@@ -1,0 +1,49 @@
+\documentclass[11pt]{article}
+\usepackage{polski}
+\usepackage[latin2]{inputenc}
+\begin{document}
+\title{Metody numeryczne. Zadanie B}
+\author{Micha³ Dettlaff}
+\maketitle
+
+\section{Tre¶æ zadania}
+
+\noindent Napisaæ program realizuj±cy metodê Newtona dla uk³adu równañ:
+$$ \begin{array}[b]{rcl}
+x + x^2 - 2yz & = & 0.1\\
+y - y^2 + 3xz & = & -0.2\\
+z + z^2 + 2x & = & 0.3
+\end{array} $$
+i przybli¿enia startowego (0,0,0).
+
+\section{Opis algorytmu}
+
+Najpierw podstawiamy za $ \mathbf{x} $ wektor (0,0,0).\newline
+Do wyznaczania kolejnych przybli¿eñ rozwi±zania korzystamy z wzoru:
+\begin{displaymath} \mathbf{x_{k+1} = x_k + d}, \end{displaymath}
+gdzie $ \mathbf{d} $ jest rozwi±zaniem równania liniowego:
+\begin{displaymath}
+\mathbf{F'\left(x_k\right)d = -F\left(x_k\right)}
+\end{displaymath}
+
+\section{Najwa¿niejsze struktury programu}
+
+{\tt F(x)} - funkcja zwracaj±ca wektor warto¶ci funkcji uk³adu równañ nieliniowych, obliczonych dla danego wektora $ \mathbf{x} $\newline
+{\tt F\_d(x)} - funkcja zwracaj±ca macierz pochodnych cz±stkowych uk³adu funkcji F(x) dla danego wektora $ \mathbf{x} $\newline
+{\tt x} - rozwi±zanie uk³adu (warto¶ci x, y i z), pocz±tkowo równe przybli¿eniu startowemu (0,0,0)
+
+\section{Wyniki dzia³ania programu}
+
+\noindent
+$ \mathbf{x_n} \textrm{ - rozwi±zanie metod± Newtona} $
+
+$$ \begin{array}[b]{lclll}
+n&\vline& \mathbf{x_n}\\\hline
+0&\vline& x=0 & y=0 & z=0\\
+1&\vline& x=0.1 & y=-0.2 & z=0.1\\
+2&\vline& x=0.024340317 & y=-0.1832997 & z=0.20872334\\
+3&\vline& x=0.023363004 & y= -0.18167287 & z= 0.20941807\\
+4&\vline& x=0.023363004 & y= -0.18167287 & z= 0.20941807
+\end{array} $$
+
+\end{document}

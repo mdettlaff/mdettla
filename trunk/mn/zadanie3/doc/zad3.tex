@@ -1,0 +1,58 @@
+\documentclass[11pt]{article}
+\usepackage{polski}
+\usepackage[latin2]{inputenc}
+\begin{document}
+\title{Metody numeryczne. Zadanie C}
+\author{Micha³ Dettlaff}
+\maketitle
+
+\section{Tre¶æ zadania}
+
+\noindent Napisaæ program testuj±cy metodê Eulera dla:
+\begin{displaymath}
+  y' = -y^2 - \frac{1}{4x^2+1},
+\end{displaymath}
+\begin{displaymath}
+  y(0)=1; \textrm{ na przedziale [0,2].}
+\end{displaymath}
+
+\section{Opis algorytmu}
+
+Do wyznaczania kolejnych przybli¿eñ rozwi±zania korzystamy z wzoru:
+\begin{displaymath}
+  y_{n+1} = y_n + h\cdot k
+\end{displaymath}
+gdzie
+\begin{displaymath}
+  h \textrm{ - krok algorytmu}
+\end{displaymath}
+\begin{displaymath}
+  k = f(y_n)
+\end{displaymath}
+W naszym przypadku wzór bêdzie mia³ postaæ:
+\begin{displaymath}
+  y_{n+1} = y_n + h\cdot \left( -y^2_n - \frac{1}{4x^2_n+1}\right)
+\end{displaymath}
+
+\section{Najwa¿niejsze struktury programu}
+
+{\tt F} - funkcja $ \displaystyle k = f(y_n) =
+  -y^2_n - \frac{1}{4x^2_n+1} $\newline
+{\tt y} - warto¶æ $ y_n $ liczona w kolejnych iteracjach\newline
+{\tt h} - warto¶æ $ h $
+
+\section{Wyniki dzia³ania programu}
+
+\noindent
+$ \{y\}^N_{i=0} \textrm{ - rozwi±zanie metod± Eulera} $
+
+$$ \begin{array}[b]{lcl}
+N&\vline&      y_N\\\hline
+10&\vline&     0.082324\\
+100&\vline&    0.220428\\
+1000&\vline&   0.230309\\
+10000&\vline&  0.231275\\
+100000&\vline& 0.231372
+\end{array} $$
+
+\end{document}

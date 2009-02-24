@@ -1,0 +1,23 @@
+ Ca³ka oznaczona z F(x)=1/(x^2+1) od 0 do niesk. = PI/2 ~= 1.5707963
+	dla n =    5	1.587805
+	dla n =   50	1.570961
+	dla n =  500	1.570798
+	dla n = 5000	1.570796
+
+ Ca³ka oznaczona z F(x)=exp(-x) od 0 do niesk. = 1
+	dla n =    5	0.900427
+	dla n =   50	0.999095
+	dla n =  500	0.999991
+	dla n = 5000	1.000000
+
+ Ca³ka oznaczona z F(x)=sin(x)*exp(-x) od 0 do niesk. = 1/2
+	dla n =    5	0.385994
+	dla n =   20	0.500057
+	dla n =   80	0.500000
+	dla n =  320	0.500000
+
+ Ca³ka oznaczona z F(x)=x^2/2^x od 0 do niesk. ~= 6.0055614
+	dla n =    5	6.799075
+	dla n =   20	6.004587
+	dla n =   80	6.005562
+	dla n =  320	6.005561
