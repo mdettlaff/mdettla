@@ -1,0 +1,96 @@
+>>>> sort data/00025.txt data/00250.txt data/02500.txt data/25000.txt data/99999.txt
+===========================================================================
+
+POROWNANIE WYDAJNOSCI ALGORYTMOW SORTUJACYCH QS I QSW
+QS - Quicksort
+QSW - Splycony Quicksort + sortowanie przez wstawianie (Insertion sort)
+
+Wspolczynnik c reguluje poziom splycenia Quicksort w QSW, tj. minimalna
+dlugosc tablicy sortowanej przez Quicksort
+
+HIPOTEZA: QSW jest wydajniejszy od QS
+
+===========================================================================
+
+Sortowanie dla 25 dat
+Plik zrodlowy: data/00025.txt
+
+algorytm	czas (s)	roznica s / %		test poprawnosci
+QS		0.000009				OK
+QSW (c=10)	0.000007	-0.000002 / 22.2	OK
+QSW (c=20)	0.000005	-0.000004 / 44.4	OK
+QSW (c=30)	0.000006	-0.000003 / 33.3	OK
+QSW (c=40)	0.000006	-0.000003 / 33.3	OK
+QSW (c=50)	0.000006	-0.000003 / 33.3	OK
+QSW (c=60)	0.000006	-0.000003 / 33.3	OK
+QSW (c=70)	0.000006	-0.000003 / 33.3	OK
+QSW (c=80)	0.000006	-0.000003 / 33.3	OK
+
+===========================================================================
+
+Sortowanie dla 250 dat
+Plik zrodlowy: data/00250.txt
+
+algorytm	czas (s)	roznica s / %		test poprawnosci
+QS		0.000098				OK
+QSW (c=10)	0.000082	-0.000016 / 16.3	OK
+QSW (c=20)	0.000076	-0.000022 / 22.4	OK
+QSW (c=30)	0.000074	-0.000024 / 24.5	OK
+QSW (c=40)	0.000072	-0.000026 / 26.5	OK
+QSW (c=50)	0.000072	-0.000026 / 26.5	OK
+QSW (c=60)	0.000071	-0.000027 / 27.6	OK
+QSW (c=70)	0.000178	+0.000080 / 81.6	OK
+QSW (c=80)	0.000075	-0.000023 / 23.5	OK
+
+===========================================================================
+
+Sortowanie dla 2500 dat
+Plik zrodlowy: data/02500.txt
+
+algorytm	czas (s)	roznica s / %		test poprawnosci
+QS		0.001438				OK
+QSW (c=10)	0.001171	-0.000267 / 18.6	OK
+QSW (c=20)	0.001184	-0.000254 / 17.7	OK
+QSW (c=30)	0.001155	-0.000283 / 19.7	OK
+QSW (c=40)	0.001224	-0.000214 / 14.9	OK
+QSW (c=50)	0.001084	-0.000354 / 24.6	OK
+QSW (c=60)	0.001209	-0.000229 / 15.9	OK
+QSW (c=70)	0.001118	-0.000320 / 22.3	OK
+QSW (c=80)	0.001145	-0.000293 / 20.4	OK
+
+===========================================================================
+
+Sortowanie dla 25000 dat
+Plik zrodlowy: data/25000.txt
+
+algorytm	czas (s)	roznica s / %		test poprawnosci
+QS		0.019399				OK
+QSW (c=10)	0.017573	-0.001826 /  9.4	OK
+QSW (c=20)	0.016540	-0.002859 / 14.7	OK
+QSW (c=30)	0.016289	-0.003110 / 16.0	OK
+QSW (c=40)	0.016245	-0.003154 / 16.3	OK
+QSW (c=50)	0.016628	-0.002771 / 14.3	OK
+QSW (c=60)	0.016818	-0.002581 / 13.3	OK
+QSW (c=70)	0.017414	-0.001985 / 10.2	OK
+QSW (c=80)	0.017287	-0.002112 / 10.9	OK
+
+===========================================================================
+
+Sortowanie dla 99999 dat
+Plik zrodlowy: data/99999.txt
+
+algorytm	czas (s)	roznica s / %		test poprawnosci
+QS		0.090352				OK
+QSW (c=10)	0.080724	-0.009628 / 10.7	OK
+QSW (c=20)	0.079570	-0.010782 / 11.9	OK
+QSW (c=30)	0.077858	-0.012494 / 13.8	OK
+QSW (c=40)	0.077364	-0.012988 / 14.4	OK
+QSW (c=50)	0.080742	-0.009610 / 10.6	OK
+QSW (c=60)	0.079952	-0.010400 / 11.5	OK
+QSW (c=70)	0.080252	-0.010100 / 11.2	OK
+QSW (c=80)	0.081876	-0.008476 /  9.4	OK
+
+===========================================================================
+
+WYNIKI TESTOW: hipoteza zostala potwierdzona!
+
