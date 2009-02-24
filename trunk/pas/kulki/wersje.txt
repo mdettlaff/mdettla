@@ -1,0 +1,4 @@
+Kulki 1.0 - sterowanie strzalkami w grze
+Kulki 1.1 - sterowanie strzalkami w menu, kody
+Kulki 1.2 - naprawiony blad z wybieraniem opcji menu i zapisywaniem bonusa 9
+Kulki 1.3 - zastosowanie algorytmu Dijkstry do znajdowania najkrotszej sciezki
