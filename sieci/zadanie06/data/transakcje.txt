@@ -1,0 +1,7 @@
+83.25.233.93|2009.01.19|Micha³|Dettlaff|Karwia|34534029543|grax2
+83.25.233.93|2009.01.19|||||grax2|idx2111827762
+83.25.233.93|2009.01.19|Micha³|Dettlaff|Karwia|34534029543|idx2111827762|cdx1|discount
+83.25.233.93|2009.01.19|Zenon|Dettlaff|Karwia|34534029543|filmx1|cdx1
+83.25.233.93|2009.01.19|Zenon|Dettlaff|Karwia|34534029543|filmx1|discount
+153.19.5.85|2009.01.20|Micha³|Dettlaff|Kolorowa 7|1234567890|cd_muzycznex1|cdx2|filmx1
+153.19.5.85|2009.01.20|Micha³|Dettlaff|Kolorowa 7|1234567890|filmx1|cdx2

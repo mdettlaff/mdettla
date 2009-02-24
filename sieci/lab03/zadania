@@ -1,0 +1,18 @@
+Wprowadzanie danych graficznych (wspó³rzêdnych punktu) do programów CGI
+
+1. Utworzyæ prosty rysunek za pomoc± edytora graficznego, zapisaæ go w pliku w formacie .jpeg (lub dowolnym innym rozpoznawanym przez przegl±darki), umie¶ciæ w katalogu public_html z odpowiednimi prawami dostêpu, obejrzeæ w przegl±darce jako plik internetowy.
+
+2. Umie¶ciæ na stronie domowej rysunek jako pole aktywne:
+...
+<form action="....cgi" .....>
+Wybierz piksel:
+<input type=image name="nazwa" src="....jpg">
+</form>
+...
+Klikn±æ wybrany piksel i obejrzeæ ³añcuch przekierowany do programu CGI, znale¼æ w nim wspó³rzêdne wybranego piksela:
+nazwa.x=m & nazwa.y=n (m,n liczby naturalne)
+
+3. Umie¶ciæ na stronie domowej rysunek jako pole aktywne:
+Kwadrat podzielony na czterny mniejsze kwadraty o ró¿nych kolorach.
+Utworzyæ program CGI, który w odpowiedzi na klikniêcie rysunku mysz± bêdzie wy¶wietla³ nazwê klikniêtego koloru.
+UWAGA: W przypadku, gdy obszar samego rysunku jest mniejszy, ni¿ pole aktywne, nale¿y przewidzieæ te¿ komunikat "Wybrano kolor t³a"

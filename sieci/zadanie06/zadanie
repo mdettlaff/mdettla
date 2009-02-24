@@ -1,0 +1,20 @@
+Sklep internetowy (PHP + cookies)
+
+formularz1:
+Uruchomić przyjmowanie zleceń na dostawę towaru: ilość (szt.), nazwa towaru, jednostki (np. kg) i cena jednostkowa. Po wysłaniu wypełnionego formularza:
+
+formularz2:
+Formularz danych do faktury (nazwisko, imię, adres, NIP itd) wyświetlana całkowita kwota zakupu
+
+lub
+
+Informacja o braku/niedostatku niektórych towarów w magazynie. Przyciski: potwierdzenie, zmiana zamówienia.
+
+Szczegóły:
+
+* aktualny stan magazynu (ilość poszczególnych towarów) - przechowywany w pliku po stronie serwera. Aktualizowany:
+  o przy każdym potwierdzeniu zakupu (odjęcie);
+  o przy każdej dostawie towaru(dodanie) - dostawa wprowadzana przy użyciu prsotego panelu administracyjnego;
+* koszyk na zakupy - zrealizowany w cookie (tj. po stronie klienta)
+* zrobić pamięć sesji (w szczególności jeśli ktoś nie wejdzie przes stronę początkową, automatycznie przekierować do niej) i pamięć wcześniejszych zakupów (jeśli klient już kiedyś coś kupił, dawać rabat 5%)
+* potwierdzone transakcje zapamiętywać w pliku dostaw (ip, godzina, data)

@@ -1,0 +1,3 @@
+php -a : tryb interaktywny. wpisz np.: <?php echo "costam" ?> i wcisnij enter, aby odpalic polecenie
+  zakoncz przy pomocy ctrl+D
+

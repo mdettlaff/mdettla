@@ -1,0 +1,7 @@
+Zadanie na ocene, czas - 2 tygodnie
+
+Utworzyc na stronie mape interaktywna udostepniajaca informacje turystyczna o obszarach wskazanych przez klikniecie mysza. Mapa powinna skladac sie przynajmniej z 8 obszarow, z ktorych zaden nie moze byc trojkatem, czworokatem ani kolem. Obsluga mapy - przez program CGI po stronie serwera (nie moze byc obslugi po stronie klienta!). Informacja turystyczna powinna byc w formie tekstowej, ale moze tez zawierac fotografie lub rysunki.
+Uwaga: indentyfikacja obszarow (na podstawie wspolrzednych punktow) po stronie serwera - mozna wykorzystac dowolne narzedzie.
+
+PNGwriter
+Image Magic <stream.h>

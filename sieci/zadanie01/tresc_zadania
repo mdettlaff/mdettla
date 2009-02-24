@@ -1,0 +1,17 @@
+Podlega odbieraniu - czas 2 tygodnie + 1 tydzieñ (¶wiêta)
+zadanie 1
+
+Utworzyæ formularz HTML i wspó³pracuj±cy z nim skrypt CGI (napisany w jêzyuku C) realizuj±cy prosty czterodzia³aniowy kalkulator na stronie domowej:
+
+HTML
+Pierwsza liczba: ...
+Druga liczba: ...
+Dzia³anie: <menu rozwijalne>: + - * /
+Przycisk Wykonaj
+
+CGI
+Program powinien wy¶wietlaæ wynik dzia³ania lub jeden z komunikatów o b³êdach:
+1 pierwsza liczba nie jest poprawna
+2 druga liczba nie jest poprawna
+3 ¿adna z liczb nie jest poprawna
+4 nie mo¿na dzieliæ przez zero
