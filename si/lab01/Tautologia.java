@@ -22,8 +22,11 @@ public class Tautologia {
       }
     }
     try {
-      System.out.println(inputLine + " jest tautologia: " + 
-	isTautology(inputLine, symbols, evaluation));
+      if (isTautology(inputLine, symbols, evaluation)) {
+	System.out.println("jest tautologia");
+      } else {
+	System.out.println("nie jest tautologia");
+      }
     } catch (BadFormulaException bfe) {
       System.out.println("Nieprawidlowe wyrazenie");
     }
@@ -56,11 +59,7 @@ public class Tautologia {
 	}
 	newFormula = newFormula.replace("" + c, bool);
       }
-
-      System.out.println(newFormula);
-
       if (!isFormulaTrue(newFormula)) {
-	System.out.println("Humbug!");
 	return false;
       }
     }
@@ -152,3 +151,4 @@ class MyStack<Character> {
 
 class BadFormulaException extends Exception {
 }
+
