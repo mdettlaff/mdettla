@@ -1,0 +1,1 @@
+Pracujac nad roznymi algorytmami kompresji, znajomy moj wymyslil, niejako przy okazji, kilka nowych algorytmow szyfrowania danych i ich deszyfrowania. Jako, ze jest programista, niektore z nich wykorzystal we wlasnych programach komercyjnych. I w czym klopot?

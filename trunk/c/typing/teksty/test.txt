@@ -1,0 +1,1 @@
+To jest pierwsza linia pliku testowego. Nie minie wiele czasu, jak nie przejdziemy do kolejnej. Chociaz teraz tak naprawde to jest ciagly tekst. Jestesmy juz w ostatniej. No a teraz to juz naprawde jest koniec.
