@@ -1,0 +1,6 @@
+ Rozwi±zywanie uk³adu równañ nieliniowych metod± Newtona.
+ 	dla n= 0 :	x= 0.   y= 0.   z= 0.
+ 	dla n= 1 :	x= 0.1   y= -0.2   z= 0.10000001
+ 	dla n= 2 :	x= 0.024340317   y= -0.1832997   z= 0.20872334
+ 	dla n= 3 :	x= 0.023363004   y= -0.18167287   z= 0.20941807
+ 	dla n= 4 :	x= 0.023363004   y= -0.18167287   z= 0.20941807

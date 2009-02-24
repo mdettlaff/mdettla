@@ -1,0 +1,7 @@
+ Metoda Eulera. Przybli¿one rozwi±zanie równania ró¿niczkowego.
+ y' = -y^2 - 1/(4x^2 + 1) na przedziale [0,2]; y(0)=1
+	dla n =     10	y_n = 0.082324
+	dla n =    100	y_n = 0.220428
+	dla n =   1000	y_n = 0.230309
+	dla n =  10000	y_n = 0.231275
+	dla n = 100000	y_n = 0.231372

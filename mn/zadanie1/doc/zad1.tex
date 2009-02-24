@@ -1,0 +1,97 @@
+\documentclass[11pt]{article}
+\usepackage{polski}
+\usepackage[latin2]{inputenc}
+\begin{document}
+\title{Metody numeryczne. Zadanie A}
+\author{Micha³ Dettlaff}
+\maketitle
+
+\section{Tre¶æ zadania}
+
+\noindent Przetestowaæ dok³adno¶æ nastêpuj±cej metody przybli¿onego obliczania ca³ki
+\begin{equation} \int^{\infty}_0 F(t)\,dt \end{equation}
+$ \textrm{dla rozmaitych funkcji ci±g³ych } F : [0, +\infty) \to \mathbf{R}
+  \textrm{ (wybraæ kilka funkcji } F \textrm{).} $ \newline\newline
+1) Zamieniamy zmienn± w ca³ce (1): $ \displaystyle x := \frac{t-1}{t+1}. $
+Otrzymujemy
+\begin{equation} \int^{\infty}_0 F(t)\,dt =
+  \int^1_{-1} 2F\left(\frac{1+x}{1-x}\right)\left(1-x\right)^{-2}\,dx
+\end{equation}
+2) Niech
+\begin{equation}
+  f(x) = 2F\left(\frac{1+x}{1-x}\right)(1-x)^{-2}\sqrt{1-x^2}
+\end{equation}
+Mamy wtedy, z (2) i (3),
+\begin{equation}
+  \int^{\infty}_0 F(t)\,dt = \int^1_{-1} \frac{f(x)}{\sqrt{1-x^2}}\,dx.
+\end{equation}
+3) Do obliczenia ca³ki po prawej stronie (4) stosujemy kwadraturê Gaussa-Czebyszewa:
+\begin{equation}
+  \int^1_{-1} \frac{f(x)}{\sqrt{1-x^2}}\,dx \approx \sum_{i=1}^n w_i f(x_i),
+\end{equation}
+$ \displaystyle\textrm{gdzie wêz³y } x_i \textrm{ s± dane wzorem } 
+  x_i = \cos \frac{\pi(2i-1)}{2n}, 1 \le i \le n,
+  \textrm{ za¶ wagi } w_i \textrm{ s± wszystkie równe } \frac{\pi}{n}. $
+
+\section{Opis algorytmu}
+
+Policzenie przybli¿enia ca³ki jest równowa¿ne obliczeniu sumy
+\begin{equation} \sum_{i=1}^n w_i f(x_i) \end{equation}
+Robimy to iteracyjnie, podstawiaj±c za ka¿dym obrotem pêtli (przy zwiêkszaj±cej siê o 1 warto¶ci $ i $) odpowiednie podane wy¿ej wzory w miejsce $ x_i, f $ oraz $ w_i $. Za $ F $ we wzorze na $ f $ podstawiamy funkcje ci±g³e, które chcemy przybli¿aæ. Wiêksz± dok³adno¶æ przybli¿enia uzyskujemy dobieraj±c wiêksze warto¶ci $ n $.
+
+\section{Najwa¿niejsze struktury programu}
+
+{\tt F1, F2, F3, F4} - przyk³adowe funkcje ci±g³e których ca³ki przybli¿amy\newline
+{\tt x\_i} - funkcja obliczaj±ca warto¶æ $ x_i $\newline
+{\tt f\_small} - wynik funkcji $ f $\newline
+{\tt suma} - suma (6) obliczona dla danej ca³ki\newline
+%{\tt n} - warto¶æ $ n $ z sumy (6)\newline
+%{\tt n\_start} - pocz±tkowa warto¶æ {\tt n} (pierwsze przybli¿enie)\newline
+
+\section{Wyniki dzia³ania programu}
+
+\noindent $ F_1 = \frac{1}{x^2+1} $\newline
+$ S_1 = \sum_{i=1}^n w_i f(x_i) \textrm{ dla } F_1 $
+
+$$ \begin{array}[b]{lcl}
+n&\vline&    S_1\\\hline
+5&\vline&    1.587805\\
+50&\vline&   1.570961\\
+500&\vline&  1.570798\\
+5000&\vline& 1.570796
+\end{array} $$
+
+\noindent $ F_2 = e^{-x} $\newline
+$ S_2 = \sum_{i=1}^n w_i f(x_i) \textrm{ dla } F_2 $
+
+$$ \begin{array}[b]{lcl}
+n&\vline&    S_2\\\hline
+5&\vline&    0.900427\\
+50&\vline&   0.999095\\
+500&\vline&  0.999991\\
+5000&\vline& 1.000000
+\end{array} $$
+
+\noindent $ F_3 = \sin\left(x\right) e^{-x} $\newline
+$ S_3 = \sum_{i=1}^n w_i f(x_i) \textrm{ dla } F_3 $
+
+$$ \begin{array}[b]{lcl}
+n&\vline&    S_3\\\hline
+5&\vline&    0.385994\\
+20&\vline&   0.500057\\
+80&\vline&   0.500000\\
+3200&\vline& 0.500000
+\end{array} $$
+
+\noindent $ F_4 = \frac{x^2}{2^x} $\newline
+$ S_4 = \sum_{i=1}^n w_i f(x_i) \textrm{ dla } F_4 $
+
+$$ \begin{array}[b]{lcl}
+n&\vline&    S_4\\\hline
+5&\vline&    6.799075\\
+20&\vline&   6.004587\\
+80&\vline&   6.005562\\
+3200&\vline& 6.005561
+\end{array} $$
+
+\end{document}

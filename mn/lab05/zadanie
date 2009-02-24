@@ -1,0 +1,9 @@
+Interpolacja liniowa
+
+Funkcja dyskretna, bêd±ca ci±giem punktów. Sca³kowaæ metod± trapezów.
+Na krañcach waga 1/2, w pozosta³ych miejscach 1.
+
+Poza tym, zrobiæ mo¿liwo¶æ policzenia ca³ki do dowolnego punktu, nie le¿±cego
+jakby w "wê¼le" funkcji (np. mamy punkt funkcji w x=10 i mamy policzyæ do ciut
+dalej, np. do 10.1). Zrobiæ to przy pomocy interpolacji liniowej (po prostu
+wybraæ punkt le¿±cy na linii tego trapezu).

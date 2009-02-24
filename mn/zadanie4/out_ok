@@ -1,0 +1,10 @@
+ Metoda Eulera. Przybli¿one rozwi±zanie zagadnienia.
+ Wynik teoretyczny dla przedzia³u [0,1]: 0.367879441
+	dla n =      5	y_n = 0.315306
+	  b³±d metody: 	Eps_n = 0.045662
+	dla n =     10	y_n = 0.341970
+	  b³±d metody: 	Eps_n = 0.023981
+	dla n =     20	y_n = 0.355001
+	  b³±d metody: 	Eps_n = 0.012366
+	dla n =     40	y_n = 0.361457
+	  b³±d metody: 	Eps_n = 0.006290
