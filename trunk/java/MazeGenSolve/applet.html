@@ -1,0 +1,23 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=iso-8859-2">
+<title>MazeGenSolve</title>
+</head>
+<body>
+<p>
+<applet width=490 height=420 code="MazeGenSolve.class">
+  <param name="bgcolor" value="#FFFFFF">
+</applet>
+</p><p align="justify">
+Labirynt generowany jest przez algorytm Depth-First Search. Traktujemy labirynt jako zbiór komórek, które na początku otoczone są ścianami ze wszystkich stron. Następnie algorytm sukcesywnie burzy ściany między komórkami, stosując strategię zachłanną. Zaczynamy od dowolnie wybranej komórki. Następnie, spośród sąsiednich komórek, w których stoją jeszcze wszystkie cztery ściany, wybieramy jedną losowo i przechodzimy do niej burząc po drodze ścianę, po czym powtarzamy proces. Jeśli nie ma takiej komórki, cofamy się. Algorytm jest szybki, ale wymaga dodatkowej pamięci na zapamiętanie poprzednich pozycji (których jest nie więcej niż komórek). Najlepiej użyć do tego stosu (struktury danych typu LIFO).
+</p><p align="justify">
+W wyniku powstaje labirynt o własności perfect, lub inaczej simply connected. Oznacza to, że z dowolnego punktu w labiryncie istnieje dokładnie jedna ścieżka do każdego innego punktu. Istnieje więc tylko jedno rozwiązanie. Nie ma żadnych zamkniętych pętli ani niedostępnych rejonów, a wszystkie ściany są połączone ze sobą. Taki labirynt można też zdefiniować jako minimalne drzewo spinające na zbiorze komórek.
+</p><p align="justify">
+Rozwiązanie znajduje algorytm Tremaux. Działa on z perspektywy osoby znajdującej się wewnątrz labiryntu. Po dojściu do rozwidlenia, zaznaczamy ścieżkę z której przyszliśmy (kolor żółty) i wybieramy wolny korytarz, w którym jeszcze nie byliśmy. Jeśli nie ma takiego, wybieramy jeden z już odwiedzonych i zaznaczamy go drugi raz (kolor niebieski). Jeśli wszystkie korytarze na rozwidleniu zaznaczyliśmy już dwa razy, algorytm kończy się. Algorytm gwarantuje znalezienie rozwiązania dla dowolnego labiryntu, ale nie zawsze jest to rozwiązanie najkrótsze (oczywiście w labiryntach simply connected nie stanowi to problemu). Po jego zakończeniu albo dojdziemy do wyjścia, albo wrócimy do punktu z którego wystartowaliśmy, przeszedłszy cały labirynt.
+</p><p align="justify">
+Innym prostym sposobem na znalezienie wyjścia jest zasada "idź, trzymając się cały czas jednej ściany" (lub inaczej: skręcaj zawsze w prawo, lub zawsze w lewo). Jednak ta metoda nie gwarantuje znalezienia rozwiązania, jeśli labirynt nie jest simply connected.
+</p><p>
+<a href="MazeGenSolve.java">Kod źródłowy (Java)</a>
+</p>
+</body>
+</html>
