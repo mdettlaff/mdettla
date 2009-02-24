@@ -1,0 +1,13 @@
+Sztuczna inteligencja
+
+zadanie 1
+Wartosciowanie wyrazen logicznych z uzyciem Odwrotnej Notacji Polskiej.
+np.
+(p=>q) <=> (~q => ~p);
+1. Przeksztalcanie na ONP
+Zrodlo:
+http://www.ipipan.gda.pl/~stefan/Dydaktyka/SztIntel/02-18-notacja_odwr_polska.c
+Implikacja to I, rownowaznosc to E
+Wynik:
+ p q I q ~ p ~ I E ;
+2. Obliczenie wartosciowania.
