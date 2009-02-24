@@ -1,0 +1,19 @@
+Zadanie 1
+Utworzyæ formularz HTML i wspó³pracuj±cy z nim program CGI napisany w C:
+
+HTML			CGI
+
+Imiê: ......		Twoje inicja³y to X.Y.
+Nazwisko: ......
+Przycisk Wprowad¼
+
+
+Zadanie 2
+
+Utworzyæ formularz HTML i wspó³pracuj±cy z nim program CGI napisany w C:
+
+HTML:
+Podaj liczbê rzeczywist±: .....
+Przycisk wprowad¼
+CGI:
+Program CGI powinien obliczaæ warto¶æ funkcji sinus, je¶li wprowadzony ci±g znaków jest poprawnym zapisem liczby rzeczywistej, lub informowaæ o b³êdzie, je¶li nie jest.

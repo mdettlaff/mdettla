@@ -1,0 +1,5 @@
+Nie na ocenê.
+5. Umie¶ciæ w pliku HTML (ukryty) rejestrator odwiedzin na stronie domowej: dostêp do strony powinien (w sposób niewidoczny dla u¿ytkownika) powodowaæ dopisanie do pliku:
+a) nazwy komputera, z którego nast±pi³ dostêp;
+b) daty i godziny dostêpu
+Uwaga: stosowaæ ¶rodki zapewniaj±ce niepodzielno¶æ dostêpu do pliku rejestratora (funkcje flock() lub fopen() z odpowiednimi parametrami).

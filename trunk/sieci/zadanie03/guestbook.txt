@@ -1,0 +1,39 @@
+Czas: Wed Dec  3 14:49:36 2008
+<br>
+IP: 83.11.11.215<br>
+Imie: Marian<br>
+Tutaj¿e s± polskie znaki, ¿ó³ty i ¿y¼niejszy!<br>
+Znów polskie znaki.<br>
+<hr>
+
+Czas: Wed Dec  3 14:50:42 2008
+<br>
+IP: 83.11.11.215<br>
+Imie: Zenek<br>
+Mój email abc@def jest #)&*^T_@ ³atwy do zapamiêtania.<br>
+<hr>
+
+Czas: Wed Dec  3 14:51:56 2008
+<br>
+IP: 83.11.11.215<br>
+Imie: Romek<br>
+To znaczniki HTML: &lt;i&gt;kursywa&lt;/i&gt;, &lt;b&gt;pogrubienie&lt;/b&gt; etc.<br>
+<hr>
+
+Czas: Tue Dec  9 16:51:17 2008
+<br>
+IP: 153.19.5.87<br>
+Imie: Micha%B3<br>
+jedna linia!<br>
+druga &lt;i&gt;linia&lt;/a&gt;<br>
+¶wite¼ s³±<br>
+<br>
+<hr>
+
+Czas: Tue Dec  9 16:51:39 2008
+<br>
+IP: 153.19.5.87<br>
+Imie: asdf<br>
+SDSAD<br>
+<hr>
+

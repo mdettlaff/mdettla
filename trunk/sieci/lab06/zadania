@@ -1,0 +1,11 @@
+1. Wypróbowaæ mo¿liwo¶ci przekazywania danych z formularza HTML do obsluguj±cego go skryptu PHP (podobnie, jak wcze¶niej CGI):
+  a) tekstowych dla metody GET;
+  b) tekstowych dla metody POST;
+  c) graficznych dla dowolnej metody
+Za ka¿dym razem w programie PHP wy¶wietlaæ zawarto¶ci ca³ych (predefiniowanych) tablic $_GET i $_POST (wskazówka: u¿yæ instrukcji foreach ... w jej bardziej z³o¿onej postaci) i zaobserwowaæ nazwy i warto¶ci elementów tych tablic. Dla danych graficznych zwróciæ uwagê na nazwa_x i nazwa_y.
+
+2. W skrypcie PHP uruchomionym z przegl±darki wy¶wietliæ ca³± zawarto¶æ predefiniowanej tablicy $_SERVER (podobnie jak w poprzednim zadaniu). Przeanalizowaæ znaczenie poszczególnych elementów.
+
+3. Utworzyæ dwupolowy formularz HTML umo¿liwiaj±cy wprowadzenie dwóch liczb naturalnych k, n oraz obs³uguj±cy go skrypt PHP, który w odpowiedzi wy¶wietla tabliczkê mno¿enia o rozmiarach k x n. (k wierszy, n kolumn).
+Wskazówka: u¿yæ znaczników <table>, <tr>, <td> i utworzyæ tabelê o odpowiednich rozmiarach.
+Uwaga: ró¿ne pola tabeli mog± mieæ t³o w ró¿nych kolorach.

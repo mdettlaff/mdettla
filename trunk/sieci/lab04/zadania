@@ -1,0 +1,31 @@
+Wspó³praca programu CGI z plikiem.
+
+1. W zespo³ach 3-4-osobowych utworzyæ program prostego komunikatora tekstowego umo¿liwiaj±cego porozumiewanie siê za pomoc± wspó³dzielonego pliku. Dostêp do pliku zsynchronizowaæ przy u¿yciu pliku zamkowego (lockfile):
+
+// ...
+while ((d=open("lockfile", O_CREAT | O_EXCL, 0)) < 0) { // sekcja wej¶ciowa
+  printf("Plik zajêty, proszê czekaæ...\n");
+  sleep(/*liczba sekund*/);
+}
+// operacje na pliku tekstowym <- sekcja krytyczna
+close(d); // sekcja wyj¶ciowa
+unlink("lockfile");
+// ...
+
+Przeczytaæ man 2 open
+           man 2 unlink
+<fcntl.h>
+<unistd.h>
+
+Interfejs u¿ytkownika:
+MENU: 0 - odczyt z pliku; 1 - zapis do pliku; 2 koniec programu
+
+2. Utworzyæ program CGI udostêpniaj±cy prosty licznik odwiedzin na stronie domowej (jednoliczbowy plik, pocz±tkowo zawieraj±cy 0, do którego zawarto¶ci jest dodawane 1 przy ka¿dym dostêpie do strony). Dostêp do pliku licznika zsynchronizowaæ przy u¿yciu pliku zamkowego:
+
+while ((d=open ... )
+  sleep(1);
+// odczyt zawarto¶ci, dodanie 1, wy¶wietlenie i zapis do pliku licznika
+close(d);
+unlink(...);
+
+Je¶li plik zamkowy istnieje, zasób jest zajêty, je¶li nie istnieje, zasób jest wolny.

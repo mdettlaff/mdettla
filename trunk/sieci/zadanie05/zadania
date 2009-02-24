@@ -1,0 +1,22 @@
+Implementacja sta³ego po³±czenia przy u¿yciu mechanizmu prze³adowania
+(od¶wie¿ania) strony w sta³ych odstêpach czasu.
+
+zadanie pomocnicze:
+Wypróbowaæ mo¿liwo¶æ nakazania przegl±darce prze³adowania (od¶wie¿ania)
+strony w sta³ych odstêpach czasu.
+
+Zadanie DO ODDANIA do czasu egzaminu.
+1. Przy u¿yciu mechanizmu prze³adowania strony w sta³ych odstêpach czasu
+(co kilka sekund) zaimplementowaæ grê w kó³ko i krzy¿yk dla dwóch graczy
+korzystaj±cych z przegl±darek.
+Szczegó³y implementacji:
+- pierwszy zg³oszony gracz stawia znak 'X' (klikaj±c mysz±) w dowolnym miejscu
+planszy, a nastêpnie otrzymuje wy¶wietlan± informacjê, aby czeka³ na ruch drugiego gracza;
+- drugi zg³oszony gracz mo¿e wykonaæ ruch dopiero po wykonaniu ruchu przez pierwszego gracza (mo¿e umie¶ciæ znak 'O' w dowolnym pustym polu planszy) itd.;
+- pamiêæ stanu gry, to¿samo¶ci graczy i kontrola prawid³owo¶ci ruchów - przy
+u¿yciu pliku po stronie serwera (zapewniæ synchronizacjê dostêpu do pliku);
+- inni odwiedzaj±cy w tym czasie stronê otrzymuj± komunikat o czasowej
+niedostêpno¶ci gry;
+- wprowadziæ limity czasu na zg³oszenie siê do gry oraz na wszystkie kolejne ruchy (po up³yniêciu limitu - og³oszenie wygranej "walkowerem");
+- koniec gry - wy¶wietlenie komunikatów "Wygrana", "Przegrana" lub "Remis"
+(i usuniêcie pliku ze stanem gry).
