@@ -1,3 +1,7 @@
 http://manta.univ.gda.pl/~stefan/Dydaktyka/SztIntel/lab-02-25/
 Nale¿y ¶ci±gn±æ program i poprawiæ kilka rzeczy:
 - wybieranie drogi o najmniejszym koszcie, a nie pierwszej z brzegu
+
+Zadanie domowe:
+Zamiast wg³±b szukamy wszerz.
+W tym otwartym po kolei dla elementów na li¶cie otwartej wykonujemy 1 krok.
