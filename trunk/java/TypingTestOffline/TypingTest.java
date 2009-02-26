@@ -310,7 +310,7 @@ public class TypingTest extends Applet
    * lub tekst wygenerowany na podstawie plikow tekstowych z danego katalogu.
    */
   void loadNewTextToType(String directory) {
-    File[] files = new File(directory).listFiles();
+    File[] files = new File(directory).listFiles(new TextfileFilter());
     Random rand = new Random(new Date().getTime());
 
     text = new Text();
