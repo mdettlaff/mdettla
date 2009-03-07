@@ -1,0 +1,12 @@
+Opis na stronie:
+http://musicmachinery.com/2009/03/02/in-search-of-the-click-track/
+
+Echo Nest Remix:
+http://code.google.com/p/echo-nest-remix/
+
+Przykład użycia:
+python click.py audio.mp3 > audio.txt
+
+Rysowanie wykresu (odkomentuj linie na początku pliku "audio.txt"):
+gnuplot
+gnuplot> plot "audio.txt" with lines
