@@ -22,6 +22,10 @@ class Node:
         self.neighbors = {} # klucz: węzeł sąsiadujący, wartość: koszt
         self.previous = None
 
+    def cost(self, neighbor):
+        """Zwróć koszt przejścia z tego węzła do podanego sąsiada."""
+        return self.neighbors[neighbor]
+
     def __cmp__(self, node):
         return cmp(self.f, node.f)
 
@@ -96,7 +100,7 @@ def a_star(w0, wg):
         for neighbor in node.neighbors:
             if neighbor in closed_nodes:
                 continue
-            current_g = node.g + node.neighbors[neighbor]
+            current_g = node.g + node.cost(neighbor)
             is_current_better = False
             if neighbor not in open_nodes:
                 open_nodes.append(neighbor)
@@ -110,7 +114,7 @@ def a_star(w0, wg):
     return None
 
 def reconstruct_path(node):
-    """Zwraca ścieżkę powstałą w wyniku działania algorytmu A*."""
+    """Zwróć ścieżkę powstałą w wyniku działania algorytmu A*."""
     path = []
     while node.previous:
         path.append(node)
@@ -128,15 +132,15 @@ if __name__ == '__main__':
 
             path = a_star(w0, wg)
 
-            if path:
-                print '\nNajkrótsza ścieżka z', w0.name, 'do', wg.name + ':'
+            print '\nNajkrótsza ścieżka z', w0.name, 'do', wg.name + ':'
+            if path is not None:
                 path_length = .0
                 print w0.name, path_length,
                 for node in path:
-                    path_length += node.previous.neighbors[node]
+                    path_length += node.previous.cost(node)
                     print '->', node.name, path_length,
             else:
-                print '\nNie znaleziono ścieżki.'
+                print 'Nie znaleziono ścieżki.'
         else:
             print usage
     except IOError:
