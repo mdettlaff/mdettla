@@ -12,8 +12,8 @@ Użycie: python dfs.py PLIK_GRAFU\
 """
 
 graph = {} # klucz: id węzła, wartość: węzeł
-open_nodes = [] # węzły do rozwinięcia
-closed_nodes = [] # zbadane węzły
+open_nodes = set() # węzły do rozwinięcia
+closed_nodes = set() # zbadane węzły
 path = []
 w0 = None # węzeł początkowy
 wg = None # węzeł końcowy
@@ -23,7 +23,6 @@ class Node:
     def __init__(self, id):
         self.id = id
         self.neighbors = {} # klucz: id sąsiada, wartość: koszt
-        self.previous = None
 
     def cost(self, neighbor):
         u"""Zwróć koszt przejścia z tego węzła do podanego sąsiada."""
@@ -43,8 +42,6 @@ class Node:
         description = str(self.id) + ' ->'
         for neighbor, cost in self.neighbors.iteritems():
             description += ' %d(%d)' % (neighbor, cost)
-        if self.previous:
-            description += ', prev=' + self.previous.id
         return description
 
 
@@ -72,39 +69,34 @@ def read_input():
     wg = graph[int(last_line[1])]
 
 
-def dfs(wg):
+def dfs():
     u"""Algorytm Depth First Search szukania najkrótszej ścieżki."""
     if not open_nodes:
         return False
     node = min(open_nodes)
     open_nodes.remove(node)
-    closed_nodes.append(node)
+    closed_nodes.add(node)
     path.append(node)
-    print 'ENTER DFS:'
-    printlist('OPEN:', open_nodes)
-    printlist('CLOSED:', closed_nodes)
-    printlist('PATH:', path)
-    print 'z', node.id ,'do wyboru:', path[-1].neighbors
     for neighbor_id in path[-1].neighbors:
         neighbor = graph[neighbor_id]
         if neighbor not in closed_nodes:
             neighbor.f = path[-1].f + node.cost(neighbor.id)
-            open_nodes.append(neighbor)
-            neighbor.previous = node
+            open_nodes.add(neighbor)
     if path[-1] == wg:
         return True
     else:
-        if dfs(wg):
+        if dfs():
             return True
         else:
             path.pop()
-            return dfs(wg)
+            return dfs()
 
-def printlist(name, list):
-    print name,
-    for node in list:
-        print str(node.id) + ',',
-    print
+
+def find_path_dfs():
+    u"""Znajdź najkrótszą ścieżkę przy pomocy algorytmu DFS."""
+    w0.f = 0
+    open_nodes.add(w0)
+    return dfs()
 
 
 if __name__ == '__main__':
@@ -115,15 +107,10 @@ if __name__ == '__main__':
             for node in graph.values():
                 print node
 
-            w0.f = 0
-            open_nodes.append(w0)
             print u'\nNajkrótsza ścieżka z %d do %d:' % (w0.id, wg.id)
-            if dfs(wg):
-                path_length = .0
-                #print w0.id, path_length,
+            if find_path_dfs():
                 for node in path:
-                    #path_length += node.previous.cost(node)
-                    print '->', node.id,# path_length,
+                    print '-> %d(%d)' % (node.id, node.f),
             else:
                 print u'Nie znaleziono ścieżki.'
         else:
