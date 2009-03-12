@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-# -*- coding: utf8 -*-
+# -*- coding: UTF-8 -*-
 
 import sys
 
-usage = """\
+usage = u"""\
 Algorytm A*, znajdujący najkrótszą ścieżkę pomiędzy danymi wierzchołkami grafu.
 Użycie: python astar.py PLIK_GRAFU PLIK_HEUREZY WĘZEŁ_POCZĄTKOWY\
 """
@@ -23,7 +23,7 @@ class Node:
         self.previous = None
 
     def cost(self, neighbor):
-        """Zwróć koszt przejścia z tego węzła do podanego sąsiada."""
+        u"""Zwróć koszt przejścia z tego węzła do podanego sąsiada."""
         return self.neighbors[neighbor]
 
     def __cmp__(self, node):
@@ -81,13 +81,13 @@ def read_input():
             wg = graph[node_name]
     h_file.close()
     if w0_name not in graph:
-        print 'Podanego węzła początkowego nie ma w grafie.'
+        print u'Podanego węzła początkowego nie ma w grafie.'
         sys.exit(1)
     w0 = graph[w0_name]
 
 
 def a_star(w0, wg):
-    """Algorytm A*."""
+    u"""Algorytm A*."""
     open_nodes.append(w0)
     w0.g = .0
     w0.f = w0.h
@@ -114,7 +114,7 @@ def a_star(w0, wg):
     return None
 
 def reconstruct_path(node):
-    """Zwróć ścieżkę powstałą w wyniku działania algorytmu A*."""
+    u"""Zwróć ścieżkę powstałą w wyniku działania algorytmu A*."""
     path = []
     while node.previous:
         path.append(node)
@@ -126,13 +126,13 @@ if __name__ == '__main__':
     try:
         if len(sys.argv) > 3:
             read_input()
-            print 'Graf wejściowy:'
+            print u'Graf wejściowy:'
             for node in graph.values():
                 print node
 
             path = a_star(w0, wg)
 
-            print '\nNajkrótsza ścieżka z', w0.name, 'do', wg.name + ':'
+            print u'\nNajkrótsza ścieżka z', w0.name, 'do', wg.name + ':'
             if path is not None:
                 path_length = .0
                 print w0.name, path_length,
@@ -140,10 +140,10 @@ if __name__ == '__main__':
                     path_length += node.previous.cost(node)
                     print '->', node.name, path_length,
             else:
-                print 'Nie znaleziono ścieżki.'
+                print u'Nie znaleziono ścieżki.'
         else:
             print usage
     except IOError:
-        print 'Nie można odnaleźć podanego pliku.'
+        print u'Nie można odnaleźć podanego pliku.'
         sys.exit(1)
 

@@ -1,0 +1,18 @@
+#!/bin/bash
+
+POCZsek="$(date +%s)"
+POCZnano="$(date +%N)"
+
+$PWD/$1
+
+KONsek="$(date +%s)"
+KONnano="$(date +%N)"
+
+echo; echo "CZAS WYKONANIA PROGRAMU $1:"
+
+if  [ $POCZnano -le $KONnano ]
+then  echo "$(($KONsek - $POCZsek)).$(($KONnano - $POCZnano)) sek."
+else  echo "$(($KONsek - $POCZsek - 1)).$(($KONnano + 1000000000 - $POCZnano)) sek."
+fi
+echo
+
