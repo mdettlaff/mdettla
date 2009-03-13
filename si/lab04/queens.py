@@ -12,62 +12,81 @@ Użycie: python """ + sys.argv[0] + """ N\
 
 open_nodes = deque() # węzły do rozwinięcia
 closed_nodes = [] # zbadane węzły
-path = [] # pozycje królowych w kolejnych wierszach szachownicy
+solution = [] # pozycje królowych w kolejnych wierszach szachownicy
+calls = 0 # liczba wywołań funkcji dfs()
+
+
+def queens_solution_dfs(N, w0):
+    u"""Znajdź rozwiązanie dodając kolejno wiersze z jedną królową."""
+    open_nodes.append([w0])
+    if dfs(N):
+        return solution
+    else:
+        return queens_solution_dfs(N, w0 + 1) # dla innej pozycji początkowej
 
 
 def dfs(N):
-    global path
     u"""Algorytm Depth First Search przeszukiwania przestrzeni rozwiązań."""
+    global solution
+    global calls
+    calls += 1
     if not open_nodes:
         return False
     node = best(open_nodes)
     open_nodes.remove(node)
     closed_nodes.append(node)
-    path = list(node)
-    print path
+    solution = node
     for x_pos in range(N):
-        if not is_conflicted(path, x_pos):
-            neighbor = list(path + [x_pos])
+        if not is_conflict(solution, x_pos):
+            neighbor = list(solution + [x_pos])
             if neighbor not in closed_nodes:
                 open_nodes.append(neighbor)
-    if not len(path) < N:
+    if not len(solution) < N:
         return True
     elif dfs(N):
         return True
-    elif path:
-        path.pop()
+    elif solution:
+        solution.pop()
         return dfs(N)
     else:
         return False
 
 
-def is_conflicted(solution, x_pos):
-    """Sprawdź czy po dodaniu królowej w kolumnie x_pos wystąpi szachowanie."""
+def is_conflict(solution, x):
+    u"""Sprawdź czy po dodaniu królowej w kolumnie x wystąpi szachowanie."""
     for i, row in enumerate(solution):
-        if x_pos == row or abs(x_pos - row) == abs(len(solution) - i):
+        if x == row or abs(x - row) == abs(len(solution) - i):
             return True
     return False
 
 
 def best(solutions):
-    """Funkcja oceny: zwraca najlepsze rozwiązanie z podanych."""
-    return solutions[-1]
+    u"""Funkcja oceny: zwróć najlepsze rozwiązanie z podanych."""
+    return solutions[0] # TODO: zwraca pierwsze z brzegu; wymyślić coś lepszego
 
 
-def queens_solution_dfs(N):
-    """Znajduje rozwiązanie dodając kolejno wiersze z jedną królową."""
-    w0 = [0]
-    open_nodes.append(w0)
-    return dfs(N)
+def print_solution(solution):
+    line = '+'
+    for j in range(N):
+        line += '---+'
+    for i in range(N):
+        print line
+        for j in range(N+1):
+            print '|',
+            if j == solution[i]:
+                print 'X',
+            else:
+                print ' ',
+        print
+    print line
 
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
+        sys.setrecursionlimit(20000)
         N = int(sys.argv[1])
-        if queens_solution_dfs(N):
-            print path
-        else:
-            print u'Nie znaleziono rozwiązania.'
+        print_solution(queens_solution_dfs(N, 0))
+        print 'Liczba wywołań:', calls
     else:
         print usage
 
