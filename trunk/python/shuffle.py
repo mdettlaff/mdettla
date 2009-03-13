@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# -*- coding: utf8 -*-
+# -*- coding: UTF-8 -*-
 
 # Program przestawiający losowo litery wewnątrz wyrazów.
 
@@ -7,7 +7,7 @@ import sys
 import random
 
 def str_shuffle(string):
-    'Przestawia losowo litery w podanym napisie.'
+    """Przestawia losowo litery w podanym napisie."""
     str_list = []
     for c in string:
         str_list.append(c)
@@ -22,14 +22,14 @@ if __name__ == '__main__':
         text = []
 
         if len(sys.argv) > 2:
-            print 'Użycie: python shuffle [PLIK]'
+            print 'Użycie: python shuffle.py [PLIK]'
         elif len(sys.argv) == 2:
             file = open(sys.argv[1])
             for line in file:
                 text += unicode(line, 'utf-8').split(' ')
         else:
-            input = raw_input()
-            text += unicode(input, 'utf-8').split(' ')
+            for line in sys.stdin.readlines():
+                text += unicode(line, 'utf-8').split(' ')
 
         for word in text:
             end = -1
