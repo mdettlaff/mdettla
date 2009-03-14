@@ -1,12 +1,5 @@
-Darek Kuziemski:
-nightal14@o2.pl
+Napisać program ustawiający N hetmanów na szachownicy o wymiarach N×N w taki sposób, żeby się nawzajem nie szachowały.
 
-Napisa� program ustawiaj�cy N hetman�w na szachownicy o wymiarach N�N w taki spos�b, �eby si� nawzajem nie szachowa�y.
-
-Algorytm:
-
-Constraint programming is even more effective on this problem. An 'iterative repair' algorithm typically starts with all queens on the board, for example with one queen per column. It then counts the number of conflicts (attacks), and uses a heuristic to determine how to improve the placement of the queens.
-
-The 'minimum-conflicts' heuristic - moving the piece with the largest number of conflicts to the square in the same column where the number of conflicts is smallest - is particularly effective: it solves the 1,000,000 queen problem in less than 50 steps on average. This assumes that the initial configuration is 'reasonably good' - if a million queens all start in the same row, it will obviously take at least 999,999 steps to fix it. A 'reasonably good' starting point can for instance be found by putting each queen in its own row and column such that it conflicts with the smallest number of queens already on the board.
-
-Do otwartych dodaj
+Moje rozwiązanie (w C) jest tutaj:
+http://manta.univ.gda.pl/~stefan/Dydaktyka/SztIntel/lab-03-11/hetmany.c
+Ale ono wykorzystuje kiepską funkcję oceny pozycji, co powoduje, że program działa bardzo wolno. Przyspieszyć jego działanie przez zmianę oceny na sensowniejszą.
