@@ -1,10 +1,12 @@
 Liczby wywołań funkcji dfs(); im mniej tym lepiej.
 
 N
-4	5	6	7	8	9	10	11	12	16
+4    5    6    7    8    9    10   11   12   16
 bez heurystyki (bfs/popleft):
-12	10	57	69	224	806	3140
+12   10   57   69   224  806  3140
 bez heurystyki (dfs/popright):
-11	7	54	23	44	148	96	272	267	959
-z heurystyką:
-12	5	45	10	89	62	74	24	146	737
+11   7    54   23   44   148  96   272  267  959
+z heurystyką (r54):
+12   5    45   10   89   62   74   24   146  737
+z heurystyką (r55):
+12   5    33   7    43   56   62   61   191  168
