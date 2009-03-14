@@ -33,15 +33,17 @@ def dfs(N):
     calls += 1
     if not open_nodes:
         return False
-    node = min(open_nodes) # węzeł o minimalnej heurystyce
-    solution = node[1]
-    open_nodes.remove(node)
+    h_node = min(open_nodes) # tupla: (heurystyka, węzeł o min. heurystyce)
+    solution = h_node[1] # węzeł o minimalnej heurystyce
+    open_nodes.remove(h_node)
     closed_nodes.append(solution)
+    neighbors = []
     for x in range(N): # pozycja następnej królowej, w następnym wierszu
         if is_square_free(x, len(solution), solution):
             neighbor = solution + [x]
             if neighbor not in closed_nodes:
-                open_nodes.append((heuristic(neighbor), neighbor))
+                neighbors.append(neighbor)
+    open_nodes.extend(heuristics(neighbors))
     if not len(solution) < N:
         return True
     elif dfs(N):
@@ -53,29 +55,39 @@ def dfs(N):
         return False
 
 
-def heuristic(solution):
-    u"""Funkcja oceny (heurystyka): oceń podane rozwiązanie.
+def heuristics(solutions):
+    u"""Funkcja oceny (heurystyka): oceń podane rozwiązania.
 
     Naszą heurystyką będzie ilość pól, które nie są zagrożone szachowaniem.
+    Zwraca listę tupli o postaci: (heurystyka rozwiązania, rozwiązanie)
 
     """
-    free_squares = 0
-    for x in range(N):
+    heuristic = [] # pozycje niezaszachowanych pól
+    for i in range(N): # inicjalizacja tablicy [N][len(solution)]
+        heuristic.append([False]*len(solution))
+    init_free = 0
+    for x in range(N): # obliczamy heurystykę wspólną dla wszystkich rozwiązań
         for y in range(len(solution)):
-            if is_square_free(x, y, solution, True):
-                free_squares += 1
-    return free_squares
+            if is_square_free(x, y, solution):
+                heuristic[x][y] = True
+                init_free += 1
+    solutions_with_heuristics = []
+    for s in solutions:
+        free_squares = init_free
+        for x in range(N):
+            for y in range(len(solution)):
+                if heuristic[x][y] and (x == s[-1] or
+                        abs(x-s[-1]) == abs(y-len(solution))):
+                    free_squares -= 1
+        solutions_with_heuristics.append((free_squares, s))
+    return solutions_with_heuristics
 
 
-def is_square_free(x, y, solution, only_diagonally=False):
+def is_square_free(x, y, solution):
     u"""Sprawdź czy podane pole nie jest zagrożone szachowaniem."""
     for i, queen in enumerate(solution):
-        if only_diagonally:
-            if abs(x-queen) == abs(y-i):
-                return False
-        else:
-            if x == queen or abs(x-queen) == abs(y-i):
-                return False
+        if x == queen or abs(x-queen) == abs(y-i):
+            return False
     return True
 
 
