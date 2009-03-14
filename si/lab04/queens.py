@@ -26,7 +26,7 @@ def queens_solution_dfs(N, w0):
 
 
 def dfs(N):
-    u"""Algorytm Depth First Search przeszukiwania przestrzeni rozwiązań."""
+    u"""Algorytm Depth-First Search przeszukiwania przestrzeni rozwiązań."""
     global solution
     global calls
     calls += 1
@@ -36,9 +36,9 @@ def dfs(N):
     open_nodes.remove(node)
     closed_nodes.append(node)
     solution = node
-    for x_pos in range(N):
-        if not is_conflict(solution, x_pos):
-            neighbor = list(solution + [x_pos])
+    for x in range(N):
+        if is_square_free(x, len(solution), solution):
+            neighbor = list(solution + [x])
             if neighbor not in closed_nodes:
                 open_nodes.append(neighbor)
     if not len(solution) < N:
@@ -52,17 +52,36 @@ def dfs(N):
         return False
 
 
-def is_conflict(solution, x):
-    u"""Sprawdź czy po dodaniu królowej w kolumnie x wystąpi szachowanie."""
-    for i, row in enumerate(solution):
-        if x == row or abs(x - row) == abs(len(solution) - i):
-            return True
-    return False
-
-
 def best(solutions):
-    u"""Funkcja oceny: zwróć najlepsze rozwiązanie z podanych."""
-    return solutions[0] # TODO: zwraca pierwsze z brzegu; wymyślić coś lepszego
+    u"""Funkcja oceny (heurystyka): zwróć najlepsze rozwiązanie z podanych.
+
+    Naszą heurystyką będzie ilość pól, które nie są zagrożone szachowaniem.
+
+    """
+    min_free_squares = N*N
+    best_solution = solutions[0]
+    for solution in solutions:
+        free_squares = 0
+        for x in range(N):
+            for y in range(len(solution)):
+                if is_square_free(x, y, solution, True):
+                    free_squares += 1
+        if free_squares < min_free_squares:
+            min_free_squares = free_squares
+            best_solution = solution
+    return best_solution
+
+
+def is_square_free(x, y, solution, only_diagonally=False):
+    u"""Sprawdź czy podane pole jest zagrożone szachowaniem."""
+    for i, queen in enumerate(solution):
+        if only_diagonally:
+            if abs(x-queen) == abs(y-i):
+                return False
+        else:
+            if x == queen or abs(x-queen) == abs(y-i):
+                return False
+    return True
 
 
 def print_solution(solution):
@@ -86,7 +105,7 @@ if __name__ == '__main__':
         sys.setrecursionlimit(20000)
         N = int(sys.argv[1])
         print_solution(queens_solution_dfs(N, 0))
-        print 'Liczba wywołań:', calls
+        print u'Liczba wywołań:', calls
     else:
         print usage
 
