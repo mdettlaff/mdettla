@@ -1,0 +1,8 @@
+N
+4	5	6	7	8	9	10	11	12
+bez heurystyki (bfs/leftpop):
+12	10	57	69	224	806	3140
+bez heurystyki (dfs/rightpop):
+11	7	54	23	44	148	96	272	267
+z heurystyką:
+12	5	48	10	43	55	107	50	531
