@@ -2,15 +2,16 @@
 # -*- coding: UTF-8 -*-
 
 import sys
-from collections import deque
 
 
 usage = u"""\
-Rozwiązuje problem N królowych dla szachownicy NxN.
+Rozwiązuje problem N królowych dla szachownicy NxN przy pomocy algorytmu
+Depth-First Search z heurystyką.
 Użycie: python """ + sys.argv[0] + """ N\
 """
 
-open_nodes = deque() # węzły do rozwinięcia
+# węzłami są rozwiązania (ustawienia królowych na szachownicy)
+open_nodes = [] # tuple: (heurystyka węzła, węzeł do rozwinięcia)
 closed_nodes = [] # zbadane węzły
 solution = [] # pozycje królowych w kolejnych wierszach szachownicy
 calls = 0 # liczba wywołań funkcji dfs()
@@ -18,11 +19,11 @@ calls = 0 # liczba wywołań funkcji dfs()
 
 def queens_solution_dfs(N, w0):
     u"""Znajdź rozwiązanie dodając kolejno wiersze z jedną królową."""
-    open_nodes.append([w0])
+    open_nodes.append((0, [w0]))
     if dfs(N):
         return solution
     else:
-        return queens_solution_dfs(N, w0 + 1) # dla innej pozycji początkowej
+        return queens_solution_dfs(N, w0+1) # dla innej pozycji początkowej
 
 
 def dfs(N):
@@ -32,15 +33,15 @@ def dfs(N):
     calls += 1
     if not open_nodes:
         return False
-    node = best(open_nodes)
+    node = min(open_nodes) # węzeł o minimalnej heurystyce
+    solution = node[1]
     open_nodes.remove(node)
-    closed_nodes.append(node)
-    solution = node
-    for x in range(N):
+    closed_nodes.append(solution)
+    for x in range(N): # pozycja następnej królowej, w następnym wierszu
         if is_square_free(x, len(solution), solution):
-            neighbor = list(solution + [x])
+            neighbor = solution + [x]
             if neighbor not in closed_nodes:
-                open_nodes.append(neighbor)
+                open_nodes.append((heuristic(neighbor), neighbor))
     if not len(solution) < N:
         return True
     elif dfs(N):
@@ -52,28 +53,22 @@ def dfs(N):
         return False
 
 
-def best(solutions):
-    u"""Funkcja oceny (heurystyka): zwróć najlepsze rozwiązanie z podanych.
+def heuristic(solution):
+    u"""Funkcja oceny (heurystyka): oceń podane rozwiązanie.
 
     Naszą heurystyką będzie ilość pól, które nie są zagrożone szachowaniem.
 
     """
-    min_free_squares = N*N
-    best_solution = solutions[0]
-    for solution in solutions:
-        free_squares = 0
-        for x in range(N):
-            for y in range(len(solution)):
-                if is_square_free(x, y, solution, True):
-                    free_squares += 1
-        if free_squares < min_free_squares:
-            min_free_squares = free_squares
-            best_solution = solution
-    return best_solution
+    free_squares = 0
+    for x in range(N):
+        for y in range(len(solution)):
+            if is_square_free(x, y, solution, True):
+                free_squares += 1
+    return free_squares
 
 
 def is_square_free(x, y, solution, only_diagonally=False):
-    u"""Sprawdź czy podane pole jest zagrożone szachowaniem."""
+    u"""Sprawdź czy podane pole nie jest zagrożone szachowaniem."""
     for i, queen in enumerate(solution):
         if only_diagonally:
             if abs(x-queen) == abs(y-i):
@@ -101,11 +96,14 @@ def print_solution(solution):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        sys.setrecursionlimit(20000)
-        N = int(sys.argv[1])
-        print_solution(queens_solution_dfs(N, 0))
-        print u'Liczba wywołań:', calls
-    else:
-        print usage
+    try:
+        if len(sys.argv) > 1:
+            sys.setrecursionlimit(20000)
+            N = int(sys.argv[1])
+            print_solution(queens_solution_dfs(N, 0))
+            print u'Liczba wywołań:', calls
+        else:
+            print usage
+    except ValueError:
+        print u'Błąd: parametr musi być liczbą całkowitą.'
 
