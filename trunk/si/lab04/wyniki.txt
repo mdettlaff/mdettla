@@ -10,3 +10,9 @@ z heurystyką (r54):
 12   5    45   10   89   62   74   24   146  737
 z heurystyką (r55):
 12   5    33   7    43   56   62   61   191  168
+
+Najlepszy wynik:
+r57
+Liczba wywołań: 1987
+CZAS WYKONANIA PROGRAMU queens.py 31:
+34.144776405 sek.
