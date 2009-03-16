@@ -64,10 +64,10 @@ def heuristics(solutions):
     """
     heuristic = [] # pozycje niezaszachowanych pól
     for i in range(N): # inicjalizacja tablicy [N][len(solution)]
-        heuristic.append([False]*len(solution))
+        heuristic.append([False]*N)
     init_free = 0
     for x in range(N): # obliczamy heurystykę wspólną dla wszystkich rozwiązań
-        for y in range(len(solution)):
+        for y in range(N):
             if is_square_free(x, y, solution):
                 heuristic[x][y] = True
                 init_free += 1
@@ -75,7 +75,7 @@ def heuristics(solutions):
     for s in solutions:
         free_squares = init_free
         for x in range(N):
-            for y in range(len(solution)):
+            for y in range(N):
                 if heuristic[x][y] and (x == s[-1] or
                         abs(x-s[-1]) == abs(y-len(solution))):
                     free_squares -= 1
