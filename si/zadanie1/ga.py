@@ -62,9 +62,7 @@ class Maze:
     u"""Labirynt ze zdefiniowanym wejściem oraz wyjściem."""
     def __init__(self, filename):
         u"""Utwórz nowy labirynt na podstawie danych z pliku."""
-        self.squares = [] # zawartości pól labiryntu na pozycjach [y][x]
-        self.start_pos = None # tupla z pozycją startową w labyryncie: (y, x)
-        self.end_pos = None # tupla z pozycją końcową w labyryncie: (y, x)
+        self.squares = [] # pola labiryntu o współrzędnych [y][x]
 
         f = open(filename)
         for y, line in enumerate(f.readlines()):
@@ -74,13 +72,15 @@ class Maze:
                     row.append(0)
                 elif c == 'S':
                     row.append(2)
-                    self.start_pos = (y, x)
+                    self.start_pos = Coords(x, y) # pozycja początkowa
                 elif c == 'E':
                     row.append(4)
-                    self.end_pos = (y, x)
+                    self.end_pos = Coords(x, y) # pozycja końcowa
                 elif c != '\n':
                     row.append(1)
             self.squares.append(row)
+        self.width = len(self.squares[0])
+        self.height = len(self.squares)
 
     def print_maze(self):
         for row in self.squares:
@@ -96,19 +96,69 @@ class Maze:
                     row_str += 'E'
             print row_str
 
+    def move(self, pos, direction):
+        u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
+        
+        pos - nasza aktualna pozycja
+        direction - kierunek w jakim chcemy przejść ('left', 'right', 'up' lub
+        'down')
+        Jeśli droga jest zablokowana, zwróć aktualną pozycję.
+        
+        """
+        if direction == 'left':
+            if pos.x > 0 and self.squares[pos.y][pos.x - 1] != 1:
+                return Coords(pos.x - 1, pos.y)
+            else:
+                return pos
+        elif direction == 'right':
+            if pos.x < self.width - 1 and self.squares[pos.y][pos.x + 1] != 1:
+                return Coords(pos.x + 1, pos.y)
+            else:
+                return pos
+        elif direction == 'up':
+            if pos.y > 0 and self.squares[pos.y - 1][pos.x] != 1:
+                return Coords(pos.x, pos.y - 1)
+            else:
+                return pos
+        elif direction == 'down':
+            if pos.y < self.height - 1 and self.squares[pos.y + 1][pos.x] != 1:
+                return Coords(pos.x, pos.y + 1)
+            else:
+                return pos
+
+
+class Coords:
+    u"""Przechowuje współrzędne (x, y)."""
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __str__(self):
+        return '(' + str(self.x) + ', ' + str(self.y) + ')'
+
 
 def fitness(specimen, maze):
     u"""Zwróć ocenę przystosowania danego osobnika w danym labiryncie."""
+    # pozycja w jakiej znajdzie się osobnik po wykonaniu ruchów z genotypu
+    pos = maze.start_pos
     for i in range(0, len(specimen.genotype)-1, 2):
         if specimen.genotype[i] == 0 and specimen.genotype[i+1] == 0:
-            print 'left'
+            pos = maze.move(pos, 'left')
         if specimen.genotype[i] == 0 and specimen.genotype[i+1] == 1:
-            print 'right'
+            pos = maze.move(pos, 'right')
         if specimen.genotype[i] == 1 and specimen.genotype[i+1] == 0:
-            print 'up'
+            pos = maze.move(pos, 'up')
         if specimen.genotype[i] == 1 and specimen.genotype[i+1] == 1:
-            print 'down'
-    return .0
+            pos = maze.move(pos, 'down')
+        if pos == maze.end_pos:
+            break
+    print u'Przeszliśmy do:', pos
+    return 1.0 / (manhattan(pos, maze.end_pos) + 1)
+
+
+def manhattan(pos1, pos2):
+    u"""Odległość Manhattan między dwoma współrzędnymi."""
+    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
 
 
 if __name__ == '__main__':
@@ -124,10 +174,12 @@ if __name__ == '__main__':
             maze.print_maze()
             print maze.start_pos
             print maze.end_pos
+            print maze.width
+            print maze.height
             for specimen in population:
                 print specimen
-            print 'Potomek:'
-            s = Specimen((population[0], population[1]), p_c, p_m)
+            print u'Potomek dwóch ostatnich:'
+            s = Specimen((population[-1], population[-2]), p_c, p_m)
             print s
             print 'Przystosowanie:', fitness(s, maze)
         else:
