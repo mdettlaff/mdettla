@@ -15,19 +15,31 @@ l = 8 # rozmiar chromosomu
 p_c = .7 # prawdopodobieństwo krzyżowania
 p_m = .7 # prawdopodobieństwo mutacji
 
-population = [] # lista osobników (instancji klasy Specimen)
+old_population = [] # lista osobników (instancji klasy Specimen)
+new_population = [] # lista osobników (instancji klasy Specimen)
+best = [] # najlepsze osobniki w kolejnych populacjach
 
 
 class Specimen:
     u"""Osobnik o określonym genotypie należący do populacji."""
 
-    def __init__(self, parents=None, p_c=0, p_m=0, genotype_len=0):
-        u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie)."""
+    def __init__(self, fit_func, parents=None, p_c=.7, p_m=0, genotype_len=10):
+        u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
+        
+        fit_func - funkcja obliczająca przystosowanie osobnika
+        parents - rodzice osobnika, z których skrzyżowania powstanie; jeśli nie
+        podano rodziców, tworzony jest osobnik z losowym genotypem
+        p_c - prawdopodobieństwo krzyżowania
+        p_m - prawdopodobieństwo mutacji
+        genotype_len - długość genotypu (jeśli tworzymy losowego osobnika)
+        
+        """
         self.genotype = []
         if parents:
             self.__new_descendant(list(parents), p_c, p_m)
         else:
             self.__new_random_instance(genotype_len)
+        self.fitness = fit_func(self)
 
     def __new_random_instance(self, genotype_len):
         u"""Utwórz nowego osobnika z losowo utworzonym genotypem."""
@@ -42,14 +54,15 @@ class Specimen:
         if (random.random() < p_c):
             # przeprowadzamy krzyżowanie jednopunktowe
             cut_index = random.randint(1, len(self.genotype)-1)
-            print u'krzyżowanie na pozycji:', cut_index
             self.genotype = parents[0].genotype[:cut_index] + \
                     parents[1].genotype[cut_index:]
         # mutacja
         if (random.random() < p_m):
             mut_index = random.randint(0, len(self.genotype)-1)
-            print 'mutacja na pozycji:', mut_index
             self.genotype[mut_index] = 1 - self.genotype[mut_index]
+
+    def __cmp__(self, other):
+        return cmp(self.fitness, other.fitness)
 
     def __str__(self):
         genotype_str = ''
@@ -133,11 +146,14 @@ class Coords:
         self.x = x
         self.y = y
 
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
     def __str__(self):
         return '(' + str(self.x) + ', ' + str(self.y) + ')'
 
 
-def fitness(specimen, maze):
+def fitness(specimen):
     u"""Zwróć ocenę przystosowania danego osobnika w danym labiryncie."""
     # pozycja w jakiej znajdzie się osobnik po wykonaniu ruchów z genotypu
     pos = maze.start_pos
@@ -152,13 +168,8 @@ def fitness(specimen, maze):
             pos = maze.move(pos, 'down')
         if pos == maze.end_pos:
             break
-    print u'Przeszliśmy do:', pos
+    manhattan = lambda pos1, pos2: abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
     return 1.0 / (manhattan(pos, maze.end_pos) + 1)
-
-
-def manhattan(pos1, pos2):
-    u"""Odległość Manhattan między dwoma współrzędnymi."""
-    return abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
 
 
 if __name__ == '__main__':
@@ -168,20 +179,20 @@ if __name__ == '__main__':
 
             # tworzymy początkową populację
             for i in range(m):
-                population.append(Specimen(genotype_len=l))
+                old_population.append(Specimen(fitness, genotype_len=l))
 
             # informacje do debugowania
+            population = old_population
             maze.print_maze()
-            print maze.start_pos
-            print maze.end_pos
-            print maze.width
-            print maze.height
             for specimen in population:
                 print specimen
-            print u'Potomek dwóch ostatnich:'
-            s = Specimen((population[-1], population[-2]), p_c, p_m)
+            print u'Potomek dwóch ostatnich:',
+            s = Specimen(fitness, (population[-1], population[-2]), p_c, p_m)
             print s
-            print 'Przystosowanie:', fitness(s, maze)
+            print 'Przystosowanie:', s.fitness
+            best.append(max(population))
+            print 'Najlepszy osobnik:', best[0]
+            print 'Przystosowanie:', best[0].fitness
         else:
             print usage
     except IOError:
