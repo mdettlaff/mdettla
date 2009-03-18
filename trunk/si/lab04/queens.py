@@ -7,7 +7,7 @@ import sys
 usage = u"""\
 Rozwiązuje problem N królowych dla szachownicy NxN przy pomocy algorytmu
 Depth-First Search z heurystyką.
-Użycie: python """ + sys.argv[0] + """ N\
+Użycie: python queens.py N\
 """
 
 # węzłami są rozwiązania (ustawienia królowych na szachownicy)
