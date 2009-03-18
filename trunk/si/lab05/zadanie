@@ -1,0 +1,20 @@
+P =/= NP
+
+Problem nalezacy do NP i do NP-zupelnych:
+Spelnialnosc formuly: czy istnieje prawdziwe wartosciowanie formuly, np.
+((pV~q)=>r) <=> s&r&~q
+
+Algorytm GSat
+
+Na wejsciu algorytm chce miec koniunkcje alternatyw atomow (koniunkcyjna postac
+normalna)
+Atom jest to p albo ~p
+
+Prawa rachunku zdan:
+(p&q)Vr => (pVr)&(qVr)
+pV(q&r) => (pVq)&(pVr)
+
+Heureza:
+Losujemy sobie wartosciowanie i sprawdzamy ile alternatyw jest spelnionych
+Ocena wartosciowania: ile spelnionych alternatyw w nawiasach
+W kazdej alternatywie jest tylko p lub ~p (bez powtorzen)

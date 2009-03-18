@@ -7,7 +7,7 @@ import random
 
 usage = u"""\
 Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.
-Użycie: python """ + sys.argv[0] + """ PLIK_Z_LABIRYNTEM\
+Użycie: python ga.py PLIK_Z_LABIRYNTEM\
 """
 
 m = 15 # rozmiar populacji
