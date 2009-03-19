@@ -227,7 +227,7 @@ def epoch(pop_size, g_len, p_c, p_m, target_fitness, selection, select_arg):
     u"""Jeden przebieg algorytmu genetycznego.
 
     pop_size - rozmiar populacji
-    gen_len - długość genotypu osobnika
+    g_len - długość genotypu osobnika
     p_c - prawdopodobieństwo krzyżowania
     p_m - prawdopodobieństwo mutacji
     target_fitness - wartość przystosowania jaką chcemy osiągnąć
