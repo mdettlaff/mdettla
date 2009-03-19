@@ -142,23 +142,16 @@ class Maze:
         if direction == 'left':
             if pos.x > 0 and self.squares[pos.y][pos.x - 1] != 1:
                 return Coords(pos.x - 1, pos.y)
-            else:
-                return pos
         elif direction == 'right':
             if pos.x < self.width - 1 and self.squares[pos.y][pos.x + 1] != 1:
                 return Coords(pos.x + 1, pos.y)
-            else:
-                return pos
         elif direction == 'up':
             if pos.y > 0 and self.squares[pos.y - 1][pos.x] != 1:
                 return Coords(pos.x, pos.y - 1)
-            else:
-                return pos
         elif direction == 'down':
             if pos.y < self.height - 1 and self.squares[pos.y + 1][pos.x] != 1:
                 return Coords(pos.x, pos.y + 1)
-            else:
-                return pos
+        return pos
 
     def mark_solution(self, specimen):
         u"""Zaznacz w labiryncie drogę jaką przejdzie dany osobnik."""
