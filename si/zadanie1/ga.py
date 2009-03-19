@@ -2,12 +2,16 @@
 # -*- coding: UTF-8 -*-
 
 import sys
+import getopt
 import random
 
 
 usage = u"""\
 Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.
-Użycie: python ga.py PLIK_Z_LABIRYNTEM\
+Użycie: python ga.py [opcje] PLIK_Z_LABIRYNTEM [LICZBA_EPOK]
+Opcje:
+        -t k  Selekcja turniejowa o rozmiarze turnieju k.
+        -s m  Ustaw rozmiar populacji na m osobników.\
 """
 
 m = 150 # rozmiar populacji
@@ -18,7 +22,6 @@ p_m = .7 # prawdopodobieństwo mutacji
 
 class Specimen:
     u"""Osobnik o określonym genotypie należący do populacji."""
-
     def __init__(self, fit_func, parents=None, p_c=.7, p_m=0, genotype_len=10):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
 
@@ -57,6 +60,27 @@ class Specimen:
             mut_index = random.randint(0, len(self.genotype)-1)
             self.genotype[mut_index] = 1 - self.genotype[mut_index]
 
+    def phenotype(self):
+        u"""Zwróć listę ruchów reprezentowanych przez genotyp osobnika.
+
+        Dwa geny to jeden ruch. Możliwe ruchy: 'left', 'right', 'up', 'down'.
+
+        """
+        phenotype = []
+        for i in range(0, len(self.genotype)-1, 2):
+            if self.genotype[i] == 0 and self.genotype[i+1] == 0:
+                phenotype.append('left')
+            if self.genotype[i] == 0 and self.genotype[i+1] == 1:
+                phenotype.append('right')
+            if self.genotype[i] == 1 and self.genotype[i+1] == 0:
+                phenotype.append('up')
+            if self.genotype[i] == 1 and self.genotype[i+1] == 1:
+                phenotype.append('down')
+        return phenotype
+
+    def __eq__(self, other):
+        return self.genotype == other.genotype
+
     def __cmp__(self, other):
         return cmp(self.fitness, other.fitness)
 
@@ -72,13 +96,12 @@ class Maze:
     def __init__(self, filename):
         u"""Utwórz nowy labirynt na podstawie danych z pliku."""
         self.squares = [] # pola labiryntu o współrzędnych [y][x]
-
         f = open(filename)
         for y, line in enumerate(f.readlines()):
             row = []
             for x, c in enumerate(line):
                 if c == ' ':
-                    row.append(0)
+                    row.append(0) # wolne pole
                 elif c == 'S':
                     row.append(2)
                     self.start_pos = Coords(x, y) # pozycja początkowa
@@ -86,7 +109,7 @@ class Maze:
                     row.append(4)
                     self.end_pos = Coords(x, y) # pozycja końcowa
                 elif c != '\n':
-                    row.append(1)
+                    row.append(1) # zajęte pole
             self.squares.append(row)
         self.width = len(self.squares[0])
         self.height = len(self.squares)
@@ -101,6 +124,8 @@ class Maze:
                     row_str += '#'
                 if square == 2:
                     row_str += 'S'
+                if square == 3:
+                    row_str += '@' # rozwiązanie
                 if square == 4:
                     row_str += 'E'
             print row_str
@@ -135,6 +160,15 @@ class Maze:
             else:
                 return pos
 
+    def mark_solution(self, specimen):
+        u"""Zaznacz w labiryncie drogę jaką przejdzie dany osobnik."""
+        position = self.start_pos
+        for move in specimen.phenotype():
+            position = maze.move(position, move)
+            if position == maze.end_pos:
+                break
+            self.squares[position.y][position.x] = 3
+
 
 class Coords:
     u"""Przechowuje współrzędne (x, y)."""
@@ -152,23 +186,16 @@ class Coords:
 def fitness(specimen):
     u"""Zwróć ocenę przystosowania danego osobnika w danym labiryncie."""
     # pozycja w jakiej znajdzie się osobnik po wykonaniu ruchów z genotypu
-    pos = maze.start_pos
-    for i in range(0, len(specimen.genotype)-1, 2):
-        if specimen.genotype[i] == 0 and specimen.genotype[i+1] == 0:
-            pos = maze.move(pos, 'left')
-        if specimen.genotype[i] == 0 and specimen.genotype[i+1] == 1:
-            pos = maze.move(pos, 'right')
-        if specimen.genotype[i] == 1 and specimen.genotype[i+1] == 0:
-            pos = maze.move(pos, 'up')
-        if specimen.genotype[i] == 1 and specimen.genotype[i+1] == 1:
-            pos = maze.move(pos, 'down')
-        if pos == maze.end_pos:
+    position = maze.start_pos
+    for move in specimen.phenotype():
+        position = maze.move(position, move)
+        if position == maze.end_pos:
             break
     manhattan = lambda pos1, pos2: abs(pos1.x - pos2.x) + abs(pos1.y - pos2.y)
-    return 1.0 / (manhattan(pos, maze.end_pos) + 1)
+    return 1.0 / (manhattan(position, maze.end_pos) + 1)
 
 
-def select_proportional(population):
+def select_proportional(population, *args):
     u"""Selekcja proporcjonalna.
 
     Wylosuj i zwróć osobnika z populacji z prawdopodobieństwem proporcjonalnym
@@ -187,11 +214,29 @@ def select_proportional(population):
     return specimen
 
 
-def epoch(selection, max_fitness):
+def select_tournament(population, k):
+    u"""Selekcja turniejowa.
+
+    Losuj bez powtórzeń k osobników i zwróć najlepiej przystosowanego.
+
+    """
+    p = list(population)
+    candidates = []
+    for i in range(k):
+        specimen = random.choice(p)
+        p.remove(specimen)
+        candidates.append(specimen)
+    del p
+    return max(candidates)
+
+
+def epoch(target_fitness, selection, select_arg):
     u"""Jeden przebieg algorytmu genetycznego, aż do znalezienia rozwiązania.
 
+    target_fitness - wartość przystosowania jaką chcemy osiągnąć
     selection - funkcja selekcji, do wybierania rodziców z populacji
-    Zwróć tuplę: (liczba iteracji, najlepsze osobniki w kolejnych populacjach).
+    select_arg - argument przekazany do funkcji selekcji
+    Zwraca listę najlepszych osobników w kolejnych populacjach.
 
     """
     population = [] # lista osobników (instancji klasy Specimen)
@@ -200,39 +245,64 @@ def epoch(selection, max_fitness):
     for i in range(m):
         population.append(Specimen(fitness, genotype_len=l))
     best.append(max(population))
-    iterations = 1 # uznajmy utworzenie populacji początkowej za jedną iterację
-    while best[-1].fitness < max_fitness:
+    while best[-1].fitness < target_fitness:
         new_population = []
         for i in range(len(population)):
-            parent1 = selection(population)
-            parent2 = selection(population)
+            parent1 = selection(population, select_arg)
+            parent2 = selection(population, select_arg)
             offspring = Specimen(fitness, (parent1, parent2), p_c, p_m)
             new_population.append(offspring)
         population = new_population
         best.append(max(population))
-        iterations += 1
-    return (iterations, best)
+    return best
 
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) > 1:
-            maze = Maze(sys.argv[1])
+        options, args = getopt.getopt(sys.argv[1:], 'm:t:', ['help'])
+        if len(args) > 0:
+            maze = Maze(args[0]) # wczytujemy labirynt z pliku
+            selection = select_proportional # domyślna funkcja selekcji
+            select_arg = None # argument przekazywany funkcji selekcji
+            for option, argument in options:
+                if option == '-t':
+                    selection = select_tournament
+                    select_arg = int(argument)
+                elif option == '-m':
+                    m = int(argument)
 
-            for i in range(5):
-                results = epoch(select_proportional, 1.0)
-                print 'Epoka', i+1
-                print 'Liczba iteracji:', results[0]
-                print 'Najlepsze przystosowania w kolejnych populacjach:'
-                for best_in_population in results[1]:
-                    print '%.2f' % (best_in_population.fitness),
-                print '\nRozwiązanie:'
-                print results[1][-1], '\n'
+            if len(args) > 1 and int(args[1]) > 1: # wiele epok
+                epoch_count = int(args[1])
+                iterations = [] # liczba iteracji w kolejnych epokach
+                print 'Liczba iteracji (pokoleń) dla kolejnych epok:'
+                for i in range(epoch_count):
+                    results = epoch(1.0, selection, select_arg)
+                    iterations.append(len(results))
+                    print '%d\t%d' % (i+1, iterations[-1])
+                print 'Uśredniona liczba iteracji:'
+                average = float(sum(iterations)) / len(iterations)
+                print '%.1f' % (average)
 
-            # informacje do debugowania
-            maze.print_maze()
+            else: # jedna epoka
+                results = epoch(1.0, selection, select_arg)
+
+                print 'Najlepsze przystosowanie w kolejnych populacjach:'
+                for i, best_in_population in enumerate(results):
+                    print '%d\t%.2f' % (i+1, best_in_population.fitness)
+                print 'Rozwiązanie:'
+                maze.mark_solution(results[-1])
+                maze.print_maze()
+
         else:
             print usage
     except IOError:
-        print u'Błąd: nie można odczytać pliku', sys.argv[1]
+        print u'Błąd: nie można odczytać pliku', args[0]
+        sys.exit(1)
+    except ValueError:
+        print u'Błąd: liczba epok musi być liczbą całkowitą'
+        sys.exit(2)
+    except getopt.GetoptError, err:
+        print str(err)
+        print usage
+        sys.exit(2)
 
