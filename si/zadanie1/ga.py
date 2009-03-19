@@ -134,7 +134,7 @@ class Maze:
         u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
 
         pos - nasza aktualna pozycja
-        direction - kierunek w jakim chcemy przejść ('left', 'right', 'up' lub
+        direction - kierunek w jakim chcemy iść ('left', 'right', 'up' lub
         'down')
         Jeśli droga jest zablokowana, zwróć aktualną pozycję.
 
@@ -184,7 +184,7 @@ class Coords:
 
 
 def fitness(specimen):
-    u"""Zwróć ocenę przystosowania danego osobnika w danym labiryncie."""
+    u"""Zwróć ocenę przystosowania danego osobnika w labiryncie."""
     # pozycja w jakiej znajdzie się osobnik po wykonaniu ruchów z genotypu
     position = maze.start_pos
     for move in specimen.phenotype():
@@ -230,9 +230,13 @@ def select_tournament(population, k):
     return max(candidates)
 
 
-def epoch(target_fitness, selection, select_arg):
-    u"""Jeden przebieg algorytmu genetycznego, aż do znalezienia rozwiązania.
+def epoch(pop_size, g_len, p_c, p_m, target_fitness, selection, select_arg):
+    u"""Jeden przebieg algorytmu genetycznego.
 
+    pop_size - rozmiar populacji
+    gen_len - długość genotypu osobnika
+    p_c - prawdopodobieństwo krzyżowania
+    p_m - prawdopodobieństwo mutacji
     target_fitness - wartość przystosowania jaką chcemy osiągnąć
     selection - funkcja selekcji, do wybierania rodziców z populacji
     select_arg - argument przekazany do funkcji selekcji
@@ -242,8 +246,8 @@ def epoch(target_fitness, selection, select_arg):
     population = [] # lista osobników (instancji klasy Specimen)
     best = [] # najlepsze osobniki w kolejnych populacjach
     # tworzymy początkową populację złożoną z osobników o losowym genotypie
-    for i in range(m):
-        population.append(Specimen(fitness, genotype_len=l))
+    for i in range(pop_size):
+        population.append(Specimen(fitness, genotype_len=g_len))
     best.append(max(population))
     while best[-1].fitness < target_fitness:
         new_population = []
@@ -259,7 +263,7 @@ def epoch(target_fitness, selection, select_arg):
 
 if __name__ == '__main__':
     try:
-        options, args = getopt.getopt(sys.argv[1:], 'm:t:', ['help'])
+        options, args = getopt.getopt(sys.argv[1:], 's:t:', ['help'])
         if len(args) > 0:
             maze = Maze(args[0]) # wczytujemy labirynt z pliku
             selection = select_proportional # domyślna funkcja selekcji
@@ -268,7 +272,7 @@ if __name__ == '__main__':
                 if option == '-t':
                     selection = select_tournament
                     select_arg = int(argument)
-                elif option == '-m':
+                elif option == '-s':
                     m = int(argument)
 
             if len(args) > 1 and int(args[1]) > 1: # wiele epok
@@ -276,7 +280,7 @@ if __name__ == '__main__':
                 iterations = [] # liczba iteracji w kolejnych epokach
                 print 'Liczba iteracji (pokoleń) dla kolejnych epok:'
                 for i in range(epoch_count):
-                    results = epoch(1.0, selection, select_arg)
+                    results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
                     iterations.append(len(results))
                     print '%d\t%d' % (i+1, iterations[-1])
                 print 'Uśredniona liczba iteracji:'
@@ -284,7 +288,7 @@ if __name__ == '__main__':
                 print '%.1f' % (average)
 
             else: # jedna epoka
-                results = epoch(1.0, selection, select_arg)
+                results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
 
                 print 'Najlepsze przystosowanie w kolejnych populacjach:'
                 for i, best_in_population in enumerate(results):
@@ -299,7 +303,7 @@ if __name__ == '__main__':
         print u'Błąd: nie można odczytać pliku', args[0]
         sys.exit(1)
     except ValueError:
-        print u'Błąd: liczba epok musi być liczbą całkowitą'
+        print u'Błąd: należy podać liczbę całkowitą'
         sys.exit(2)
     except getopt.GetoptError, err:
         print str(err)
