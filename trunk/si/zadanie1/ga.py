@@ -10,14 +10,10 @@ Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.
 Użycie: python ga.py PLIK_Z_LABIRYNTEM\
 """
 
-m = 15 # rozmiar populacji
-l = 8 # rozmiar chromosomu
+m = 150 # rozmiar populacji
+l = 70 # rozmiar chromosomu
 p_c = .7 # prawdopodobieństwo krzyżowania
 p_m = .7 # prawdopodobieństwo mutacji
-
-old_population = [] # lista osobników (instancji klasy Specimen)
-new_population = [] # lista osobników (instancji klasy Specimen)
-best = [] # najlepsze osobniki w kolejnych populacjach
 
 
 class Specimen:
@@ -25,14 +21,14 @@ class Specimen:
 
     def __init__(self, fit_func, parents=None, p_c=.7, p_m=0, genotype_len=10):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
-        
+
         fit_func - funkcja obliczająca przystosowanie osobnika
         parents - rodzice osobnika, z których skrzyżowania powstanie; jeśli nie
         podano rodziców, tworzony jest osobnik z losowym genotypem
         p_c - prawdopodobieństwo krzyżowania
         p_m - prawdopodobieństwo mutacji
         genotype_len - długość genotypu (jeśli tworzymy losowego osobnika)
-        
+
         """
         self.genotype = []
         if parents:
@@ -49,8 +45,8 @@ class Specimen:
     def __new_descendant(self, parents, p_c, p_m):
         u"""Utwórz osobnika będącego potomkiem podanych rodziców."""
         random.shuffle(parents)
-        self.genotype = parents[0].genotype
-        # krzyzowanie
+        self.genotype = list(parents[0].genotype)
+        # krzyżowanie
         if (random.random() < p_c):
             # przeprowadzamy krzyżowanie jednopunktowe
             cut_index = random.randint(1, len(self.genotype)-1)
@@ -111,12 +107,12 @@ class Maze:
 
     def move(self, pos, direction):
         u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
-        
+
         pos - nasza aktualna pozycja
         direction - kierunek w jakim chcemy przejść ('left', 'right', 'up' lub
         'down')
         Jeśli droga jest zablokowana, zwróć aktualną pozycję.
-        
+
         """
         if direction == 'left':
             if pos.x > 0 and self.squares[pos.y][pos.x - 1] != 1:
@@ -172,27 +168,69 @@ def fitness(specimen):
     return 1.0 / (manhattan(pos, maze.end_pos) + 1)
 
 
+def select_proportional(population):
+    u"""Selekcja proporcjonalna.
+
+    Wylosuj i zwróć osobnika z populacji z prawdopodobieństwem proporcjonalnym
+    do jego przystosowania.
+
+    """
+    total_fitness = 0
+    for specimen in population:
+        total_fitness += specimen.fitness
+    r = random.random() * total_fitness
+    sum_fitness = 0
+    for specimen in population:
+        sum_fitness += specimen.fitness
+        if sum_fitness > r:
+            break
+    return specimen
+
+
+def epoch(selection, max_fitness):
+    u"""Jeden przebieg algorytmu genetycznego, aż do znalezienia rozwiązania.
+
+    selection - funkcja selekcji, do wybierania rodziców z populacji
+    Zwróć tuplę: (liczba iteracji, najlepsze osobniki w kolejnych populacjach).
+
+    """
+    population = [] # lista osobników (instancji klasy Specimen)
+    best = [] # najlepsze osobniki w kolejnych populacjach
+    # tworzymy początkową populację złożoną z osobników o losowym genotypie
+    for i in range(m):
+        population.append(Specimen(fitness, genotype_len=l))
+    best.append(max(population))
+    iterations = 1 # uznajmy utworzenie populacji początkowej za jedną iterację
+    while best[-1].fitness < max_fitness:
+        new_population = []
+        for i in range(len(population)):
+            parent1 = selection(population)
+            parent2 = selection(population)
+            offspring = Specimen(fitness, (parent1, parent2), p_c, p_m)
+            new_population.append(offspring)
+        population = new_population
+        best.append(max(population))
+        iterations += 1
+    return (iterations, best)
+
+
 if __name__ == '__main__':
     try:
         if len(sys.argv) > 1:
             maze = Maze(sys.argv[1])
 
-            # tworzymy początkową populację
-            for i in range(m):
-                old_population.append(Specimen(fitness, genotype_len=l))
+            for i in range(5):
+                results = epoch(select_proportional, 1.0)
+                print 'Epoka', i+1
+                print 'Liczba iteracji:', results[0]
+                print 'Najlepsze przystosowania w kolejnych populacjach:'
+                for best_in_population in results[1]:
+                    print '%.2f' % (best_in_population.fitness),
+                print '\nRozwiązanie:'
+                print results[1][-1], '\n'
 
             # informacje do debugowania
-            population = old_population
             maze.print_maze()
-            for specimen in population:
-                print specimen
-            print u'Potomek dwóch ostatnich:',
-            s = Specimen(fitness, (population[-1], population[-2]), p_c, p_m)
-            print s
-            print 'Przystosowanie:', s.fitness
-            best.append(max(population))
-            print 'Najlepszy osobnik:', best[0]
-            print 'Przystosowanie:', best[0].fitness
         else:
             print usage
     except IOError:
