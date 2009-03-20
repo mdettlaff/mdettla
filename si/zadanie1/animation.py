@@ -55,12 +55,13 @@ class Maze(QtGui.QFrame):
     def paintEvent(self, event):
         painter = QtGui.QPainter(self)
         black = QtGui.QColor(0x000000)
+        white = QtGui.QColor(0xFFFFFF)
         grey = QtGui.QColor(0x808080)
         red = QtGui.QColor(0xCC0000)
         green = QtGui.QColor(0x00CC00)
         blue = QtGui.QColor(0x0000FF)
 
-        self.drawMaze(painter, black, green, red)
+        self.drawMaze(painter, white, black, green, red)
         self.drawSolution(painter, grey, blue)
 
     def timerEvent(self, event):
@@ -76,8 +77,11 @@ class Maze(QtGui.QFrame):
                 'Pokolenie ' + str(self.generation_count) +
                 ', ruch ' + str(len(self.path)-1))
 
-    def drawMaze(self, painter, color, start_color, end_color):
+    def drawMaze(self, painter, bg_color, color, start_color, end_color):
         u"""Narysuj sam labirynt, bez rozwiązania."""
+        # tło
+        painter.fillRect(0, 0, self.maze.width * Maze.sq_size,
+                self.maze.width * Maze.sq_size, bg_color)
         # linie
         painter.setPen(color)
         for j in range(self.maze.height):
