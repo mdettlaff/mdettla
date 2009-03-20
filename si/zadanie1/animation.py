@@ -17,7 +17,7 @@ class AnimationWindow(QtGui.QMainWindow):
     def __init__(self, maze, moves):
         QtGui.QMainWindow.__init__(self)
         self.setGeometry(300, 300, maze.width * Maze.sq_size,
-                maze.height * Maze.sq_size + 15)
+                maze.height * Maze.sq_size + 20)
         self.setWindowTitle('Algorytm genetyczny - animacja')
         self.maze_canvas = Maze(self, maze, moves)
         self.setCentralWidget(self.maze_canvas)
@@ -36,7 +36,7 @@ class AnimationWindow(QtGui.QMainWindow):
 
 
 class Maze(QtGui.QFrame):
-    speed = 200
+    speed = 100
     sq_size = 30
 
     def __init__(self, parent, maze, moves):
@@ -44,9 +44,10 @@ class Maze(QtGui.QFrame):
         self.timer = QtCore.QBasicTimer()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.maze = maze # abstrakcyjna reprezentacja labiryntu (ga.Maze)
-        self.moves = moves
-        self.path = [] # kolejne pozycje agenta
-        self.path.append(self.maze.start_pos)
+        self.moves = moves # lista ciągów ruchów
+        self.path = [self.maze.start_pos] # kolejne pozycje agenta
+        self.path_ended = False
+        self.generation_count = 1
 
     def start(self):
         self.timer.start(Maze.speed, self)
@@ -63,12 +64,17 @@ class Maze(QtGui.QFrame):
         self.drawSolution(painter, grey, blue)
 
     def timerEvent(self, event):
-        if self.path[-1] == self.maze.end_pos:
-            self.timer.stop()
+        if self.path_ended:
+            self.moves.pop(0) # bierzemy kolejny ciąg ruchów
+            self.path_ended = False
+            if self.moves: # jeśli to ostatnie pokolenie, nie zerujemy ścieżki
+                self.generation_count += 1
+                self.path = [self.maze.start_pos]
         self.advanceAgent()
         self.update()
         self.emit(QtCore.SIGNAL('messageToStatusbar(QString)'),
-                'ruch ' + str(len(self.path)-1))
+                'Pokolenie ' + str(self.generation_count) +
+                ', ruch ' + str(len(self.path)-1))
 
     def drawMaze(self, painter, color, start_color, end_color):
         u"""Narysuj sam labirynt, bez rozwiązania."""
@@ -108,8 +114,12 @@ class Maze(QtGui.QFrame):
 
     def advanceAgent(self):
         u"""Przejdź dalej w kierunku wyjścia z labiryntu."""
-        if moves and self.path[-1] != self.maze.end_pos:
-            move = self.moves.pop(0)
+        if not self.moves:
+            self.timer.stop()
+        elif not self.moves[0] or self.path[-1] == self.maze.end_pos:
+            self.path_ended = True
+        else:
+            move = self.moves[0].pop(0)
             self.path.append(self.maze.move(self.path[-1], move))
 
 
@@ -121,7 +131,7 @@ if __name__ == '__main__':
             ga.maze = ga.Maze(sys.argv[1])
             selection = ga.select_proportional
             results = ga.epoch(ga.m, ga.l, ga.p_c, ga.p_m, 1, selection, None)
-            moves = results[-1].phenotype()
+            moves = [result.phenotype() for result in results]
 
             animation = AnimationWindow(ga.maze, moves)
             animation.show()
@@ -130,6 +140,6 @@ if __name__ == '__main__':
         else:
             print usage
     except IOError:
-        print u'Błąd: nie można odczytać pliku', sys.argv[1]
+        print u'Błąd: nie można odnaleźć pliku', sys.argv[1]
         sys.exit(1)
 
