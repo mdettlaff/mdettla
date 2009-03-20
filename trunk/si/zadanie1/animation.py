@@ -17,7 +17,7 @@ class AnimationWindow(QtGui.QMainWindow):
     def __init__(self, maze, moves):
         QtGui.QMainWindow.__init__(self)
         self.setGeometry(300, 300, maze.width * Maze.sq_size,
-                maze.height * Maze.sq_size + 20)
+                maze.height * Maze.sq_size + 24)
         self.setWindowTitle('Algorytm genetyczny - animacja')
         self.maze_canvas = Maze(self, maze, moves)
         self.setCentralWidget(self.maze_canvas)
@@ -81,13 +81,13 @@ class Maze(QtGui.QFrame):
         u"""Narysuj sam labirynt, bez rozwiązania."""
         # tło
         painter.fillRect(0, 0, self.maze.width * Maze.sq_size,
-                self.maze.width * Maze.sq_size, bg_color)
+                self.maze.height * Maze.sq_size, bg_color)
         # linie
         painter.setPen(color)
-        for j in range(self.maze.height):
+        for j in range(self.maze.height + 1):
             painter.drawLine(0, j * Maze.sq_size,
                     self.maze.width * Maze.sq_size, j * Maze.sq_size)
-        for i in range(self.maze.width):
+        for i in range(self.maze.width + 1):
             painter.drawLine(i * Maze.sq_size, 0,
                     i * Maze.sq_size, self.maze.height * Maze.sq_size)
         # ściany
@@ -111,7 +111,8 @@ class Maze(QtGui.QFrame):
                 color = agent_color
             else:
                 color = path_color
-            if position != self.maze.start_pos: # nie zasłaniamy startu
+            if position != self.maze.start_pos and \
+                    position != self.maze.end_pos:
                 painter.fillRect(position.x * Maze.sq_size + 1,
                         position.y * Maze.sq_size + 1,
                         Maze.sq_size - 1, Maze.sq_size - 1, color)

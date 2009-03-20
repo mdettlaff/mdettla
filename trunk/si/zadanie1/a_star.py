@@ -1,15 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+from ga import Maze, Coords
 import sys
 
-usage = u"""\
-Algorytm A*, znajdujący najkrótszą ścieżkę pomiędzy danymi wierzchołkami grafu.
-Użycie: python a_star.py PLIK_GRAFU PLIK_HEUREZY WĘZEŁ_POCZĄTKOWY\
-"""
-# węzeł końcowy to węzeł o heurezie równiej 0
 
-graph = {} # klucz: nazwa węzła, wartość: węzeł
+usage = u"""\
+Algorytm A*, znajdujący najkrótszą ścieżkę w labiryncie.
+Użycie: python a_star.py PLIK_Z_LABIRYNTEM\
+"""
+
+graph = {} # klucz: id węzła, wartość: węzeł
 open_nodes = [] # węzły do rozwinięcia
 closed_nodes = [] # zbadane węzły
 w0 = None # węzeł początkowy
@@ -17,8 +18,8 @@ wg = None # węzeł końcowy
 
 
 class Node:
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, id):
+        self.id = id
         self.neighbors = {} # klucz: węzeł sąsiadujący, wartość: koszt
         self.previous = None
 
@@ -30,60 +31,57 @@ class Node:
         return cmp(self.f, node.f)
 
     def __eq__(self, node):
-        return self.name == node.name
+        return self.id == node.id
 
     def __hash__(self):
-        return hash(self.name)
+        return hash(self.id)
 
     def __str__(self):
-        description = self.name + ' ->'
+        description = str(self.id) + ' ->'
         for neighbor, cost in self.neighbors.iteritems():
-            description += ' ' + neighbor.name + ' ' + str(cost)
+            description += ' ' + str(neighbor.id) + ' ' + str(cost)
         description += ', h=' + str(self.h)
         if self.previous:
-            description += ', prev=' + self.previous.name
+            description += ', prev=' + str(self.previous.id)
         return description
 
 
 def read_input():
     global w0
     global wg
-    graph_filename = sys.argv[1]
-    h_filename = sys.argv[2]
-    w0_name = sys.argv[3]
+    maze = Maze(sys.argv[1])
     # tworzymy węzły
-    graph_file = open(graph_filename)
-    for line in graph_file.readlines():
-        line_data = line.split(' ')
-        node_name = line_data[0]
-        node = Node(node_name)
-        if node_name not in graph:
-            graph[node_name] = Node(node_name)
-    graph_file.close()
-    # dodajemy informacje o sąsiadach (krawędziach) do węzłów
-    graph_file = open(graph_filename)
-    for line in graph_file.readlines():
-        line_data = line.split(' ')
-        node_name = line_data[0]
-        neighbor_name = line_data[1]
-        neighbor = graph[neighbor_name]
-        cost = float(line_data[2].strip())
-        graph[node_name].neighbors[neighbor] = cost
-    graph_file.close()
-    # dodajemy informacje o heurezie do węzłów
-    h_file = open(h_filename)
-    for line in h_file.readlines():
-        line_data = line.split(' ')
-        node_name = line_data[0]
-        h = float(line_data[1].strip())
-        graph[node_name].h = h
-        if h == 0:
-            wg = graph[node_name]
-    h_file.close()
-    if w0_name not in graph:
-        print u'Podanego węzła początkowego nie ma w grafie.'
-        sys.exit(1)
-    w0 = graph[w0_name]
+    for j, row in enumerate(maze.squares):
+        for i, square in enumerate(row):
+            if square == 0 or square == 2 or square == 4:
+                node_id = (i, j)
+                node = Node(node_id)
+                graph[node_id] = node
+                if square == 2:
+                    w0 = node
+                elif square == 4:
+                    wg = node
+    # dodajemy informacje o sąsiadach (krawędziach) i heurezie do węzłów
+    for j, row in enumerate(maze.squares):
+        for i, square in enumerate(row):
+            if square == 0 or square == 2 or square == 4:
+                node_id = (i, j)
+                node = graph[node_id]
+                node_position = Coords(i, j) # współrzędne węzła
+                manhattan = lambda p1, p2: abs(p1.x - p2.x) + abs(p1.y - p2.y)
+                node.h = manhattan(node_position, Coords(wg.id[0], wg.id[1]))
+                if node_position != maze.move(node_position, 'left'):
+                    neighbor = graph[(i-1, j)]
+                    node.neighbors[neighbor] = 1
+                if node_position != maze.move(node_position, 'right'):
+                    neighbor = graph[(i+1, j)]
+                    node.neighbors[neighbor] = 1
+                if node_position != maze.move(node_position, 'up'):
+                    neighbor = graph[(i, j-1)]
+                    node.neighbors[neighbor] = 1
+                if node_position != maze.move(node_position, 'down'):
+                    neighbor = graph[(i, j+1)]
+                    node.neighbors[neighbor] = 1
 
 
 def a_star(w0, wg):
@@ -113,6 +111,7 @@ def a_star(w0, wg):
                 neighbor.f = neighbor.g + neighbor.h
     return None
 
+
 def reconstruct_path(node):
     u"""Zwróć ścieżkę powstałą w wyniku działania algorytmu A*."""
     path = []
@@ -124,21 +123,21 @@ def reconstruct_path(node):
 
 if __name__ == '__main__':
     try:
-        if len(sys.argv) > 3:
+        if len(sys.argv) > 1:
             read_input()
-            print u'Graf wejściowy:'
-            for node in graph.values():
-                print node
+            #print u'Graf wejściowy:'
+            #for node in graph.values():
+            #    print node
 
             path = a_star(w0, wg)
 
-            print u'\nNajkrótsza ścieżka z', w0.name, 'do', wg.name + ':'
+            print u'Najkrótsza ścieżka od wejścia do wyjścia:'
             if path is not None:
                 path_length = .0
-                print w0.name, path_length,
+                print w0.id, path_length,
                 for node in path:
                     path_length += node.previous.cost(node)
-                    print '->', node.name, path_length,
+                    print '->', node.id, path_length,
             else:
                 print u'Nie znaleziono ścieżki.'
         else:
