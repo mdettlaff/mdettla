@@ -81,6 +81,9 @@ class Specimen:
     def __eq__(self, other):
         return self.genotype == other.genotype
 
+    def __ne__(self, other):
+        return self.genotype != other.genotype
+
     def __cmp__(self, other):
         return cmp(self.fitness, other.fitness)
 
@@ -171,6 +174,9 @@ class Coords:
 
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
+    def __ne__(self, other):
+        return self.x != other.x or self.y != other.y
 
     def __str__(self):
         return '(' + str(self.x) + ', ' + str(self.y) + ')'
