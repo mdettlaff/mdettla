@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+"""\
+Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.\
+"""
+
 import sys
 import getopt
 import random
 
 
 usage = u"""\
-Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.
 Użycie: python ga.py [opcje] PLIK_Z_LABIRYNTEM [LICZBA_EPOK]
 Opcje:
         -t k  Selekcja turniejowa o rozmiarze turnieju k.
@@ -279,34 +282,35 @@ if __name__ == '__main__':
             if len(args) > 1 and int(args[1]) > 1: # wiele epok
                 epoch_count = int(args[1])
                 iterations = [] # liczba iteracji w kolejnych epokach
-                print 'Liczba iteracji (pokoleń) dla kolejnych epok -',
+                print u'Liczba iteracji (pokoleń) dla kolejnych epok -',
                 if selection == select_proportional:
-                    print 'selekcja proporcjonalna:'
+                    print u'selekcja proporcjonalna:'
                 else:
-                    print 'selekcja turniejowa:'
+                    print u'selekcja turniejowa:'
                 for i in range(epoch_count):
                     results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
                     iterations.append(len(results))
                     print '%d\t%d' % (i+1, iterations[-1])
-                print 'Uśredniona liczba iteracji:'
+                print u'Uśredniona liczba iteracji:'
                 average = float(sum(iterations)) / len(iterations)
                 print '%.1f' % (average)
 
             else: # jedna epoka
                 results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
 
-                print 'Najlepsze przystosowanie w kolejnych populacjach -',
+                print u'Najlepsze przystosowanie w kolejnych populacjach -',
                 if selection == select_proportional:
-                    print 'selekcja proporcjonalna:'
+                    print u'selekcja proporcjonalna:'
                 else:
-                    print 'selekcja turniejowa:'
+                    print u'selekcja turniejowa:'
                 for i, best_in_population in enumerate(results):
                     print '%d\t%.2f' % (i+1, best_in_population.fitness)
-                print 'Rozwiązanie:'
+                print u'Rozwiązanie:'
                 maze.mark_solution(results[-1])
                 print maze
 
         else:
+            print __doc__
             print usage
     except IOError:
         print u'Błąd: nie można odnaleźć pliku', args[0]
