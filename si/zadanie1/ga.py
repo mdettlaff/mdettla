@@ -283,7 +283,7 @@ if __name__ == '__main__':
                 if selection == select_proportional:
                     print 'selekcja proporcjonalna:'
                 else:
-                    print 'selekcja turniejowa (k=' + str(select_arg) + '):'
+                    print 'selekcja turniejowa:'
                 for i in range(epoch_count):
                     results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
                     iterations.append(len(results))
@@ -299,7 +299,7 @@ if __name__ == '__main__':
                 if selection == select_proportional:
                     print 'selekcja proporcjonalna:'
                 else:
-                    print 'selekcja turniejowa (k=' + str(select_arg) + '):'
+                    print 'selekcja turniejowa:'
                 for i, best_in_population in enumerate(results):
                     print '%d\t%.2f' % (i+1, best_in_population.fitness)
                 print 'Rozwiązanie:'
