@@ -117,22 +117,6 @@ class Maze:
         self.width = len(self.squares[0])
         self.height = len(self.squares)
 
-    def print_maze(self):
-        for row in self.squares:
-            row_str = ''
-            for square in row:
-                if square == 0:
-                    row_str += ' '
-                if square == 1:
-                    row_str += '#'
-                if square == 2:
-                    row_str += 'S'
-                if square == 3:
-                    row_str += '@' # rozwiązanie
-                if square == 4:
-                    row_str += 'E'
-            print row_str
-
     def move(self, pos, direction):
         u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
 
@@ -164,6 +148,24 @@ class Maze:
             if position == maze.end_pos:
                 break
             self.squares[position.y][position.x] = 3
+
+    def __str__(self):
+        maze_str = ''
+        for row in self.squares:
+            row_str = ''
+            for square in row:
+                if square == 0:
+                    row_str += ' '
+                if square == 1:
+                    row_str += '#'
+                if square == 2:
+                    row_str += 'S'
+                if square == 3:
+                    row_str += '@' # rozwiązanie
+                if square == 4:
+                    row_str += 'E'
+            maze_str += row_str + '\n'
+        return maze_str.rstrip()
 
 
 class Coords:
@@ -277,7 +279,11 @@ if __name__ == '__main__':
             if len(args) > 1 and int(args[1]) > 1: # wiele epok
                 epoch_count = int(args[1])
                 iterations = [] # liczba iteracji w kolejnych epokach
-                print 'Liczba iteracji (pokoleń) dla kolejnych epok:'
+                print 'Liczba iteracji (pokoleń) dla kolejnych epok -',
+                if selection == select_proportional:
+                    print 'selekcja proporcjonalna:'
+                else:
+                    print 'selekcja turniejowa (k=' + str(select_arg) + '):'
                 for i in range(epoch_count):
                     results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
                     iterations.append(len(results))
@@ -289,17 +295,21 @@ if __name__ == '__main__':
             else: # jedna epoka
                 results = epoch(m, l, p_c, p_m, 1.0, selection, select_arg)
 
-                print 'Najlepsze przystosowanie w kolejnych populacjach:'
+                print 'Najlepsze przystosowanie w kolejnych populacjach -',
+                if selection == select_proportional:
+                    print 'selekcja proporcjonalna:'
+                else:
+                    print 'selekcja turniejowa (k=' + str(select_arg) + '):'
                 for i, best_in_population in enumerate(results):
                     print '%d\t%.2f' % (i+1, best_in_population.fitness)
                 print 'Rozwiązanie:'
                 maze.mark_solution(results[-1])
-                maze.print_maze()
+                print maze
 
         else:
             print usage
     except IOError:
-        print u'Błąd: nie można odczytać pliku', args[0]
+        print u'Błąd: nie można odnaleźć pliku', args[0]
         sys.exit(1)
     except ValueError:
         print u'Błąd: należy podać liczbę całkowitą'
