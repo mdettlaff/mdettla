@@ -13,9 +13,9 @@ animation.py - wizualizacja działania algorytmu genetycznego
 Aby uruchomić program (kompilacja nie jest wymagana), należy użyć polecenia:
 python nazwa_programu.py
 
-Python jest zainstalowany domyślnie na większości systemów linuksowych.
-Do uruchomienia programu animation.py wymagana jest biblioteka PyQt4 (również
-zainstalowana domyślnie na wielu platformach linuksowych).
+Python jest zainstalowany domyślnie na większości platform linuksowych.
+Wersję dla systemu Windows można pobrać ze strony:
+http://www.python.org/ftp/python/2.5.4/python-2.5.4.msi
 
 Przykłady użycia:
 python ga.py maze.txt # pojedynczy przebieg algorytmu genetycznego (epoka)
