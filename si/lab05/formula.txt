@@ -1,0 +1,1 @@
+(p V q) & (~q V r V ~s) & (s V ~t)
