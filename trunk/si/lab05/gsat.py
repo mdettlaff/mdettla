@@ -1,15 +1,19 @@
 #!/usr/bin/env python
-# -*- coding: ISO-8859-2 -*-
+# -*- coding: UTF-8 -*-
 
-"""Algorytm GSAT, sprawdzaj±cy spe³nialno¶æ formu³y.
+"""Algorytm GSAT, sprawdzajÄ…cy speÅ‚nialnoÅ›Ä‡ formuÅ‚y.
 
-Podana formu³a musi byæ w koniunkcyjnej postaci normalnej (CNF).
-Przyk³ad: (p V q) & (~q V r V ~s) & (s V ~t)
+Podana formuÅ‚a musi byÄ‡ w koniunkcyjnej postaci normalnej (CNF).
+PrzykÅ‚ad: (p V q) & (~q V r V ~s) & (s V ~t)
 
 """
 
 import sys
 import random
+import copy
+
+
+MAX_ITER = 255 # maksymalna liczba iteracji algorytmu
 
 
 class Literal:
@@ -24,14 +28,14 @@ class Literal:
         else:
             return '~' + self.symbol
 
-    def evaluate(self, value):
-        """Zwróæ warto¶æ atomu dla podanego warto¶ciowania."""
+    def eval(self, value):
+        """ZwrÃ³Ä‡ wartoÅ›Ä‡ atomu dla podanego wartoÅ›ciowania."""
         return (self.not_negated and value) or \
                 (not self.not_negated and not value)
 
 
 class Formula:
-    """Formu³a w postaci CNF."""
+    """FormuÅ‚a w postaci CNF."""
     def __init__(self, input):
         self.CNF = []
         self.symbols = set()
@@ -59,45 +63,94 @@ class Formula:
             s += ') & '
         return s[:-3]
 
-    def evaluate(self, evaluation):
-        """Czy formu³a jest spe³niona dla podanego warto¶ciowania."""
-        return self.satisfied_clauses_count(evaluation) == len(self.CNF)
+    def str_eval(self, eval):
+        """ZwrÃ³Ä‡ formuÅ‚Ä™ dla danego wartoÅ›ciowania jako napis."""
+        s = ''
+        for disjunction in self.CNF:
+            s += '('
+            for literal in disjunction:
+                if literal.not_negated:
+                    s += str(int(eval.values[literal.symbol])) + ' V '
+                else:
+                    s += '~' + str(int(eval.values[literal.symbol])) + ' V '
+            s = s[:-3]
+            s += ') & '
+        return s[:-3]
 
-    def satisfied_clauses_count(self, evaluation):
-        """Zwróæ liczbê dysjunkcji spe³nionych dla podanego warto¶ciowania.
-
-        evaluation - warto¶ciowanie: s³ownik, w którym kluczami s± symbole,
-            a warto¶ciami ich warto¶ciowania (True/False)
-
-        """
+    def satisfied_clauses_count(self, eval):
+        """ZwrÃ³Ä‡ liczbÄ™ dysjunkcji speÅ‚nionych dla podanego wartoÅ›ciowania."""
         satisfied_clauses = 0
         for disjunction in self.CNF:
             for literal in disjunction:
-                if literal.evaluate(evaluation[literal.symbol]):
+                if literal.eval(eval.values[literal.symbol]):
                     satisfied_clauses += 1
                     break
         return satisfied_clauses
 
+    def get_clauses_count(self):
+        return len(self.CNF)
+
+    clauses_count = property(fget=get_clauses_count)
+
+
+class Evaluation:
+    """WartoÅ›ciowanie (prawda/faÅ‚sz) dla danego zestawu symboli."""
+    def __init__(self, symbols):
+        """UtwÃ³rz losowe wartoÅ›ciowanie dla podanego zestawu symboli."""
+        self.values = {}
+        for symbol in symbols:
+            self.values[symbol] = random.choice([True, False])
+
+    def __cmp__(self, other):
+        return cmp(self.rank, other.rank)
+
+    def __str__(self):
+        s = ''
+        for key, value in self.values.iteritems():
+            s += str(key) + '=' + str(value) + ', '
+        return s[:-2]
+
 
 def gsat(formula):
-    """Algorytm GSAT."""
-    evaluation = {}
-    for symbol in formula.symbols:
-        evaluation[symbol] = random.choice([True, False])
-    # TODO
-    if formula.evaluate(evaluation):
-        return evaluation
-    else:
-        return None
+    """Algorytm GSAT.
+    
+    Sprawdza czy istnieje wartoÅ›ciowanie speÅ‚niajÄ…ce podanÄ… formuÅ‚Ä™.
+    Nie gwarantuje znalezienia rozwiÄ…zania.
+    Zwraca tuplÄ™: (wartoÅ›ciowanie, liczba iteracji) lub None, jeÅ›li nie
+    znaleziono wartoÅ›ciowania speÅ‚niajÄ…cego formuÅ‚Ä™.
+    
+    """
+    eval = Evaluation(formula.symbols) # losowe wartoÅ›ciowanie
+    for iter in range(MAX_ITER):
+        evals = []
+        for symbol in formula.symbols:
+            new_eval = copy.deepcopy(eval)
+            new_eval.values[symbol] = not new_eval.values[symbol]
+            new_eval.rank = \
+                    formula.satisfied_clauses_count(new_eval)
+            evals.append(new_eval)
+        eval = max(evals)
+        if eval.rank == formula.clauses_count:
+            return (eval, iter+1)
+    return None
 
 
 if __name__ == '__main__':
+    print u'Algorytm GSAT, sprawdzajÄ…cy speÅ‚nialnoÅ›Ä‡ formuÅ‚y.'
+    print u'Podaj formuÅ‚Ä™ w koniunkcyjnej postaci normalnej (CNF).'
+    print u'PrzykÅ‚ad: (p V q) & (~q V r V ~s) & (s V ~t)'
+
     formula = Formula(raw_input())
     print formula
-    evaluation = gsat(formula)
-    if evaluation:
-        print u'Podana formu³a jest spe³niona dla warto¶ciowania:'
-        print evaluation
+
+    results = gsat(formula)
+
+    if results:
+        eval = results[0]
+        print u'Podana formuÅ‚a jest speÅ‚niona dla wartoÅ›ciowania:'
+        print formula.str_eval(eval)
+        print eval
+        print u'Liczba iteracji algorytmu:', results[1]
     else:
-        print u'Nie znaleziono warto¶ciowana spe³niaj±cego formu³ê.'
+        print u'Nie znaleziono wartoÅ›ciowana speÅ‚niajÄ…cego formuÅ‚Ä™.'
 
