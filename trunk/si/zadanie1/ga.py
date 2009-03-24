@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-"""\
+u"""\
 Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.\
 """
 

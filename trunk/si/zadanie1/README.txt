@@ -16,6 +16,8 @@ python nazwa_programu.py
 Python jest zainstalowany domyślnie na większości platform linuksowych.
 Wersję dla systemu Windows można pobrać ze strony:
 http://www.python.org/ftp/python/2.5.4/python-2.5.4.msi
+Do uruchomienia programu animation.py wymagana jest biblioteka PyQt4:
+http://www.riverbankcomputing.co.uk/static/Downloads/PyQt4/PyQt-Py2.5-gpl-4.4.3-1.exe
 
 Przykłady użycia:
 python ga.py maze.txt # pojedynczy przebieg algorytmu genetycznego (epoka)
