@@ -2,32 +2,32 @@ WYNIKI:
 
 Uśredniona liczba iteracji - selekcja proporcjonalna (m=150):
 18.2
-CZAS WYKONANIA PROGRAMU ga.py maze.txt 30:
+Czas wykonania programu ga.py maze.txt 30:
 28.592762011 sek.
 
 Uśredniona liczba iteracji - selekcja proporcjonalna (m=50):
 35.7
-CZAS WYKONANIA PROGRAMU ga.py -s 50 maze.txt 30:
+Czas wykonania programu ga.py -s 50 maze.txt 30:
 14.221914820 sek.
 
 Uśredniona liczba iteracji - selekcja turniejowa (k=2):
 14.4
-CZAS WYKONANIA PROGRAMU ga.py -t 2 maze.txt 30:
+Czas wykonania programu ga.py -t 2 maze.txt 30:
 32.668580491 sek.
 
 Uśredniona liczba iteracji - selekcja turniejowa (k=3):
 10.0
-CZAS WYKONANIA PROGRAMU ga.py -t 3 maze.txt 30:
+Czas wykonania programu ga.py -t 3 maze.txt 30:
 28.697888066 sek.
 
 Uśredniona liczba iteracji - selekcja turniejowa (k=4):
 9.1
-CZAS WYKONANIA PROGRAMU ga.py -t 4 maze.txt 30:
+Czas wykonania programu ga.py -t 4 maze.txt 30:
 31.504767379 sek.
 
 Uśredniona liczba iteracji - selekcja turniejowa (k=5):
 8.4
-CZAS WYKONANIA PROGRAMU ga.py -t 5 maze.txt 30:
+Czas wykonania programu ga.py -t 5 maze.txt 30:
 34.445461061 sek.
 
 Algorytm A*:
@@ -93,7 +93,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja proporcjonalna (m=150):
 Uśredniona liczba iteracji:
 18.2
 
-CZAS WYKONANIA PROGRAMU ga.py maze.txt 30:
+Czas wykonania programu ga.py maze.txt 30:
 28.592762011 sek.
 
 
@@ -132,7 +132,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja proporcjonalna (m=50):
 Uśredniona liczba iteracji:
 35.7
 
-CZAS WYKONANIA PROGRAMU ga.py -s 50 maze.txt 30:
+Czas wykonania programu ga.py -s 50 maze.txt 30:
 14.221914820 sek.
 
 
@@ -171,7 +171,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja turniejowa (k=2):
 Uśredniona liczba iteracji:
 14.4
 
-CZAS WYKONANIA PROGRAMU ga.py -t 2 maze.txt 30:
+Czas wykonania programu ga.py -t 2 maze.txt 30:
 32.668580491 sek.
 
 
@@ -210,7 +210,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja turniejowa (k=3):
 Uśredniona liczba iteracji:
 10.0
 
-CZAS WYKONANIA PROGRAMU ga.py -t 3 maze.txt 30:
+Czas wykonania programu ga.py -t 3 maze.txt 30:
 28.697888066 sek.
 
 
@@ -249,7 +249,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja turniejowa (k=4):
 Uśredniona liczba iteracji:
 9.1
 
-CZAS WYKONANIA PROGRAMU ga.py -t 4 maze.txt 30:
+Czas wykonania programu ga.py -t 4 maze.txt 30:
 31.504767379 sek.
 
 
@@ -288,7 +288,7 @@ Liczba iteracji (pokoleń) dla kolejnych epok - selekcja turniejowa (k=5):
 Uśredniona liczba iteracji:
 8.4
 
-CZAS WYKONANIA PROGRAMU ga.py -t 5 maze.txt 30:
+Czas wykonania programu ga.py -t 5 maze.txt 30:
 34.445461061 sek.
 
 
@@ -298,7 +298,7 @@ CZAS WYKONANIA PROGRAMU ga.py -t 5 maze.txt 30:
 Najkrótsza ścieżka od wejścia do wyjścia:
 (0, 2) 0.0 -> (1, 2) 1.0 -> (2, 2) 2.0 -> (3, 2) 3.0 -> (4, 2) 4.0 -> (5, 2) 5.0 -> (6, 2) 6.0 -> (7, 2) 7.0 -> (7, 3) 8.0 -> (7, 4) 9.0 -> (7, 5) 10.0 -> (7, 6) 11.0 -> (8, 6) 12.0 -> (9, 6) 13.0 -> (9, 7) 14.0 -> (10, 7) 15.0 -> (11, 7) 16.0 -> (12, 7) 17.0 -> (13, 7) 18.0 -> (14, 7) 19.0
 
-CZAS WYKONANIA PROGRAMU a_star.sh:
+Czas wykonania programu a_star.sh:
 0.903999434 sek.
 
 
