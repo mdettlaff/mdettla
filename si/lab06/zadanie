@@ -1,0 +1,5 @@
+Dylemat więźnia.
+
+Gra: Można wziąć 1, 2 lub trzy zapałki z N zapałek. Przegrywa ten, kto weźmie
+ostatnią zapałkę.
+Napisać program grający z użytkownikiem, stosując algorytm alfa-beta cięć.
