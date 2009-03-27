@@ -21,7 +21,7 @@ Opcje:
         -n ILOŚĆ_ZAPAŁEK  Rozpocznij grę z podaną ilością zapałek.\
 """
 
-INFINITY = 65535
+INFINITY = float('Infinity')
 MIN_TAKE = 1 # ile co najmniej zapałek trzeba zabrać
 MAX_TAKE = 3 # ile co najwyżej zapałek można zabrać
 
