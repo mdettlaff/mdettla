@@ -2,14 +2,14 @@
 # -*- coding: UTF-8 -*-
 
 u"""Algorytm Alfa-Beta na przykładzie prostej gry.
-
-Zasady gry:
+<p>
+Zasady gry:<br>
 Gracze na zmianę biorą 1, 2 lub 3 zapałki z n zapałek. Przegrywa ten, kto
 weźmie ostatnią zapałkę.
 
 """
 
-__docformat__ = 'plaintext'
+__docformat__ = 'javadoc'
 
 import sys
 import getopt
@@ -22,8 +22,10 @@ Opcje:
 """
 
 INFINITY = float('Infinity')
-MIN_TAKE = 1 # ile co najmniej zapałek trzeba zabrać
-MAX_TAKE = 3 # ile co najwyżej zapałek można zabrać
+MIN_TAKE = 1
+u"""Ile co najmniej zapałek trzeba zabrać."""
+MAX_TAKE = 3
+u"""Ile co najwyżej zapałek można zabrać."""
 
 
 def main():
@@ -68,16 +70,17 @@ def main():
 def alphabeta(n, player_id, alpha, beta):
     u"""Algorytm Alfa-Beta.
 
-    n - ilość zapałek, jakie pozostały
-    player_id - numer gracza: 0 to komputer, 1 to człowiek
-    alpha - wartość węzła
-    beta - najlepszy wybór poprzedniego gracza
+    @param n          Ilość zapałek, jakie pozostały.
+    @param player_id  Numer gracza: 0 to komputer, 1 to człowiek.
+    @param alpha      Wartość węzła.
+    @param beta       Najlepszy wybór poprzedniego gracza.
 
-    Zwraca tuplę: (wartość węzła, ile wziąć zapałek)
+    @return <li>Wartość węzła.
+            <li>Ile wziąć zapałek.
 
     """
     if n == 0: # jesteśmy w liściu
-        return (player_id, None)
+        return player_id, None
     decision = MIN_TAKE # ile wziąć zapałek
     for i in range(MIN_TAKE, min(MAX_TAKE+1, n+1)): # i - ilość zapałek
         a = -alphabeta(n-i, 1 - player_id, -beta, -alpha)[0]
@@ -86,7 +89,7 @@ def alphabeta(n, player_id, alpha, beta):
             decision = i
         if beta <= alpha: # beta-odcięcie
             break
-    return (alpha, decision)
+    return alpha, decision
 
 
 if __name__ == '__main__':
