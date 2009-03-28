@@ -39,12 +39,12 @@ przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
 
 """
 
-__docformat__ = 'restructuredtext'
+__docformat__ = 'restructuredtext pl'
 
 import random
 
 
-m = 200
+population_size = 200
 u"""Rozmiar populacji."""
 p_c = .7
 u"""Prawdopodobieństwo krzyżowania."""
@@ -58,16 +58,18 @@ class Specimen:
     Osobnikiem jest układ klawiatury, reprezentowany przez ciąg znaków.
 
     """
-    def __init__(self, fit_func, parents=None, p_c=.7, p_m=.7):
+    def __init__(self, fit_func, fit_arg, parents=None, p_c=.7, p_m=.7):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
 
         :Parameters:
-            - `fit_func`: funkcja obliczająca przystosowanie osobnika
-            - `parents`: rodzice osobnika, z których skrzyżowania powstanie;
-              jeśli nie podano rodziców, tworzony jest osobnik z losowym
-              genotypem
-            - `p_c`: prawdopodobieństwo krzyżowania
-            - `p_m`: prawdopodobieństwo mutacji
+            - `fit_func`: Funkcja obliczająca przystosowanie osobnika. Jako
+              argumenty musi brać instancję osobnika oraz `fit_arg`.
+            - `fit_arg`: Argument przekazywany do funkcji `fit_func`.
+            - `parents`: Rodzice osobnika, z których skrzyżowania powstanie.
+              Jeśli nie podano rodziców, tworzony jest osobnik z losowym
+              genotypem.
+            - `p_c`: Prawdopodobieństwo krzyżowania.
+            - `p_m`: Prawdopodobieństwo mutacji.
 
         """
         self.genotype = []
@@ -75,7 +77,7 @@ class Specimen:
             self.__new_descendant(parents, p_c, p_m)
         else:
             self.__new_random_instance()
-        self.fitness = fit_func(self)
+        self.fitness = fit_func(self, fit_arg)
 
     def __new_random_instance(self):
         u"""Utwórz nowego osobnika z losowo utworzonym genotypem."""
@@ -102,23 +104,95 @@ class Specimen:
     def __ne__(self, other):
         return self.genotype != other.genotype
 
+    def __lt__(self, other):
+        return self.fitness < other.fitness
+
+    def __le__(self, other):
+        return self.fitness <= other.fitness
+
+    def __gt__(self, other):
+        return self.fitness > other.fitness
+
+    def __ge__(self, other):
+        return self.fitness >= other.fitness
+
     def __cmp__(self, other):
         return cmp(self.fitness, other.fitness)
 
     def __str__(self):
-        # TODO
-        pass
+        string = ''
+        for row in self.phenotype:
+            for i, key in enumerate(row):
+                string += key + ' '
+                if i == 4:
+                    string += ' '
+            string += '\n'
+        return string[:-1]
 
+    @property
     def phenotype(self):
-        u"""Zwróć słownik z rzędami klawiszy: 'top', 'home', 'bottom'."""
-        # TODO
-        return None
+        u"""Lista z rzędami klawiszy: [górny, środkowy, dolny]."""
+        return [self.genotype[:10], self.genotype[10:20], self.genotype[20:30]]
 
 
-def fitness(specimen):
-    u"""Zwróć ocenę przystosowania danego osobnika."""
+def main():
+    specimen = Specimen(fitness, 'asdf')
+    print specimen
+
+
+def fitness(specimen, corpus):
+    u"""Funkcja przystosowania.
+
+    :Parameters:
+        - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
+        - `corpus`: Tekst (najlepiej dość długi), na podstawie analizy którego
+          obliczana jest wartość przystosowania układu klawiatury.
+
+    :Return:
+        - Ocena danego układu klawiatury. Im wyższa, tym lepsza.
+
+    """
     # TODO
-    return None
+    return 0
+
+
+def epoch(iterations, population_size, p_c, p_m, selection, select_arg, \
+        fitness, fit_arg):
+    u"""Jeden przebieg algorytmu genetycznego.
+
+    :Parameters:
+        - `iterations`: Ilość iteracji (pokoleń) algorytmu.
+        - `population_size`: Rozmiar populacji.
+        - `p_c`: Prawdopodobieństwo krzyżowania.
+        - `p_m`: Prawdopodobieństwo mutacji.
+        - `selection`: Funkcja selekcji, do wybierania rodziców z populacji.
+          Jako argumenty musi brać populację oraz `select_arg`.
+        - `select_arg`: Argument przekazywany do funkcji `selection`.
+        - `fitness`: Funkcja oceniająca przystosowanie osobników. Jako
+          argumenty musi brać instancję osobnika oraz `fit_arg`.
+        - `fit_arg`: Argument przekazywany do funkcji `fitness`.
+
+    :Return:
+        - Lista najlepiej przystosowanych osobników w kolejnych populacjach.
+
+    """
+    population = [] # lista osobników (instancji klasy Specimen)
+    best = [] # najlepsze osobniki w kolejnych populacjach
+    # tworzymy początkową populację złożoną z osobników o losowym genotypie
+    for i in range(population_size):
+        population.append(Specimen(fitness, fit_arg))
+    best.append(max(population))
+    for i in range(iterations):
+        new_population = []
+        for i in range(len(population)):
+            parent1 = selection(population, select_arg)
+            parent2 = selection(population, select_arg)
+            parents = (parent1, parent2)
+            offspring = Specimen(fitness, fit_arg, parents, p_c, p_m)
+            new_population.append(offspring)
+        population = new_population
+        best.append(max(population))
+    return best
 
 
 def select_proportional(population, *args):
@@ -143,45 +217,13 @@ def select_proportional(population, *args):
 def select_tournament(population, k):
     u"""Selekcja turniejowa.
 
-    Losuj bez powtórzeń k osobników i zwróć najlepiej przystosowanego.
+    Losuj bez powtórzeń k osobników z danej populacji i zwróć najlepiej
+    przystosowanego.
 
     """
     return max(random.select(population, k))
 
 
-def epoch(population_size, p_c, p_m, target_fitness, selection, select_arg):
-    u"""Jeden przebieg algorytmu genetycznego.
-
-    :Parameters:
-        - `population_size`: rozmiar populacji
-        - `p_c`: prawdopodobieństwo krzyżowania
-        - `p_m`: prawdopodobieństwo mutacji
-        - `target_fitness`: wartość przystosowania jaką chcemy osiągnąć
-        - `selection`: funkcja selekcji, do wybierania rodziców z populacji
-        - `select_arg`: argument przekazany do funkcji selekcji
-
-    :Return:
-        - Lista najlepiej przystosowanych osobników w kolejnych populacjach.
-
-    """
-    population = [] # lista osobników (instancji klasy Specimen)
-    best = [] # najlepsze osobniki w kolejnych populacjach
-    # tworzymy początkową populację złożoną z osobników o losowym genotypie
-    for i in range(population_size):
-        population.append(Specimen(fitness))
-    best.append(max(population))
-    while best[-1].fitness < target_fitness:
-        new_population = []
-        for i in range(len(population)):
-            parent1 = selection(population, select_arg)
-            parent2 = selection(population, select_arg)
-            offspring = Specimen(fitness, (parent1, parent2), p_c, p_m)
-            new_population.append(offspring)
-        population = new_population
-        best.append(max(population))
-    return best
-
-
 if __name__ == '__main__':
-    print __doc__
+    main()
 
