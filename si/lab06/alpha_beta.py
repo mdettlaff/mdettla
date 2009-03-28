@@ -2,14 +2,14 @@
 # -*- coding: UTF-8 -*-
 
 u"""Algorytm Alfa-Beta na przykładzie prostej gry.
-<p>
-Zasady gry:<br>
+
+Zasady gry:
 Gracze na zmianę biorą 1, 2 lub 3 zapałki z n zapałek. Przegrywa ten, kto
 weźmie ostatnią zapałkę.
 
 """
 
-__docformat__ = 'javadoc'
+__docformat__ = 'restructuredtext'
 
 import sys
 import getopt
@@ -70,13 +70,15 @@ def main():
 def alphabeta(n, player_id, alpha, beta):
     u"""Algorytm Alfa-Beta.
 
-    @param n          Ilość zapałek, jakie pozostały.
-    @param player_id  Numer gracza: 0 to komputer, 1 to człowiek.
-    @param alpha      Wartość węzła.
-    @param beta       Najlepszy wybór poprzedniego gracza.
+    :Parameters:
+        - `n`: Ilość zapałek, jakie pozostały.
+        - `player_id`: Numer gracza: 0 to komputer, 1 to człowiek.
+        - `alpha`: Wartość węzła.
+        - `beta`: Najlepszy wybór poprzedniego gracza.
 
-    @return <li>Wartość węzła.
-            <li>Ile wziąć zapałek.
+    :Return:
+        - Wartość węzła.
+        - Ile wziąć zapałek.
 
     """
     if n == 0: # jesteśmy w liściu
