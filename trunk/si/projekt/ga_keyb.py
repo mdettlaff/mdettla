@@ -59,11 +59,11 @@ Opcje:
     --help  Wyświetl treść pomocy i zakończ.\
 """
 
-POPULATION_SIZE = 200
+DEFAULT_POPULATION_SIZE = 200
 u"""Domyślny rozmiar populacji."""
-P_C = .7
+DEFAULT_P_C = .7
 u"""Domyślne prawdopodobieństwo krzyżowania."""
-P_M = .7
+DEFAULT_P_M = .7
 u"""Domyślne prawdopodobieństwo mutacji."""
 
 
@@ -171,9 +171,9 @@ class Specimen:
 
 
 def main():
-    population_size = POPULATION_SIZE
-    p_c = P_C
-    p_m = P_M
+    population_size = DEFAULT_POPULATION_SIZE
+    p_c = DEFAULT_P_C # prawdopodobieństwo krzyżowania
+    p_m = DEFAULT_P_M # prawdopodobieństwo mutacji
 
     try:
         options, args = getopt.getopt(sys.argv[1:], 'hs:c:m:', ['help'])
