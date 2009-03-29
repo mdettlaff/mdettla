@@ -10,14 +10,17 @@ klawiszy na klawiaturze. Przykładowo, dla układu QWERTY wygląda on tak:
 Każdy znak może oczywiście wystąpić tylko raz.
 
 Mutację definiujemy jako zamianę dwóch losowo wybranych znaków miejscami.
-Niech X oznacza zmienną losową reprezentującą ilość mutacji dla osobnika.
-Do jej obliczenia użyjemy wzoru:
+Ilość mutacji dla osobnika (oznaczmy ją jako zmienną losową X), obliczamy
+w następujący sposób:
 
     X = int(math.floor(1 / random.uniform(.1, 1)))
 
 W przybliżeniu: P(X=1) = 55%, P(X=2) = 18%, P(X=3) =  9%, ..., P(X=9) = 1%.
 
-Stosujemy krzyżowanie wielopunktowe.
+Ze względu na to, że genotyp musi być permutacją znaków, krzyżownie w ścisłym
+znaczeniu nie jest możliwe. Zastosujemy jednak operację podobną do krzyżowania
+jednostajnego, naprawiając na bieżąco powtórzenia znaków - wywoła to
+z konieczności kilka mutacji podczas każdego krzyżowania.
 
 Funkcja oceny (przystosowania) obliczana jest za pomocą wzoru
 
@@ -41,15 +44,27 @@ przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
 
 __docformat__ = 'restructuredtext pl'
 
+import getopt
+import math
 import random
+import sys
 
 
-population_size = 200
-u"""Rozmiar populacji."""
-p_c = .7
-u"""Prawdopodobieństwo krzyżowania."""
-p_m = .7
-u"""Prawdopodobieństwo mutacji."""
+usage = u"""\
+Użycie: python ga_keyb.py [opcje]
+Opcje:
+    -c p    Ustaw prawdopodobieństwo krzyżowania na p (0 <= p <= 1).
+    -m p    Ustaw prawdopodobieństwo mutacji na p (0 <= p <= 1).
+    -s m    Ustaw rozmiar populacji na m osobników.
+    --help  Wyświetl treść pomocy i zakończ.\
+"""
+
+POPULATION_SIZE = 200
+u"""Domyślny rozmiar populacji."""
+P_C = .7
+u"""Domyślne prawdopodobieństwo krzyżowania."""
+P_M = .7
+u"""Domyślne prawdopodobieństwo mutacji."""
 
 
 class Specimen:
@@ -58,13 +73,13 @@ class Specimen:
     Osobnikiem jest układ klawiatury, reprezentowany przez ciąg znaków.
 
     """
-    def __init__(self, fit_func, fit_arg, parents=None, p_c=.7, p_m=.7):
+    def __init__(self, fit_func, fit_args, parents=None, p_c=.7, p_m=.7):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
 
         :Parameters:
             - `fit_func`: Funkcja obliczająca przystosowanie osobnika. Jako
-              argumenty musi brać instancję osobnika oraz `fit_arg`.
-            - `fit_arg`: Argument przekazywany do funkcji `fit_func`.
+              argumenty musi brać instancję osobnika oraz `fit_args`.
+            - `fit_args`: Lista argumentów przekazywanych do `fit_func`.
             - `parents`: Rodzice osobnika, z których skrzyżowania powstanie.
               Jeśli nie podano rodziców, tworzony jest osobnik z losowym
               genotypem.
@@ -77,7 +92,7 @@ class Specimen:
             self.__new_descendant(parents, p_c, p_m)
         else:
             self.__new_random_instance()
-        self.fitness = fit_func(self, fit_arg)
+        self.fitness = fit_func(self, *fit_args)
 
     def __new_random_instance(self):
         u"""Utwórz nowego osobnika z losowo utworzonym genotypem."""
@@ -86,17 +101,37 @@ class Specimen:
             self.genotype.append(key)
         random.shuffle(self.genotype)
 
-    def __new_descendant(self, parents, p_c):
+    def __new_descendant(self, parents, p_c, p_m):
         u"""Utwórz osobnika będącego potomkiem podanych rodziców."""
-        self.genotype = list(random.choice(parents).genotype)
-        # TODO
-        # krzyżowanie
+        self.genotype = list(parents[random.randint(0, 1)].genotype)
+        # krzyżowanie jednostajne z naprawianiem powtórzeń
         if (random.random() < p_c):
-            # przeprowadzamy krzyżowanie wielopunktowe
-            pass
+            # znaki, których jeszcze nie skopiowaliśmy do genotypu potomka
+            unused = set(self.genotype)
+            random_order = range(0, len(self.genotype))
+            random.shuffle(random_order)
+            for i in random_order:
+                parent = random.randint(0, 1)
+                if parents[parent].genotype[i] in unused:
+                    key = parents[parent].genotype[i]
+                    self.genotype[i] = key
+                    unused.remove(key)
+                elif parents[1 - parent].genotype[i] in unused:
+                    key = parents[1 - parent].genotype[i]
+                    self.genotype[i] = key
+                    unused.remove(key)
+                else: # bierzemy arbitralnie wybrany niepowtarzający się znak
+                    print 'arbitralny znak na pozycji', i
+                    self.genotype[i] = unused.pop()
         # mutacja
         if (random.random() < p_m):
-            pass
+            mut_count = int(math.floor(1 / random.uniform(.1, 1)))
+            # pozycje, na których wystąpią mutacje
+            mp = random.sample(range(0, len(self.genotype)), mut_count * 2)
+            print 'mutacje na pozycjach:', mp
+            for i in range(0, len(mp), 2):
+                self.genotype[mp[i]], self.genotype[mp[i+1]] = \
+                        self.genotype[mp[i+1]], self.genotype[mp[i]]
 
     def __eq__(self, other):
         return self.genotype == other.genotype
@@ -132,12 +167,39 @@ class Specimen:
     @property
     def phenotype(self):
         u"""Lista z rzędami klawiszy: [górny, środkowy, dolny]."""
-        return [self.genotype[:10], self.genotype[10:20], self.genotype[20:30]]
+        return [self.genotype[:10], self.genotype[10:20], self.genotype[20:]]
 
 
 def main():
-    specimen = Specimen(fitness, 'asdf')
-    print specimen
+    population_size = POPULATION_SIZE
+    p_c = P_C
+    p_m = P_M
+
+    try:
+        options, args = getopt.getopt(sys.argv[1:], 'hs:c:m:', ['help'])
+        for option, argument in options:
+            if option in ('-h', '--help'):
+                print __doc__.split('\n')[0]
+                print usage
+                sys.exit()
+            elif option == '-s':
+                population_size = int(argument)
+            elif option == '-c':
+                p_c = float(argument)
+            elif option == '-m':
+                p_m = float(argument)
+
+        p1 = Specimen(fitness, ['asdf'])
+        p2 = Specimen(fitness, ['asdf'])
+        offspring = Specimen(fitness, ['asdf'], (p1, p2), p_c, p_m)
+        print p1, '\n'
+        print p2, '\n'
+        print offspring
+
+    except getopt.GetoptError, err:
+        print str(err)
+        print usage
+        sys.exit(2)
 
 
 def fitness(specimen, corpus):
@@ -156,8 +218,8 @@ def fitness(specimen, corpus):
     return 0
 
 
-def epoch(iterations, population_size, p_c, p_m, selection, select_arg, \
-        fitness, fit_arg):
+def epoch(iterations, population_size, p_c, p_m, selection, select_args, \
+        fitness, fit_args):
     u"""Jeden przebieg algorytmu genetycznego.
 
     :Parameters:
@@ -166,11 +228,11 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_arg, \
         - `p_c`: Prawdopodobieństwo krzyżowania.
         - `p_m`: Prawdopodobieństwo mutacji.
         - `selection`: Funkcja selekcji, do wybierania rodziców z populacji.
-          Jako argumenty musi brać populację oraz `select_arg`.
-        - `select_arg`: Argument przekazywany do funkcji `selection`.
+          Jako argumenty musi brać populację oraz `select_args`.
+        - `select_args`: Argumenty przekazywane do funkcji `selection`.
         - `fitness`: Funkcja oceniająca przystosowanie osobników. Jako
-          argumenty musi brać instancję osobnika oraz `fit_arg`.
-        - `fit_arg`: Argument przekazywany do funkcji `fitness`.
+          argumenty musi brać instancję osobnika oraz `fit_args`.
+        - `fit_args`: Lista argumentów przekazywanych do funkcji `fitness`.
 
     :Return:
         - Lista najlepiej przystosowanych osobników w kolejnych populacjach.
@@ -180,15 +242,15 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_arg, \
     best = [] # najlepsze osobniki w kolejnych populacjach
     # tworzymy początkową populację złożoną z osobników o losowym genotypie
     for i in range(population_size):
-        population.append(Specimen(fitness, fit_arg))
+        population.append(Specimen(fitness, fit_args))
     best.append(max(population))
     for i in range(iterations):
         new_population = []
         for i in range(len(population)):
-            parent1 = selection(population, select_arg)
-            parent2 = selection(population, select_arg)
+            parent1 = selection(population, *select_args)
+            parent2 = selection(population, *select_args)
             parents = (parent1, parent2)
-            offspring = Specimen(fitness, fit_arg, parents, p_c, p_m)
+            offspring = Specimen(fitness, fit_args, parents, p_c, p_m)
             new_population.append(offspring)
         population = new_population
         best.append(max(population))
@@ -217,7 +279,7 @@ def select_proportional(population, *args):
 def select_tournament(population, k):
     u"""Selekcja turniejowa.
 
-    Losuj bez powtórzeń k osobników z danej populacji i zwróć najlepiej
+    Losuj bez powtórzeń `k` osobników z danej populacji i zwróć najlepiej
     przystosowanego.
 
     """
