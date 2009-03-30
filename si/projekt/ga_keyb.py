@@ -43,6 +43,7 @@ przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
 """
 
 __docformat__ = 'restructuredtext pl'
+__author__ = u'Michał Dettlaff'
 
 import getopt
 import math
@@ -53,9 +54,9 @@ import sys
 usage = u"""\
 Użycie: python ga_keyb.py [opcje]
 Opcje:
-    -c p    Ustaw prawdopodobieństwo krzyżowania na p (0 <= p <= 1).
-    -m p    Ustaw prawdopodobieństwo mutacji na p (0 <= p <= 1).
-    -s m    Ustaw rozmiar populacji na m osobników.
+    -c P    Ustaw prawdopodobieństwo krzyżowania na P (0 <= P <= 1).
+    -m P    Ustaw prawdopodobieństwo mutacji na P (0 <= P <= 1).
+    -s N    Ustaw rozmiar populacji na N osobników.
     --help  Wyświetl treść pomocy i zakończ.\
 """
 
@@ -189,9 +190,9 @@ def main():
             elif option == '-m':
                 p_m = float(argument)
 
-        p1 = Specimen(fitness, ['asdf'])
-        p2 = Specimen(fitness, ['asdf'])
-        offspring = Specimen(fitness, ['asdf'], (p1, p2), p_c, p_m)
+        p1 = Specimen(fitness, ['asdf', 1, 1])
+        p2 = Specimen(fitness, ['asdf', 1, 1])
+        offspring = Specimen(fitness, ['asdf', 1, 1], (p1, p2), p_c, p_m)
         print p1, '\n'
         print p2, '\n'
         print offspring
@@ -202,20 +203,46 @@ def main():
         sys.exit(2)
 
 
-def fitness(specimen, corpus):
+def fitness(specimen, corpus, rows_weight=1, distance_weight=1):
     u"""Funkcja przystosowania.
+
+    Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
+    układu klawiatury: rząd klawisza, odległość poprzedniego klawisza,
+    alteracja rąk, palcowanie (dłuższe palce powinny wykonywać więcej pracy).
 
     :Parameters:
         - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
         - `corpus`: Tekst (najlepiej dość długi), na podstawie analizy którego
           obliczana jest wartość przystosowania układu klawiatury.
+        - `rows_weight`: Waga cechy rząd klawisza.
+        - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
 
     :Return:
         - Ocena danego układu klawiatury. Im wyższa, tym lepsza.
 
     """
-    # TODO
-    return 0
+
+    rows = 0 # cecha: rząd klawiszy
+    distance = 0 # cecha: odległość poprzedniego klawisza
+    for c in corpus: # iterujemy kolejno po znakach w tekście
+        # znajdujemy pozycję znaku na danym układzie klawiatury
+        for i, r in enumerate(specimen.phenotype):
+            if c in r:
+                row = i
+                column = r.index(c)
+                break
+        # obliczamy cechę: rząd klawiszy
+        if row == 1: # środkowy (home row)
+            rows += 1
+        elif row == 0: # górny
+            rows += .5
+        elif row == 2: # dolny
+            rows += 0
+        # obliczamy cechę: odległość poprzedniego klawisza
+        # TODO
+        prev_row = row
+        prev_column = column
+    return (rows * rows_weight) + (distance * distance_weight)
 
 
 def epoch(iterations, population_size, p_c, p_m, selection, select_args, \
@@ -283,7 +310,7 @@ def select_tournament(population, k):
     przystosowanego.
 
     """
-    return max(random.select(population, k))
+    return max(random.sample(population, k))
 
 
 if __name__ == '__main__':
