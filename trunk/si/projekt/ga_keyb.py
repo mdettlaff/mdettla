@@ -52,7 +52,8 @@ import sys
 
 
 usage = u"""\
-Użycie: python ga_keyb.py [opcje]
+Użycie: python ga_keyb.py [opcje] PLIK...
+Plik tekstowy PLIK zostanie użyty do oceny przystosowania.
 Opcje:
     -c P    Ustaw prawdopodobieństwo krzyżowania na P (0 <= P <= 1).
     -m P    Ustaw prawdopodobieństwo mutacji na P (0 <= P <= 1).
@@ -97,9 +98,9 @@ class Specimen:
 
     def __new_random_instance(self):
         u"""Utwórz nowego osobnika z losowo utworzonym genotypem."""
-        keys = 'qwertyuiopasdfghjkl;zxcvbnm,.?'
-        for key in keys:
-            self.genotype.append(key)
+        chars = u'qwertyuiopasdfghjkl;zxcvbnm,.?'
+        for c in chars:
+            self.genotype.append(c)
         random.shuffle(self.genotype)
 
     def __new_descendant(self, parents, p_c, p_m):
@@ -107,6 +108,7 @@ class Specimen:
         self.genotype = list(parents[random.randint(0, 1)].genotype)
         # krzyżowanie jednostajne z naprawianiem powtórzeń
         if (random.random() < p_c):
+            print u'krzyżowanie'
             # znaki, których jeszcze nie skopiowaliśmy do genotypu potomka
             unused = set(self.genotype)
             random_order = range(0, len(self.genotype))
@@ -122,14 +124,13 @@ class Specimen:
                     self.genotype[i] = key
                     unused.remove(key)
                 else: # bierzemy arbitralnie wybrany niepowtarzający się znak
-                    print 'arbitralny znak na pozycji', i
                     self.genotype[i] = unused.pop()
         # mutacja
         if (random.random() < p_m):
             mut_count = int(math.floor(1 / random.uniform(.1, 1)))
+            print u'mutacja X', mut_count
             # pozycje, na których wystąpią mutacje
             mp = random.sample(range(0, len(self.genotype)), mut_count * 2)
-            print 'mutacje na pozycjach:', mp
             for i in range(0, len(mp), 2):
                 self.genotype[mp[i]], self.genotype[mp[i+1]] = \
                         self.genotype[mp[i+1]], self.genotype[mp[i]]
@@ -175,7 +176,13 @@ def main():
     population_size = DEFAULT_POPULATION_SIZE
     p_c = DEFAULT_P_C # prawdopodobieństwo krzyżowania
     p_m = DEFAULT_P_M # prawdopodobieństwo mutacji
+    corpus = u'' # tekst analizowany w celu oceny przystosowania
 
+    pl_chars_to_latin = lambda string: \
+            string.lower().replace(u'ą', 'a').replace(u'ć', 'c') \
+            .replace(u'ę', 'e').replace(u'ł', 'l').replace(u'ń', 'n') \
+            .replace(u'ó', 'o').replace(u'ś', 's').replace(u'ż', 'z') \
+            .replace(u'ź', 'z')
     try:
         options, args = getopt.getopt(sys.argv[1:], 'hs:c:m:', ['help'])
         for option, argument in options:
@@ -190,12 +197,24 @@ def main():
             elif option == '-m':
                 p_m = float(argument)
 
-        p1 = Specimen(fitness, ['asdf', 1, 1])
-        p2 = Specimen(fitness, ['asdf', 1, 1])
-        offspring = Specimen(fitness, ['asdf', 1, 1], (p1, p2), p_c, p_m)
-        print p1, '\n'
-        print p2, '\n'
-        print offspring
+        if args:
+            for filename in args:
+                for line in open(filename).readlines():
+                    corpus += line.decode('UTF-8')
+            corpus = pl_chars_to_latin(corpus)
+            print corpus
+
+            p1 = Specimen(fitness, [corpus] + 4*[1])
+            p2 = Specimen(fitness, [corpus] + 4*[1])
+            offspring = Specimen(fitness, [corpus] + 4*[1], (p1, p2), p_c, p_m)
+            print p1
+            print p1.fitness, '\n'
+            print p2
+            print p2.fitness, '\n'
+            print offspring
+            print offspring.fitness
+        else:
+            print usage
 
     except getopt.GetoptError, err:
         print str(err)
@@ -203,12 +222,14 @@ def main():
         sys.exit(2)
 
 
-def fitness(specimen, corpus, rows_weight=1, distance_weight=1):
+def fitness(specimen, corpus, rows_weight=1, distance_weight=1,
+        alteration_weight=1, fingers_weight=1):
     u"""Funkcja przystosowania.
 
     Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
     układu klawiatury: rząd klawisza, odległość poprzedniego klawisza,
     alteracja rąk, palcowanie (dłuższe palce powinny wykonywać więcej pracy).
+    O wpływie danej cechy na wynik decydują wagi (patrz parametry).
 
     :Parameters:
         - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
@@ -216,6 +237,8 @@ def fitness(specimen, corpus, rows_weight=1, distance_weight=1):
           obliczana jest wartość przystosowania układu klawiatury.
         - `rows_weight`: Waga cechy rząd klawisza.
         - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
+        - `alteration_weight`: Waga cechy alteracja rąk.
+        - `fingers_weight`: Waga cechy palcowanie.
 
     :Return:
         - Ocena danego układu klawiatury. Im wyższa, tym lepsza.
@@ -224,7 +247,14 @@ def fitness(specimen, corpus, rows_weight=1, distance_weight=1):
 
     rows = 0 # cecha: rząd klawiszy
     distance = 0 # cecha: odległość poprzedniego klawisza
+    alteration = 0 # cecha: zmiana rąk
+    fingers = 0 # cecha: palcowanie (dłuższy palec powinien więcej pisać)
+    prev_row, prev_column = None, None
     for c in corpus: # iterujemy kolejno po znakach w tekście
+        if c not in specimen.genotype:
+            prev_row = None
+            prev_column = None
+            continue
         # znajdujemy pozycję znaku na danym układzie klawiatury
         for i, r in enumerate(specimen.phenotype):
             if c in r:
@@ -232,20 +262,46 @@ def fitness(specimen, corpus, rows_weight=1, distance_weight=1):
                 column = r.index(c)
                 break
         # obliczamy cechę: rząd klawiszy
-        if row == 1: # środkowy (home row)
+        if row == 1 and (3 < column < 6): # 'gh' na QWERTY
+            rows += .5
+        elif row == 1: # środkowy (home row)
             rows += 1
+        elif row == 0 and (3 < column < 6): # 'ty' na QWERTY
+            rows += .2
         elif row == 0: # górny
             rows += .5
-        elif row == 2: # dolny
+        elif row == 2 and column == 4: # 'b' na QWERTY
             rows += 0
+        elif row == 2: # dolny
+            rows += .1
         # obliczamy cechę: odległość poprzedniego klawisza
-        # TODO
+        if prev_row and prev_column:
+            d = 1 # ile dodać do distance
+            if column == prev_column:
+                d -= .5
+            elif abs(column - prev_column) == 1: # klawisz obok
+                d -= .3
+            elif abs(row - prev_row) == 2: # skok z góry na dół lub odwrotnie
+                d -= .5
+            distance += d
+        # obliczamy cechę: alteracja rąk
+        if (prev_row < 5 and row >= 5) or (prev_row >= 5 and row < 5):
+            alteration += 1
+        # obliczamy cechę: palcowanie
+        if row == 0 or row == 9:
+            fingers += 0 # mały palec
+        if row == 1 or row == 8:
+            fingers += .5 # palec serdeczny
+        else:
+            fingers += 1 # palec środkowy lub wskazujący
+        # pamiętamy pozycję poprzedniego znaku w tekście
         prev_row = row
         prev_column = column
-    return (rows * rows_weight) + (distance * distance_weight)
+    return (rows * rows_weight) + (distance * distance_weight) + \
+            (alteration * alteration_weight) + (fingers * fingers_weight)
 
 
-def epoch(iterations, population_size, p_c, p_m, selection, select_args, \
+def epoch(iterations, population_size, p_c, p_m, selection, select_args,
         fitness, fit_args):
     u"""Jeden przebieg algorytmu genetycznego.
 
