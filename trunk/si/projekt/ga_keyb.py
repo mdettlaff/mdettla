@@ -75,8 +75,9 @@ class Specimen:
     Osobnikiem jest układ klawiatury, reprezentowany przez ciąg znaków.
 
     """
-    def __init__(self, fit_func, fit_args, parents=None, p_c=.7, p_m=.7):
-        u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
+    def __init__(self, fit_func, fit_args, parents=None, p_c=.7, p_m=.7,
+            clone=None):
+        u"""Utwórz nowego osobnika (losowo, przez krzyżowanie lub klonowanie).
 
         :Parameters:
             - `fit_func`: Funkcja obliczająca przystosowanie osobnika. Jako
@@ -87,13 +88,17 @@ class Specimen:
               genotypem.
             - `p_c`: Prawdopodobieństwo krzyżowania.
             - `p_m`: Prawdopodobieństwo mutacji.
+            - `clone`: Genotyp, który zostanie przypisany nowemu osobnikowi.
+              Klon powstanie, jeśli podano ten argument a nie podano rodziców.
 
         """
         self.genotype = []
         if parents:
             self.__new_descendant(parents, p_c, p_m)
-        else:
+        elif not clone:
             self.__new_random_instance()
+        else:
+            self.genotype = clone
         self.fitness = fit_func(self, *fit_args)
 
     def __new_random_instance(self):
@@ -183,6 +188,17 @@ def main():
             .replace(u'ę', 'e').replace(u'ł', 'l').replace(u'ń', 'n') \
             .replace(u'ó', 'o').replace(u'ś', 's').replace(u'ż', 'z') \
             .replace(u'ź', 'z')
+
+    def print_stats(specimen, corpus):
+        print specimen
+        print u'przystosowanie:\t\t', specimen.fitness
+        stats = statistics(specimen, corpus).split('\n')
+        print u'rzędy klawiszy:\t\t', stats[0]
+        print u'palce lewej ręki:\t', stats[1][3:]
+        print u'palce prawej ręki:\t', stats[2][3:]
+        print u'alternacja rąk:\t\t', stats[3]
+        print u'odległość poprzedniego:\t', stats[4]
+
     try:
         options, args = getopt.getopt(sys.argv[1:], 'hs:c:m:', ['help'])
         for option, argument in options:
@@ -202,17 +218,22 @@ def main():
                 for line in open(filename).readlines():
                     corpus += line.decode('UTF-8')
             corpus = pl_chars_to_latin(corpus)
-            print corpus
 
-            p1 = Specimen(fitness, [corpus] + 4*[1])
-            p2 = Specimen(fitness, [corpus] + 4*[1])
-            offspring = Specimen(fitness, [corpus] + 4*[1], (p1, p2), p_c, p_m)
-            print p1
-            print p1.fitness, '\n'
-            print p2
-            print p2.fitness, '\n'
-            print offspring
-            print offspring.fitness
+            print u'LOSOWY UKŁAD KLAWIATURY:'
+            random_layout = Specimen(fitness, [corpus] + 4*[1])
+            print_stats(random_layout, corpus)
+            print u'\nQWERTY:'
+            qwerty = Specimen(fitness, [corpus] + 4*[1], clone = \
+                    u'q w e r t y u i o p'.split() + \
+                    u'a s d f g h j k l ;'.split() + \
+                    u'z x c v b n m , . ?'.split())
+            print_stats(qwerty, corpus)
+            print u'\nDVORAK:'
+            dvorak = Specimen(fitness, [corpus] + 4*[1], clone = \
+                    u'? , . p y f g c r l'.split() + \
+                    u'a o e u i d h t n s'.split() + \
+                    u'; q j k x b m w v z'.split())
+            print_stats(dvorak, corpus)
         else:
             print usage
 
@@ -222,13 +243,13 @@ def main():
         sys.exit(2)
 
 
-def fitness(specimen, corpus, rows_weight=1, distance_weight=1,
-        alteration_weight=1, fingers_weight=1):
+def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
+        alteration_weight=1, distance_weight=1):
     u"""Funkcja przystosowania.
 
     Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
-    układu klawiatury: rząd klawisza, odległość poprzedniego klawisza,
-    alteracja rąk, palcowanie (dłuższe palce powinny wykonywać więcej pracy).
+    układu klawiatury: rząd klawisza, palcowanie (dłuższe palce powinny
+    wykonywać więcej pracy), alteracja rąk, odległość poprzedniego klawisza.
     O wpływie danej cechy na wynik decydują wagi (patrz parametry).
 
     :Parameters:
@@ -236,9 +257,9 @@ def fitness(specimen, corpus, rows_weight=1, distance_weight=1,
         - `corpus`: Tekst (najlepiej dość długi), na podstawie analizy którego
           obliczana jest wartość przystosowania układu klawiatury.
         - `rows_weight`: Waga cechy rząd klawisza.
-        - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
-        - `alteration_weight`: Waga cechy alteracja rąk.
         - `fingers_weight`: Waga cechy palcowanie.
+        - `alteration_weight`: Waga cechy alteracja rąk.
+        - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
 
     :Return:
         - Ocena danego układu klawiatury. Im wyższa, tym lepsza.
@@ -246,59 +267,123 @@ def fitness(specimen, corpus, rows_weight=1, distance_weight=1,
     """
 
     rows = 0 # cecha: rząd klawiszy
-    distance = 0 # cecha: odległość poprzedniego klawisza
-    alteration = 0 # cecha: zmiana rąk
     fingers = 0 # cecha: palcowanie (dłuższy palec powinien więcej pisać)
-    prev_row, prev_column = None, None
+    alteration = 0 # cecha: zmiana rąk
+    distance = 0 # cecha: odległość poprzedniego klawisza
+    prev_row, prev_col = None, None
     for c in corpus: # iterujemy kolejno po znakach w tekście
         if c not in specimen.genotype:
             prev_row = None
-            prev_column = None
+            prev_col = None
             continue
         # znajdujemy pozycję znaku na danym układzie klawiatury
         for i, r in enumerate(specimen.phenotype):
             if c in r:
                 row = i
-                column = r.index(c)
+                col = r.index(c)
                 break
         # obliczamy cechę: rząd klawiszy
-        if row == 1 and (3 < column < 6): # 'gh' na QWERTY
+        if row == 1 and (3 < col < 6): # 'gh' na QWERTY
             rows += .5
         elif row == 1: # środkowy (home row)
             rows += 1
-        elif row == 0 and (3 < column < 6): # 'ty' na QWERTY
+        elif row == 0 and (3 < col < 6): # 'ty' na QWERTY
             rows += .2
         elif row == 0: # górny
             rows += .5
-        elif row == 2 and column == 4: # 'b' na QWERTY
+        elif row == 2 and col == 4: # 'b' na QWERTY
             rows += 0
         elif row == 2: # dolny
             rows += .1
+        # obliczamy cechę: palcowanie
+        if col == 0 or col == 9:
+            fingers += 0 # mały palec
+        elif col == 1 or col == 8:
+            fingers += .5 # palec serdeczny
+        else:
+            fingers += 1 # palec środkowy lub wskazujący
+        # obliczamy cechę: alteracja rąk
+        if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+            alteration += 1
         # obliczamy cechę: odległość poprzedniego klawisza
-        if prev_row and prev_column:
+        if prev_row and prev_col:
             d = 1 # ile dodać do distance
-            if column == prev_column:
+            if col == prev_col:
                 d -= .5
-            elif abs(column - prev_column) == 1: # klawisz obok
+            elif abs(col - prev_col) == 1: # klawisz obok
                 d -= .3
             elif abs(row - prev_row) == 2: # skok z góry na dół lub odwrotnie
                 d -= .5
             distance += d
-        # obliczamy cechę: alteracja rąk
-        if (prev_row < 5 and row >= 5) or (prev_row >= 5 and row < 5):
-            alteration += 1
-        # obliczamy cechę: palcowanie
-        if row == 0 or row == 9:
-            fingers += 0 # mały palec
-        if row == 1 or row == 8:
-            fingers += .5 # palec serdeczny
-        else:
-            fingers += 1 # palec środkowy lub wskazujący
         # pamiętamy pozycję poprzedniego znaku w tekście
         prev_row = row
-        prev_column = column
-    return (rows * rows_weight) + (distance * distance_weight) + \
-            (alteration * alteration_weight) + (fingers * fingers_weight)
+        prev_col = col
+    return (rows * rows_weight) + (fingers * fingers_weight) + \
+            (alteration * alteration_weight) + (distance * distance_weight)
+
+
+def statistics(specimen, corpus):
+    u"""Zwróć statystyki dotyczące podanego układu klawiatury.
+
+    Działa podobnie jak funkcja `fitness`, ale zwraca wyniki które są bardziej
+    czytelne i zrozumiałe dla człowieka, podane w ułamkach (więcej = lepiej).
+    
+    :Return:
+        Napis zawierający:
+            - Wykorzystanie rzędów klawiszy na klawiaturze.
+            - Ilość znaków przepisana przez poszczególne palce.
+            - Zmienianie rąk przy wpisywaniu kolejnych znaków.
+            - Stosunek znaków, dla których poprzedni znak leżał w tej samej lub
+              sąsiedniej kolumnie do pozostałych.
+            
+    """
+    all_chars = .0 # ilość znaków jakie uwzględniliśmy w analizie
+    rows = [0, 0, 0] # rząd klawiszy
+    fingers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # palcowanie
+    alteration = 0 # zmiana rąk
+    distance = 0 # odległość poprzedniego klawisza
+    prev_row, prev_col = None, None
+    for c in corpus: # iterujemy kolejno po znakach w tekście
+        if c not in specimen.genotype:
+            prev_row = None
+            prev_col = None
+            continue
+        all_chars += 1
+        # znajdujemy pozycję znaku na danym układzie klawiatury
+        for i, r in enumerate(specimen.phenotype):
+            if c in r:
+                row = i
+                col = r.index(c)
+                break
+        # obliczamy cechę: rząd klawiszy
+        rows[row] += 1
+        # obliczamy cechę: palcowanie
+        fingers[col] += 1
+        # obliczamy cechę: alteracja rąk
+        if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+            alteration += 1
+        # obliczamy cechę: odległość poprzedniego klawisza
+        if prev_row and prev_col:
+            if (col != prev_col) and (abs(col - prev_col) != 1):
+                distance += 1
+        # pamiętamy pozycję poprzedniego znaku w tekście
+        prev_row = row
+        prev_col = col
+    fingers[3] += fingers[4]
+    fingers[6] += fingers[5]
+    fingers = fingers[:4] + fingers[6:]
+    string = ''
+    for i in range(len(rows)):
+        string += str(rows[i] / all_chars * 100)[:4] + '% '
+    string = string[:-1] + '\nL: '
+    for i in range(len(fingers) / 2):
+        string += str(int(fingers[i] / all_chars * 100)) + '% '
+    string += '\nR: '
+    for i in range(len(fingers) / 2, len(fingers), 1):
+        string += str(int(fingers[i] / all_chars * 100)) + '% '
+    string = string[:-1] + '\n' + str(alteration / all_chars * 100)[:4] + '%\n'
+    string += str(distance / all_chars * 100)[:4] + '%\n'
+    return string
 
 
 def epoch(iterations, population_size, p_c, p_m, selection, select_args,
