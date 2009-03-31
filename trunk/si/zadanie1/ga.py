@@ -5,6 +5,9 @@ u"""\
 Prosty algorytm genetyczny przeznaczony do poszukiwania drogi w labiryncie.\
 """
 
+__docformat__ = 'restructuredtext pl'
+__author__ = u'Michał Dettlaff'
+
 import sys
 import getopt
 import random
@@ -28,12 +31,15 @@ class Specimen:
     def __init__(self, fit_func, parents=None, p_c=.7, p_m=0, genotype_len=10):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
 
-        fit_func - funkcja obliczająca przystosowanie osobnika
-        parents - rodzice osobnika, z których skrzyżowania powstanie; jeśli nie
-        podano rodziców, tworzony jest osobnik z losowym genotypem
-        p_c - prawdopodobieństwo krzyżowania
-        p_m - prawdopodobieństwo mutacji
-        genotype_len - długość genotypu (jeśli tworzymy losowego osobnika)
+        :Parameters:
+            - `fit_func`: Funkcja obliczająca przystosowanie osobnika.
+            - `parents`: Rodzice osobnika, z których skrzyżowania powstanie.
+              Jeśli nie podano rodziców, tworzony jest osobnik z losowym
+              genotypem.
+            - `p_c`: Prawdopodobieństwo krzyżowania.
+            - `p_m`: Prawdopodobieństwo mutacji.
+            - `genotype_len`: Długość genotypu (jeśli tworzymy losowego
+              osobnika).
 
         """
         self.genotype = []
@@ -123,10 +129,14 @@ class Maze:
     def move(self, pos, direction):
         u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
 
-        pos - nasza aktualna pozycja
-        direction - kierunek w jakim chcemy iść ('left', 'right', 'up' lub
-        'down')
-        Jeśli droga jest zablokowana, zwróć aktualną pozycję.
+        :Parameters: 
+            - `pos`: Nasza aktualna pozycja.
+            - `direction`: Kierunek w jakim chcemy iść ('left', 'right', 'up'
+              lub 'down').
+
+        :Return:
+            - Pozycja po wykonaniu ruchu. Jeśli droga jest zablokowana, zwróć
+              aktualną pozycję.
 
         """
         if direction == 'left':
@@ -221,30 +231,27 @@ def select_proportional(population, *args):
 def select_tournament(population, k):
     u"""Selekcja turniejowa.
 
-    Losuj bez powtórzeń k osobników i zwróć najlepiej przystosowanego.
+    Losuj bez powtórzeń `k` osobników z populacji `population` i zwróć
+    najlepiej przystosowanego.
 
     """
-    p = list(population)
-    candidates = []
-    for i in range(k):
-        specimen = random.choice(p)
-        p.remove(specimen)
-        candidates.append(specimen)
-    del p
-    return max(candidates)
+    return max(random.sample(population, k))
 
 
 def epoch(pop_size, g_len, p_c, p_m, target_fitness, selection, select_arg):
     u"""Jeden przebieg algorytmu genetycznego.
 
-    pop_size - rozmiar populacji
-    g_len - długość genotypu osobnika
-    p_c - prawdopodobieństwo krzyżowania
-    p_m - prawdopodobieństwo mutacji
-    target_fitness - wartość przystosowania jaką chcemy osiągnąć
-    selection - funkcja selekcji, do wybierania rodziców z populacji
-    select_arg - argument przekazany do funkcji selekcji
-    Zwraca listę najlepszych osobników w kolejnych populacjach.
+    :Parameters: 
+        - `pop_size`: Rozmiar populacji.
+        - `g_len`: Długość genotypu osobnika.
+        - `p_c`: Prawdopodobieństwo krzyżowania.
+        - `p_m`: Prawdopodobieństwo mutacji.
+        - `target_fitness`: Wartość przystosowania jaką chcemy osiągnąć.
+        - `selection`: Funkcja selekcji, do wybierania rodziców z populacji.
+        - `select_arg`: Argument przekazany do funkcji selekcji.
+
+    :Return:
+        - Lista z najlepszymi osobnikami w kolejnych populacjach.
 
     """
     population = [] # lista osobników (instancji klasy Specimen)
