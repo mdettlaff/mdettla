@@ -23,7 +23,7 @@ cat $tmpfile; echo -n -e "\t"; ./tautology.sh < $tmpfile
 echo -n "(p => (q=>r)) => ((p=>q) => (p=>r));" > $tmpfile
 cat $tmpfile; echo -n -e "\t"; ./tautology.sh < $tmpfile
 
-echo -e "\nKontrtautologie:"
+echo -e "\nNie-tautologie:"
 echo -n "p=>q;" > $tmpfile
 cat $tmpfile; echo -n -e "\t"; ./tautology.sh < $tmpfile
 echo -n "(p=>q) <=> (p=>~r);" > $tmpfile
