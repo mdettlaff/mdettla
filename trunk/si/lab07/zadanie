@@ -1,0 +1,17 @@
+W gramatyce formuł zasady niżej mają pierwszeństwo.
+Tworzą się drzewa z formuł. Dla alternatywy:
+p V q V r:
+	V
+      p   V
+	 q r
+
+java Glowny
+wpisać np.:
+p=>q <=> ~q=>~p;
+
+Tw.
+Formuła w Koniunkcyjnej Postaci Normalnej jest tautologią <=>
+każda alternatywa zawiera kontrarną parę literałów (p & ~p)
+
+Napisać program, który sprawdza czy formuła w KPN jest tautologią korzystając
+z powyższego twierdzenia.
