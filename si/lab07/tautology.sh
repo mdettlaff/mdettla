@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Sprawdza czy podana formuła jest tautologią. Przykład:
+# Sprawdza czy podana formula jest tautologia. Przyklad:
 # ~p => (p=>q);
 
 tmpfile="/tmp/asdf.txt"
