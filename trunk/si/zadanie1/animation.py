@@ -1,16 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+u"""Animacja pokazująca szukanie drogi w labiryncie przez algorytm genetyczny.
+
+Dla każdego pokolenia wybierany jest z niego najlepiej przystosowany osobnik,
+który następnie porusza się po labiryncie zgodnie z ruchami określonymi przez
+jego genotyp.
+
+"""
+
 from PyQt4 import QtCore, QtGui
 import ga
 import sys
 import random
 
 
-usage = u"""\
-Wizualizacja poszukiwania drogi w labiryncie przez algorytm genetyczny.
-Użycie: python animation.py PLIK_Z_LABIRYNTEM\
-"""
+usage = u"""Użycie: python animation.py PLIK_Z_LABIRYNTEM"""
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -36,6 +41,7 @@ class AnimationWindow(QtGui.QMainWindow):
 
 
 class Maze(QtGui.QFrame):
+    u"""Obszar na którym będziemy rysować labirynt, ścieżkę i agenta."""
     speed = 100
     sq_size = 30
 
@@ -143,6 +149,7 @@ if __name__ == '__main__':
 
             sys.exit(app.exec_())
         else:
+            print __doc__
             print usage
     except IOError:
         print u'Błąd: nie można odnaleźć pliku', sys.argv[1]

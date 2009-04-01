@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+u"""Algorytm A*, znajdujący najkrótszą ścieżkę w labiryncie."""
+
 from ga import Maze, Coords
 import sys
 
 
-usage = u"""\
-Algorytm A*, znajdujący najkrótszą ścieżkę w labiryncie.
-Użycie: python a_star.py PLIK_Z_LABIRYNTEM\
-"""
+usage = u"""Użycie: python a_star.py PLIK_Z_LABIRYNTEM"""
 
 graph = {} # klucz: id węzła, wartość: węzeł
 open_nodes = [] # węzły do rozwinięcia
@@ -18,7 +17,9 @@ wg = None # węzeł końcowy
 
 
 class Node:
+    u"""Węzeł grafu, będący polem labiryntu."""
     def __init__(self, id):
+        u"""Utwórz węzeł o podanym id, gdzie id to współrzędne (x, y) pola."""
         self.id = id
         self.neighbors = {} # klucz: węzeł sąsiadujący, wartość: koszt
         self.previous = None
@@ -111,7 +112,6 @@ def a_star(w0, wg):
                 neighbor.f = neighbor.g + neighbor.h
     return None
 
-
 def reconstruct_path(node):
     u"""Zwróć ścieżkę powstałą w wyniku działania algorytmu A*."""
     path = []
@@ -141,6 +141,7 @@ if __name__ == '__main__':
             else:
                 print u'Nie znaleziono ścieżki.'
         else:
+            print __doc__
             print usage
     except IOError:
         print u'Nie można odnaleźć podanego pliku.'
