@@ -15,7 +15,7 @@ class Glowny {
 	    w = pars.form0(br);
 	    w = kpn.przeksztalc(w);
             if (pars.lk.leksZnak().equals(";"))
-                System.out.println("\n" + w.wyrNapis() + "\n");
+                System.out.println(w.wyrNapis());
 	    else  throw new Blad("SMIECI NA KONCU");
         }
 	catch (Blad e) { System.err.println(e.msg); }
