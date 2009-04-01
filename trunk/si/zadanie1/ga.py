@@ -20,14 +20,23 @@ Opcje:
         -s m  Ustaw rozmiar populacji na m osobników.\
 """
 
-m = 150 # rozmiar populacji
-l = 70 # rozmiar chromosomu
-p_c = .7 # prawdopodobieństwo krzyżowania
-p_m = .7 # prawdopodobieństwo mutacji
+m = 150
+u"""Rozmiar populacji."""
+l = 70
+u"""Rozmiar chromosomu."""
+p_c = .7
+u"""Prawdopodobieństwo krzyżowania."""
+p_m = .7
+u"""Prawdopodobieństwo mutacji."""
 
 
 class Specimen:
-    u"""Osobnik o określonym genotypie należący do populacji."""
+    u"""Osobnik o określonym genotypie należący do populacji.
+
+    Osobnikiem jest agent poruszający się po labiryncie. Jego ruchy określone
+    są przez jego genotyp.
+
+    """
     def __init__(self, fit_func, parents=None, p_c=.7, p_m=0, genotype_len=10):
         u"""Utwórz nowego osobnika (losowo lub poprzez krzyżowanie).
 
