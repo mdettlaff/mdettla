@@ -129,7 +129,7 @@ class Maze:
     def move(self, pos, direction):
         u"""Zwróć naszą pozycję po wykonaniu podanego ruchu w labiryncie.
 
-        :Parameters: 
+        :Parameters:
             - `pos`: Nasza aktualna pozycja.
             - `direction`: Kierunek w jakim chcemy iść ('left', 'right', 'up'
               lub 'down').
@@ -241,7 +241,7 @@ def select_tournament(population, k):
 def epoch(pop_size, g_len, p_c, p_m, target_fitness, selection, select_arg):
     u"""Jeden przebieg algorytmu genetycznego.
 
-    :Parameters: 
+    :Parameters:
         - `pop_size`: Rozmiar populacji.
         - `g_len`: Długość genotypu osobnika.
         - `p_c`: Prawdopodobieństwo krzyżowania.
