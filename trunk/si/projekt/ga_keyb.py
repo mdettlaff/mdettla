@@ -35,10 +35,10 @@ Pod uwagę brane są następujące cechy:
 
 1. Rząd klawiszy. Za literę w środkowym rzędzie wartość zwiększana jest o 1, \
 w górnym o 0.5, a w dolnym 0. Ruch palca wskazującego do środka: +0.5.
-2. Bliskość klawiszy. Za literę wpisaną tym samym palcem co poprzednio \
-przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
+2. Użycie palców. Za literę wpisaną małym palcem 0, serdecznym +0.5, reszta +1.
 3. Zmiana rąk. Za literę wpisaną inną ręką niż poprzednio +1.
-4. Długość palca. Za literę wpisaną małym palcem 0, serdecznym +0.5, reszta +1.
+4. Odległość poprzedniego klawisza. Za literę wpisaną tym samym palcem co \
+poprzednio przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
 
 """
 
@@ -55,8 +55,9 @@ usage = u"""\
 Użycie: python ga_keyb.py [opcje] PLIK...
 Plik tekstowy PLIK zostanie użyty do oceny przystosowania.
 Opcje:
-    -c P    Ustaw prawdopodobieństwo krzyżowania na P (0 <= P <= 1).
-    -m P    Ustaw prawdopodobieństwo mutacji na P (0 <= P <= 1).
+    -e ENC  Kodowanie znaków w pliku PLIK (domyślnie UTF-8).
+    -c P    Prawdopodobieństwo krzyżowania na (0 <= P <= 1).
+    -m P    Prawdopodobieństwo mutacji na (0 <= P <= 1).
     -s N    Ustaw rozmiar populacji na N osobników.
     --help  Wyświetl treść pomocy i zakończ.\
 """
@@ -67,6 +68,8 @@ DEFAULT_P_C = .7
 u"""Domyślne prawdopodobieństwo krzyżowania."""
 DEFAULT_P_M = .7
 u"""Domyślne prawdopodobieństwo mutacji."""
+DEFAULT_ENCODING = 'UTF-8'
+u"""Domyślne kodowanie znaków w plikach tekstowych do analizy."""
 
 
 class Specimen:
@@ -184,8 +187,15 @@ class Corpus:
     utworzone na podstawie analizy zbioru tekstów.
 
     """
+    def __init__(self, filenames, encoding, size):
+        u"""Utwórz nowe dane do analizy.
 
-    def __init__(self, filenames):
+        :Parameters:
+            - `filenames`: Nazwy plików tekstowych, które będziemy analizować.
+            - `encoding`: Kodowanie znaków w plikach do analizy.
+            - `size`: Pamiętamy tylko `size` najczęściej występujących słów.
+
+        """
         self.frequencies = {} # słowa i ich częstotliwości
         pl2latin = lambda string: \
                 string.lower().replace(u'ą', 'a').replace(u'ć', 'c') \
@@ -194,19 +204,19 @@ class Corpus:
                 .replace(u'ź', 'z')
         for filename in filenames:
             for line in open(filename).readlines():
-                for word in pl2latin(line.decode('UTF-8')).split():
+                for word in pl2latin(line.decode(encoding)).split():
                     if word in self.frequencies:
                         self.frequencies[word] += 1
                     else:
                         self.frequencies[word] = 1
+        self.frequencies = dict(sorted(self.frequencies.iteritems(),
+            key=lambda x: x[1], reverse=True)[:size])
 
     def __str__(self):
         s = ''
         for i, (word, freq) in enumerate(sorted(self.frequencies.iteritems(),
                 key=lambda x: x[1], reverse=True)):
             s += str(freq) + '\t' + word + '\n'
-            if i > 18: # pokazuj tylko najczęściej występujące
-                break
         return s[:-1]
 
 
@@ -214,6 +224,7 @@ def main(argv):
     population_size = DEFAULT_POPULATION_SIZE
     p_c = DEFAULT_P_C # prawdopodobieństwo krzyżowania
     p_m = DEFAULT_P_M # prawdopodobieństwo mutacji
+    encoding = DEFAULT_ENCODING
 
     def print_stats(specimen, corpus):
         print specimen
@@ -226,12 +237,14 @@ def main(argv):
         print u'odległość poprzedniego:\t', stats[4]
 
     try:
-        options, args = getopt.getopt(argv[1:], 'hs:c:m:', ['help'])
+        options, args = getopt.getopt(argv[1:], 'he:s:c:m:', ['help'])
         for option, argument in options:
             if option in ('-h', '--help'):
                 print __doc__.split('\n')[0]
                 print usage
                 sys.exit()
+            elif option == '-e':
+                encoding = argument
             elif option == '-s':
                 population_size = int(argument)
             elif option == '-c':
@@ -241,10 +254,9 @@ def main(argv):
 
         if args:
             print u'Analiza statystyczna tekstu...'
-            corpus = Corpus(args)
+            corpus = Corpus(args, encoding, 100)
             print corpus
 
-            """
             print u'LOSOWY UKŁAD KLAWIATURY:'
             random_layout = Specimen(fitness, [corpus] + [1, 1, 1, 1])
             print_stats(random_layout, corpus)
@@ -260,7 +272,6 @@ def main(argv):
                     u"a o e u i d h t n s".split() + \
                     u"; q j k x b m w v z".split())
             print_stats(dvorak, corpus)
-            """
 
         else:
             print usage
@@ -268,6 +279,9 @@ def main(argv):
         print str(err)
         print usage
         sys.exit(2)
+    except UnicodeDecodeError:
+        print u'błąd: podany plik zawiera znaki spoza kodowania', encoding
+        sys.exit(1)
 
 
 def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
@@ -275,7 +289,7 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
     u"""Funkcja przystosowania.
 
     Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
-    układu klawiatury: rząd klawisza, palcowanie (dłuższe palce powinny
+    układu klawiatury: rząd klawisza, użycie palców (dłuższe palce powinny
     wykonywać więcej pracy), alternacja rąk, odległość poprzedniego klawisza.
     O wpływie danej cechy na wynik decydują wagi (patrz parametry).
 
@@ -284,7 +298,7 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
         - `corpus`: Tekst (najlepiej dość długi), na podstawie analizy którego
           obliczana jest wartość przystosowania układu klawiatury.
         - `rows_weight`: Waga cechy rząd klawisza.
-        - `fingers_weight`: Waga cechy palcowanie.
+        - `fingers_weight`: Waga cechy użycie palców.
         - `alternation_weight`: Waga cechy alternacja rąk.
         - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
 
@@ -294,57 +308,63 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
     """
 
     rows = 0 # cecha: rząd klawiszy
-    fingers = 0 # cecha: palcowanie (dłuższy palec powinien więcej pisać)
+    fingers = 0 # cecha: użycie palców (dłuższy palec powinien więcej pisać)
     alternation = 0 # cecha: zmiana rąk
     distance = 0 # cecha: odległość poprzedniego klawisza
     prev_row, prev_col = None, None
-    for c in corpus: # iterujemy kolejno po znakach w tekście
-        if c not in specimen.genotype:
-            prev_row = None
-            prev_col = None
-            continue
-        # znajdujemy pozycję znaku na danym układzie klawiatury
-        for i, r in enumerate(specimen.phenotype):
-            if c in r:
-                row = i
-                col = r.index(c)
-                break
-        # obliczamy cechę: rząd klawiszy
-        if row == 1 and (3 < col < 6): # 'gh' na QWERTY
-            rows += .5
-        elif row == 1: # środkowy (home row)
-            rows += 1
-        elif row == 0 and (3 < col < 6): # 'ty' na QWERTY
-            rows += .2
-        elif row == 0: # górny
-            rows += .5
-        elif row == 2 and col == 4: # 'b' na QWERTY
-            rows += 0
-        elif row == 2: # dolny
-            rows += .1
-        # obliczamy cechę: palcowanie
-        if col == 0 or col == 9:
-            fingers += 0 # mały palec
-        elif col == 1 or col == 8:
-            fingers += .5 # palec serdeczny
-        else:
-            fingers += 1 # palec środkowy lub wskazujący
-        # obliczamy cechę: alternacja rąk
-        if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
-            alternation += 1
-        # obliczamy cechę: odległość poprzedniego klawisza
-        if prev_row and prev_col:
-            d = 1 # ile dodać do distance
-            if col == prev_col:
-                d -= .5
-            elif abs(col - prev_col) == 1: # klawisz obok
-                d -= .3
-            elif abs(row - prev_row) == 2: # skok z góry na dół lub odwrotnie
-                d -= .5
-            distance += d
-        # pamiętamy pozycję poprzedniego znaku w tekście
-        prev_row = row
-        prev_col = col
+    for word, freq in corpus.frequencies.iteritems():
+        for c in word: # iterujemy kolejno po znakach
+            if c not in specimen.genotype:
+                prev_row = None
+                prev_col = None
+                continue
+            # znajdujemy pozycję znaku na danym układzie klawiatury
+            for i, r in enumerate(specimen.phenotype):
+                if c in r:
+                    row = i
+                    col = r.index(c)
+                    break
+            # obliczamy cechę: rząd klawiszy
+            reward = 0
+            if row == 1 and (3 < col < 6): # 'gh' na QWERTY
+                reward = .5
+            elif row == 1: # środkowy (home row)
+                reward = 1
+            elif row == 0 and (3 < col < 6): # 'ty' na QWERTY
+                reward = .2
+            elif row == 0: # górny
+                reward = .5
+            elif row == 2 and col == 4: # 'b' na QWERTY
+                reward = 0
+            elif row == 2: # dolny
+                reward = .1
+            rows += reward * freq
+            # obliczamy cechę: użycie palców
+            reward = 0
+            if col == 0 or col == 9:
+                reward = 0 # mały palec
+            elif col == 1 or col == 8:
+                reward = .5 # palec serdeczny
+            else:
+                reward = 1 # palec środkowy lub wskazujący
+            fingers += reward * freq
+            # obliczamy cechę: alternacja rąk
+            if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+                alternation += 1 * freq
+            # obliczamy cechę: odległość poprzedniego klawisza
+            if prev_row and prev_col:
+                reward = 1 # ile dodać do distance
+                if col == prev_col:
+                    reward -= .5
+                elif abs(col - prev_col) == 1: # klawisz obok
+                    reward -= .3
+                # skok z góry na dół lub odwrotnie
+                if abs(row - prev_row) == 2:
+                    reward -= .5
+                distance += reward * freq
+            # pamiętamy pozycję poprzedniego znaku w tekście
+            prev_row = row
+            prev_col = col
     return (rows * rows_weight) + (fingers * fingers_weight) + \
             (alternation * alternation_weight) + (distance * distance_weight)
 
@@ -353,7 +373,7 @@ def statistics(specimen, corpus):
     u"""Zwróć statystyki dotyczące podanego układu klawiatury.
 
     Działa podobnie jak funkcja `fitness`, ale zwraca wyniki które są bardziej
-    czytelne i zrozumiałe dla człowieka, podane w ułamkach (więcej = lepiej).
+    czytelne i zrozumiałe dla człowieka, podane procentowo (więcej = lepiej).
 
     :Return:
         Napis zawierający:
@@ -366,36 +386,37 @@ def statistics(specimen, corpus):
     """
     all_chars = .0 # ilość znaków jakie uwzględniliśmy w analizie
     rows = [0, 0, 0] # rząd klawiszy
-    fingers = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] # palcowanie
+    fingers = 10*[0] # użycie palców
     alternation = 0 # zmiana rąk
     distance = 0 # odległość poprzedniego klawisza
     prev_row, prev_col = None, None
-    for c in corpus: # iterujemy kolejno po znakach w tekście
-        if c not in specimen.genotype:
-            prev_row = None
-            prev_col = None
-            continue
-        all_chars += 1
-        # znajdujemy pozycję znaku na danym układzie klawiatury
-        for i, r in enumerate(specimen.phenotype):
-            if c in r:
-                row = i
-                col = r.index(c)
-                break
-        # obliczamy cechę: rząd klawiszy
-        rows[row] += 1
-        # obliczamy cechę: palcowanie
-        fingers[col] += 1
-        # obliczamy cechę: alternacja rąk
-        if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
-            alternation += 1
-        # obliczamy cechę: odległość poprzedniego klawisza
-        if prev_row and prev_col:
-            if (col != prev_col) and (abs(col - prev_col) != 1):
-                distance += 1
-        # pamiętamy pozycję poprzedniego znaku w tekście
-        prev_row = row
-        prev_col = col
+    for word, freq in corpus.frequencies.iteritems():
+        for c in word: # iterujemy kolejno po znakach
+            if c not in specimen.genotype:
+                prev_row = None
+                prev_col = None
+                continue
+            all_chars += 1 * freq
+            # znajdujemy pozycję znaku na danym układzie klawiatury
+            for i, r in enumerate(specimen.phenotype):
+                if c in r:
+                    row = i
+                    col = r.index(c)
+                    break
+            # obliczamy udział rzędów klawiszy
+            rows[row] += 1 * freq
+            # obliczamy użycie palców
+            fingers[col] += 1 * freq
+            # obliczamy alternację rąk
+            if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+                alternation += 1 * freq
+            # obliczamy cechę: odległość poprzedniego klawisza
+            if prev_row and prev_col:
+                if (col != prev_col) and (abs(col - prev_col) != 1):
+                    distance += 1 * freq
+            # pamiętamy pozycję poprzedniego znaku w tekście
+            prev_row = row
+            prev_col = col
     fingers[3] += fingers[4]
     fingers[6] += fingers[5]
     fingers = fingers[:4] + fingers[6:]
