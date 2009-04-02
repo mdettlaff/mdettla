@@ -3,7 +3,7 @@
 
 u"""Szukanie optymalnego układu klawiatury za pomocą algorytmu genetycznego.
 
-Stosujemy algorytm genetyczny z selekcją turniejową lub proporcjonalną.
+Stosujemy algorytm genetyczny z selekcją turniejową.
 Genotypem pojedynczego osobnika będzie ciąg znaków reprezentujący układ
 klawiszy na klawiaturze. Przykładowo, dla układu QWERTY wygląda on tak:
 "qwertyuiopasdfghjkl;zxcvbnm,.?".
@@ -55,19 +55,33 @@ usage = u"""\
 Użycie: python ga_keyb.py [opcje] PLIK...
 Plik tekstowy PLIK zostanie użyty do oceny przystosowania.
 Opcje:
-    -e ENC  Kodowanie znaków w pliku PLIK (domyślnie UTF-8).
-    -c P    Prawdopodobieństwo krzyżowania na (0 <= P <= 1).
-    -m P    Prawdopodobieństwo mutacji na (0 <= P <= 1).
-    -s N    Ustaw rozmiar populacji na N osobników.
+    -e ENC  Kodowanie znaków w plikach wejściowych (domyślnie UTF-8).
+    -c P    Prawdopodobieństwo krzyżowania (0 <= P <= 1).
+    -m P    Prawdopodobieństwo mutacji (0 <= P <= 1).
+    -t K    Rozmiar turnieju K w selekcji turniejowej.
+    -s ROZ  ROZMIAR (ilość osobników) populacji.
+    -w N    Analizuj tylko N najczęściej występujących wyrazów.
+    -r W    Waga cechy rząd klawiszy.
+    -u W    Waga cechy użycie palców.
+    -a W    Waga cechy alternacja rąk.
+    -d W    Waga cechy odległość poprzedniego klawisza.
     --help  Wyświetl treść pomocy i zakończ.\
 """
 
-DEFAULT_POPULATION_SIZE = 200
+DEFAULT_ITERATIONS = 32
+u"""Domyślny rozmiar populacji."""
+DEFAULT_POPULATION_SIZE = 100
+u"""Domyślny rozmiar populacji."""
+DEFAULT_TOURNAMENT_SIZE = 4
 u"""Domyślny rozmiar populacji."""
 DEFAULT_P_C = .7
 u"""Domyślne prawdopodobieństwo krzyżowania."""
 DEFAULT_P_M = .7
 u"""Domyślne prawdopodobieństwo mutacji."""
+DEFAULT_WEIGHTS = [1, 1, 1, 1]
+u"""Domyślne wartości wag dla cech układów klawiatury."""
+DEFAULT_WORDS = 128
+u"""Domyślna maksymalna ilość najczęstszych wyrazów do analizowania."""
 DEFAULT_ENCODING = 'UTF-8'
 u"""Domyślne kodowanie znaków w plikach tekstowych do analizy."""
 
@@ -116,7 +130,6 @@ class Specimen:
         self.genotype = list(parents[random.randint(0, 1)].genotype)
         # krzyżowanie jednostajne z naprawianiem powtórzeń
         if (random.random() < p_c):
-            print u'krzyżowanie'
             # znaki, których jeszcze nie skopiowaliśmy do genotypu potomka
             unused = set(self.genotype)
             random_order = range(0, len(self.genotype))
@@ -136,7 +149,6 @@ class Specimen:
         # mutacja
         if (random.random() < p_m):
             mut_count = int(math.floor(1 / random.uniform(.1, 1)))
-            print u'mutacja X', mut_count
             # pozycje, na których wystąpią mutacje
             mp = random.sample(range(0, len(self.genotype)), mut_count * 2)
             for i in range(0, len(mp), 2):
@@ -221,9 +233,13 @@ class Corpus:
 
 
 def main(argv):
+    iterations = DEFAULT_ITERATIONS
     population_size = DEFAULT_POPULATION_SIZE
+    tournament_size = DEFAULT_TOURNAMENT_SIZE
     p_c = DEFAULT_P_C # prawdopodobieństwo krzyżowania
     p_m = DEFAULT_P_M # prawdopodobieństwo mutacji
+    weights = DEFAULT_WEIGHTS
+    words = DEFAULT_WORDS
     encoding = DEFAULT_ENCODING
 
     def print_stats(specimen, corpus):
@@ -234,10 +250,11 @@ def main(argv):
         print u'palce lewej ręki:\t', stats[1][3:]
         print u'palce prawej ręki:\t', stats[2][3:]
         print u'alternacja rąk:\t\t', stats[3]
-        print u'odległość poprzedniego:\t', stats[4]
+        print u'zmiana palca:\t\t', stats[4]
 
     try:
-        options, args = getopt.getopt(argv[1:], 'he:s:c:m:', ['help'])
+        options, args = getopt.getopt(argv[1:], 'he:s:i:c:m:w:r:u:a:d:',
+                ['help'])
         for option, argument in options:
             if option in ('-h', '--help'):
                 print __doc__.split('\n')[0]
@@ -245,20 +262,41 @@ def main(argv):
                 sys.exit()
             elif option == '-e':
                 encoding = argument
-            elif option == '-s':
-                population_size = int(argument)
+            elif option == '-i':
+                iterations = int(argument)
             elif option == '-c':
                 p_c = float(argument)
             elif option == '-m':
                 p_m = float(argument)
+            elif option == '-t':
+                tournament_size = int(argument)
+            elif option == '-s':
+                population_size = int(argument)
+            elif option == '-w':
+                words = int(argument)
+            elif option == '-r':
+                weights[0] = float(argument)
+            elif option == '-u':
+                weights[1] = float(argument)
+            elif option == '-a':
+                weights[2] = float(argument)
+            elif option == '-d':
+                weights[3] = float(argument)
 
         if args:
             print u'Analiza statystyczna tekstu...'
-            corpus = Corpus(args, encoding, 100)
-            print corpus
+            corpus = Corpus(args, encoding, words)
+
+            print u'Najlepsze przystosowanie w kolejnych populacjach:'
+            results = []
+            for i, best in enumerate(epoch(iterations, population_size,
+                p_c, p_m, select_tournament, [tournament_size], fitness,
+                [corpus] + weights)):
+                results.append(best)
+                print '%d\t%.2f' % (i+1, best.fitness)
 
             print u'LOSOWY UKŁAD KLAWIATURY:'
-            random_layout = Specimen(fitness, [corpus] + [1, 1, 1, 1])
+            random_layout = Specimen(fitness, [corpus] + weights)
             print_stats(random_layout, corpus)
             print u'\nQWERTY:'
             qwerty = Specimen(fitness, [corpus] + [1, 1, 1 ,1], clone = \
@@ -267,11 +305,13 @@ def main(argv):
                     u"z x c v b n m , . ?".split())
             print_stats(qwerty, corpus)
             print u'\nDVORAK:'
-            dvorak = Specimen(fitness, [corpus] + [1, 1, 1, 1], clone = \
+            dvorak = Specimen(fitness, [corpus] + weights, clone = \
                     u"' , . p y f g c r l".split() + \
                     u"a o e u i d h t n s".split() + \
                     u"; q j k x b m w v z".split())
             print_stats(dvorak, corpus)
+            print u'\nWYNIK ALGORYTMU GENETYCZNEGO:'
+            print_stats(max(results), corpus)
 
         else:
             print usage
@@ -279,8 +319,12 @@ def main(argv):
         print str(err)
         print usage
         sys.exit(2)
+    except IOError:
+        print >> sys.stderr, u'błąd: nie można odnaleźć pliku'
+        sys.exit(1)
     except UnicodeDecodeError:
-        print u'błąd: podany plik zawiera znaki spoza kodowania', encoding
+        print >> sys.stderr, u'błąd: plik zawiera znaki spoza kodowania', \
+                encoding
         sys.exit(1)
 
 
@@ -295,8 +339,8 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
 
     :Parameters:
         - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
-        - `corpus`: Tekst (najlepiej dość długi), na podstawie analizy którego
-          obliczana jest wartość przystosowania układu klawiatury.
+        - `corpus`: Częstotliwości występowania słów w tekście, na podstawie
+          których obliczana jest wartość przystosowania układu klawiatury.
         - `rows_weight`: Waga cechy rząd klawisza.
         - `fingers_weight`: Waga cechy użycie palców.
         - `alternation_weight`: Waga cechy alternacja rąk.
@@ -313,6 +357,8 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
     distance = 0 # cecha: odległość poprzedniego klawisza
     prev_row, prev_col = None, None
     for word, freq in corpus.frequencies.iteritems():
+        prev_row = None
+        prev_col = None
         for c in word: # iterujemy kolejno po znakach
             if c not in specimen.genotype:
                 prev_row = None
@@ -341,18 +387,21 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
             rows += reward * freq
             # obliczamy cechę: użycie palców
             reward = 0
-            if col == 0 or col == 9:
+            if (col == 0 or col == 9) and (row != 1):
                 reward = 0 # mały palec
-            elif col == 1 or col == 8:
+            if (col == 0 or col == 9) and (row == 1):
+                reward = .5 # mały palec, środkowy rząd
+            elif (col == 1 or col == 8) and (row != 1):
                 reward = .5 # palec serdeczny
             else:
                 reward = 1 # palec środkowy lub wskazujący
             fingers += reward * freq
             # obliczamy cechę: alternacja rąk
-            if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
-                alternation += 1 * freq
+            if prev_col is not None:
+                if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+                    alternation += 1 * freq
             # obliczamy cechę: odległość poprzedniego klawisza
-            if prev_row and prev_col:
+            if prev_row is not None and prev_col is not None:
                 reward = 1 # ile dodać do distance
                 if col == prev_col:
                     reward -= .5
@@ -380,23 +429,28 @@ def statistics(specimen, corpus):
             - Wykorzystanie rzędów klawiszy na klawiaturze.
             - Ilość znaków przepisana przez poszczególne palce.
             - Zmienianie rąk przy wpisywaniu kolejnych znaków.
-            - Stosunek znaków, dla których poprzedni znak leżał w tej samej lub
-              sąsiedniej kolumnie do pozostałych.
+            - Stosunek znaków napisanych innym palcem niż poprzednio do
+              pozostałych.
 
     """
     all_chars = .0 # ilość znaków jakie uwzględniliśmy w analizie
+    non_first_chars = .0 # znaki, które nie wystąpują na początku słów
     rows = [0, 0, 0] # rząd klawiszy
     fingers = 10*[0] # użycie palców
     alternation = 0 # zmiana rąk
     distance = 0 # odległość poprzedniego klawisza
     prev_row, prev_col = None, None
     for word, freq in corpus.frequencies.iteritems():
+        prev_row = None
+        prev_col = None
         for c in word: # iterujemy kolejno po znakach
             if c not in specimen.genotype:
                 prev_row = None
                 prev_col = None
                 continue
             all_chars += 1 * freq
+            if prev_col is not None:
+                non_first_chars += 1 * freq
             # znajdujemy pozycję znaku na danym układzie klawiatury
             for i, r in enumerate(specimen.phenotype):
                 if c in r:
@@ -408,11 +462,15 @@ def statistics(specimen, corpus):
             # obliczamy użycie palców
             fingers[col] += 1 * freq
             # obliczamy alternację rąk
-            if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
-                alternation += 1 * freq
-            # obliczamy cechę: odległość poprzedniego klawisza
-            if prev_row and prev_col:
-                if (col != prev_col) and (abs(col - prev_col) != 1):
+            if prev_col is not None:
+                if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
+                    alternation += 1 * freq
+            # obliczamy pisanie tym innym palcem niż poprzednio
+            if prev_col is not None:
+                if col != prev_col and not (prev_col == 3 and col == 4) and \
+                        not (prev_col == 4 and col == 3) and \
+                        not (prev_col == 5 and col == 6) and \
+                        not (prev_col == 6 and col == 5):
                     distance += 1 * freq
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
@@ -429,8 +487,9 @@ def statistics(specimen, corpus):
     string += '\nR: '
     for i in range(len(fingers) / 2, len(fingers), 1):
         string += str(int(fingers[i] / all_chars * 100)) + '% '
-    string = string[:-1] + '\n' + str(alternation/all_chars * 100)[:4] + '%\n'
-    string += str(distance / all_chars * 100)[:4] + '%\n'
+    string = string[:-1] + '\n' + str(alternation / non_first_chars * 100) \
+            [:4] + '%\n'
+    string += str(distance / non_first_chars * 100)[:4] + '%\n'
     return string
 
 
@@ -451,16 +510,16 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_args,
         - `fit_args`: Lista argumentów przekazywanych do funkcji `fitness`.
 
     :Return:
-        - Lista najlepiej przystosowanych osobników w kolejnych populacjach.
+        - Pobieraj najlepiej przystosowane osobniki w kolejnych populacjach
+          za pomocą generatora.
 
     """
     population = [] # lista osobników (instancji klasy Specimen)
-    best = [] # najlepsze osobniki w kolejnych populacjach
     # tworzymy początkową populację złożoną z osobników o losowym genotypie
     for i in range(population_size):
         population.append(Specimen(fitness, fit_args))
-    best.append(max(population))
-    for i in range(iterations):
+    yield max(population)
+    for i in range(iterations - 1):
         new_population = []
         for i in range(len(population)):
             parent1 = selection(population, *select_args)
@@ -469,27 +528,7 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_args,
             offspring = Specimen(fitness, fit_args, parents, p_c, p_m)
             new_population.append(offspring)
         population = new_population
-        best.append(max(population))
-    return best
-
-
-def select_proportional(population, *args):
-    u"""Selekcja proporcjonalna.
-
-    Wylosuj i zwróć osobnika z populacji z prawdopodobieństwem proporcjonalnym
-    do jego przystosowania.
-
-    """
-    total_fitness = 0
-    for specimen in population:
-        total_fitness += specimen.fitness
-    r = random.random() * total_fitness
-    sum_fitness = 0
-    for specimen in population:
-        sum_fitness += specimen.fitness
-        if sum_fitness > r:
-            break
-    return specimen
+        yield max(population)
 
 
 def select_tournament(population, k):
