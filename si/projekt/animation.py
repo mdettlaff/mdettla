@@ -18,7 +18,7 @@ import ga_keyb
 usage = u"""Użycie: python animation.py PLIK_TEKSTOWY..."""
 
 WIDTH = 516
-HEIGHT = 200
+HEIGHT = 192
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -43,8 +43,6 @@ class AnimationWindow(QtGui.QMainWindow):
 
 class KeyboardCanvas(QtGui.QFrame):
     u"""Obszar na którym będziemy rysować klawiaturę."""
-    key_size = 30
-
     def __init__(self, parent):
         QtGui.QFrame.__init__(self, parent)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -55,7 +53,18 @@ class KeyboardCanvas(QtGui.QFrame):
         black = QtGui.QColor(0x000000)
         white = QtGui.QColor(0xFFFFFF)
 
-        self.drawLayout(painter, white, black)
+        painter.fillRect(0, 0, WIDTH, HEIGHT, white) # tło
+        painter.setPen(black)
+        painter.drawImage(4, 4, QtGui.QImage('keyboard.png'))
+        left_margins = [62, 75, 95]
+        top_margins = [53, 86, 120]
+        if self.current_layout:
+            for i, row in enumerate(self.current_layout.phenotype):
+                x = left_margins[i]
+                y = top_margins[i]
+                for key in row:
+                    painter.drawText(x, y, key.upper())
+                    x += 34
 
     def nextGeneration(self, generation_count, keyboard_layout):
         self.current_layout = keyboard_layout
@@ -64,21 +73,22 @@ class KeyboardCanvas(QtGui.QFrame):
                 'Pokolenie ' + str(generation_count) +
                 ', przystosowanie ' + str(self.current_layout.fitness))
 
-    def drawLayout(self, painter, bg_color, color):
-        painter.fillRect(0, 0, WIDTH, HEIGHT, bg_color) # tło
-        painter.setPen(color)
-        painter.drawImage(4, 4, QtGui.QImage('keyboard.png'))
-        if self.current_layout:
-            painter.drawText(60, 52, self.current_layout.genotype[0].upper())
-
 
 class GeneticAlgorithmThread(threading.Thread):
     def run(self):
-        corpus = ga_keyb.Corpus(sys.argv[1:], 'UTF-8', 128)
+        iterations = ga_keyb.DEFAULT_ITERATIONS
+        population_size = ga_keyb.DEFAULT_POPULATION_SIZE
+        tournament_size = ga_keyb.DEFAULT_TOURNAMENT_SIZE
+        p_c = ga_keyb.DEFAULT_P_C # prawdopodobieństwo krzyżowania
+        p_m = ga_keyb.DEFAULT_P_M # prawdopodobieństwo mutacji
+        weights = ga_keyb.DEFAULT_WEIGHTS
+        words = ga_keyb.DEFAULT_WORDS
+        encoding = ga_keyb.DEFAULT_ENCODING
+        corpus = ga_keyb.Corpus(sys.argv[1:], encoding, words)
         #results = []
-        for i, best in enumerate(ga_keyb.epoch(16, 100, .7, .7,
-            ga_keyb.select_tournament, [4], ga_keyb.fitness,
-            [corpus] + [1, 1, 1, 1])):
+        for i, best in enumerate(ga_keyb.epoch(iterations, population_size,
+            p_c, p_m, ga_keyb.select_tournament, [tournament_size],
+            ga_keyb.fitness, [corpus] + weights)):
             #results.append(best)
             animation.canvas.nextGeneration(i+1, best)
             print '%d\t%d' % (i+1, best.fitness)
