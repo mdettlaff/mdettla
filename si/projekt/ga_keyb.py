@@ -69,11 +69,11 @@ Opcje:
 """
 
 DEFAULT_ITERATIONS = 32
-u"""Domyślny rozmiar populacji."""
+u"""Domyślna ilość iteracji (pokoleń) algorytmu genetycznego."""
 DEFAULT_POPULATION_SIZE = 100
 u"""Domyślny rozmiar populacji."""
 DEFAULT_TOURNAMENT_SIZE = 4
-u"""Domyślny rozmiar populacji."""
+u"""Domyślny rozmiar turnieju dla selekcji turniejowej."""
 DEFAULT_P_C = .7
 u"""Domyślne prawdopodobieństwo krzyżowania."""
 DEFAULT_P_M = .7
@@ -404,12 +404,12 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
             if prev_row is not None and prev_col is not None:
                 reward = 1 # ile dodać do distance
                 if col == prev_col:
-                    reward -= .5
+                    reward -= 1
                 elif abs(col - prev_col) == 1: # klawisz obok
                     reward -= .3
                 # skok z góry na dół lub odwrotnie
-                if abs(row - prev_row) == 2:
-                    reward -= .5
+                #if abs(row - prev_row) == 2:
+                #    reward -= .5
                 distance += reward * freq
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
