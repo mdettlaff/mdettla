@@ -19,14 +19,6 @@ usage = u"""Użycie: python animation.py PLIK_TEKSTOWY..."""
 
 WIDTH = 516
 HEIGHT = 196
-iterations = ga_keyb.DEFAULT_ITERATIONS
-population_size = ga_keyb.DEFAULT_POPULATION_SIZE
-tournament_size = ga_keyb.DEFAULT_TOURNAMENT_SIZE
-p_c = ga_keyb.DEFAULT_P_C # prawdopodobieństwo krzyżowania
-p_m = ga_keyb.DEFAULT_P_M # prawdopodobieństwo mutacji
-weights = ga_keyb.DEFAULT_WEIGHTS
-words = ga_keyb.DEFAULT_WORDS
-encoding = ga_keyb.DEFAULT_ENCODING
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -88,22 +80,37 @@ class KeyboardCanvas(QtGui.QFrame):
 
 
 def genetic_algorithm():
-    for i, best in enumerate(ga_keyb.epoch(iterations, population_size,
-        p_c, p_m, ga_keyb.select_tournament, [tournament_size],
-        ga_keyb.fitness, [corpus] + weights)):
-        yield (i+1, best)
+    for i, best in enumerate(
+            ga_keyb.epoch(
+                ga_keyb.DEFAULT_ITERATIONS,
+                ga_keyb.DEFAULT_POPULATION_SIZE,
+                ga_keyb.DEFAULT_P_C, # prawdopodobieństwo krzyżowania
+                ga_keyb.DEFAULT_P_M, # prawdopodobieństwo mutacji
+                ga_keyb.select_tournament,
+                (ga_keyb.DEFAULT_TOURNAMENT_SIZE,),
+                ga_keyb.fitness,
+                (corpus,)
+                )
+            ):
+        yield i+1, best
 
 
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
+def main(argv):
+    global corpus
+    if len(argv) > 1:
         print u'Analiza statystyczna tekstu...'
-        corpus = ga_keyb.Corpus(sys.argv[1:], encoding, words)
+        corpus = ga_keyb.Corpus(argv[1:],
+                ga_keyb.DEFAULT_ENCODING, ga_keyb.DEFAULT_WORDS)
 
-        app = QtGui.QApplication(sys.argv)
+        app = QtGui.QApplication(argv)
         animation = AnimationWindow()
         animation.show()
         sys.exit(app.exec_())
     else:
         print __doc__[:-1]
         print usage
+
+
+if __name__ == '__main__':
+    main(sys.argv)
 
