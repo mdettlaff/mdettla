@@ -22,23 +22,15 @@ znaczeniu nie jest możliwe. Zastosujemy jednak operację podobną do krzyżowan
 jednostajnego, naprawiając na bieżąco powtórzenia znaków - wywoła to
 z konieczności kilka mutacji podczas każdego krzyżowania.
 
-Funkcja oceny (przystosowania) obliczana jest za pomocą wzoru
-
-    c1*w1 + c2*w2 + ... + cN*wN,
-
-gdzie c1,...,cN oznaczają cechy układu klawiatury, a w1,...,wN to ich wagi,
-decydujące o wpływie danej cechy na ogólną ocenę. Im większa wartość funkcji
-oceny, tym lepsze przystosowanie osobnika. Wartości liczbowe są przypisywane
-cechom na podstawie analizy reprezentatywnego zbioru tekstów.
-
-Pod uwagę brane są następujące cechy:
-
-1. Rząd klawiszy. Za literę w środkowym rzędzie wartość zwiększana jest o 1, \
-w górnym o 0.5, a w dolnym 0. Ruch palca wskazującego do środka: +0.5.
-2. Użycie palców. Za literę wpisaną małym palcem 0, serdecznym +0.5, reszta +1.
-3. Zmiana rąk. Za literę wpisaną inną ręką niż poprzednio +1.
-4. Odległość poprzedniego klawisza. Za literę wpisaną tym samym palcem co \
-poprzednio przyznajemy 0, palcem obok +0.5. W pozostałych przypadkach +1.
+Funkcja oceny (przystosowania) układu klawiatury obliczana jest na podstawie
+analizy reprezentatywnego zbioru tekstów. Do optymalizowanych zmiennych należą:
+    - Rząd klawiszy. Najlepszy jest środkowy, najmniej optymalny dolny.
+    - Użycie palców. Najwięcej pracy powinny wykonywać najdłuższe palce.
+    - Zmiana rąk. Niekorzystne jest pisanie ciągów liter tą samą ręką.
+    - Zmiana palca. Należy unikać pisania kolejnych liter tym samym palcem.
+Na początku wartość przystosowania wynosi 0, po czym za odstępstwa od
+powyższych przyznawane są punkty karne. Dlatego im mniejsza wartość funkcji
+oceny, tym lepsze przystosowanie osobnika.
 
 """
 
@@ -55,32 +47,27 @@ usage = u"""\
 Użycie: python ga_keyb.py [opcje] PLIK...
 Plik tekstowy PLIK zostanie użyty do oceny przystosowania.
 Opcje:
-    -e ENC  Kodowanie znaków w plikach wejściowych (domyślnie UTF-8).
     -c P    Prawdopodobieństwo krzyżowania (0 <= P <= 1).
+    -e ENC  Kodowanie znaków w plikach wejściowych (domyślnie UTF-8).
+    -i ITER Liczba ITERACJI (pokoleń) algorytmu genetycznego.
     -m P    Prawdopodobieństwo mutacji (0 <= P <= 1).
-    -t K    Rozmiar turnieju K w selekcji turniejowej.
     -s ROZ  ROZMIAR (ilość osobników) populacji.
+    -t K    Rozmiar turnieju K w selekcji turniejowej.
     -w N    Analizuj tylko N najczęściej występujących wyrazów.
-    -r W    Waga cechy rząd klawiszy.
-    -u W    Waga cechy użycie palców.
-    -a W    Waga cechy alternacja rąk.
-    -d W    Waga cechy odległość poprzedniego klawisza.
     --help  Wyświetl treść pomocy i zakończ.\
 """
 
-DEFAULT_ITERATIONS = 32
+DEFAULT_ITERATIONS = 150
 u"""Domyślna ilość iteracji (pokoleń) algorytmu genetycznego."""
 DEFAULT_POPULATION_SIZE = 100
 u"""Domyślny rozmiar populacji."""
 DEFAULT_TOURNAMENT_SIZE = 4
 u"""Domyślny rozmiar turnieju dla selekcji turniejowej."""
-DEFAULT_P_C = .7
+DEFAULT_P_C = .5
 u"""Domyślne prawdopodobieństwo krzyżowania."""
 DEFAULT_P_M = .7
 u"""Domyślne prawdopodobieństwo mutacji."""
-DEFAULT_WEIGHTS = [1, 1, 1, 1]
-u"""Domyślne wartości wag dla cech układów klawiatury."""
-DEFAULT_WORDS = 128
+DEFAULT_WORDS = 200
 u"""Domyślna maksymalna ilość najczęstszych wyrazów do analizowania."""
 DEFAULT_ENCODING = 'UTF-8'
 u"""Domyślne kodowanie znaków w plikach tekstowych do analizy."""
@@ -238,7 +225,6 @@ def main(argv):
     tournament_size = DEFAULT_TOURNAMENT_SIZE
     p_c = DEFAULT_P_C # prawdopodobieństwo krzyżowania
     p_m = DEFAULT_P_M # prawdopodobieństwo mutacji
-    weights = DEFAULT_WEIGHTS
     words = DEFAULT_WORDS
     encoding = DEFAULT_ENCODING
 
@@ -253,35 +239,27 @@ def main(argv):
         print u'zmiana palca:\t\t', stats[4]
 
     try:
-        options, args = getopt.getopt(argv[1:], 'he:s:i:c:m:w:r:u:a:d:',
+        options, args = getopt.getopt(argv[1:], 'hc:e:i:m:s:t:w:',
                 ['help'])
         for option, argument in options:
             if option in ('-h', '--help'):
                 print __doc__.split('\n')[0]
                 print usage
                 sys.exit()
+            elif option == '-c':
+                p_c = float(argument)
             elif option == '-e':
                 encoding = argument
             elif option == '-i':
                 iterations = int(argument)
-            elif option == '-c':
-                p_c = float(argument)
             elif option == '-m':
                 p_m = float(argument)
-            elif option == '-t':
-                tournament_size = int(argument)
             elif option == '-s':
                 population_size = int(argument)
+            elif option == '-t':
+                tournament_size = int(argument)
             elif option == '-w':
                 words = int(argument)
-            elif option == '-r':
-                weights[0] = float(argument)
-            elif option == '-u':
-                weights[1] = float(argument)
-            elif option == '-a':
-                weights[2] = float(argument)
-            elif option == '-d':
-                weights[3] = float(argument)
 
         if args:
             print u'Analiza statystyczna tekstu...'
@@ -290,28 +268,34 @@ def main(argv):
             print u'Najlepsze przystosowanie w kolejnych populacjach:'
             results = []
             for i, best in enumerate(epoch(iterations, population_size,
-                p_c, p_m, select_tournament, [tournament_size], fitness,
-                [corpus] + weights)):
+                p_c, p_m, select_tournament, (tournament_size,), fitness,
+                (corpus,))):
                 results.append(best)
                 print '%d\t%.2f' % (i+1, best.fitness)
 
             print u'LOSOWY UKŁAD KLAWIATURY:'
-            random_layout = Specimen(fitness, [corpus] + weights)
+            random_layout = Specimen(fitness, (corpus,))
             print_stats(random_layout, corpus)
             print u'\nQWERTY:'
-            qwerty = Specimen(fitness, [corpus] + [1, 1, 1 ,1], clone = \
+            qwerty = Specimen(fitness, (corpus,), clone = \
                     u"q w e r t y u i o p".split() + \
                     u"a s d f g h j k l ;".split() + \
                     u"z x c v b n m , . ?".split())
             print_stats(qwerty, corpus)
             print u'\nDVORAK:'
-            dvorak = Specimen(fitness, [corpus] + weights, clone = \
+            dvorak = Specimen(fitness, (corpus,), clone = \
                     u"' , . p y f g c r l".split() + \
                     u"a o e u i d h t n s".split() + \
                     u"; q j k x b m w v z".split())
             print_stats(dvorak, corpus)
             print u'\nWYNIK ALGORYTMU GENETYCZNEGO:'
-            print_stats(max(results), corpus)
+            print_stats(min(results), corpus)
+            print u'\nKLAUSLER:'
+            klausler = Specimen(fitness, (corpus,), clone = \
+                    u"k , u y p  w l m f c".split() + \
+                    u"o a e i d  r n t h s".split() + \
+                    u"q . ' ; z  x v g b j".split())
+            print_stats(klausler, corpus)
 
         else:
             print usage
@@ -328,33 +312,29 @@ def main(argv):
         sys.exit(1)
 
 
-def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
-        alternation_weight=1, distance_weight=1):
+def fitness(specimen, corpus):
     u"""Funkcja przystosowania.
 
     Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
     układu klawiatury: rząd klawisza, użycie palców (dłuższe palce powinny
     wykonywać więcej pracy), alternacja rąk, odległość poprzedniego klawisza.
-    O wpływie danej cechy na wynik decydują wagi (patrz parametry).
 
     :Parameters:
         - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
         - `corpus`: Częstotliwości występowania słów w tekście, na podstawie
           których obliczana jest wartość przystosowania układu klawiatury.
-        - `rows_weight`: Waga cechy rząd klawisza.
-        - `fingers_weight`: Waga cechy użycie palców.
-        - `alternation_weight`: Waga cechy alternacja rąk.
-        - `distance_weight`: Waga cechy odległość od poprzedniego klawisza.
 
     :Return:
-        - Ocena danego układu klawiatury. Im wyższa, tym lepsza.
+        - Ocena danego układu klawiatury. Im niższa, tym lepsza.
 
     """
 
-    rows = 0 # cecha: rząd klawiszy
-    fingers = 0 # cecha: użycie palców (dłuższy palec powinien więcej pisać)
-    alternation = 0 # cecha: zmiana rąk
-    distance = 0 # cecha: odległość poprzedniego klawisza
+    # tabela kar przyznawanych za klawisze na danych pozycjach
+    costs = ( (5, 3, 3, 3, 4, 4, 3, 3, 3, 5),
+              (1, 0, 0, 0, 2, 2, 0, 0, 0, 1),
+              (6, 5, 5, 5, 7, 7, 5, 5, 5, 6) )
+    punishment = 0 # punkty karne za nieoptymalne znaki
+    same_hand_twice = False # poprzednie dwa znaki były napisane tą samą ręką
     prev_row, prev_col = None, None
     for word, freq in corpus.frequencies.iteritems():
         prev_row = None
@@ -370,52 +350,35 @@ def fitness(specimen, corpus, rows_weight=1, fingers_weight=1,
                     row = i
                     col = r.index(c)
                     break
-            # obliczamy cechę: rząd klawiszy
-            reward = 0
-            if row == 1 and (3 < col < 6): # 'gh' na QWERTY
-                reward = .5
-            elif row == 1: # środkowy (home row)
-                reward = 1
-            elif row == 0 and (3 < col < 6): # 'ty' na QWERTY
-                reward = .2
-            elif row == 0: # górny
-                reward = .5
-            elif row == 2 and col == 4: # 'b' na QWERTY
-                reward = 0
-            elif row == 2: # dolny
-                reward = .1
-            rows += reward * freq
-            # obliczamy cechę: użycie palców
-            reward = 0
-            if (col == 0 or col == 9) and (row != 1):
-                reward = 0 # mały palec
-            if (col == 0 or col == 9) and (row == 1):
-                reward = .5 # mały palec, środkowy rząd
-            elif (col == 1 or col == 8) and (row != 1):
-                reward = .5 # palec serdeczny
-            else:
-                reward = 1 # palec środkowy lub wskazujący
-            fingers += reward * freq
-            # obliczamy cechę: alternacja rąk
-            if prev_col is not None:
-                if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
-                    alternation += 1 * freq
-            # obliczamy cechę: odległość poprzedniego klawisza
+            # punkty karne zgodnie z tablicą kosztów
+            punishment += costs[row][col]
             if prev_row is not None and prev_col is not None:
-                reward = 1 # ile dodać do distance
-                if col == prev_col:
-                    reward -= 1
-                elif abs(col - prev_col) == 1: # klawisz obok
-                    reward -= .3
-                # skok z góry na dół lub odwrotnie
-                #if abs(row - prev_row) == 2:
-                #    reward -= .5
-                distance += reward * freq
+                # punkty karne za pisanie tym samym palcem co poprzednio
+                if (col == prev_col or (prev_col == 3 and col == 4) or \
+                        (prev_col == 4 and col == 3) or \
+                        (prev_col == 5 and col == 6) or \
+                        (prev_col == 6 and col == 5)) and \
+                        not (col == prev_col and row == prev_row):
+                    punishment += 10
+                # punkty karne za pisanie tą samą ręką co poprzednio
+                if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
+                    if prev_row != row or (prev_row == 2 and row == 2):
+                        punishment += 2
+                    if abs(col - prev_col) != 1:
+                        punishment += 1
+                # punkty karne za trzy i więcej znaków napisanych tą samą ręką
+                if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
+                    if same_hand_twice:
+                        punishment += 1
+                    same_hand_twice = True
+                else:
+                    same_hand_twice = False
+            else:
+                same_hand_twice = False
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
             prev_col = col
-    return (rows * rows_weight) + (fingers * fingers_weight) + \
-            (alternation * alternation_weight) + (distance * distance_weight)
+    return punishment
 
 
 def statistics(specimen, corpus):
@@ -467,10 +430,11 @@ def statistics(specimen, corpus):
                     alternation += 1 * freq
             # obliczamy pisanie tym innym palcem niż poprzednio
             if prev_col is not None:
-                if col != prev_col and not (prev_col == 3 and col == 4) and \
+                if (col != prev_col and not (prev_col == 3 and col == 4) and \
                         not (prev_col == 4 and col == 3) and \
                         not (prev_col == 5 and col == 6) and \
-                        not (prev_col == 6 and col == 5):
+                        not (prev_col == 6 and col == 5)) or \
+                        col == prev_col and row == prev_row:
                     distance += 1 * freq
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
@@ -518,7 +482,7 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_args,
     # tworzymy początkową populację złożoną z osobników o losowym genotypie
     for i in range(population_size):
         population.append(Specimen(fitness, fit_args))
-    yield max(population)
+    yield min(population)
     for i in range(iterations - 1):
         new_population = []
         for i in range(len(population)):
@@ -528,17 +492,17 @@ def epoch(iterations, population_size, p_c, p_m, selection, select_args,
             offspring = Specimen(fitness, fit_args, parents, p_c, p_m)
             new_population.append(offspring)
         population = new_population
-        yield max(population)
+        yield min(population)
 
 
 def select_tournament(population, k):
     u"""Selekcja turniejowa.
 
     Losuj bez powtórzeń `k` osobników z danej populacji i zwróć najlepiej
-    przystosowanego.
+    przystosowanego. Uznajemy, że mniejsza wartość przystosowania jest lepsza.
 
     """
-    return max(random.sample(population, k))
+    return min(random.sample(population, k))
 
 
 if __name__ == '__main__':
