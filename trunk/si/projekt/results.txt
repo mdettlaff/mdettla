@@ -1,0 +1,214 @@
+revision: 117
+
+mdettla@mdettla-desktop:~/manta/si/projekt$ python ga_keyb.py corpus/darwin/*
+Analiza statystyczna tekstu...
+Najlepsze przystosowanie w kolejnych populacjach:
+1       3928
+2       3896
+3       3295
+4       3590
+5       3410
+6       3334
+7       3137
+8       3065
+9       2980
+10      2980
+11      2916
+12      2916
+13      2916
+14      2916
+15      2863
+16      2844
+17      2624
+18      2624
+19      2740
+20      2694
+21      2513
+22      2689
+23      2668
+24      2668
+25      2567
+26      2567
+27      2567
+28      2576
+29      2530
+30      2530
+31      2528
+32      2490
+33      2490
+34      2474
+35      2474
+36      2466
+37      2466
+38      2434
+39      2434
+40      2416
+41      2353
+42      2363
+43      2363
+44      2365
+45      2299
+46      2299
+47      2266
+48      2266
+49      2196
+50      2190
+51      2196
+52      2196
+53      2224
+54      2224
+55      2224
+56      2224
+57      2159
+58      2197
+59      2218
+60      2174
+61      2174
+62      2161
+63      2174
+64      2160
+65      2147
+66      2147
+67      2150
+68      2141
+69      2168
+70      2156
+71      2146
+72      2134
+73      2128
+74      2128
+75      2128
+76      2128
+77      2126
+78      2144
+79      2128
+80      2124
+81      2120
+82      2128
+83      2035
+84      2035
+85      2105
+86      2094
+87      2035
+88      2035
+89      2035
+90      2035
+91      2024
+92      2039
+93      2043
+94      2034
+95      2034
+96      2032
+97      2020
+98      2022
+99      2022
+100     2024
+101     1992
+102     1992
+103     1992
+104     1992
+105     1992
+106     1992
+107     1999
+108     1995
+109     2000
+110     2001
+111     2012
+112     2000
+113     2012
+114     1991
+115     1991
+116     1996
+117     2000
+118     2000
+119     1998
+120     1998
+121     1996
+122     1996
+123     1996
+124     1984
+125     1990
+126     1976
+127     1976
+128     1976
+129     1976
+130     1976
+131     1965
+132     1962
+133     1951
+134     1951
+135     1951
+136     1951
+137     1951
+138     1954
+139     1954
+140     1952
+141     1940
+142     1940
+143     1940
+144     1951
+145     1952
+146     1951
+147     1951
+148     1943
+149     1951
+150     1948
+LOSOWY UKŁAD KLAWIATURY:
+x o h . c  p t g r b
+y e m i d  a z u k ;
+j w l v q  s , ' f n
+przystosowanie:         4410.0
+rzędy klawiszy:         41.0% 36.3% 22.6%
+palce lewej ręki:       2% 25% 15% 12%
+palce prawej ręki:      26% 3% 9% 9%
+użycie rąk:             53.5% 46.5%
+alternacja rąk:         57.6%
+zmiana palca:           92.0%
+
+QWERTY:
+q w e r t  y u i o p
+a s d f g  h j k l ;
+z x c v b  n m , . ?
+przystosowanie:         4370.0
+rzędy klawiszy:         51.8% 33.5% 14.8%
+palce lewej ręki:       8% 8% 18% 25%
+palce prawej ręki:      23% 6% 12% 1%
+użycie rąk:             58.4% 41.6%
+alternacja rąk:         62.9%
+zmiana palca:           96.2%
+
+DVORAK:
+' , . p y  f g c r l
+a o e u i  d h t n s
+; q j k x  b m w v z
+przystosowanie:         2331.5
+rzędy klawiszy:         16.9% 75.1% 8.1%
+palce lewej ręki:       8% 9% 14% 10%
+palce prawej ręki:      22% 16% 13% 8%
+użycie rąk:             41.8% 58.2%
+alternacja rąk:         73.1%
+zmiana palca:           98.7%
+
+WYNIK ALGORYTMU GENETYCZNEGO:
+k . y g q  f m c l d
+u e i o a  n h r t s
+j ' , x ;  z v w p b
+przystosowanie:         1940.0
+rzędy klawiszy:         16.5% 77.3% 6.2%
+palce lewej ręki:       2% 14% 8% 18%
+palce prawej ręki:      25% 9% 15% 10%
+użycie rąk:             42.0% 58.0%
+alternacja rąk:         73.8%
+zmiana palca:           99.8%
+
+KLAUSLER:
+k , u y p  w l m f c
+o a e i d  r n t h s
+q . ' ; z  x v g b j
+przystosowanie:         2053.0
+rzędy klawiszy:         17.7% 78.0% 4.3%
+palce lewej ręki:       9% 9% 15% 11%
+palce prawej ręki:      18% 15% 16% 7%
+użycie rąk:             44.1% 55.9%
+alternacja rąk:         75.2%
+zmiana palca:           99.5%
