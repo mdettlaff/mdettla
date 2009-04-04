@@ -351,7 +351,7 @@ def fitness(specimen, corpus):
                     col = r.index(c)
                     break
             # punkty karne zgodnie z tablicą kosztów
-            punishment += costs[row][col]
+            punishment += costs[row][col] * freq
             if prev_row is not None and prev_col is not None:
                 # punkty karne za pisanie tym samym palcem co poprzednio
                 if (col == prev_col or (prev_col == 3 and col == 4) or \
@@ -359,22 +359,22 @@ def fitness(specimen, corpus):
                         (prev_col == 5 and col == 6) or \
                         (prev_col == 6 and col == 5)) and \
                         not (col == prev_col and row == prev_row):
-                    punishment += 10
+                    punishment += 10 * freq
                 # punkty karne za pisanie tą samą ręką co poprzednio
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if prev_row != row or (prev_row == 2 and row == 2):
-                        punishment += 2
+                        punishment += 2 * freq
                     if abs(col - prev_col) != 1:
-                        punishment += 1
+                        punishment += 1 * freq
                     # inboard stroke flow
                     elif (col < 5 and prev_col < 5) and (col < prev_col):
-                        punishment += 1
+                        punishment += 1 * freq
                     elif (col >= 5 and prev_col >= 5) and (col > prev_col):
-                        punishment += 1
+                        punishment += 1 * freq
                 # punkty karne za trzy i więcej znaków napisanych tą samą ręką
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if same_hand_twice:
-                        punishment += 1
+                        punishment += 1 * freq
                     same_hand_twice = True
                 else:
                     same_hand_twice = False
@@ -382,7 +382,7 @@ def fitness(specimen, corpus):
                 same_hand_twice = False
             # punkty karne za pisanie lewą ręką
             if col < 5:
-                punishment += .5
+                punishment += 1 * freq
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
             prev_col = col

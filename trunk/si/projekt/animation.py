@@ -10,7 +10,6 @@ przystosowaniu, który następnie wyświetlany jest na ekranie.
 
 from PyQt4 import QtCore, QtGui
 import sys
-import threading
 
 import ga_keyb
 
@@ -18,7 +17,7 @@ import ga_keyb
 usage = u"""Użycie: python animation.py PLIK_TEKSTOWY..."""
 
 WIDTH = 516
-HEIGHT = 196
+HEIGHT = 345
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -68,8 +67,17 @@ class KeyboardCanvas(QtGui.QFrame):
                 for key in row:
                     painter.drawText(x, y, key.upper())
                     x += 34
-            painter.drawText(5, 186, 'Pokolenie ' + str(self.generation_count)
-                    + ', przystosowanie ' + str(self.current_layout.fitness))
+            # statystyka
+            painter.drawText(5, 187, 'pokolenie ' + str(self.generation_count))
+            painter.drawText(5, 210, u'przystosowanie:\t' +
+                    str(self.current_layout.fitness))
+            stats = ga_keyb.statistics(self.current_layout, corpus).split('\n')
+            painter.drawText(5, 230, u'rzędy klawiszy:\t' + stats[0])
+            painter.drawText(5, 250, u'palce lewej ręki:\t' + stats[1][3:])
+            painter.drawText(5, 270, u'palce prawej ręki:\t' + stats[2][3:])
+            painter.drawText(5, 290, u'użycie rąk:\t\t' + stats[3])
+            painter.drawText(5, 310, u'alternacja rąk:\t' + stats[4])
+            painter.drawText(5, 330, u'zmiana palca:\t'+ stats[5])
 
     def timerEvent(self, event):
         try:
