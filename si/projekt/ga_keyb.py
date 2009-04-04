@@ -275,7 +275,7 @@ def main(argv):
                 p_c, p_m, select_tournament, (tournament_size,), fitness,
                 (corpus,))):
                 results.append(best)
-                print '%d\t%.f' % (i+1, best.fitness)
+                print i+1, '\t', best.fitness
 
             print u'LOSOWY UKŁAD KLAWIATURY:'
             random_layout = Specimen(fitness, (corpus,))
