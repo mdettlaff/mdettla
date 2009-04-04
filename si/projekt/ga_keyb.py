@@ -27,7 +27,8 @@ analizy reprezentatywnego zbioru tekstów. Do optymalizowanych zmiennych należ�
 
     - Rząd klawiszy. Najlepszy jest środkowy, najmniej optymalny dolny.
     - Użycie palców. Najwięcej pracy powinny wykonywać najdłuższe palce.
-    - Zmiana rąk. Niekorzystne jest pisanie ciągów liter tą samą ręką.
+    - Użycie rąk. Prawa ręka powinna wykonywać więcej pracy niż lewa.
+    - Zmiana rąk. Niekorzystne jest pisanie kolejnych liter tą samą ręką.
     - Zmiana palca. Należy unikać pisania kolejnych liter tym samym palcem.
 
 Na początku wartość przystosowania wynosi 0, po czym za odstępstwa od
@@ -237,8 +238,9 @@ def main(argv):
         print u'rzędy klawiszy:\t\t', stats[0]
         print u'palce lewej ręki:\t', stats[1][3:]
         print u'palce prawej ręki:\t', stats[2][3:]
-        print u'alternacja rąk:\t\t', stats[3]
-        print u'zmiana palca:\t\t', stats[4]
+        print u'użycie rąk:\t\t', stats[3]
+        print u'alternacja rąk:\t\t', stats[4]
+        print u'zmiana palca:\t\t', stats[5]
 
     try:
         options, args = getopt.getopt(argv[1:], 'hc:e:i:m:s:t:w:',
@@ -273,7 +275,7 @@ def main(argv):
                 p_c, p_m, select_tournament, (tournament_size,), fitness,
                 (corpus,))):
                 results.append(best)
-                print '%d\t%.2f' % (i+1, best.fitness)
+                print '%d\t%.f' % (i+1, best.fitness)
 
             print u'LOSOWY UKŁAD KLAWIATURY:'
             random_layout = Specimen(fitness, (corpus,))
@@ -316,10 +318,6 @@ def main(argv):
 
 def fitness(specimen, corpus):
     u"""Funkcja przystosowania.
-
-    Przy obliczaniu funkcji przystosowania bierzemy pod uwagę następujące cechy
-    układu klawiatury: rząd klawisza, użycie palców (dłuższe palce powinny
-    wykonywać więcej pracy), alternacja rąk, odległość poprzedniego klawisza.
 
     :Parameters:
         - `specimen`: Układ klawiatury, którego przystosowanie obliczamy.
@@ -368,6 +366,11 @@ def fitness(specimen, corpus):
                         punishment += 2
                     if abs(col - prev_col) != 1:
                         punishment += 1
+                    # inboard stroke flow
+                    elif (col < 5 and prev_col < 5) and (col < prev_col):
+                        punishment += 1
+                    elif (col >= 5 and prev_col >= 5) and (col > prev_col):
+                        punishment += 1
                 # punkty karne za trzy i więcej znaków napisanych tą samą ręką
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if same_hand_twice:
@@ -377,6 +380,9 @@ def fitness(specimen, corpus):
                     same_hand_twice = False
             else:
                 same_hand_twice = False
+            # punkty karne za pisanie lewą ręką
+            if col < 5:
+                punishment += .5
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
             prev_col = col
@@ -393,6 +399,7 @@ def statistics(specimen, corpus):
         Napis zawierający:
             - Wykorzystanie rzędów klawiszy na klawiaturze.
             - Ilość znaków przepisana przez poszczególne palce.
+            - Wykorzystanie lewej i prawej ręki.
             - Zmienianie rąk przy wpisywaniu kolejnych znaków.
             - Stosunek znaków napisanych innym palcem niż poprzednio do
               pozostałych.
@@ -402,6 +409,7 @@ def statistics(specimen, corpus):
     non_first_chars = .0 # znaki, które nie wystąpują na początku słów
     rows = [0, 0, 0] # rząd klawiszy
     fingers = 10*[0] # użycie palców
+    hands = [0, 0] # użycie rąk
     alternation = 0 # zmiana rąk
     distance = 0 # odległość poprzedniego klawisza
     prev_row, prev_col = None, None
@@ -426,6 +434,11 @@ def statistics(specimen, corpus):
             rows[row] += 1 * freq
             # obliczamy użycie palców
             fingers[col] += 1 * freq
+            # obliczamy użycie rąk
+            if col < 5:
+                hands[0] += 1 * freq
+            else:
+                hands[1] += 1 * freq
             # obliczamy alternację rąk
             if prev_col is not None:
                 if (prev_col < 5 and col >= 5) or (prev_col >= 5 and col < 5):
@@ -446,16 +459,17 @@ def statistics(specimen, corpus):
     fingers = fingers[:4] + fingers[6:]
     string = ''
     for i in range(len(rows)):
-        string += str(rows[i] / all_chars * 100)[:4] + '% '
+        string += '%.1f' % (rows[i] / all_chars * 100) + '% '
     string = string[:-1] + '\nL: '
     for i in range(len(fingers) / 2):
-        string += str(int(fingers[i] / all_chars * 100)) + '% '
+        string += '%.f' % (fingers[i] / all_chars * 100) + '% '
     string += '\nR: '
     for i in range(len(fingers) / 2, len(fingers), 1):
-        string += str(int(fingers[i] / all_chars * 100)) + '% '
-    string = string[:-1] + '\n' + str(alternation / non_first_chars * 100) \
-            [:4] + '%\n'
-    string += str(distance / non_first_chars * 100)[:4] + '%\n'
+        string += '%.f' % (fingers[i] / all_chars * 100) + '% '
+    string = string[:-1] + '\n' + '%.1f' % (hands[0] / all_chars * 100) + \
+            '% ' + '%.1f' % (hands[1] / all_chars * 100) + '%\n'
+    string = string + '%.1f' % (alternation / non_first_chars * 100) + '%\n'
+    string += '%.1f' % (distance / non_first_chars * 100) + '%\n'
     return string
 
 
