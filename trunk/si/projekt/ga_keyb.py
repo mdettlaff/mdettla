@@ -24,12 +24,14 @@ z konieczności kilka mutacji podczas każdego krzyżowania.
 
 Funkcja oceny (przystosowania) układu klawiatury obliczana jest na podstawie
 analizy reprezentatywnego zbioru tekstów. Do optymalizowanych zmiennych należą:
+
     - Rząd klawiszy. Najlepszy jest środkowy, najmniej optymalny dolny.
     - Użycie palców. Najwięcej pracy powinny wykonywać najdłuższe palce.
     - Zmiana rąk. Niekorzystne jest pisanie ciągów liter tą samą ręką.
     - Zmiana palca. Należy unikać pisania kolejnych liter tym samym palcem.
+
 Na początku wartość przystosowania wynosi 0, po czym za odstępstwa od
-powyższych przyznawane są punkty karne. Dlatego im mniejsza wartość funkcji
+powyższych przyznawane są punkty karne. Zatem, im mniejsza wartość funkcji
 oceny, tym lepsze przystosowanie osobnika.
 
 """
@@ -385,7 +387,7 @@ def statistics(specimen, corpus):
     u"""Zwróć statystyki dotyczące podanego układu klawiatury.
 
     Działa podobnie jak funkcja `fitness`, ale zwraca wyniki które są bardziej
-    czytelne i zrozumiałe dla człowieka, podane procentowo (więcej = lepiej).
+    czytelne i zrozumiałe dla człowieka, podane procentowo.
 
     :Return:
         Napis zawierający:
