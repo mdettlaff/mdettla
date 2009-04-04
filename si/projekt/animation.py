@@ -45,6 +45,7 @@ class KeyboardCanvas(QtGui.QFrame):
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.keyboard_image = QtGui.QImage('keyboard.png')
         self.current_layout = None
+        self.current_stats = None
         self.generator = genetic_algorithm()
 
     def start(self):
@@ -71,17 +72,20 @@ class KeyboardCanvas(QtGui.QFrame):
             painter.drawText(5, 187, 'pokolenie ' + str(self.generation_count))
             painter.drawText(5, 210, u'przystosowanie:\t' +
                     str(self.current_layout.fitness))
-            stats = ga_keyb.statistics(self.current_layout, corpus).split('\n')
-            painter.drawText(5, 230, u'rzędy klawiszy:\t' + stats[0])
-            painter.drawText(5, 250, u'palce lewej ręki:\t' + stats[1][3:])
-            painter.drawText(5, 270, u'palce prawej ręki:\t' + stats[2][3:])
-            painter.drawText(5, 290, u'użycie rąk:\t\t' + stats[3])
-            painter.drawText(5, 310, u'alternacja rąk:\t' + stats[4])
-            painter.drawText(5, 330, u'zmiana palca:\t'+ stats[5])
+            painter.drawText(5, 230, u'rzędy klawiszy:\t' + self.stats[0])
+            painter.drawText(5, 250, u'palce lewej ręki:\t' +
+                    self.stats[1][3:])
+            painter.drawText(5, 270, u'palce prawej ręki:\t' +
+                    self.stats[2][3:])
+            painter.drawText(5, 290, u'użycie rąk:\t\t' + self.stats[3])
+            painter.drawText(5, 310, u'alternacja rąk:\t' + self.stats[4])
+            painter.drawText(5, 330, u'zmiana palca:\t'+ self.stats[5])
 
     def timerEvent(self, event):
         try:
             self.generation_count, self.current_layout = self.generator.next()
+            self.stats = ga_keyb.statistics(self.current_layout, corpus). \
+                    split('\n')
             self.repaint()
         except StopIteration:
             self.timer.stop()
