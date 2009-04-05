@@ -241,6 +241,7 @@ def main(argv):
         print u'użycie rąk:\t\t', stats[3]
         print u'alternacja rąk:\t\t', stats[4]
         print u'zmiana palca:\t\t', stats[5]
+        print u'ruchy do środka:\t', stats[6]
 
     try:
         options, args = getopt.getopt(argv[1:], 'hc:e:i:m:s:t:w:',
@@ -362,15 +363,16 @@ def fitness(specimen, corpus):
                     punishment += 10 * freq
                 # punkty karne za pisanie tą samą ręką co poprzednio
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
+                    punishment += 1 * freq
                     if prev_row != row or (prev_row == 2 and row == 2):
                         punishment += 2 * freq
                     if abs(col - prev_col) != 1:
                         punishment += 1 * freq
                     # inboard stroke flow
                     elif (col < 5 and prev_col < 5) and (col < prev_col):
-                        punishment += 1 * freq
+                        punishment += 2 * freq
                     elif (col >= 5 and prev_col >= 5) and (col > prev_col):
-                        punishment += 1 * freq
+                        punishment += 2 * freq
                 # punkty karne za trzy i więcej znaków napisanych tą samą ręką
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if same_hand_twice:
@@ -406,12 +408,14 @@ def statistics(specimen, corpus):
 
     """
     all_chars = .0 # ilość znaków jakie uwzględniliśmy w analizie
-    non_first_chars = .0 # znaki, które nie wystąpują na początku słów
+    non_first_chars = .0 # ilość znaków, które nie wystąpują na początku słów
+    stroke_flow = .0 # ilość znaków, które leżą obok poprzedniego znaku
     rows = [0, 0, 0] # rząd klawiszy
     fingers = 10*[0] # użycie palców
     hands = [0, 0] # użycie rąk
     alternation = 0 # zmiana rąk
     distance = 0 # odległość poprzedniego klawisza
+    inboard_stroke_flow = 0
     prev_row, prev_col = None, None
     for word, freq in corpus.frequencies.iteritems():
         prev_row = None
@@ -451,6 +455,13 @@ def statistics(specimen, corpus):
                         not (prev_col == 6 and col == 5)) or \
                         col == prev_col and row == prev_row:
                     distance += 1 * freq
+            # inboard stroke flow
+            if prev_col is not None:
+                if abs(col - prev_col) == 1:
+                    stroke_flow += 1
+                    if (col < 5 and prev_col < 5) and (col > prev_col) or \
+                            (col >= 5 and prev_col >= 5) and (col < prev_col):
+                        inboard_stroke_flow += 1
             # pamiętamy pozycję poprzedniego znaku w tekście
             prev_row = row
             prev_col = col
@@ -470,6 +481,7 @@ def statistics(specimen, corpus):
             '% ' + '%.1f' % (hands[1] / all_chars * 100) + '%\n'
     string = string + '%.1f' % (alternation / non_first_chars * 100) + '%\n'
     string += '%.1f' % (distance / non_first_chars * 100) + '%\n'
+    string += '%.1f' % (inboard_stroke_flow / stroke_flow * 100) + '%\n'
     return string
 
 
