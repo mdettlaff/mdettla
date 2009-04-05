@@ -30,6 +30,7 @@ analizy reprezentatywnego zbioru tekstów. Do optymalizowanych zmiennych należ�
     - Użycie rąk. Prawa ręka powinna wykonywać więcej pracy niż lewa.
     - Zmiana rąk. Niekorzystne jest pisanie kolejnych liter tą samą ręką.
     - Zmiana palca. Należy unikać pisania kolejnych liter tym samym palcem.
+    - Ruchy do środka. Sąsiednie klawisze powinny być pisane ruchem do środka.
 
 Na początku wartość przystosowania wynosi 0, po czym za odstępstwa od
 powyższych przyznawane są punkty karne. Zatem, im mniejsza wartość funkcji
@@ -368,7 +369,7 @@ def fitness(specimen, corpus):
                         punishment += 2 * freq
                     if abs(col - prev_col) != 1:
                         punishment += 1 * freq
-                    # inboard stroke flow
+                    # punkty karne za ruchy od środka
                     elif (col < 5 and prev_col < 5) and (col < prev_col):
                         punishment += 2 * freq
                     elif (col >= 5 and prev_col >= 5) and (col > prev_col):
@@ -405,6 +406,7 @@ def statistics(specimen, corpus):
             - Zmienianie rąk przy wpisywaniu kolejnych znaków.
             - Stosunek znaków napisanych innym palcem niż poprzednio do
               pozostałych.
+            - Pisanie sąsiednich klawiszy w kierunku środka klawiatury.
 
     """
     all_chars = .0 # ilość znaków jakie uwzględniliśmy w analizie
@@ -415,7 +417,7 @@ def statistics(specimen, corpus):
     hands = [0, 0] # użycie rąk
     alternation = 0 # zmiana rąk
     distance = 0 # odległość poprzedniego klawisza
-    inboard_stroke_flow = 0
+    inboard_stroke_flow = 0 # ruchy do środka
     prev_row, prev_col = None, None
     for word, freq in corpus.frequencies.iteritems():
         prev_row = None
@@ -455,7 +457,7 @@ def statistics(specimen, corpus):
                         not (prev_col == 6 and col == 5)) or \
                         col == prev_col and row == prev_row:
                     distance += 1 * freq
-            # inboard stroke flow
+            # obliczamy ruchy do środka (inboard stroke flow)
             if prev_col is not None:
                 if abs(col - prev_col) == 1:
                     stroke_flow += 1
