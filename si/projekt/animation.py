@@ -17,7 +17,7 @@ import ga_keyb
 usage = u"""Użycie: python animation.py PLIK_TEKSTOWY..."""
 
 WIDTH = 516
-HEIGHT = 345
+HEIGHT = 365
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -79,7 +79,8 @@ class KeyboardCanvas(QtGui.QFrame):
                     self.stats[2][3:])
             painter.drawText(5, 290, u'użycie rąk:\t\t' + self.stats[3])
             painter.drawText(5, 310, u'alternacja rąk:\t' + self.stats[4])
-            painter.drawText(5, 330, u'zmiana palca:\t'+ self.stats[5])
+            painter.drawText(5, 330, u'zmiana palca:\t' + self.stats[5])
+            painter.drawText(5, 350, u'ruchy do środka:\t' + self.stats[6])
 
     def timerEvent(self, event):
         try:
