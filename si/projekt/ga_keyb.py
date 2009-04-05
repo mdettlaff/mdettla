@@ -367,13 +367,14 @@ def fitness(specimen, corpus):
                     punishment += 1 * freq
                     if prev_row != row or (prev_row == 2 and row == 2):
                         punishment += 2 * freq
-                    if abs(col - prev_col) != 1:
-                        punishment += 1 * freq
+                    if row == prev_row and abs(col - prev_col) > 1:
+                        punishment += 8 * freq
                     # punkty karne za ruchy od środka
-                    elif (col < 5 and prev_col < 5) and (col < prev_col):
-                        punishment += 2 * freq
-                    elif (col >= 5 and prev_col >= 5) and (col > prev_col):
-                        punishment += 2 * freq
+                    if row == prev_row and abs(col - prev_col) == 1:
+                        if (col < 5 and prev_col < 5) and (col < prev_col):
+                            punishment += 8 * freq
+                        elif (col >= 5 and prev_col >= 5) and (col > prev_col):
+                            punishment += 8 * freq
                 # punkty karne za trzy i więcej znaków napisanych tą samą ręką
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if same_hand_twice:
@@ -458,8 +459,8 @@ def statistics(specimen, corpus):
                         col == prev_col and row == prev_row:
                     distance += 1 * freq
             # obliczamy ruchy do środka (inboard stroke flow)
-            if prev_col is not None:
-                if abs(col - prev_col) == 1:
+            if prev_col is not None and prev_row is not None:
+                if row == prev_row and abs(col - prev_col) == 1: # klawisz obok
                     stroke_flow += 1
                     if (col < 5 and prev_col < 5) and (col > prev_col) or \
                             (col >= 5 and prev_col >= 5) and (col < prev_col):
