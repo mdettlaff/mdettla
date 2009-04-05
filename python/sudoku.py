@@ -10,69 +10,76 @@ import sys
 
 usage = u"""Użycie: python sudoku.py"""
 
-N = 9
+N = 4
 open_nodes = [] # tuple: (heurystyka węzła, węzeł do rozwinięcia)
 closed_nodes = [] # zbadane węzły
-solutions = []
+solution = [] # kolejne liczby dodawane na planszę wraz z pozycjami
 calls_count = 0 # liczba wywołań funkcji dfs()
 
 
-class Solution:
-    def __init__(self, other=None):
-        if other is None:
-            self.board = []
-            for i in range(N):
-                self.board.append(N*[0])
-        else:
-            self.board = other.board[:]
+def print_solution(solution):
+    board = []
+    for i in range(N):
+        board.append(N*[0])
+    for position in solution:
+        board[position[0].y][position[0].x] = position[1]
+    s = ''
+    for y, row in enumerate(board):
+        for x, square in enumerate(row):
+            s += str(square)
+            #if x % 3 == 2:
+            #    s += ' '
+        #if y % 3 == 2:
+        #    s += '\n'
+        s += '\n'
+    print s[:-2]
 
-    def __str__(self):
-        s = ''
-        for y, row in enumerate(self.board):
-            for x, square in enumerate(row):
-                s += str(square)
-                if x % 3 == 2:
-                    s += ' '
-            if y % 3 == 2:
-                s += '\n'
-            s += '\n'
-        return s[:-2]
-
-    def is_consistent(self, value, coords):
-        if self.board[coords.y][coords.x] != 0:
+def is_consistent(board, value, coords):
+    if board[coords.y][coords.x] != 0:
+        return False
+    # rząd
+    for x in range(N):
+        if board[coords.y][x] == value:
             return False
-        # rząd
+    # kolumna
+    for y in range(N):
+        if board[y][coords.x] == value:
+            return False
+    # kwadrat
+    #sq = lambda z: 3 * (z / 3)
+    #for y in range(sq(coords.y), 3 + sq(coords.y)):
+    #    for x in range(sq(coords.x), 3 + sq(coords.x)):
+    #        if board[y][x] == value:
+    #            return False
+    return True
+
+def is_completed(solution):
+    board = []
+    for i in range(N):
+        board.append(N*[0])
+    for position in solution:
+        #print position
+        board[position[0].y][position[0].x] = position[1]
+    for row in board:
+        if 0 in row:
+            return False
+    return True
+
+def neighbors(solution):
+    board = []
+    for i in range(N):
+        board.append(N*[0])
+    for position in solution:
+        #print position
+        board[position[0].y][position[0].x] = position[1]
+    nbors = []
+    for y in range(N):
         for x in range(N):
-            if self.board[coords.y][x] == value:
-                return False
-        # kolumna
-        for y in range(N):
-            if self.board[y][coords.x] == value:
-                return False
-        # kwadrat
-        sq = lambda z: 3 * (z / 3)
-        for y in range(sq(coords.y), 3 + sq(coords.y)):
-            for x in range(sq(coords.x), 3 + sq(coords.x)):
-                if self.board[y][x] == value:
-                    return False
-        return True
-
-    def is_completed(self):
-        for row in self.board:
-            if 0 in row:
-                return False
-        return True
-
-    def neighbors(self):
-        nbors = []
-        for y in range(N):
-            for x in range(N):
-                for a in range(1, N+1):
-                    if self.is_consistent(a, Coords(x, y)):
-                        neighbor = Solution(self)
-                        neighbor.board[y][x] = a
-                        nbors.append(neighbor)
-        return nbors
+            for a in range(1, N+1):
+                if is_consistent(board, a, Coords(x, y)):
+                    neighbor = solution + [(Coords(x, y), a)]
+                    nbors.append(neighbor)
+    return nbors
 
 
 class Coords:
@@ -81,8 +88,8 @@ class Coords:
         self.x = x
         self.y = y
 
-    def __eq__(self, other):
-        return self.x == other.x and self.y == other.y
+    #def __eq__(self, other):
+    #    return self.x == other.x and self.y == other.y
 
     def __ne__(self, other):
         return self.x != other.x or self.y != other.y
@@ -92,32 +99,39 @@ class Coords:
 
 
 def sudoku_solution_dfs(w0):
-    open_nodes.append((0, w0))
+    open_nodes.append((0, [w0]))
     print dfs(N)
-    print solutions
+    print solution
+    print_solution(solution)
 
 
 def dfs(N):
     u"""Algorytm Depth-First Search przeszukiwania przestrzeni rozwiązań."""
-    global solutions
+    global solution
     global calls_count
     calls_count += 1
+    print len(open_nodes), len(solution)
+    print_solution(solution)
+    print
     if not open_nodes:
         return False
-    h_node = min(open_nodes) # tupla: (heurystyka, węzeł o min. heurystyce)
-    solutions.append(h_node[1]) # węzeł o minimalnej heurystyce
+    #h_node = min(open_nodes) # tupla: (heurystyka, węzeł o min. heurystyce)
+    h_node = open_nodes[-1]
+    solution = h_node[1] # węzeł o minimalnej heurystyce
     open_nodes.remove(h_node)
-    closed_nodes.append(solutions[-1])
-    print solutions[-1], '\n\n'
-    neighbors = []
-    open_nodes.extend(heuristics(solutions[-1].neighbors()))
-    if solutions[-1].is_completed():
+    closed_nodes.append(solution)
+    nbors = []
+    for neighbor in neighbors(solution):
+        if neighbor not in closed_nodes:
+            nbors.append(neighbor)
+    open_nodes.extend(heuristics(nbors))
+    if is_completed(solution):
         return True
     elif dfs(N):
         return True
-    elif solutions:
+    elif solution:
         print 'pop'
-        solutions.pop()
+        solution.pop()
         return dfs(N)
     else:
         return False
@@ -127,13 +141,14 @@ def heuristics(solutions):
     u"""Funkcja oceny (heurystyka): oceń podane rozwiązania."""
     solutions_with_heuristics = []
     for s in solutions:
-        solutions_with_heuristics.append((0, s))
+        import random
+        solutions_with_heuristics.append((random.randint(0, 100), s))
     return solutions_with_heuristics
 
 
 if __name__ == '__main__':
-    #sys.setrecursionlimit(20000)
-    print sudoku_solution_dfs(Solution())
+    sys.setrecursionlimit(20000)
+    sudoku_solution_dfs((Coords(2, 2), 1))
     #print Solution()
     print u'Liczba wywołań:', calls_count
 
