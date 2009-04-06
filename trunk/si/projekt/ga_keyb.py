@@ -279,7 +279,7 @@ def main(argv):
                 results.append(best)
                 print i+1, '\t', best.fitness
 
-            print u'LOSOWY UKŁAD KLAWIATURY:'
+            print u'\nLOSOWY UKŁAD KLAWIATURY:'
             random_layout = Specimen(fitness, (corpus,))
             print_stats(random_layout, corpus)
             print u'\nQWERTY:'
@@ -296,12 +296,6 @@ def main(argv):
             print_stats(dvorak, corpus)
             print u'\nWYNIK ALGORYTMU GENETYCZNEGO:'
             print_stats(min(results), corpus)
-            print u'\nKLAUSLER:'
-            klausler = Specimen(fitness, (corpus,), clone = \
-                    u"k , u y p  w l m f c".split() + \
-                    u"o a e i d  r n t h s".split() + \
-                    u"q . ' ; z  x v g b j".split())
-            print_stats(klausler, corpus)
 
         else:
             print usage

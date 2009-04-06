@@ -153,6 +153,7 @@ Najlepsze przystosowanie w kolejnych populacjach:
 148     2362361
 149     2340779
 150     2345817
+
 LOSOWY UKŁAD KLAWIATURY:
 , g x i d  p j e ; .
 s n u b r  m a c f q
@@ -204,16 +205,3 @@ użycie rąk:             44.3% 55.7%
 alternacja rąk:         76.1%
 zmiana palca:           99.5%
 ruchy do środka:        82.7%
-
-KLAUSLER:
-k , u y p  w l m f c
-o a e i d  r n t h s
-q . ' ; z  x v g b j
-przystosowanie:         3085247
-rzędy klawiszy:         17.7% 78.0% 4.3%
-palce lewej ręki:       9% 9% 15% 11%
-palce prawej ręki:      18% 15% 16% 7%
-użycie rąk:             44.1% 55.9%
-alternacja rąk:         75.2%
-zmiana palca:           99.5%
-ruchy do środka:        12.2%
