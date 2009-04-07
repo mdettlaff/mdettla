@@ -16,10 +16,10 @@ h_integ = .1 # krok przy liczeniu całki (im mniejszy, tym lepsza dokładność)
 class FuzzySet:
     u"""Zbiór rozmyty."""
     def degree(self, x):
-        u"""Stopień zawierania się wartości `x` w tym zbiorze.
+        u"""Stopień przynależności wartości `x` do tego zbioru.
         
         :Return:
-            Stopień zawierania się. Przyjmuje wartości między 0 i 1 włącznie.
+            Stopień przynależności. Przyjmuje wartości od 0 do 1 włącznie.
             
         """
         pass
@@ -44,9 +44,15 @@ class TriangleSet(FuzzySet):
         if x <= self.a:
             deg = 0
         elif x <= self.b:
-            deg = (x-self.a) / (self.b-self.a)
+            if self.a != -INFINITY:
+                deg = (x - self.a) / (self.b - self.a)
+            else:
+                deg = 1
         elif x <= self.c:
-            deg = (self.c-x) / (self.c-self.b)
+            if self.c != INFINITY:
+                deg = (self.c - x) / (self.c - self.b)
+            else:
+                deg = 1
         else:
             deg = 0
         if hasattr(self, 'multiplier') and self.multiplier is not None:
@@ -57,6 +63,7 @@ class TriangleSet(FuzzySet):
 
 class LimitedSet(TriangleSet):
     def __init__(self, triangle_set, limit):
+        u"""Zbiór trójkątny ograniczony z góry przez prostą y=`limit`."""
         self.a = triangle_set.a
         self.b = triangle_set.b
         self.c = triangle_set.c
@@ -134,20 +141,26 @@ def main(argv):
                 else:
                     conclusions[FAM[j][i]] = \
                             max(conclusions[FAM[j][i]], min(deg_v, deg_h))
-    for conclusion, deg in conclusions.iteritems():
-        print conclusion, deg
     # wynikowy zbiór rozmyty
     sum_conclusion = MultiSet([LimitedSet(c, limit) for \
         c, limit in conclusions.iteritems()])
-    print 'zbior_wynikowy(10) =', sum_conclusion.degree(10)
     # wyostrzanie
-    i2 = integral(sum_conclusion, MultiSet.degree, \
-            -INFINITY, INFINITY, h_integ)
     i1 = integral(sum_conclusion, \
             lambda self, x: MultiSet.degree(self, x) * x, \
-            -INFINITY, INFINITY, h_integ)
+            -INFINITY+1, INFINITY-1, h_integ)
+    i2 = integral(sum_conclusion, MultiSet.degree, \
+            -INFINITY+1, INFINITY-1, h_integ)
     center_of_gravity = i1/i2
-    print 'f = %.2f' % center_of_gravity
+
+    # debug
+    for conclusion, deg in conclusions.iteritems():
+        print conclusion, deg
+    for i in range(-15, 25):
+        print 'w(' + str(i) + ')=' + str(sum_conclusion.degree(i)) + ','
+    print
+    print 'f = %.2f/%.2f = %.2f' % (i1, i2, center_of_gravity)
+    print integral(Z, lambda self, x: TriangleSet.degree(self, x) * x, \
+            0, INFINITY-1, h_integ)
 
 
 if __name__ == '__main__':
