@@ -366,9 +366,9 @@ def fitness(specimen, corpus):
                     # punkty karne za ruchy od środka
                     if row == prev_row and abs(col - prev_col) == 1:
                         if (col < 5 and prev_col < 5) and (col < prev_col):
-                            punishment += 8 * freq
+                            punishment += 32 * freq
                         elif (col >= 5 and prev_col >= 5) and (col > prev_col):
-                            punishment += 8 * freq
+                            punishment += 32 * freq
                 # punkty karne za trzy i więcej znaków napisanych tą samą ręką
                 if (prev_col < 5 and col < 5) or (prev_col >= 5 and col >= 5):
                     if same_hand_twice:
