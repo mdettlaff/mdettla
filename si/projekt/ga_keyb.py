@@ -455,7 +455,9 @@ def statistics(specimen, corpus):
             # obliczamy ruchy do środka (inboard stroke flow)
             if prev_col is not None and prev_row is not None:
                 if row == prev_row and abs(col - prev_col) == 1: # klawisz obok
-                    stroke_flow += 1
+                    if (col < 5 and prev_col < 5) or \
+                            (col >= 5 and prev_col >= 5):
+                        stroke_flow += 1
                     if (col < 5 and prev_col < 5) and (col > prev_col) or \
                             (col >= 5 and prev_col >= 5) and (col < prev_col):
                         inboard_stroke_flow += 1
@@ -478,7 +480,10 @@ def statistics(specimen, corpus):
             '% ' + '%.1f' % (hands[1] / all_chars * 100) + '%\n'
     string = string + '%.1f' % (alternation / non_first_chars * 100) + '%\n'
     string += '%.1f' % (distance / non_first_chars * 100) + '%\n'
-    string += '%.1f' % (inboard_stroke_flow / stroke_flow * 100) + '%\n'
+    if stroke_flow > 0:
+        string += '%.1f' % (inboard_stroke_flow / stroke_flow * 100) + '%\n'
+    else:
+        string += '?\n'
     return string
 
 
