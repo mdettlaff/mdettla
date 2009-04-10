@@ -107,7 +107,7 @@ def integral(f, a, b, h):
     while x < b:
         integral += f(x)
         x += h
-    return integral + h/2 * (f(a) + f(b))
+    return h * (integral + .5 * (f(a) + f(b)))
 
 
 def defuzzify_center_of_gravity(fuzzy_set, u_min, u_max, h):
