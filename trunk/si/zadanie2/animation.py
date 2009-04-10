@@ -3,6 +3,8 @@
 
 u"""Animacja pokazująca lądowanie samolotu przez automatycznego pilota."""
 
+__author__ = u'Michał Dettlaff'
+
 from PyQt4 import QtCore, QtGui
 import sys
 
@@ -82,7 +84,7 @@ class Scene(QtGui.QFrame):
         painter.setPen(color)
         painter.fillRect(0, Scene.ground_level, WIDTH, HEIGHT -
                 Scene.ground_level, ground_color)
-        painter.drawLine(0, Scene.ground_level, WIDTH, Scene.ground_level)
+        painter.drawLine(0, Scene.ground_level, WIDTH - 1, Scene.ground_level)
 
     def advanceAgent(self):
         u"""Przesuń samolot na następną pozycję."""
@@ -98,7 +100,8 @@ def main(argv):
             heights = [] # wysokości samolotu w kolejnych sekundach
             f = open(sys.argv[1])
             for line in f.readlines():
-                heights.append(float(line.split('\t')[0].split()[0]))
+                if not line[0].isalpha():
+                    heights.append(float(line.split('\t')[0].split()[0]))
 
             animation = AnimationWindow(heights)
             animation.show()
