@@ -103,11 +103,11 @@ class MultiSet(FuzzySet):
 def integral(f, a, b, h):
     u"""Całkowanie numeryczne metodą trapezów."""
     integral = 0
-    x = a
+    x = a + h
     while x < b:
-        integral += h/2 * (f(x) + f(x + h))
+        integral += f(x)
         x += h
-    return integral
+    return integral + h/2 * (f(a) + f(b))
 
 
 def defuzzify_center_of_gravity(fuzzy_set, u_min, u_max, h):
@@ -208,10 +208,8 @@ def autopilot(defuzzify, defuz_precision, iterations):
     h_init = 1000
     v_init = -20
 
-    print 'h\t\tv\t\tf'
-    for h, v, f in fuzzy_controller(h_sets, v_sets, FAM, h_init, v_init,
-            h_next, v_next, defuzzify, defuz_precision, iterations, -20, 20):
-        print '%8.3f\t%8.4f\t%8.5f' % (h, v, f)
+    return fuzzy_controller(h_sets, v_sets, FAM, h_init, v_init,
+            h_next, v_next, defuzzify, defuz_precision, iterations, -20, 20)
 
 
 def pendulum(defuzzify, defuz_precision, iterations):
@@ -242,10 +240,8 @@ def pendulum(defuzzify, defuz_precision, iterations):
     x1_init = 1
     x2_init = -4
 
-    print 'x1\t\tx2\t\tu'
-    for x1, x2, u in fuzzy_controller(x1_sets, x2_sets, FAM, x1_init, x2_init,
-            x1_next, x2_next, defuzzify, defuz_precision, iterations, -24, 24):
-        print '%8.3f\t%8.4f\t%8.5f' % (x1, x2, u)
+    return fuzzy_controller(x1_sets, x2_sets, FAM, x1_init, x2_init,
+            x1_next, x2_next, defuzzify, defuz_precision, iterations, -24, 24)
 
 
 def main(argv):
@@ -268,12 +264,17 @@ def main(argv):
             elif option == '-p':
                 if not iterations:
                     iterations = DEFAULT_ITERATIONS_PENDULUM
-                pendulum(defuzzification, defuz_precision, iterations)
+                print 'x1\t\tx2\t\tu'
+                for x1, x2, u in pendulum(defuzzification, defuz_precision,
+                        iterations):
+                    print '%8.3f\t%8.4f\t%8.5f' % (x1, x2, u)
                 sys.exit()
         if not iterations:
             iterations = DEFAULT_ITERATIONS_AUTOPILOT
 
-        autopilot(defuzzification, defuz_precision, iterations)
+        print 'h\t\tv\t\tf'
+        for h, v, f in autopilot(defuzzification, defuz_precision, iterations):
+            print '%8.3f\t%8.4f\t%8.5f' % (h, v, f)
 
     except getopt.GetoptError, err:
         print str(err)
