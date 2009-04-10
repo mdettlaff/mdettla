@@ -8,11 +8,8 @@ __author__ = u'Michał Dettlaff'
 from PyQt4 import QtCore, QtGui
 import sys
 
+import autopilot
 
-usage = u"""\
-Użycie: python animation.py FILE
-Plik FILE zawiera kolejne wysokości samolotu.\
-"""
 
 WIDTH = 700
 u"""Szerokość okna."""
@@ -24,7 +21,7 @@ class AnimationWindow(QtGui.QMainWindow):
     def __init__(self, heights):
         QtGui.QMainWindow.__init__(self)
         self.setGeometry(300, 300, WIDTH, HEIGHT)
-        self.setWindowTitle('Automatyczny pilot')
+        self.setWindowTitle(u'Automatyczny pilot')
         self.scene = Scene(self, heights)
         self.setCentralWidget(self.scene)
         self.statusbar = self.statusBar()
@@ -73,7 +70,7 @@ class Scene(QtGui.QFrame):
             self.advanceAgent()
             self.update()
             self.emit(QtCore.SIGNAL('messageToStatusbar(QString)'),
-                    'Czas: ' + str(self.time_count))
+                    u'Czas: ' + str(self.time_count))
             self.heights.pop(0)
         else:
             self.timer.stop()
@@ -93,26 +90,16 @@ class Scene(QtGui.QFrame):
 
 
 def main(argv):
-    try:
-        if len(sys.argv) > 1:
-            app = QtGui.QApplication(sys.argv)
+    app = QtGui.QApplication(sys.argv)
 
-            heights = [] # wysokości samolotu w kolejnych sekundach
-            f = open(sys.argv[1])
-            for line in f.readlines():
-                if not line[0].isalpha():
-                    heights.append(float(line.split('\t')[0].split()[0]))
+    # wysokości samolotu w kolejnych sekundach
+    heights = [h for h, v, f in autopilot.autopilot(
+        autopilot.defuzzify_center_of_gravity, .5,
+        autopilot.DEFAULT_ITERATIONS_AUTOPILOT)]
 
-            animation = AnimationWindow(heights)
-            animation.show()
-
-            sys.exit(app.exec_())
-        else:
-            print __doc__
-            print usage
-    except IOError:
-        print u'błąd: nie można odnaleźć pliku', sys.argv[1]
-        sys.exit(1)
+    animation = AnimationWindow(heights)
+    animation.show()
+    sys.exit(app.exec_())
 
 
 if __name__ == '__main__':
