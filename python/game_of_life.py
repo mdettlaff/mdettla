@@ -7,20 +7,21 @@ __author__ = u'Michał Dettlaff'
 
 from PyQt4 import QtCore, QtGui
 import getopt
+import random
 import sys
 
 
 usage = """\
 Użycie: python game_of_life.py [opcje]
 Opcje:
-    -p, --pattern=NAME  Zacznij od struktury o nazwie NAME.
-                        Możliwe wartości: glider, lwss, fpentomino
+    -p, --pattern=NAME  Zacznij od struktury o nazwie NAME. Możliwe wartości:
+                        glider, lwss, f-pentomino, diehard, immortal, random
     -s, --speed=TIME    Szybkość animacji; opóźnienie równe TIME milisekund.\
 """
 
 DEFAULT_SPEED = 200
-GRID_WIDTH = 32
-GRID_HEIGHT = 24
+BOARD_WIDTH = 32
+BOARD_HEIGHT = 32
 
 
 class AnimationWindow(QtGui.QMainWindow):
@@ -53,7 +54,7 @@ class Scene(QtGui.QFrame):
         Scene.speed = speed
         self.timer = QtCore.QBasicTimer()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.time_count = 0
+        self.iter_count = 0
         self.board = board
         self.board_width = len(self.board[0])
         self.board_height = len(self.board)
@@ -70,11 +71,11 @@ class Scene(QtGui.QFrame):
         self.drawScene(painter, white, black, grey)
 
     def timerEvent(self, event):
-        self.time_count += 1
+        self.iter_count += 1
         self.nextStep()
         self.update()
         self.emit(QtCore.SIGNAL('messageToStatusbar(QString)'),
-                u'Czas: ' + str(self.time_count))
+                u'Iteracja ' + str(self.iter_count))
 
     def drawScene(self, painter, bg_color, color, line_color):
         cs = Scene.cell_size
@@ -93,15 +94,49 @@ class Scene(QtGui.QFrame):
             painter.drawLine(i * cs, 0, i * cs, self.board_height * cs)
 
     def nextStep(self):
-        pass
+        live = []
+        die = []
+        for j, row in enumerate(self.board):
+            for i, cell in enumerate(row):
+                neighbors_count = 0
+                if j > 0 and i > 0 and self.board[j-1][i-1]:
+                    neighbors_count += 1
+                if j > 0 and self.board[j-1][i]:
+                    neighbors_count += 1
+                if j > 0 and i < self.board_width - 1 and self.board[j-1][i+1]:
+                    neighbors_count += 1
+                if i > 0 and self.board[j][i-1]:
+                    neighbors_count += 1
+                if i < self.board_width - 1 and self.board[j][i+1]:
+                    neighbors_count += 1
+                if j < self.board_height - 1 and i > 0 and \
+                        self.board[j+1][i-1]:
+                    neighbors_count += 1
+                if j < self.board_height - 1 and self.board[j+1][i]:
+                    neighbors_count += 1
+                if j < self.board_height - 1 and i < self.board_width - 1 and \
+                        self.board[j+1][i+1]:
+                    neighbors_count += 1
+                if cell == 0 and neighbors_count == 3:
+                    live.append((i, j))
+                elif cell == 1 and not 2 <= neighbors_count <= 3:
+                    die.append((i, j))
+        for coords in live:
+            self.board[coords[1]][coords[0]] = 1
+        for coords in die:
+            self.board[coords[1]][coords[0]] = 0
+        if not live and not die:
+            self.timer.stop()
+            self.iter_count -= 1
 
 
 def main(argv):
     speed = DEFAULT_SPEED
     # glider
-    pattern = [ [1, 1, 1],
-              [1, 0, 0],
-              [0, 1, 0] ]
+    pattern = [ [0, 1, 0],
+                [0, 0, 1],
+                [1, 1, 1] ]
+    vertical_shift = 0
     try:
         options, args = getopt.getopt(argv[1:], 'hp:s:', ['help',
             'speed=', 'pattern=',])
@@ -114,18 +149,32 @@ def main(argv):
                 speed = int(argument)
             elif option in ('-p', '--pattern'):
                 if argument == 'glider':
-                    pattern = [ [1, 1, 1],
-                              [1, 0, 0],
-                              [0, 1, 0] ]
+                    pattern = [ [0, 1, 0],
+                                [0, 0, 1],
+                                [1, 1, 1] ]
                 elif argument == 'lwss':
-                    pattern = [ [0, 1, 0, 0, 1],
-                              [1, 0, 0, 0, 0],
-                              [1, 0, 0, 0, 1],
-                              [1, 1, 1, 1, 0] ]
-                elif argument == 'fpentomino':
+                    pattern = [ [1, 0, 0, 1, 0],
+                                [0, 0, 0, 0, 1],
+                                [1, 0, 0, 0, 1],
+                                [0, 1, 1, 1, 1] ]
+                elif argument == 'f-pentomino':
                     pattern = [ [0, 1, 1],
-                              [1, 1, 0],
-                              [0, 1, 0] ]
+                                [1, 1, 0],
+                                [0, 1, 0] ]
+                elif argument == 'diehard':
+                    pattern = [ [0, 0, 0, 0, 0, 0, 1, 0],
+                                [1, 1, 0, 0, 0, 0, 0, 0],
+                                [0, 1, 0, 0, 0, 1, 1, 1] ]
+                    vertical_shift = -5
+                elif argument == 'immortal':
+                    pattern = [ [1, 1, 1, 0, 1],
+                                [1, 0, 0, 0, 0],
+                                [0, 0, 0, 1, 1],
+                                [0, 1, 1, 0, 1],
+                                [1, 0, 1, 0, 1] ]
+                elif argument == 'random':
+                    pattern = [[random.randint(0, 1) for i in \
+                            range(BOARD_WIDTH)] for j in range(BOARD_HEIGHT)]
                 else:
                     print u'nieznana nazwa struktury:', argument
                     print usage
@@ -135,10 +184,10 @@ def main(argv):
         print usage
         sys.exit(2)
 
-    board = [GRID_WIDTH*[0] for i in range(GRID_HEIGHT)]
+    board = [[0]*BOARD_WIDTH for i in range(BOARD_HEIGHT)]
     # umieść strukturę na planszy
-    x = GRID_WIDTH / 2 - len(pattern[0]) / 2 - len(pattern[0]) % 2
-    y = GRID_HEIGHT / 2 - len(pattern) / 2 - len(pattern) % 2
+    x = BOARD_WIDTH / 2 - len(pattern[0]) / 2 - len(pattern[0]) % 2
+    y = BOARD_HEIGHT / 2 - len(pattern) / 2 - len(pattern) % 2 + vertical_shift
     for j, row in enumerate(board[y : y + len(pattern)]):
         row[x : x + len(pattern[0])] = pattern[j]
 
