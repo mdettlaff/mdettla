@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-u"""Program rozwiązujący Sudoku algorytmem Depth-First Search z heurystyką."""
+u"""Program generujący Sudoku algorytmem Depth-First Search."""
 
 __author__ = u'Michał Dettlaff'
 
 import math
 import random
-import sys
 
-
-usage = u"""Użycie: python sudoku.py"""
 
 N = 9
 UNIT_SIZE = int(math.sqrt(N)) # rozmiar dużego kwadratu
@@ -21,7 +18,7 @@ solution = [] # kolejne cyfry dodawane na planszę
 calls_count = 0 # liczba wywołań funkcji dfs()
 
 
-def print_solution(solution):
+def get_board(solution):
     board = []
     for i in range(N):
         board.append(N*[0])
@@ -29,22 +26,12 @@ def print_solution(solution):
         x = i % N
         y = i / N
         board[y][x] = num
-    s = ''
-    for y, row in enumerate(board):
-        for x, square in enumerate(row):
-            s += str(square)
-            if x % UNIT_SIZE == 2:
-                s += ' '
-        if y % UNIT_SIZE == 2:
-            s += '\n'
-        s += '\n'
-    print s[:-1]
+    return board
 
-def is_consistent(board, value, solution):
-    if len(solution) == N*N:
+
+def is_consistent(board, value, value_x, value_y):
+    if board[N-1][N-1] != 0:
         return True
-    value_x = len(solution) % N
-    value_y = len(solution) / N
     if board[value_y][value_x] != 0:
         return False
     # rząd
@@ -63,23 +50,29 @@ def is_consistent(board, value, solution):
                 return False
     return True
 
-def is_completed(solution):
-    return len(solution) == N*N
 
-def neighbors(solution):
-    board = []
-    for i in range(N):
-        board.append(N*[0])
-    for i, num in enumerate(solution):
-        x = i % N
-        y = i / N
-        board[y][x] = num
-    nbors = []
+def get_neighbors(solution):
+    board = get_board(solution)
+    neighbors = []
     for a in range(1, N+1):
-        if is_consistent(board, a, solution):
+        if is_consistent(board, a, len(solution) % N, len(solution) / N):
             neighbor = solution + [a]
-            nbors.append(neighbor)
-    return nbors
+            neighbors.append(neighbor)
+    return neighbors
+
+
+def print_solution(solution):
+    board = get_board(solution)
+    s = ''
+    for y, row in enumerate(board):
+        for x, square in enumerate(row):
+            s += str(square)
+            if x % UNIT_SIZE == UNIT_SIZE - 1:
+                s += ' '
+        if y % UNIT_SIZE == UNIT_SIZE - 1:
+            s += '\n'
+        s += '\n'
+    print s[:-1]
 
 
 def sudoku_solution_dfs(w0):
@@ -97,19 +90,16 @@ def dfs(N):
     calls_count += 1
     if not open_nodes:
         return False
-    #h_node = min(open_nodes) # tupla: (heurystyka, węzeł o min. heurystyce)
     h_node = open_nodes[-1]
     solution = h_node[1] # węzeł o minimalnej heurystyce
     open_nodes.remove(h_node)
     closed_nodes.append(solution)
-    nbors = []
-    for neighbor in neighbors(solution):
+    neighbors = []
+    for neighbor in get_neighbors(solution):
         if neighbor not in closed_nodes:
-            nbors.append(neighbor)
-        else:
-            'closed!'
-    open_nodes.extend(heuristics(nbors))
-    if is_completed(solution):
+            neighbors.append(neighbor)
+    open_nodes.extend([(0, n) for n in neighbors])
+    if len(solution) == N*N: # znaleziono rozwiązanie
         return True
     elif dfs(N):
         return True
@@ -120,17 +110,14 @@ def dfs(N):
         return False
 
 
-def heuristics(solutions):
-    u"""Funkcja oceny (heurystyka): oceń podane rozwiązania."""
-    # TODO
-    solutions_with_heuristics = []
-    for s in solutions:
-        solutions_with_heuristics.append((0, s))
-    return solutions_with_heuristics
+def main():
+    if sudoku_solution_dfs(random.randint(1, N)) is not None:
+        print_solution(solution)
+        print u'Liczba wywołań Depth-First Search:', calls_count
+    else:
+        print u'Nie znaleziono rozwiązania.'
 
 
 if __name__ == '__main__':
-    sudoku_solution_dfs(random.randint(1, N))
-    print_solution(solution)
-    print u'Liczba wywołań Depth-First Search:', calls_count
+    main()
 
