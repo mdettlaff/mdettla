@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transakcje
+  xmlns="http://www.owocex.pl"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.owocex.pl transakcje.xsd">
+  <zamowienia>
+    <zamowienie-hipermarket>
+      <owoc rodzaj="marchewka">
+	<gatunek>marchevcus pospolitus</gatunek>
+	<odmiana>Malezyjska</odmiana>
+	<kaliber>4</kaliber>
+      </owoc>
+      <odbiorca>
+	<nazwa>Real</nazwa>
+	<adres>Nierealna 16, 23-442 Kielce</adres>
+      </odbiorca>
+      <data>2009-04-12</data>
+      <wielkosc-zamowienia>600</wielkosc-zamowienia>
+      <proponowana-cena waluta="PLN">5</proponowana-cena>
+      <oplata-za-ekspozycje>1000</oplata-za-ekspozycje>
+    </zamowienie-hipermarket>
+    <zamowienie-maly-sklep>
+      <owoc rodzaj="truskawka">
+	<gatunek>truscavicus pospolitus</gatunek>
+	<odmiana>Szwedzka</odmiana>
+	<kaliber>3</kaliber>
+	<dodatkowe-informacje>Dobra na trawienie, ulży bolączkom</dodatkowe-informacje>
+      </owoc>
+      <odbiorca>
+	<nazwa>U Genowefy</nazwa>
+	<adres>Alabastrowa 15, 22-666 Wałbrzych</adres>
+      </odbiorca>
+      <data>2009-03-01</data>
+      <wielkosc-zamowienia>50</wielkosc-zamowienia>
+    </zamowienie-maly-sklep>
+  </zamowienia>
+  <dostawy>
+    <dostawa>
+      <owoc rodzaj="truskawka">
+	<gatunek>truscavicus pospolitus</gatunek>
+	<odmiana>Szwedzka</odmiana>
+	<kaliber>3</kaliber>
+	<dodatkowe-informacje>Dobra na trawienie</dodatkowe-informacje>
+      </owoc>
+      <wielkosc-dostawy>20</wielkosc-dostawy>
+      <dostawca>
+	<nazwa>Truskawki-to-my</nazwa>
+	<adres>Truskawkowa 15, 22-666 Wałbrzych</adres>
+      </dostawca>
+      <firma-transportowa>
+	<nazwa>Fedex-ovotz</nazwa>
+	<adres>Kredkowa 22, 22-666 Wałbrzych</adres>
+      </firma-transportowa>
+      <data>2009-02-12</data>
+      <data-przydatnosci>2009-02-13</data-przydatnosci>
+      <jakosc>1</jakosc>
+      <cena waluta="PLN">5</cena>
+      <opis-uszkodzen>Lekko nieświeże</opis-uszkodzen>
+    </dostawa>
+  </dostawy>
+</transakcje>

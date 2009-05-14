@@ -1,0 +1,14 @@
+1. Napisac program ktory zamieni puste znaczniki w xml z postaci
+<znacznik></znacznik> na <znacznik/> (program tworzy nowy plik XML,
+który zawiera tą samą zawartość co plik wejściowy, tylko
+znaczniki puste są odpowiednio przeformatowane. (Metoda tworzenia
+nowego pliku jest dowolna)
+
+2. Npisac program który wypisze ilość znacznikow każdego rodzaju
+w dokumencie XML podanym jako argument wywołania programu.
+Przykladowy rezultat dzialania programu na pliku ceny.xml
+
+nazwa znacznika ilosc wystapien
+produkty 1
+produkt 5
+cena 15

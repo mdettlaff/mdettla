@@ -1,0 +1,20 @@
+<!ENTITY % automat_def "stany,alfabet,funkcja-przejscia,stan-poczatkowy,stany-akceptujace">
+<!ELEMENT automat (%automat_def;)>
+<!ATTLIST automat
+typ (deterministyczny|niedeterministyczny) #REQUIRED
+rozmiar (skonczony) #IMPLIED
+>
+  <!ELEMENT stany (stan)+>
+  <!ELEMENT stan (#PCDATA)>
+  <!ELEMENT alfabet (symbol)+>
+  <!ELEMENT symbol (#PCDATA)>
+  <!ELEMENT funkcja-przejscia (przejscie)+>
+  <!ELEMENT przejscie (#PCDATA)>
+  <!ATTLIST przejscie
+  stan CDATA #REQUIRED
+  symbol CDATA #REQUIRED
+  nowy-stan CDATA #REQUIRED
+  >
+  <!ELEMENT stan-poczatkowy (#PCDATA)>
+  <!ELEMENT stany-akceptujace (stan-akceptujacy)+>
+  <!ELEMENT stan-akceptujacy (#PCDATA)>

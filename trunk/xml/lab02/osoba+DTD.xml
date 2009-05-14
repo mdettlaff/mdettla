@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE osoba [
+<!ELEMENT osoba (imie,nazwisko,wiek)>
+<!ELEMENT imie (#PCDATA)>
+<!ELEMENT nazwisko (#PCDATA)>
+<!ELEMENT wiek (#PCDATA)>
+]>
+<osoba>
+<imie>Jan</imie>
+<nazwisko>Nowak</nazwisko>
+<wiek>25</wiek>
+<plec>m</plec>
+</osoba>

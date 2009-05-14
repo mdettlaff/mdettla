@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<xhtml:html xmlns:xhtml="http://moja.przestrzen">
+	<xhtml:head>
+		<xhtml:title>XML and Bioinformatics</xhtml:title>
+	</xhtml:head>
+	<xhtml:body>
+		<xhtml:table xhtml:width="100%">
+			<xhtml:tr><xhtml:td>Wlcome</xhtml:td></xhtml:tr>
+		</xhtml:table>
+	</xhtml:body>
+</xhtml:html>

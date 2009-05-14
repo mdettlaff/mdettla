@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE wizytowka SYSTEM "wizytowka.dtd">
+<wizytowka typ="biznesowa">
+  <imie typ="pierwsze">Jan</imie>
+  <imie typ="drugie">Adam</imie>
+  <nazwisko>Kowalski</nazwisko>
+  <firma>Kowal &amp; spolka</firma>
+  <wiek>25</wiek>
+  <adres rodzaj="firmowy">
+    <ulica>Lipcowa</ulica>
+    <numer_domu>15</numer_domu>
+    <miasto>Warszawa</miasto>
+    <kod>45-245</kod>
+  </adres>
+  <telefon>
+    <prefiks>022</prefiks>
+    <numer>23454356</numer>
+  </telefon>
+</wizytowka>

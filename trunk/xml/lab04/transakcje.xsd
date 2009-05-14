@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://www.owocex.pl"
+  xmlns="http://www.owocex.pl"
+  elementFormDefault="qualified">
+
+  <!-- główny opis zawartości dokumentu -->
+
+  <xs:element name="transakcje">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="zamowienia">
+	  <xs:complexType>
+	    <xs:choice maxOccurs="unbounded">
+	      <xs:element name="zamowienie-maly-sklep" type="zamowienie-maly-sklep"/>
+	      <xs:element name="zamowienie-hipermarket" type="zamowienie-hipermarket"/>
+	      <xs:element name="zamowienie-hurtownia" type="zamowienie-hurtownia"/>
+	    </xs:choice>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="dostawy">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="dostawa" type="dostawa" maxOccurs="unbounded"/>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- deklaracje typów -->
+
+  <xs:complexType name="zamowienie-maly-sklep">
+    <xs:complexContent>
+      <xs:extension base="zamowienie">
+	<xs:sequence>
+	  <xs:element name="wielkosc-zamowienia" type="xs:integer"/>
+	</xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="zamowienie-hipermarket">
+    <xs:complexContent>
+      <xs:extension base="zamowienie">
+	<xs:sequence>
+	  <xs:element name="wielkosc-zamowienia">
+	    <xs:simpleType>
+	      <xs:restriction base="xs:integer">
+		<xs:minInclusive value="500"/>
+	      </xs:restriction>
+	    </xs:simpleType>
+	  </xs:element>
+	  <xs:element name="proponowana-cena" type="cena" minOccurs="0"/>
+	  <xs:element name="oplata-za-ekspozycje" type="cena"/>
+	</xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="zamowienie-hurtownia">
+    <xs:complexContent>
+      <xs:extension base="zamowienie">
+	<xs:sequence>
+	  <xs:element name="wielkosc-zamowienia">
+	    <xs:simpleType>
+	      <xs:restriction base="xs:integer">
+		<xs:minInclusive value="500"/>
+	      </xs:restriction>
+	    </xs:simpleType>
+	  </xs:element>
+	  <xs:element name="proponowana-cena" type="cena" minOccurs="0"/>
+	</xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <!-- typ stanowiący podstawę dla bardziej szczegółowych zamówień -->
+  <xs:complexType name="zamowienie">
+    <xs:sequence>
+      <xs:element name="owoc" type="owoc"/>
+      <xs:element name="odbiorca" type="podmiot-gospodarczy"/>
+      <xs:element name="data" type="xs:date"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dostawa">
+    <xs:sequence>
+      <xs:element name="owoc" type="owoc"/>
+      <xs:element name="wielkosc-dostawy" type="xs:positiveInteger"/>
+      <xs:element name="dostawca" type="podmiot-gospodarczy"/>
+      <xs:element name="firma-transportowa" type="podmiot-gospodarczy"/>
+      <xs:element name="data" type="xs:date"/>
+      <xs:element name="data-przydatnosci" type="xs:date"/>
+      <xs:element name="jakosc">
+	<xs:simpleType>
+	  <xs:restriction base="xs:integer">
+	    <xs:minInclusive value="1"/>
+	    <xs:maxInclusive value="2"/>
+	  </xs:restriction>
+	</xs:simpleType>
+      </xs:element>
+      <xs:element name="cena" type="cena"/>
+      <xs:element name="opis-uszkodzen" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="podmiot-gospodarczy">
+    <xs:sequence>
+      <xs:element name="nazwa" type="xs:string"/>
+      <xs:element name="adres" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="owoc">
+    <xs:sequence>
+      <xs:element name="gatunek" type="xs:string"/>
+      <xs:element name="odmiana" type="xs:string"/>
+      <xs:element name="kaliber">
+	<xs:simpleType>
+	  <xs:restriction base="xs:integer">
+	    <xs:minInclusive value="1"/>
+	    <xs:maxInclusive value="5"/>
+	  </xs:restriction>
+	</xs:simpleType>
+      </xs:element>
+      <xs:element name="dodatkowe-informacje" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute name="rodzaj" type="xs:string"/>
+  </xs:complexType>
+
+  <xs:complexType name="cena">
+    <xs:simpleContent>
+      <xs:extension base="xs:positiveInteger">
+	<xs:attribute name="waluta" default="EUR">
+	  <xs:simpleType>
+	    <xs:restriction base="xs:string">
+	      <xs:enumeration value="USD"/>
+	      <xs:enumeration value="EUR"/>
+	      <xs:enumeration value="PLN"/>
+	    </xs:restriction>
+	  </xs:simpleType>
+	</xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+</xs:schema>

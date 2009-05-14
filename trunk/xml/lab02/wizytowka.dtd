@@ -1,0 +1,16 @@
+<!ELEMENT wizytowka (imie,imie,nazwisko,firma,wiek,adres,telefon)>
+<!ATTLIST wizytowka typ (biznesowa|prywatna) #IMPLIED>
+<!ELEMENT imie (#PCDATA)>
+<!ATTLIST imie typ (pierwsze|drugie) #REQUIRED>
+<!ELEMENT nazwisko (#PCDATA)>
+<!ELEMENT firma (#PCDATA)>
+<!ELEMENT wiek (#PCDATA)>
+<!ELEMENT adres (ulica,numer_domu,miasto,kod)>
+<!ATTLIST adres rodzaj (domowy|firmowy) #IMPLIED>
+<!ELEMENT ulica (#PCDATA)>
+<!ELEMENT numer_domu (#PCDATA)>
+<!ELEMENT miasto (#PCDATA)>
+<!ELEMENT kod (#PCDATA)>
+<!ELEMENT telefon (prefiks,numer)>
+<!ELEMENT prefiks (#PCDATA)>
+<!ELEMENT numer (#PCDATA)>
