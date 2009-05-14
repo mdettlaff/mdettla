@@ -1,0 +1,9 @@
+1. Przed utworzeniem XMLInputFactory dodajemy linię:
+System.setProperty("javax.xml.stream.XMLInputFactory",
+    "com.ctc.wstx.stax.WstxInputFactory");
+2. Ściągamy do tego samego katalogu następujące dwa pliki:
+http://repository.codehaus.org/org/codehaus/woodstox/woodstox-core-lgpl/4.0.3/woodstox-core-lgpl-4.0.3.jar
+http://repository.codehaus.org/org/codehaus/woodstox/stax2-api/3.0.1/stax2-api-3.0.1.jar
+3. Kompilujemy: javac Foo.java
+4. Uruchamiamy za pomocą polecenia:
+java -cp .:woodstox-core-lgpl-4.0.3.jar:stax2-api-3.0.1.jar Foo
