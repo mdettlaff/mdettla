@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd>
+<html>
+<head>
+ <title> xml </title>
+</head>
+<body>
+<h1>
+Forma zaliczenia</h1>
+<p> Warunkiem zaliczenia jest terminowe oddawanie zadañ oraz zaliczenie kolokwium (z teorii) pod koniec semestru.
+</p>
+<br> Lista osób z podzia³em na grupy jest <a href="GrupaAoceny.xls"> tutaj </a> </br>
+ <h1>Cwiczenia 1  </h1>
+<p>
+Formalna dokumentacja znajduje sie <a href="http://www.w3.org/TR/REC-xml/"> tutaj</a>
+</p>
+
+<p>
+<h2>Zadanie 1.</h2>
+Stwórz w³asn¹ wizytówkê. Strukturê dokumentu i nazwy elementów/ atrybutów ustal samodzielnie.
+<h2>Zadanie 2.</h2>
+Stwórz przykladowy poprawny sk³adniowo dokument xml opisuj¹cy dowolny deterministyczny automat skoñczony.
+</p>
+<h1> Cwiczenia 2</h1>
+
+
+<h2> Zadanie 3 </h2>
+<p>
+Stworzyc DTD do pliku z zad 1 i 2.
+</p>
+<h1> Æwiczenia 3 </h1>
+<h2> Zadanie 4 </h2>
+<p>
+Stworzyc poprawny skladniowo dokument xml opisujacy automat niedeterministyczny skoñczony (dowolny).
+Dokument powinien zawieraæ DTD (w tym atrybuty i encje).
+</p>
+<h1> Cwiczenia 4 </h1>
+Tutorial znajduje sie <a href="http://www.w3schools.com"> tutaj</a><br/>
+i <a href="http://www.w3.org/TR/xmlschema-0/"> xmlschema-0</a><br/>
+<a href="http://www.w3.org/TR/xmlschema-1/">xmlschema-1</a><br/>
+<a href="http://www.w3.org/TR/xmlschema-2/">xmlschema-2</a><br/>
+<a href="http://www.w3.org/TR/xmlschema-ref/">xmlschema-ref</a><br/>
+<!--<a href="os.txt">osoby + schema </a> <br/>
+<a href="nagl.txt"> Naglowek </a> <br/>
+<a href="typy.txt"> Typy globalne i lokalne </a> <br/>
+<a href="typw.txt"> Elementy o typach prostych - typy wbudowane </a> <br/>
+
+<a href="typw1.txt"> Elementy o typach prostych - tworzenie wlasnych typow </a> <br/>
+
+<a href="rest.txt"> Typach proste - restrykcje</a> <br/>
+<a href="lis.txt"> Typy proste - listy</a> <br/>
+<a href="tp-unie.txt">Typy proste tworzone za pomoca unii</a> <br/>
+<a href="tz-prosta.txt">Typy z³o¿one o prostej zawartoœci </a> <br/>
+<a href="tz-pr_roz.txt">Typy z³o¿one o prostej zawartoœci -rozszerzanie</a> <br/>
+<a href="tz-pr_res.txt">Typy z³o¿one o prostej zawartoœci -restrykcje</a> <br/>
+<a href="tz-zl.txt">Typy z³o¿one o z³o¿onej zawartoœci</a> <br/>
+<a href="tz-zl1.txt">Typy z³o¿one o z³o¿onej zaw. - compositors i particles</a> <br/>
+<a href="grel_at.txt">Grupy elementow i atrybutów</a> <br/>
+<a href="tz-miesz.txt">Typy z³o¿one o mieszanej zawartoœci</a> <br/>
+<a href="el-puste.txt">Elementy o pustej zawartosci</a> <br/>
+--!>
+<h2> Zadanie 5 </h2>
+<p>
+Uzywajac XML Schema zaprojektuj schemat dla dokumentów,
+w ktorych firma importujaca owoce moze przechowywac dane o
+zamówienia i dostawach. Zastanów sie, które dane pamietac w postaci atrybutów, a które jako elementy. Postaraj sie wymusic na dokumentach XML
+jak najwieksza zgodnosc z ponizszym opisem.
+Dla kazdej dostawy nalezy zapamietac rodzaj owocu, wielkosc dostawy (kg),
+dostawce, firme transportowa, date, date przydatnosci, jakosc (pierwsza lub
+druga) oraz cene (jedna z walut USD/EUR/PLN, domyslnie EUR). Dostawa
+moze zawierac opis uszkodzen. Kazdy owoc posiada gatunek, odmiane i
+kaliber (od 1 do 5), niektóre posiadaja informacje o swoich szczególnych w³asnosciach zdrowotnych. Kazdy odbiorca, dostawca oraz firma transportowa posiada swoja nazwe oraz adres. Sa trzy kategorie odbiorców: hipermarkety, hurtownie, oraz mniejsze sklepy. Zamówienia zawiera rodzaj owocu, wielkosc zamowienia, odbiorce, date oraz moze zawierac proponowana cene (USD/EUR/PLN).Jesli odbiorca jest hipermarket to zamówienie zawiera wysokosc op³aty za ekspozycje towaru. Jesli odbiorca jest ma³y sklep to zamówienie nie moze posiadac proponowanej ceny.
+ Minimalna wielkosc zamówienia dla hipermarketu i hurtowni to 500kg.
+</p>
+<h1> Cwiczenia 5 </h1>
+<p>Przestrzeñ nazw.</p>
+<a href="http://w3schools.com/xml/xml_namespaces.asp">Tutorial </a> <br/>
+<!--<a href="pn2.txt"> W³¹czanie Schema za pomoc¹ include </a> <br/>
+<a href="pn3.txt">W³aczanie schema za pomoc¹ redefine </a> <br/>
+<a href="pn4.txt">W³¹czanie Schema za pomoc¹ import </a> <br/>
+<a href="q.txt"> qualified, unqualified </a><br/>
+<a href="pn1.txt">Przyk³ady u¿ycia przestrzeni nazw w dokumentach </a><br/>--!>
+<h1> cwiczenia 6 </h1>
+<p>
+Projekt
+<a href="http://woodstox.codehaus.org/"/>Woodstox <a/>
+- udana i uznana implementacja StAX'a:<br/>
+Fragment o StAX 
+<a href="http://java.sun.com/javaee/5/docs/tutorial/doc/bnbdv.html"/>z JEE Tutoriala<a/><br/>
+
+</p>
+<p> Parsery XML <br/>
+<a href="http://xml.apache.org"> Apache Xerces </a><br/>
+<a href="http://alphaworks.ibm.com/tech/xml4j">  IBM XML4J </a><br/>
+<a href="http://www.jclark.com/xml/xp"> James Clark's XP </a><br/>
+<a href="http://technet.oracle.com/tech/xml">  Oracle XML Parser </a><br/>
+<a href="http://java.sun.com/products/xml">  Sun Microsystems Project X </a><br/>
+<a href="http://www.textuality.com/Lark">  Tim Bray's Lark and Larval </a><br/>
+
+</p>
+<p>
+Aby SAX dzia³a³ nale¿y do zmiennej CLASSPATH dodaæ œcie¿ki<br/>
+
+    * na mancie wystarczy dodaæ œcie¿ke /usr/share/java2/xercesImpl.jar i /usr/share/java2/xml-apis.jar przy u¿yciu polecenia export
+</p>
+<p>
+W SAX s¹ cztery podstawowe procedury obs³ugi<br/>
+
+    * ContentHandler<br/>
+    * ErrorHandler<br/>
+    * DTDHandler<br/>
+    * EntityResolver<br/><br/>
+
+Rejestrowanie klas implementuj¹cych odbywa siê za pomoc¹ metod<br/>
+
+    * SetContentHandler()<br/>
+    * SetErrorHandler()<br/>
+    * SetDTDHandler()<br/>
+    * SetEntityResolver()<br/>
+</p>
+<p>
+Jeœli chodzi o konfiguracje parsera to mamy do dyspozycji 4 metody<br/><br/>
+
+    * setFeature("URI w³aœciwoœci", true|false)<br/>
+    * getFeature("URI w³aœciwoœci")<br/>
+    * setProperty("URI cechy", true|false)<br/>
+    * getProperty("URI cechy")<br/>
+
+<br/><br/>
+
+
+Wiêksz¹ listê w³aœciwoœci i listê cech mo¿na znaleŸæ na stronach<br/><br/>
+
+    * http://xerces.apache.org/xerces-j/features.html<br/>
+    * http://xerces.apache.org/xerces-j/properties.html<br/>
+</p>
+<h1> Cwiczenia 7 </h1>
+<a href="zawartosc.txt">zawartosc plików </a> <br/>
+<a href="Run.java">przyklad </a> <br/>
+<a href="ceny.xml">ceny.xml </a> <br/>
+
+
+Cwiczenia<br/>
+Napisaæ programy realizuj¹ce nastêpuj¹ce zadania<br/>
+1. Program wypisuje ile elementów ma atrybuty o nazwie bêd¹cej argumentem wywo³ania programu.<br/>
+2. Program wypisuje nazwy i zawartoœci tych elementów które maja dzieci.<br/>
+3. Napisaæ program który wypisze markê i standard najdro¿szego auta z pliku
+ceny.xml. (plik ceny.xml podpiêty do zajêæ)<br/>
+<h2> zadanie</h2>
+1. Napisac program ktory zamieni puste znaczniki w xml z postaci
+< znacznik > < / znacznik> na <  znacznik/> (program tworzy nowy plik XML,
+który zawiera t¹ sam¹ zawartoœæ co plik wejœciowy, tylko
+znaczniki puste s¹ odpowiednio przeformatowane. (Metoda tworzenia
+nowego pliku jest dowolna)<br/><br/>
+
+2. Npisac program który wypisze iloœæ znacznikow ka¿dego rodzaju
+w dokumencie XML podanym jako argument wywo³ania programu.
+Przykladowy rezultat dzialania programu na pliku ceny.xml<br/>
+
+nazwa znacznika ilosc wystapien<br/>
+produkty            1<br/>
+produkt              5<br/>
+cena                  15<br/>
+(do 4 maja)
+<h1> Cwiczenia 9 </h1>
+<a href="ciagFiltrow.tar"> ciag filtrow</a> <br/>
+<a href="filtrTagow.tar"> filtr Tagow </a> <br/>
+<a href="zmianaPrzestrzeni.tar"> zmiana przestrzeni</a> <br/>
+<a href="dodajNapis.tar"> Dodaj napis </a><br/>
+
+Cwiczenia (do 18 maja)<br/>
+Stworzyæ nastêpuj¹ce filtry<br/>
+
+    * formatuj¹cy wynik (³adne wciêcia)<br/>
+    * pomijaj¹cy okreœlone znaczniki (podane przez u¿ytkownika)<br/>
+    * zamieniaj¹cy przestrzenie nazw na podane przez u¿ytkownika przy uruchomieniu programu (Uwaga: plik .xml mo¿e miec kilka ró¿nych przestrzeni nazw, nale¿y wskazaæ jakie przetrzenie nazw chcemy zamieniæ na jakie)<br/>
+    * zamieniaj¹cy nazwy elementów na pisane du¿ymi literami (prefixy sie nie zmieniaj¹)<br/>
+    * zamieniaj¹cy nazwy atrybutów na pisane ma³ymi literami (prefixy siê nie zmieniaj¹)<br/><br/>
+
+Napisaæ program, który bedzie korzysta³ z powy¿szych filtrów. Iloœæ u¿ywanych (przy uruchomieniu nie trzeba zawsze korzystaæ z wszystkich i tych samych filtrów) filtrów i kolejnoœæ ich u¿ycia powinna byc okreœlana za pomoc¹ argumentów wywo³ania.
+<br/>
+Dla potrzeb testowania programu stworzyc przyk³adowy plik .xml.<br/>
+<h1> Cwiczenia 10 </h1>
+<a href="http://www.w3.org/TR/DOM-Level-3-Core/"> http://www.w3.org/TR/DOM-Level-3-Core/</a><br/>
+<a href="http://www.w3.org/TR/DOM-Level-2-Core/"> http://www.w3.org/TR/DOM-Level-2-Core/</a><br/>
+<a href="http://www.w3.org/TR/REC-DOM-Level-1/"> http://www.w3.org/TR/REC-DOM-Level-1/</a><br/>
+
+<a href="http://xerces.apache.org"> Biblioteka, dokumentacja, itp.</a><br/><br/>
+<a href="http://xerces.apache.org/mirrors.cgi">sekcja downloads</a><br/>
+<a href="http://www.apache.net.pl/xerces/j/Xerces-J-bin.2.9.1.tar.gz">sekcja downloads </a><br/>
+
+ Po rozpakowaniu dwa pliki na œcie¿kê:<br/><br/>
+
+xml-apis.jar<br/>
+xercesImpl.jar<br/><br/>
+Przyklad: <br/>
+<a href="Dom3Demo.java"> 1</a><br/>
+<a href="personal.xml"> 2</a><br/>
+<a href="personal.xsd"> 3</a><br/>
+<h2> Zadanie </h2>(do 25 maja) 
+Napisaæ program przy u¿yciu parsera DOM, który dokument <a href="ceny.xml">ceny.xml</a> zamieni na taki, w którym samochody wraz z cenami bêd¹ pogrupowane (bêd¹ dzieæmi) elementów standard (z atrybutem nazwa="wysoki")
+</body>
+</html>

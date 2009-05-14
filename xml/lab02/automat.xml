@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE automat SYSTEM "automat.dtd">
+<automat typ="deterministyczny" rozmiar="skonczony">
+  <alfabet>
+    <symbol>a</symbol>
+    <symbol>b</symbol>
+  </alfabet>
+  <stany>
+    <stan>X0</stan>
+    <stan>X1</stan>
+    <stan>X2</stan>
+    <stan>X3</stan>
+    <stan>X4</stan>
+  </stany>
+  <stan-poczatkowy>X0</stan-poczatkowy>
+  <stany-akceptujace>
+    <stan-akceptujacy>X0</stan-akceptujacy>
+  </stany-akceptujace>
+  <funkcja-przejscia>
+    <przejscie stan="X0" symbol="a" nowy-stan="X1" />
+    <przejscie stan="X0" symbol="b" nowy-stan="X1" />
+    <przejscie stan="X1" symbol="a" nowy-stan="X2" />
+    <przejscie stan="X1" symbol="b" nowy-stan="X3" />
+    <przejscie stan="X2" symbol="a" nowy-stan="X4" />
+    <przejscie stan="X2" symbol="b" nowy-stan="X0" />
+    <przejscie stan="X3" symbol="a" nowy-stan="X1" />
+    <przejscie stan="X3" symbol="b" nowy-stan="X2" />
+    <przejscie stan="X4" symbol="a" nowy-stan="X3" />
+    <przejscie stan="X4" symbol="b" nowy-stan="X4" />
+  </funkcja-przejscia>
+</automat>

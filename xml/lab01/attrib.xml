@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<osoba plec="m">
+  <imie typ="pierwsze">Jan</imie>
+  <imie typ="drugie">Adam</imie>
+  <nazwisko>Kowalski</nazwisko>
+  <firma>Kow&apos;al &amp; spolka</firma>
+  <wiek>25</wiek>
+
+  <wyrazenia>
+    <wyrazenie>5>2</wyrazenie>
+    <wyrazenie>2&lt;3</wyrazenie>
+    <wyrazenie><![CDATA[tu mozna poszalec: &d"""]]></wyrazenie>
+  </wyrazenia>
+</osoba>

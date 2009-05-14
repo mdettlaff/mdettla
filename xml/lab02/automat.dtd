@@ -1,0 +1,19 @@
+<!ELEMENT automat (alfabet,stany,stan-poczatkowy,stany-akceptujace,funkcja-przejscia)>
+<!ATTLIST automat
+typ (deterministyczny|niedeterministyczny) #REQUIRED
+rozmiar (skonczony) #IMPLIED
+>
+  <!ELEMENT alfabet (symbol)+>
+  <!ELEMENT symbol (#PCDATA)>
+  <!ELEMENT stany (stan)+>
+  <!ELEMENT stan (#PCDATA)>
+  <!ELEMENT stan-poczatkowy (#PCDATA)>
+  <!ELEMENT stany-akceptujace (stan-akceptujacy)+>
+  <!ELEMENT stan-akceptujacy (#PCDATA)>
+  <!ELEMENT funkcja-przejscia (przejscie)+>
+  <!ELEMENT przejscie (#PCDATA)>
+  <!ATTLIST przejscie
+  stan CDATA #REQUIRED
+  symbol CDATA #REQUIRED
+  nowy-stan CDATA #REQUIRED
+  >

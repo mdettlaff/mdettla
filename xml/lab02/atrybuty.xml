@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE osoby [
+<!ELEMENT osoby (osoba)*>
+<!ELEMENT osoba (imie,nazwisko)>
+<!ELEMENT imie (#PCDATA)>
+<!ELEMENT nazwisko (#PCDATA)>
+<!ATTLIST osoba
+plec (m|k) #REQUIRED
+numer ID #REQUIRED
+para IDREF #IMPLIED
+>
+
+]>
+<osoby>
+<osoba plec="m" numer="m1" para="k1">
+<imie>Jan</imie>
+<nazwisko>Nowak</nazwisko>
+</osoba>
+<osoba plec="k" numer="k1">
+<imie>Ewa</imie>
+<nazwisko>Nowak</nazwisko>
+</osoba>
+</osoby>

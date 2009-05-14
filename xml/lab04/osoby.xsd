@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  targetNamespace="http://dane_osoby.com"
+  xmlns="htp://dane_osoby.com"
+  elementFormDefault="qualified">
+  <xs:element name="osoba">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="imie" type="xs:string"/>
+	<xs:element name="nazwisko" type="xs:string"/>
+	<xs:element name="wiek" type="xs:decimal"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

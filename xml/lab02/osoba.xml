@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE osoba SYSTEM "osoba.dtd">
+<osoba>
+ <imie>Jan</imie>
+ <nazwisko>Nowak</nazwisko>
+<wiek>25</wiek>
+</osoba>

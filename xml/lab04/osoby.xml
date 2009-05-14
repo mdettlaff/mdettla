@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<osoba
+  xmlns="http://dane_osoby.com"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://dane_osoby.com osoby.xsd">
+  <imie>Jan</imie>
+  <nazwisko>Nowak</nazwisko>
+  <wiek>25</wiek>
+</osoba>
