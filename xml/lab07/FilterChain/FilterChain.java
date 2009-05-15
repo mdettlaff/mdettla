@@ -65,7 +65,7 @@ public class FilterChain {
 
 	public static void main(String[] args){
 		List<XMLFilterImpl> filters = new ArrayList<XMLFilterImpl>();
-		Getopt getopt = new Getopt("FilterChain", args, "s:n:ta");
+		Getopt getopt = new Getopt("FilterChain", args, "tain:s:");
 		int c;
 		String arg;
 		while ((c = getopt.getopt()) != -1) {
@@ -75,6 +75,9 @@ public class FilterChain {
 					break;
 				case 'a':
 					filters.add(new ToLowerAttsFilter());
+					break;
+				case 'i':
+					filters.add(new IndentFilter());
 					break;
 				case 's':
 					arg = getopt.getOptarg();
@@ -105,6 +108,7 @@ public class FilterChain {
 					"Użycie: java FilterChain [opcje] URI\n" +
 					"Opcje:\n" +
 					"  -a Filtr zamieniający litery na małe w atrybutach.\n" +
+					"  -i Filtr formatujący wcięcia w dokumencie.\n" +
 					"  -n NSMAPPINGS Filtr zamieniający przestrzenie nazw.\n" +
 					"  -s TAGS Filtr pomijający podane znaczniki.\n" +
 					"  -t Filtr zamieniający litery na wielkie w znacznikach."
