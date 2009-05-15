@@ -1,4 +1,6 @@
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.XMLReader;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLFilterImpl;
 
 public class CapitalizeTagsFilter extends XMLFilterImpl {
@@ -14,7 +16,6 @@ public class CapitalizeTagsFilter extends XMLFilterImpl {
 		localName = localName.toUpperCase();
 		String[] twoPartName = qName.split(":");
 		qName = twoPartName[0] + ":" + twoPartName[1].toUpperCase();
-		//getContentHandler().startElement(uri, localName, qName, atts);
 		super.startElement(uri, localName, qName, atts);
 	}
 
@@ -23,7 +24,6 @@ public class CapitalizeTagsFilter extends XMLFilterImpl {
 		localName = localName.toUpperCase();
 		String[] twoPartName = qName.split(":");
 		qName = twoPartName[0] + ":" + twoPartName[1].toUpperCase();
-		//getContentHandler().endElement(uri, localName, qName);
 		super.endElement(uri, localName, qName);
 	}
 
