@@ -1,5 +1,7 @@
 import java.util.List;
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.XMLReader;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLFilterImpl;
 
 public class SkipFilter extends XMLFilterImpl {
@@ -17,7 +19,6 @@ public class SkipFilter extends XMLFilterImpl {
 	public void startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
 		if (!tagsToSkip.contains(localName)) {
-			//getContentHandler().startElement(uri, localName, qName, atts);
 			super.startElement(uri, localName, qName, atts);
 		}
 	}
@@ -26,7 +27,6 @@ public class SkipFilter extends XMLFilterImpl {
 		throws SAXException {
 
 		if (!tagsToSkip.contains(localName)) {
-			//getContentHandler().endElement(uri, localName, qName);
 			super.endElement(uri, localName, qName);
 		}
 	}

@@ -1,6 +1,8 @@
 import java.util.Map;
 import java.util.HashMap;
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.XMLReader;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLFilterImpl;
 
 public class ChangeNamespaceFilter extends XMLFilterImpl{
@@ -16,12 +18,11 @@ public class ChangeNamespaceFilter extends XMLFilterImpl{
 		this.namespaceMappings = namespaceMappings;
 	}
 
-	/*public void startElement(String uri, String localName, String qName,
+	public void startElement(String uri, String localName, String qName,
 			Attributes atts) throws SAXException {
 		if (namespaceMappings.keySet().contains(uri)) {
 			uri = namespaceMappings.get(uri);
 		}
-		//getContentHandler().startElement(uri,localName,qName,atts);
 		super.startElement(uri, localName, qName, atts);
 	}
 
@@ -30,9 +31,8 @@ public class ChangeNamespaceFilter extends XMLFilterImpl{
 		if (namespaceMappings.keySet().contains(uri)) {
 			uri = namespaceMappings.get(uri);
 		}
-		//getContentHandler().endElement(uri,localName,qName);
 		super.endElement(uri, localName, qName);
-	}*/
+	}
 
 	public void startPrefixMapping(String prefix,
 			String uri) throws SAXException {

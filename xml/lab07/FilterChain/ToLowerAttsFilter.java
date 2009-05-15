@@ -1,4 +1,6 @@
-import org.xml.sax.*;
+import org.xml.sax.Attributes;
+import org.xml.sax.XMLReader;
+import org.xml.sax.SAXException;
 import org.xml.sax.helpers.XMLFilterImpl;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -19,7 +21,6 @@ public class ToLowerAttsFilter extends XMLFilterImpl {
 			attsImpl.setQName(i,
 					twoPartName[0] + ":" + twoPartName[1].toLowerCase());
 		}
-		//getContentHandler().startElement(uri, localName, qName, attsImpl);
 		super.startElement(uri, localName, qName, attsImpl);
 	}
 

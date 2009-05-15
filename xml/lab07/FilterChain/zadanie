@@ -1,9 +1,5 @@
 Cwiczenia 9
-ciag filtrow
-filtr Tagow
-zmiana przestrzeni
-Dodaj napis
-Cwiczenia (do 18 maja)
+Zadanie (do 18 maja)
 Stworzyć następujące filtry
 * formatujący wynik (ładne wcięcia)
 * pomijający określone znaczniki (podane przez użytkownika)
@@ -12,3 +8,8 @@ Stworzyć następujące filtry
 * zamieniający nazwy atrybutów na pisane małymi literami (prefixy się nie zmieniają)
 
 Napisać program, który bedzie korzystał z powyższych filtrów. Ilość używanych (przy uruchomieniu nie trzeba zawsze korzystać z wszystkich i tych samych filtrów) filtrów i kolejność ich użycia powinna byc określana za pomocą argumentów wywołania.
+
+Kompilacja:
+javac -cp java-getopt-1.0.13.jar *java
+Przykład użycia:
+java -cp .:java-getopt-1.0.13.jar FilterChain -s "head body" -at -n "http://moja.przestrzen http://inna.przestrzen" example.xml

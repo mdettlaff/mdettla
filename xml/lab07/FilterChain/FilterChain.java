@@ -1,9 +1,9 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
+import java.util.Map;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.ErrorHandler;
@@ -12,48 +12,38 @@ import org.xml.sax.Locator;
 import org.xml.sax.Attributes;
 import org.xml.sax.XMLReader;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.XMLFilterImpl;
-//import org.apache.xerces.parsers.SAXParser;
 
+import gnu.getopt.Getopt;
+//import org.apache.xerces.parsers.SAXParser;
 
 public class FilterChain {
 
 	public void filter(String uri, List<XMLFilterImpl> filters) {
-		System.out.println("Parsing XML File: " + uri);
-		System.out.println("Filters used: " + filters + "\n");
 		try {
 			MyContentHandler contentHandler = new MyContentHandler();
 			MyErrorHandler errorHandler = new MyErrorHandler();
 			XMLReader parser = XMLReaderFactory.createXMLReader();
 			//SAXParser parser = new SAXParser();
 
-			//definiowanie filtrów
-			filters.get(0).setParent(parser);
-			for (int i=1; i < filters.size(); i++) {
-				filters.get(i).setParent(filters.get(i-1));
-			}
-			XMLFilterImpl lastFilter = filters.get(filters.size() - 1);
-			lastFilter.setContentHandler(contentHandler);
-			lastFilter.setErrorHandler(errorHandler);
-			lastFilter.setFeature(
-					"http://xml.org/sax/features/validation", false);
-
-			/*CapitalizeTagsFilter capitalize = new CapitalizeTagsFilter();
-			capitalize.setParent(parser);
-			SkipFilter skip = new SkipFilter(Arrays.asList("wibble", "td"));
-			skip.setParent(capitalize);
-			skip.setContentHandler(contentHandler);
-			skip.setErrorHandler(errorHandler);
-			skip.setFeature("http://xml.org/sax/features/validation", false);*/
-
-			//parsowanie
-			lastFilter.parse(uri);
-			/*if (filter.getFeature("http://xml.org/sax/features/validation")) {
-				System.out.println("Z walidacją");
+			XMLReader filter; // pierwszy filtr
+			if (filters.size() > 0) {
+				filters.get(0).setParent(parser);
+				for (int i=1; i < filters.size(); i++) {
+					filters.get(i).setParent(filters.get(i-1));
+				}
+				filter = filters.get(filters.size() - 1);
 			} else {
-				System.out.println("Bez walidacji");
-			}*/
+				filter = parser;
+			}
+			filter.setContentHandler(contentHandler);
+			filter.setErrorHandler(errorHandler);
+			filter.setFeature(
+					"http://xml.org/sax/features/validation", false);
+			filter.parse(uri);
 		}
 		catch (IOException e) {
 			System.out.println("Input/Output exception " + e.getMessage());
@@ -74,22 +64,53 @@ public class FilterChain {
 	}
 
 	public static void main(String[] args){
-		if (args.length == 0){
-			System.out.println("Usage: java FilterChain XML_URI");
-			System.exit(0);
+		List<XMLFilterImpl> filters = new ArrayList<XMLFilterImpl>();
+		Getopt getopt = new Getopt("FilterChain", args, "s:n:ta");
+		int c;
+		String arg;
+		while ((c = getopt.getopt()) != -1) {
+			switch(c) {
+				case 't':
+					filters.add(new CapitalizeTagsFilter());
+					break;
+				case 'a':
+					filters.add(new ToLowerAttsFilter());
+					break;
+				case 's':
+					arg = getopt.getOptarg();
+					filters.add(new SkipFilter(Arrays.asList(arg.split(" "))));
+					break;
+				case 'n':
+					arg = getopt.getOptarg();
+					String[] optargs = arg.split(" ");
+					Map<String, String> nsMappings =
+						new HashMap<String, String>();
+					for (int i=0; i < optargs.length; i+=2) {
+						nsMappings.put(optargs[i], optargs[i+1]);
+					}
+					filters.add(new ChangeNamespaceFilter(nsMappings));
+					break;
+				case '?':
+					System.exit(2);
+			}
 		}
-		String uri = args[0];
-		List<XMLFilterImpl> filters = Arrays.asList(
-				new SkipFilter(Arrays.asList("wibble", "td")),
-				new CapitalizeTagsFilter(),
-				new ToLowerAttsFilter(),
-				new ChangeNamespaceFilter(new HashMap<String, String>() {{
-					put("http://moja.przestrzen", "http://nowa.przestrzen");
-					put("http://jakas.przestrzen", "http://inna.przestrzen");
-				}})
-		);
-		FilterChain filterChain = new FilterChain();
-		filterChain.filter(uri, filters);
+		if (getopt.getOptind() < args.length) {
+			String uri = args[getopt.getOptind()];
+			FilterChain filterChain = new FilterChain();
+			System.out.println("Parsowanie pliku " + uri);
+			System.out.println("Użyte filtry: " + filters + "\n");
+			filterChain.filter(uri, filters);
+		} else {
+			System.out.println(
+					"Użycie: java FilterChain [opcje] URI\n" +
+					"Opcje:\n" +
+					"  -a Filtr zamieniający litery na małe w atrybutach.\n" +
+					"  -n NSMAPPINGS Filtr zamieniający przestrzenie nazw.\n" +
+					"  -s TAGS Filtr pomijający podane znaczniki.\n" +
+					"  -t Filtr zamieniający litery na wielkie w znacznikach."
+					);
+			System.exit(2);
+		}
 	}
 }
 
@@ -144,20 +165,10 @@ class MyContentHandler implements ContentHandler{
 				String rawName, Attributes atts) throws SAXException {
 		int i;
 		System.out.print("<" + rawName);
-		//System.out.println("\n"+"ELEMENT "+localName);
-		//System.out.println("... Linia "+locator.getLineNumber());
-		//System.out.println("...Kolumna "+locator.getColumnNumber());
-		//System.out.println("...Przestrzen nazw "+namespaceURI);
-		//System.out.println("...Pelna nazwa "+rawName);
 
 		for (i=0; i < atts.getLength(); i++) {
 			System.out.print(" " + atts.getQName(i));
 			System.out.print("=\"" + atts.getValue(i) + "\"");
-			//System.out.println(atts.getLocalName(i));
-			//System.out.println(">>>>>>>> Przestrzen nazw "+atts.getURI(i));
-			//System.out.println(">>>>>>>> Pelna nazwa "+atts.getQName(i));
-			//System.out.println(">>>>>>>> Typ "+atts.getType(i));
-			//System.out.println(">>>>>>>> Wartosc "+atts.getValue(i));
 		}
 		if (prefix != null && uri != null) {
 			System.out.print(" xmlns:" + prefix + "=\"" + uri + "\"");
@@ -180,7 +191,5 @@ class MyContentHandler implements ContentHandler{
 	public void ignorableWhitespace(char[] ch, int start, int end)
 		throws SAXException {}
 
-	public void skippedEntity(String name) throws SAXException {
-		System.out.println("Encja");
-	}
+	public void skippedEntity(String name) throws SAXException {}
 }
