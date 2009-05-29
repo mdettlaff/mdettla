@@ -1,0 +1,4 @@
+Napisać program w JDOM, ktory wypisze zawartość dowolnego przez nas wybranego elementu i jego atrybuty (jeśli posiada).
+Przy wywołaniu programu podajemy nazwę elementu i numer (może być wiecej niż jeden element o zadanej nazwie).
+o jeśli nie ma elementów o zadanej nazwie to wyświetlamy odpowiedni komunikat
+o jeśli występują elementy o zadanej nazwie ale ich ilość jest mniejsza niż podana liczba, wtedy wypisujemy dane o elemencie ostatnim.
