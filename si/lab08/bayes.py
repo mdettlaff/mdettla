@@ -42,9 +42,10 @@ class NBC:
             for feature in classifiable.features:
                 classifiables_having_feature = \
                         [cl for cl in classifiables_in_domain if \
+                        feature in cl.features and \
                         classifiable.features[feature] == cl.features[feature]]
-                possible_feature_values = \
-                        set([cl.features[feature] for cl in self.database])
+                possible_feature_values = set([cl.features[feature] \
+                        for cl in self.database if feature in cl.features])
                 # obliczamy prawdopodobieństwo dla danej cechy, stosując
                 # wygładzanie Laplace'a
                 probability *= (1.0 + len(classifiables_having_feature)) \
