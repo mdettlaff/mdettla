@@ -1,0 +1,2 @@
+Zadanie (do 25 maja)
+Napisać program przy użyciu parsera DOM, który dokument ceny.xml zamieni na taki, w którym samochody wraz z cenami będą pogrupowane (będą dziećmi) elementów standard (z atrybutem nazwa="wysoki")
