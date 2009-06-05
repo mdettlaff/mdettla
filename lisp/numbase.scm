@@ -6,11 +6,6 @@
 (define (base number)
   (cdr number))
 
-(define (pow a b)
-  (cond ((= 1 b) a)
-        ((= 0 b) 1)
-        (else    (* a (pow a (- b 1))))))
-
 (define (print-number number)
   (display (car (digits number))) (display '*)
   (display (base number)) (display '^)
@@ -25,8 +20,8 @@
   (if (= (length (digits number)) 0)
       0
       (+ (* (car (digits number))
-            (pow (base number)
-                 (- (length (digits number)) 1)))
+            (expt (base number)
+                  (- (length (digits number)) 1)))
          (number-to-int (make-number (cdr (digits number))
                                      (base number))))))
 
