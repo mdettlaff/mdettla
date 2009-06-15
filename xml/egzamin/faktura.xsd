@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified">
+
+  <!--
+  zad 1. Dany jest dokument XML. Podac mozliwie precyzyjna definicje w postaci
+  XML Schema.
+  -->
+  <xs:element name="faktura">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="Nrfaktury" type="xs:string"/>
+	<xs:element name="Sprzedawca">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="NazwaFirmy" type="xs:string"/>
+	      <xs:element name="Adres">
+		<xs:complexType>
+		  <xs:sequence>
+		    <xs:element name="Ulica" type="xs:string"/>
+		    <xs:element name="Miejscowosc" type="xs:string"/>
+		    <xs:element name="KodPocztowy">
+		      <xs:simpleType>
+			<xs:restriction base="xs:string">
+			  <xs:pattern value="[0-9]{2}-[0-9]{3}"/>
+			</xs:restriction>
+		      </xs:simpleType>
+		    </xs:element>
+		  </xs:sequence>
+		</xs:complexType>
+	      </xs:element>
+	      <xs:element name="NIP">
+		<xs:simpleType>
+		  <xs:restriction base="xs:string">
+		    <xs:pattern value="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/>
+		  </xs:restriction>
+		</xs:simpleType>
+	      </xs:element>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+
+	<xs:element name="Nabywca">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="NazwiskoOsoby" type="xs:string"/>
+	      <xs:element name="NIP" type="xs:string"/>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+
+	<xs:element name="lista">
+	  <xs:complexType>
+	    <xs:choice maxOccurs="unbounded">
+	      <xs:element name="towar">
+		<xs:complexType>
+		  <xs:sequence>
+		    <xs:element name="nazwa" type="xs:string"/>
+		    <xs:element name="cena" type="xs:float"/>
+		    <xs:element name="ilosc" type="xs:integer"/>
+		  </xs:sequence>
+		  <xs:attribute name="VAT" type="xs:float"/>
+		</xs:complexType>
+	      </xs:element>
+	    </xs:choice>
+	  </xs:complexType>
+	</xs:element>
+
+      </xs:sequence>
+      <xs:attribute name="StatusFaktury" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

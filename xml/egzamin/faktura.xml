@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faktura StatusFaktury="zaplacona">
+  <Nrfaktury>2009-05-27-123</Nrfaktury>
+
+  <Sprzedawca>
+    <NazwaFirmy>MSX</NazwaFirmy>
+    <Adres>
+      <Ulica>Zielona</Ulica>
+      <Miejscowosc>Gdansk</Miejscowosc>
+      <KodPocztowy>81-870</KodPocztowy>
+    </Adres>
+    <NIP>345-345-67-12</NIP>
+  </Sprzedawca>
+
+  <Nabywca>
+    <NazwiskoOsoby>Zielinski</NazwiskoOsoby>
+    <NIP>123-456-78-89</NIP>
+  </Nabywca>
+
+  <lista>
+    <towar VAT="0">
+      <nazwa>kredka</nazwa>
+      <cena>3.0</cena>
+      <ilosc>10</ilosc>
+    </towar>
+    <towar VAT="0.1">
+      <nazwa>zeszyt</nazwa>
+      <cena>1.50</cena>
+      <ilosc>2</ilosc>
+    </towar>
+    <towar VAT="0">
+      <nazwa>pisak</nazwa>
+      <cena>5.50</cena>
+      <ilosc>10</ilosc>
+    </towar>
+  </lista>
+</faktura>
