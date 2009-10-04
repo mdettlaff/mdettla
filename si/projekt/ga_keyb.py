@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- coding: UTF-8 -*-
+# -*- encoding: UTF-8 -*-
 
 u"""Szukanie optymalnego układu klawiatury za pomocą algorytmu genetycznego.
 
@@ -42,9 +42,10 @@ __docformat__ = 'restructuredtext pl'
 __author__ = u'Michał Dettlaff'
 
 import getopt
-import math
 import random
 import sys
+
+import genetic_operators
 
 
 usage = u"""\
@@ -53,9 +54,9 @@ Plik tekstowy PLIK zostanie użyty do oceny przystosowania.
 Opcje:
     -c P    Prawdopodobieństwo krzyżowania (0 <= P <= 1).
     -e ENC  Kodowanie znaków w plikach wejściowych (domyślnie UTF-8).
-    -i ITER Liczba ITERACJI (pokoleń) algorytmu genetycznego.
+    -i ITER Liczba iteracji (pokoleń) algorytmu genetycznego.
     -m P    Prawdopodobieństwo mutacji (0 <= P <= 1).
-    -s ROZ  ROZMIAR (ilość osobników) populacji.
+    -s ROZ  Rozmiar (ilość osobników) populacji.
     -t K    Rozmiar turnieju K w selekcji turniejowej.
     -w N    Analizuj tylko N najczęściej występujących wyrazów.
     --help  Wyświetl treść pomocy i zakończ.\
@@ -75,6 +76,9 @@ DEFAULT_WORDS = 200
 u"""Domyślna maksymalna ilość najczęstszych wyrazów do analizowania."""
 DEFAULT_ENCODING = 'UTF-8'
 u"""Domyślne kodowanie znaków w plikach tekstowych do analizy."""
+
+CROSSOVER = genetic_operators.cx_crossover;
+MUTATE = genetic_operators.swap_mutate;
 
 
 class Specimen:
@@ -118,33 +122,12 @@ class Specimen:
 
     def __new_descendant(self, parents, p_c, p_m):
         u"""Utwórz osobnika będącego potomkiem podanych rodziców."""
-        self.genotype = list(parents[random.randint(0, 1)].genotype)
-        # krzyżowanie jednostajne z naprawianiem powtórzeń
-        if (random.random() < p_c):
-            # znaki, których jeszcze nie skopiowaliśmy do genotypu potomka
-            unused = set(self.genotype)
-            random_order = range(0, len(self.genotype))
-            random.shuffle(random_order)
-            for i in random_order:
-                parent = random.randint(0, 1)
-                if parents[parent].genotype[i] in unused:
-                    key = parents[parent].genotype[i]
-                    self.genotype[i] = key
-                    unused.remove(key)
-                elif parents[1 - parent].genotype[i] in unused:
-                    key = parents[1 - parent].genotype[i]
-                    self.genotype[i] = key
-                    unused.remove(key)
-                else: # bierzemy arbitralnie wybrany niepowtarzający się znak
-                    self.genotype[i] = unused.pop()
-        # mutacja
-        if (random.random() < p_m):
-            mut_count = int(math.floor(1 / random.uniform(.1, 1)))
-            # pozycje, na których wystąpią mutacje
-            mp = random.sample(range(0, len(self.genotype)), mut_count * 2)
-            for i in range(0, len(mp), 2):
-                self.genotype[mp[i]], self.genotype[mp[i+1]] = \
-                        self.genotype[mp[i+1]], self.genotype[mp[i]]
+        if random.random() < p_c:
+            self.genotype = random.choice(CROSSOVER(parents))
+        else:
+            self.genotype = list(random.choice(parents).genotype)
+        if random.random() < p_m:
+            MUTATE(self.genotype)
 
     def __eq__(self, other):
         return self.genotype == other.genotype
