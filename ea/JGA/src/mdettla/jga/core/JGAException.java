@@ -10,4 +10,8 @@ public class JGAException extends Exception {
 	public JGAException(String message) {
 		super(message);
 	}
+
+	public JGAException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

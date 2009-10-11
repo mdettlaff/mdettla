@@ -1,19 +1,21 @@
 package mdettla.jga.core;
 
-public interface Specimen extends Comparable<Specimen>, Cloneable {
 
-	public Specimen createInstance();
+public interface Specimen extends Comparable<Specimen> {
+
+	public Specimen createRandomInstance();
+
+	public Specimen createCopy();
 
 	public int getGenotypeLength();
 
-	public Gene getGeneAt(int position);
+	public Object getGeneAt(int position);
 
-	public void setGeneAt(int position, Gene gene);
+	public void setGeneAt(int position, Object gene);
 
-	public Object getFitness();
+	public void setRandomGeneValueAt(int position);
 
-	/**
-	 * @return Reprezentacja napisowa osobnika (fenotyp).
-	 */
-	public String toString();
+	public void setOppositeGeneValueAt(int position);
+
+	public Integer getFitness();
 }
