@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Utils {
 
-	public static <T> List<T> randomSample(List<T> population, int k) {
+	public synchronized static <T> List<T> randomSample(List<T> population, int k) {
 		Random random = new Random();
 		List<Integer> indexes = new ArrayList<Integer>(population.size());
 		for (int i = 0; i < population.size(); i++) {
@@ -21,10 +21,10 @@ public class Utils {
 		return sample;
 	}
 
-	public static List<Integer> range(int n) {
+	public synchronized static List<Integer> range(int n) {
 		List<Integer> range = new ArrayList<Integer>(n);
 		for (int i = 0; i < n; i++) {
-			range.add(n);
+			range.add(i);
 		}
 		return range;
 	}

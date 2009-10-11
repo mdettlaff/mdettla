@@ -31,7 +31,7 @@ class SpecimenCreatorThread extends Thread {
 			if (random.nextDouble() < ga.getCrossoverProbability()) {
 				offspring = ga.getCrossoverOperator().produceOffspring(parent1, parent2);
 			} else {
-				offspring = Arrays.asList(parent1, parent2);
+				offspring = Arrays.asList(parent1.createCopy(), parent2.createCopy());
 			}
 			for (Specimen specimen : offspring) {
 				if (random.nextDouble() < ga.getMutationProbability()) {

@@ -1,13 +1,11 @@
 package mdettla.jga.operators.crossover;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import mdettla.jga.core.CrossoverOperator;
-import mdettla.jga.core.Gene;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 
@@ -19,9 +17,10 @@ public class CycleCrossover implements CrossoverOperator {
 		Specimen[] parents = new Specimen[] { parent1, parent2 };
 		Specimen offspring;
 
-		offspring = parent1.createInstance();
+		offspring = parent1.createCopy();
 		// geny, których jeszcze nie skopiowaliśmy do genotypu potomka
-		Set<Gene> unused  = new HashSet<Gene>();
+		List<Object> unused =
+			new ArrayList<Object>(offspring.getGenotypeLength());
 		for (int i = 0; i < parent1.getGenotypeLength(); i++) {
 			unused.add(parent1.getGeneAt(i));
 		}
@@ -29,16 +28,18 @@ public class CycleCrossover implements CrossoverOperator {
 		for (Integer i : randomOrder) {
 			int parentIndex = random.nextInt(2);
 			if (unused.contains(parents[parentIndex].getGeneAt(i))) {
-				Gene gene = parents[parentIndex].getGeneAt(i);
+				Object gene = parents[parentIndex].getGeneAt(i);
 				offspring.setGeneAt(i, gene);
 				unused.remove(gene);
 			} else if (unused.contains(parents[1 - parentIndex].getGeneAt(i))) {
-				Gene gene = parents[1 - parentIndex].getGeneAt(i);
+				Object gene = parents[1 - parentIndex].getGeneAt(i);
 				offspring.setGeneAt(i, gene);
 				unused.remove(gene);
 			} else {
 				// bierzemy arbitralnie wybrany niepowtarzający się gen
-				offspring.setGeneAt(i, unused.iterator().next());
+				Object gene = unused.iterator().next();
+				offspring.setGeneAt(i, gene);
+				unused.remove(gene);
 			}
 		}
 		return Arrays.asList(offspring);
