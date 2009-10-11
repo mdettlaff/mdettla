@@ -15,10 +15,9 @@ public class GeneticAlgorithm {
 
 	public static final double DEFAULT_CROSSOVER_PROBABILITY = .7;
 	public static final double DEFAULT_MUTATION_PROBABILITY = .7;
-	public static final int DEFAULT_POPULATION_SIZE = 100;
 	public static final int DEFAULT_THREAD_POOL_SIZE = 7;
 
-	private Class<? extends Specimen> specimenClass;
+	private List<Specimen> initialPopulation;
 	private CrossoverOperator crossoverOperator;
 	private double crossoverProbability;
 	private MutationOperator mutationOperator;
@@ -28,15 +27,14 @@ public class GeneticAlgorithm {
 	private int threadPoolSize;
 	private boolean quiet;
 
-	public GeneticAlgorithm(Class<? extends Specimen> specimenClass) {
-		// TODO Przekazywanie początkowej populacji do konstruktora.
-		this.specimenClass = specimenClass;
+	public GeneticAlgorithm(List<Specimen> initialPopulation) {
+		this.initialPopulation = initialPopulation;
+		populationSize = initialPopulation.size();
 		crossoverOperator = new CycleCrossover();
 		crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
 		mutationOperator = new OnePointMutation();
 		mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		selectionFunction = new TournamentSelection(4);
-		populationSize = DEFAULT_POPULATION_SIZE;
 		threadPoolSize = DEFAULT_THREAD_POOL_SIZE;
 		quiet = false;
 	}
@@ -89,10 +87,6 @@ public class GeneticAlgorithm {
 		return selectionFunction;
 	}
 
-	public void setPopulationSize(int populationSize) {
-		this.populationSize = populationSize;
-	}
-
 	public void setThreadPoolSize(int threadPoolSize) {
 		this.threadPoolSize = Math.max(threadPoolSize, 1);
 	}
@@ -104,15 +98,11 @@ public class GeneticAlgorithm {
 	public Specimen runEpoch(int iterations) throws JGAException {
 		Specimen best = null;
 		try {
-			List<Specimen> population = Collections.synchronizedList(
-					new ArrayList<Specimen>(populationSize));
 			List<Specimen> bestFromEachPopulation = new ArrayList<Specimen>();
+			List<Specimen> population = initialPopulation;
 
 			if (!quiet) {
 				System.out.println("Najlepsze przystosowanie w kolejnych pokoleniach:");
-			}
-			for (int i = 0; i < populationSize; i++) {
-				population.add(createRandomSpecimen());
 			}
 			for (int i = 0; i < iterations; i++) {
 				List<Specimen> newPopulation = Collections.synchronizedList(
@@ -134,6 +124,7 @@ public class GeneticAlgorithm {
 				population = newPopulation;
 				Specimen bestInPopulation = Collections.max(population);
 				bestFromEachPopulation.add(bestInPopulation);
+
 				if (!quiet) {
 					System.out.println((i + 1) + "\t" +
 							bestInPopulation.getFitness().toString());
@@ -144,20 +135,5 @@ public class GeneticAlgorithm {
 			e.printStackTrace();
 		}
 		return best;
-	}
-
-	private Specimen createRandomSpecimen() throws JGAException {
-		Specimen randomSpecimen;
-		try {
-			randomSpecimen =
-				specimenClass.newInstance().createRandomInstance();
-		} catch (InstantiationException e) {
-			throw new JGAException("Nie można utworzyć obiektu klasy " +
-					specimenClass.getName(), e);
-		} catch (IllegalAccessException e) {
-			throw new JGAException("Błąd dostępu w klasie " +
-					specimenClass.getName(), e);
-		}
-		return randomSpecimen;
 	}
 }

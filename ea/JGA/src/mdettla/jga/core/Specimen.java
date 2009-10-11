@@ -3,8 +3,6 @@ package mdettla.jga.core;
 
 public interface Specimen extends Comparable<Specimen> {
 
-	public Specimen createRandomInstance();
-
 	public Specimen createCopy();
 
 	public int getGenotypeLength();

@@ -15,7 +15,6 @@ public class UtilsTest {
 	public void testRandomSample() {
 		List<Integer> population = Arrays.asList(5, 3, 1, 2, 4);
 		List<Integer> sample = Utils.randomSample(population, 3);
-		System.out.println(sample);
 		assertTrue(sample.size() == 3);
 		assertTrue(population.containsAll(sample));
 		assertTrue(!sample.get(0).equals(sample.get(1)));
