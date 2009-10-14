@@ -10,10 +10,10 @@ public class Text implements Specimen {
 
 	public static final String AVAILABLE_CHARS = "abcdefghijklmnopqrstuvwxyz ";
 
-	private Character[] text;
+	private char[] text;
 
 	public Text() {
-		text = new Character[getGenotypeLength()];
+		text = new char[getGenotypeLength()];
 	}
 
 	public static Specimen createRandomInstance() {
@@ -44,7 +44,7 @@ public class Text implements Specimen {
 	}
 
 	@Override
-	public Object getGeneAt(int position) {
+	public Character getGeneAt(int position) {
 		return text[position];
 	}
 
@@ -77,7 +77,13 @@ public class Text implements Specimen {
 
 	@Override
 	public int compareTo(Specimen other) {
-		return getFitness().compareTo(other.getFitness());
+		if (getFitness().intValue() > other.getFitness().intValue()) {
+			return 1;
+		} else if (getFitness().intValue() < other.getFitness().intValue()) {
+			return -1;
+		} else {
+			return 0;
+		}
 	}
 
 	public String getPhenotype() {

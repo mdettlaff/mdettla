@@ -15,5 +15,5 @@ public interface Specimen extends Comparable<Specimen> {
 
 	public void setOppositeGeneValueAt(int position);
 
-	public Integer getFitness();
+	public Number getFitness();
 }
