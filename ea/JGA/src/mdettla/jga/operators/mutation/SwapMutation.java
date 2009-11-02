@@ -9,9 +9,10 @@ import mdettla.jga.core.Utils;
 
 public class SwapMutation implements MutationOperator {
 
+	private static Random random = new Random();
+
 	@Override
 	public void mutate(Specimen specimen) {
-		Random random = new Random();
 		int mutationsCount = (int)Math.floor(1 / (
 				(random.nextDouble() + .1) * .9));
 		mutationsCount = Math.min(

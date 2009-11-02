@@ -28,4 +28,12 @@ public class Utils {
 		}
 		return range;
 	}
+
+	public synchronized static List<Integer> range(int a, int b) {
+		List<Integer> range = new ArrayList<Integer>(b - a);
+		for (int i = a; i < b; i++) {
+			range.add(i);
+		}
+		return range;
+	}
 }

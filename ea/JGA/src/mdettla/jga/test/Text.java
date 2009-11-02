@@ -4,7 +4,7 @@ import java.util.Random;
 
 import mdettla.jga.core.Specimen;
 
-public class Text implements Specimen {
+class Text implements Specimen {
 
 	public static final String TARGET = "methinks it is like a weasel";
 
