@@ -11,10 +11,11 @@ import mdettla.jga.core.Utils;
 
 public class CycleCrossover implements CrossoverOperator {
 
+	private static Random random = new Random();
+
 	@Override
 	public List<Specimen> produceOffspring(Specimen parent1, Specimen parent2) {
-		Random random = new Random();
-		Specimen[] parents = new Specimen[] { parent1, parent2 };
+		Specimen[] parents = new Specimen[] {parent1, parent2};
 		Specimen offspring;
 
 		offspring = parent1.createCopy();

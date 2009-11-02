@@ -7,9 +7,10 @@ import mdettla.jga.core.Specimen;
 
 public class OnePointMutation implements MutationOperator {
 
+	private static Random random = new Random();
+
 	@Override
 	public void mutate(Specimen specimen) {
-		Random random = new Random();
 		int randomIndex = random.nextInt(specimen.getGenotypeLength());
 		specimen.setOppositeGeneValueAt(randomIndex);
 	}

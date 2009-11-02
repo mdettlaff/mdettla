@@ -20,10 +20,8 @@ public class GeneticAlgorithmTest {
 			initialPopulation.add(Text.createRandomInstance());
 		}
 
-		GeneticAlgorithm geneticAlgorithm =
-			new GeneticAlgorithm(initialPopulation);
-		geneticAlgorithm.setQuiet(true);
-		Specimen best = geneticAlgorithm.runEpoch(200);
+		GeneticAlgorithm ga = new GeneticAlgorithm(initialPopulation);
+		Specimen best = ga.runEpoch(200);
 
 		System.out.println("Najlepiej przystosowany osobnik " +
 				"(wartość przystosowania = " + best.getFitness() + "):");
