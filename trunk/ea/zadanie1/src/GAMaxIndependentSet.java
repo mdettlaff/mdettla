@@ -7,6 +7,7 @@ import java.util.Set;
 import mdettla.jga.core.GeneticAlgorithm;
 import mdettla.jga.core.JGAException;
 import mdettla.jga.core.Specimen;
+import mdettla.jga.operators.selection.RankSelection;
 
 public class GAMaxIndependentSet {
 
@@ -40,6 +41,7 @@ public class GAMaxIndependentSet {
 
 		// uruchamiamy algorytm genetyczny
 		GeneticAlgorithm ga = new GeneticAlgorithm(initialPopulation);
+		ga.setPrintResults(true);
 		Specimen best = ga.runEpoch(30);
 
 		System.out.println("Najlepiej przystosowany osobnik " +
