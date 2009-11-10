@@ -1,0 +1,7 @@
+Przykład sprowadzania do CNF:
+
+~(p => ~q) V (q V ~p)
+~(~p V ~q) V (q V ~p)
+(~~p & ~~q) V (q V ~p)
+(p & q) V (q V ~p)
+(p V q V ~p) & (q V q V ~p)
