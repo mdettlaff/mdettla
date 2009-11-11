@@ -73,47 +73,34 @@ class Formula:
         return s
 
 
-class FormulaCNF(Formula):
+def export_to_dimacs_cnf(formula):
 
-    def __init__(self, formula):
-        self.isLiteral = formula.isLiteral
-        if not formula.isLiteral:
-            self.operator = formula.operator
-            self.__args = ()
-            for i in range(formula.operator.arity):
-                self.__args += (FormulaCNF(formula[i]),)
-        else:
-            self.literal = formula.literal
-
-    def __getitem__(self, index):
-        return self.__args[index]
-
-    def toDIMACS(self):
-        dimacs, literals = self.__toDIMACSrecursive({})
-        return 'p cnf ' + str(len(literals)) + ' ' + \
-                str(dimacs.count('\n') + 1) + '\n' + dimacs
-
-    def __toDIMACSrecursive(self, literals):
+    def dimacs_cnf_recursive(formula, literals):
         s = ''
-        if self.isLiteral:
-            if not self.literal in literals:
-                literals[self.literal] = len(literals) + 1
-            s = str(literals[self.literal])
-        elif self.operator == NOT:
-            s = '-' + self[0].__toDIMACSrecursive(literals)[0]
-        elif self.operator == OR:
-            for i in range(self.operator.arity):
-                s += self[i].__toDIMACSrecursive(literals)[0]
-                if (i < len(self.__args) - 1):
+        if formula.isLiteral:
+            if not formula.literal in literals:
+                literals[formula.literal] = len(literals) + 1
+            s = str(literals[formula.literal])
+        elif formula.operator == NOT:
+            s = '-' + dimacs_cnf_recursive(formula[0], literals)[0]
+        elif formula.operator == OR:
+            for i in range(formula.operator.arity):
+                s += dimacs_cnf_recursive(formula[i], literals)[0]
+                if (i < formula.operator.arity - 1):
                     s += ' '
-        elif self.operator == AND:
-            for i in range(self.operator.arity):
-                s += self[i].__toDIMACSrecursive(literals)[0] + ' 0\n'
+        elif formula.operator == AND:
+            for i in range(formula.operator.arity):
+                s += dimacs_cnf_recursive(formula[i], literals)[0] + ' 0\n'
             s = s[:-1]
         return s, literals
 
+    dimacs, literals = dimacs_cnf_recursive(formula, {})
+    dimacs = dimacs if dimacs.endswith('0') else dimacs + ' 0'
+    return 'p cnf ' + str(len(literals)) + ' ' + str(dimacs.count('0')) + \
+            '\n' + dimacs
 
-class FormulaParser:
+
+def parse_formula(input):
 
     OPERATORS = (NOT, IMPL, OR, AND)
 
@@ -125,80 +112,89 @@ class FormulaParser:
         def __str__(self):
             return self.string
 
-    def __init__(self):
-        self.token = None
+    class TokenStack:
+        def __init__(self, token_generator):
+            self.generator = token_generator
+            self.current = self.generator.next()
 
-    def parse(self, input):
+        def pop(self):
+            self.current = self.generator.next()
+            self.peek()
 
-        def tokenize(input):
-            it = iter(input)
-            for c in it:
-                if not c.isspace():
-                    is_operator_matched = False
-                    for operator in FormulaParser.OPERATORS:
-                        if operator.symbol.startswith(c):
-                            is_operator_matched = True
-                            for c_symbol in operator.symbol[1:]:
-                                c = it.next()
-                                if c_symbol != c:
-                                    raise Exception(
-                                            'Nie mogę sparsować operatora')
-                            yield FormulaParser.Token(operator.symbol, True)
-                    if not is_operator_matched:
-                        yield FormulaParser.Token(c, False)
+        def peek(self):
+            return self.current
 
-        # form0 ::= form1 | form1 '=>' form0
-        def form0(tokens):
-            form = form1(tokens)
-            while not self.token.isLiteral and \
-                    self.token.string == IMPL.symbol:
-                self.token = tokens.next()
-                form = Formula(IMPL, form, form0(tokens))
-            return form
+    def tokenize(input):
+        it = iter(input)
+        for c in it:
+            if not c.isspace():
+                is_operator_matched = False
+                for operator in OPERATORS:
+                    if operator.symbol.startswith(c):
+                        is_operator_matched = True
+                        for c_symbol in operator.symbol[1:]:
+                            c = it.next()
+                            if c_symbol != c:
+                                raise Exception(
+                                        'Nie mogę sparsować operatora')
+                        yield Token(operator.symbol, True)
+                if not is_operator_matched:
+                    yield Token(c, False)
 
-        # form1 ::= form2 | form1 'V' form2
-        def form1(tokens):
-            form = form2(tokens)
-            while not self.token.isLiteral and self.token.string == OR.symbol:
-                self.token = tokens.next()
-                form = Formula(OR, form, form2(tokens))
-            return form
+    # form0 ::= form1 | form1 '=>' form0
+    def form0(tokens):
+        form = form1(tokens)
+        while not tokens.peek().isLiteral and \
+                tokens.peek().string == IMPL.symbol:
+            tokens.pop()
+            form = Formula(IMPL, form, form0(tokens))
+        return form
 
-        # form2 ::= form3 | form2 '&' form3
-        def form2(tokens):
+    # form1 ::= form2 | form1 'V' form2
+    def form1(tokens):
+        form = form2(tokens)
+        while not tokens.peek().isLiteral and \
+                tokens.peek().string == OR.symbol:
+            tokens.pop()
+            form = Formula(OR, form, form2(tokens))
+        return form
+
+    # form2 ::= form3 | form2 '&' form3
+    def form2(tokens):
+        form = form3(tokens)
+        while not tokens.peek().isLiteral and \
+                tokens.peek().string == AND.symbol:
+            tokens.pop()
+            form = Formula(AND, form, form3(tokens))
+        return form
+
+    # form3 ::= '~' form3 | form4
+    def form3(tokens):
+        if not tokens.peek().isLiteral and \
+                tokens.peek().string == NOT.symbol:
+            tokens.pop()
             form = form3(tokens)
-            while not self.token.isLiteral and self.token.string == AND.symbol:
-                self.token = tokens.next()
-                form = Formula(AND, form, form3(tokens))
-            return form
+            form = Formula(NOT, form)
+        else:
+            form = form4(tokens)
+        return form
 
-        # form3 ::= '~' form3 | form4
-        def form3(tokens):
-            if not self.token.isLiteral and self.token.string == NOT.symbol:
-                self.token = tokens.next()
-                form = form3(tokens)
-                form = Formula(NOT, form)
-            else:
-                form = form4(tokens)
-            return form
+    # form4 ::= literal | '(' form0 ')'
+    def form4(tokens):
+        try:
+            if tokens.peek().isLiteral:
+                form = Formula.createLiteral(tokens.peek().string)
+                tokens.pop()
+            elif tokens.peek().string == '(':
+                tokens.pop()
+                form = form0(tokens)
+                tokens.pop()
+        except StopIteration:
+            pass
+        return form
 
-        # form4 ::= literal | '(' form0 ')'
-        def form4(tokens):
-            try:
-                if self.token.isLiteral:
-                    form = Formula.createLiteral(self.token.string)
-                    self.token = tokens.next()
-                elif self.token.string == '(':
-                    self.token = tokens.next()
-                    form = form0(tokens)
-                    self.token = tokens.next()
-            except StopIteration:
-                pass
-            return form
-
-        tokens = tokenize(input)
-        self.token = tokens.next()
-        return form0(tokens)
+    tokens = TokenStack(tokenize(input))
+    return form0(tokens)
 
 
 def cnf(phi):
@@ -270,8 +266,8 @@ def cnf(phi):
 
 def main():
     input = sys.stdin.readline()
-    formula = FormulaParser().parse(input)
-    print FormulaCNF(cnf(formula)).toDIMACS()
+    formula = parse_formula(input)
+    print export_to_dimacs_cnf(cnf(formula))
 
 
 if __name__ == '__main__':
