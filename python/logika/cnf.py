@@ -1,21 +1,24 @@
 #!/usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
-u"""Sprowadzanie formuł logicznych do koniunkcyjnej postaci normalnej (CNF).
+u"""Sprowadza formuły logiczne do koniunkcyjnej postaci normalnej (CNF)."""
 
+__docformat__ = 'restructuredtext pl'
+__author__ = u'Michał Dettlaff'
+__date__ = '2009-11-11'
+
+
+import getopt
+import doctest
+import sys
+
+
+usage = u"""\
 Użycie: cnf.py < PLIK_WEJŚCIOWY > PLIK_WYJŚCIOWY
 
 PLIK_WEJŚCIOWY zawiera formułę logiczną, a PLIK_WYJŚCIOWY równoważną formułę
 w formacie DIMACS CNF.
-
 """
-
-__docformat__ = 'restructuredtext pl'
-__author__ = u'Michał Dettlaff'
-__date__ = '2009-11-10'
-
-
-import sys
 
 
 class Operator:
@@ -38,12 +41,21 @@ AND = Operator('&', 2)
 
 
 class Formula:
+    u"""Reprezentuje formułę logiczną.
+
+    >>> p, q = Formula.createLiteral('p'), Formula.createLiteral('q')
+    >>> phi = Formula(IMPL, Formula(OR, Formula(NOT, p), q), p)
+    >>> print phi
+    ((~p V q) => p)
+
+    """
+
     def __init__(self, operator, *args):
         self.isLiteral = operator is None and len(args) == 1
         if not self.isLiteral:
             if operator.arity != len(args):
                 raise Exception('Operator \"' + str(operator) + '\" wymaga ' +
-                        str(operator.arity) + ' argumentów, podano ' +
+                        str(operator.arity) + u' argumentów, podano ' +
                         str(len(args)))
             self.operator = operator
             self.__args = args
@@ -73,34 +85,14 @@ class Formula:
         return s
 
 
-def export_to_dimacs_cnf(formula):
-
-    def dimacs_cnf_recursive(formula, literals):
-        s = ''
-        if formula.isLiteral:
-            if not formula.literal in literals:
-                literals[formula.literal] = len(literals) + 1
-            s = str(literals[formula.literal])
-        elif formula.operator == NOT:
-            s = '-' + dimacs_cnf_recursive(formula[0], literals)[0]
-        elif formula.operator == OR:
-            for i in range(formula.operator.arity):
-                s += dimacs_cnf_recursive(formula[i], literals)[0]
-                if (i < formula.operator.arity - 1):
-                    s += ' '
-        elif formula.operator == AND:
-            for i in range(formula.operator.arity):
-                s += dimacs_cnf_recursive(formula[i], literals)[0] + ' 0\n'
-            s = s[:-1]
-        return s, literals
-
-    dimacs, literals = dimacs_cnf_recursive(formula, {})
-    dimacs = dimacs if dimacs.endswith('0') else dimacs + ' 0'
-    return 'p cnf ' + str(len(literals)) + ' ' + str(dimacs.count('0')) + \
-            '\n' + dimacs
-
-
 def parse_formula(input):
+    u"""Zwróć formułę logiczną którą reprezentuje podany napis.
+
+    >>> phi = parse_formula('p => (~~p&q V r)')
+    >>> print phi
+    (p => ((~~p & q) V r))
+
+    """
 
     OPERATORS = (NOT, IMPL, OR, AND)
 
@@ -136,7 +128,7 @@ def parse_formula(input):
                             c = it.next()
                             if c_symbol != c:
                                 raise Exception(
-                                        'Nie mogę sparsować operatora')
+                                        u'Nie mogę sparsować operatora')
                         yield Token(operator.symbol, True)
                 if not is_operator_matched:
                     yield Token(c, False)
@@ -264,6 +256,41 @@ def cnf(phi):
     return CNF(NNF(IMPL_FREE(phi)))
 
 
+def export_to_dimacs_cnf(formula):
+    u"""Konwertuj podaną formułę logiczną do napisu w formacie DIMACS CNF.
+
+    Podana formuła musi być już sprowadzona do CNF.
+
+    >>> cnf_formula = cnf(parse_formula('~(p => ~q) V (q V ~p)'))
+    >>> print export_to_dimacs_cnf(cnf_formula)
+    p cnf 2 2
+    1 2 -1 0
+    2 2 -1 0
+
+    """
+
+    def dimacs_cnf(formula, literals):
+        if formula.isLiteral:
+            if not formula.literal in literals:
+                literals[formula.literal] = len(literals) + 1
+            return str(literals[formula.literal]), literals
+        elif formula.operator == NOT:
+            return '-' + dimacs_cnf(formula[0], literals)[0], literals
+        elif formula.operator == OR:
+            return dimacs_cnf(formula[0], literals)[0] + \
+                    ' ' + dimacs_cnf(formula[1], literals)[0], literals
+        elif formula.operator == AND:
+            return dimacs_cnf(formula[0], literals)[0] + \
+                    ' 0\n' + dimacs_cnf(formula[1], literals)[0], literals
+        else:
+            raise Exception(u'Podana formuła musi być w CNF')
+
+    body, literals = dimacs_cnf(formula, {})
+    body += ' 0'
+    header = 'p cnf %d %d' % (len(literals), body.count('0'))
+    return header + '\n' + body
+
+
 def main():
     input = sys.stdin.readline()
     formula = parse_formula(input)
@@ -271,5 +298,16 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    doctest.testmod()
+    try:
+        options, args = getopt.getopt(sys.argv[1:], 't', ['help', 'test'])
+        if len(options) == 0:
+            main()
+        elif '--help' in [opt[0] for opt in options]:
+            print __doc__
+            print usage
+    except getopt.GetoptError, err:
+        print err
+        print usage
+        sys.exit(2)
 
