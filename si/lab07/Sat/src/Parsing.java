@@ -1,4 +1,4 @@
-//package spelnialnosc.rach.zdan;
+// package spelnialnosc.rach.zdan;
 
 import java.io.*;
 
@@ -52,29 +52,29 @@ public class Parsing {
     private Leksem  nastleks (BufferedReader br) throws Blad {
         wprzod = getznak(br);
     	switch (wprzod) {
-    	   case 'V' : lk = new Leksem("V"); break;
-    	   case '&' : lk = new Leksem("&"); break;
-    	   case '~' : lk = new Leksem("~"); break;
-    	   case '(' : lk = new Leksem("("); break;
-    	   case ')' : lk = new Leksem(")"); break;
-    	   case ';' : lk = new Leksem(";"); break;
-    	   case '=' :
-    	       wprzod = getznak(br);
-    	       if (wprzod == '>')  lk = new Leksem("=>");
-    	       else  throw new Blad("=?");
-    	       break;
-    	   case '<' :
-    	       wprzod = getznak(br);
-    	       if (wprzod == '=') {
-    		   wprzod = getznak(br);
-    	           if (wprzod == '>')  lk = new Leksem("<=>");
-    	           else  throw new Blad("<=?");
-    	       }
-    	       else  throw new Blad("<?");
-    	       break;
-    	   default :
-    	       try { lk = new Leksem(new Zmienna(wprzod)); }
-    	       catch (Blad e) { throw new Blad("DZIWNY ZNAK " + e.msg); }
+    	    case 'V' : lk = new Leksem("V"); break;
+    	    case '&' : lk = new Leksem("&"); break;
+    	    case '~' : lk = new Leksem("~"); break;
+    	    case '(' : lk = new Leksem("("); break;
+    	    case ')' : lk = new Leksem(")"); break;
+    	    case ';' : lk = new Leksem(";"); break;
+    	    case '=' :
+    	        wprzod = getznak(br);
+    	        if (wprzod == '>')  lk = new Leksem("=>");
+    	        else  throw new Blad("=?");
+    	        break;
+    	    case '<' :
+    	        wprzod = getznak(br);
+    	        if (wprzod == '=') {
+    		    wprzod = getznak(br);
+    	            if (wprzod == '>')  lk = new Leksem("<=>");
+    	            else  throw new Blad("<=?");
+    	        }
+    	        else  throw new Blad("<?");
+    	        break;
+    	    default :
+    	        try { lk = new Leksem(new Zmienna(wprzod)); }
+    	        catch (Blad e) { throw new Blad("DZIWNY ZNAK " + e.msg); }
     	}
     	return lk;
     }

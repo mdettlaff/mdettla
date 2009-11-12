@@ -1,4 +1,4 @@
-//package spelnialnosc.rach.zdan;
+// package spelnialnosc.rach.zdan;
 
 public class Operator {
     private String  nazwa;
