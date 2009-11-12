@@ -1,4 +1,4 @@
-//package spelnialnosc.rach.zdan;
+// package spelnialnosc.rach.zdan;
 
 public class Wyrazenie {
     private boolean czyzm;
@@ -12,12 +12,15 @@ public class Wyrazenie {
 
     public Wyrazenie (Operator op, Wyrazenie[] wyr) throws Blad {
       	this.czyzm = false;
-	this.op = op;
+        this.op = op;
         if (op.arnLiczba() == wyr.length) {
-	    this.wyr = new Wyrazenie[wyr.length];
-	    System.arraycopy(wyr,0, this.wyr,0, wyr.length);
-	}
-	else  throw new Blad("ZLA LICZBA ARGUMENTOW");
+        	for (int i=0; i<wyr.length; i++)
+        		if (wyr[i] == null)
+        			throw new Blad("WYRAZENIE: argument " + i + " nullowy");
+            this.wyr = new Wyrazenie[wyr.length];
+            System.arraycopy(wyr,0, this.wyr,0, wyr.length);
+        }
+        else  throw new Blad("WYRAZENIE: zla liczba argumentow");
     }
 
 
@@ -39,21 +42,21 @@ public class Wyrazenie {
 
 
     public String  wyrNapis () {
-	if (this.czyzm)  return zm.zmiennaNapis();
-	else {
-	    String  st = "(";
+        if (this.czyzm)  return zm.zmiennaNapis();
+        else {
+            String  st = "(";
             if (this.wyr.length == 1) {
-	        st = st + this.op.operNapis();
-		st = st + " " + this.wyr[0].wyrNapis();
-	    }
-	    else {
-		st = st + this.wyr[0].wyrNapis();
-	        st = st + " " + this.op.operNapis();
-		st = st + " " + this.wyr[1].wyrNapis();
-	    }
-	    st = st + ")";
-	    return st;
-	}
+                st = st + this.op.operNapis();
+                st = st + " " + this.wyr[0].wyrNapis();
+            }
+            else {
+                st = st + this.wyr[0].wyrNapis();
+                st = st + " " + this.op.operNapis();
+                st = st + " " + this.wyr[1].wyrNapis();
+            }
+            st = st + ")";
+            return st;
+        }
     }
 
 }
