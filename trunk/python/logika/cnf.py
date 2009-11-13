@@ -5,7 +5,7 @@ u"""Sprowadza formuły logiczne do koniunkcyjnej postaci normalnej (CNF)."""
 
 __docformat__ = 'restructuredtext pl'
 __author__ = u'Michał Dettlaff'
-__date__ = '2009-11-11'
+__date__ = '2009-11-13'
 
 
 import getopt
@@ -36,7 +36,7 @@ class Operator:
 # operatory logiczne
 NOT = Operator('~', 1)
 IMPL = Operator('=>', 2)
-OR = Operator('V', 2)
+OR = Operator('|', 2)
 AND = Operator('&', 2)
 
 
@@ -44,10 +44,8 @@ class Formula:
     u"""Reprezentuje formułę logiczną.
 
     >>> p, q = Formula.createLiteral('p'), Formula.createLiteral('q')
-    >>> phi = Formula(IMPL, Formula(OR, Formula(NOT, p), q), p)
-    >>> print phi
-    ((~p V q) => p)
-
+    >>> print Formula(IMPL, Formula(OR, Formula(NOT, p), q), p)
+    ((~p | q) => p)
     """
 
     def __init__(self, operator, *args):
@@ -88,83 +86,96 @@ class Formula:
 def parse_formula(input):
     u"""Zwróć formułę logiczną którą reprezentuje podany napis.
 
-    >>> phi = parse_formula('p => (~~p&q V r)')
-    >>> print phi
-    (p => ((~~p & q) V r))
-
+    >>> print parse_formula('p => (~~p&q | r)')
+    (p => ((~~p & q) | r))
     """
 
     OPERATORS = (NOT, IMPL, OR, AND)
 
     class Token:
-        def __init__(self, token_string, is_operator):
+        u"""Literał (zmienna), operator lub nawias."""
+
+        def __init__(self, token_string, is_literal):
             self.string = token_string
-            self.isLiteral = not is_operator and token_string not in '()'
+            self.isLiteral = is_literal
 
         def __str__(self):
             return self.string
 
-    class TokenStack:
+    class TokenIterator:
         def __init__(self, token_generator):
             self.generator = token_generator
-            self.current = self.generator.next()
+            self.currentToken = self.generator.next()
 
-        def pop(self):
-            self.current = self.generator.next()
-            self.peek()
+        def next(self):
+            self.currentToken = self.generator.next()
+            return self.currentToken
 
-        def peek(self):
-            return self.current
+        def current(self):
+            return self.currentToken
 
     def tokenize(input):
-        it = iter(input)
-        for c in it:
-            if not c.isspace():
-                is_operator_matched = False
-                for operator in OPERATORS:
-                    if operator.symbol.startswith(c):
-                        is_operator_matched = True
-                        for c_symbol in operator.symbol[1:]:
-                            c = it.next()
-                            if c_symbol != c:
-                                raise Exception(
-                                        u'Nie mogę sparsować operatora')
-                        yield Token(operator.symbol, True)
-                if not is_operator_matched:
-                    yield Token(c, False)
+
+        def is_literal_char(c):
+            if c.isspace() or c in '()':
+                return False
+            for operator in OPERATORS:
+                if c == operator.symbol[0]:
+                    return False
+            return True
+
+        i = 0
+        while i < len(input):
+            if input[i].isspace():
+                i += 1
+            else:
+                literal_len = 0
+                while is_literal_char(input[i + literal_len]):
+                    literal_len += 1
+                if literal_len > 0:
+                    yield Token(input[i:i + literal_len], True)
+                    i += literal_len
+                elif input[i] in '()':
+                    yield Token(input[i], False)
+                    i += 1
+                else:
+                    for operator in OPERATORS:
+                        if input[i] == operator.symbol[0]:
+                            yield Token(operator.symbol, False)
+                            i += len(operator.symbol)
 
     # form0 ::= form1 | form1 '=>' form0
     def form0(tokens):
         form = form1(tokens)
-        while not tokens.peek().isLiteral and \
-                tokens.peek().string == IMPL.symbol:
-            tokens.pop()
+        while not tokens.current().isLiteral and \
+                tokens.current().string == IMPL.symbol:
+            tokens.next()
             form = Formula(IMPL, form, form0(tokens))
         return form
 
-    # form1 ::= form2 | form1 'V' form2
+    # form1 ::= form2 | form1 '|' form2
     def form1(tokens):
         form = form2(tokens)
-        while not tokens.peek().isLiteral and \
-                tokens.peek().string == OR.symbol:
-            tokens.pop()
+        while not tokens.current().isLiteral and \
+                tokens.current().string == OR.symbol:
+            tokens.next()
             form = Formula(OR, form, form2(tokens))
         return form
 
     # form2 ::= form3 | form2 '&' form3
     def form2(tokens):
         form = form3(tokens)
-        while not tokens.peek().isLiteral and \
-                tokens.peek().string == AND.symbol:
-            tokens.pop()
+        while not tokens.current().isLiteral and \
+                tokens.current().string == AND.symbol:
+            tokens.next()
             form = Formula(AND, form, form3(tokens))
         return form
 
     # form3 ::= '~' form3 | form4
     def form3(tokens):
-        if not tokens.peek().isLiteral and \
-                tokens.peek().string == NOT.symbol:
-            tokens.pop()
+        if not tokens.current().isLiteral and \
+                tokens.current().string == NOT.symbol:
+            tokens.next()
             form = form3(tokens)
             form = Formula(NOT, form)
         else:
@@ -174,18 +185,18 @@ def parse_formula(input):
     # form4 ::= literal | '(' form0 ')'
     def form4(tokens):
         try:
-            if tokens.peek().isLiteral:
-                form = Formula.createLiteral(tokens.peek().string)
-                tokens.pop()
-            elif tokens.peek().string == '(':
-                tokens.pop()
+            if tokens.current().isLiteral:
+                form = Formula.createLiteral(tokens.current().string)
+                tokens.next()
+            elif tokens.current().string == '(':
+                tokens.next()
                 form = form0(tokens)
-                tokens.pop()
+                tokens.next()
         except StopIteration:
             pass
         return form
 
-    tokens = TokenStack(tokenize(input))
+    tokens = TokenIterator(tokenize(input))
     return form0(tokens)
 
 
@@ -261,12 +272,11 @@ def export_to_dimacs_cnf(formula):
 
     Podana formuła musi być już sprowadzona do CNF.
 
-    >>> cnf_formula = cnf(parse_formula('~(p => ~q) V (q V ~p)'))
+    >>> cnf_formula = cnf(parse_formula('~(p => ~q) | (q | ~p)'))
     >>> print export_to_dimacs_cnf(cnf_formula)
     p cnf 2 2
     1 2 -1 0
     2 2 -1 0
-
     """
 
     def dimacs_cnf(formula, literals):
