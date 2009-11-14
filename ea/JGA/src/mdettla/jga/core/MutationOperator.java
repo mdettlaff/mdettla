@@ -1,5 +1,8 @@
 package mdettla.jga.core;
 
+/**
+ * Operator mutacji.
+ */
 public interface MutationOperator {
 
 	/**

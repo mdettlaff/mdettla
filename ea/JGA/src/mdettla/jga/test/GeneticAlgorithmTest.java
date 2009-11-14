@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mdettla.jga.core.GeneticAlgorithm;
-import mdettla.jga.core.JGAException;
 import mdettla.jga.core.Specimen;
 
 import org.junit.Test;
@@ -14,7 +13,7 @@ import org.junit.Test;
 public class GeneticAlgorithmTest {
 
 	@Test
-	public void testRunEpoch() throws JGAException {
+	public void testRunEpoch() {
 		List<Specimen> initialPopulation = new ArrayList<Specimen>();
 		for (int i = 0; i < 100; i++) {
 			initialPopulation.add(Text.createRandomInstance());

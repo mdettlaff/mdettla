@@ -7,6 +7,9 @@ import mdettla.jga.core.MutationOperator;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 
+/**
+ * Mutacja polegająca na zamianie pewnej ilości genów miejscami.
+ */
 public class SwapMutation implements MutationOperator {
 
 	private static Random random = new Random();

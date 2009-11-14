@@ -10,6 +10,26 @@ import mdettla.jga.operators.selection.TournamentSelection;
 
 /**
  * Algorytm genetyczny.
+ * <p>
+ * Aby zastosować algorytm genetyczny do danego problemu, należy:<br>
+ * <ol>
+ *   <li>
+ *     Utworzyć klasę implementującą interfejs {@link Specimen}, której
+ *     instancje będą osobnikami w algorytmie. Interfejs ten umożliwia
+ *     między innymi określenie funkcji przystosowania.
+ *   </li>
+ *   <li>
+ *     Stworzyć nowy obiekt poniższej klasy, jako argument konstruktora
+ *     podając populację początkową. Populacja początkowa najczęściej składa
+ *     się z osobników z losowo utworzonym genotypem.
+ *   </li>
+ *   <li>
+ *     Ustawić parametry algorytmu (operatory genetyczne itp.) za pomocą metod
+ *     tej klasy, a następnie uruchomić algorytm za pomocą metody
+ *     {@link GeneticAlgorithm#runEpoch(int) runEpoch}. Metoda ta zwróci
+ *     najlepiej przystosowanego osobnika znalezionego przez algorytm.
+ *   </li>
+ * </ol>
  */
 public class GeneticAlgorithm {
 
@@ -26,6 +46,7 @@ public class GeneticAlgorithm {
 	private int populationSize;
 	private int threadPoolSize;
 	private boolean printResults;
+	private List<Specimen> lastPopulation;
 
 	public GeneticAlgorithm(List<Specimen> initialPopulation) {
 		this.initialPopulation = initialPopulation;
@@ -95,7 +116,17 @@ public class GeneticAlgorithm {
 		this.printResults = printResults;
 	}
 
-	public Specimen runEpoch(int generations) throws JGAException {
+	public List<Specimen> getLastPopulation() {
+		return lastPopulation;
+	}
+
+	/**
+	 * Jeden przebieg algorytmu genetycznego.
+	 *
+	 * @param generations   Ilość pokoleń (iteracji) algorytmu.
+	 * @return              Najlepszy znaleziony osobnik.
+	 */
+	public Specimen runEpoch(int generations) {
 		Specimen best = null;
 		try {
 			List<Specimen> bestFromEachPopulation = new ArrayList<Specimen>();
@@ -125,6 +156,7 @@ public class GeneticAlgorithm {
 
 				info(i, bestInPopulation);
 			}
+			lastPopulation = population;
 			best = Collections.max(bestFromEachPopulation);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
