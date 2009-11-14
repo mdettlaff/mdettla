@@ -9,12 +9,18 @@ import mdettla.jga.core.CrossoverOperator;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 
+/**
+ * Krzyżowanie jedno- lub wielopunktowe.
+ */
 public class CutPointCrossover implements CrossoverOperator {
 
 	private static Random random = new Random();
 
 	private int cutPointCount;
 
+	/**
+	 * @param cutPointCount Ilość punktów przecięcia genotypu.
+	 */
 	public CutPointCrossover(int cutPointCount) {
 		if (cutPointCount < 1) {
 			throw new IllegalArgumentException(

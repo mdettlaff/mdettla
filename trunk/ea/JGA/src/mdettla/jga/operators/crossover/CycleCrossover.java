@@ -9,6 +9,11 @@ import mdettla.jga.core.CrossoverOperator;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 
+/**
+ * Krzyżowanie cykliczne. Jest to rodzaj krzyżowania, w którym staramy się,
+ * aby na każdej pozycji w genotypie potomka znajdował się gen z tej samej
+ * pozycji w genotypie jednego z rodziców.
+ */
 public class CycleCrossover implements CrossoverOperator {
 
 	private static Random random = new Random();
