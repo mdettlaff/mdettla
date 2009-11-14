@@ -6,7 +6,6 @@ import java.util.Set;
 
 import mdettla.jga.core.CrossoverOperator;
 import mdettla.jga.core.GeneticAlgorithm;
-import mdettla.jga.core.JGAException;
 import mdettla.jga.core.SelectionFunction;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
@@ -25,7 +24,7 @@ public class GAMaxIndependentSet {
 	private static final int EDGES_COUNT = 36;
 	private static final double DEFAULT_CROSSOVER_PROBABILITY = .6;
 
-	public static void main(String[] args) throws JGAException {
+	public static void main(String[] args) {
 		initGraph();
 
 		System.out.println("Algorytm genetyczny dla wyznaczania " +
@@ -96,7 +95,7 @@ public class GAMaxIndependentSet {
 
 	private static void runExperiment(String name, Integer populationSize,
 			Double p_c, CrossoverOperator crossover,
-			SelectionFunction selection) throws JGAException {
+			SelectionFunction selection) {
 		System.out.println(name);
 		// ustawiamy parametry algorytmu genetycznego
 		if (populationSize == null) {
@@ -117,6 +116,7 @@ public class GAMaxIndependentSet {
 		} else {
 			ga.setCrossoverProbability(DEFAULT_CROSSOVER_PROBABILITY);
 		}
+		ga.setMutationProbability(1);
 		if (selection != null) {
 			ga.setSelectionFunction(selection);
 		} else {
