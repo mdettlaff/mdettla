@@ -12,14 +12,16 @@ import mdettla.jga.core.Specimen;
 public class IndependentSet implements Specimen {
 
 	/*
-	 * Graf na którym okreśłony jest zbiór niezależny.
+	 * Graf na którym określony jest zbiór niezależny.
 	 */
 	private static List<Integer> vertices;
 	private static Set<Edge<Integer>> edges;
 
-	private static final int GENOTYPE_LENGTH = 6;
+	private static final int GENOTYPE_LENGTH = 24;
 	/**
-	 * Reprezentacja zbioru niezależnego.
+	 * Reprezentacja zbioru niezależnego. Wartości boolowskie określają, czy
+	 * na danej pozycji listy wierzchołków <code>vertices</code> znajduje się
+	 * wierzchołek należący do zbioru niezależnego.
 	 */
 	private List<Boolean> genotype;
 
@@ -32,6 +34,9 @@ public class IndependentSet implements Specimen {
 		this.genotype = genotype;
 	}
 
+	/**
+	 * Definiuje graf, na którym określony jest zbiór niezależny.
+	 */
 	public static void setGraph(List<Integer> V, Set<Edge<Integer>> E) {
 		vertices = V;
 		edges = E;
@@ -104,6 +109,9 @@ public class IndependentSet implements Specimen {
 		}
 	}
 
+	/**
+	 * Zwraca zbiór wierzchołków należących do tego zbioru niezależnego.
+	 */
 	public Set<Integer> getContent() {
 		Set<Integer> content = new HashSet<Integer>();
 		for (int i = 0; i < getGenotypeLength(); i++) {
