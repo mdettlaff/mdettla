@@ -46,6 +46,7 @@ public class GAMaxIndependentSet {
 		System.out.println("Krzyżowanie 1-punktowe z prawdopodobieństwem " +
 				DEFAULT_CROSSOVER_PROBABILITY);
 		System.out.println("Rozmiar populacji µ/4 = " + verticesCount / 4);
+		System.out.println("Liczba iteracji: " + ITERATIONS);
 
 		runExperiment("\nEksperyment 1, domyślne parametry:",
 				null, null, null, null);
