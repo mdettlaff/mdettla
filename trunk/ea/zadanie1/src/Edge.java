@@ -17,6 +17,10 @@ public class Edge<T> {
 		this.V2 = V2;
 	}
 
+	public boolean contains(T v) {
+		return V1.equals(v) || V2.equals(v);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {

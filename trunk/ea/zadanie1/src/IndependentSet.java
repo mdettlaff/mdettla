@@ -17,7 +17,6 @@ public class IndependentSet implements Specimen {
 	private static List<Integer> vertices;
 	private static Set<Edge<Integer>> edges;
 
-	private static final int GENOTYPE_LENGTH = 24;
 	/**
 	 * Reprezentacja zbioru niezależnego. Wartości boolowskie określają, czy
 	 * na danej pozycji listy wierzchołków <code>vertices</code> znajduje się
@@ -44,8 +43,8 @@ public class IndependentSet implements Specimen {
 
 	public static Specimen createRandomInstance() {
 		Random random = new Random();
-		List<Boolean> randomGenotype = new ArrayList<Boolean>(GENOTYPE_LENGTH);
-		for (int i = 0; i < GENOTYPE_LENGTH; i++) {
+		List<Boolean> randomGenotype = new ArrayList<Boolean>(vertices.size());
+		for (int i = 0; i < vertices.size(); i++) {
 			randomGenotype.add(random.nextBoolean());
 		}
 		return new IndependentSet(randomGenotype);
@@ -58,7 +57,7 @@ public class IndependentSet implements Specimen {
 
 	@Override
 	public int getGenotypeLength() {
-		return GENOTYPE_LENGTH;
+		return vertices.size();
 	}
 
 	@Override
