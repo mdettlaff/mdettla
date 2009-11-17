@@ -25,7 +25,8 @@ import org.apache.commons.math.stat.descriptive.moment.StandardDeviation;
  */
 public class GAMaxIndependentSet {
 
-	private static final int ITERATIONS = 30;
+	private static final int EPOCH_REPEATS = 30;
+	private static final int ITERATIONS = 100;
 	private static final double DEFAULT_CROSSOVER_PROBABILITY = .6;
 
 	private static int verticesCount;
@@ -47,6 +48,8 @@ public class GAMaxIndependentSet {
 				DEFAULT_CROSSOVER_PROBABILITY);
 		System.out.println("Rozmiar populacji µ/4 = " + verticesCount / 4);
 		System.out.println("Liczba iteracji: " + ITERATIONS);
+		System.out.println("Wartości są uśredniane po " + EPOCH_REPEATS +
+				" powtórzeniach");
 
 		runExperiment("\nEksperyment 1, domyślne parametry:",
 				null, null, null, null);
@@ -92,31 +95,54 @@ public class GAMaxIndependentSet {
 		//ga.setPrintResults(true);
 		// uruchamiamy algorytm genetyczny
 		long timeBegin = System.currentTimeMillis();
-		Specimen best = ga.runEpoch(ITERATIONS);
+		List<Double> means = new ArrayList<Double>();
+		List<List<Specimen>> bestInEpochsIters =
+			new ArrayList<List<Specimen>>();
+		bestInEpochsIters.add(new ArrayList<Specimen>());
+		for (int i = 0; i < EPOCH_REPEATS; i++) {
+			Specimen best = ga.runEpoch(ITERATIONS);
+			bestInEpochsIters.get(0).add(best);
+			means.add(meanFitness(ga.getLastPopulation()));
+		}
 		long timeEnd = System.currentTimeMillis();
-		System.out.println("Najlepiej przystosowany osobnik " +
-				"(wartość przystosowania = " + best.getFitness() + "):");
-		System.out.println("Rozmiar zbioru niezależnego = " +
-				((IndependentSet)best).getContent().size());
+		// ewolucja najlepszego rozwiązania, po uśrednieniu
+		System.out.println("Ewolucja najlepszego rozwiązania:");
+		System.out.println("Iter.\tPrzystosowanie najlepszego w populacji");
+		System.out.println(String.format("1\t%.2f",
+					meanFitness(bestInEpochsIters.get(0))));
 		// liczymy średnie przystosowanie
-		List<Specimen> lastPopulation = ga.getLastPopulation();
-		double sumFitness = 0;
-		for (Specimen specimen : lastPopulation) {
-			sumFitness += specimen.getFitness().doubleValue();
-		}
-		double meanFitness = sumFitness / lastPopulation.size();
+		double totalMeanFitness = mean(means);
 		System.out.println(String.format("Średnie przystosowanie: %.2f",
-					meanFitness));
+					totalMeanFitness));
 		// liczymy odchylenie standardowe
-		double[] fitnessArray = new double[lastPopulation.size()];
-		for (int i = 0; i < lastPopulation.size(); i++) {
-			fitnessArray[i] = lastPopulation.get(i).getFitness().doubleValue();
-		}
-		double standardDeviation =
-			new StandardDeviation().evaluate(fitnessArray, meanFitness);
 		System.out.println(String.format("Odchylenie standardowe: %.2f",
-					standardDeviation));
+					standardDeviation(means, totalMeanFitness)));
 		// czas trwania eksperymentu
 		System.out.println("Czas wykonania: " + (timeEnd - timeBegin) + " ms");
+	}
+
+	private static double mean(List<? extends Number> values) {
+		double sum = 0;
+		for (Number value : values) {
+			sum += value.doubleValue();
+		}
+		return sum / values.size();
+	}
+
+	private static double meanFitness(List<Specimen> population) {
+		List<Number> fitness = new ArrayList<Number>();
+		for (Specimen specimen : population) {
+			fitness.add(specimen.getFitness().doubleValue());
+		}
+		return mean(fitness);
+	}
+
+	private static double standardDeviation(List<? extends Number> values,
+			double mean) {
+		double[] arr = new double[values.size()];
+		for (int i = 0; i < values.size(); i++) {
+			arr[i] = values.get(i).doubleValue();
+		}
+		return new StandardDeviation().evaluate(arr, mean);
 	}
 }
