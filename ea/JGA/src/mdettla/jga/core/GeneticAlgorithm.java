@@ -1,7 +1,9 @@
 package mdettla.jga.core;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import mdettla.jga.operators.crossover.CutPointCrossover;
@@ -25,13 +27,19 @@ import mdettla.jga.operators.selection.TournamentSelection;
  *   </li>
  *   <li>
  *     Ustawić parametry algorytmu (operatory genetyczne itp.) za pomocą metod
- *     tej klasy, a następnie uruchomić algorytm za pomocą metody
- *     {@link GeneticAlgorithm#runEpoch(int) runEpoch}. Metoda ta zwróci
- *     najlepiej przystosowanego osobnika znalezionego przez algorytm.
+ *     tej klasy. Parametry, których nie ustawimy, będą miały wartości
+ *     domyślne.
+ *   </li>
+ *   <li>
+ *     Uruchomić algorytm za pomocą metody {@link #runEpoch(int) runEpoch}.
+ *     Metoda ta zwróci najlepiej przystosowanego osobnika znalezionego przez
+ *     algorytm.
+ *     Zamiast niej można też użyć {@link #iterator() iteratora}, jeśli chcemy
+ *     znać stan populacji po każdej iteracji algorytmu.
  *   </li>
  * </ol>
  */
-public class GeneticAlgorithm {
+public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 
 	public static final double DEFAULT_CROSSOVER_PROBABILITY = .7;
 	public static final double DEFAULT_MUTATION_PROBABILITY = .7;
@@ -45,8 +53,6 @@ public class GeneticAlgorithm {
 	private SelectionFunction selectionFunction;
 	private int populationSize;
 	private int threadPoolSize;
-	private boolean printResults;
-	private List<Specimen> lastPopulation;
 
 	public GeneticAlgorithm(List<Specimen> initialPopulation) {
 		this.initialPopulation = initialPopulation;
@@ -57,7 +63,6 @@ public class GeneticAlgorithm {
 		mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		selectionFunction = new TournamentSelection(4);
 		threadPoolSize = DEFAULT_THREAD_POOL_SIZE;
-		printResults = false;
 	}
 
 	public void setCrossoverOperator(CrossoverOperator crossoverOperator) {
@@ -112,68 +117,81 @@ public class GeneticAlgorithm {
 		this.threadPoolSize = Math.max(threadPoolSize, 1);
 	}
 
-	public void setPrintResults(boolean printResults) {
-		this.printResults = printResults;
-	}
-
-	public List<Specimen> getLastPopulation() {
-		return lastPopulation;
-	}
-
 	/**
 	 * Jeden przebieg algorytmu genetycznego.
 	 *
-	 * @param generations   Ilość pokoleń (iteracji) algorytmu.
-	 * @return              Najlepszy znaleziony osobnik.
+	 * @param generations Ilość pokoleń (iteracji) algorytmu.
+	 * @return            Najlepszy znaleziony osobnik.
 	 */
 	public Specimen runEpoch(int generations) {
-		Specimen best = null;
-		try {
-			List<Specimen> bestFromEachPopulation = new ArrayList<Specimen>();
-			List<Specimen> population = initialPopulation;
+		List<Specimen> population = initialPopulation;
+		Specimen best = initialPopulation.iterator().next();
 
-			info();
-			for (int i = 0; i < generations; i++) {
-				List<Specimen> newPopulation = Collections.synchronizedList(
-						new ArrayList<Specimen>(populationSize));
-				List<Thread> threadPool = new ArrayList<Thread>();
-				for (int j = 0; j < threadPoolSize; j++) {
-					int specimens = populationSize / threadPoolSize;
-					if (j == 0) {
-						specimens += populationSize % threadPoolSize;
-					}
-					Thread thread = new SpecimenCreatorThread(
-							this, specimens, newPopulation, population);
-					thread.start();
-					threadPool.add(thread);
-				}
-				for (int j = 0; j < threadPool.size(); j++) {
-					threadPool.get(j).join();
-				}
-				population = newPopulation;
-				Specimen bestInPopulation = Collections.max(population);
-				bestFromEachPopulation.add(bestInPopulation);
+		for (int i = 0; i < generations; i++) {
+			population = nextGeneration(population);
 
-				info(i, bestInPopulation);
-			}
-			lastPopulation = population;
-			best = Collections.max(bestFromEachPopulation);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			Specimen bestFromPopulation = Collections.max(population);
+			best = Collections.max(Arrays.asList(best, bestFromPopulation));
 		}
 		return best;
 	}
 
-	private void info() {
-		if (printResults) {
-			System.out.println("Najlepsze przystosowanie w kolejnych pokoleniach:");
-		}
+	/**
+	 * Iterator z którego można pobierać kolejne pokolenia osobników
+	 * w algorytmie genetycznym. Pozwala on na wykonanie algorytmu na zasadzie
+	 * leniwej ewaluacji. Uwaga: metoda {@link Iterator#hasNext() hasNext()}
+	 * tego iteratora zawsze zwraca {@code true}, więc programista sam musi
+	 * zadbać o warunek zakończenia algorytmu (np. przez ograniczenie ilości
+	 * powtórzeń).
+	 *
+	 * @see java.lang.Iterable#iterator()
+	 */
+	@Override
+	public Iterator<List<Specimen>> iterator() {
+		return new Iterator<List<Specimen>>() {
+
+			private List<Specimen> population = initialPopulation;
+
+			@Override
+			public boolean hasNext() {
+				return true;
+			}
+
+			@Override
+			public List<Specimen> next() {
+				population = nextGeneration(population);
+				return population;
+			}
+			
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
 
-	private void info(int generation, Specimen bestInPopulation) {
-		if (printResults) {
-			System.out.println((generation + 1) + "\t" +
-					bestInPopulation.getFitness().toString());
+	private List<Specimen> nextGeneration(List<Specimen> population) {
+		try {
+			List<Specimen> newPopulation = Collections.synchronizedList(
+					new ArrayList<Specimen>(populationSize));
+			List<Thread> threadPool = new ArrayList<Thread>();
+			for (int j = 0; j < threadPoolSize; j++) {
+				int specimens = populationSize / threadPoolSize;
+				if (j == 0) {
+					specimens += populationSize % threadPoolSize;
+				}
+				Thread thread = new SpecimenCreatorThread(
+						this, specimens, newPopulation, population);
+				thread.start();
+				threadPool.add(thread);
+			}
+			for (int j = 0; j < threadPool.size(); j++) {
+				threadPool.get(j).join();
+			}
+			population = newPopulation;
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		return population;
 	}
 }
