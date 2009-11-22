@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.io.BufferedReader;
@@ -26,10 +28,11 @@ import org.apache.commons.math.stat.descriptive.moment.StandardDeviation;
 public class GAMaxIndependentSet {
 
 	private static final int EPOCH_REPEATS = 30;
-	private static final int ITERATIONS = 100;
+	private static final int ITERATIONS = 50;
 	private static final double DEFAULT_CROSSOVER_PROBABILITY = .6;
 
 	private static int verticesCount;
+	private static int edgesCount;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader in =
@@ -38,6 +41,7 @@ public class GAMaxIndependentSet {
 		IndependentSet.setGraph(
 				new ArrayList<Integer>(graph.getVertices()), graph.getEdges());
 		verticesCount = graph.getVertices().size();
+		edgesCount = graph.getEdges().size();
 
 		System.out.println("Algorytm genetyczny dla wyznaczania " +
 				"maksymalnego zbioru niezależnego.");
@@ -46,15 +50,15 @@ public class GAMaxIndependentSet {
 		System.out.println("Mutacja 1-punktowa z prawdopodobieństwem 1/n");
 		System.out.println("Krzyżowanie 1-punktowe z prawdopodobieństwem " +
 				DEFAULT_CROSSOVER_PROBABILITY);
-		System.out.println("Rozmiar populacji µ/4 = " + verticesCount / 4);
+		System.out.println("Rozmiar populacji µ/4 = " + edgesCount / 4);
 		System.out.println("Liczba iteracji: " + ITERATIONS);
 		System.out.println("Wartości są uśredniane po " + EPOCH_REPEATS +
 				" powtórzeniach");
 
 		runExperiment("\nEksperyment 1, domyślne parametry:",
 				null, null, null, null);
-		runExperiment("\nEksperyment 2, µ = n/2 = " + verticesCount / 2 + ":",
-				verticesCount / 2, null, null, null);
+		runExperiment("\nEksperyment 2, µ = n/2 = " + edgesCount / 2 + ":",
+				edgesCount / 2, null, null, null);
 		runExperiment("\nEksperyment 3, krzyżowanie 2-punktowe:",
 				null, null, new CutPointCrossover(2), null);
 		runExperiment("\nEksperyment 4, brak krzyżowania:",
@@ -67,14 +71,15 @@ public class GAMaxIndependentSet {
 			Double p_c, CrossoverOperator crossover,
 			SelectionFunction selection) {
 		System.out.println(name);
-		// ustawiamy parametry algorytmu genetycznego
+		// populacja początkowa
 		if (populationSize == null) {
-			populationSize = verticesCount / 4;
+			populationSize = edgesCount / 4;
 		}
 		List<Specimen> initialPopulation = new ArrayList<Specimen>();
 		for (int i = 0; i < populationSize; i++) {
 			initialPopulation.add(IndependentSet.createRandomInstance());
 		}
+		// ustawiamy parametry algorytmu genetycznego
 		GeneticAlgorithm ga = new GeneticAlgorithm(initialPopulation);
 		if (crossover != null) {
 			ga.setCrossoverOperator(crossover);
@@ -90,26 +95,33 @@ public class GAMaxIndependentSet {
 		if (selection != null) {
 			ga.setSelectionFunction(selection);
 		} else {
-			ga.setSelectionFunction(new TournamentSelection(4));
+			ga.setSelectionFunction(new TournamentSelection(3));
 		}
-		//ga.setPrintResults(true);
 		// uruchamiamy algorytm genetyczny
 		long timeBegin = System.currentTimeMillis();
 		List<Double> means = new ArrayList<Double>();
-		List<List<Specimen>> bestInEpochsIters =
+		List<List<Specimen>> bestInItersEpochs =
 			new ArrayList<List<Specimen>>();
-		bestInEpochsIters.add(new ArrayList<Specimen>());
+		for (int i = 0; i < ITERATIONS; i++) {
+			bestInItersEpochs.add(new ArrayList<Specimen>());
+		}
 		for (int i = 0; i < EPOCH_REPEATS; i++) {
-			Specimen best = ga.runEpoch(ITERATIONS);
-			bestInEpochsIters.get(0).add(best);
-			means.add(meanFitness(ga.getLastPopulation()));
+			Iterator<List<Specimen>> it = ga.iterator();
+			List<Specimen> generation = null;
+			for (int j = 0; j < ITERATIONS; j++) {
+				generation = it.next();
+				bestInItersEpochs.get(j).add(Collections.max(generation));
+			}
+			means.add(meanFitness(generation)); // ostatnie pokolenie
 		}
 		long timeEnd = System.currentTimeMillis();
 		// ewolucja najlepszego rozwiązania, po uśrednieniu
 		System.out.println("Ewolucja najlepszego rozwiązania:");
 		System.out.println("Iter.\tPrzystosowanie najlepszego w populacji");
-		System.out.println(String.format("1\t%.2f",
-					meanFitness(bestInEpochsIters.get(0))));
+		for (int i = 0; i < ITERATIONS; i++) {
+			System.out.println(String.format("%d\t%.2f",
+						i + 1, meanFitness(bestInItersEpochs.get(i))));
+		}
 		// liczymy średnie przystosowanie
 		double totalMeanFitness = mean(means);
 		System.out.println(String.format("Średnie przystosowanie: %.2f",
