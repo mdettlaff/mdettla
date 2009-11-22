@@ -95,4 +95,9 @@ class Text implements Specimen {
 		phenotype.append("\"");
 		return phenotype.toString();
 	}
+
+	@Override
+	public String toString() {
+		return getPhenotype();
+	}
 }
