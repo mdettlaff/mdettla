@@ -1,64 +1,283 @@
 \documentclass[11pt]{article}
 %\usepackage{polski}
 \usepackage[utf8]{inputenc}
+\usepackage[OT4]{fontenc}
+\usepackage[pdftex]{graphicx}
+
 \begin{document}
 \title{Algorytmy ewolucyjne. Zadanie 1}
-\author{Michał Dettlaff}
+\author{Michał Dettlaff, Dariusz Kuziemski}
 \maketitle
 
+\section{Wprowadzenie}
+
+\noindent
+Zagadnienia polega na znalezieniu największego podzbioru wierzchołków
+w grafie, którego żadne dwa wierzchołki nie są połączone ze sobą krawędzią 
+(czyli wszystkie wierzchołki są niezależne od siebie nawzajem).
+
+Celem jest znalezienie dobrego heurystycznego, tj. działającego w czasie 
+wielomianowym algorytmu, który potrafi znaleźć rozwiązanie blisko optymalnego. 
+W większości przypadków  heurystyki są zależne od problemu: heurystyka jest 
+dobierana w zależności od własności problemu, który chcemy rozwiązać.
+
+Dotychczas problemem zajmowali się między innymi Thomas Bäck i Sami Khuri 
+w swojej pracy: „An Evolutionary Heuristic for the Maximum Independent Set Problem” 
+(1994) zawartej w \textit{In Proceedings of the First IEEE Conference on Evolutionary Computation}.\newline
+\begin{center}
+\includegraphics[scale=0.5]{wiki9mis}
+\end{center}
+
+\newpage
+\section{Metodologia}
+
+\noindent
+Problem rozwiążemy korzystając z Algorytmu genetycznego będącego naj-
+popularniejszą reprezentacją klasy algorytmów losowego przeszukiwania 
+bazujących na modelu ewolucji organicznej, tzw.  Algorytmów ewolucyjnych. 
+Kanoniczne algorytmy genetyczne reprezentują indywidualne jednostki 
+jako binarne wektory $ \vec{x} = (x_1,...,x_n) \in \{0,1\} $ stałej długości $n$.
+
+Chromosom(potencjalne rozwiązanie będzie więc n-wymiarowym wekto-
+rem $x$ ($n$ jest równe liczbie węzłów, $n=|V|$), przy czym jego i-ty element $x_i$
+przyjmuje wartość 0 gdy $ i $-ty węzeł nie należy do $ V' $, $ x_i $ = 1 gdy $ v_i \in  V' $.
+
+Niech $A$ = $[a_{ij}]_{n \times x}$ będzie macierzą incydencji grafu $G$, tzn.
+\begin{center}
+$a_{ij} = 
+\left\{\begin{array}{rcl}
+0 & gdy & (v_i,v_j) \notin E\\
+1 & gdy & (v_i,v_j) \in E
+\end{array} \right.
+$
+\end{center}
+
+Funkcja dopasowania $ f: \{ 0,1 \} \to R $ która charakteryzuje 
+rzeczywisty problem optymalizacji stanowi wskaźnik jakości dla 
+jednostek. Wartości dopasowania są używane przez procedury 
+selekcji ukierunkowując przeszukiwania w obszary z wyższym 
+dopasowaniem mając nadzieję na otrzymanie lepszych wyników.
+\begin{center}
+$f(x) = \sum_{i=1}^n x_i - n \sum_{i>j} a_{ij} x_i x_j$
+\end{center}
+Przez $G=(V,E)$ oznaczamy graf gdzie $V$ to zbiór wierzchołków, a $E$ jest zbiorem 
+krawędzi. Problemem jest wyznaczenie wyznaczenie zbioru $V' \subset V$ takiego, że
+$\forall ~i,j \in V' $ krawędzi $\langle i,j \rangle \notin E $ maksymalny jest $|V|$. Jest to problem NP-trudny.
+
+\newpage
 \section{Wyniki działania algorytmu}
 
 \noindent
-Domyślne parametry algorytmu:\newline
-Selekcja turniejowa o rozmiarze turnieju 4\newline
-Mutacja 1-punktowa z prawdopodobieństwem 1/n\newline
-Krzyżowanie 1-punktowe z prawdopodobieństwem 0.6\newline
-Rozmiar populacji $ \mu/4 = 112 $\newline
-\newline
-Najlepsze rozwiazanie po 30 powtórzeniach:\newline
-Wartość przystosowania = X\newline
-Średnie przystosowanie: X\newline
-Odchylenie standardowe: X\newline
-Czas wykonania: X s
+Omówiony eksperyment został przygotowany przy użyciu algorytmu 
+genetycznego z populacją o rozmiarze $ \mu/4$ = 9, z prawdopodobieństwem 
+mutacji $p_m = 1/n$, krzyżowaniem 1-punktowym $p_c$ = 0.6, selekcję 
+turniejową o rozmiarze turnieju 4, dla liczby iteracji 50, wartości 
+zostały uśrednione po 30 powtórzeniach:\newline
+%Domyślne parametry algorytmu:\newline
+%Selekcja turniejowa o rozmiarze turnieju 4\newline
+%Mutacja 1-punktowa z prawdopodobieństwem 1/n\newline
+%Krzyżowanie 1-punktowe z prawdopodobieństwem 0.6\newline
+%Rozmiar populacji $ \mu/4 = 112 $\newline
+%\newline
+%Najlepsze rozwiazanie po 30 powtórzeniach:\newline
+%Wartość przystosowania = X\newline
+%Średnie przystosowanie: X\newline
+%Odchylenie standardowe: X\newline
+%Czas wykonania: X s
 
+\begin{tabular}{ | l | l |}
+\hline
+Iter. & Przystosowanie najlepszego w populacji \\ \hline
+1 & -53,40 \\
+2 & -34,80 \\
+3 & -20,30 \\
+4 & -13,40 \\
+5 & -8,53 \\
+6 & -4,83 \\
+7 & -1,80 \\
+8 & 0,27 \\
+9 & 1,37 \\
+10 & 3,60 \\
+11 & 4,20 \\
+12 & 3,93 \\
+13 & 3,77 \\
+14 & 4,53 \\
+15 & 5,03 \\
+16 & 6,17 \\
+17 & 5,87 \\
+18 & 6,07 \\
+19 & 5,90 \\
+20 & 6,33 \\
+21 & 6,03 \\
+22 & 5,30 \\
+23 & 5,47 \\
+24 & 6,00 \\
+25 & 6,00 \\
+26 & 3,77 \\
+27 & 5,37 \\
+28 & 5,47 \\
+29 & 4,03 \\
+30 & 4,67 \\
+
+\hline
+\end{tabular}
+
+\begin{tabular}{ | l | l |}
+\hline
+Iter. & Przystosowanie najlepszego w populacji cd.\\ \hline
+31 & 2,67 \\
+32 & 3,07 \\
+33 & 3,77 \\
+34 & 5,23 \\
+35 & 5,90 \\
+36 & 6,73 \\
+37 & 6,73 \\
+38 & 5,30 \\
+39 & 6,27 \\
+40 & 4,53 \\
+41 & 5,93 \\
+42 & 6,00 \\
+43 & 6,87 \\
+44 & 5,37 \\
+45 & 3,40 \\
+46 & 5,43 \\
+47 & 5,40 \\
+48 & 5,73 \\
+49 & 4,87 \\
+50 & 5,90 \\
+\hline
+\end{tabular}
+
+\includegraphics[scale=0.40]{1}\newline
+Średnie przystosowanie: $-17,18$\newline
+Odchylenie standardowe: $11,23$\newline
+Czas wykonania: $1911 ms$\newline
+
+Optymalne średnie przystosowanie zaczyna się stabilizować
+już w okolicy 10-tego do 15-tego pokolenia i oscyluje 
+eksloracje w tym stałym obszarze do końca działania algorytmu.
+Odchylenie standardowe wynosi 11,23, czas działania 
+programu 1911 ms.
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Pytania dodatkowe}
 
 \begin{description}
 
 \item[a)] Wyniki po zwiekszeniu rozmiaru populacji do $ \mu = \lfloor n/2 \rfloor $\newline
-Wartość przystosowania = X\newline
-Średnie przystosowanie: X\newline
-Odchylenie standardowe: X\newline
-Czas wykonania: X s
+
+\includegraphics[scale=0.4]{2}\newline
+%Wartość przystosowania = X\newline
+%Średnie przystosowanie: X\newline
+%Odchylenie standardowe: X\newline
+%Czas wykonania: X s
+Średnie przystosowanie: $-18,54$\newline
+Odchylenie standardowe: $7,67$\newline
+Czas wykonania: $2151 ms$\newline
+
+Dzięki zwiększeniu rozmiaru populacji ewolucja najlepszego
+rozwiązania szybciej osiąga obszar optymalnych rozwiązań 
+oraz chętniej poszukuje rozwiązania w tym obszarze co obrazuje 
+spadek współczynnika odchylenia standardowego, czas działania
+programu wzrósł do 2151 ms.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \item[b1)] Wyniki po zastosowaniu krzyżowania 2-punktowego\newline
-Wartość przystosowania = X\newline
-Średnie przystosowanie: X\newline
-Odchylenie standardowe: X\newline
-Czas wykonania: X s
+
+\includegraphics[scale=0.4]{3}\newline
+%Wartość przystosowania = X\newline
+%Średnie przystosowanie: X\newline
+%Odchylenie standardowe: X\newline
+%Czas wykonania: X s
+Średnie przystosowanie: $-20,31$\newline
+Odchylenie standardowe: $11,49$\newline
+Czas wykonania: $1424 ms$
+
+Zastosowanie krzyżowania 2-punktowego wpływa znacząco na eksplorację 
+obszaru rozwiązań - algorytm wykazuje tendencje do poszukiwania 
+rozwiązań w szerszym obszarze, pokolenia są bardziej zróżnicowane.
+Współczynnik odchylenia standardowego wzrósł (w niewielkim stopniu),
+czas działania programu zmniejszył się do 1424 ms.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%
 \item[b2)] Wyniki po zrezygnowaniu z krzyżowania\newline
-Wartość przystosowania = X\newline
-Średnie przystosowanie: X\newline
-Odchylenie standardowe: X\newline
-Czas wykonania: X s
+
+\includegraphics[scale=0.4]{4}\newline
+%Wartość przystosowania = X\newline
+%Średnie przystosowanie: X\newline
+%Odchylenie standardowe: X\newline
+%Czas wykonania: X s
+Średnie przystosowanie: $-18,94$\newline
+Odchylenie standardowe: $10,31$\newline
+Czas wykonania: $1584 ms$
+
+Po zrezygnowaniu z krzyżowania algorytm osiąga obszar
+optymalnych rozwiązań wolniej, odchylenie standardowe 
+również zmalało co wskazuje na zmniejszenie zdolności 
+eksloracyjnych algorytmu. Czas działania programu 
+zmniejszył się do 1584 ms.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \item[c)] Wyniki po zastosowaniu selekcji rangowej\newline
-Wartość przystosowania = X\newline
-Średnie przystosowanie: X\newline
-Odchylenie standardowe: X\newline
-Czas wykonania: X s
-\item[d)] Jak można usprawnic algorytm?\newline
-Można inicjować populacje poczatkowa osobnikami nie całkowicie losowymi, ale
-majacymi rozmiar zbioru niezależnego zbliżony do oczekiwanego w rozwiazaniu.
+
+\includegraphics[scale=0.4]{5}\newline
+%Wartość przystosowania = X\newline
+%Średnie przystosowanie: X\newline
+%Odchylenie standardowe: X\newline
+%Czas wykonania: X s
+Średnie przystosowanie: $-42,87$\newline
+Odchylenie standardowe: $21,56$\newline
+Czas wykonania: $4892 ms$
+
+Zastosowanie selekcji rangowej pozwala algorytmowi 
+na bardziej skokową eksploracje, odchylenie standardowe
+jest w tym przypadku najwyższe. Czas działania programu
+wzrósł ponad dwukrotnie - 4892 ms.
+
+%\newpage
+\item[d)] Jak można usprawnić algorytm?\newline
+Można inicjować populację poczatkową osobnikami nie całkowicie losowymi, ale
+mającymi rozmiar zbioru niezależnego zbliżony do oczekiwanego w rozwiązaniu.
 \item[e)] Porównać skuteczność algorytmu genetycznego z innym (znanym)
 algorytmem wyznaczania maksymalnego zbioru niezależnego.\newline
-Algorytm genetyczny działa wolniej.
-\item[f)] Praktyczne zastosowania rozwiazywanego problemu.\newline
-Znajdowanie maksymalnych zbiorów niezależnych może mieć zastosowanie w wielu
-algorytmach zwiazanych z problemami NP-trudnymi.\newline
-Problem maksymalnego zbioru niezależnego znajduje zastosowanie w wielu dziedzinach, takich jak:\newline
-Rozpoznawanie obrazów.\newline
-Biologia molekularna.\newline
-Zadanie harmonogramowania.\newline
-Oznaczanie map.
+Rozważmy prosty algorytm znajdowania maksymalnego zbioru niezależnego.
+Zaczynamy od pojedynczego wierzchołka. Następnie znajdujemy wierzchołek,
+który nie jest z nim bezpośrednio połączony i dodajemy go do naszego
+zbioru. Następnie dodajemy wierzchołek, który nie jest bezpośrednio
+połączony z żadnym z już dodanych i tak dalej, aż nie zostaną już
+żadne wierzchołki do dodania.\newline
+Algorytm ten ma złożoność wykładniczą i działa szybciej od algorytmu
+genetycznego, ale podobnie jak algorytm genetyczny nie gwarantuje
+znalezienia optymalnego rozwiązania.
+
+\newpage
+\item[f)] Praktyczne zastosowania rozwiązywanego problemu.\newline
+Znajdowanie maksymalnych zbiorów niezależnych może mieć 
+zastosowanie w wielu algorytmach związanych z problemami 
+NP-trudnymi. \newline
+Problem maksymalnego zbioru niezależnego znajduje 
+zastosowanie w wielu dziedzinach, takich jak:
+\begin{itemize}
+\item Rozpoznawanie obrazów,\end{itemize}
+\begin{itemize}
+\item Biologia molekularna,\end{itemize}
+\begin{itemize}
+\item Zadanie harmonogramowania,\end{itemize}
+\begin{itemize}
+\item Oznaczanie map.\end{itemize}
+
 \end{description}
+
+\section{Bibliografia}
+
+Thomas Bäck, Sami Khuri: An evolutionary heuristic for the maximum in-
+dependent set problem. In: \textit{Proceedings of the First IEEE Conferen-
+ce on Evolutionary Computation}, IEEE Press 1994, 531-535 
+http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.54.624.8
+
+
 
 \end{document}
