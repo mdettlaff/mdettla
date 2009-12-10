@@ -1,0 +1,34 @@
+mganzha@sigma.ug.edu.pl
+
+
+Agent:
+  addBehaviour() - dolacza do kolejki zachowan
+  send() - wysyla message
+  receive() - odbiera message
+
+Ma kolejke zachowan.
+
+
+Behaviour:
+  action() - tresc zachowania
+  done() - jesli true, usun zachowanie z kolejki zachowan agenta
+
+Moze byc one np. one shot albo cykliczne (wtedy done() zwraca false).
+
+Zawsze robic CyclicBehaviour jesli robimy cos wiele razy.
+WakerBehaviour - budzenie agenta
+TickerBehaviour - zachowanie cykliczne (co iles sekund np. agent budzi sie
+i cos robi)
+
+
+ACLMessage
+  setReceiver(new AID("Peter", AID.ISLOCALNAME));
+  setRozneParametryWiadomosci...
+
+Warto dodawać block() po sprawdzeniu wiadomości w bloku else.
+
+
+Directory Facilitator
+DFAgentDescription
+// trzeba wyrejestrować go:
+protected void takeDown() { DFService.deregister(this); }

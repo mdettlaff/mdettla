@@ -1,0 +1,36 @@
+Modyfikacja poprzedniego scenariusza:
+Po rozmowie z agentami mierzącymi temperaturę JobAgent pyta
+TemperatureAgenta mającego najlepszą ofertę o jego lokacje
+i przemieszcza sie do kontenera, w ktorym tamten sie znajduje.
+
+WhereIsAgentAction
+QueryPlatformLocationsAction
+
+Wysyłanie zapytania o przemieszczenie:
+private ACLMessage prepareRequestToAMS(AID agent) {
+  ACLMessage request = new ACLMessage(ACLMessage.REQUEST);
+  request.addReceiver(getAMS());
+  request.setLanguage(FIPANames.ContentLanguage.FIPA_SLO);
+  request.setOntology(MobilityOntology.NAME);
+  request.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+  Action act = new Action();
+  act.setActor(getAMS());
+
+  WhereIsAgentAction action = new WhereIsAgentAction();
+  action.setAgentIndentifier(agent);
+  act.setAction(action);
+
+  getContentManager().fillContent(request, act);
+  return request;
+}
+
+Parsowanie odpowiedzi:
+private Location parseAMSResponse(ACLMessage response) {
+  Result results = (Result)getContentManager().extractContent(response);
+  Iterator it = results.getItems().iterator();
+  Location loc = null;
+  if (it.hasNext()) {
+    loc = (Location)it.next();
+  }
+  return loc;
+}

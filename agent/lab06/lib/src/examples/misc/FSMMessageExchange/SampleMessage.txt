@@ -1,0 +1,28 @@
+(REQUEST
+ :ontology FSMOntology
+ :content  
+"
+<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+
+<fsm>
+
+	<state name=\"START\" first=\"true\" behaviour=\"examples.misc.FSMMessageExchange.SampleReceiverTask\">
+		<!-- default transition: wait a message and then go to RX a state -->
+		<transition nextState=\"RX\"/>
+	</state>
+	
+	<state name=\"RX\" behaviour=\"examples.misc.FSMMessageExchange.SampleReceiverTask\">
+		<!-- if an INFORM is received, then remain in this state -->
+		<transition code=\"7\" nextState=\"RX\"/>
+
+		<!-- default transition: otherwise go into END state -->
+		<transition nextState=\"END\"/>
+	</state>
+	
+	<state name=\"END\" last=\"true\" behaviour=\"examples.misc.FSMMessageExchange.SampleTask\">
+		<!-- in this last state just prints a message -->
+	</state>
+	
+</fsm>
+"
+)

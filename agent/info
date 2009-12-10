@@ -1,0 +1,12 @@
+Uruchamianie:
+main class: jade.Boot
+Run -> Arguments
+-detect-main false -gui ta:mdettla.jade.hello.MyAgent()
+
+Domyślny port 1099
+
+Zamykać przez File -> Shut down agent platform
+
+Dołączenie nowego agenta do platformy
+java jade.Boot -container -host hostname
+Można podać nazwę kontenera jako argument opcji -container
