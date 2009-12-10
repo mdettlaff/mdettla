@@ -1,0 +1,14 @@
+Ontologie
+Napisac przykladowa ontologie.
+Na nastepne zajecia zainstalowac Protege.
+
+1. English auction
+http://www.fipa.org/specs/fipa00031/XC00031F.html#_Toc505484326
+Seller, buyer. Zaimplementowac, powiedziec co brakuje.
+Zastosowac ontologie ksiazki i CD z tutoriala.
+Buyerzy musza dostac informacje czy wygrali czy przegrali.
+Zrobic ontologiczny Concept Bid i wyslac go w ACLMesage za pomoca
+ContentManagera, ktory zapisze Bid w wiadomosci i potem odczyta
+u adresaga.
+Ocen Bidy moze byc Conceptem akcji (ale niekoniecznie). Nie uzywamy
+predykatow. Uzywamy Conceptow.

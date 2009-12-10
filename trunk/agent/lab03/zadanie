@@ -1,0 +1,16 @@
+Scenariusz:
+
+Mamy dwa typy agentów: JobAgent i TempAgent.
+
+JobAgent - wysyła wiadomość do agentów typu TempAgent (CFP): podejmij się
+  pracy mierzenia temperatury dla mnie.
+  Wysyła CFP w którym jest zakres czasu, krok, cena.
+  Zachowania:
+    Wysyła call po PROPOSAL (replyBy - ile czekać na odpowiedź)
+    Sprawdzanie skrzynki z templatem PROPOSE.
+  JobAgent wybiera najlepszą propozycję i wybiera agenta który ją zaproponował.
+
+TempAgent - do mierzenia temperatury. Odpowiada tak lub nie i wskazuje swoją
+  cenę. Wysyła ACCEPT (CONFORM?) lub REJECT.
+
+Zastosować message template przy odbieraniu wiadomości.
