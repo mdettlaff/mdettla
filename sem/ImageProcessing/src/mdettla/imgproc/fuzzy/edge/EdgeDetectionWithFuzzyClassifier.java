@@ -43,7 +43,7 @@ public class EdgeDetectionWithFuzzyClassifier implements ImageProcessingAlgorith
 			for (int i = 0; i < 8; i++) {
 				f += (int)Math.pow(ft[i], 2);
 			}
-			fuzzyTruth = calculateFuzzyTruthValue(f);
+			fuzzyTruth = calculateFuzzyTruthValue(Math.sqrt(f));
 		}
 		return fuzzyTruth;
 	}
@@ -64,7 +64,7 @@ public class EdgeDetectionWithFuzzyClassifier implements ImageProcessingAlgorith
 			for (int i = 0; i < 8; i++) {
 				f += (int)Math.pow(ft[i], 2);
 			}
-			fuzzyTruth = calculateFuzzyTruthValue(f);
+			fuzzyTruth = calculateFuzzyTruthValue(Math.sqrt(f));
 		}
 		return fuzzyTruth;
 	}

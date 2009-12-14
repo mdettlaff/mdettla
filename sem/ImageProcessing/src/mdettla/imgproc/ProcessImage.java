@@ -6,8 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import mdettla.imgproc.fuzzy.edge.EdgeDetectionWithFuzzyClassifier;
-
 /**
  * Stosuje wybrany algorytm przetwarzania obrazu do danego pliku graficznego
  * i zapisuje wynik do innego podanego pliku.
@@ -15,22 +13,31 @@ import mdettla.imgproc.fuzzy.edge.EdgeDetectionWithFuzzyClassifier;
 public class ProcessImage {
 
 	public static void main(String[] args) throws IOException {
-		if (args.length < 2) {
-			System.out.println("Użycie: java " +
-					ProcessImage.class.getSimpleName() +
-					" PLIK_WEJŚCIOWY PLIK_WYJŚCIOWY");
-			return;
+		try {
+			if (args.length < 3) {
+				System.out.println("Użycie: java " +
+						ProcessImage.class.getSimpleName() +
+				"KLASA_ALGORYTMU PLIK_WEJŚCIOWY PLIK_WYJŚCIOWY");
+				return;
+			}
+			File inputImage = new File(args[1]);
+			File outputImage = new File(args[2]);
+			BufferedImage image = ImageIO.read(inputImage);
+
+			ImageProcessingAlgorithm algorithm =
+				(ImageProcessingAlgorithm)Class.forName(args[0]).newInstance();
+
+			image = algorithm.processImage(image);
+
+			String outputFormatName = outputImage.getName().replaceAll(".*\\.", "");
+			ImageIO.write(image, outputFormatName, outputImage);
+			System.out.println("Zapisano do pliku: " + outputImage);
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		File inputImage = new File(args[0]);
-		File outputImage = new File(args[1]);
-		BufferedImage image = ImageIO.read(inputImage);
-
-		ImageProcessingAlgorithm algorithm = new EdgeDetectionWithFuzzyClassifier();
-
-		image = algorithm.processImage(image);
-
-		String outputFormatName = outputImage.getName().replaceAll(".*\\.", "");
-		ImageIO.write(image, outputFormatName, outputImage);
-		System.out.println("Zapisano do pliku: " + outputImage);
 	}
 }
