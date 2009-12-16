@@ -2,6 +2,7 @@ package mdettla.englishauction;
 
 import mdettla.englishauction.ontology.EnglishAuctionOntology;
 import mdettla.englishauction.ontology.BiddingPrice;
+import mdettla.englishauction.ontology.Bid;
 
 import java.util.Random;
 
@@ -14,6 +15,7 @@ import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.domain.DFService;
@@ -23,6 +25,8 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Buyer extends Agent {
 	private static final long serialVersionUID = 1L;
 
+	private static Random random = new Random();
+
 	private Codec codec = new SLCodec();
 	private Ontology ontology = EnglishAuctionOntology.getInstance();
 
@@ -30,6 +34,10 @@ public class Buyer extends Agent {
 	 * Maksymalna cena, jaką agent kupujący jest w stanie zapłacić.
 	 */
 	private int maxPrice;
+	/**
+	 * Zapamiętujemy naszą ostatnią ofertę.
+	 */
+	private Bid bid;
 	private AID seller;
 
 	@Override
@@ -73,24 +81,17 @@ public class Buyer extends Agent {
 							}
 							break;
 						case ACLMessage.CFP:
-							if (msg.getSender().equals(seller)) {
-								// TODO weryfikacja kodeka i ontologii za
-								// pomocą MessageTemplate
+							MessageTemplate mt = MessageTemplate.and(
+									MessageTemplate.MatchLanguage(codec.getName()),
+									MessageTemplate.MatchOntology(ontology.getName()));
+							if (msg.getSender().equals(seller)
+									&& mt.match(msg)) {
 								try {
 									ContentElement ce = null;
-									ce = getContentManager().
-										extractContent(msg);
+									ce = getContentManager().extractContent(msg);
 									if (ce instanceof BiddingPrice) {
-										BiddingPrice price = (BiddingPrice)ce;
-										System.out.println(
-												myAgent.getLocalName() +
-												": dowiedziałem się, że " +
-												"nowa cena to " +
-												price.getPrice());
-										ACLMessage bidMsg = new ACLMessage(
-												ACLMessage.PROPOSE);
-										bidMsg.addReceiver(msg.getSender());
-										send(bidMsg);
+										BiddingPrice biddingPrice = (BiddingPrice)ce;
+										bid(biddingPrice, msg.createReply());
 									}
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -103,6 +104,32 @@ public class Buyer extends Agent {
 		};
 
 		addBehaviour(checkMessages);
+	}
+
+	/**
+	 * Wysyłamy ofertę do prowadzącego aukcję, jeśli odpowiadają nam warunki.
+	 */
+	private void bid(BiddingPrice biddingPrice, ACLMessage bidMsg) {
+		try {
+			int newPrice = biddingPrice.getPrice() + random.nextInt(5) + 1;
+			newPrice = Math.min(newPrice, maxPrice);
+			// licytujemy, jeśli aktualna cena jest wyższa od tej
+			// którą zaproponowaliśmy ostatnio, żeby nie licytować
+			// z samym sobą
+			if (bid == null || biddingPrice.getPrice() > bid.getPrice()) {
+				if (newPrice > biddingPrice.getPrice()) {
+					bidMsg.setPerformative(ACLMessage.PROPOSE);
+					bid = new Bid();
+					bid.setPrice(newPrice);
+					bid.setAbleToPay(true);
+					bid.setBidderName(getLocalName());
+					getContentManager().fillContent(bidMsg, bid);
+					send(bidMsg);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

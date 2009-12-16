@@ -15,9 +15,9 @@ then
   src/mdettla/englishauction/ontology/*.java
 else
   java -cp $cp:bin jade.Boot -detect-main false \
-  jobagent:mdettla.englishauction.Seller\(10 30\) \
+  seller:mdettla.englishauction.Seller\(10 30\) \
   buyer1:mdettla.englishauction.Buyer\(20\) \
-  buyer2:mdettla.englishauction.Buyer\(25\) \
-  buyer3:mdettla.englishauction.Buyer\(35\)
+  buyer2:mdettla.englishauction.Buyer\(30\) \
+  buyer3:mdettla.englishauction.Buyer\(40\)
   mv APDescription.txt MTPs-Main-Container.txt bin
 fi

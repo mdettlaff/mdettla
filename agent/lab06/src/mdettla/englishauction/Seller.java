@@ -2,6 +2,7 @@ package mdettla.englishauction;
 
 import mdettla.englishauction.ontology.EnglishAuctionOntology;
 import mdettla.englishauction.ontology.BiddingPrice;
+import mdettla.englishauction.ontology.Bid;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
+import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
@@ -40,6 +42,16 @@ public class Seller extends Agent {
 	 * Minimalna cena, za jaką może zostać sprzedany przedmiot aukcji.
 	 */
 	private int reservationPrice;
+	/**
+	 * Aktualna cena przedmiotu.
+	 */
+	private int currentPrice;
+
+	/**
+	 * Agent, który przedstawił do tej pory najlepszą ofertę.
+	 */
+	private AID topBidder;
+	private String topBidderName;
 
 	@Override
 	protected void setup() {
@@ -47,6 +59,7 @@ public class Seller extends Agent {
 
 		askingPrice = Integer.valueOf(getArguments()[0].toString());
 		reservationPrice = Integer.valueOf(getArguments()[1].toString());
+		currentPrice = askingPrice;
 
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
@@ -56,19 +69,36 @@ public class Seller extends Agent {
 
 			@Override
 			protected void onTick() {
-				ACLMessage msg = receive();
+				MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(
+						MessageTemplate.MatchLanguage(codec.getName()),
+						MessageTemplate.MatchOntology(ontology.getName())),
+						MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
+				ACLMessage msg = receive(mt);
 				if (msg != null) {
-					switch (msg.getPerformative()) {
-						case ACLMessage.PROPOSE:
-							System.out.println(myAgent.getLocalName() +
-									": dostałem ofertę");
-							sendCFPToBuyers(55);
-							break;
+					try {
+						ContentElement ce = null;
+						ce = getContentManager().extractContent(msg);
+						if (ce instanceof Bid) {
+							Bid bid = (Bid)ce;
+							if (bid.getAbleToPay() && bid.getPrice() > currentPrice) {
+								currentPrice = bid.getPrice();
+								topBidder = msg.getSender();
+								topBidderName = bid.getBidderName();
+								System.out.println(myAgent.getLocalName() +
+										": zaakceptowałem ofertę od: " + bid.getBidderName());
+								System.out.println(getLocalName() +
+										": wysyłam informację, że aktualna cena to " +
+										currentPrice);
+								sendCFPToBuyers();
+							}
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
-				// po uwzględnieniu najszybszej odpowiedzi, olewamy resztę
+				// po uwzględnieniu najszybszej odpowiedzi, ignorujemy resztę
 				while (msg != null) {
-					msg = receive();
+					msg = receive(mt);
 				}
 			}
 		};
@@ -89,7 +119,7 @@ public class Seller extends Agent {
 				}
 				send(startOfAuction);
 
-				sendCFPToBuyers(askingPrice);
+				sendCFPToBuyers();
 				addBehaviour(checkBids);
 			}
 		};
@@ -100,7 +130,7 @@ public class Seller extends Agent {
 	/**
 	 * Wezwanie do licytowania, do wszystkich kupujących.
 	 */
-	private void sendCFPToBuyers(int proposedPrice) {
+	private void sendCFPToBuyers() {
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		for (AID buyer : getBuyers()) {
 			msg.addReceiver(buyer);
@@ -108,7 +138,7 @@ public class Seller extends Agent {
 		msg.setLanguage(codec.getName());
 		msg.setOntology(ontology.getName());
 		BiddingPrice price = new BiddingPrice();
-		price.setPrice(proposedPrice);
+		price.setPrice(currentPrice);
 		try {
 			getContentManager().fillContent(msg, price);
 		} catch (Exception e) {
