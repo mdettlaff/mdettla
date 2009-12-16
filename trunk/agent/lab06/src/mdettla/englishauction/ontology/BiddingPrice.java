@@ -1,6 +1,5 @@
 package mdettla.englishauction.ontology;
 
-import jade.content.Concept;
 import jade.content.Predicate;
 import jade.content.onto.annotations.Slot;
 

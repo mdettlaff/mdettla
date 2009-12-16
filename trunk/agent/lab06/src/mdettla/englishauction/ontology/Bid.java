@@ -1,12 +1,14 @@
 package mdettla.englishauction.ontology;
 
 import jade.content.Concept;
+import jade.content.Predicate;
 import jade.content.onto.annotations.Slot;
 
-public class Bid implements Concept {
+public class Bid implements Predicate {
 
 	private Integer price;
 	private String bidderName;
+	private Boolean ableToPay;
 
 	public void setPrice(Integer price) {
 		this.price = price;
@@ -15,6 +17,14 @@ public class Bid implements Concept {
 	@Slot(mandatory = true)
 	public Integer getPrice() {
 		return price;
+	}
+
+	public void setAbleToPay(Boolean ableToPay) {
+		this.ableToPay = ableToPay;
+	}
+
+	public Boolean getAbleToPay() {
+		return ableToPay;
 	}
 
 	public void setBidderName(String bidderName) {
