@@ -1,4 +1,4 @@
-package mdettla.imgproc.edge;
+package mdettla.imgproc.algorithms.edge;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
