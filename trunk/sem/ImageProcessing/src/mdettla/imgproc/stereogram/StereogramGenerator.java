@@ -68,8 +68,8 @@ public class StereogramGenerator {
 		try {
 			if (args.length < 3) {
 				System.out.println("Użycie: java " +
-						StereogramGenerator.class.getSimpleName() +
-				"PLIK_MASKI PLIK_TŁA PLIK_WYJŚCIOWY");
+						StereogramGenerator.class.getName() +
+				" PLIK_MASKI PLIK_TŁA PLIK_WYJŚCIOWY");
 				return;
 			}
 			BufferedImage mask = ImageIO.read(new File(args[0]));
