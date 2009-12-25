@@ -16,8 +16,8 @@ public class ProcessImage {
 		try {
 			if (args.length < 3) {
 				System.out.println("Użycie: java " +
-						ProcessImage.class.getSimpleName() +
-				"KLASA_ALGORYTMU PLIK_WEJŚCIOWY PLIK_WYJŚCIOWY");
+						ProcessImage.class.getName() +
+				" KLASA_ALGORYTMU PLIK_WEJŚCIOWY PLIK_WYJŚCIOWY");
 				return;
 			}
 			File inputImage = new File(args[1]);
