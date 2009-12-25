@@ -1,4 +1,4 @@
-package mdettla.imgproc.fuzzy.edge;
+package mdettla.imgproc.algorithms.fuzzy.edge;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
