@@ -15,6 +15,7 @@ import jade.content.ContentElement;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
+import jade.content.onto.basic.Action;
 import jade.core.Agent;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
@@ -46,6 +47,7 @@ public class Seller extends Agent {
 	 * Aktualna cena przedmiotu.
 	 */
 	private int currentPrice;
+	private boolean auctionActive;
 
 	/**
 	 * Agent, który przedstawił do tej pory najlepszą ofertę.
@@ -64,7 +66,7 @@ public class Seller extends Agent {
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
-		final Behaviour checkBids = new TickerBehaviour(this, 750) {
+		final Behaviour checkBids = new TickerBehaviour(this, 1000) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -78,8 +80,9 @@ public class Seller extends Agent {
 					try {
 						ContentElement ce = null;
 						ce = getContentManager().extractContent(msg);
-						if (ce instanceof Bid) {
-							Bid bid = (Bid)ce;
+						if (ce instanceof Action) {
+							Action raiseBiddingPrice = (Action)ce;
+							Bid bid = (Bid)raiseBiddingPrice.getAction();
 							if (bid.getAbleToPay() && bid.getPrice() > currentPrice) {
 								currentPrice = bid.getPrice();
 								topBidder = msg.getSender();
@@ -94,6 +97,12 @@ public class Seller extends Agent {
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
+					}
+				} else {
+					// brak oferty kupna
+					if (auctionActive && topBidderName != null) {
+						informEndOfAuction();
+						auctionActive = false;
 					}
 				}
 				// po uwzględnieniu najszybszej odpowiedzi, ignorujemy resztę
@@ -119,6 +128,7 @@ public class Seller extends Agent {
 				}
 				send(startOfAuction);
 
+				auctionActive = true;
 				sendCFPToBuyers();
 				addBehaviour(checkBids);
 			}
@@ -143,6 +153,19 @@ public class Seller extends Agent {
 			getContentManager().fillContent(msg, price);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		send(msg);
+	}
+
+	private void informEndOfAuction() {
+		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+		for (AID buyer : getBuyers()) {
+			msg.addReceiver(buyer);
+		}
+		if (currentPrice >= reservationPrice) {
+			msg.setContent("Koniec aukcji. Wygrał: " + topBidderName);
+		} else {
+			msg.setContent("Koniec aukcji. Przedmiot nie został sprzedany.");
 		}
 		send(msg);
 	}
