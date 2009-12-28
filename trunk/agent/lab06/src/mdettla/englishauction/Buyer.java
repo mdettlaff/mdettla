@@ -9,6 +9,7 @@ import java.util.Random;
 import jade.content.lang.Codec;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
+import jade.content.onto.basic.Action;
 import jade.content.ContentElement;
 import jade.core.Agent;
 import jade.core.AID;
@@ -62,7 +63,8 @@ public class Buyer extends Agent {
 			fe.printStackTrace();
 		}
 
-		Behaviour checkMessages = new TickerBehaviour(this, 1000) {
+		Behaviour checkMessages =
+			new TickerBehaviour(this, 900 + random.nextInt(200)) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -74,10 +76,17 @@ public class Buyer extends Agent {
 							if (FIPANames.InteractionProtocol.
 									FIPA_ENGLISH_AUCTION.equals(
 									msg.getProtocol())) {
+								if (seller == null) {
+									System.out.println(myAgent.getLocalName() +
+											": dowiedziałem się o " +
+											"rozpoczęciu aukcji");
+									seller = msg.getSender();
+								}
+							} else {
 								System.out.println(myAgent.getLocalName() +
 										": dowiedziałem się o " +
-										"rozpoczęciu aukcji");
-								seller = msg.getSender();
+										"zakończeniu aukcji (" +
+										msg.getContent() + ")");
 							}
 							break;
 						case ACLMessage.CFP:
@@ -91,7 +100,8 @@ public class Buyer extends Agent {
 									ce = getContentManager().extractContent(msg);
 									if (ce instanceof BiddingPrice) {
 										BiddingPrice biddingPrice = (BiddingPrice)ce;
-										bid(biddingPrice, msg.createReply());
+										bid(biddingPrice, msg.createReply(),
+												msg.getSender());
 									}
 								} catch (Exception e) {
 									e.printStackTrace();
@@ -109,7 +119,7 @@ public class Buyer extends Agent {
 	/**
 	 * Wysyłamy ofertę do prowadzącego aukcję, jeśli odpowiadają nam warunki.
 	 */
-	private void bid(BiddingPrice biddingPrice, ACLMessage bidMsg) {
+	private void bid(BiddingPrice biddingPrice, ACLMessage bidMsg, AID sender) {
 		try {
 			int newPrice = biddingPrice.getPrice() + random.nextInt(5) + 1;
 			newPrice = Math.min(newPrice, maxPrice);
@@ -119,11 +129,14 @@ public class Buyer extends Agent {
 			if (bid == null || biddingPrice.getPrice() > bid.getPrice()) {
 				if (newPrice > biddingPrice.getPrice()) {
 					bidMsg.setPerformative(ACLMessage.PROPOSE);
+					Action raiseBiddingPrice = new Action();
 					bid = new Bid();
 					bid.setPrice(newPrice);
 					bid.setAbleToPay(true);
 					bid.setBidderName(getLocalName());
-					getContentManager().fillContent(bidMsg, bid);
+					raiseBiddingPrice.setAction(bid);
+					raiseBiddingPrice.setActor(sender);
+					getContentManager().fillContent(bidMsg, raiseBiddingPrice);
 					send(bidMsg);
 				}
 			}

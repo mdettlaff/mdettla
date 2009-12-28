@@ -4,7 +4,7 @@ import jade.content.Concept;
 import jade.content.Predicate;
 import jade.content.onto.annotations.Slot;
 
-public class Bid implements Predicate {
+public class Bid implements Concept {
 
 	private Integer price;
 	private String bidderName;
