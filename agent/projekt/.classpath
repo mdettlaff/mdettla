@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/bcel.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/GraphLayout.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_examples.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_rt.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_tools.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/janino.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jhall.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jibx-bind.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jibx-extras.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jibx-run.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/nuggets.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/xmlpull_1_1_4.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/xpp3.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/commons-codec-1.3.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/crimson.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/http.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/iiop.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jade.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jadeTools.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jadex_jadeadapter.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
