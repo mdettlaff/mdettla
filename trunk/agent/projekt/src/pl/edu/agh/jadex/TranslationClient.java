@@ -16,14 +16,41 @@ public class TranslationClient extends Agent {
 	protected void setup() {
 		final AID TRANSLATOR = new AID("translator", AID.ISLOCALNAME);
 
+		addBehaviour(new WakerBehaviour(this, 500) {
+			@Override
+			public void onWake() {
+				String word = "dog";
+				System.out.println(myAgent.getName() +
+						": wysyłam zapytanie o tłumaczenie: " + word);
+				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+				msg.addReceiver(TRANSLATOR);
+				msg.setContent("translate " + word);
+				send(msg);
+			}
+		});
+
 		addBehaviour(new WakerBehaviour(this, 1000) {
 			@Override
 			public void onWake() {
+				String word = "cat";
 				System.out.println(myAgent.getName() +
-						": wysyłam zapytanie o tłumaczenie");
+						": wysyłam zapytanie o tłumaczenie: " + word);
 				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
 				msg.addReceiver(TRANSLATOR);
-				msg.setContent("translate Katze");
+				msg.setContent("translate " + word);
+				send(msg);
+			}
+		});
+
+		addBehaviour(new WakerBehaviour(this, 1500) {
+			@Override
+			public void onWake() {
+				System.out.println(myAgent.getName() +
+						": wysyłam zapytanie o dodanie słowa do słownika " +
+						"cat Katze");
+				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+				msg.addReceiver(TRANSLATOR);
+				msg.setContent("add cat Katze");
 				send(msg);
 			}
 		});
@@ -31,35 +58,12 @@ public class TranslationClient extends Agent {
 		addBehaviour(new WakerBehaviour(this, 2000) {
 			@Override
 			public void onWake() {
+				String word = "cat";
 				System.out.println(myAgent.getName() +
-						": wysyłam zapytanie o tłumaczenie");
+						": wysyłam zapytanie o tłumaczenie: " + word);
 				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
 				msg.addReceiver(TRANSLATOR);
-				msg.setContent("translate Hund");
-				send(msg);
-			}
-		});
-
-		addBehaviour(new WakerBehaviour(this, 3000) {
-			@Override
-			public void onWake() {
-				System.out.println(myAgent.getName() +
-						": wysyłam zapytanie o dodanie słowa do słownika");
-				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-				msg.addReceiver(TRANSLATOR);
-				msg.setContent("add Hund dog");
-				send(msg);
-			}
-		});
-
-		addBehaviour(new WakerBehaviour(this, 4000) {
-			@Override
-			public void onWake() {
-				System.out.println(myAgent.getName() +
-						": wysyłam zapytanie o tłumaczenie");
-				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
-				msg.addReceiver(TRANSLATOR);
-				msg.setContent("translate Hund");
+				msg.setContent("translate " + word);
 				send(msg);
 			}
 		});

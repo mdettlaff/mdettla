@@ -13,15 +13,18 @@ public class AddWordToDictionary extends Plan {
 	@SuppressWarnings("unchecked")
 	public void body() {
 		Map<String, String> words = (Map<String, String>)getBeliefbase().
-		getBelief("dictionary").getFact();
+		getBelief("egwords").getFact();
 		String messageContent = (String)getParameter("new_word").getValue();
 		StringTokenizer st = new StringTokenizer(messageContent);
 		if (st.countTokens() >= 3) {
 			st.nextToken();
-			String key = st.nextToken();
-			if (!words.containsKey(key)) {
-				words.put(key, st.nextToken());
-				getLogger().info("dodano słowo do słownika");
+			String eword = st.nextToken();
+			if (!words.containsKey(eword)) {
+				String gword = st.nextToken();
+				words.put(eword, gword);
+				//getBeliefbase().getBeliefSet("egwords").addFact(new jadex.util.Tuple(key, st.nextToken()));
+				getLogger().info("dodano słowo do słownika: " +
+						eword + " " + gword);
 			}
 		}
 	}
