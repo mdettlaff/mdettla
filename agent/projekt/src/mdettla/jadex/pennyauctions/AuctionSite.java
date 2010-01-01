@@ -20,7 +20,7 @@ public class AuctionSite extends Agent {
 						": wysyłam zapytanie o tłumaczenie");
 				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
 				msg.addReceiver(new AID("translator", AID.ISLOCALNAME));
-				msg.setContent("Hund");
+				msg.setContent("translate Hund");
 				send(msg);
 			}
 		};

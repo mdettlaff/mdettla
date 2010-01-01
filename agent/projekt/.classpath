@@ -5,7 +5,7 @@
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/bcel.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/GraphLayout.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_examples.jar"/>
-	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_rt.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_rt.jar" sourcepath="/home/mdettla/manta/agent/projekt/jadex-0.96/src/"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jadex_tools.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/janino.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-0.96/lib/jhall.jar"/>

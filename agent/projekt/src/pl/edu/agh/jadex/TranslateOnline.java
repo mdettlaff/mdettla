@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @SuppressWarnings("serial")
-public class SearchTranslationOnline extends Plan {
+public class TranslateOnline extends Plan {
 
-	public SearchTranslationOnline() {
+	public TranslateOnline() {
 	}
 
 	public void body() {
-		String eword = (String) getParameter("eword").getValue();
+		String eword = (String) getParameter("word").getValue();
+		eword = eword.split(" ")[1];
 		URL dict = null;
 		try {
 			dict = new URL("http://wolfram.schneider.org/dict/dict.cgi?query="
@@ -31,20 +32,11 @@ public class SearchTranslationOnline extends Plan {
 		String inline = null;
 		try {
 			while ((inline = in.readLine()) != null) {
-				if (inline.indexOf("<td>") != -1 && inline.indexOf(eword) != -1) {
-					try
-					{
-						int start = inline.indexOf("<td>") + 4;
-						int end = inline.indexOf("</td", start);
-						String worda = inline.substring(start, end);
-						start = inline.indexOf("<td", start);
-						start = inline.indexOf(">", start);
-						end = inline.indexOf("</td", start);
-						String wordb = inline.substring(start,
-								end == -1 ? inline.length() - 1 : end);
-						wordb = wordb.replaceAll("<b>", "");
-						wordb = wordb.replaceAll("</b>", "");
-						System.out.println(worda + " - " + wordb);
+				if (inline.indexOf("<td><b>" + eword + "</b> ") != -1) {
+					try {
+						String englishWord = inline.replaceAll(".*right\">", "");
+						englishWord = englishWord.trim();
+						getLogger().info(eword + " -> " + englishWord);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
