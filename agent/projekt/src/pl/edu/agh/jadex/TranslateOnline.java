@@ -46,9 +46,10 @@ public class TranslateOnline extends Plan {
 //				if (inline.indexOf("><b>" + eword + "</b> |") != -1) {
 //					try {
 //						String gword = inline.replaceAll(".*left\"><td>", "");
-//						gword = gword.replaceAll("<td>.*", "");
+//						gword = gword.replaceAll("</td><td.*", "");
 //						gword = gword.trim();
-						getLogger().info(eword + " -> " + getDictionary().get(eword));
+						String gword = getDictionary().get(eword);
+						getLogger().info(eword + " -> " + gword);
 //					} catch (Exception e) {
 //						e.printStackTrace();
 //					}

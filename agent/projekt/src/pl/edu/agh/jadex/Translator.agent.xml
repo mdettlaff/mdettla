@@ -15,17 +15,13 @@
 	</imports>
 
 	<beliefs>
-		<belief name="egwords" class="Map">
-			<fact>Translate.getDictionary()</fact>
-		</belief>
-	</beliefs>
-
-	<!-- <beliefs>
 		<beliefset name="egwords" class="Tuple">
+			<fact>new Tuple("coffee", "Kaffee")</fact>
 			<fact>new Tuple("milk", "Milch")</fact>
-			<fact>new Tuple("cat", "Katze")</fact>
+			<fact>new Tuple("cow", "Kuh")</fact>
+			<fact>new Tuple("dog", "Hund")</fact>
 		</beliefset>
-	</beliefs> -->
+	</beliefs>
 
 	<plans>
 		<plan name="add_word">
@@ -46,7 +42,7 @@
 				<messageevent ref="request_translation" />
 			</trigger>
 			<precondition>
-				Translate.containsWord((String)$event.getContent())
+				Translate.containsWord((String)$event.getContent(), $beliefbase.egwords)
 			</precondition>
 		</plan>
 		<plan name="translate_online" priority="-1">
@@ -80,14 +76,14 @@
 		</messageevent>
 	</events>
 
-	<!-- <expressions>
-		<expression name="query_word">
+	<expressions>
+		<expression name="query_egword">
 			select one $wordpair.get(1)
 			from Tuple $wordpair in $beliefbase.egwords
-			where $wordpair.get(0).equals($word)
-			<parameter name="$word" class="String"/>
+			where $wordpair.get(0).equals($eword)
+			<parameter name="$eword" class="String"/>
 		</expression>
-	</expressions> -->
+	</expressions>
 
 	<properties>
 		<property name="logging.level">Level.INFO</property>
