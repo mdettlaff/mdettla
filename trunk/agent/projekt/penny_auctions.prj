@@ -1,10 +1,10 @@
 #Jadex Project Properties
-#Fri Jan 01 12:15:01 CET 2010
-wnd0.x=142
+#Fri Jan 01 16:33:25 CET 2010
+wnd0.x=137
 wnd0.height=614
 wnd0.centersplit=499
 wnd0.extendedState=0
 wnd0.width=768
 wnd0.console_on=false
 wnd0.perspective=Starter
-wnd0.y=71
+wnd0.y=50
