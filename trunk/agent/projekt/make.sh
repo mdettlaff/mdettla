@@ -29,7 +29,7 @@ else
     cp src/pl/edu/agh/jadex/*.xml bin/pl/edu/agh/jadex
   else
     java -cp .:bin:$libs jadex.adapter.jade.tools.Starter \
-    auction_site:pl.edu.agh.jadex.TranslationClient\(\) \
+    translation_client:pl.edu.agh.jadex.TranslationClient\(\) \
     translator:jadex.adapter.jade.JadeAgentAdapter\(pl.edu.agh.jadex.Translator default max_storage=5\)
   fi
 fi

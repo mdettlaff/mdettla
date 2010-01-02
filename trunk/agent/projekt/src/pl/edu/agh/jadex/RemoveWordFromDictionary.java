@@ -9,10 +9,11 @@ public class RemoveWordFromDictionary extends Plan {
 	public RemoveWordFromDictionary() {}
 
 	public void body() {
-		Tuple[] egwords = (Tuple[])getBeliefbase().getBeliefSet("egwords").getFacts();
-		String eword = (String)egwords[0].getEntity(0);
-		String gword = (String)egwords[0].getEntity(1);
-		getBeliefbase().getBeliefSet("egwords").removeFact(new Tuple(eword, gword));
+		Object[] egwords = getBeliefbase().getBeliefSet("egwords").getFacts();
+		getBeliefbase().getBeliefSet("egwords").removeFact(egwords[0]);
+
+		String eword = (String)((Tuple)egwords[0]).get(0);
+		String gword = (String)((Tuple)egwords[0]).get(1);
 		getLogger().info("usunięto słowo ze słownika: " +
 				eword + " " + gword);
 	}

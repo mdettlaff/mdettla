@@ -19,7 +19,7 @@
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/crimson.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/http.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/iiop.jar"/>
-	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jade.jar"/>
+	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jade.jar" sourcepath="/home/mdettla/manta/agent/jade/src"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jadeTools.jar"/>
 	<classpathentry kind="lib" path="/home/mdettla/manta/agent/projekt/jadex-jadeadapter-0.96/lib/jadex_jadeadapter.jar"/>
 	<classpathentry kind="output" path="bin"/>

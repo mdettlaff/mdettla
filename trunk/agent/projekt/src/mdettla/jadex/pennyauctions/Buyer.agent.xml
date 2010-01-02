@@ -1,0 +1,67 @@
+<agent xmlns="http://jadex.sourceforge.net/jadex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://jadex.sourceforge.net/jadex
+    http://jadex.sourceforge.net/jadex-0.96.xsd"
+	name="Buyer" package="mdettla.jadex.pennyauctions">
+	<imports>
+		<import>java.util.logging.*</import>
+		<import>java.util.*</import>
+		<import>jadex.adapter.fipa.*</import>
+	</imports>
+
+	<capabilities>
+		<capability name="dfcap" file="jadex.planlib.DF" />
+	</capabilities>
+
+	<goals>
+		<achievegoalref name="df_search">
+			<concrete ref="dfcap.df_search" />
+		</achievegoalref>
+	</goals>
+
+	<plans>
+		<plan name="subscribe_to_auction_site">
+			<body>new SubscribeToAuctionSite()</body>
+		</plan>
+		<plan name="process_auction_state">
+			<parameter name="state" class="String">
+				<messageeventmapping ref="auction_state.content" />
+			</parameter>
+			<body>new ProcessAuctionState()</body>
+			<trigger>
+				<messageevent ref="auction_state" />
+			</trigger>
+		</plan>
+	</plans>
+
+	<events>
+		<messageevent name="register" type="fipa" direction="send">
+			<parameter name="performative" class="String">
+				<value>SFipa.REQUEST</value>
+			</parameter>
+			<parameter name="content" class="String">
+				<value>"register"</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="auction_state" type="fipa" direction="receive">
+			<parameter name="performative" class="String">
+				<value>SFipa.INFORM</value>
+			</parameter>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"auction_state"</value>
+			</parameter>
+		</messageevent>
+	</events>
+
+	<properties>
+		<property name="logging.level">Level.INFO</property>
+		<property name="logging.useParentHandlers">true</property>
+	</properties>
+
+	<configurations>
+		<configuration name="default">
+			<plans>
+				<initialplan ref="subscribe_to_auction_site" />
+			</plans>
+		</configuration>
+	</configurations>
+</agent>
