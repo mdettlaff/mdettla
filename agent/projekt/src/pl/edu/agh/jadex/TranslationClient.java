@@ -67,5 +67,18 @@ public class TranslationClient extends Agent {
 				send(msg);
 			}
 		});
+
+		addBehaviour(new WakerBehaviour(this, 2500) {
+			@Override
+			public void onWake() {
+				String word = "dog";
+				System.out.println(myAgent.getName() +
+						": wysyłam zapytanie o tłumaczenie: " + word);
+				ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+				msg.addReceiver(TRANSLATOR);
+				msg.setContent("translate " + word);
+				send(msg);
+			}
+		});
 	}
 }

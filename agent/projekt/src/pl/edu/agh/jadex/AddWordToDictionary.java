@@ -10,7 +10,7 @@ public class AddWordToDictionary extends Plan {
 	public AddWordToDictionary() {}
 
 	public void body() {
-		String messageContent = (String)getParameter("new_word").getValue();
+		String messageContent = (String)getParameter("new_egword").getValue();
 		StringTokenizer st = new StringTokenizer(messageContent);
 		if (st.countTokens() >= 3) {
 			st.nextToken();
