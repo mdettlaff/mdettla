@@ -30,7 +30,7 @@ public class Translate extends Plan {
 	public static boolean containsWord(String msgContent, Tuple[] egwords) {
 		String eword = msgContent.split(" ")[1];
 		for (Tuple egword : egwords) {
-			if (egword.getEntity(0).toString().equals(eword)) {
+			if (egword.get(0).toString().equals(eword)) {
 				return true;
 			}
 		}

@@ -1,7 +1,7 @@
 	<!--
-		Using the beliefbase with a belief. The agent stores its dictionary in
-		a single-valued belief that can be accessed from a translation as well
-		as from an add new word plan.
+		Agent tłumaczący słowa z języka angielskiego na niemiecki. Posiada
+		słownik wewnętrzny jako beliefset. Jeśli szukanego słowa nie ma w
+		słowniku wewnętrznym, odwołuje się do słownika online.
 	-->
 <agent xmlns="http://jadex.sourceforge.net/jadex" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://jadex.sourceforge.net/jadex
