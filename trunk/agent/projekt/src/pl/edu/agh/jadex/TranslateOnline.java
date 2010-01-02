@@ -15,10 +15,10 @@ public class TranslateOnline extends Plan {
 	public static Map<String, String> getDictionary() {
 		if (dictionary == null) {
 			dictionary = new HashMap<String, String>();
-			dictionary.put("coffee", "Kaffee");
-			dictionary.put("milk", "Milch");
-			dictionary.put("cow", "Kuh");
-			dictionary.put("dog", "Hund");
+			dictionary.put("coffee", "Kaffee {m} | Kaffee machen");
+			dictionary.put("milk", "Milch {f} | dicke Milch");
+			dictionary.put("cow", "Kuh {f} [zool.] | Kuehe {pl}");
+			dictionary.put("dog", "Hund {m}");
 			dictionary.put("cat", "Katze {f} [zool.] | Katzen {pl}");
 		}
 		return dictionary;

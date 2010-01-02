@@ -21,6 +21,9 @@ public class Translate extends Plan {
             IExpression queryword = getExpression("query_egword");
             String gword = (String)queryword.execute("$eword", eword);
 			getLogger().info(eword + " -> " + gword);
+
+			getLogger().info("Rozmiar słownika: " +
+					getBeliefbase().getBeliefSet("egwords").size());
 		}
 	}
 
