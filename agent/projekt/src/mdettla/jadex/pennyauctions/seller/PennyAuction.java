@@ -1,16 +1,34 @@
 package mdettla.jadex.pennyauctions.seller;
 
+import mdettla.jadex.pennyauctions.util.Utils;
+
 public class PennyAuction {
 
+	/**
+	 * O ile sekund przedłuża aukcję jedno podbicie.
+	 */
+	public static final int TIME_UP_PER_BID = 3;
+	/**
+	 * O ile groszy zwiększa cenę jedno podbicie.
+	 */
+	public static final int PRICE_UP_PER_BID = 1;
+
+	private static int auctionIdGenerator = 0;
+
+	private Integer auctionId;
 	private Product product;
 	private Integer currentPrice;
 	private Integer timeLeft;
-	private String topBidderName;
+	private User topBidder;
+	private boolean isActive;
 
 	public PennyAuction(Product product, Integer currentPrice, Integer timeLeft) {
 		this.product = product;
 		this.currentPrice = currentPrice;
 		this.timeLeft = timeLeft;
+		auctionIdGenerator++;
+		this.auctionId = auctionIdGenerator;
+		this.isActive = true;
 	}
 
 	public void setProduct(Product product) {
@@ -21,8 +39,10 @@ public class PennyAuction {
 		return product;
 	}
 
-	public void setCurrentPrice(Integer currentPrice) {
-		this.currentPrice = currentPrice;
+	public void makeBid(User user) {
+		currentPrice += PRICE_UP_PER_BID;
+		timeLeft += TIME_UP_PER_BID;
+		topBidder = user;
 	}
 
 	public Integer getCurrentPrice() {
@@ -37,11 +57,34 @@ public class PennyAuction {
 		return timeLeft;
 	}
 
-	public void setTopBidderName(String topBidderName) {
-		this.topBidderName = topBidderName;
+	public void setTopBidder(User topBidder) {
+		this.topBidder = topBidder;
 	}
 
-	public String getTopBidderName() {
-		return topBidderName;
+	public User getTopBidder() {
+		return topBidder;
+	}
+
+	public void setId(Integer auctionId) {
+		this.auctionId = auctionId;
+	}
+
+	public Integer getId() {
+		return auctionId;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public String toString() {
+		return "aukcja nr " + auctionId +
+		(topBidder != null ? ", wygrywający: " + topBidder : ", brak wygrywającego") +
+		"\n" + "osiągnięta cena " + Utils.formatPrice(currentPrice) + " zł," +
+		"towar: " + product;
 	}
 }

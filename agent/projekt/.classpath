@@ -8,11 +8,11 @@
 	<classpathentry kind="lib" path="lib/GraphLayout.jar"/>
 	<classpathentry kind="lib" path="lib/http.jar"/>
 	<classpathentry kind="lib" path="lib/iiop.jar"/>
-	<classpathentry kind="lib" path="lib/jade.jar"/>
+	<classpathentry kind="lib" path="lib/jade.jar" sourcepath="/home/mdettla/manta/agent/jade/src"/>
 	<classpathentry kind="lib" path="lib/jadeTools.jar"/>
 	<classpathentry kind="lib" path="lib/jadex_examples.jar"/>
 	<classpathentry kind="lib" path="lib/jadex_jadeadapter.jar"/>
-	<classpathentry kind="lib" path="lib/jadex_rt.jar"/>
+	<classpathentry kind="lib" path="lib/jadex_rt.jar" sourcepath="/home/mdettla/manta/agent/projekt/jadex-0.96/src"/>
 	<classpathentry kind="lib" path="lib/jadex_tools.jar"/>
 	<classpathentry kind="lib" path="lib/janino.jar"/>
 	<classpathentry kind="lib" path="lib/jhall.jar"/>
