@@ -36,18 +36,23 @@
 	<events>
 		<messageevent name="register" type="fipa" direction="send">
 			<parameter name="performative" class="String">
-				<value>SFipa.REQUEST</value>
-			</parameter>
-			<parameter name="content" class="String">
-				<value>"register"</value>
+				<value>SFipa.SUBSCRIBE</value>
 			</parameter>
 		</messageevent>
 		<messageevent name="auction_state" type="fipa" direction="receive">
 			<parameter name="performative" class="String">
-				<value>SFipa.INFORM</value>
+				<value>SFipa.CFP</value>
 			</parameter>
 			<parameter name="content-start" class="String" direction="fixed">
 				<value>"auction_state"</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="bid" type="fipa" direction="send">
+			<parameter name="performative" class="String">
+				<value>SFipa.REQUEST</value>
+			</parameter>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"bid"</value>
 			</parameter>
 		</messageevent>
 	</events>

@@ -35,6 +35,7 @@ public class SubscribeToAuctionSite extends Plan {
 			getLogger().info("znalezione serwisy: " +
 					Arrays.toString(serviceproviders));
 			IMessageEvent me = createMessageEvent("register");
+			me.setContent(getAgentName());
 			for (AgentIdentifier auctionSite : serviceproviders) {
 				me.getParameterSet(SFipa.RECEIVERS).addValue(auctionSite);
 			}
