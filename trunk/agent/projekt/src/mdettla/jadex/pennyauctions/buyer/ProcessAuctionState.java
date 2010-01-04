@@ -1,4 +1,4 @@
-package mdettla.jadex.pennyauctions;
+package mdettla.jadex.pennyauctions.buyer;
 
 import jadex.runtime.Plan;
 

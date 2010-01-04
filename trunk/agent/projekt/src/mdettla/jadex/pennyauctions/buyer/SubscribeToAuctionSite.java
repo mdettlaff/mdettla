@@ -1,4 +1,4 @@
-package mdettla.jadex.pennyauctions;
+package mdettla.jadex.pennyauctions.buyer;
 
 import jadex.adapter.fipa.AgentDescription;
 import jadex.adapter.fipa.AgentIdentifier;
