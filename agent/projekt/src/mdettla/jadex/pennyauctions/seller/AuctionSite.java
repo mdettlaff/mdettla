@@ -1,4 +1,4 @@
-package mdettla.jadex.pennyauctions;
+package mdettla.jadex.pennyauctions.seller;
 
 import jade.core.AID;
 import jade.core.Agent;
@@ -17,6 +17,7 @@ public class AuctionSite extends Agent {
 	private static final long serialVersionUID = 1L;
 
 	private List<AID> subscribers = new ArrayList<AID>();
+	private int netProfit = 0;
 
 	@SuppressWarnings("serial")
 	@Override
@@ -49,7 +50,16 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForNewRegistrations);
 
-		Behaviour broadcastAuctionState = new TickerBehaviour(this, 1000) {
+		startAuction(ProductsDatabase.getProducts().get(0), 100, 10);
+	}
+
+	@SuppressWarnings("serial")
+	private void startAuction(
+			final Product product, final int initialPrice, final int timeLeft) {
+
+		Behaviour runAuction = new TickerBehaviour(this, 1000) {
+			private PennyAuction auction =
+				new PennyAuction(product, initialPrice, timeLeft);
 			@Override
 			public void onTick() {
 				if (subscribers != null && subscribers.size() > 0) {
@@ -61,9 +71,10 @@ public class AuctionSite extends Agent {
 					send(msg);
 					System.out.println(myAgent.getName() +
 					": wysyłam wiadomość o stanie aucji");
+					auction.setTimeLeft(auction.getTimeLeft() - 1);
 				}
 			}
 		};
-		addBehaviour(broadcastAuctionState);
+		addBehaviour(runAuction);
 	}
 }
