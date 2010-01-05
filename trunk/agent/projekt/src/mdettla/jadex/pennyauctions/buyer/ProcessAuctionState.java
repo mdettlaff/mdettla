@@ -16,9 +16,10 @@ public class ProcessAuctionState extends Plan {
 		int currentPrice = Integer.valueOf(state.split(" ")[3]);
 		int timeLeft = Integer.valueOf(state.split(" ")[4]);
 		String topBidder = state.split(" ")[5];
-		if (!topBidder.equals(getAgentName())) { // nie licytyjemy sami ze sobą
+		if (!topBidder.equals(getAgentName()) // nie licytyjemy sami ze sobą
+				&& ((Integer)getBeliefbase().getBelief("bids_left").getFact()) > 0) {
 			Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));
-			if (currentPrice < 0.8 * product.getRetailPrice()
+			if (currentPrice < 0.5 * product.getRetailPrice()
 					&& timeLeft < 3) {
 				IMessageEvent me = (IMessageEvent)initialevent;
 				StringBuffer content = new StringBuffer();

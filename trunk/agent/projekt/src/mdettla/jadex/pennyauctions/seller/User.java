@@ -4,6 +4,8 @@ import jade.core.AID;
 
 public class User {
 
+	public static final int INITIAL_BIDS = 1;
+
 	private String name;
 	private AID aid;
 	private Integer moneySpent;
@@ -13,7 +15,7 @@ public class User {
 		this.name = name;
 		this.aid = aid;
 		moneySpent = 0;
-		bidsLeft = 2;
+		bidsLeft = INITIAL_BIDS;
 	}
 
 	public String getName() {
@@ -22,6 +24,11 @@ public class User {
 
 	public AID getAID() {
 		return aid;
+	}
+
+	public void buyBids(int bidsCount) {
+		bidsLeft += bidsCount;
+		moneySpent += PennyAuction.BID_PRICE;
 	}
 
 	public Integer getMoneySpent() {

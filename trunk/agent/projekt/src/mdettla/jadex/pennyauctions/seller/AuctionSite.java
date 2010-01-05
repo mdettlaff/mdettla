@@ -36,21 +36,46 @@ public class AuctionSite extends Agent {
 			fe.printStackTrace();
 		}
 
+		Behaviour checkForNewRegistrations = new TickerBehaviour(this, 1000) {
+			@Override
+			public void onTick() {
+				MessageTemplate mt = MessageTemplate.MatchPerformative(
+						ACLMessage.SUBSCRIBE);
+				ACLMessage msg = receive(mt);
+				if (msg != null) {
+					String username = msg.getContent();
+					ACLMessage reply = msg.createReply();
+					reply.setContent("");
+					if (getUser(username) == null) {
+						subscribers.add(new User(username, msg.getSender()));
+						reply.setPerformative(ACLMessage.AGREE);
+						System.out.println(myAgent.getName() +
+						": agent zarejestrował się na stronie aukcyjnej");
+					} else {
+						reply.setPerformative(ACLMessage.REFUSE);
+					}
+					send(reply);
+				}
+			}
+		};
+		addBehaviour(checkForNewRegistrations);
+
 		Behaviour checkForBids = new TickerBehaviour(this, 100) {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
 						ACLMessage.REQUEST);
 				ACLMessage msg = receive(mt);
+				// jeśli otrzymaliśmy podbicie
 				if (msg != null && msg.getContent().startsWith("bid")) {
 					boolean isBidAccepted = true;
-					System.out.println(myAgent.getName() + ": otrzymałem bid");
+					System.out.println(myAgent.getName() + ": otrzymałem podbicie");
 					Integer auctionId = Integer.valueOf(msg.getContent().split(" ")[1]);
 					String username = msg.getContent().split(" ")[2];
 					User user = getUser(username);
 					PennyAuction auction = getAuction(auctionId);
 					if (user != null && auction != null
-							&& user.getBidsLeft() > 0) {
+							&& user.getBidsLeft() > 0 && auction.isActive()) {
 						auction.makeBid(user);
 						user.setBidsLeft(user.getBidsLeft() - 1);
 						isBidAccepted = true;
@@ -60,34 +85,31 @@ public class AuctionSite extends Agent {
 
 					// wysyłamy potwierdzenie (lub odrzucenie propozycji)
 					ACLMessage reply = msg.createReply();
+					reply.setContent(auction.getId().toString());
 					if (isBidAccepted) {
 						reply.setPerformative(ACLMessage.CONFIRM);
+						reply.setContent("confirm_bid");
 					} else {
 						reply.setPerformative(ACLMessage.DISCONFIRM);
 					}
-//					send(reply);
+					send(reply);
+				} else if (msg != null && msg.getContent().startsWith("buy_bids")) {
+					// jeśli otrzymaliśmy prośbę o zakup podbić
+					System.out.println(myAgent.getName() + ": otrzymałem prośbę o kupno podbić");
+					Integer bidsCount = Integer.valueOf(msg.getContent().split(" ")[1]);
+					String username = msg.getContent().split(" ")[2];
+					User user = getUser(username);
+					if (user != null && bidsCount > 0) {
+						user.buyBids(bidsCount);
+						System.out.println(myAgent.getName() +
+						": dodałem podbicia użytkownikowi");
+					}
 				}
 			}
 		};
 		addBehaviour(checkForBids);
 
-		Behaviour checkForNewRegistrations = new TickerBehaviour(this, 1000) {
-			@Override
-			public void onTick() {
-				MessageTemplate mt = MessageTemplate.MatchPerformative(
-						ACLMessage.SUBSCRIBE);
-				ACLMessage msg = receive(mt);
-				if (msg != null) {
-					String username = msg.getContent();
-					subscribers.add(new User(username, msg.getSender()));
-					System.out.println(myAgent.getName() +
-							": agent zarejestrował się na stronie aukcyjnej");
-				}
-			}
-		};
-		addBehaviour(checkForNewRegistrations);
-
-		startAuction(ProductsDatabase.getProduct(1), 100, 5);
+		startAuction(ProductsDatabase.getProduct(1), 11995, 5);
 	}
 
 	@SuppressWarnings("serial")
@@ -122,7 +144,7 @@ public class AuctionSite extends Agent {
 					msg.setContent(content.toString());
 					send(msg);
 					System.out.println(myAgent.getName() +
-					": wysyłam wiadomość o stanie aucji");
+					": wysyłam wiadomość o stanie aukcji");
 					auction.setTimeLeft(auction.getTimeLeft() - 1);
 					if (auction.getTimeLeft() < 0) {
 						auction.setActive(false);

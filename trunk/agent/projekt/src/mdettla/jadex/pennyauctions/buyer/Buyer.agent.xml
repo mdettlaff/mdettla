@@ -12,15 +12,49 @@
 		<capability name="dfcap" file="jadex.planlib.DF" />
 	</capabilities>
 
+	<beliefs>
+		<belief name="is_registered" class="Boolean">
+			<fact>false</fact>
+		</belief>
+		<belief name="auction_site" class="AgentIdentifier" />
+		<belief name="bids_left" class="Integer"
+			description="Ilość podbić do wykorzystania">
+			<fact>1</fact>
+		</belief>
+	</beliefs>
+
 	<goals>
 		<achievegoalref name="df_search">
 			<concrete ref="dfcap.df_search" />
 		</achievegoalref>
+		<maintaingoal name="have_bids">
+			<contextcondition>
+				$beliefbase.is_registered
+			</contextcondition>
+			<maintaincondition>
+				$beliefbase.bids_left &gt;= 4
+			</maintaincondition>
+		</maintaingoal>
 	</goals>
 
 	<plans>
 		<plan name="subscribe_to_auction_site">
 			<body>new SubscribeToAuctionSite()</body>
+		</plan>
+		<plan name="accept_registration">
+			<body>new AcceptRegistration()</body>
+			<trigger>
+				<messageevent ref="registration_accepted" />
+			</trigger>
+		</plan>
+		<plan name="buy_more_bids">
+			<body>new BuyMoreBids()</body>
+			<trigger>
+				<goal ref="have_bids" />
+			</trigger>
+			<precondition>
+				$beliefbase.is_registered
+			</precondition>
 		</plan>
 		<plan name="process_auction_state">
 			<parameter name="state" class="String">
@@ -31,12 +65,34 @@
 				<messageevent ref="auction_state" />
 			</trigger>
 		</plan>
+		<plan name="receive_bid_confirmation">
+			<body>new ReceiveBidConfirmation()</body>
+			<trigger>
+				<messageevent ref="bid_confirmation" />
+			</trigger>
+		</plan>
 	</plans>
 
 	<events>
 		<messageevent name="register" type="fipa" direction="send">
 			<parameter name="performative" class="String">
 				<value>SFipa.SUBSCRIBE</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="registration_accepted" type="fipa" direction="receive">
+			<parameter name="performative" class="String">
+				<value>SFipa.AGREE</value>
+			</parameter>
+			<parameter name="content" class="String" direction="fixed">
+				<value>""</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="buy_bids" type="fipa" direction="send">
+			<parameter name="performative" class="String">
+				<value>SFipa.REQUEST</value>
+			</parameter>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"buy_bids"</value>
 			</parameter>
 		</messageevent>
 		<messageevent name="auction_state" type="fipa" direction="receive">
@@ -55,6 +111,14 @@
 				<value>"bid"</value>
 			</parameter>
 		</messageevent>
+		<messageevent name="bid_confirmation" type="fipa" direction="receive">
+			<parameter name="performative" class="String">
+				<value>SFipa.CONFIRM</value>
+			</parameter>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"confirm_bid"</value>
+			</parameter>
+		</messageevent>
 	</events>
 
 	<properties>
@@ -64,6 +128,9 @@
 
 	<configurations>
 		<configuration name="default">
+			<goals>
+				<initialgoal ref="have_bids" />
+			</goals>
 			<plans>
 				<initialplan ref="subscribe_to_auction_site" />
 			</plans>
