@@ -21,6 +21,7 @@
 			description="Ilość podbić do wykorzystania">
 			<fact>1</fact>
 		</belief>
+		<belief name="money" class="Integer" exported="true" />
 	</beliefs>
 
 	<goals>
@@ -29,7 +30,7 @@
 		</achievegoalref>
 		<maintaingoal name="have_bids">
 			<contextcondition>
-				$beliefbase.is_registered
+				$beliefbase.is_registered &amp;&amp; $beliefbase.money &gt; 100
 			</contextcondition>
 			<maintaincondition>
 				$beliefbase.bids_left &gt;= 4
@@ -53,22 +54,31 @@
 				<goal ref="have_bids" />
 			</trigger>
 			<precondition>
-				$beliefbase.is_registered
+				$beliefbase.is_registered &amp;&amp; $beliefbase.money &gt; 100
 			</precondition>
 		</plan>
 		<plan name="process_auction_state">
 			<parameter name="state" class="String">
-				<messageeventmapping ref="auction_state.content" />
+				<messageeventmapping ref="auction_running.content" />
 			</parameter>
 			<body>new ProcessAuctionState()</body>
 			<trigger>
-				<messageevent ref="auction_state" />
+				<messageevent ref="auction_running" />
 			</trigger>
 		</plan>
 		<plan name="receive_bid_confirmation">
 			<body>new ReceiveBidConfirmation()</body>
 			<trigger>
 				<messageevent ref="bid_confirmation" />
+			</trigger>
+		</plan>
+		<plan name="handle_auction_end">
+			<parameter name="state" class="String">
+				<messageeventmapping ref="auction_end.content" />
+			</parameter>
+			<body>new HandleAuctionEnd()</body>
+			<trigger>
+				<messageevent ref="auction_end" />
 			</trigger>
 		</plan>
 	</plans>
@@ -95,12 +105,12 @@
 				<value>"buy_bids"</value>
 			</parameter>
 		</messageevent>
-		<messageevent name="auction_state" type="fipa" direction="receive">
+		<messageevent name="auction_running" type="fipa" direction="receive">
 			<parameter name="performative" class="String">
 				<value>SFipa.CFP</value>
 			</parameter>
 			<parameter name="content-start" class="String" direction="fixed">
-				<value>"auction_state"</value>
+				<value>"auction_running"</value>
 			</parameter>
 		</messageevent>
 		<messageevent name="bid" type="fipa" direction="send">
@@ -117,6 +127,14 @@
 			</parameter>
 			<parameter name="content-start" class="String" direction="fixed">
 				<value>"confirm_bid"</value>
+			</parameter>
+		</messageevent>
+		<messageevent name="auction_end" type="fipa" direction="receive">
+			<parameter name="performative" class="String">
+				<value>SFipa.INFORM</value>
+			</parameter>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"auction_end"</value>
 			</parameter>
 		</messageevent>
 	</events>

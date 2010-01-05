@@ -14,8 +14,8 @@ public class ProcessAuctionState extends Plan {
 		String auctionId = state.split(" ")[1];
 		String productId = state.split(" ")[2];
 		int currentPrice = Integer.valueOf(state.split(" ")[3]);
-		int timeLeft = Integer.valueOf(state.split(" ")[4]);
-		String topBidder = state.split(" ")[5];
+		String topBidder = state.split(" ")[4];
+		int timeLeft = Integer.valueOf(state.split(" ")[5]);
 		if (!topBidder.equals(getAgentName()) // nie licytyjemy sami ze sobą
 				&& ((Integer)getBeliefbase().getBelief("bids_left").getFact()) > 0) {
 			Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));

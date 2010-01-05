@@ -39,6 +39,10 @@ public class User {
 		this.moneySpent = moneySpent;
 	}
 
+	public void addMoneySpent(Integer moneySpent) {
+		this.moneySpent += moneySpent;
+	}
+
 	public Integer getBidsLeft() {
 		return bidsLeft;
 	}
