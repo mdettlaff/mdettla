@@ -25,12 +25,15 @@ then
 else
   if [ $# -eq 0 ]
   then
-    javac -cp $libs -d bin src/mdettla/jadex/pennyauctions/buyer/*.java \
-    src/mdettla/jadex/pennyauctions/seller/*.java
+    javac -cp $libs -d bin \
+    src/mdettla/jadex/pennyauctions/buyer/*.java \
+    src/mdettla/jadex/pennyauctions/seller/*.java \
+    src/mdettla/jadex/pennyauctions/util/*.java
     cp src/mdettla/jadex/pennyauctions/buyer/*.xml bin/mdettla/jadex/pennyauctions/buyer
   else
     java -cp .:bin:$libs jadex.adapter.jade.tools.Starter -nogui \
     auction_site:mdettla.jadex.pennyauctions.seller.AuctionSite\(\) \
-    buyer1:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer default\)
+    buyer1:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer default\) \
+    buyer2:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer default\)
   fi
 fi

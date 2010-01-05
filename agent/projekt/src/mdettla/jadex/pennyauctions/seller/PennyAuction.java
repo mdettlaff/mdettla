@@ -12,6 +12,10 @@ public class PennyAuction {
 	 * O ile groszy zwiększa cenę jedno podbicie.
 	 */
 	public static final int PRICE_UP_PER_BID = 1;
+	/**
+	 * Cena za jedno podbicie.
+	 */
+	public static final int BID_PRICE = 50;
 
 	private static int auctionIdGenerator = 0;
 
@@ -84,7 +88,7 @@ public class PennyAuction {
 	public String toString() {
 		return "aukcja nr " + auctionId +
 		(topBidder != null ? ", wygrywający: " + topBidder : ", brak wygrywającego") +
-		"\n" + "osiągnięta cena " + Utils.formatPrice(currentPrice) + " zł," +
+		"\n" + "osiągnięta cena " + Utils.formatPrice(currentPrice) + " zł, " +
 		"towar: " + product;
 	}
 }
