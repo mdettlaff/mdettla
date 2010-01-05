@@ -101,6 +101,7 @@ public class AuctionSite extends Agent {
 					User user = getUser(username);
 					if (user != null && bidsCount > 0) {
 						user.buyBids(bidsCount);
+						netProfit += PennyAuction.BID_PRICE;
 						System.out.println(myAgent.getName() +
 						": dodałem podbicia użytkownikowi");
 					}
@@ -109,7 +110,7 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForBids);
 
-		startAuction(ProductsDatabase.getProduct(1), 11995, 5);
+		startAuction(ProductsDatabase.getProduct(1), 11990, 5);
 	}
 
 	@SuppressWarnings("serial")
@@ -129,27 +130,44 @@ public class AuctionSite extends Agent {
 						msg.addReceiver(subscriber.getAID());
 					}
 					StringBuffer content = new StringBuffer();
-					content.append("auction_state");
-					content.append(" " + auction.getId());
-					content.append(" " + auction.getProduct().getId());
-					content.append(" " + auction.getCurrentPrice());
-					content.append(" " + auction.getTimeLeft());
 					String topBidder;
 					if (auction.getTopBidder() != null) {
 						topBidder = auction.getTopBidder().getName();
 					} else {
 						topBidder = "none";
 					}
-					content.append(" " + topBidder);
+					if (auction.getTimeLeft() > 0) {
+						// informacja o trwaniu aukcji
+						content.append("auction_running");
+						content.append(" " + auction.getId());
+						content.append(" " + auction.getProduct().getId());
+						content.append(" " + auction.getCurrentPrice());
+						content.append(" " + topBidder);
+						content.append(" " + auction.getTimeLeft());
+					} else {
+						// informacja o zakończeniu aukcji
+						auction.setActive(false);
+						msg.setPerformative(ACLMessage.INFORM);
+						content.append("auction_end");
+						content.append(" " + auction.getId());
+						content.append(" " + auction.getProduct().getId());
+						content.append(" " + auction.getCurrentPrice());
+						content.append(" " + topBidder);
+						if (auction.getTopBidder() != null) {
+							auction.getTopBidder().addMoneySpent(
+									auction.getCurrentPrice());
+							netProfit +=
+								auction.getCurrentPrice() -
+								auction.getProduct().getRetailPrice();
+						}
+						System.out.println("Koniec aukcji: " + auction);
+						System.out.println("SUMARYCZNY ZYSK: " + netProfit);
+					}
 					msg.setContent(content.toString());
 					send(msg);
 					System.out.println(myAgent.getName() +
-					": wysyłam wiadomość o stanie aukcji");
+							": wysyłam wiadomość o stanie aukcji");
 					auction.setTimeLeft(auction.getTimeLeft() - 1);
-					if (auction.getTimeLeft() < 0) {
-						auction.setActive(false);
-						System.out.println("Koniec aukcji: " + auction);
-					}
 				}
 			}
 		};

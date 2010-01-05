@@ -1,5 +1,6 @@
 package mdettla.jadex.pennyauctions.buyer;
 
+import mdettla.jadex.pennyauctions.seller.PennyAuction;
 import jadex.adapter.fipa.AgentIdentifier;
 import jadex.adapter.fipa.SFipa;
 import jadex.runtime.IMessageEvent;
@@ -8,7 +9,7 @@ import jadex.runtime.Plan;
 public class BuyMoreBids extends Plan {
 	private static final long serialVersionUID = 1L;
 
-	private static final int BIDS_TO_BUY = 5;
+	private static final int BIDS_TO_BUY = 3;
 
 	@Override
 	public void body() {
@@ -22,6 +23,9 @@ public class BuyMoreBids extends Plan {
 			me.setContent(content.toString());
 			me.getParameterSet(SFipa.RECEIVERS).addValue(serviceprovider);
 			sendMessage(me);
+			int money = (Integer)getBeliefbase().getBelief("money").getFact();
+			getBeliefbase().getBelief("money").setFact(
+					money - BIDS_TO_BUY * PennyAuction.BID_PRICE);
 			getBeliefbase().getBelief("bids_left").setFact(
 					((Integer)getBeliefbase().getBelief("bids_left").getFact()) +
 					BIDS_TO_BUY);
