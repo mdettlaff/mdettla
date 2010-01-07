@@ -49,7 +49,11 @@ public class TranslateOnline extends Plan {
 //						gword = gword.replaceAll("</td><td.*", "");
 //						gword = gword.trim();
 						String gword = getDictionary().get(eword);
-						getLogger().info(eword + " -> " + gword);
+						if (gword != null) {
+							getLogger().info(eword + " -> " + gword);
+						} else {
+							getLogger().info("Brak tłumaczenia dla słowa " + eword);
+						}
 //					} catch (Exception e) {
 //						e.printStackTrace();
 //					}
