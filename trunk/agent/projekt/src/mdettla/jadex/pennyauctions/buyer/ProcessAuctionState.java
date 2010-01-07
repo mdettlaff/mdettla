@@ -1,5 +1,7 @@
 package mdettla.jadex.pennyauctions.buyer;
 
+import java.util.Random;
+
 import mdettla.jadex.pennyauctions.seller.Product;
 import mdettla.jadex.pennyauctions.seller.ProductsDatabase;
 import jadex.runtime.IMessageEvent;
@@ -16,21 +18,35 @@ public class ProcessAuctionState extends Plan {
 		int currentPrice = Integer.valueOf(state.split(" ")[3]);
 		String topBidder = state.split(" ")[4];
 		int timeLeft = Integer.valueOf(state.split(" ")[5]);
-		if (!topBidder.equals(getAgentName()) // nie licytyjemy sami ze sobą
-				&& ((Integer)getBeliefbase().getBelief("bids_left").getFact()) > 0) {
-			Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));
-			if (currentPrice < 0.5 * product.getRetailPrice()
-					&& timeLeft < 3) {
-				IMessageEvent me = (IMessageEvent)initialevent;
-				StringBuffer content = new StringBuffer();
-				content.append("bid");
-				content.append(" " + auctionId);
-				content.append(" " + getAgentName());
-				IMessageEvent bid = me.createReply("bid");
-				bid.setContent(content.toString());
-				sendMessage(bid);
-				getLogger().info("podbijam aukcję: " + auctionId);
-			}
+		Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));
+		boolean makeBid = true;
+		if (topBidder.equals(getAgentName())) { // nie licytyjemy sami ze sobą
+			makeBid = false;
+		}
+		if (((Integer)getBeliefbase().getBelief("bids_left").getFact()) <= 0) {
+			makeBid = false;
+		}
+		int max_price_proc = (Integer)getBeliefbase().getBelief("max_price_proc").getFact();
+		if (currentPrice >= (max_price_proc / 100.0) * product.getRetailPrice()) {
+			makeBid = false;
+		}
+		int bidWhenTimeLeft = (Integer)getBeliefbase().getBelief("bid_when_time_left").getFact();
+		if (bidWhenTimeLeft < 0) {
+			bidWhenTimeLeft = new Random().nextInt(10) + 1;
+		}
+		if (timeLeft > bidWhenTimeLeft) {
+			makeBid = false;
+		}
+		if (makeBid) {
+			IMessageEvent me = (IMessageEvent)initialevent;
+			StringBuffer content = new StringBuffer();
+			content.append("bid");
+			content.append(" " + auctionId);
+			content.append(" " + getAgentName());
+			IMessageEvent bid = me.createReply("bid");
+			bid.setContent(content.toString());
+			sendMessage(bid);
+			getLogger().info("podbijam aukcję: " + auctionId);
 		}
 	}
 }

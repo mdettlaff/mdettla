@@ -17,11 +17,18 @@
 			<fact>false</fact>
 		</belief>
 		<belief name="auction_site" class="AgentIdentifier" />
-		<belief name="bids_left" class="Integer"
-			description="Ilość podbić do wykorzystania">
+		<!-- Ilość podbić do wykorzystania. -->
+		<belief name="bids_left" class="Integer">
 			<fact>1</fact>
 		</belief>
+
 		<belief name="money" class="Integer" exported="true" />
+		<!-- Maksymalna cena jaką agent może zapłacić za przedmiot (jako
+		     procent ceny detalicznej). -->
+		<belief name="max_price_proc" class="Integer" exported="true" />
+		<!-- Agent licytuje, kiedy pozostały czas aukcji osiągnie podany
+		     poziom. Jeśli -1, brana jest losowa wartość między 1 a 10. -->
+		<belief name="bid_when_time_left" class="Integer" exported="true" />
 	</beliefs>
 
 	<goals>
