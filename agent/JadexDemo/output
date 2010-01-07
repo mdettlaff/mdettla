@@ -1,0 +1,46 @@
+2010-01-07 21:48:17 jade.core.Runtime beginContainer
+INFO: ----------------------------------
+    This is JADE 3.4.1 - revision 5912 of 2006/11/16 13:09:18
+    downloaded in Open Source, under LGPL restrictions,
+    at http://jade.tilab.com/
+----------------------------------------
+2010-01-07 21:48:17 jade.core.BaseService init
+INFO: Service jade.core.management.AgentManagement initialized
+2010-01-07 21:48:17 jade.core.BaseService init
+INFO: Service jade.core.messaging.Messaging initialized
+2010-01-07 21:48:17 jade.core.BaseService init
+INFO: Service jade.core.mobility.AgentMobility initialized
+2010-01-07 21:48:17 jade.core.BaseService init
+INFO: Service jade.core.event.Notification initialized
+2010-01-07 21:48:17 jade.mtp.http.HTTPServer <init>
+INFO: HTTP-MTP Using XML parser org.apache.crimson.parser.XMLReaderImpl
+2010-01-07 21:48:17 jade.core.messaging.MessagingService boot
+INFO: MTP addresses:
+http://mdettla-desktop:7778/acc
+2010-01-07 21:48:17 jade.core.AgentContainerImpl joinPlatform
+INFO: --------------------------------------
+Agent container Main-Container@JADE-IMTP://mdettla-desktop is ready.
+--------------------------------------------
+
+    This is Jadex 0.96 - 2007/06/15
+    Using configuration: jar:file:/home/mdettla/workspace/JadexDemo/lib/jadex_jadeadapter.jar!/jadex.properties
+
+translation_client@mdettla-desktop:1099/JADE: wysyłam zapytanie o tłumaczenie: dog
+2010-01-07 21:48:10 pl.edu.agh.jadex.Translate body
+INFO: dog -> Hund
+2010-01-07 21:48:10 pl.edu.agh.jadex.Translate body
+INFO: Rozmiar słownika: 5
+translation_client@mdettla-desktop:1099/JADE: wysyłam zapytanie o tłumaczenie: cat
+2010-01-07 21:48:10 pl.edu.agh.jadex.TranslateOnline body
+INFO: cat -> Katze {f} [zool.] | Katzen {pl}
+translation_client@mdettla-desktop:1099/JADE: wysyłam zapytanie o dodanie słowa do słownika cat Katze
+2010-01-07 21:48:11 pl.edu.agh.jadex.AddWordToDictionary body
+INFO: dodano słowo do słownika: cat Katze
+translation_client@mdettla-desktop:1099/JADE: wysyłam zapytanie o tłumaczenie: cat
+2010-01-07 21:48:11 pl.edu.agh.jadex.Translate body
+INFO: cat -> Katze
+2010-01-07 21:48:11 pl.edu.agh.jadex.Translate body
+INFO: Rozmiar słownika: 5
+translation_client@mdettla-desktop:1099/JADE: wysyłam zapytanie o tłumaczenie: dog
+2010-01-07 21:48:12 pl.edu.agh.jadex.TranslateOnline body
+INFO: dog -> Hund {m}
