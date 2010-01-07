@@ -13,12 +13,15 @@ import jade.lang.acl.MessageTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import mdettla.jadex.pennyauctions.util.Utils;
+
 public class AuctionSite extends Agent {
 	private static final long serialVersionUID = 1L;
 
 	private List<User> subscribers = new ArrayList<User>();
 	private List<PennyAuction> auctions = new ArrayList<PennyAuction>();
-	private int netProfit = 0;
+	private int netOutcomings = 0;
+	private int netIncomings = 0;
 
 	@SuppressWarnings("serial")
 	@Override
@@ -101,7 +104,7 @@ public class AuctionSite extends Agent {
 					User user = getUser(username);
 					if (user != null && bidsCount > 0) {
 						user.buyBids(bidsCount);
-						netProfit += PennyAuction.BID_PRICE;
+						netIncomings += PennyAuction.BID_PRICE;
 						System.out.println(myAgent.getName() +
 						": dodałem podbicia użytkownikowi");
 					}
@@ -156,12 +159,17 @@ public class AuctionSite extends Agent {
 						if (auction.getTopBidder() != null) {
 							auction.getTopBidder().addMoneySpent(
 									auction.getCurrentPrice());
-							netProfit +=
-								auction.getCurrentPrice() -
-								auction.getProduct().getRetailPrice();
+							netIncomings += auction.getCurrentPrice();
+							netOutcomings += auction.getProduct().getRetailPrice();
 						}
 						System.out.println("Koniec aukcji: " + auction);
-						System.out.println("SUMARYCZNY ZYSK: " + netProfit);
+						System.out.println("PRZYCHODY: " +
+								Utils.formatPrice(netIncomings) + " zł");
+						System.out.println("WYDATKI: " +
+								Utils.formatPrice(netOutcomings) + " zł");
+						System.out.println("SUMARYCZNY ZYSK: " +
+								Utils.formatPrice(netIncomings - netOutcomings) +
+								" zł");
 					}
 					msg.setContent(content.toString());
 					send(msg);
