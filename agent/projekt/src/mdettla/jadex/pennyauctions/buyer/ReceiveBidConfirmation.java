@@ -7,7 +7,10 @@ public class ReceiveBidConfirmation extends Plan {
 
 	@Override
 	public void body() {
-		getBeliefbase().getBelief("bids_left").setFact(
-				(Integer)getBeliefbase().getBelief("bids_left").getFact() - 1);
+		int bidsLeft = (Integer)getBeliefbase().getBelief("bids_left").getFact();
+		getBeliefbase().getBelief("bids_left").setFact(bidsLeft - 1);
+		int bidsSpent = ((Integer)getBeliefbase().getBelief("bids_spent").getFact());
+		getBeliefbase().getBelief("bids_spent").setFact(
+				bidsSpent + 1);
 	}
 }

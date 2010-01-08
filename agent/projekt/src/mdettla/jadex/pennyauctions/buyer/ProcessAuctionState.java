@@ -37,6 +37,10 @@ public class ProcessAuctionState extends Plan {
 		if (timeLeft > bidWhenTimeLeft) {
 			makeBid = false;
 		}
+		if ((Integer)getBeliefbase().getBelief("bids_spent").getFact()
+				>= (Integer)getBeliefbase().getBelief("max_bids_per_auction").getFact()) {
+			makeBid = false;
+		}
 		if (makeBid) {
 			IMessageEvent me = (IMessageEvent)initialevent;
 			StringBuffer content = new StringBuffer();
