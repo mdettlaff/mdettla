@@ -39,7 +39,7 @@ public class AuctionSite extends Agent {
 			fe.printStackTrace();
 		}
 
-		Behaviour checkForNewRegistrations = new TickerBehaviour(this, 1000) {
+		Behaviour checkForNewRegistrations = new TickerBehaviour(this, 500) {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
@@ -63,7 +63,7 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForNewRegistrations);
 
-		Behaviour checkForBids = new TickerBehaviour(this, 100) {
+		Behaviour checkForBids = new TickerBehaviour(this, 50) {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
@@ -99,12 +99,13 @@ public class AuctionSite extends Agent {
 				} else if (msg != null && msg.getContent().startsWith("buy_bids")) {
 					// jeśli otrzymaliśmy prośbę o zakup podbić
 					System.out.println(myAgent.getName() + ": otrzymałem prośbę o kupno podbić");
-					Integer bidsCount = Integer.valueOf(msg.getContent().split(" ")[1]);
+					Integer bidPackagesCount = Integer.valueOf(msg.getContent().split(" ")[1]);
 					String username = msg.getContent().split(" ")[2];
 					User user = getUser(username);
-					if (user != null && bidsCount > 0) {
-						user.buyBids(bidsCount);
-						netIncomings += PennyAuction.BID_PRICE;
+					if (user != null && bidPackagesCount > 0) {
+						user.buyBids(bidPackagesCount);
+						netIncomings += bidPackagesCount * PennyAuction.BID_PRICE *
+								PennyAuction.BIDS_IN_PACKAGE;
 						System.out.println(myAgent.getName() +
 						": dodałem podbicia użytkownikowi");
 					}
@@ -123,7 +124,7 @@ public class AuctionSite extends Agent {
 		final PennyAuction newAuction = new PennyAuction(product, initialPrice, timeLeft);
 		auctions.add(newAuction);
 
-		Behaviour runAuction = new TickerBehaviour(this, 1000) {
+		Behaviour runAuction = new TickerBehaviour(this, 200) {
 			private PennyAuction auction = newAuction;
 			@Override
 			public void onTick() {
@@ -174,7 +175,8 @@ public class AuctionSite extends Agent {
 					msg.setContent(content.toString());
 					send(msg);
 					System.out.println(myAgent.getName() +
-							": wysyłam wiadomość o stanie aukcji");
+							": wysyłam wiadomość o stanie aukcji " +
+							"(sekund " + auction.getTimeLeft() + ")");
 					auction.setTimeLeft(auction.getTimeLeft() - 1);
 				}
 			}

@@ -1,5 +1,6 @@
 package mdettla.jadex.pennyauctions.buyer;
 
+import mdettla.jadex.pennyauctions.util.Utils;
 import jadex.runtime.Plan;
 
 public class HandleAuctionEnd extends Plan {
@@ -15,7 +16,7 @@ public class HandleAuctionEnd extends Plan {
 			getBeliefbase().getBelief("money").setFact(money - currentPrice);
 		}
 		getLogger().info(getAgentName() + ": zostało pieniędzy: " +
-				getBeliefbase().getBelief("money").getFact());
+				Utils.formatPrice((Integer)getBeliefbase().getBelief("money").getFact()));
 		getLogger().info(getAgentName() + ": zostało podbić: " +
 				getBeliefbase().getBelief("bids_left").getFact());
 	}

@@ -6,6 +6,7 @@
 		<import>java.util.logging.*</import>
 		<import>java.util.*</import>
 		<import>jadex.adapter.fipa.*</import>
+		<import>mdettla.jadex.pennyauction.seller.*</import>
 	</imports>
 
 	<capabilities>
@@ -21,6 +22,9 @@
 		<belief name="bids_left" class="Integer">
 			<fact>1</fact>
 		</belief>
+		<belief name="bids_spent" class="Integer">
+			<fact>0</fact>
+		</belief>
 
 		<belief name="money" class="Integer" exported="true" />
 		<!-- Maksymalna cena jaką agent może zapłacić za przedmiot (jako
@@ -29,6 +33,8 @@
 		<!-- Agent licytuje, kiedy pozostały czas aukcji osiągnie podany
 		     poziom. Jeśli -1, brana jest losowa wartość między 1 a 10. -->
 		<belief name="bid_when_time_left" class="Integer" exported="true" />
+		<belief name="min_bids" class="Integer" exported="true" />
+		<belief name="max_bids_per_auction" class="Integer" exported="true" />
 	</beliefs>
 
 	<goals>
@@ -37,10 +43,11 @@
 		</achievegoalref>
 		<maintaingoal name="have_bids">
 			<contextcondition>
-				$beliefbase.is_registered &amp;&amp; $beliefbase.money &gt; 100
+				$beliefbase.is_registered &amp;&amp;
+				$beliefbase.bids_spent &lt; $beliefbase.max_bids_per_auction
 			</contextcondition>
 			<maintaincondition>
-				$beliefbase.bids_left &gt;= 4
+				$beliefbase.bids_left &gt;= $beliefbase.min_bids
 			</maintaincondition>
 		</maintaingoal>
 	</goals>
@@ -60,9 +67,6 @@
 			<trigger>
 				<goal ref="have_bids" />
 			</trigger>
-			<precondition>
-				$beliefbase.is_registered &amp;&amp; $beliefbase.money &gt; 100
-			</precondition>
 		</plan>
 		<plan name="process_auction_state">
 			<parameter name="state" class="String">

@@ -9,26 +9,27 @@ import jadex.runtime.Plan;
 public class BuyMoreBids extends Plan {
 	private static final long serialVersionUID = 1L;
 
-	private static final int BIDS_TO_BUY = 3;
+	private static final int BID_PACKAGES_TO_BUY = 1;
 
 	@Override
 	public void body() {
 		if (getBeliefbase().getBelief("auction_site").getFact() != null) {
-			AgentIdentifier serviceprovider =
+			AgentIdentifier auctionSite =
 				(AgentIdentifier)getBeliefbase().getBelief("auction_site").getFact();
 			IMessageEvent me = createMessageEvent("buy_bids");
 			StringBuffer content = new StringBuffer("buy_bids");
-			content.append(" " + BIDS_TO_BUY);
+			content.append(" " + BID_PACKAGES_TO_BUY);
 			content.append(" " + getAgentName());
 			me.setContent(content.toString());
-			me.getParameterSet(SFipa.RECEIVERS).addValue(serviceprovider);
+			me.getParameterSet(SFipa.RECEIVERS).addValue(auctionSite);
 			sendMessage(me);
 			int money = (Integer)getBeliefbase().getBelief("money").getFact();
 			getBeliefbase().getBelief("money").setFact(
-					money - BIDS_TO_BUY * PennyAuction.BID_PRICE);
+					money - PennyAuction.BID_PRICE * BID_PACKAGES_TO_BUY *
+					PennyAuction.BIDS_IN_PACKAGE);
+			int bidsLeft = ((Integer)getBeliefbase().getBelief("bids_left").getFact());
 			getBeliefbase().getBelief("bids_left").setFact(
-					((Integer)getBeliefbase().getBelief("bids_left").getFact()) +
-					BIDS_TO_BUY);
+					bidsLeft + BID_PACKAGES_TO_BUY * PennyAuction.BIDS_IN_PACKAGE);
 		}
 	}
 }

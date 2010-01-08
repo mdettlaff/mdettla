@@ -16,6 +16,7 @@ public class PennyAuction {
 	 * Cena za jedno podbicie.
 	 */
 	public static final int BID_PRICE = 50;
+	public static final int BIDS_IN_PACKAGE = 3;
 
 	private static int auctionIdGenerator = 0;
 

@@ -26,9 +26,10 @@ public class User {
 		return aid;
 	}
 
-	public void buyBids(int bidsCount) {
-		bidsLeft += bidsCount;
-		moneySpent += PennyAuction.BID_PRICE;
+	public void buyBids(int bidPackagesCount) {
+		bidsLeft += bidPackagesCount * PennyAuction.BIDS_IN_PACKAGE;
+		moneySpent += bidPackagesCount *
+				PennyAuction.BID_PRICE * PennyAuction.BIDS_IN_PACKAGE;
 	}
 
 	public Integer getMoneySpent() {
