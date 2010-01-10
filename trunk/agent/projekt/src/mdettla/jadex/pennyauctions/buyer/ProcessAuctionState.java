@@ -2,6 +2,7 @@ package mdettla.jadex.pennyauctions.buyer;
 
 import java.util.Random;
 
+import mdettla.jadex.pennyauctions.seller.PennyAuction;
 import mdettla.jadex.pennyauctions.seller.Product;
 import mdettla.jadex.pennyauctions.seller.ProductsDatabase;
 import jadex.runtime.IMessageEvent;
@@ -39,6 +40,17 @@ public class ProcessAuctionState extends Plan {
 		}
 		if ((Integer)getBeliefbase().getBelief("bids_spent").getFact()
 				>= (Integer)getBeliefbase().getBelief("max_bids_per_auction").getFact()) {
+			makeBid = false;
+		}
+		// podejmujemy "racjonalną" decyzję
+		int profitWhenAuctionLost =
+			(-1) * ((Integer)getBeliefbase().getBelief("bids_spent").getFact())
+			* PennyAuction.BID_PRICE;
+		int profitWhenAuctionWon =
+			((-1) * ((Integer)getBeliefbase().getBelief("bids_spent").getFact() + 1)
+			* PennyAuction.BID_PRICE)
+			- currentPrice + product.getRetailPrice();
+		if (profitWhenAuctionLost > profitWhenAuctionWon) {
 			makeBid = false;
 		}
 		if (makeBid) {
