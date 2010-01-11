@@ -1,5 +1,8 @@
 package mdettla.ea.zadanie2;
 
+import java.util.Arrays;
+import java.util.Collections;
+
 /**
  * Cumulative Step Adaptation.
  * http://www.informatik.uni-ulm.de/ni/Lehre/SS02/Evosem/es.java
@@ -25,14 +28,20 @@ public class EvolutionaryStrategyCSA {
 		mu = populationSize;
 	}
 
+	private void printInfo(int generation, Specimen[] population, double sigma) {
+		if (generation % 500 == 0 || generation == generationsCount) {
+			Specimen best = Collections.max(Arrays.asList(population));
+			System.out.println(
+					"Generation: " + generation + " Best Specimen: " + best +
+					String.format(" sigma: %.5f", sigma));
+		}
+	}
+
 	public void runAlgorithm() {
 		/** our source of random numbers */
 		java.util.Random rnd = new java.util.Random();
 		/** the population */
 		Specimen[] pop = new Specimen[mu];
-		/** the best Specimen found so far */
-		Specimen best = new Specimen(varsCount);
-		best.fitness = Double.MAX_VALUE;
 
 		double sigma = 3.0;
 		double chi_n = Math.sqrt(varsCount)*(1 - 1.0/(4.0*varsCount) +
@@ -42,8 +51,9 @@ public class EvolutionaryStrategyCSA {
 		double mult1 = 1-c;
 		double mult2 = Math.sqrt(c*(2-c)*mu);
 
-		double[] tt = new double[varsCount];
+		System.out.println("Strategia Ewolucyjna: Cumulative Step Adaptation");
 
+		double[] tt = new double[varsCount];
 		for (int j = 0; j < varsCount; j++) {
 			tt[j] = (rnd.nextDouble() - 0.5) * 2.0 * fitness.getArea();
 		}
@@ -54,9 +64,8 @@ public class EvolutionaryStrategyCSA {
 				pop[i].vars[j] = tt[j] + sigma*rnd.nextGaussian();
 			}
 			pop[i].fitness = fitness.fitness(pop[i]);
-			best = (best.compareTo(pop[i]) < 0) ? best : pop[i];
 		}
-		System.out.println("Best in initial population:\n" + best);
+		printInfo(0, pop, sigma);
 
 		double[] x_old = new double[varsCount];
 		double[] x_new = new double[varsCount];
@@ -124,12 +133,8 @@ public class EvolutionaryStrategyCSA {
 			if (sigma<0.0001) sigma = 0.0001;
 			else
 				if (sigma>100) sigma = 100;
-			if (best.compareTo(pop[0]) > 0) {
-				best = pop[0];
-			}
 
-			System.out.println("Generation: " + i + " Best Specimen: " + pop[0] +
-					String.format(" sigma: %.5f", sigma));
+			printInfo(i, pop, sigma);
 		}
 	}
 }

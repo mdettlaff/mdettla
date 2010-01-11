@@ -12,9 +12,9 @@ public class Specimen implements Comparable<Specimen> {
 	/** the fitness value */
 	public double fitness;
 
-	public Specimen(int numvars) {
-		vars = new double[numvars];
-		sdevs = new double[numvars];
+	public Specimen(int varsCount) {
+		vars = new double[varsCount];
+		sdevs = new double[varsCount];
 	}
 
 	/** compare this Specimen to another looking only at the fitness */
