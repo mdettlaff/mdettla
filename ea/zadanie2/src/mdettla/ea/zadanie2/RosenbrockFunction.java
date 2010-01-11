@@ -7,13 +7,13 @@ package mdettla.ea.zadanie2;
 public class RosenbrockFunction implements FitnessFunction {
 
 	@Override
-	public double fitness(Specimen i) {
+	public double fitness(Specimen s) {
 		double fitness = 0;
-		for (int j = 1; j < i.vars.length; j++) {
-			if (Math.abs(i.vars[j]) > 2048) return Double.MAX_VALUE; // penalty
-			fitness += 100.0 * (i.vars[j] - i.vars[j-1] * i.vars[j-1])
-				* (i.vars[j] - i.vars[j-1] * i.vars[j-1])
-				+ (1 - i.vars[j-1])*(1 - i.vars[j-1]);
+		for (int i = 1; i < s.vars.length; i++) {
+			if (Math.abs(s.vars[i]) > 2048) return Double.MAX_VALUE; // penalty
+			fitness += 100.0 * (s.vars[i] - s.vars[i-1] * s.vars[i-1])
+				* (s.vars[i] - s.vars[i-1] * s.vars[i-1])
+				+ (1 - s.vars[i-1])*(1 - s.vars[i-1]);
 		}
 		return fitness;
 	}
