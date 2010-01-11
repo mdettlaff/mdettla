@@ -11,9 +11,9 @@ public class GriewangkFunction implements FitnessFunction {
 		double fitness = 0;
 		double sum = 0;
 		double prod = 1;
-        for (int i = 0; i < s.vars.length; i++) {
-            sum += s.vars[i] * s.vars[i] / 4000.0;
-            prod *= Math.cos((s.vars[i]) / Math.sqrt(i + 1));
+        for (int i = 0; i < s.getGenotypeLength(); i++) {
+            sum += s.get(i) * s.get(i) / 4000.0;
+            prod *= Math.cos(s.get(i) / Math.sqrt(i + 1));
         }
         fitness = 1.0 + sum - prod;
         return fitness;
