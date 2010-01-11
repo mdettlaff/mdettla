@@ -3,12 +3,11 @@ package mdettla.ea.zadanie2;
 public class CompareAlgorithms {
 
 	public static void main(String[] args) {
-		int generationsCount = 1000;
+		int generationsCount = 1500;
 		int populationSize = 15;
+		int varsCount = 30;
 
-		EvolutionaryStrategyCSA csa = new EvolutionaryStrategyCSA(
-				new CircleFunction(), 20,
-				generationsCount, populationSize);
-		csa.runAlgorithm();
+		new EvolutionaryStrategyCSA(new GriewangkFunction(), varsCount,
+				generationsCount, populationSize).runAlgorithm();
 	}
 }
