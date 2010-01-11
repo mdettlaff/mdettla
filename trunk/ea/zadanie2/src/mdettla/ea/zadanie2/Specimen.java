@@ -18,11 +18,11 @@ public class Specimen implements Comparable<Specimen> {
 	}
 
 	/** compare this Specimen to another looking only at the fitness */
-	public int compareTo(Specimen i) {
-		if (this.fitness == i.fitness) {
+	public int compareTo(Specimen specimen) {
+		if (this.fitness == specimen.fitness) {
 			return 0;
 		} else {
-			return (this.fitness < i.fitness) ? -1 : 1;
+			return (this.fitness < specimen.fitness) ? -1 : 1;
 		}
 	}
 
