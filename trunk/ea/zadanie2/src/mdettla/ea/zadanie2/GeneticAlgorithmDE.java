@@ -1,7 +1,6 @@
 package mdettla.ea.zadanie2;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -21,7 +20,7 @@ public class GeneticAlgorithmDE {
 	/** number of decision variables */
 	private final int varsCount;
 
-	private FitnessFunction fitness;
+	private final FitnessFunction fitness;
 
 	public GeneticAlgorithmDE(FitnessFunction fitness,
 			int varsCount, int generationsCount, int populationSize) {
@@ -31,90 +30,66 @@ public class GeneticAlgorithmDE {
 		mu = populationSize;
 	}
 
-	public synchronized static Integer[] range(Integer n) {
-		Integer[] range = new Integer[n];
-		for (Integer i = 0; i < n; i++) {
-			range[i] = i;
-		}
-		return range;
-	}
-
-	private static <T> List<T> randomSample(T[] population, int k) {
-		Random random = new Random();
-		List<Integer> indexes = new ArrayList<Integer>(population.length);
-		for (int i = 0; i < population.length; i++) {
-			indexes.add(i);
-		}
-		List<T> sample = new ArrayList<T>();
-		for (int i = 0; i < k; i++) {
-			Integer index = indexes.get(random.nextInt(indexes.size()));
-			indexes.remove(index);
-			sample.add(population[index]);
-		}
-		return sample;
-	}
-
-	private void printInfo(int generation, Specimen[] population) {
+	private void printInfo(int generation, List<Specimen> population) {
 		if (generation % 1000 == 0 || generation == generationsCount) {
-			Specimen best = Collections.max(Arrays.asList(population));
+			Specimen best = Collections.max(population);
 			System.out.println(
 					"Generation: " + generation + " Best Specimen: " + best);
 		}
 	}
 
+	private List<Specimen> generateRandomPopulation() {
+		Random random = new Random();
+		List<Specimen> population = new ArrayList<Specimen>(mu);
+		double sigma = 3.0;
+		for (int i = 0; i < mu; i++) {
+			Specimen newSpecimen = new Specimen(fitness, varsCount);
+			for (int j = 0; j < varsCount; j++) {
+				double tt = (random.nextDouble() - 0.5) * 2.0 * fitness.getArea();
+				newSpecimen.set(j, tt + sigma * random.nextGaussian());
+			}
+			population.add(newSpecimen);
+		}
+		return population;
+	}
+
 	public void runAlgorithm() {
-		java.util.Random random = new java.util.Random();
-		/** the population */
-		Specimen[] pop = new Specimen[mu];
+		List<Specimen> population;
 
 		System.out.println("Algorytm Genetyczny: Differential Evolution");
 
-		// generate the intial population and calculate fitness
-		double sigma = 3.0;
-		double[] tt = new double[varsCount];
-		for (int j = 0; j < varsCount; j++) {
-			tt[j] = (random.nextDouble() - 0.5) * 2.0 * fitness.getArea();
-		}
-		for (int i = 0; i < mu; i++) {
-			pop[i] = new Specimen(varsCount);
-			for (int j = 0; j < varsCount; j++) {
-				pop[i].vars[j] = tt[j] + sigma * random.nextGaussian();
-			}
-			pop[i].fitness = fitness.fitness(pop[i]);
-		}
+		// generate the initial population
+		population = generateRandomPopulation();
 
-		printInfo(0, pop);
+		printInfo(0, population);
 
+		Random random = new Random();
 		for (int t = 0; t < generationsCount; t++) {
-			Specimen[] newPop = new Specimen[mu];
-			Specimen[] p = new Specimen[mu];
+			List<Specimen> newPopulation = new ArrayList<Specimen>(mu);
 			for (int i = 0; i < mu; i++) {
-				p[i] = new Specimen(varsCount);
-			}
-			for (int i = 0; i < mu; i++) {
-				List<Integer> sample = randomSample(range(mu), 3);
-				int r = sample.get(0);
-				int u = sample.get(1);
-				int v = sample.get(2);
+				List<Specimen> sample = Utils.randomSample(population, 3);
+				Specimen r = sample.get(0);
+				Specimen u = sample.get(1);
+				Specimen v = sample.get(2);
 				int jRand = random.nextInt(varsCount);
+				Specimen p = new Specimen(fitness, varsCount);
 				for (int j = 0; j < varsCount; j++) {
 					if (random.nextDouble() <= CR && j == jRand) {
-						p[i].vars[j] = pop[v].vars[j]
-								+ F * (pop[r].vars[j] - pop[u].vars[j]);
+						p.set(j, v.get(j) + F * (r.get(j) - u.get(j)));
 					} else {
-						p[i].vars[j] = pop[i].vars[j];
+						p.set(j, population.get(i).get(j));
 					}
 				}
-				p[i].fitness = fitness.fitness(p[i]);
-				if (p[i].fitness <= pop[i].fitness) {
-					newPop[i] = p[i];
+				// if p[i].fitness <= pop[i].fitness
+				if (p.compareTo(population.get(i)) <= 0) {
+					newPopulation.add(p);
 				} else {
-					newPop[i] = pop[i];
+					newPopulation.add(population.get(i));
 				}
 			}
-			pop = newPop;
+			population = newPopulation;
 
-			printInfo(t + 1, pop);
+			printInfo(t + 1, population);
 		}
 	}
 }

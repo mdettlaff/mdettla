@@ -11,7 +11,7 @@ public class CompareAlgorithms {
 				20000, populationSize).runAlgorithm();
 		System.out.println();
 		new EvolutionaryStrategyCSA(new RosenbrockFunction(), varsCount,
-				10000, populationSize).runAlgorithm();
+				5000, populationSize).runAlgorithm();
 
 		System.out.println("\n\nFunkcja Griewangka\n");
 		new GeneticAlgorithmDE(new GriewangkFunction(), varsCount,

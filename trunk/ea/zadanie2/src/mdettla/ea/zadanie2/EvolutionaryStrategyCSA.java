@@ -59,11 +59,10 @@ public class EvolutionaryStrategyCSA {
 		}
 		// generate the intial population and calculate fitness
 		for (int i = 0; i < mu; i++) {
-			pop[i] = new Specimen(varsCount);
+			pop[i] = new Specimen(fitness, varsCount);
 			for (int j = 0; j < varsCount; j++) {
-				pop[i].vars[j] = tt[j] + sigma*rnd.nextGaussian();
+				pop[i].set(j, tt[j] + sigma * rnd.nextGaussian());
 			}
-			pop[i].fitness = fitness.fitness(pop[i]);
 		}
 		printInfo(0, pop, sigma);
 
@@ -71,57 +70,55 @@ public class EvolutionaryStrategyCSA {
 		double[] x_new = new double[varsCount];
 		double[] path  = new double[varsCount];
 
-		//implementacja r-nania (6.63)
+		// implementacja r-nania (6.63)
 		for (int j = 0; j < varsCount; j++) {
 			x_old[j] = 0;
-			for (int k=0; k<mu; k++) {
-				x_old[j] += pop[k].vars[j];
+			for (int k = 0; k < mu; k++) {
+				x_old[j] += pop[k].get(j);
 			}
-			x_old[j] = x_old[j]/mu;
+			x_old[j] = x_old[j] / mu;
 		} 
 
 		// the generation loop
 		for (int i = 1; i <= generationsCount; i++) {
 			/** the temporary population */
-			Specimen[] tpop = new Specimen[lambda+mu];
+			Specimen[] tpop = new Specimen[lambda + mu];
 
 			for (int j = 0; j < lambda; j++) {
 
-				Specimen child = new Specimen(varsCount);
+				Specimen child = new Specimen(fitness, varsCount);
 
-				for (int k=0; k<varsCount; k++) {
-					child.vars[k] = x_old[k] + sigma*rnd.nextGaussian();
+				for (int k = 0; k < varsCount; k++) {
+					child.set(k, x_old[k] + sigma * rnd.nextGaussian());
 				}
 				// evaluate the child
-				child.fitness = fitness.fitness(child);
 				tpop[j] = child;
 			}
 
-			for (int j=0; j<mu; j++) {
-				tpop[lambda+j]=pop[j];
+			for (int j = 0; j < mu; j++) {
+				tpop[lambda + j] = pop[j];
 			}
 
-			java.util.Arrays.sort(tpop); // sorts ascending
+			Arrays.sort(tpop); // sorts ascending
 
 			for (int j = 0; j < mu; j++) {
 				pop[j] = tpop[j];
-				//System.out.println(pop[j]);
 			}
 
-			// wyznaczenie nowej sredniej
+			// wyznaczenie nowej średniej
 			for (int j = 0; j < varsCount; j++) {
 				x_new[j] = 0;
-				for (int k=0; k<mu; k++) {
-					x_new[j] += pop[k].vars[j];
+				for (int k = 0; k < mu; k++) {
+					x_new[j] += pop[k].get(j);
 				}
-				x_new[j] = x_new[j]/mu;
+				x_new[j] = x_new[j] / mu;
 			}
 
-			// modyfikacja sciezki
+			// modyfikacja ścieżki
 			double d = 0;
 			for (int j = 0; j < varsCount; j++) {
 				path[j] = path[j]*mult1;
-				path[j]+= mult2/Math.sqrt(sigma)*(x_new[j]-x_old[j]);
+				path[j] += mult2 / Math.sqrt(sigma) * (x_new[j] - x_old[j]);
 				d = d + path[j]*path[j];
 				x_old[j] = x_new[j];
 			}
@@ -129,10 +126,12 @@ public class EvolutionaryStrategyCSA {
 			d = Math.sqrt(d);
 			d = (d-chi_n)/dump/chi_n;
 			// nowe sigma
-			sigma = sigma*Math.exp(d);
-			if (sigma<0.0001) sigma = 0.0001;
-			else
-				if (sigma>100) sigma = 100;
+			sigma = sigma * Math.exp(d);
+			if (sigma < 0.0001) {
+				sigma = 0.0001;
+			} else if (sigma > 100) {
+				sigma = 100;
+			}
 
 			printInfo(i, pop, sigma);
 		}
