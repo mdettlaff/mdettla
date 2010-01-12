@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Differential Evolution.
+ * Algorytm genetyczny Differential Evolution.
  */
-public class GeneticAlgorithmDE {
+public class DifferentialEvolutionGA implements EvolutionaryAlgorithm {
 
 	public static final double CR = 0.9;
 	public static final double F = 0.6;
@@ -22,7 +22,7 @@ public class GeneticAlgorithmDE {
 
 	private final FitnessFunction fitness;
 
-	public GeneticAlgorithmDE(FitnessFunction fitness,
+	public DifferentialEvolutionGA(FitnessFunction fitness,
 			int varsCount, int generationsCount, int populationSize) {
 		this.fitness = fitness;
 		this.varsCount = varsCount;
@@ -31,11 +31,9 @@ public class GeneticAlgorithmDE {
 	}
 
 	private void printInfo(int generation, List<Specimen> population) {
-		if (generation % 1000 == 0 || generation == generationsCount) {
-			Specimen best = Collections.max(population);
-			System.out.println(
-					"Generation: " + generation + " Best Specimen: " + best);
-		}
+		Specimen best = Collections.max(population);
+		System.out.println(
+				String.format("%d\t%.5f", generation, best.getFitness()));
 	}
 
 	private List<Specimen> generateRandomPopulation() {
@@ -53,10 +51,9 @@ public class GeneticAlgorithmDE {
 		return population;
 	}
 
+	@Override
 	public void runAlgorithm() {
 		List<Specimen> population;
-
-		System.out.println("Algorytm Genetyczny: Differential Evolution");
 
 		// generate the initial population
 		population = generateRandomPopulation();

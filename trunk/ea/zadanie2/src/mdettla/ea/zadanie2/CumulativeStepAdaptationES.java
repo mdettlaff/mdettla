@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * Cumulative Step Adaptation.
+ * Strategia ewolucyjna Cumulative Step Adaptation.
  * http://www.informatik.uni-ulm.de/ni/Lehre/SS02/Evosem/es.java
  */
-public class EvolutionaryStrategyCSA {
+public class CumulativeStepAdaptationES implements EvolutionaryAlgorithm {
 
 	/** number of generations */
 	private final int generationsCount;
@@ -20,7 +20,7 @@ public class EvolutionaryStrategyCSA {
 
 	private FitnessFunction fitness;
 
-	public EvolutionaryStrategyCSA(FitnessFunction fitness,
+	public CumulativeStepAdaptationES(FitnessFunction fitness,
 			int varsCount, int generationsCount, int populationSize) {
 		this.fitness = fitness;
 		this.varsCount = varsCount;
@@ -29,14 +29,12 @@ public class EvolutionaryStrategyCSA {
 	}
 
 	private void printInfo(int generation, Specimen[] population, double sigma) {
-		if (generation % 500 == 0 || generation == generationsCount) {
-			Specimen best = Collections.max(Arrays.asList(population));
-			System.out.println(
-					"Generation: " + generation + " Best Specimen: " + best +
-					String.format(" sigma: %.5f", sigma));
-		}
+		Specimen best = Collections.max(Arrays.asList(population));
+		System.out.println(
+				String.format("%d\t%.5f", generation, best.getFitness()));
 	}
 
+	@Override
 	public void runAlgorithm() {
 		/** our source of random numbers */
 		java.util.Random rnd = new java.util.Random();
@@ -50,8 +48,6 @@ public class EvolutionaryStrategyCSA {
 		double c = 1/dump;
 		double mult1 = 1-c;
 		double mult2 = Math.sqrt(c*(2-c)*mu);
-
-		System.out.println("Strategia Ewolucyjna: Cumulative Step Adaptation");
 
 		double[] tt = new double[varsCount];
 		for (int j = 0; j < varsCount; j++) {
