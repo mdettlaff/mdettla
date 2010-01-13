@@ -1,7 +1,9 @@
 package mdettla.ea.zadanie2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Strategia ewolucyjna Cumulative Step Adaptation.
@@ -28,14 +30,11 @@ public class CumulativeStepAdaptationES implements EvolutionaryAlgorithm {
 		mu = populationSize;
 	}
 
-	private void printInfo(int generation, Specimen[] population, double sigma) {
-		Specimen best = Collections.max(Arrays.asList(population));
-		System.out.println(
-				String.format("%d\t%.5f", generation, best.getFitness()));
-	}
-
 	@Override
-	public void runAlgorithm() {
+	public List<Specimen> runAlgorithm() {
+		// najlepsze osobniki w kolejnych generacjach
+		List<Specimen> bestSpecimens =
+			new ArrayList<Specimen>(generationsCount);
 		/** our source of random numbers */
 		java.util.Random rnd = new java.util.Random();
 		/** the population */
@@ -60,7 +59,7 @@ public class CumulativeStepAdaptationES implements EvolutionaryAlgorithm {
 				pop[i].set(j, tt[j] + sigma * rnd.nextGaussian());
 			}
 		}
-		printInfo(0, pop, sigma);
+		bestSpecimens.add(Collections.max(Arrays.asList(pop)));
 
 		double[] x_old = new double[varsCount];
 		double[] x_new = new double[varsCount];
@@ -76,7 +75,7 @@ public class CumulativeStepAdaptationES implements EvolutionaryAlgorithm {
 		} 
 
 		// the generation loop
-		for (int i = 1; i <= generationsCount; i++) {
+		for (int i = 0; i < generationsCount - 1; i++) {
 			/** the temporary population */
 			Specimen[] tpop = new Specimen[lambda + mu];
 
@@ -129,7 +128,8 @@ public class CumulativeStepAdaptationES implements EvolutionaryAlgorithm {
 				sigma = 100;
 			}
 
-			printInfo(i, pop, sigma);
+			bestSpecimens.add(Collections.max(Arrays.asList(pop)));
 		}
+		return bestSpecimens;
 	}
 }

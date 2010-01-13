@@ -30,12 +30,6 @@ public class DifferentialEvolutionGA implements EvolutionaryAlgorithm {
 		mu = populationSize;
 	}
 
-	private void printInfo(int generation, List<Specimen> population) {
-		Specimen best = Collections.max(population);
-		System.out.println(
-				String.format("%d\t%.5f", generation, best.getFitness()));
-	}
-
 	private List<Specimen> generateRandomPopulation() {
 		Random random = new Random();
 		List<Specimen> population = new ArrayList<Specimen>(mu);
@@ -52,16 +46,19 @@ public class DifferentialEvolutionGA implements EvolutionaryAlgorithm {
 	}
 
 	@Override
-	public void runAlgorithm() {
+	public List<Specimen> runAlgorithm() {
 		List<Specimen> population;
+		// najlepsze osobniki w kolejnych generacjach
+		List<Specimen> bestSpecimens =
+			new ArrayList<Specimen>(generationsCount);
 
-		// generate the initial population
+		// wygeneruj populację początkową
 		population = generateRandomPopulation();
 
-		printInfo(0, population);
+		bestSpecimens.add(Collections.max(population));
 
 		Random random = new Random();
-		for (int t = 0; t < generationsCount; t++) {
+		for (int t = 0; t < generationsCount - 1; t++) {
 			List<Specimen> newPopulation = new ArrayList<Specimen>(mu);
 			for (int i = 0; i < mu; i++) {
 				List<Specimen> sample = Utils.randomSample(population, 3);
@@ -86,7 +83,8 @@ public class DifferentialEvolutionGA implements EvolutionaryAlgorithm {
 			}
 			population = newPopulation;
 
-			printInfo(t + 1, population);
+			bestSpecimens.add(Collections.max(population));
 		}
+		return bestSpecimens;
 	}
 }

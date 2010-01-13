@@ -12,7 +12,7 @@ set output "griewangk_de.png"
 set title "Algorytm genetyczny - Differential Evolution\nfunkcja Griewangka"
 plot "griewangk_de" title "¶rednie przystosowanie najlepszego osobnika w populacji" with lines
 
-set yr [0:10000]
+set yr [0:1000000000]
 
 set output "rosenbrock_csa.png"
 set title "Strategia ewolucyjna - Cumulative Step Adaptation\nfunkcja Rosenbrocka"
