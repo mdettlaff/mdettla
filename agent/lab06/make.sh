@@ -16,8 +16,8 @@ then
 else
   java -cp $cp:bin jade.Boot -detect-main false \
   seller:mdettla.englishauction.Seller\(10 30\) \
-  buyer1:mdettla.englishauction.Buyer\(20\) \
-  buyer2:mdettla.englishauction.Buyer\(30\) \
-  buyer3:mdettla.englishauction.Buyer\(40\)
+  buyer1:mdettla.englishauction.Buyer\(20 600\) \
+  buyer2:mdettla.englishauction.Buyer\(30 700\) \
+  buyer3:mdettla.englishauction.Buyer\(40 800\)
   mv APDescription.txt MTPs-Main-Container.txt bin
 fi

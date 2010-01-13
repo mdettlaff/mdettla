@@ -26,7 +26,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Buyer extends Agent {
 	private static final long serialVersionUID = 1L;
 
-	private static Random random = new Random();
+	private static final Random random = new Random();
 
 	private Codec codec = new SLCodec();
 	private Ontology ontology = EnglishAuctionOntology.getInstance();
@@ -46,6 +46,7 @@ public class Buyer extends Agent {
 		System.out.println("Tworzy się agent " + getLocalName());
 
 		maxPrice = Integer.valueOf(getArguments()[0].toString());
+		int checkMsgInterval = Integer.valueOf(getArguments()[1].toString());
 
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
@@ -64,7 +65,7 @@ public class Buyer extends Agent {
 		}
 
 		Behaviour checkMessages =
-			new TickerBehaviour(this, 900 + random.nextInt(200)) {
+			new TickerBehaviour(this, checkMsgInterval) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -75,14 +76,12 @@ public class Buyer extends Agent {
 						case ACLMessage.INFORM:
 							if (FIPANames.InteractionProtocol.
 									FIPA_ENGLISH_AUCTION.equals(
-									msg.getProtocol())) {
-								if (seller == null) {
-									System.out.println(myAgent.getLocalName() +
-											": dowiedziałem się o " +
-											"rozpoczęciu aukcji");
-									seller = msg.getSender();
-								}
-							} else {
+										msg.getProtocol()) && seller == null) {
+								System.out.println(myAgent.getLocalName() +
+										": dowiedziałem się o " +
+										"rozpoczęciu aukcji");
+								seller = msg.getSender();
+							} else if (seller != null) {
 								System.out.println(myAgent.getLocalName() +
 										": dowiedziałem się o " +
 										"zakończeniu aukcji (" +
@@ -93,7 +92,7 @@ public class Buyer extends Agent {
 							MessageTemplate mt = MessageTemplate.and(
 									MessageTemplate.MatchLanguage(codec.getName()),
 									MessageTemplate.MatchOntology(ontology.getName()));
-							if (msg.getSender().equals(seller)
+							if (seller != null && msg.getSender().equals(seller)
 									&& mt.match(msg)) {
 								try {
 									ContentElement ce = null;
@@ -121,7 +120,7 @@ public class Buyer extends Agent {
 	 */
 	private void bid(BiddingPrice biddingPrice, ACLMessage bidMsg, AID sender) {
 		try {
-			int newPrice = biddingPrice.getPrice() + random.nextInt(5) + 1;
+	int newPrice = biddingPrice.getPrice() + random.nextInt(7) + 1;
 			newPrice = Math.min(newPrice, maxPrice);
 			// licytujemy, jeśli aktualna cena jest wyższa od tej
 			// którą zaproponowaliśmy ostatnio, żeby nie licytować
