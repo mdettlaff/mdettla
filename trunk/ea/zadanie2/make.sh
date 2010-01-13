@@ -8,19 +8,25 @@ then
 else
   if [ "$1" == "doc" ]
   then
-    echo "tworzenie wykresów..."
-    cd output
-    gnuplot < evo.plt
-    cd ..
-    mv output/*.png doc
-    echo "tworzenie pliku PDF..."
-    cd doc
-    pdflatex ga2wyniki.tex > /dev/null
-    cd ..
-    rm doc/*.png
-    rm doc/ga2wyniki.aux
-    rm doc/ga2wyniki.log
-    echo "zapisano do pliku doc/ga2wyniki.pdf"
+    if [ -f output/griewangk_de ]
+    then
+      echo "tworzenie wykresów..."
+      cd output
+      gnuplot < evo.plt
+      cd ..
+      mv output/*.png doc
+      echo "tworzenie pliku PDF..."
+      cd doc
+      pdflatex ga2wyniki.tex > /dev/null
+      cd ..
+      rm doc/*.png
+      rm doc/ga2wyniki.aux
+      rm doc/ga2wyniki.log
+      echo "zapisano do pliku doc/ga2wyniki.pdf"
+    else
+      echo "błąd: brak danych do wykresów"
+      echo "najpierw uruchom program (polecenie \"./make run\")"
+    fi
   else
     if [ ! -d output ]
     then
