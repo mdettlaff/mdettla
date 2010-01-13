@@ -55,6 +55,8 @@ public class Seller extends Agent {
 	private AID topBidder;
 	private String topBidderName;
 
+	private int bidCount = 0;
+
 	@Override
 	protected void setup() {
 		System.out.println("Tworzy się agent " + getLocalName());
@@ -71,10 +73,16 @@ public class Seller extends Agent {
 
 			@Override
 			protected void onTick() {
-				MessageTemplate mt = MessageTemplate.and(MessageTemplate.and(
-						MessageTemplate.MatchLanguage(codec.getName()),
-						MessageTemplate.MatchOntology(ontology.getName())),
-						MessageTemplate.MatchPerformative(ACLMessage.PROPOSE));
+				if (!auctionActive) {
+					return;
+				}
+				MessageTemplate mt = MessageTemplate.and(
+						MessageTemplate.and(
+							MessageTemplate.and(
+								MessageTemplate.MatchLanguage(codec.getName()),
+								MessageTemplate.MatchOntology(ontology.getName())),
+							MessageTemplate.MatchPerformative(ACLMessage.PROPOSE)),
+						MessageTemplate.MatchInReplyTo(bidCount + ""));
 				ACLMessage msg = receive(mt);
 				if (msg != null) {
 					try {
@@ -87,32 +95,23 @@ public class Seller extends Agent {
 								currentPrice = bid.getPrice();
 								topBidder = msg.getSender();
 								topBidderName = bid.getBidderName();
-								System.out.println(myAgent.getLocalName() +
-										": zaakceptowałem ofertę od: " + bid.getBidderName());
-								System.out.println(getLocalName() +
-										": wysyłam informację, że aktualna cena to " +
-										currentPrice);
+								System.out.println(myAgent.getLocalName()
+										+ ": zaakceptowałem ofertę od: "
+										+ bid.getBidderName());
 								sendCFPToBuyers();
 							}
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-				} else {
-					// brak oferty kupna
-					if (auctionActive && topBidderName != null) {
-						informEndOfAuction();
-						auctionActive = false;
-					}
-				}
-				// po uwzględnieniu najszybszej odpowiedzi, ignorujemy resztę
-				while (msg != null) {
-					msg = receive(mt);
+				} else if (auctionActive) { // brak oferty kupna
+					informEndOfAuction();
+					auctionActive = false;
 				}
 			}
 		};
 
-		Behaviour startAuction = new WakerBehaviour(this, 1000) {
+		Behaviour informStartOfAuction = new WakerBehaviour(this, 1000) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -129,24 +128,46 @@ public class Seller extends Agent {
 				send(startOfAuction);
 
 				auctionActive = true;
+			}
+		};
+		addBehaviour(informStartOfAuction);
+
+		Behaviour firstCFP = new WakerBehaviour(this, 2000) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onWake() {
 				sendCFPToBuyers();
+			}
+		};
+		addBehaviour(firstCFP);
+
+		Behaviour startCheckingMessages = new WakerBehaviour(this, 3000) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void onWake() {
 				addBehaviour(checkBids);
 			}
 		};
-
-		addBehaviour(startAuction);
+		addBehaviour(startCheckingMessages);
 	}
 
 	/**
 	 * Wezwanie do licytowania, do wszystkich kupujących.
 	 */
 	private void sendCFPToBuyers() {
+		System.out.println(getLocalName() +
+				": wysyłam informację, że aktualna cena to " +
+				currentPrice);
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		for (AID buyer : getBuyers()) {
 			msg.addReceiver(buyer);
 		}
 		msg.setLanguage(codec.getName());
 		msg.setOntology(ontology.getName());
+		bidCount++;
+		msg.setReplyWith(bidCount + "");
 		BiddingPrice price = new BiddingPrice();
 		price.setPrice(currentPrice);
 		try {
@@ -167,6 +188,7 @@ public class Seller extends Agent {
 		} else {
 			msg.setContent("Koniec aukcji. Przedmiot nie został sprzedany.");
 		}
+		System.out.println(getLocalName() + ": ogłaszam koniec aukcji");
 		send(msg);
 	}
 
