@@ -6,35 +6,56 @@ then
   fi
   javac -d bin src/mdettla/ea/zadanie2/*.java
 else
-  if [ ! -d output ]
+  if [ "$1" == "doc" ]
   then
-    mkdir output
+    echo "tworzenie wykresów..."
+    cd output
+    gnuplot < evo.plt
+    cd ..
+    mv output/*.png doc
+    echo "tworzenie pliku PDF..."
+    cd doc
+    pdflatex ga2wyniki.tex > /dev/null
+    cd ..
+    rm doc/*.png
+    rm doc/ga2wyniki.aux
+    rm doc/ga2wyniki.log
+    echo "zapisano do pliku doc/ga2wyniki.pdf"
+  else
+    if [ ! -d output ]
+    then
+      mkdir output
+    fi
+    echo "Test 1: Funkcja Griewangka"
+    echo "Obliczam za pomocą algorytmu Differential Evolution"
+    echo -n "Proszę czekać"
+    java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
+    mdettla.ea.zadanie2.DifferentialEvolutionGA 1000 \
+    mdettla.ea.zadanie2.GriewangkFunction \
+    > output/griewangk_de
+    echo "Wyniki zapisano do katalogu output"
+    echo "Obliczam za pomocą algorytmu Cumulative Step Adaptation"
+    echo -n "Proszę czekać"
+    java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
+    mdettla.ea.zadanie2.CumulativeStepAdaptationES 1000 \
+    mdettla.ea.zadanie2.GriewangkFunction \
+    > output/griewangk_csa
+    echo "Wyniki zapisano do katalogu output"
+    echo
+    echo "Test 2: Funkcja Rosenbrocka"
+    echo "Obliczam za pomocą algorytmu Differential Evolution"
+    echo -n "Proszę czekać"
+    java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
+    mdettla.ea.zadanie2.DifferentialEvolutionGA 500 \
+    mdettla.ea.zadanie2.RosenbrockFunction \
+    > output/rosenbrock_de
+    echo "Wyniki zapisano do katalogu output"
+    echo "Obliczam za pomocą algorytmu Cumulative Step Adaptation"
+    echo -n "Proszę czekać"
+    java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
+    mdettla.ea.zadanie2.CumulativeStepAdaptationES 500 \
+    mdettla.ea.zadanie2.RosenbrockFunction \
+    > output/rosenbrock_csa
+    echo "Wyniki zapisano do katalogu output"
   fi
-  echo "Test 1: Funkcja Griewangka"
-  echo "Obliczam za pomocą algorytmu Differential Evolution..."
-  java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
-  mdettla.ea.zadanie2.DifferentialEvolutionGA 1500 \
-  mdettla.ea.zadanie2.GriewangkFunction \
-  > output/griewangk_de
-  echo "Wyniki zapisano do katalogu output"
-  echo "Obliczam za pomocą algorytmu Cumulative Step Adaptation..."
-  java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
-  mdettla.ea.zadanie2.CumulativeStepAdaptationES 1500 \
-  mdettla.ea.zadanie2.GriewangkFunction \
-  > output/griewangk_csa
-  echo "Wyniki zapisano do katalogu output"
-  echo
-  echo "Test 2: Funkcja Rosenbrocka"
-  echo "Obliczam za pomocą algorytmu Differential Evolution..."
-  java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
-  mdettla.ea.zadanie2.DifferentialEvolutionGA 5000 \
-  mdettla.ea.zadanie2.RosenbrockFunction \
-  > output/rosenbrock_de
-  echo "Wyniki zapisano do katalogu output"
-  echo "Obliczam za pomocą algorytmu Cumulative Step Adaptation..."
-  java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
-  mdettla.ea.zadanie2.CumulativeStepAdaptationES 5000 \
-  mdettla.ea.zadanie2.RosenbrockFunction \
-  > output/rosenbrock_csa
-  echo "Wyniki zapisano do katalogu output"
 fi
