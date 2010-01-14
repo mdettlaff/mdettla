@@ -6,18 +6,8 @@ import jade.content.onto.annotations.Slot;
 
 public class Bid implements Concept {
 
-	private Integer price;
 	private String bidderName;
 	private Boolean ableToPay;
-
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
-	@Slot(mandatory = true)
-	public Integer getPrice() {
-		return price;
-	}
 
 	public void setAbleToPay(Boolean ableToPay) {
 		this.ableToPay = ableToPay;
