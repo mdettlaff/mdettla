@@ -36,9 +36,9 @@ public class Seller extends Agent {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * O ile zwiększać cenę po zaakceptowaniu oferty.
+	 * Co ile milisekund wysyłać wezwanie do licytowania.
 	 */
-	private static final int INCREMENT_PRICE_BY = 5;
+	private static final int INTERVAL = 1000;
 
 	private Codec codec = new SLCodec();
 	private Ontology ontology = EnglishAuctionOntology.getInstance();
@@ -55,6 +55,11 @@ public class Seller extends Agent {
 	 * Aktualna cena przedmiotu.
 	 */
 	private int currentPrice;
+	/**
+	 * O ile zwiększać cenę po zaakceptowaniu oferty.
+	 */
+	private static int incrementPriceBy = 5;
+
 	private boolean isAuctionActive;
 
 	/**
@@ -63,7 +68,7 @@ public class Seller extends Agent {
 	private AID topBidder;
 	private String topBidderName;
 
-	private int bidCount = 0;
+	private int bidCount = 1;
 
 	@Override
 	protected void setup() {
@@ -71,12 +76,13 @@ public class Seller extends Agent {
 
 		askingPrice = Integer.valueOf(getArguments()[0].toString());
 		reservationPrice = Integer.valueOf(getArguments()[1].toString());
+		incrementPriceBy = Integer.valueOf(getArguments()[2].toString());
 		currentPrice = askingPrice;
 
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
-		final Behaviour checkBids = new TickerBehaviour(this, 1000) {
+		final Behaviour checkBids = new TickerBehaviour(this, INTERVAL) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -91,17 +97,20 @@ public class Seller extends Agent {
 							MessageTemplate.MatchInReplyTo(bidCount + ""));
 					ACLMessage msg = receive(mt);
 					if (msg != null) {
+						currentPrice += incrementPriceBy;
 						handleBid(msg);
 					} else if (isAuctionActive) { // brak oferty kupna
 						informEndOfAuction();
 						isAuctionActive = false;
+						if (topBidder != null) {
+							requestWinner();
+						}
 					}
-					currentPrice += INCREMENT_PRICE_BY;
 				}
 			}
 		};
 
-		Behaviour informStartOfAuction = new WakerBehaviour(this, 1000) {
+		Behaviour informStartOfAuction = new WakerBehaviour(this, INTERVAL) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -122,18 +131,17 @@ public class Seller extends Agent {
 		};
 		addBehaviour(informStartOfAuction);
 
-		Behaviour firstCFP = new WakerBehaviour(this, 2000) {
+		Behaviour firstCFP = new WakerBehaviour(this, 2 * INTERVAL) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void onWake() {
 				sendCFPToBuyers();
-				currentPrice += INCREMENT_PRICE_BY;
 			}
 		};
 		addBehaviour(firstCFP);
 
-		Behaviour startCheckingMessages = new WakerBehaviour(this, 3000) {
+		Behaviour startCheckingMessages = new WakerBehaviour(this, 3 * INTERVAL) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -148,19 +156,19 @@ public class Seller extends Agent {
 	 * Wezwanie do licytowania, do wszystkich kupujących.
 	 */
 	private void sendCFPToBuyers() {
+		int priceToPropose = currentPrice + incrementPriceBy;
 		System.out.println(getLocalName() +
-				": wysyłam informację, że aktualna cena to " +
-				currentPrice);
+				": wysyłam informację, że proponowana cena to " +
+				priceToPropose);
 		ACLMessage msg = new ACLMessage(ACLMessage.CFP);
 		for (AID buyer : getBuyers()) {
 			msg.addReceiver(buyer);
 		}
 		msg.setLanguage(codec.getName());
 		msg.setOntology(ontology.getName());
-		bidCount++;
 		msg.setReplyWith(bidCount + "");
 		BiddingPrice price = new BiddingPrice();
-		price.setPrice(currentPrice);
+		price.setPrice(priceToPropose);
 		try {
 			getContentManager().fillContent(msg, price);
 		} catch (Exception e) {
@@ -195,6 +203,7 @@ public class Seller extends Agent {
 				if (bid.getAbleToPay()) {
 					topBidder = msg.getSender();
 					topBidderName = bid.getBidderName();
+					bidCount++;
 					System.out.println(getLocalName()
 							+ ": zaakceptowałem ofertę od: "
 							+ bid.getBidderName());
@@ -223,6 +232,21 @@ public class Seller extends Agent {
 			msg.setContent("Koniec aukcji. Przedmiot nie został sprzedany.");
 		}
 		System.out.println(getLocalName() + ": brak chętnych, ogłaszam koniec aukcji");
+		send(msg);
+	}
+
+	private void requestWinner() {
+		ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+		msg.setLanguage(codec.getName());
+		msg.setOntology(ontology.getName());
+		BiddingPrice finalPrice = new BiddingPrice();
+		finalPrice.setPrice(currentPrice);
+		try {
+			getContentManager().fillContent(msg, finalPrice);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		msg.addReceiver(topBidder);
 		send(msg);
 	}
 
