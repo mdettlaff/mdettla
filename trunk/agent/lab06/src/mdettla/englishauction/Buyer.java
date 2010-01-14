@@ -82,6 +82,8 @@ public class Buyer extends Agent {
 						case ACLMessage.DISCONFIRM:
 							isPreviousBidMine = false;
 							break;
+						case ACLMessage.REQUEST:
+							handleRequest(msg);
 					}
 				}
 			}
@@ -139,6 +141,21 @@ public class Buyer extends Agent {
 					getContentManager().fillContent(bidMsg, raiseBiddingPrice);
 					send(bidMsg);
 				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void handleRequest(ACLMessage msg) {
+		try {
+			ContentElement ce = null;
+			ce = getContentManager().extractContent(msg);
+			if (ce instanceof BiddingPrice) {
+				BiddingPrice finalPrice = (BiddingPrice)ce;
+				System.out.println(getLocalName()
+						+ ": dostałem wezwanie do kupna za "
+						+ finalPrice.getPrice());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
