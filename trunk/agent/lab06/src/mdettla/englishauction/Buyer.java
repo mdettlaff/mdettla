@@ -35,11 +35,8 @@ public class Buyer extends Agent {
 	 * Maksymalna cena, jaką agent kupujący jest w stanie zapłacić.
 	 */
 	private int maxPrice;
-	/**
-	 * Zapamiętujemy naszą ostatnią ofertę.
-	 */
-	private Bid bid;
 	private AID seller;
+	private boolean isPreviousBidMine = false;
 
 	@Override
 	protected void setup() {
@@ -74,38 +71,16 @@ public class Buyer extends Agent {
 				if (msg != null) {
 					switch (msg.getPerformative()) {
 						case ACLMessage.INFORM:
-							if (FIPANames.InteractionProtocol.
-									FIPA_ENGLISH_AUCTION.equals(
-										msg.getProtocol()) && seller == null) {
-								System.out.println(myAgent.getLocalName() +
-										": dowiedziałem się o " +
-										"rozpoczęciu aukcji");
-								seller = msg.getSender();
-							} else if (seller != null) {
-								System.out.println(myAgent.getLocalName() +
-										": dowiedziałem się o " +
-										"zakończeniu aukcji (" +
-										msg.getContent() + ")");
-							}
+							handleInform(msg);
 							break;
 						case ACLMessage.CFP:
-							MessageTemplate mt = MessageTemplate.and(
-									MessageTemplate.MatchLanguage(codec.getName()),
-									MessageTemplate.MatchOntology(ontology.getName()));
-							if (seller != null && msg.getSender().equals(seller)
-									&& mt.match(msg)) {
-								try {
-									ContentElement ce = null;
-									ce = getContentManager().extractContent(msg);
-									if (ce instanceof BiddingPrice) {
-										BiddingPrice biddingPrice = (BiddingPrice)ce;
-										bid(biddingPrice, msg.createReply(),
-												msg.getSender());
-									}
-								} catch (Exception e) {
-									e.printStackTrace();
-								}
-							}
+							handleCFP(msg);
+							break;
+						case ACLMessage.CONFIRM:
+							isPreviousBidMine = true;
+							break;
+						case ACLMessage.DISCONFIRM:
+							isPreviousBidMine = false;
 							break;
 					}
 				}
@@ -115,22 +90,48 @@ public class Buyer extends Agent {
 		addBehaviour(checkMessages);
 	}
 
+	private void handleInform(ACLMessage msg) {
+		if (FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION.equals(
+					msg.getProtocol()) && seller == null) {
+			System.out.println(getLocalName() +
+					": dowiedziałem się o rozpoczęciu aukcji");
+			seller = msg.getSender();
+		} else if (seller != null) {
+			System.out.println(getLocalName() +
+					": dowiedziałem się o zakończeniu aukcji (" +
+					msg.getContent() + ")");
+		}
+	}
+
+	private void handleCFP(ACLMessage msg) {
+		MessageTemplate mt = MessageTemplate.and(
+				MessageTemplate.MatchLanguage(codec.getName()),
+				MessageTemplate.MatchOntology(ontology.getName()));
+		if (seller != null && msg.getSender().equals(seller)
+				&& mt.match(msg)) {
+			try {
+				ContentElement ce = null;
+				ce = getContentManager().extractContent(msg);
+				if (ce instanceof BiddingPrice) {
+					BiddingPrice biddingPrice = (BiddingPrice)ce;
+					makeBid(biddingPrice, msg.createReply(), msg.getSender());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * Wysyłamy ofertę do prowadzącego aukcję, jeśli odpowiadają nam warunki.
 	 */
-	private void bid(BiddingPrice biddingPrice, ACLMessage bidMsg, AID sender) {
+	private void makeBid(BiddingPrice biddingPrice, ACLMessage bidMsg, AID sender) {
 		try {
-	int newPrice = biddingPrice.getPrice() + random.nextInt(7) + 1;
-			newPrice = Math.min(newPrice, maxPrice);
-			// licytujemy, jeśli aktualna cena jest wyższa od tej
-			// którą zaproponowaliśmy ostatnio, żeby nie licytować
-			// z samym sobą
-			if (bid == null || biddingPrice.getPrice() > bid.getPrice()) {
-				if (newPrice > biddingPrice.getPrice()) {
+			if (!isPreviousBidMine) {
+				if (maxPrice >= biddingPrice.getPrice()) {
 					bidMsg.setPerformative(ACLMessage.PROPOSE);
 					Action raiseBiddingPrice = new Action();
-					bid = new Bid();
-					bid.setPrice(newPrice);
+					Bid bid = new Bid();
 					bid.setAbleToPay(true);
 					bid.setBidderName(getLocalName());
 					raiseBiddingPrice.setAction(bid);

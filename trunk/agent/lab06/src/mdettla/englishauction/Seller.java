@@ -13,8 +13,11 @@ import java.util.HashMap;
 
 import jade.content.ContentElement;
 import jade.content.lang.Codec;
+import jade.content.lang.Codec.CodecException;
 import jade.content.lang.sl.SLCodec;
 import jade.content.onto.Ontology;
+import jade.content.onto.OntologyException;
+import jade.content.onto.UngroundedException;
 import jade.content.onto.basic.Action;
 import jade.core.Agent;
 import jade.core.AID;
@@ -32,6 +35,11 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 public class Seller extends Agent {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * O ile zwiększać cenę po zaakceptowaniu oferty.
+	 */
+	private static final int INCREMENT_PRICE_BY = 5;
+
 	private Codec codec = new SLCodec();
 	private Ontology ontology = EnglishAuctionOntology.getInstance();
 
@@ -47,7 +55,7 @@ public class Seller extends Agent {
 	 * Aktualna cena przedmiotu.
 	 */
 	private int currentPrice;
-	private boolean auctionActive;
+	private boolean isAuctionActive;
 
 	/**
 	 * Agent, który przedstawił do tej pory najlepszą ofertę.
@@ -73,40 +81,22 @@ public class Seller extends Agent {
 
 			@Override
 			protected void onTick() {
-				if (!auctionActive) {
-					return;
-				}
-				MessageTemplate mt = MessageTemplate.and(
-						MessageTemplate.and(
+				if (isAuctionActive) {
+					MessageTemplate mt = MessageTemplate.and(
 							MessageTemplate.and(
-								MessageTemplate.MatchLanguage(codec.getName()),
-								MessageTemplate.MatchOntology(ontology.getName())),
-							MessageTemplate.MatchPerformative(ACLMessage.PROPOSE)),
-						MessageTemplate.MatchInReplyTo(bidCount + ""));
-				ACLMessage msg = receive(mt);
-				if (msg != null) {
-					try {
-						ContentElement ce = null;
-						ce = getContentManager().extractContent(msg);
-						if (ce instanceof Action) {
-							Action raiseBiddingPrice = (Action)ce;
-							Bid bid = (Bid)raiseBiddingPrice.getAction();
-							if (bid.getAbleToPay() && bid.getPrice() > currentPrice) {
-								currentPrice = bid.getPrice();
-								topBidder = msg.getSender();
-								topBidderName = bid.getBidderName();
-								System.out.println(myAgent.getLocalName()
-										+ ": zaakceptowałem ofertę od: "
-										+ bid.getBidderName());
-								sendCFPToBuyers();
-							}
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
+								MessageTemplate.and(
+									MessageTemplate.MatchLanguage(codec.getName()),
+									MessageTemplate.MatchOntology(ontology.getName())),
+								MessageTemplate.MatchPerformative(ACLMessage.PROPOSE)),
+							MessageTemplate.MatchInReplyTo(bidCount + ""));
+					ACLMessage msg = receive(mt);
+					if (msg != null) {
+						handleBid(msg);
+					} else if (isAuctionActive) { // brak oferty kupna
+						informEndOfAuction();
+						isAuctionActive = false;
 					}
-				} else if (auctionActive) { // brak oferty kupna
-					informEndOfAuction();
-					auctionActive = false;
+					currentPrice += INCREMENT_PRICE_BY;
 				}
 			}
 		};
@@ -127,7 +117,7 @@ public class Seller extends Agent {
 				}
 				send(startOfAuction);
 
-				auctionActive = true;
+				isAuctionActive = true;
 			}
 		};
 		addBehaviour(informStartOfAuction);
@@ -138,6 +128,7 @@ public class Seller extends Agent {
 			@Override
 			public void onWake() {
 				sendCFPToBuyers();
+				currentPrice += INCREMENT_PRICE_BY;
 			}
 		};
 		addBehaviour(firstCFP);
@@ -178,6 +169,49 @@ public class Seller extends Agent {
 		send(msg);
 	}
 
+	private void sendConfirmTo(AID buyer) {
+		ACLMessage msg = new ACLMessage(ACLMessage.CONFIRM);
+		msg.addReceiver(buyer);
+		send(msg);
+	}
+
+	private void sendDisconfirm() {
+		ACLMessage msg = new ACLMessage(ACLMessage.DISCONFIRM);
+		for (AID buyer : getBuyers()) {
+			if (!buyer.equals(topBidder)) {
+				msg.addReceiver(buyer);
+			}
+		}
+		send(msg);
+	}
+
+	private void handleBid(ACLMessage msg) {
+		try {
+			ContentElement ce = null;
+			ce = getContentManager().extractContent(msg);
+			if (ce instanceof Action) {
+				Action raiseBiddingPrice = (Action)ce;
+				Bid bid = (Bid)raiseBiddingPrice.getAction();
+				if (bid.getAbleToPay()) {
+					topBidder = msg.getSender();
+					topBidderName = bid.getBidderName();
+					System.out.println(getLocalName()
+							+ ": zaakceptowałem ofertę od: "
+							+ bid.getBidderName());
+					sendConfirmTo(topBidder);
+					sendDisconfirm();
+					sendCFPToBuyers();
+				}
+			}
+		} catch (CodecException e) {
+			e.printStackTrace();
+		} catch (UngroundedException e) {
+			e.printStackTrace();
+		} catch (OntologyException e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void informEndOfAuction() {
 		ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 		for (AID buyer : getBuyers()) {
@@ -188,7 +222,7 @@ public class Seller extends Agent {
 		} else {
 			msg.setContent("Koniec aukcji. Przedmiot nie został sprzedany.");
 		}
-		System.out.println(getLocalName() + ": ogłaszam koniec aukcji");
+		System.out.println(getLocalName() + ": brak chętnych, ogłaszam koniec aukcji");
 		send(msg);
 	}
 
