@@ -38,7 +38,7 @@ public class Seller extends Agent {
 	/**
 	 * Co ile milisekund wysyłać wezwanie do licytowania.
 	 */
-	private static final int INTERVAL = 1000;
+	private static final int INTERVAL = 500;
 
 	private Codec codec = new SLCodec();
 	private Ontology ontology = EnglishAuctionOntology.getInstance();
@@ -58,7 +58,7 @@ public class Seller extends Agent {
 	/**
 	 * O ile zwiększać cenę po zaakceptowaniu oferty.
 	 */
-	private static int incrementPriceBy = 5;
+	private static int incrementPriceBy;
 
 	private boolean isAuctionActive;
 
@@ -72,7 +72,7 @@ public class Seller extends Agent {
 
 	@Override
 	protected void setup() {
-		System.out.println("Tworzy się agent " + getLocalName());
+		System.out.println("tworzy się agent " + getLocalName());
 
 		askingPrice = Integer.valueOf(getArguments()[0].toString());
 		reservationPrice = Integer.valueOf(getArguments()[1].toString());
@@ -97,7 +97,6 @@ public class Seller extends Agent {
 							MessageTemplate.MatchInReplyTo(bidCount + ""));
 					ACLMessage msg = receive(mt);
 					if (msg != null) {
-						currentPrice += incrementPriceBy;
 						handleBid(msg);
 					} else if (isAuctionActive) { // brak oferty kupna
 						informEndOfAuction();
@@ -117,7 +116,7 @@ public class Seller extends Agent {
 			public void onWake() {
 				// wysyłamy wiadomość o rozpoczęciu aukcji
 				System.out.println(myAgent.getLocalName() +
-						": wysyłam wiadomość o rozpoczęciu aukcji");
+						": wysyłam informację o rozpoczęciu aukcji");
 				ACLMessage startOfAuction = new ACLMessage(ACLMessage.INFORM);
 				startOfAuction.setProtocol(
 						FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION);
@@ -150,6 +149,25 @@ public class Seller extends Agent {
 			}
 		};
 		addBehaviour(startCheckingMessages);
+	}
+
+	private List<AID> getBuyers() {
+		DFAgentDescription template = new DFAgentDescription();
+		ServiceDescription sd = new ServiceDescription();
+		sd.setType("bidding");
+		template.addServices(sd);
+		List<AID> buyers = null;
+		try {
+			DFAgentDescription[] result =
+				DFService.search(this, template);
+			buyers = new ArrayList<AID>(result.length);
+			for (int i = 0; i < result.length; ++i) {
+				buyers.add(result[i].getName());
+			}
+		} catch (FIPAException fe) {
+			fe.printStackTrace();
+		}
+		return buyers;
 	}
 
 	/**
@@ -200,9 +218,11 @@ public class Seller extends Agent {
 			if (ce instanceof Action) {
 				Action raiseBiddingPrice = (Action)ce;
 				Bid bid = (Bid)raiseBiddingPrice.getAction();
-				if (bid.getAbleToPay()) {
+				if (bid.getAbleToPay()
+						&& bid.getPrice().equals(currentPrice + incrementPriceBy)) {
 					topBidder = msg.getSender();
 					topBidderName = bid.getBidderName();
+					currentPrice += incrementPriceBy;
 					bidCount++;
 					System.out.println(getLocalName()
 							+ ": zaakceptowałem ofertę od: "
@@ -226,11 +246,6 @@ public class Seller extends Agent {
 		for (AID buyer : getBuyers()) {
 			msg.addReceiver(buyer);
 		}
-		if (currentPrice >= reservationPrice) {
-			msg.setContent("Koniec aukcji. Wygrał: " + topBidderName);
-		} else {
-			msg.setContent("Koniec aukcji. Przedmiot nie został sprzedany.");
-		}
 		System.out.println(getLocalName() + ": brak chętnych, ogłaszam koniec aukcji");
 		send(msg);
 	}
@@ -248,25 +263,6 @@ public class Seller extends Agent {
 		}
 		msg.addReceiver(topBidder);
 		send(msg);
-	}
-
-	private List<AID> getBuyers() {
-		DFAgentDescription template = new DFAgentDescription();
-		ServiceDescription sd = new ServiceDescription();
-		sd.setType("bidding");
-		template.addServices(sd);
-		List<AID> buyers = null;
-		try {
-			DFAgentDescription[] result =
-				DFService.search(this, template);
-			buyers = new ArrayList<AID>(result.length);
-			for (int i = 0; i < result.length; ++i) {
-				buyers.add(result[i].getName());
-			}
-		} catch (FIPAException fe) {
-			fe.printStackTrace();
-		}
-		return buyers;
 	}
 
 	protected void takeDown() {

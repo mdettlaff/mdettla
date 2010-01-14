@@ -40,7 +40,7 @@ public class Buyer extends Agent {
 
 	@Override
 	protected void setup() {
-		System.out.println("Tworzy się agent " + getLocalName());
+		System.out.println("tworzy się agent " + getLocalName());
 
 		maxPrice = Integer.valueOf(getArguments()[0].toString());
 		int checkMsgInterval = Integer.valueOf(getArguments()[1].toString());
@@ -96,12 +96,11 @@ public class Buyer extends Agent {
 		if (FIPANames.InteractionProtocol.FIPA_ENGLISH_AUCTION.equals(
 					msg.getProtocol()) && seller == null) {
 			System.out.println(getLocalName() +
-					": dowiedziałem się o rozpoczęciu aukcji");
+					": dostałem informację o rozpoczęciu aukcji");
 			seller = msg.getSender();
 		} else if (seller != null) {
 			System.out.println(getLocalName() +
-					": dowiedziałem się o zakończeniu aukcji (" +
-					msg.getContent() + ")");
+					": dostałem informację o zakończeniu aukcji");
 		}
 	}
 
@@ -116,7 +115,10 @@ public class Buyer extends Agent {
 				ce = getContentManager().extractContent(msg);
 				if (ce instanceof BiddingPrice) {
 					BiddingPrice biddingPrice = (BiddingPrice)ce;
-					makeBid(biddingPrice, msg.createReply(), msg.getSender());
+					int price = biddingPrice.getPrice();
+					if (!isPreviousBidMine && maxPrice >= price) {
+						makeBid(msg.createReply(), msg.getSender(), price);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -125,23 +127,20 @@ public class Buyer extends Agent {
 	}
 
 	/**
-	 * Wysyłamy ofertę do prowadzącego aukcję, jeśli odpowiadają nam warunki.
+	 * Wysyłamy ofertę do prowadzącego aukcję.
 	 */
-	private void makeBid(BiddingPrice biddingPrice, ACLMessage bidMsg, AID sender) {
+	private void makeBid(ACLMessage bidMsg, AID seller, int price) {
 		try {
-			if (!isPreviousBidMine) {
-				if (maxPrice >= biddingPrice.getPrice()) {
-					bidMsg.setPerformative(ACLMessage.PROPOSE);
-					Action raiseBiddingPrice = new Action();
-					Bid bid = new Bid();
-					bid.setAbleToPay(true);
-					bid.setBidderName(getLocalName());
-					raiseBiddingPrice.setAction(bid);
-					raiseBiddingPrice.setActor(sender);
-					getContentManager().fillContent(bidMsg, raiseBiddingPrice);
-					send(bidMsg);
-				}
-			}
+			bidMsg.setPerformative(ACLMessage.PROPOSE);
+			Action raiseBiddingPrice = new Action();
+			Bid bid = new Bid();
+			bid.setAbleToPay(true);
+			bid.setPrice(price);
+			bid.setBidderName(getLocalName());
+			raiseBiddingPrice.setAction(bid);
+			raiseBiddingPrice.setActor(seller);
+			getContentManager().fillContent(bidMsg, raiseBiddingPrice);
+			send(bidMsg);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -154,7 +153,7 @@ public class Buyer extends Agent {
 			if (ce instanceof BiddingPrice) {
 				BiddingPrice finalPrice = (BiddingPrice)ce;
 				System.out.println(getLocalName()
-						+ ": dostałem wezwanie do kupna za "
+						+ ": dostałem wezwanie do kupna za cenę "
 						+ finalPrice.getPrice());
 			}
 		} catch (Exception e) {
