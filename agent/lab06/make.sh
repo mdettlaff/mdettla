@@ -15,7 +15,7 @@ then
   src/mdettla/englishauction/ontology/*.java
 else
   java -cp $cp:bin jade.Boot -detect-main false \
-  seller:mdettla.englishauction.Seller\(10 30 5\) \
+  seller:mdettla.englishauction.Seller\(10 30\) \
   buyer1:mdettla.englishauction.Buyer\(20 100\) \
   buyer2:mdettla.englishauction.Buyer\(30 125\) \
   buyer3:mdettla.englishauction.Buyer\(40 150\)

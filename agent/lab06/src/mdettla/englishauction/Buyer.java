@@ -28,15 +28,15 @@ public class Buyer extends Agent {
 
 	private static final Random random = new Random();
 
-	private Codec codec = new SLCodec();
-	private Ontology ontology = EnglishAuctionOntology.getInstance();
-
 	/**
 	 * Maksymalna cena, jaką agent kupujący jest w stanie zapłacić.
 	 */
 	private int maxPrice;
 	private AID seller;
 	private boolean isPreviousBidMine = false;
+
+	private Codec codec = new SLCodec();
+	private Ontology ontology = EnglishAuctionOntology.getInstance();
 
 	@Override
 	protected void setup() {
@@ -48,7 +48,7 @@ public class Buyer extends Agent {
 		getContentManager().registerLanguage(codec);
 		getContentManager().registerOntology(ontology);
 
-		// rejestrujemy usługę w Yellow Pages (Directory Facilitator).
+		// rejestrujemy usługę w Yellow Pages (Directory Facilitator)
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
 		ServiceDescription sd = new ServiceDescription();
@@ -61,10 +61,7 @@ public class Buyer extends Agent {
 			fe.printStackTrace();
 		}
 
-		Behaviour checkMessages =
-			new TickerBehaviour(this, checkMsgInterval) {
-			private static final long serialVersionUID = 1L;
-
+		Behaviour checkMessages = new TickerBehaviour(this, checkMsgInterval) {
 			@Override
 			protected void onTick() {
 				ACLMessage msg = receive();
@@ -106,18 +103,21 @@ public class Buyer extends Agent {
 
 	private void handleCFP(ACLMessage msg) {
 		MessageTemplate mt = MessageTemplate.and(
-				MessageTemplate.MatchLanguage(codec.getName()),
-				MessageTemplate.MatchOntology(ontology.getName()));
-		if (seller != null && msg.getSender().equals(seller)
-				&& mt.match(msg)) {
+				MessageTemplate.and(
+					MessageTemplate.MatchLanguage(codec.getName()),
+					MessageTemplate.MatchOntology(ontology.getName())),
+				MessageTemplate.MatchSender(seller));
+		if (mt.match(msg)) {
 			try {
 				ContentElement ce = null;
 				ce = getContentManager().extractContent(msg);
 				if (ce instanceof BiddingPrice) {
 					BiddingPrice biddingPrice = (BiddingPrice)ce;
 					int price = biddingPrice.getPrice();
-					if (!isPreviousBidMine && maxPrice >= price) {
-						makeBid(msg.createReply(), msg.getSender(), price);
+					int priceToOffer = Math.min(
+							price + 1 + random.nextInt(5), maxPrice);
+					if (!isPreviousBidMine && priceToOffer > price) {
+						makeBid(msg.createReply(), seller, priceToOffer);
 					}
 				}
 			} catch (Exception e) {
@@ -148,13 +148,16 @@ public class Buyer extends Agent {
 
 	private void handleRequest(ACLMessage msg) {
 		try {
-			ContentElement ce = null;
-			ce = getContentManager().extractContent(msg);
-			if (ce instanceof BiddingPrice) {
-				BiddingPrice finalPrice = (BiddingPrice)ce;
-				System.out.println(getLocalName()
-						+ ": dostałem wezwanie do kupna za cenę "
-						+ finalPrice.getPrice());
+			MessageTemplate mt = MessageTemplate.MatchSender(seller);
+			if (mt.match(msg)) {
+				ContentElement ce = null;
+				ce = getContentManager().extractContent(msg);
+				if (ce instanceof BiddingPrice) {
+					BiddingPrice finalPrice = (BiddingPrice)ce;
+					System.out.println(getLocalName()
+							+ ": dostałem wezwanie do kupna za cenę "
+							+ finalPrice.getPrice());
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
