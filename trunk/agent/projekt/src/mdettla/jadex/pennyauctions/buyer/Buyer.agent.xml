@@ -18,6 +18,9 @@
 			<fact>false</fact>
 		</belief>
 		<belief name="auction_site" class="AgentIdentifier" />
+		<!-- Cena jednego podbicia. -->
+		<belief name="bid_price" class="Integer" />
+		<belief name="bids_in_package" class="Integer" />
 		<!-- Ilość podbić do wykorzystania. -->
 		<belief name="bids_left" class="Integer">
 			<fact>1</fact>
@@ -103,8 +106,8 @@
 			<parameter name="performative" class="String">
 				<value>SFipa.AGREE</value>
 			</parameter>
-			<parameter name="content" class="String" direction="fixed">
-				<value>""</value>
+			<parameter name="content-start" class="String" direction="fixed">
+				<value>"registered"</value>
 			</parameter>
 		</messageevent>
 		<messageevent name="buy_bids" type="fipa" direction="send">
