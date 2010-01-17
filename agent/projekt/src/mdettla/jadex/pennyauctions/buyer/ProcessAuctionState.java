@@ -32,16 +32,20 @@ public class ProcessAuctionState extends Plan {
 
 		Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));
 		boolean makeBid = true;
-		if (topBidder.equals(getAgentName())) { // nie licytyjemy sami ze sobą
+		// nie licytyjemy sami ze sobą
+		if (topBidder.equals(getAgentName())) {
 			makeBid = false;
 		}
+		// nie licytujemy jeśli nie mamy już podbić
 		if (((Integer)getBeliefbase().getBelief("bids_left").getFact()) <= 0) {
 			makeBid = false;
 		}
+		// nie licytujemy jeśli cena jest zbyt wysoka
 		int max_price_proc = (Integer)getBeliefbase().getBelief("max_price_proc").getFact();
 		if (currentPrice >= (max_price_proc / 100.0) * product.getRetailPrice()) {
 			makeBid = false;
 		}
+		// nie licytujemy jeśli zostało zbyt dużo czasu do końca aukcji
 		int bidWhenTimeLeft = (Integer)getBeliefbase().getBelief("bid_when_time_left").getFact();
 		if (bidWhenTimeLeft < 0) {
 			bidWhenTimeLeft = new Random().nextInt(10) + 1;
@@ -49,6 +53,7 @@ public class ProcessAuctionState extends Plan {
 		if (timeLeft > bidWhenTimeLeft) {
 			makeBid = false;
 		}
+		// nie licytujemy jeśli przekroczylibyśmy nasz limit podbić na aukcję
 		if (bidsSpent >= (Integer)getBeliefbase().getBelief("max_bids_per_auction").getFact()) {
 			makeBid = false;
 		}
