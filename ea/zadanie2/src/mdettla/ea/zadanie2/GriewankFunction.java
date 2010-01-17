@@ -1,10 +1,10 @@
 package mdettla.ea.zadanie2;
 
 /**
- * Griewangk's Function - defined for -600.0 < x_i < 600.0
+ * Griewank's Function - defined for -600.0 < x_i < 600.0
  * minimum at x_i = 0 - this thing is _very_ multimodal
  */
-public class GriewangkFunction implements FitnessFunction {
+public class GriewankFunction implements FitnessFunction {
 
 	@Override
 	public double fitness(Specimen s) {

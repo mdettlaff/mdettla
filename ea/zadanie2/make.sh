@@ -8,7 +8,7 @@ then
 else
   if [ "$1" == "doc" ]
   then
-    if [ -f output/griewangk_de ]
+    if [ -f output/griewank_de ]
     then
       echo "tworzenie wykresów..."
       cd output
@@ -19,9 +19,7 @@ else
       cd doc
       pdflatex ga2wyniki.tex > /dev/null
       cd ..
-      rm doc/*.png
-      rm doc/ga2wyniki.aux
-      rm doc/ga2wyniki.log
+      rm doc/ga2wyniki.aux doc/ga2wyniki.log
       echo "zapisano do pliku doc/ga2wyniki.pdf"
     else
       echo "błąd: brak danych do wykresów"
@@ -32,20 +30,20 @@ else
     then
       mkdir output
     fi
-    echo "Test 1: Funkcja Griewangka"
+    echo "Test 1: Funkcja Griewanka"
     echo "Obliczam za pomocą algorytmu Differential Evolution"
     echo -n "Proszę czekać"
     java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
     mdettla.ea.zadanie2.DifferentialEvolutionGA 1000 \
-    mdettla.ea.zadanie2.GriewangkFunction \
-    > output/griewangk_de
+    mdettla.ea.zadanie2.GriewankFunction \
+    > output/griewank_de
     echo "Wyniki zapisano do katalogu output"
     echo "Obliczam za pomocą algorytmu Cumulative Step Adaptation"
     echo -n "Proszę czekać"
     java -cp bin mdettla.ea.zadanie2.RunEvolutionaryAlgorithm \
     mdettla.ea.zadanie2.CumulativeStepAdaptationES 1000 \
-    mdettla.ea.zadanie2.GriewangkFunction \
-    > output/griewangk_csa
+    mdettla.ea.zadanie2.GriewankFunction \
+    > output/griewank_csa
     echo "Wyniki zapisano do katalogu output"
     echo
     echo "Test 2: Funkcja Rosenbrocka"

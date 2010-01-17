@@ -4,13 +4,13 @@ set ylabel "przystosowanie"
 
 set yr [0:1500]
 
-set output "griewangk_csa.png"
-set title "Strategia ewolucyjna - Cumulative Step Adaptation\nfunkcja Griewangka"
-plot "griewangk_csa" title "¶rednie przystosowanie najlepszego osobnika w populacji" with lines
+set output "griewank_csa.png"
+set title "Strategia ewolucyjna - Cumulative Step Adaptation\nfunkcja Griewanka"
+plot "griewank_csa" title "¶rednie przystosowanie najlepszego osobnika w populacji" with lines
 
-set output "griewangk_de.png"
-set title "Algorytm genetyczny - Differential Evolution\nfunkcja Griewangka"
-plot "griewangk_de" title "¶rednie przystosowanie najlepszego osobnika w populacji" with lines
+set output "griewank_de.png"
+set title "Algorytm genetyczny - Differential Evolution\nfunkcja Griewanka"
+plot "griewank_de" title "¶rednie przystosowanie najlepszego osobnika w populacji" with lines
 
 set yr [0:1000000000]
 
