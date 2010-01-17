@@ -48,7 +48,10 @@ public class AuctionSite extends Agent {
 				if (msg != null) {
 					String username = msg.getContent();
 					ACLMessage reply = msg.createReply();
-					reply.setContent("");
+					StringBuffer content = new StringBuffer("registered");
+					content.append(" " + PennyAuction.BID_PRICE);
+					content.append(" " + PennyAuction.BIDS_IN_PACKAGE);
+					reply.setContent(content.toString());
 					if (getUser(username) == null) {
 						subscribers.add(new User(username, msg.getSender()));
 						reply.setPerformative(ACLMessage.AGREE);
