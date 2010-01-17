@@ -88,10 +88,9 @@ public class AuctionSite extends Agent {
 
 					// wysyłamy potwierdzenie (lub odrzucenie propozycji)
 					ACLMessage reply = msg.createReply();
-					reply.setContent(auction.getId().toString());
 					if (isBidAccepted) {
 						reply.setPerformative(ACLMessage.CONFIRM);
-						reply.setContent("confirm_bid");
+						reply.setContent("confirm_bid " + auction.getId());
 					} else {
 						reply.setPerformative(ACLMessage.DISCONFIRM);
 					}
