@@ -38,6 +38,10 @@ else
   else
     if [ $# -eq 0 ]
     then
+      if [ ! -d bin ]
+      then
+	mkdir bin
+      fi
       javac -cp $libs -d bin \
       src/mdettla/jadex/pennyauctions/buyer/*.java \
       src/mdettla/jadex/pennyauctions/seller/*.java \

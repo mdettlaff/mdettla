@@ -1,0 +1,76 @@
+\documentclass{beamer}
+
+\usepackage{beamerthemesplit}
+
+\title{Modelowanie aukcji groszowych za pomocą systemu Jadex}
+\author{Michał Dettlaff, Bartłomiej Kossakowski}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%\section[Outline]{}
+%\frame{\tableofcontents}
+
+%\section{Introduction}
+%\subsection{Overview of the Beamer Class}
+
+\frame {
+  \frametitle{Jadex}
+  \begin{itemize}
+    \item Implementacja modelu BDI
+    \item Belief
+    \item Desire / Goal
+    \item Intention / Plan
+  \end{itemize}
+}
+
+\frame {
+  \frametitle{Aukcje groszowe}
+  \begin{itemize}
+    \item podbij.pl
+    \item fruli.pl
+    \item za10groszy.pl
+    \item swoopo.com
+    \item BidRivals.com
+  \end{itemize}
+}
+
+\frame {
+  \frametitle{Aukcje groszowe}
+  \begin{block}{Każda oferta (podbicie, bid)}
+    \begin{itemize}
+      \item podnosi cenę przedmiotu o 1 grosz
+      \item przedłuża czas aukcji o 20 sekund
+      \item kosztuje kupującego 50 groszy
+    \end{itemize}
+  \end{block}
+  Wartości liczbowe na przykładzie podbij.pl
+}
+
+\frame {
+  \frametitle{Protokół aukcji}
+  \begin{block}{Rejestracja na stronie aukcyjnej}
+    \begin{definition}
+      \begin{tabular}{ll}
+        Performative & subscribe \\
+        Content      & nazwa\_agenta
+      \end{tabular}
+    \end{definition}
+  \end{block}
+  \begin{block}{Odpowiedź}
+    \begin{definition}
+      \begin{tabular}{ll}
+        Performative & agree
+      \end{tabular}
+    \end{definition}
+    albo
+    \begin{definition}
+      \begin{tabular}{ll}
+        Performative & disagree
+      \end{tabular}
+    \end{definition}
+  \end{block}
+}
+\end{document}
