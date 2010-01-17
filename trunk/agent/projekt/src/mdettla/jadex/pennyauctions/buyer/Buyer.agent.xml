@@ -6,7 +6,7 @@
 		<import>java.util.logging.*</import>
 		<import>java.util.*</import>
 		<import>jadex.adapter.fipa.*</import>
-		<import>mdettla.jadex.pennyauction.seller.*</import>
+		<import>jadex.util.Tuple</import>
 	</imports>
 
 	<capabilities>
@@ -22,9 +22,8 @@
 		<belief name="bids_left" class="Integer">
 			<fact>1</fact>
 		</belief>
-		<belief name="bids_spent" class="Integer">
-			<fact>0</fact>
-		</belief>
+		<!-- Ilość podbić wykorzystana na poszczególne aukcje. -->
+		<beliefset name="bids_spent" class="Tuple" />
 
 		<belief name="money" class="Integer" exported="true" />
 		<!-- Maksymalna cena jaką agent może zapłacić za przedmiot (jako
@@ -44,7 +43,7 @@
 		<maintaingoal name="have_bids">
 			<contextcondition>
 				$beliefbase.is_registered &amp;&amp;
-				$beliefbase.bids_spent &lt; $beliefbase.max_bids_per_auction
+				BuyMoreBids.getMaxBidsSpent($beliefbase.bids_spent) &lt; $beliefbase.max_bids_per_auction
 			</contextcondition>
 			<maintaincondition>
 				$beliefbase.bids_left &gt;= $beliefbase.min_bids
@@ -149,6 +148,15 @@
 			</parameter>
 		</messageevent>
 	</events>
+
+	<expressions>
+		<expression name="query_bids_spent_per_auction">
+			select one $pair.get(1)
+			from Tuple $pair in $beliefbase.bids_spent
+			where $pair.get(0).equals($auction_id)
+			<parameter name="$auction_id" class="String" />
+		</expression>
+	</expressions>
 
 	<properties>
 		<property name="logging.level">Level.INFO</property>

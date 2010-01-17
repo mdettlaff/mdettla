@@ -5,6 +5,7 @@ import jadex.adapter.fipa.AgentIdentifier;
 import jadex.adapter.fipa.SFipa;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
+import jadex.util.Tuple;
 
 public class BuyMoreBids extends Plan {
 	private static final long serialVersionUID = 1L;
@@ -31,5 +32,13 @@ public class BuyMoreBids extends Plan {
 			getBeliefbase().getBelief("bids_left").setFact(
 					bidsLeft + BID_PACKAGES_TO_BUY * PennyAuction.BIDS_IN_PACKAGE);
 		}
+	}
+
+	public static int getMaxBidsSpent(Tuple[] bidsSpent) {
+		int maxBidsSpent = 0 ;
+		for (Tuple bidsSpentPerAuction : bidsSpent) {
+			maxBidsSpent = Math.max((Integer)bidsSpentPerAuction.get(1), maxBidsSpent);
+		}
+		return maxBidsSpent;
 	}
 }

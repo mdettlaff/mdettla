@@ -5,8 +5,10 @@ import java.util.Random;
 import mdettla.jadex.pennyauctions.seller.PennyAuction;
 import mdettla.jadex.pennyauctions.seller.Product;
 import mdettla.jadex.pennyauctions.seller.ProductsDatabase;
+import jadex.runtime.IExpression;
 import jadex.runtime.IMessageEvent;
 import jadex.runtime.Plan;
+import jadex.util.Tuple;
 
 public class ProcessAuctionState extends Plan {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +21,16 @@ public class ProcessAuctionState extends Plan {
 		int currentPrice = Integer.valueOf(state.split(" ")[3]);
 		String topBidder = state.split(" ")[4];
 		int timeLeft = Integer.valueOf(state.split(" ")[5]);
+
+		IExpression queryword = getExpression("query_bids_spent_per_auction");
+		Integer bidsSpent = (Integer)queryword.execute(
+				"$auction_id", Integer.valueOf(auctionId));
+		if (bidsSpent == null) {
+			getBeliefbase().getBeliefSet("bids_spent").addFact(
+					new Tuple(Integer.valueOf(auctionId), 0));
+			bidsSpent = 0;
+		}
+
 		Product product = ProductsDatabase.getProduct(Integer.valueOf(productId));
 		boolean makeBid = true;
 		if (topBidder.equals(getAgentName())) { // nie licytyjemy sami ze sobą
@@ -38,17 +50,14 @@ public class ProcessAuctionState extends Plan {
 		if (timeLeft > bidWhenTimeLeft) {
 			makeBid = false;
 		}
-		if ((Integer)getBeliefbase().getBelief("bids_spent").getFact()
-				>= (Integer)getBeliefbase().getBelief("max_bids_per_auction").getFact()) {
+		if (bidsSpent >= (Integer)getBeliefbase().getBelief("max_bids_per_auction").getFact()) {
 			makeBid = false;
 		}
 		// podejmujemy "racjonalną" decyzję
 		int profitWhenAuctionLost =
-			(-1) * ((Integer)getBeliefbase().getBelief("bids_spent").getFact())
-			* PennyAuction.BID_PRICE;
+			(-1) * bidsSpent * PennyAuction.BID_PRICE;
 		int profitWhenAuctionWon =
-			((-1) * ((Integer)getBeliefbase().getBelief("bids_spent").getFact() + 1)
-			* PennyAuction.BID_PRICE)
+			((-1) * (bidsSpent + 1) * PennyAuction.BID_PRICE)
 			- currentPrice + product.getRetailPrice();
 		if (profitWhenAuctionLost > profitWhenAuctionWon) {
 			makeBid = false;
