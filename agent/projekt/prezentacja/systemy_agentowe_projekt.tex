@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\usepackage{polski}
+%\usepackage{polski}
 \usepackage[utf8]{inputenc}
 \usepackage[OT4]{fontenc}
 
@@ -57,20 +57,121 @@
   \frametitle{Protokół aukcji}
   \begin{block}{Rejestracja na stronie aukcyjnej}
     \begin{tabular}{ll}
+      Sender       & \textit{kupujący} \\
+      Receiver     & \textit{strona aukcyjna} \\
       Performative & subscribe \\
-      Content      & \textit{nazwa\_agenta}
+      Content      & \textit{nazwa użytkownika}
     \end{tabular}
   \end{block}
-  \begin{block}{Odpowiedź na rejestrację}
+}
+
+\frame {
+  \frametitle{Protokół aukcji}
+  Odpowiedź na prośbę o rejestrację
+  \begin{block}{Potwierdzenie rejestracji}
     \begin{tabular}{ll}
-      Performative & agree
+      Sender       & \textit{strona aukcyjna} \\
+      Receiver     & \textit{kupujący} \\
+      Performative & agree \\
+      Content      & \textit{cena podbicia} \\
+                   & \textit{ilość podbić w pakiecie}
     \end{tabular}
   \end{block}
   albo
-  \begin{block}{Odpowiedź na rejestrację}
+  \begin{block}{Odrzucenie prośby o rejestrację}
     \begin{tabular}{ll}
+      Sender       & \textit{strona aukcyjna} \\
+      Receiver     & \textit{kupujący} \\
       Performative & disagree
     \end{tabular}
   \end{block}
+}
+
+\frame {
+  \frametitle{Protokół aukcji}
+  \begin{block}{Dokupienie pakietu podbić}
+    \begin{tabular}{ll}
+      Sender       & \textit{kupujący} \\
+      Receiver     & \textit{strona aukcyjna} \\
+      Performative & request \\
+      Content      & \textit{ilość pakietów} \\
+                   & \textit{nazwa użytkownika}
+    \end{tabular}
+  \end{block}
+}
+
+\frame {
+  \frametitle{Protokół aukcji}
+  \begin{block}{Informacja o stanie aukcji}
+    \begin{tabular}{ll}
+      Sender       & \textit{strona aukcyjna} \\
+      Receiver     & \textit{kupujący1, kupujący2, ...} \\
+      Performative & cfp \\
+      Content      & \textit{id aukcji} \\
+                   & \textit{id przedmiotu} \\
+                   & \textit{aktualna cena} \\
+                   & \textit{aktualny wygrywający} \\
+                   & \textit{pozostały czas}
+    \end{tabular}
+  \end{block}
+}
+
+\frame {
+  \frametitle{Protokół aukcji}
+  \begin{block}{Podbicie}
+    \begin{tabular}{ll}
+      Sender       & \textit{kupujący} \\
+      Receiver     & \textit{strona aukcyjna} \\
+      Performative & request \\
+      Content      & \textit{id aukcji} \\
+                   & \textit{nazwa użytkownika}
+    \end{tabular}
+  \end{block}
+}
+
+\frame {
+  Odpowiedź na podbicie
+  \begin{block}{Potwierdzenie podbicia}
+    \begin{tabular}{ll}
+      Sender       & \textit{strona aukcyjna} \\
+      Receiver     & \textit{kupujący} \\
+      Performative & confirm \\
+      Content      & \textit{id aukcji}
+    \end{tabular}
+  \end{block}
+  albo
+  \begin{block}{Odrzucenie podbicia}
+    \begin{tabular}{ll}
+      Sender       & \textit{strona aukcyjna} \\
+      Receiver     & \textit{kupujący} \\
+      Performative & disconfirm \\
+      Content      & \textit{id aukcji}
+    \end{tabular}
+  \end{block}
+}
+
+\frame {
+  \frametitle{Aukcja dolarowa}
+  \begin{itemize}
+    \item przedmiotem aukcji jest banknot jednodolarowy
+    \item dolar zostanie sprzedany temu, kto zaoferuje najwięcej
+    \item ten kto będzie drugi w kolejności, też musi zapłacić swoją stawkę i nie dostanie nic w zamian
+  \end{itemize}
+}
+
+\frame {
+  \frametitle{Aukcja dolarowa}
+  \begin{itemize}[<+->]
+    \item paradoks teorii racjonalnego wyboru
+    \item zawsze "racjonalną" decyzją jest podbicie oferty
+    \item występuje irracjonalna eskalacja kosztów
+  \end{itemize}
+}
+
+\frame {
+  \frametitle{Aukcje groszowe}
+  "A strange game. The only winning move is not to play."\newline
+  \newline
+  \textit{ \textemdash "Gry wojenne", film USA, 1983}
 }
 \end{document}
