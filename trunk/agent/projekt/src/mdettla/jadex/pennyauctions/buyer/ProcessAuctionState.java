@@ -74,7 +74,7 @@ public class ProcessAuctionState extends Plan {
 			IMessageEvent bid = me.createReply("bid");
 			bid.setContent(content.toString());
 			sendMessage(bid);
-			getLogger().info("podbijam aukcję: " + auctionId);
+//			getLogger().info("podbijam aukcję: " + auctionId);
 		}
 	}
 }

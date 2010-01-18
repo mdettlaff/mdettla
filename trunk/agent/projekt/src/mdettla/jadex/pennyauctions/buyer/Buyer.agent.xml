@@ -128,7 +128,7 @@
 		</messageevent>
 		<messageevent name="bid" type="fipa" direction="send">
 			<parameter name="performative" class="String">
-				<value>SFipa.REQUEST</value>
+				<value>SFipa.PROPOSE</value>
 			</parameter>
 			<parameter name="content-start" class="String" direction="fixed">
 				<value>"bid"</value>

@@ -70,14 +70,14 @@ public class AuctionSite extends Agent {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
-						ACLMessage.REQUEST);
+						ACLMessage.PROPOSE);
 				ACLMessage msg = receive(mt);
-				// jeśli otrzymaliśmy podbicie
 				if (msg != null && msg.getContent().startsWith("bid")) {
 					boolean isBidAccepted = true;
-					System.out.println(myAgent.getName() + ": otrzymałem podbicie");
 					Integer auctionId = Integer.valueOf(msg.getContent().split(" ")[1]);
 					String username = msg.getContent().split(" ")[2];
+					System.out.println(myAgent.getName() +
+							": otrzymałem podbicie od " + username);
 					User user = getUser(username);
 					PennyAuction auction = getAuction(auctionId);
 					if (user != null && auction != null
@@ -91,16 +91,26 @@ public class AuctionSite extends Agent {
 
 					// wysyłamy potwierdzenie (lub odrzucenie propozycji)
 					ACLMessage reply = msg.createReply();
+					reply.setContent("confirm_bid " + auction.getId());
 					if (isBidAccepted) {
 						reply.setPerformative(ACLMessage.CONFIRM);
-						reply.setContent("confirm_bid " + auction.getId());
 					} else {
 						reply.setPerformative(ACLMessage.DISCONFIRM);
 					}
 					send(reply);
-				} else if (msg != null && msg.getContent().startsWith("buy_bids")) {
-					// jeśli otrzymaliśmy prośbę o zakup podbić
-					System.out.println(myAgent.getName() + ": otrzymałem prośbę o kupno podbić");
+				}
+			}
+		};
+		addBehaviour(checkForBids);
+
+		Behaviour checkForBidPurchaseRequest = new TickerBehaviour(this, 50) {
+			@Override
+			protected void onTick() {
+				MessageTemplate mt = MessageTemplate.MatchPerformative(
+						ACLMessage.REQUEST);
+				ACLMessage msg = receive(mt);
+				if (msg != null && msg.getContent().startsWith("buy_bids")) {
+//					System.out.println(myAgent.getName() + ": otrzymałem prośbę o kupno podbić");
 					Integer bidPackagesCount = Integer.valueOf(msg.getContent().split(" ")[1]);
 					String username = msg.getContent().split(" ")[2];
 					User user = getUser(username);
@@ -109,12 +119,12 @@ public class AuctionSite extends Agent {
 						netIncomings += bidPackagesCount * PennyAuction.BID_PRICE *
 								PennyAuction.BIDS_IN_PACKAGE;
 						System.out.println(myAgent.getName() +
-						": dodałem podbicia użytkownikowi");
+						": dodałem podbicia użytkownikowi " + username);
 					}
 				}
 			}
 		};
-		addBehaviour(checkForBids);
+		addBehaviour(checkForBidPurchaseRequest);
 
 		startAuction(ProductsDatabase.getProduct(1), 11990, 5);
 	}
