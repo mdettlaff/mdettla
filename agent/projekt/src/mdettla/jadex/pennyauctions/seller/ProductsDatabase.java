@@ -9,7 +9,7 @@ public class ProductsDatabase {
 
 	private static List<Product> products = new ArrayList<Product>();
 	static {
-		products.add(new Product(generateProductId(), "Nokia 7070", 24000));
+		products.add(new Product(generateProductId(), "Nokia 7070", 10000));
 		products.add(new Product(generateProductId(), "Blueberry London zapach", 17000));
 		products.add(new Product(generateProductId(), "Bon Sodexo", 20000));
 	}

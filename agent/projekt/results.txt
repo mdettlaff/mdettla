@@ -1,22 +1,61 @@
-Koniec aukcji: aukcja nr 1, wygrywający: buyer1
-osiągnięta cena 124,90 zł, towar: Nokia 7070, cena detaliczna: 240,00 zł
-PRZYCHODY: 379,90 zł
-WYDATKI: 240,00 zł
-SUMARYCZNY ZYSK: 139,90 zł
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer1
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer2
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer1
+auction_site@mdettla-desktop:1099/JADE: dodałem podbicia użytkownikowi buyer1
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer2
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer1
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer2
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: dodałem podbicia użytkownikowi buyer2
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer1
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: otrzymałem podbicie od buyer2
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 4)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 3)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 2)
+auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 1)
+Koniec aukcji: aukcja nr 1, wygrywający: buyer2
+osiągnięta cena 55,77 zł, towar: Nokia 7070, cena detaliczna: 100,00 zł
+PRZYCHODY: 355,77 zł
+WYDATKI: 100,00 zł
+SUMARYCZNY ZYSK: 255,77 zł
 auction_site@mdettla-desktop:1099/JADE: wysyłam wiadomość o stanie aukcji (sekund 0)
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
 INFO: buyer4: zostało pieniędzy: 449,00
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
 INFO: buyer4: zostało podbić: 3
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
 INFO: buyer3: zostało pieniędzy: 449,00
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
 INFO: buyer3: zostało podbić: 3
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
-INFO: buyer2: zostało pieniędzy: 423,50
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
-INFO: buyer1: zostało pieniędzy: 298,60
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
-INFO: buyer2: zostało podbić: 4
-2010-01-18 14:37:21 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+INFO: buyer1: zostało pieniędzy: 423,50
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+INFO: buyer6: zostało pieniędzy: 449,00
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+INFO: buyer6: zostało podbić: 3
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+INFO: buyer2: zostało pieniędzy: 373,73
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
+INFO: buyer2: zostało podbić: 5
+2010-01-19 13:47:01 mdettla.jadex.pennyauctions.buyer.HandleAuctionEnd body
 INFO: buyer1: zostało podbić: 4

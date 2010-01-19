@@ -26,15 +26,19 @@ else
   if [ "$1" == "1" ]
   then
     java -cp .:bin:$libs jadex.adapter.jade.tools.Starter -nogui \
-    auction_site:mdettla.jadex.pennyauctions.seller.AuctionSite\(\) \
+    auction_site:mdettla.jadex.pennyauctions.seller.AuctionSite\(20\) \
     buyer1:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
     default money=50000 bid_when_time_left=2 min_bids=4 max_price_proc=70 max_bids_per_auction=150\) \
     buyer2:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
-    default money=50000 bid_when_time_left=3 min_bids=4 max_price_proc=70 max_bids_per_auction=150\) \
+    default money=50000 bid_when_time_left=2 min_bids=4 max_price_proc=70 max_bids_per_auction=150\) \
     buyer3:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
     default money=50000 bid_when_time_left=4 min_bids=4 max_price_proc=70 max_bids_per_auction=100\) \
     buyer4:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
-    default money=50000 bid_when_time_left=5 min_bids=4 max_price_proc=70 max_bids_per_auction=100\)
+    default money=50000 bid_when_time_left=4 min_bids=4 max_price_proc=70 max_bids_per_auction=100\) \
+    buyer5:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
+    default money=50000 bid_when_time_left=4 min_bids=4 max_price_proc=70 max_bids_per_auction=100\) \
+    buyer6:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
+    default money=50000 bid_when_time_left=4 min_bids=4 max_price_proc=70 max_bids_per_auction=100\)
   else
     if [ $# -eq 0 ]
     then
@@ -49,11 +53,11 @@ else
       cp src/mdettla/jadex/pennyauctions/buyer/*.xml bin/mdettla/jadex/pennyauctions/buyer
     else # test
       java -cp .:bin:$libs jadex.adapter.jade.tools.Starter -nogui \
-      auction_site:mdettla.jadex.pennyauctions.seller.AuctionSite\(\) \
+      auction_site:mdettla.jadex.pennyauctions.seller.AuctionSite\(500\) \
       buyer1:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
-      default money=400 max_price_proc=50 bid_when_time_left=3 min_bids=4 max_bids_per_auction=4\) \
+      default money=10000 max_price_proc=50 bid_when_time_left=3 min_bids=4 max_bids_per_auction=4\) \
       buyer2:jadex.adapter.jade.JadeAgentAdapter\(mdettla.jadex.pennyauctions.buyer.Buyer \
-      default money=350 max_price_proc=50 bid_when_time_left=3 min_bids=4 max_bids_per_auction=4\)
+      default money=10000 max_price_proc=50 bid_when_time_left=3 min_bids=4 max_bids_per_auction=4\)
     fi
   fi
 fi
