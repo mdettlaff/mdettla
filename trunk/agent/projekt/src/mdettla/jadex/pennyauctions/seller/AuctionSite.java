@@ -22,10 +22,13 @@ public class AuctionSite extends Agent {
 	private List<PennyAuction> auctions = new ArrayList<PennyAuction>();
 	private int netOutcomings = 0;
 	private int netIncomings = 0;
+	private int cfpInterval;
+	private boolean isProposalSinceLastCFP = false;
 
 	@SuppressWarnings("serial")
 	@Override
 	protected void setup() {
+		cfpInterval = Integer.parseInt((String)getArguments()[0]);
 		// rejestrujemy usługę w Yellow Pages (Directory Facilitator).
 		DFAgentDescription dfd = new DFAgentDescription();
 		dfd.setName(getAID());
@@ -39,7 +42,7 @@ public class AuctionSite extends Agent {
 			fe.printStackTrace();
 		}
 
-		Behaviour checkForNewRegistrations = new TickerBehaviour(this, 500) {
+		Behaviour checkForNewRegistrations = new TickerBehaviour(this, cfpInterval * 2) {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
@@ -66,13 +69,14 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForNewRegistrations);
 
-		Behaviour checkForBids = new TickerBehaviour(this, 50) {
+		Behaviour checkForBids = new TickerBehaviour(this, cfpInterval / 10) {
 			@Override
 			public void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
 						ACLMessage.PROPOSE);
 				ACLMessage msg = receive(mt);
-				if (msg != null && msg.getContent().startsWith("bid")) {
+				if (msg != null && msg.getContent().startsWith("bid")
+						&& !isProposalSinceLastCFP) {
 					boolean isBidAccepted = true;
 					Integer auctionId = Integer.valueOf(msg.getContent().split(" ")[1]);
 					String username = msg.getContent().split(" ")[2];
@@ -94,6 +98,7 @@ public class AuctionSite extends Agent {
 					reply.setContent("confirm_bid " + auction.getId());
 					if (isBidAccepted) {
 						reply.setPerformative(ACLMessage.CONFIRM);
+						isProposalSinceLastCFP = true;
 					} else {
 						reply.setPerformative(ACLMessage.DISCONFIRM);
 					}
@@ -103,7 +108,7 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForBids);
 
-		Behaviour checkForBidPurchaseRequest = new TickerBehaviour(this, 50) {
+		Behaviour checkForBidPurchaseRequest = new TickerBehaviour(this, cfpInterval) {
 			@Override
 			protected void onTick() {
 				MessageTemplate mt = MessageTemplate.MatchPerformative(
@@ -126,7 +131,7 @@ public class AuctionSite extends Agent {
 		};
 		addBehaviour(checkForBidPurchaseRequest);
 
-		startAuction(ProductsDatabase.getProduct(1), 11990, 5);
+		startAuction(ProductsDatabase.getProduct(1), 4990, 5);
 	}
 
 	@SuppressWarnings("serial")
@@ -136,7 +141,7 @@ public class AuctionSite extends Agent {
 		final PennyAuction newAuction = new PennyAuction(product, initialPrice, timeLeft);
 		auctions.add(newAuction);
 
-		Behaviour runAuction = new TickerBehaviour(this, 200) {
+		Behaviour runAuction = new TickerBehaviour(this, cfpInterval) {
 			private PennyAuction auction = newAuction;
 			@Override
 			public void onTick() {
@@ -190,6 +195,7 @@ public class AuctionSite extends Agent {
 							": wysyłam wiadomość o stanie aukcji " +
 							"(sekund " + auction.getTimeLeft() + ")");
 					auction.setTimeLeft(auction.getTimeLeft() - 1);
+					isProposalSinceLastCFP = false;
 				}
 			}
 		};
