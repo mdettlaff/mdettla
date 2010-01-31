@@ -4,6 +4,19 @@
 
 main_class=Main
 
+function move_swf_files_to_bin {
+  base_name=${base_path_name/*\//}
+  binary_dir=${binary_file/\/$base_name.swf/}
+  if [ ! -d $binary_dir ]
+  then
+    mkdir -p $binary_dir
+  fi
+  if [ -f src/${binary_file#bin/} ]
+  then
+    mv src/${binary_file#bin/} $binary_file
+  fi
+}
+
 if [ $# == 0 ] || [ "$1" == "all" ]
 then
   if [ ! -d bin ]
@@ -21,18 +34,11 @@ then
     then
       mxmlc -sp=src --show-actionscript-warnings=true --strict=true \
         $source_file
-      # begin przenosimy pliki swf do katalogu bin
-      base_name=${base_path_name/*\//}
-      binary_dir=${binary_file/\/$base_name.swf/}
-      if [ ! -d $binary_dir ]
+      if [ $? != 0 ]
       then
-        mkdir -p $binary_dir
+        break
       fi
-      if [ -f src/${binary_file#bin/} ]
-      then
-        mv src/${binary_file#bin/} $binary_file
-      fi
-      # end przenosimy pliki swf do katalogu bin
+      move_swf_files_to_bin
     fi
   done
 else
