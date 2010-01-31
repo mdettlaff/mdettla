@@ -1,0 +1,15 @@
+<security_domain>http://localhost/</security_domain>
+<url_upload>http://localhost/fileref/upload.php?action=blah</url_upload>
+<httpSessionID>PHPSESSID</httpSessionID>
+<fileFilters>
+	<filter>*.jpg</filter>
+	<filter>*.gif</filter>
+	<filter>*.png</filter>
+</fileFilters>
+<maxFileBytes>10090000</maxFileBytes>
+<onProgressJS></onProgressJS>
+<onCompleteJS></onCompleteJS>
+<!-- define the class 'colors' to control the appearance of the upload % in progressTextCSS-->
+<progressTextCSS>.colors {color:#FF0000;}</progressTextCSS>
+<progressTextDefault>click to upload</progressTextDefault>
+<progressTextOnComplete>upload another?</progressTextOnComplete>
