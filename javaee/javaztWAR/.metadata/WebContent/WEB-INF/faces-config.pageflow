@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf12328876632240" configfile="/javaztWAR/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="product" x="122" y="178" id="pf12330600958380" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf12330600958381 pf12337516862970" path="/product.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="cart" x="338" y="178" id="pf12330600958382" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf12330600958381" path="/cart.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="register" x="122" y="754" id="pf12335889624590" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf12335889624591 pf12335956587703" path="/register.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="just_registered" x="338" y="562" id="pf12335889624592" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" inlinks="pf12335889624591" path="/just_registered.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="register_fail" x="338" y="946" id="pf12335956587704" referenceLink="//@navigationRule.1/@navigationCase.1/@toViewId|" inlinks="pf12335956587703" path="/register_fail.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="order" x="122" y="1330" id="pf12336704939550" referenceLink="//@navigationRule.2/@fromViewId|" outlinks="pf12336704939551" path="/order.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="order_success" x="338" y="1330" id="pf12336704939552" referenceLink="//@navigationRule.2/@navigationCase.0/@toViewId|" inlinks="pf12336704939551" path="/order_success.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="profile_change" x="122" y="1715" id="pf12337516862981" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf12337516862982" path="/profile_change.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="profile" x="338" y="1715" id="pf12337516862983" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf12337516862982" path="/profile.jsp"/>
+  <nodes xsi:type="pageflow:PFPage" name="bad_quantity" id="pf12337516862984" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf12337516862970" path="/bad_quantity.jsp"/>
+  <links id="pf12330600958381" target="pf12330600958382" source="pf12330600958380" outcome="success"/>
+  <links id="pf12335889624591" target="pf12335889624592" source="pf12335889624590" outcome="success"/>
+  <links id="pf12335956587703" target="pf12335956587704" source="pf12335889624590" outcome="failure"/>
+  <links id="pf12336704939551" target="pf12336704939552" source="pf12336704939550" outcome="success"/>
+  <links id="pf12337516862982" target="pf12337516862983" source="pf12337516862981" outcome="success"/>
+  <links id="pf12337516862970" target="pf12337516862984" source="pf12330600958380" outcome="badQuantity"/>
+</pageflow:Pageflow>

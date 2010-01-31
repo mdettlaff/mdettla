@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>javaztWAR</display-name>
+  <welcome-file-list>
+    <welcome-file>faces/index.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>Faces Servlet</servlet-name>
+    <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Faces Servlet</servlet-name>
+    <url-pattern>/faces/*</url-pattern>
+  </servlet-mapping>
+  
+  <security-role>
+    <role-name>registered-users</role-name>
+  </security-role>
+
+  <security-role>
+    <role-name>administrators</role-name>
+  </security-role>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Registered Users</web-resource-name>
+      <url-pattern>/faces/order.jsp</url-pattern>
+      <url-pattern>/faces/loginWelcome.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>registered-users</role-name>
+      <role-name>administrators</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Administrators Only!</web-resource-name>
+      <url-pattern>/faces/admin.jsp</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>administrators</role-name>
+    </auth-constraint>
+  </security-constraint>
+
+  <login-config>
+    <auth-method>FORM</auth-method>
+    <realm-name>Jetty Realm</realm-name>
+    <form-login-config>
+      <form-login-page>/faces/login.jsp</form-login-page>
+      <form-error-page>/faces/loginError.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+</web-app>

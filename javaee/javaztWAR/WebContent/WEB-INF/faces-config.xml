@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_1_2.xsd"
+    version="1.2">
+
+    <managed-bean>
+      <managed-bean-name>customer</managed-bean-name>
+      <managed-bean-class>mdettla.javazt.mbeans.CustomerMB</managed-bean-class>
+      <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+  <navigation-rule>
+    <from-view-id>/product.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/cart.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>badQuantity</from-outcome>
+      <to-view-id>/bad_quantity.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  <navigation-rule>
+    <from-view-id>/register.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/just_registered.jsp</to-view-id>
+    </navigation-case>
+    <navigation-case>
+      <from-outcome>failure</from-outcome>
+      <to-view-id>/register_fail.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  <navigation-rule>
+    <from-view-id>/order.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/order_success.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  <navigation-rule>
+    <from-view-id>/profile_change.jsp</from-view-id>
+    <navigation-case>
+      <from-outcome>success</from-outcome>
+      <to-view-id>/profile.jsp</to-view-id>
+    </navigation-case>
+  </navigation-rule>
+  
+  <converter>
+    <converter-id>javazt.utils.PhoneConverter</converter-id>
+    <converter-class>mdettla.javazt.utils.PhoneConverter</converter-class>
+  </converter>
+
+  <validator>
+    <validator-id>javazt.utils.PESELValidator</validator-id>
+    <validator-class>mdettla.javazt.utils.PESELValidator</validator-class>
+  </validator>
+  
+  <application>
+    <locale-config>
+ 	  <default-locale>pl</default-locale>
+    </locale-config>
+    <message-bundle>messages</message-bundle>
+  </application>  
+</faces-config>
