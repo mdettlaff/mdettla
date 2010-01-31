@@ -1,0 +1,7 @@
+	<div id="wrap">
+	<div id="header">
+		<h1><a href="#">Sklep internetowy Dettlaff & Company</a></h1>
+		<h2>z wykorzystaniem technologii Java EE 5</h2>
+	</div>
+	<div id="right">
+	<div class="articles">
