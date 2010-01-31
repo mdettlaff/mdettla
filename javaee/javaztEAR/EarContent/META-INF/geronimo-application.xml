@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<app:application xmlns:app="http://geronimo.apache.org/xml/ns/j2ee/application-2.0"
+  xmlns:client="http://geronimo.apache.org/xml/ns/j2ee/application-client-2.0"
+  xmlns:conn="http://geronimo.apache.org/xml/ns/j2ee/connector-1.2"
+  xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2"
+  xmlns:ejb="http://openejb.apache.org/xml/ns/openejb-jar-2.2"
+  xmlns:name="http://geronimo.apache.org/xml/ns/naming-1.2"
+  xmlns:pers="http://java.sun.com/xml/ns/persistence"
+  xmlns:pkgen="http://openejb.apache.org/xml/ns/pkgen-2.1"
+  xmlns:sec="http://geronimo.apache.org/xml/ns/security-2.0"
+  xmlns:web="http://geronimo.apache.org/xml/ns/j2ee/web-2.0.1"
+  application-name="javaztEAR">
+    <dep:environment>
+        <dep:moduleId>
+            <dep:groupId>default</dep:groupId>
+            <dep:artifactId>javaztEAR</dep:artifactId>
+            <dep:version>1.0</dep:version>
+            <dep:type>car</dep:type>
+        </dep:moduleId>
+        <dep:dependencies>
+            <dep:dependency>
+                <dep:groupId>org.apache.geronimo.framework</dep:groupId>
+                <dep:artifactId>j2ee-security</dep:artifactId>
+                <dep:type>car</dep:type>
+            </dep:dependency>
+            <dep:dependency>
+                <dep:groupId>org.apache.geronimo.configs</dep:groupId>
+                <dep:artifactId>system-database</dep:artifactId>
+                <dep:version>2.1.3</dep:version>
+                <dep:type>car</dep:type>
+            </dep:dependency>
+        </dep:dependencies>
+    </dep:environment>
+    <app:module>
+
+    <app:connector>tranql-connector-derby-embed-xa-1.4.rar</app:connector>
+        <app:alt-dd>javaztDBPool.xml</app:alt-dd>
+    </app:module>
+
+    <dep:gbean name="javazt-realm" class="org.apache.geronimo.security.realm.GenericSecurityRealm" xsi:type="dep:gbeanType" xmlns:dep="http://geronimo.apache.org/xml/ns/deployment-1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <dep:attribute name="realmName">javazt-realm</dep:attribute>
+        <dep:reference name="ServerInfo">
+            <dep:name>ServerInfo</dep:name>
+        </dep:reference>
+        <dep:xml-reference name="LoginModuleConfiguration">
+            <log:login-config xmlns:log="http://geronimo.apache.org/xml/ns/loginconfig-2.0">
+                <log:login-module control-flag="REQUIRED" wrap-principals="false">
+                    <log:login-domain-name>javazt-realm</log:login-domain-name>
+                    <log:login-module-class>org.apache.geronimo.security.realm.providers.SQLLoginModule</log:login-module-class>
+                    <log:option name="groupSelect">SELECT username, groupname FROM groups WHERE username=?</log:option>
+                    <log:option name="dataSourceApplication">default/javaztEAR/1.0/car</log:option>
+                    <log:option name="userSelect">SELECT username, password FROM users WHERE username=?</log:option>
+                    <log:option name="dataSourceName">javaztDBPool</log:option>
+                </log:login-module>
+            </log:login-config>
+        </dep:xml-reference>
+    </dep:gbean>
+</app:application>
