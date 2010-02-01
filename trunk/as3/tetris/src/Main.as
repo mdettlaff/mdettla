@@ -1,5 +1,10 @@
 package {
+
+    import tetris.Tetromino;
+    import tetris.TetrominoCreator;
+
     import flash.utils.Timer;
+    import flash.events.Event;
     import flash.events.TimerEvent;
     import flash.events.KeyboardEvent;
     import flash.display.Sprite;
@@ -7,29 +12,36 @@ package {
 
     public class Main extends Sprite {
 
-        private var xCoord:int = 10;
+        private var tetromino:Tetromino;
 
         public function Main() {
-            stage.addEventListener(KeyboardEvent.KEY_UP, keyHandler);
-            var timer:Timer = new Timer(1000, 8);
+            stage.addEventListener(Event.ENTER_FRAME, init);
+
+            stage.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
+
+            var timer:Timer = new Timer(1000, 0);
             timer.addEventListener(TimerEvent.TIMER, timerHandler);
             timer.start();
         }
 
-        public function timerHandler(event:TimerEvent):void {
-            trace("timerHandler: " + event);
-            trace("position: " + xCoord);
+        private function init(event:Event):void {
+            stage.removeEventListener(Event.ENTER_FRAME, init);
+            var tetrominoFactory:TetrominoCreator = new TetrominoCreator();
+            tetromino =
+                tetrominoFactory.addTetromino(TetrominoCreator.L, this.stage);
+        }
+
+        private function timerHandler(event:TimerEvent):void {
+            tetromino.moveOneBlockDown();
         }
 
         private function keyHandler(event:KeyboardEvent):void {
             switch (event.keyCode) {
                 case Keyboard.LEFT:
-                    xCoord--;
-                    trace("strzałka w lewo");
+                    tetromino.moveLeft();
                     break;
                 case Keyboard.RIGHT:
-                    xCoord++;
-                    trace("strzałka w prawo");
+                    tetromino.moveRight();
                     break;
             }
         }
