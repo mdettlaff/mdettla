@@ -2,7 +2,8 @@ package tetris {
 
     public class Board {
 
-        public static const SIZE:Object = {"x": 10, "y": 20};
-        public static const BLOCK_SIZE:uint = 15;
+        public static const WIDTH:int = 10;
+        public static const HEIGHT:int = 22;
+        public static const BLOCK_SIZE:int = 15;
     }
 }

@@ -32,7 +32,7 @@ package {
         }
 
         private function timerHandler(event:TimerEvent):void {
-            tetromino.moveOneBlockDown();
+            tetromino.moveDown();
         }
 
         private function keyHandler(event:KeyboardEvent):void {
@@ -42,6 +42,12 @@ package {
                     break;
                 case Keyboard.RIGHT:
                     tetromino.moveRight();
+                    break;
+                case Keyboard.DOWN:
+                    tetromino.moveDown();
+                    break;
+                case Keyboard.UP:
+                    tetromino.rotateClockwise();
                     break;
             }
         }
