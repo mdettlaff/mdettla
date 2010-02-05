@@ -30,7 +30,8 @@ then
     base_path_name=${base_path_name%.as}
     base_path_name=${base_path_name%.mxml}
     binary_file=bin/$base_path_name.swf
-    if [ $source_file -nt $binary_file ] || [ "$1" == "all" ]
+    if [ $source_file -nt $binary_file ] \
+      || [ "$1" == "all" ] || [[ $source_file == *$main_class* ]]
     then
       mxmlc -sp=src --show-actionscript-warnings=true --strict=true \
         --debug=true $source_file
