@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<mx:Application
+  xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:game="tetris.*"
+  creationComplete="init()">
+
+  <mx:Script>
+    <![CDATA[
+
+    import tetris.Tetris;
+
+    import flash.events.Event;
+
+    public function init():void {
+        new Tetris(gameCanvas);
+    }
+
+    private function printMessage(event:Event):void  {
+        message.text += event.target.label + " pressed" + "\n";
+    }
+
+    ]]>
+  </mx:Script>
+
+  <mx:Panel title="Tetris"
+    height="500" width="95%" layout="vertical"
+    paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+
+    <mx:Button label="Default Button" click="printMessage(event);"/>
+
+    <mx:TextArea id="message" text="" editable="false" width="250" height="50"
+      color="#0000FF" />
+
+    <game:GameCanvas id="gameCanvas" />
+
+  </mx:Panel>
+
+</mx:Application>
