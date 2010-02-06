@@ -1,9 +1,6 @@
 package tetris {
 
     import flash.display.Shape;
-    import flash.utils.ByteArray;
-
-    import mx.utils.ObjectUtil;
 
     public class Tetromino extends Shape {
 
@@ -13,44 +10,42 @@ package tetris {
         public var xCoord:int;
         public var yCoord:int;
 
+        /*
+         * Potential next tetromino state. Possible changes of state are
+         * rotations and moving one block down, left or right.
+         */
+        private var nextState:Tetromino;
+
         public function Tetromino(shape:Array, size:int, color:uint):void {
             this.shape = shape;
             this.size = size;
             this.color = color;
             xCoord = (Board.WIDTH / 2) - (size / 2);
             yCoord = 0;
-            updatePosition();
+            updateXY();
             draw();
         }
 
         public function moveDown():void {
-            var nextPosition:Tetromino = shallowCopy(this);
-            nextPosition.yCoord += 1;
-            attemptMove(nextPosition);
+            attemptMove(shape, xCoord, yCoord + 1);
         }
 
         public function moveLeft():void {
-            var nextPosition:Tetromino = shallowCopy(this);
-            nextPosition.xCoord -= 1;
-            attemptMove(nextPosition);
+            attemptMove(shape, xCoord - 1, yCoord);
         }
 
         public function moveRight():void {
-            var nextPosition:Tetromino = shallowCopy(this);
-            nextPosition.xCoord += 1;
-            attemptMove(nextPosition);
+            attemptMove(shape, xCoord + 1, yCoord);
         }
 
         public function rotateClockwise():void {
-            var nextPosition:Tetromino = shallowCopy(this);
             var rotatedShape:Array = Utils.createArray2D(size, size);
             for (var i:int = 0; i < size; i++) {
                 for (var j:int = 0; j < size; j++) {
                     rotatedShape[(size - 1) - j][i] = shape[i][j];
                 }
             }
-            nextPosition.shape = rotatedShape;
-            attemptMove(nextPosition);
+            attemptMove(rotatedShape, xCoord, yCoord);
             draw();
         }
 
@@ -69,33 +64,29 @@ package tetris {
             graphics.endFill();
         }
 
-        private function updatePosition():void {
+        private function updateXY():void {
             x = xCoord * Board.BLOCK_SIZE;
             y = yCoord * Board.BLOCK_SIZE + 2;
         }
 
-        private function attemptMove(nextPosition:Tetromino):void {
-            if (!(parent as Board).isConflictWith(nextPosition)) {
-                copyDataFrom(nextPosition);
-                updatePosition();
+        private function move(targetState:Tetromino):void {
+            shape = targetState.shape;
+            xCoord = targetState.xCoord;
+            yCoord = targetState.yCoord;
+            updateXY();
+        }
+
+        private function attemptMove(shape:Array,
+                xCoord:int, yCoord:int):void {
+            if (nextState == null) {
+                nextState = new Tetromino(shape, size, color);
             }
-        }
-
-        private function shallowCopy(original:Tetromino):Tetromino {
-            var copy:Tetromino =
-                new Tetromino(original.shape, original.size, original.color);
-            copy.xCoord = original.xCoord;
-            copy.yCoord = original.yCoord;
-            copy.updatePosition();
-            return copy;
-        }
-
-        private function copyDataFrom(source:Tetromino):void {
-            shape = source.shape;
-            size = source.size;
-            color = source.color;
-            xCoord = source.xCoord;
-            yCoord = source.yCoord;
+            nextState.shape = shape;
+            nextState.xCoord = xCoord;
+            nextState.yCoord = yCoord;
+            if (!(parent as Board).isConflictWith(nextState)) {
+                move(nextState);
+            }
         }
     }
 }
