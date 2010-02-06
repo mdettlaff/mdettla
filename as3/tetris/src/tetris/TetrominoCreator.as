@@ -20,11 +20,9 @@ package tetris {
         private static const PURPLE:uint = 0xA000A0;
         private static const RED:uint = 0xFF0000;
 
-        public function addTetromino(shape:uint,
-                target:DisplayObjectContainer):Tetromino {
+        public function addTetromino(shape:uint, board:Board):Tetromino {
             var tetromino:Tetromino = this.createTetromino(shape);
-            tetromino.draw();
-            target.addChild(tetromino);
+            board.addChild(tetromino);
             return tetromino;
         }
 

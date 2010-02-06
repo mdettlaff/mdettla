@@ -1,5 +1,6 @@
 package tetris {
 
+    import tetris.Board;
     import tetris.Tetromino;
     import tetris.TetrominoCreator;
 
@@ -16,9 +17,11 @@ package tetris {
         private var tetromino:Tetromino;
 
         public function Tetris(mainContainer:DisplayObjectContainer) {
+            var board:Board = new Board();
             var tetrominoFactory:TetrominoCreator = new TetrominoCreator();
             tetromino = tetrominoFactory.addTetromino(
-                    TetrominoCreator.L, mainContainer);
+                    TetrominoCreator.L, board);
+            mainContainer.addChild(board);
 
             var timer:Timer = new Timer(1000, 0);
             timer.addEventListener(TimerEvent.TIMER, timerHandler);
