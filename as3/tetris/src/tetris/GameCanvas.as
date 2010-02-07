@@ -13,15 +13,5 @@ package tetris {
         public function GameCanvas() {
             super();
         }
-
-        public function describeChildren(event:Event):void {
-            var desc:String = "";
-            var child:DisplayObject;
-            for (var i:int=0; i < this.numChildren; i++) {
-                child = this.getChildAt(i);
-                desc += i + ": " + child + '\n';
-            }
-            trace(desc);
-        }
     }
 }

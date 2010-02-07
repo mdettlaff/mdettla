@@ -26,12 +26,12 @@
     </mx:Script>
 
     <mx:Panel title="Tetris"
-        height="450" width="95%" layout="vertical"
+        height="455" width="250" layout="vertical"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
 
         <mx:Button label="Default Button" click="printMessage(event);"/>
 
-        <mx:TextArea id="message" text="" editable="false" width="200" height="50"
+        <mx:TextArea id="message" text="" editable="false" width="175" height="50"
             color="#0000FF" />
 
         <game:GameCanvas id="gameCanvas" />
