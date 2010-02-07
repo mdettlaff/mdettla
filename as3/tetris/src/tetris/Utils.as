@@ -11,15 +11,7 @@ package tetris {
         }
 
         public static function randInt(n:int):int {
-            return Math.round((n - 1) * Math.random());
-        }
-
-        public static function range(n:int):Array {
-            var range:Array = new Array(n);
-            for (var i:int = 0; i < n; i++) {
-                range[i] = i;
-            }
-            return range;
+            return n * Math.random();
         }
 
         public static function shuffle(array:Array):Array {

@@ -2,15 +2,14 @@ package tetris {
 
     public class TetrominoCreator {
 
-        public static const SHAPES_COUNT:int = 7;
         // tetromino shapes
-        public static const I:int = 0;
-        public static const J:int = 1;
-        public static const L:int = 2;
-        public static const O:int = 3;
-        public static const S:int = 4;
-        public static const T:int = 5;
-        public static const Z:int = 6;
+        private static const I:String = "I";
+        private static const J:String = "J";
+        private static const L:String = "L";
+        private static const O:String = "O";
+        private static const S:String = "S";
+        private static const T:String = "T";
+        private static const Z:String = "Z";
 
         private static const CYAN:uint = 0x00FFFF;
         private static const BLUE:uint = 0x0000FF;
@@ -27,8 +26,8 @@ package tetris {
         }
 
         public function getNextTetromino():Tetromino {
-            trace("bagOfShapes = " + bagOfShapes);
-            var shape:int = bagOfShapes.pop();
+            trace("bagOfShapes =", bagOfShapes);
+            var shape:String = bagOfShapes.pop();
             if (bagOfShapes.length == 0) {
                 bagOfShapes = createBagOfShapes();
             }
@@ -36,10 +35,10 @@ package tetris {
         }
 
         private function createBagOfShapes():Array {
-            return Utils.shuffle(Utils.range(SHAPES_COUNT));
+            return Utils.shuffle([I, J, L, O, S, T, Z]);
         }
 
-        private function createTetromino(shape:int):Tetromino {
+        private function createTetromino(shape:String):Tetromino {
             switch (shape) {
                 case I:
                     return new Tetromino([
@@ -84,7 +83,7 @@ package tetris {
                             [0, 0, 0]], 3, RED);
                     break;
             }
-            throw new Error("unknown tetromino shape: " + shape);
+            throw new Error("unknown tetromino shape:", shape);
         }
     }
 }
