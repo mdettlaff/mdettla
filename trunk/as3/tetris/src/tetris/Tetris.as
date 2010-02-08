@@ -25,22 +25,16 @@ package tetris {
             tetrominoCreator = new TetrominoCreator();
             putNextTetrominoOnBoard();
 
-            addChild(board);
-            mainContainer.addChild(this);
+            board.addChild(tetromino);
+            mainContainer.addChild(board);
 
             var timer:Timer = new Timer(SPEED, 0);
             timer.addEventListener(TimerEvent.TIMER, timerHandler);
             timer.start();
 
             mainContainer.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
-        }
-
-        public function putNextTetrominoOnBoard():void {
-            if (tetromino != null) {
-                board.removeChild(tetromino);
-            }
-            tetromino = tetrominoCreator.getNextTetromino();
-            board.addChild(tetromino);
+            board.addEventListener(
+                    TetrisEvent.TETROMINO_STUCK, tetrominoStuckHandler);
         }
 
         private function timerHandler(event:TimerEvent):void {
@@ -48,8 +42,29 @@ package tetris {
         }
 
         private function keyHandler(event:KeyboardEvent):void {
-            tetromino.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN,
-                        false, true, event.charCode, event.keyCode));
+            switch (event.keyCode) {
+                case Keyboard.LEFT:
+                    tetromino.moveLeft();
+                    break;
+                case Keyboard.RIGHT:
+                    tetromino.moveRight();
+                    break;
+                case Keyboard.DOWN:
+                    tetromino.moveDown();
+                    break;
+                case Keyboard.UP:
+                    tetromino.rotateClockwise();
+                    break;
+            }
+        }
+
+        private function tetrominoStuckHandler(event:TetrisEvent):void {
+            putNextTetrominoOnBoard();
+        }
+
+        private function putNextTetrominoOnBoard():void {
+            tetromino = tetrominoCreator.getNextTetromino();
+            board.addChild(tetromino);
         }
     }
 }
