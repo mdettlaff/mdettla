@@ -7,16 +7,14 @@ package tetris {
     public class Tetromino extends Shape {
 
         public var shape:Array;
-        public var size:int;
         public var color:uint;
         public var xCoord:int;
         public var yCoord:int;
 
-        public function Tetromino(shape:Array, size:int, color:uint) {
+        public function Tetromino(shape:Array, color:uint) {
             this.shape = shape;
-            this.size = size;
             this.color = color;
-            xCoord = (Board.WIDTH / 2) - (size / 2);
+            xCoord = (Board.WIDTH / 2) - (shape.length / 2);
             yCoord = 0;
             updateXY();
             draw();
@@ -39,10 +37,11 @@ package tetris {
         }
 
         public function rotateClockwise():void {
-            var rotatedShape:Array = Utils.createArray2D(size, size);
-            for (var i:int = 0; i < size; i++) {
-                for (var j:int = 0; j < size; j++) {
-                    rotatedShape[i][(size - 1) - j] = shape[j][i];
+            var rotatedShape:Array =
+                Utils.createArray2D(shape.length, shape.length);
+            for (var i:int = 0; i < shape.length; i++) {
+                for (var j:int = 0; j < shape.length; j++) {
+                    rotatedShape[i][(shape.length - 1) - j] = shape[j][i];
                 }
             }
             attemptMove(rotatedShape, xCoord, yCoord);
@@ -53,8 +52,8 @@ package tetris {
             graphics.clear();
             graphics.lineStyle(1.0, 0x000000, 1.0);
             graphics.beginFill(color);
-            for (var i:int = 0; i < size; i++) {
-                for (var j:int = 0; j < size; j++) {
+            for (var i:int = 0; i < shape.length; i++) {
+                for (var j:int = 0; j < shape.length; j++) {
                     if (shape[i][j]) {
                         graphics.drawRect(
                                 j * Board.BLOCK_SIZE, i * Board.BLOCK_SIZE,
@@ -68,7 +67,7 @@ package tetris {
         private function attemptMove(
                 shape:Array, xCoord:int, yCoord:int):Boolean {
             if (!(parent as Board).isConflictWithTetrominoState(
-                        shape, size, xCoord, yCoord)) {
+                        shape, xCoord, yCoord)) {
                 moveToState(shape, xCoord, yCoord);
                 return true;
             }
