@@ -12,6 +12,9 @@
 
         import flash.events.Event;
 
+        [Bindable]
+        public var score:int = 0;
+
         public function init():void {
             new Tetris(gameCanvas);
             gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
@@ -26,13 +29,18 @@
     </mx:Script>
 
     <mx:Panel title="Tetris"
-        height="455" width="250" layout="vertical"
+        layout="vertical"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
 
-        <mx:Button label="Default Button" click="printMessage(event);"/>
+        <mx:Button label="Default Button" click="printMessage(event)"/>
 
-        <mx:TextArea id="message" text="" editable="false" width="175" height="50"
-            color="#0000FF" />
+        <mx:TextArea id="message" text="" editable="false"
+            width="175" height="40" color="#0000FF" />
+
+        <mx:HBox>
+            <mx:Label text="{score}" />
+            <mx:Label text="punktów" />
+        </mx:HBox>
 
         <game:GameCanvas id="gameCanvas" />
 
