@@ -45,42 +45,42 @@ package tetris {
                             [0, 0, 0, 0],
                             [1, 1, 1, 1],
                             [0, 0, 0, 0],
-                            [0, 0, 0, 0]], 4, CYAN);
+                            [0, 0, 0, 0]], CYAN);
                     break;
                 case J:
                     return new Tetromino([
                             [1, 0, 0],
                             [1, 1, 1],
-                            [0, 0, 0]], 3, BLUE);
+                            [0, 0, 0]], BLUE);
                     break;
                 case L:
                     return new Tetromino([
                             [0, 0, 1],
                             [1, 1, 1],
-                            [0, 0, 0]], 3, ORANGE);
+                            [0, 0, 0]], ORANGE);
                     break;
                 case O:
                     return new Tetromino([
                             [1, 1],
-                            [1, 1]], 2, YELLOW);
+                            [1, 1]], YELLOW);
                     break;
                 case S:
                     return new Tetromino([
                             [0, 1, 1],
                             [1, 1, 0],
-                            [0, 0, 0]], 3, GREEN);
+                            [0, 0, 0]], GREEN);
                     break;
                 case T:
                     return new Tetromino([
                             [0, 1, 0],
                             [1, 1, 1],
-                            [0, 0, 0]], 3, PURPLE);
+                            [0, 0, 0]], PURPLE);
                     break;
                 case Z:
                     return new Tetromino([
                             [1, 1, 0],
                             [0, 1, 1],
-                            [0, 0, 0]], 3, RED);
+                            [0, 0, 0]], RED);
                     break;
             }
             throw new Error("unknown tetromino shape:", shape);

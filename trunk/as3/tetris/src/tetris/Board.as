@@ -30,9 +30,9 @@ package tetris {
         }
 
         public function isConflictWithTetrominoState(
-                shape:Array, size:int, xCoord:int, yCoord:int):Boolean {
-            for (var i:int = 0; i < size; i++) {
-                for (var j:int = 0; j < size; j++) {
+                shape:Array, xCoord:int, yCoord:int):Boolean {
+            for (var i:int = 0; i < shape.length; i++) {
+                for (var j:int = 0; j < shape.length; j++) {
                     if (shape[i][j]) {
                         if (xCoord + j < 0 || xCoord + j > Board.WIDTH - 1
                                 || yCoord + i > Board.HEIGHT - 1
@@ -51,8 +51,8 @@ package tetris {
         }
 
         private function stick(t:Tetromino):void {
-            for (var i:int = 0; i < t.size; i++) {
-                for (var j:int = 0; j < t.size; j++) {
+            for (var i:int = 0; i < t.shape.length; i++) {
+                for (var j:int = 0; j < t.shape.length; j++) {
                     if (t.shape[i][j]) {
                         board[t.yCoord + i][t.xCoord + j] = t.color;
                     }
