@@ -25,6 +25,7 @@ package tetris {
             y = 5;
             board = Utils.createArray2D(WIDTH, HEIGHT);
             drawBounds();
+            addEventListener(TetrisEvent.TETROMINO_STUCK, stick);
         }
 
         public function isConflictWithTetrominoState(
@@ -43,7 +44,8 @@ package tetris {
             return false;
         }
 
-        public function stick(t:Tetromino):void {
+        public function stick(event:TetrisEvent):void {
+            var t:Tetromino = event.tetromino;
             for (var i:int = 0; i < t.size; i++) {
                 for (var j:int = 0; j < t.size; j++) {
                     if (t.shape[i][j]) {
@@ -56,12 +58,7 @@ package tetris {
         }
 
         private function destroyBlockLines():void {
-            awardPoints();
-        }
-
-        private function awardPoints():void {
-            var tetrisApp:TetrisApp = parent.parent.parent.parent as TetrisApp;
-            tetrisApp.score += 100;
+            dispatchEvent(new TetrisEvent(TetrisEvent.BLOCK_LINE_DESTROYED));
         }
 
         private function drawBounds():void {

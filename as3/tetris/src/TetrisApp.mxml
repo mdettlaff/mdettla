@@ -9,20 +9,27 @@
 
         import tetris.Board;
         import tetris.Tetris;
+        import tetris.TetrisEvent;
 
         import flash.events.Event;
 
         [Bindable]
-        public var score:int = 0;
+        private var score:int = 0;
 
-        public function init():void {
+        private function init():void {
             new Tetris(gameCanvas);
             gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
             gameCanvas.height = Board.HEIGHT * Board.BLOCK_SIZE;
+
+            addEventListener(TetrisEvent.BLOCK_LINE_DESTROYED, awardPoints);
         }
 
         private function printMessage(event:Event):void  {
             message.text += event.target.label + " pressed" + "\n";
+        }
+
+        private function awardPoints(event:TetrisEvent):void {
+            score += 100;
         }
 
         ]]>
