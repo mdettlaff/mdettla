@@ -21,7 +21,7 @@
             gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
             gameCanvas.height = Board.HEIGHT * Board.BLOCK_SIZE;
 
-            addEventListener(TetrisEvent.BLOCK_LINE_DESTROYED, awardPoints);
+            addEventListener(TetrisEvent.LINES_DESTROYED, awardPoints);
         }
 
         private function printMessage(event:Event):void  {
@@ -29,7 +29,7 @@
         }
 
         private function awardPoints(event:TetrisEvent):void {
-            score += 100;
+            score += 100 * event.destroyedLinesCount;
         }
 
         ]]>

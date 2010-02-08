@@ -25,7 +25,8 @@ package tetris {
             y = 5;
             board = Utils.createArray2D(WIDTH, HEIGHT);
             drawBounds();
-            addEventListener(TetrisEvent.TETROMINO_STUCK, stick);
+
+            addEventListener(TetrisEvent.TETROMINO_LANDED, landingHandler);
         }
 
         public function isConflictWithTetrominoState(
@@ -44,8 +45,12 @@ package tetris {
             return false;
         }
 
-        public function stick(event:TetrisEvent):void {
-            var t:Tetromino = event.tetromino;
+        private function landingHandler(event:TetrisEvent):void {
+            stick(event.tetromino);
+            destroyFullLines();
+        }
+
+        private function stick(t:Tetromino):void {
             for (var i:int = 0; i < t.size; i++) {
                 for (var j:int = 0; j < t.size; j++) {
                     if (t.shape[i][j]) {
@@ -53,12 +58,36 @@ package tetris {
                     }
                 }
             }
-            destroyBlockLines();
             drawBlocks();
         }
 
-        private function destroyBlockLines():void {
-            dispatchEvent(new TetrisEvent(TetrisEvent.BLOCK_LINE_DESTROYED));
+        private function destroyFullLines():void {
+            var nonFullLines:Array = board.filter(
+                    function (line:Array, i:int, array:Array):Boolean {
+                        return !isLineFull(line);
+                    });
+            var destroyedLinesCount:int = HEIGHT - nonFullLines.length;
+            if (destroyedLinesCount > 0) {
+                var emptyLines:Array =
+                    Utils.createArray2D(WIDTH, destroyedLinesCount);
+                board = emptyLines.concat(nonFullLines);
+                draw();
+
+                dispatchEvent(new TetrisEvent(TetrisEvent.LINES_DESTROYED,
+                            null, destroyedLinesCount));
+            }
+        }
+
+        private function isLineFull(line:Array):Boolean {
+            return line.every(
+                    function (block:Object, i:int, array:Array):Boolean {
+                        return block != null;
+                    });
+        }
+
+        private function draw():void {
+            drawBounds();
+            drawBlocks();
         }
 
         private function drawBounds():void {
