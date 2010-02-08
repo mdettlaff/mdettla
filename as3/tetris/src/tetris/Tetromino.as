@@ -1,6 +1,8 @@
 package tetris {
 
     import flash.display.Shape;
+    import flash.events.KeyboardEvent;
+    import flash.ui.Keyboard;
 
     public class Tetromino extends Shape {
 
@@ -11,6 +13,7 @@ package tetris {
         public var yCoord:int;
 
         public function Tetromino(shape:Array, size:int, color:uint) {
+            addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
             this.shape = shape;
             this.size = size;
             this.color = color;
@@ -27,15 +30,32 @@ package tetris {
             }
         }
 
-        public function moveLeft():void {
+        private function keyHandler(event:KeyboardEvent):void {
+            switch (event.keyCode) {
+                case Keyboard.LEFT:
+                    moveLeft();
+                    break;
+                case Keyboard.RIGHT:
+                    moveRight();
+                    break;
+                case Keyboard.DOWN:
+                    moveDown();
+                    break;
+                case Keyboard.UP:
+                    rotateClockwise();
+                    break;
+            }
+        }
+
+        private function moveLeft():void {
             attemptMove(shape, xCoord - 1, yCoord);
         }
 
-        public function moveRight():void {
+        private function moveRight():void {
             attemptMove(shape, xCoord + 1, yCoord);
         }
 
-        public function rotateClockwise():void {
+        private function rotateClockwise():void {
             var rotatedShape:Array = Utils.createArray2D(size, size);
             for (var i:int = 0; i < size; i++) {
                 for (var j:int = 0; j < size; j++) {
@@ -62,9 +82,14 @@ package tetris {
             graphics.endFill();
         }
 
-        private function updateXY():void {
-            x = xCoord * Board.BLOCK_SIZE;
-            y = yCoord * Board.BLOCK_SIZE;
+        private function attemptMove(
+                shape:Array, xCoord:int, yCoord:int):Boolean {
+            if (!(parent as Board).isConflictWithTetrominoState(
+                        shape, size, xCoord, yCoord)) {
+                moveToState(shape, xCoord, yCoord);
+                return true;
+            }
+            return false;
         }
 
         private function moveToState(
@@ -75,14 +100,9 @@ package tetris {
             updateXY();
         }
 
-        private function attemptMove(
-                shape:Array, xCoord:int, yCoord:int):Boolean {
-            if (!(parent as Board).isConflictWithTetrominoState(
-                        shape, size, xCoord, yCoord)) {
-                moveToState(shape, xCoord, yCoord);
-                return true;
-            }
-            return false;
+        private function updateXY():void {
+            x = xCoord * Board.BLOCK_SIZE;
+            y = yCoord * Board.BLOCK_SIZE;
         }
     }
 }

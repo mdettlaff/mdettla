@@ -2,46 +2,34 @@
 #./make.sh run
 #./make.sh all
 
-main_class=Main
-
-function move_swf_files_to_bin {
-  base_name=${base_path_name/*\//}
-  binary_dir=${binary_file/\/$base_name.swf/}
-  if [ ! -d $binary_dir ]
-  then
-    mkdir -p $binary_dir
-  fi
-  if [ -f src/${binary_file#bin/} ]
-  then
-    mv src/${binary_file#bin/} $binary_file
-  fi
-}
+main_class=TetrisApp
 
 if [ $# == 0 ] || [ "$1" == "all" ]
 then
-  if [ ! -d bin ]
-  then
-    mkdir bin
-  fi
   source_files=`find src -name '*.as' -or -name '*.mxml'`
+  binary_file="bin/$main_class.swf"
+  changed=false
   for source_file in $source_files
   do
-    base_path_name=${source_file#src/}
-    base_path_name=${base_path_name%.as}
-    base_path_name=${base_path_name%.mxml}
-    binary_file=bin/$base_path_name.swf
-    if [ $source_file -nt $binary_file ] \
-      || [ "$1" == "all" ] || [[ $source_file == *$main_class* ]]
+    if [ $source_file -nt $binary_file ]
     then
-      mxmlc -sp=src --show-actionscript-warnings=true --strict=true \
-        --debug=true $source_file
-      if [ $? != 0 ]
-      then
-        break
-      fi
-      move_swf_files_to_bin
+      changed=true
     fi
   done
+  if $changed || [ "$1" == "all" ]
+  then
+    main_file=`ls src/$main_class.*`
+    mxmlc -sp=src --show-actionscript-warnings=true --strict=true \
+      --debug=true $main_file
+    if [ $? == 0 ]
+    then
+      if [ ! -d bin ]
+      then
+        mkdir bin
+      fi
+      mv src/$main_class.swf bin/$main_class.swf
+    fi
+  fi
 else
   if [ "$1" == "clean" ]
   then

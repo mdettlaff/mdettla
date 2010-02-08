@@ -14,6 +14,8 @@ package tetris {
 
     public class Tetris extends Sprite {
 
+        private static const SPEED:int = 1000;
+
         private var board:Board;
         private var tetrominoCreator:TetrominoCreator;
         private var tetromino:Tetromino;
@@ -26,7 +28,7 @@ package tetris {
             addChild(board);
             mainContainer.addChild(this);
 
-            var timer:Timer = new Timer(1000, 0);
+            var timer:Timer = new Timer(SPEED, 0);
             timer.addEventListener(TimerEvent.TIMER, timerHandler);
             timer.start();
 
@@ -46,20 +48,8 @@ package tetris {
         }
 
         private function keyHandler(event:KeyboardEvent):void {
-            switch (event.keyCode) {
-                case Keyboard.LEFT:
-                    tetromino.moveLeft();
-                    break;
-                case Keyboard.RIGHT:
-                    tetromino.moveRight();
-                    break;
-                case Keyboard.DOWN:
-                    tetromino.moveDown();
-                    break;
-                case Keyboard.UP:
-                    tetromino.rotateClockwise();
-                    break;
-            }
+            tetromino.dispatchEvent(new KeyboardEvent(KeyboardEvent.KEY_DOWN,
+                        false, true, event.charCode, event.keyCode));
         }
     }
 }

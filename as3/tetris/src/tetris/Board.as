@@ -51,7 +51,17 @@ package tetris {
                     }
                 }
             }
+            destroyBlockLines();
             drawBlocks();
+        }
+
+        private function destroyBlockLines():void {
+            awardPoints();
+        }
+
+        private function awardPoints():void {
+            var tetrisApp:TetrisApp = parent.parent.parent.parent as TetrisApp;
+            tetrisApp.score += 100;
         }
 
         private function drawBounds():void {
