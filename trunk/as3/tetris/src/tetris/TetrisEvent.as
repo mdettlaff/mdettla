@@ -4,15 +4,17 @@ package tetris {
 
     public class TetrisEvent extends Event {
 
-        public static const TETROMINO_STUCK:String = "tetrominoStuck";
-        public static const BLOCK_LINE_DESTROYED:String = "blockLineDestroyed";
+        public static const TETROMINO_LANDED:String = "tetrominoLanded";
+        public static const LINES_DESTROYED:String = "linesDestroyed";
 
         public var tetromino:Tetromino;
+        public var destroyedLinesCount:int;
 
-        public function TetrisEvent(
-                eventName:String, tetromino:Tetromino=null) {
+        public function TetrisEvent(eventName:String,
+                tetromino:Tetromino = null, destroyedLinesCount:int = 0) {
             super(eventName, true);
             this.tetromino = tetromino;
+            this.destroyedLinesCount = destroyedLinesCount;
         }
     }
 }

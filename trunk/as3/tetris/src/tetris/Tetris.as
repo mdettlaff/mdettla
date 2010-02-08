@@ -34,7 +34,7 @@ package tetris {
 
             mainContainer.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
             board.addEventListener(
-                    TetrisEvent.TETROMINO_STUCK, tetrominoStuckHandler);
+                    TetrisEvent.TETROMINO_LANDED, landingHandler);
         }
 
         private function timerHandler(event:TimerEvent):void {
@@ -58,7 +58,7 @@ package tetris {
             }
         }
 
-        private function tetrominoStuckHandler(event:TetrisEvent):void {
+        private function landingHandler(event:TetrisEvent):void {
             putNextTetrominoOnBoard();
         }
 

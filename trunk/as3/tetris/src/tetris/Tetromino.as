@@ -25,7 +25,7 @@ package tetris {
         public function moveDown():void {
             if (!attemptMove(shape, xCoord, yCoord + 1)) {
                 dispatchEvent(
-                        new TetrisEvent(TetrisEvent.TETROMINO_STUCK, this));
+                        new TetrisEvent(TetrisEvent.TETROMINO_LANDED, this));
                 parent.removeChild(this);
             }
         }
