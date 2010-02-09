@@ -13,6 +13,9 @@
 
         import flash.events.Event;
 
+        private static const PAUSE:String = "Pauza";
+        private static const CONTINUE:String = "Wznów";
+
         [Bindable]
         private var score:int = 0;
 
@@ -23,6 +26,8 @@
 
             addEventListener(TetrisEvent.LINES_DESTROYED, awardPoints);
             addEventListener(TetrisEvent.NEW_GAME, newGameHandler);
+            addEventListener(TetrisEvent.PAUSE, pauseHandler);
+            addEventListener(TetrisEvent.CONTINUE, continueHandler);
         }
 
         private function awardPoints(event:TetrisEvent):void {
@@ -33,23 +38,45 @@
             score = 0;
         }
 
-        private function dispatchNewGame():void {
-            gameCanvas.getChildAt(0).dispatchEvent(
-                    new TetrisEvent(TetrisEvent.NEW_GAME));
+        private function pauseHandler(event:TetrisEvent):void {
+            pauseButton.label = CONTINUE;
+        }
+
+        private function continueHandler(event:TetrisEvent):void {
+            pauseButton.label = PAUSE;
+        }
+
+        private function newGame():void {
+            dispatchTetrisEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+        }
+
+        private function pauseOrContinue(event:Event):void {
+            if (event.currentTarget.label == PAUSE) {
+                dispatchTetrisEvent(new TetrisEvent(TetrisEvent.PAUSE));
+            } else {
+                dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
+            }
+        }
+
+        private function dispatchTetrisEvent(event:TetrisEvent):void {
+            gameCanvas.getChildAt(0).dispatchEvent(event);
         }
 
         ]]>
     </mx:Script>
 
-    <mx:Panel title="Tetris"
-        layout="vertical"
+    <mx:Panel title="Tetris" layout="vertical"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-
-        <mx:Button label="Nowa gra" click="dispatchNewGame()" />
 
         <mx:HBox>
             <mx:Label text="{score}" />
             <mx:Label text="punktów" />
+        </mx:HBox>
+
+        <mx:HBox width="155">
+            <mx:Button label="Nowa gra" click="newGame()" />
+            <mx:Button id="pauseButton" label="{PAUSE}"
+                click="pauseOrContinue(event)" />
         </mx:HBox>
 
         <game:GameCanvas id="gameCanvas" />
