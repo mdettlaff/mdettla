@@ -6,6 +6,7 @@ package tetris {
 
         public static const TETROMINO_LANDED:String = "tetrominoLanded";
         public static const LINES_DESTROYED:String = "linesDestroyed";
+        public static const NEW_GAME:String = "newGame";
 
         public var tetromino:Tetromino;
         public var destroyedLinesCount:int;

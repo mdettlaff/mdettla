@@ -1,8 +1,6 @@
 package tetris {
 
     import flash.display.Shape;
-    import flash.events.KeyboardEvent;
-    import flash.ui.Keyboard;
 
     public class Tetromino extends Shape {
 
@@ -24,7 +22,6 @@ package tetris {
             if (!attemptMove(shape, xCoord, yCoord + 1)) {
                 dispatchEvent(
                         new TetrisEvent(TetrisEvent.TETROMINO_LANDED, this));
-                parent.removeChild(this);
             }
         }
 
