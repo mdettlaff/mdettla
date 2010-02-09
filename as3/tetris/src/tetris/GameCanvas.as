@@ -1,4 +1,4 @@
-package tetris {
+	package tetris {
 
     import flash.display.DisplayObject;
     import flash.events.Event;

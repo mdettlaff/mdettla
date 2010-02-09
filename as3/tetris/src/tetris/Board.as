@@ -19,14 +19,13 @@ package tetris {
                 lineColor:Number = 0x000000) {
             this.fillColor = fillColor;
             this.lineColor = lineColor;
+            clear();
             bounds = new Rectangle(0, 0,
                     WIDTH * BLOCK_SIZE, HEIGHT * BLOCK_SIZE);
-            x = 5;
-            y = 5;
-            board = Utils.createArray2D(WIDTH, HEIGHT);
             drawBounds();
 
             addEventListener(TetrisEvent.TETROMINO_LANDED, landingHandler);
+            addEventListener(TetrisEvent.NEW_GAME, newGameHandler);
         }
 
         public function isConflictWithTetrominoState(
@@ -50,6 +49,15 @@ package tetris {
             destroyFullLines();
         }
 
+        private function newGameHandler(event:TetrisEvent):void {
+            clear();
+        	draw();
+        }
+
+        private function clear():void {
+        	board = Utils.createArray2D(WIDTH, HEIGHT);
+        }
+
         private function stick(t:Tetromino):void {
             for (var i:int = 0; i < t.shape.length; i++) {
                 for (var j:int = 0; j < t.shape.length; j++) {
@@ -62,8 +70,16 @@ package tetris {
         }
 
         private function destroyFullLines():void {
+
+            var isLineFull:Function = function(line:Array):Boolean {
+                return line.every(
+                        function(block:Object, i:int, array:Array):Boolean {
+                            return block != null;
+                        });
+            };
+
             var nonFullLines:Array = board.filter(
-                    function (line:Array, i:int, array:Array):Boolean {
+                    function(line:Array, i:int, array:Array):Boolean {
                         return !isLineFull(line);
                     });
             var destroyedLinesCount:int = HEIGHT - nonFullLines.length;
@@ -76,13 +92,6 @@ package tetris {
                 dispatchEvent(new TetrisEvent(TetrisEvent.LINES_DESTROYED,
                             null, destroyedLinesCount));
             }
-        }
-
-        private function isLineFull(line:Array):Boolean {
-            return line.every(
-                    function (block:Object, i:int, array:Array):Boolean {
-                        return block != null;
-                    });
         }
 
         private function draw():void {

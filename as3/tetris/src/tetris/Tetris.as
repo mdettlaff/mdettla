@@ -1,16 +1,11 @@
 package tetris {
 
-    import tetris.Board;
-    import tetris.Tetromino;
-    import tetris.TetrominoCreator;
-
-    import flash.utils.Timer;
-    import flash.events.Event;
-    import flash.events.TimerEvent;
-    import flash.events.KeyboardEvent;
     import flash.display.DisplayObjectContainer;
     import flash.display.Sprite;
+    import flash.events.KeyboardEvent;
+    import flash.events.TimerEvent;
     import flash.ui.Keyboard;
+    import flash.utils.Timer;
 
     public class Tetris extends Sprite {
 
@@ -23,7 +18,7 @@ package tetris {
         public function Tetris(mainContainer:DisplayObjectContainer) {
             board = new Board();
             tetrominoCreator = new TetrominoCreator();
-            putNextTetrominoOnBoard();
+            nextTetromino();
 
             board.addChild(tetromino);
             mainContainer.addChild(board);
@@ -34,7 +29,8 @@ package tetris {
 
             mainContainer.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
             board.addEventListener(
-                    TetrisEvent.TETROMINO_LANDED, landingHandler);
+                    TetrisEvent.TETROMINO_LANDED, nextTetromino);
+            board.addEventListener(TetrisEvent.NEW_GAME, nextTetromino);
         }
 
         private function timerHandler(event:TimerEvent):void {
@@ -55,14 +51,16 @@ package tetris {
                 case Keyboard.UP:
                     tetromino.rotateClockwise();
                     break;
+                case 78: // N
+                    board.dispatchEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+                    break;
             }
         }
 
-        private function landingHandler(event:TetrisEvent):void {
-            putNextTetrominoOnBoard();
-        }
-
-        private function putNextTetrominoOnBoard():void {
+        private function nextTetromino(event:TetrisEvent = null):void {
+            if (tetromino != null) {
+                board.removeChild(tetromino);
+            }
             tetromino = tetrominoCreator.getNextTetromino();
             board.addChild(tetromino);
         }
