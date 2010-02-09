@@ -11,6 +11,8 @@ package tetris {
 
         private static const SPEED:int = 1000;
 
+        private var timer:Timer;
+
         private var board:Board;
         private var tetrominoCreator:TetrominoCreator;
         private var tetromino:Tetromino;
@@ -18,19 +20,24 @@ package tetris {
         public function Tetris(mainContainer:DisplayObjectContainer) {
             board = new Board();
             tetrominoCreator = new TetrominoCreator();
-            nextTetromino();
+            putNextTetrominoOnBoard();
 
             board.addChild(tetromino);
             mainContainer.addChild(board);
 
-            var timer:Timer = new Timer(SPEED, 0);
+            timer = new Timer(SPEED, 0);
             timer.addEventListener(TimerEvent.TIMER, timerHandler);
             timer.start();
 
             mainContainer.addEventListener(KeyboardEvent.KEY_DOWN, keyHandler);
             board.addEventListener(
-                    TetrisEvent.TETROMINO_LANDED, nextTetromino);
-            board.addEventListener(TetrisEvent.NEW_GAME, nextTetromino);
+                    TetrisEvent.TETROMINO_LANDED, landingHandler);
+            board.addEventListener(
+                    TetrisEvent.NEW_GAME, newGameHandler);
+            board.addEventListener(
+                    TetrisEvent.PAUSE, pauseHandler);
+            board.addEventListener(
+                    TetrisEvent.CONTINUE, continueHandler);
         }
 
         private function timerHandler(event:TimerEvent):void {
@@ -38,29 +45,55 @@ package tetris {
         }
 
         private function keyHandler(event:KeyboardEvent):void {
+            if (timer.running) {
+                switch (event.keyCode) {
+                    case Keyboard.LEFT:
+                        tetromino.moveLeft();
+                        break;
+                    case Keyboard.RIGHT:
+                        tetromino.moveRight();
+                        break;
+                    case Keyboard.DOWN:
+                        tetromino.moveDown();
+                        break;
+                    case Keyboard.UP:
+                        tetromino.rotateClockwise();
+                        break;
+                }
+            }
             switch (event.keyCode) {
-                case Keyboard.LEFT:
-                    tetromino.moveLeft();
-                    break;
-                case Keyboard.RIGHT:
-                    tetromino.moveRight();
-                    break;
-                case Keyboard.DOWN:
-                    tetromino.moveDown();
-                    break;
-                case Keyboard.UP:
-                    tetromino.rotateClockwise();
-                    break;
                 case 78: // N
                     board.dispatchEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+                    break;
+                case 80: // P
+                    board.dispatchEvent(new TetrisEvent(
+                                timer.running
+                                ? TetrisEvent.PAUSE
+                                : TetrisEvent.CONTINUE));
                     break;
             }
         }
 
-        private function nextTetromino(event:TetrisEvent = null):void {
-            if (tetromino != null) {
-                board.removeChild(tetromino);
-            }
+        private function landingHandler(event:TetrisEvent):void {
+            board.removeChild(tetromino);
+            putNextTetrominoOnBoard();
+        }
+
+        private function newGameHandler(event:TetrisEvent):void {
+            board.removeChild(tetromino);
+            putNextTetrominoOnBoard();
+            board.dispatchEvent(new TetrisEvent(TetrisEvent.CONTINUE));
+        }
+
+        private function pauseHandler(event:TetrisEvent):void {
+            timer.stop();
+        }
+
+        private function continueHandler(event:TetrisEvent):void {
+            timer.start();
+        }
+
+        private function putNextTetrominoOnBoard():void {
             tetromino = tetrominoCreator.getNextTetromino();
             board.addChild(tetromino);
         }
