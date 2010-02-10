@@ -2,12 +2,12 @@
       </div>
       <div id="left"> 
  
-<? include "menu.php" ?>
+<?php include 'menu.php' ?>
  
       </div>
       <div style="clear: both;" />
       <div id="footer">
-<? include "footer.php" ?>
+<?php include 'footer.php' ?>
       </div>
     </div>
   </body>

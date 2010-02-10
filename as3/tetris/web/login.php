@@ -1,4 +1,4 @@
-<? include "template/top.php" ?>
+<?php include 'template/top.php' ?>
 
 <form name="login_form" method="POST" action="">
   <table border="0" cellspacing="4">
@@ -23,11 +23,11 @@
   </table>
 </form>
 
-<?
-  echo "parametry:<br />";
+<?php
+  echo 'parametry:<br />';
   foreach ($_POST as $name => $value) {
-    echo "$name=$value<br />";
+    echo $name.'='.$value.'<br />';
   }
 ?>
 
-<? include "template/bottom.php" ?>
+<?php include 'template/bottom.php' ?>
