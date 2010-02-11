@@ -2,6 +2,8 @@
 
 <?php
 
+include 'include/db_connection.php';
+
 function translate_username($username) {
     return $username != 'guest' ? htmlspecialchars($username) : 'Gość';
 }
@@ -9,8 +11,6 @@ function translate_username($username) {
 ?>
 
 <h2>Najlepsze wyniki</h2>
-
-<?php include 'include/db_connection.php' ?>
 
 <table cellspacing="8">
     <tr>
@@ -20,16 +20,17 @@ function translate_username($username) {
 
 <?php
 
-$query = "
+$query = '
 SELECT username, score
     FROM tetris.highscore h
         LEFT JOIN tetris.users u
         ON (h.id_user = u.id_user)
-";
+    ORDER BY score DESC
+';
 
 $result = pg_query($query);
 if (!$result) {
-    echo 'Problem with query '.$query.'<br/>';
+    echo 'ERROR: Problem with query '.$query.'<br/>';
     echo pg_last_error();
 }
 while($row = pg_fetch_assoc($result)) {
