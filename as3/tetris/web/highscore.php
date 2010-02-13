@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <?php include 'template/top.php' ?>
 
 <?php
@@ -44,6 +46,6 @@ while($row = pg_fetch_assoc($result)) {
 }
 ?>
 
-</table> 
+</table>
 
 <?php include 'template/bottom.php' ?>
