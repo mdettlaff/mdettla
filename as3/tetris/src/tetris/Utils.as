@@ -2,6 +2,10 @@ package tetris {
 
     public class Utils {
 
+        public function Utils() {
+            throw new Error("Do not instantiate this class!");
+        }
+
         public static function createArray2D(sizeX:int, sizeY:int):Array {
             var array2D:Array = new Array(sizeY);
             for (var i:int = 0; i < sizeY; i++) {

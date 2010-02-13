@@ -20,8 +20,8 @@ package tetris {
 
         public function moveDown():void {
             if (!attemptMove(shape, xCoord, yCoord + 1)) {
-                dispatchEvent(
-                        new TetrisEvent(TetrisEvent.TETROMINO_LANDED, this));
+                dispatchEvent(new TetrisEvent(
+                            TetrisEvent.TETROMINO_LANDED, this));
             }
         }
 
@@ -47,7 +47,7 @@ package tetris {
 
         private function draw():void {
             graphics.clear();
-            graphics.lineStyle(1.0, 0x000000, 1.0);
+            graphics.lineStyle(1.0, 0x000000);
             graphics.beginFill(color);
             for (var i:int = 0; i < shape.length; i++) {
                 for (var j:int = 0; j < shape.length; j++) {
@@ -61,14 +61,9 @@ package tetris {
             graphics.endFill();
         }
 
-        private function attemptMove(
-                shape:Array, xCoord:int, yCoord:int):Boolean {
-            if (!(parent as Board).isConflictWithTetrominoState(
-                        shape, xCoord, yCoord)) {
-                moveToState(shape, xCoord, yCoord);
-                return true;
-            }
-            return false;
+        private function updateXY():void {
+            x = xCoord * Board.BLOCK_SIZE;
+            y = yCoord * Board.BLOCK_SIZE;
         }
 
         private function moveToState(
@@ -79,9 +74,14 @@ package tetris {
             updateXY();
         }
 
-        private function updateXY():void {
-            x = xCoord * Board.BLOCK_SIZE;
-            y = yCoord * Board.BLOCK_SIZE;
+        private function attemptMove(
+                shape:Array, xCoord:int, yCoord:int):Boolean {
+            if (!(parent as Board).isConflictWithTetrominoState(
+                        shape, xCoord, yCoord)) {
+                moveToState(shape, xCoord, yCoord);
+                return true;
+            }
+            return false;
         }
     }
 }

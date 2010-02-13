@@ -1,7 +1,4 @@
-	package tetris {
-
-    import flash.display.DisplayObject;
-    import flash.events.Event;
+package tetris.mx {
 
     import mx.core.UIComponent;
     import mx.managers.IFocusManagerComponent;
