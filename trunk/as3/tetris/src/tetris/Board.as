@@ -2,6 +2,9 @@ package tetris {
 
     import flash.display.Sprite;
     import flash.geom.Rectangle;
+    import flash.text.TextField;
+    import flash.text.TextFieldAutoSize;
+    import flash.text.TextFormat;
 
     public class Board extends Sprite {
 
@@ -12,20 +15,21 @@ package tetris {
         private var board:Array;
 
         private var bounds:Rectangle;
-        private var lineColor:Number;
-        private var fillColor:Number;
+        private var lineColor:uint;
+        private var fillColor:uint;
 
-        public function Board(fillColor:Number = 0xFFFFFF,
-                lineColor:Number = 0x000000) {
+        public function Board(fillColor:uint = 0xFFFFFF,
+                lineColor:uint = 0x000000) {
             this.fillColor = fillColor;
             this.lineColor = lineColor;
             clear();
-            bounds = new Rectangle(0, 0,
-                    WIDTH * BLOCK_SIZE, HEIGHT * BLOCK_SIZE);
+            bounds =
+                new Rectangle(0, 0, WIDTH * BLOCK_SIZE, HEIGHT * BLOCK_SIZE);
             drawBounds();
 
-            addEventListener(TetrisEvent.TETROMINO_LANDED, landingHandler);
-            addEventListener(TetrisEvent.NEW_GAME, newGameHandler);
+            addEventListener(TetrisEvent.TETROMINO_LANDED, onLanding);
+            addEventListener(TetrisEvent.NEW_GAME, onNewGame);
+            addEventListener(TetrisEvent.GAME_OVER, onGameOver);
         }
 
         public function isConflictWithTetrominoState(
@@ -44,29 +48,62 @@ package tetris {
             return false;
         }
 
-        private function landingHandler(event:TetrisEvent):void {
+        private function onLanding(event:TetrisEvent):void {
+
+            var stick:Function = function(t:Tetromino):void {
+                for (var i:int = 0; i < t.shape.length; i++) {
+                    for (var j:int = 0; j < t.shape.length; j++) {
+                        if (t.shape[i][j]) {
+                            board[t.yCoord + i][t.xCoord + j] = t.color;
+                        }
+                    }
+                }
+                drawBlocks();
+            };
+
             stick(event.tetromino);
+            removeChild(event.tetromino);
             destroyFullLines();
         }
 
-        private function newGameHandler(event:TetrisEvent):void {
+        private function onNewGame(event:TetrisEvent):void {
+
+            var removeAllChildren:Function = function():void {
+                while (numChildren > 0) {
+                    removeChildAt(0);
+                }
+            };
+
+            removeAllChildren();
             clear();
-        	draw();
+            draw();
+        }
+
+        private function onGameOver(event:TetrisEvent):void {
+
+            var getGameOverLabel:Function = function():TextField {
+                var format:TextFormat = new TextFormat();
+                format.font = "Verdana";
+                format.size = 18;
+
+                var label:TextField = new TextField();
+                label.defaultTextFormat = format;
+                label.text = "Koniec gry";
+                label.autoSize = TextFieldAutoSize.CENTER;
+                label.x = (width / 2) - (label.width / 2);
+                label.y = (height / 2) - 50;
+                label.background = true;
+                label.border = true;
+                label.selectable = false;
+                return label;
+            };
+
+            addChild(getGameOverLabel());
+            draw();
         }
 
         private function clear():void {
-        	board = Utils.createArray2D(WIDTH, HEIGHT);
-        }
-
-        private function stick(t:Tetromino):void {
-            for (var i:int = 0; i < t.shape.length; i++) {
-                for (var j:int = 0; j < t.shape.length; j++) {
-                    if (t.shape[i][j]) {
-                        board[t.yCoord + i][t.xCoord + j] = t.color;
-                    }
-                }
-            }
-            drawBlocks();
+            board = Utils.createArray2D(WIDTH, HEIGHT);
         }
 
         private function destroyFullLines():void {

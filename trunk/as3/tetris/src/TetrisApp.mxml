@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <mx:Application
     xmlns:mx="http://www.adobe.com/2006/mxml"
-    xmlns:game="tetris.*"
+    xmlns:game="tetris.mx.*"
     creationComplete="init()">
 
     <mx:Script>
@@ -20,29 +20,35 @@
         private var score:int = 0;
 
         private function init():void {
-            new Tetris(gameCanvas);
+            new Tetris(gameCanvas, this);
             gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
             gameCanvas.height = Board.HEIGHT * Board.BLOCK_SIZE;
 
             addEventListener(TetrisEvent.LINES_DESTROYED, awardPoints);
-            addEventListener(TetrisEvent.NEW_GAME, newGameHandler);
-            addEventListener(TetrisEvent.PAUSE, pauseHandler);
-            addEventListener(TetrisEvent.CONTINUE, continueHandler);
+            addEventListener(TetrisEvent.NEW_GAME, onNewGame);
+            addEventListener(TetrisEvent.GAME_OVER, onGameOver);
+            addEventListener(TetrisEvent.PAUSE, onPause);
+            addEventListener(TetrisEvent.CONTINUE, onContinue);
         }
 
         private function awardPoints(event:TetrisEvent):void {
             score += 100 * event.destroyedLinesCount;
         }
 
-        private function newGameHandler(event:TetrisEvent):void {
+        private function onNewGame(event:TetrisEvent):void {
             score = 0;
+            pauseButton.enabled = true;
         }
 
-        private function pauseHandler(event:TetrisEvent):void {
+        private function onGameOver(event:TetrisEvent):void {
+            pauseButton.enabled = false;
+        }
+
+        private function onPause(event:TetrisEvent):void {
             pauseButton.label = CONTINUE;
         }
 
-        private function continueHandler(event:TetrisEvent):void {
+        private function onContinue(event:TetrisEvent):void {
             pauseButton.label = PAUSE;
         }
 
