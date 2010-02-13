@@ -25,6 +25,7 @@ SELECT username, score
     FROM tetris.highscore h
         LEFT JOIN tetris.users u
         ON (h.id_user = u.id_user)
+    WHERE score > 0
     ORDER BY score DESC
 ';
 

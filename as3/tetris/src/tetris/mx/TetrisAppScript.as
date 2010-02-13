@@ -3,6 +3,7 @@ import tetris.Tetris;
 import tetris.TetrisEvent;
 
 import flash.events.Event;
+import mx.controls.Alert;
 import mx.rpc.events.ResultEvent;
 
 private static const PAUSE:String = "Pauza";
@@ -23,23 +24,6 @@ private function init():void {
     addEventListener(TetrisEvent.CONTINUE, onContinue);
 }
 
-
-[Bindable]
-private var myResult:String;
-
-public function submitScore():void {
-    submitScoreService.cancel();
-    var params:Object = new Object();
-    params.score = score;
-    submitScoreService.send(params);
-}
-
-public function resultHandler(event:ResultEvent):void {
-    trace("resultHandler: odpowiedź z serwera:", event.result);
-    myResult = event.result.toString();
-}
-
-
 private function awardPoints(event:TetrisEvent):void {
     score += 100 * event.destroyedLinesCount;
 }
@@ -51,7 +35,9 @@ private function onNewGame(event:TetrisEvent):void {
 
 private function onGameOver(event:TetrisEvent):void {
     pauseButton.enabled = false;
-    submitScore();
+    if (score > 0) {
+        submitScore();
+    }
 }
 
 private function onPause(event:TetrisEvent):void {
@@ -60,6 +46,13 @@ private function onPause(event:TetrisEvent):void {
 
 private function onContinue(event:TetrisEvent):void {
     pauseButton.label = PAUSE;
+}
+
+private function onScoreServiceResult(event:ResultEvent):void {
+    var serviceResponse:String = event.result.toString();
+    if ("OK" != serviceResponse) {
+        Alert.show("Wynik nie został zapisany.\n" + serviceResponse);
+    }
 }
 
 private function dispatchTetrisEvent(event:TetrisEvent):void {
@@ -76,4 +69,11 @@ private function pauseOrContinue(event:Event):void {
     } else {
         dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
     }
+}
+
+private function submitScore():void {
+    submitScoreService.cancel();
+    var params:Object = new Object();
+    params.score = score;
+    submitScoreService.send(params);
 }
