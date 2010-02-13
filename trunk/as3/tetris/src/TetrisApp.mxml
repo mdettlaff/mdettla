@@ -4,75 +4,17 @@
     xmlns:game="tetris.mx.*"
     creationComplete="init()">
 
-    <mx:Script>
-        <![CDATA[
+    <mx:HTTPService
+        id="submitScoreService"
+        url="http://sigma.ug.edu.pl/~mdettla/tetris/web/service/submit_score.php"
+        result="resultHandler(event)"/>
 
-        import tetris.Board;
-        import tetris.Tetris;
-        import tetris.TetrisEvent;
-
-        import flash.events.Event;
-
-        private static const PAUSE:String = "Pauza";
-        private static const CONTINUE:String = "Wznów";
-
-        [Bindable]
-        private var score:int = 0;
-
-        private function init():void {
-            new Tetris(gameCanvas, this);
-            gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
-            gameCanvas.height = Board.HEIGHT * Board.BLOCK_SIZE;
-
-            addEventListener(TetrisEvent.LINES_DESTROYED, awardPoints);
-            addEventListener(TetrisEvent.NEW_GAME, onNewGame);
-            addEventListener(TetrisEvent.GAME_OVER, onGameOver);
-            addEventListener(TetrisEvent.PAUSE, onPause);
-            addEventListener(TetrisEvent.CONTINUE, onContinue);
-        }
-
-        private function awardPoints(event:TetrisEvent):void {
-            score += 100 * event.destroyedLinesCount;
-        }
-
-        private function onNewGame(event:TetrisEvent):void {
-            score = 0;
-            pauseButton.enabled = true;
-        }
-
-        private function onGameOver(event:TetrisEvent):void {
-            pauseButton.enabled = false;
-        }
-
-        private function onPause(event:TetrisEvent):void {
-            pauseButton.label = CONTINUE;
-        }
-
-        private function onContinue(event:TetrisEvent):void {
-            pauseButton.label = PAUSE;
-        }
-
-        private function newGame():void {
-            dispatchTetrisEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
-        }
-
-        private function pauseOrContinue(event:Event):void {
-            if (event.currentTarget.label == PAUSE) {
-                dispatchTetrisEvent(new TetrisEvent(TetrisEvent.PAUSE));
-            } else {
-                dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
-            }
-        }
-
-        private function dispatchTetrisEvent(event:TetrisEvent):void {
-            gameCanvas.getChildAt(0).dispatchEvent(event);
-        }
-
-        ]]>
-    </mx:Script>
+    <mx:Script source="tetris/mx/TetrisAppScript.as" />
 
     <mx:Panel title="Tetris" layout="vertical"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+
+        <mx:TextArea id="resultFld" text="{myResult}" width="150" height="50"/>
 
         <mx:HBox>
             <mx:Label text="{score}" />
