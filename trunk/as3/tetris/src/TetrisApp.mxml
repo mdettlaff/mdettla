@@ -2,19 +2,19 @@
 <mx:Application
     xmlns:mx="http://www.adobe.com/2006/mxml"
     xmlns:game="tetris.mx.*"
+    backgroundGradientColors="[#FFFFFF, #FFFFFF]"
     creationComplete="init()">
 
     <mx:HTTPService
         id="submitScoreService"
         url="http://sigma.ug.edu.pl/~mdettla/tetris/web/service/submit_score.php"
-        result="resultHandler(event)"/>
+        result="onScoreServiceResult(event)" />
 
     <mx:Script source="tetris/mx/TetrisAppScript.as" />
 
-    <mx:Panel title="Tetris" layout="vertical"
-        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
-
-        <mx:TextArea id="resultFld" text="{myResult}" width="150" height="50"/>
+    <mx:Panel title="Tetris" layout="vertical" backgroundColor="#E0E0F0"
+        borderColor="#8090D0" paddingTop="10" paddingBottom="10"
+        paddingLeft="10" paddingRight="10">
 
         <mx:HBox>
             <mx:Label text="{score}" />
