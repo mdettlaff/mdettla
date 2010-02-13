@@ -4,6 +4,7 @@ import tetris.TetrisEvent;
 
 import flash.events.Event;
 import mx.controls.Alert;
+import mx.events.FlexEvent;
 import mx.rpc.events.ResultEvent;
 
 private static const PAUSE:String = "Pauza";
@@ -17,11 +18,28 @@ private function init():void {
     gameCanvas.width = Board.WIDTH * Board.BLOCK_SIZE;
     gameCanvas.height = Board.HEIGHT * Board.BLOCK_SIZE;
 
+    newGameButton.addEventListener(
+            FlexEvent.BUTTON_DOWN, onNewGameButtonClicked);
+    pauseButton.addEventListener(
+            FlexEvent.BUTTON_DOWN, onPauseButtonClicked);
+
     addEventListener(TetrisEvent.LINES_DESTROYED, awardPoints);
     addEventListener(TetrisEvent.NEW_GAME, onNewGame);
     addEventListener(TetrisEvent.GAME_OVER, onGameOver);
     addEventListener(TetrisEvent.PAUSE, onPause);
     addEventListener(TetrisEvent.CONTINUE, onContinue);
+}
+
+private function onNewGameButtonClicked(event:Event):void {
+    dispatchTetrisEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+}
+
+private function onPauseButtonClicked(event:Event):void {
+    if (event.currentTarget.label == PAUSE) {
+        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.PAUSE));
+    } else {
+        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
+    }
 }
 
 private function awardPoints(event:TetrisEvent):void {
@@ -57,18 +75,6 @@ private function onScoreServiceResult(event:ResultEvent):void {
 
 private function dispatchTetrisEvent(event:TetrisEvent):void {
     gameCanvas.getChildAt(0).dispatchEvent(event);
-}
-
-private function newGame():void {
-    dispatchTetrisEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
-}
-
-private function pauseOrContinue(event:Event):void {
-    if (event.currentTarget.label == PAUSE) {
-        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.PAUSE));
-    } else {
-        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
-    }
 }
 
 private function submitScore():void {
