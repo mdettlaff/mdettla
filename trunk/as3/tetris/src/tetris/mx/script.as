@@ -54,7 +54,7 @@ private function onNewGame(event:TetrisEvent):void {
 private function onGameOver(event:TetrisEvent):void {
     pauseButton.enabled = false;
     if (score > 0) {
-        submitScore();
+        submitScore(score);
     }
 }
 
@@ -77,7 +77,7 @@ private function dispatchTetrisEvent(event:TetrisEvent):void {
     gameCanvas.getChildAt(0).dispatchEvent(event);
 }
 
-private function submitScore():void {
+private function submitScore(score:int):void {
     submitScoreService.cancel();
     var params:Object = new Object();
     params.score = score;

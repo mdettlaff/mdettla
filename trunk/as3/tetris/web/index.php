@@ -1,6 +1,14 @@
+<?php session_start() ?>
+
 <?php include 'template/top.php' ?>
 
 <h2>Tetris</h2>
-Na tej stronie można zagrać w grę Tetris.
+
+<?php
+if (isset($_SESSION['username'])) {
+    echo 'Witaj, '.$_SESSION['username'].'! ';
+}
+?>
+Na tej stronie możesz zagrać w grę Tetris.
 
 <?php include 'template/bottom.php' ?>
