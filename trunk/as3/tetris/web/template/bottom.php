@@ -1,9 +1,9 @@
         </div>
       </div>
-      <div id="left"> 
- 
+      <div id="left">
+
 <?php include 'menu.php' ?>
- 
+
       </div>
       <div style="clear: both;" />
       <div id="footer">
