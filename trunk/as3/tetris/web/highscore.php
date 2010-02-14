@@ -33,8 +33,8 @@ SELECT username, score
 
 $result = pg_query($query);
 if (!$result) {
-    echo 'ERROR: Problem with query '.$query.'<br/>';
-    echo pg_last_error();
+    log_write('ERROR: Problem with query '.$query);
+    log_write(pg_last_error());
 }
 while($row = pg_fetch_assoc($result)) {
 ?>

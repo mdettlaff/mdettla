@@ -1,11 +1,13 @@
 <?php
 
+session_start();
+
 include '../include/db_connection.php';
 include '../include/sql.php';
 include '../include/log.php';
 
 $score = $_GET['score'];
-$id_user = $_GET['id_user'];
+$id_user = $_SESSION['id_user'];
 if (!isset($id_user)) {
     $id_user = 1;
 }
