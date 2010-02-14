@@ -25,7 +25,7 @@
                 $_SESSION['username'] = $form_username;
                 echo 'Zalogowany jako '.$_SESSION['username'];
                 $is_login_successful = true;
-                log_write($form_username.' logged in');
+                log_write('user '.$form_username.' logged in');
             } else {
                 log_write('failed login as '.$form_username.' with password '.
                     $form_password);

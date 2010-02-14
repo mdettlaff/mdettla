@@ -18,18 +18,18 @@ if (!isset($score)) {
 }
 
 $query = '
-INSERT INTO tetris.highscore
-    (score, id_user)
-    VALUES
-    ('.sql_escape($score).', '.sql_escape($id_user).');
-';
+    INSERT INTO tetris.highscore
+        (score, id_user)
+        VALUES
+        ('.sql_escape($score).', '.sql_escape($id_user).');
+    ';
 
 $result = pg_query($query);
 if (!$result) {
     echo 'ERROR: Problem with query';
     log_write('ERROR: Problem with query '.$query.'\n'.pg_last_error());
 } else {
-    log_write('score '.$score.' added for user '.$id_user);
+    log_write('score '.$score.' added for user '.$_SESSION['username']);
     echo 'OK';
 }
 

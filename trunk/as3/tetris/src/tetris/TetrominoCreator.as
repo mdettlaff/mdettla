@@ -25,20 +25,28 @@ package tetris {
             bagOfShapes = createBagOfShapes();
         }
 
-        public function getNextTetromino():Tetromino {
-            trace("bagOfShapes =", bagOfShapes);
+        public function createTetromino():Tetromino {
             var shape:String = bagOfShapes.pop();
             if (bagOfShapes.length == 0) {
                 bagOfShapes = createBagOfShapes();
             }
-            return createTetromino(shape);
+            trace("bagOfShapes =", bagOfShapes);
+            return createTetrominoFrom(shape);
+        }
+
+        public function peekNextTetromino():Tetromino {
+            return createTetrominoFrom(bagOfShapes[bagOfShapes.length - 1]);
+        }
+
+        public function reset():void {
+            bagOfShapes = createBagOfShapes();
         }
 
         private function createBagOfShapes():Array {
             return Utils.shuffle([I, J, L, O, S, T, Z]);
         }
 
-        private function createTetromino(shape:String):Tetromino {
+        private function createTetrominoFrom(shape:String):Tetromino {
             switch (shape) {
                 case I:
                     return new Tetromino([

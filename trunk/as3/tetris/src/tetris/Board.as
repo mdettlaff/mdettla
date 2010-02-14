@@ -67,14 +67,7 @@ package tetris {
         }
 
         private function onNewGame(event:TetrisEvent):void {
-
-            var removeAllChildren:Function = function():void {
-                while (numChildren > 0) {
-                    removeChildAt(0);
-                }
-            };
-
-            removeAllChildren();
+            Utils.removeAllChildren(this);
             clear();
             draw();
         }
