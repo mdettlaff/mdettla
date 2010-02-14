@@ -15,14 +15,14 @@ Learn more about Flex at http://flex.org
 // -->
 
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-        id="TetrisApp" width="250" height="475"
+        id="TetrisApp" width="255" height="490"
         codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
         <param name="movie" value="TetrisApp.swf" />
         <param name="quality" value="high" />
         <param name="bgcolor" value="#ffffff" />
         <param name="allowScriptAccess" value="sameDomain" />
         <embed src="flash/TetrisApp.swf" quality="high" bgcolor="#ffffff"
-            width="250" height="475" name="TetrisApp" align="middle"
+            width="255" height="490" name="TetrisApp" align="middle"
             play="true"
             loop="false"
             allowScriptAccess="sameDomain"
