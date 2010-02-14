@@ -1,5 +1,7 @@
 package tetris {
 
+    import flash.display.DisplayObjectContainer;
+
     public class Utils {
 
         public function Utils() {
@@ -25,6 +27,13 @@ package tetris {
                 shuffled.push(original.splice(randInt(original.length), 1));
             }
             return shuffled;
+        }
+
+        public static function removeAllChildren(
+                container:DisplayObjectContainer):void {
+            while (container.numChildren > 0) {
+                container.removeChildAt(0);
+            }
         }
     }
 }

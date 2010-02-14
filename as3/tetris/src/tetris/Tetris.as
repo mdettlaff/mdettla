@@ -26,11 +26,9 @@ package tetris {
             if (keyEventDispatcher == null) {
                 keyEventDispatcher = mainContainer;
             }
-            board = new Board();
             tetrominoCreator = new TetrominoCreator();
-            putNextTetrominoOnBoard();
+            board = new Board();
 
-            board.addChild(tetromino);
             mainContainer.addChild(board);
 
             timer = new Timer(SPEED, 0);
@@ -49,6 +47,8 @@ package tetris {
                     TetrisEvent.PAUSE, onPause);
             board.addEventListener(
                     TetrisEvent.CONTINUE, onContinue);
+
+            board.dispatchEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
         }
 
         private function onTimer(event:TimerEvent):void {
@@ -87,10 +87,13 @@ package tetris {
 
         private function onLanding(event:TetrisEvent):void {
             putNextTetrominoOnBoard();
+            event.nextTetromino = tetrominoCreator.peekNextTetromino();
         }
 
         private function onNewGame(event:TetrisEvent):void {
+            tetrominoCreator.reset();
             putNextTetrominoOnBoard();
+            event.nextTetromino = tetrominoCreator.peekNextTetromino();
             board.dispatchEvent(new TetrisEvent(TetrisEvent.CONTINUE));
         }
 
@@ -107,9 +110,10 @@ package tetris {
         }
 
         private function putNextTetrominoOnBoard():void {
-            tetromino = tetrominoCreator.getNextTetromino();
+            var candidate:Tetromino = tetrominoCreator.peekNextTetromino();
             if (!board.isConflictWithTetrominoState(
-                        tetromino.shape, tetromino.xCoord, tetromino.yCoord)) {
+                        candidate.shape, candidate.xCoord, candidate.yCoord)) {
+                tetromino = tetrominoCreator.createTetromino();
                 board.addChild(tetromino);
             } else {
                 board.dispatchEvent(new TetrisEvent(TetrisEvent.GAME_OVER));

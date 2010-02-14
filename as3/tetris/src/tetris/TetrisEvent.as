@@ -12,6 +12,7 @@ package tetris {
         public static const CONTINUE:String = "continue";
 
         public var tetromino:Tetromino;
+        public var nextTetromino:Tetromino;
         public var destroyedLinesCount:int;
 
         public function TetrisEvent(eventName:String,
