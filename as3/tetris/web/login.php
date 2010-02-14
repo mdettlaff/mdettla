@@ -1,18 +1,6 @@
-<?php
-
-session_start();
-
-$form_username = $_POST['username'];
-if (!empty($form_username)) {
-    $_SESSION['username'] = $form_username;
-    header('Location: login_successful.php');
-}
-
-?>
-
 <?php include 'template/top.php' ?>
 
-<form name="login_form" method="POST" action="">
+<form name="login_form" method="POST" action="login_validate.php">
   <table border="0" cellspacing="4">
     <tr>
       <td>Nazwa użytkownika:</td>
