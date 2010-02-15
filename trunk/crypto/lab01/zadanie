@@ -1,0 +1,17 @@
+Napisać program szyfrujący szyfrem podstawieniowym.
+Nasz alfabet ma 26 liter.
+ABCD...     XYZ
+CODEABFG... XYZ
+
+Wygenerować losową permutację i zaszyfrować nią tekst z jakiegoś pliku.
+Szyfrujemy tekst angielski po usunięciu spacji.
+
+Program 1:
+  1. Losowa permutacja
+  2. Zaszyfrowanie tekstu angielskiego (z pliku) po usunięicu spacji szyfrem
+     podstawieniowym tą permutacją
+
+Program B:
+  1. Zliczanie liter w szyfrogramie
+  2. Porównanie rozkładu z rozkładem dla standardowego tekstu angielskiego.
+     np. d = suma(0, 25, (p_i - c_i)^2)
