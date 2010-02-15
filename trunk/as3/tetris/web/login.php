@@ -1,4 +1,4 @@
-<?php include 'template/top.php' ?>
+<?php include 'template/top.php'; ?>
 
 <form name="login_form" method="POST" action="login_validate.php">
   <table border="0" cellspacing="4">
@@ -23,4 +23,4 @@
   </table>
 </form>
 
-<?php include 'template/bottom.php' ?>
+<?php include 'template/bottom.php'; ?>
