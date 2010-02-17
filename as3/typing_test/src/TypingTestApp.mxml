@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<mx:Application
+    xmlns:mx="http://www.adobe.com/2006/mxml"
+    xmlns:tt="tt.mx.*"
+    backgroundGradientColors="[#FFFFFF, #FFFFFF]"
+    creationComplete="init()">
+
+    <mx:HTTPService id="getTextService"
+        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/texts.php"
+        result="onGetTextServiceResult(event)" />
+
+    <mx:HTTPService id="submitTestResultsService"
+        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/ttlog.php"
+        result="onSubmitTestResultService(event)" />
+
+    <mx:Script source="tt/mx/script.as" />
+
+    <mx:Panel title="Test prędkości pisania" layout="vertical"
+        backgroundColor="#E0E0F0" borderColor="#8090D0"
+        paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
+
+        <mx:HBox id="testInfoCanvas">
+            <mx:Label text="prędkość:" left="5" top="4" />
+            <mx:Label text="{speed} zn./min" left="5" top="20" fontSize="12" />
+        </mx:HBox>
+
+        <tt:TypingCanvas id="typingCanvas" width="575" height="275" />
+
+        <mx:HBox>
+            <mx:Button id="newTestButton" label="Rozpocznij nowy test" />
+            <mx:Button id="pauseButton" label="{PAUSE}" />
+        </mx:HBox>
+
+    </mx:Panel>
+
+</mx:Application>
