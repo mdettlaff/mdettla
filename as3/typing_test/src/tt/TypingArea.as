@@ -9,8 +9,12 @@ package tt {
     public class TypingArea extends Sprite {
 
         public static const MAX_LINES:int = 5;
+        public static const LINE_HEIGHT:int = 44;
+        public static const TEXT_TO_TYPE_COLOR:uint = 0x000000;
+        public static const WRITTEN_TEXT_COLOR:uint = 0x0000C0;
 
         private var visibleTextLines:Array /* of String */;
+        private var visibleWrittenLines:Array /* of String */;
 
         private var bounds:Rectangle;
         private var lineColor:uint;
@@ -23,34 +27,54 @@ package tt {
             bounds = new Rectangle(0, 0, width, height);
             drawBounds();
 
+            var i:int;
+            var yShift:int;
+            var line:TextField;
+
+            // text to type
             visibleTextLines = [];
-            var yShift:int = 4;
-            for (var i:int = 0; i < MAX_LINES; i++) {
-                var line:TextField = createLine(yShift);
+            yShift = 4;
+            for (i = 0; i < MAX_LINES; i++) {
+                line = createLine(yShift, TEXT_TO_TYPE_COLOR);
                 visibleTextLines.push(line);
                 addChild(line);
-                yShift += 40;
+                yShift += LINE_HEIGHT;
+            }
+
+            // text typed in by the user
+            visibleWrittenLines = [];
+            yShift = 24;
+            for (i = 0; i < MAX_LINES; i++) {
+                line = createLine(yShift, WRITTEN_TEXT_COLOR);
+                visibleWrittenLines.push(line);
+                addChild(line);
+                yShift += LINE_HEIGHT;
             }
         }
 
         public function draw(typingTestModel:TypingTestModel):void {
-            for (var i:String in typingTestModel.textLines) {
+            var i:String;
+            for (i in typingTestModel.textLines) {
                 visibleTextLines[i].text = typingTestModel.textLines[i];
+            }
+            for (i in typingTestModel.writtenLines) {
+                visibleWrittenLines[i].text = typingTestModel.writtenLines[i];
             }
         }
 
-        private function createLine(yShift:int):TextField {
+        private function createLine(yShift:int, color:uint):TextField {
             var format:TextFormat = new TextFormat();
             format.font = "Verdana";
-            format.size = 16;
+            format.size = 15;
+            format.color = color;
 
             var line:TextField = new TextField();
             line.x = 5;
             line.y = yShift;
             line.defaultTextFormat = format;
-            line.text = "początek linii";
+            line.text = "";
             line.selectable = false;
-            line.width = bounds.width;
+            line.width = bounds.width - 2;
             return line;
         }
 

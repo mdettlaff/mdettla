@@ -16,11 +16,14 @@ package tt {
             if (keyEventDispatcher == null) {
                 keyEventDispatcher = mainContainer;
             }
-            this.typingArea =
-                new TypingArea(mainContainer.width, mainContainer.height);
-            mainContainer.addChild(typingArea);
+            typingArea = new TypingArea(
+                    mainContainer.width, mainContainer.height);
+            typingTestModel = new TypingTestModel(
+                    "To jest sobie jakiś tekst, który chciałbym ładnie "
+                    + "podzielić na wiele linii.\nTo jest druga linia.");
+            typingArea.draw(typingTestModel);
 
-            typingTestModel = new TypingTestModel();
+            mainContainer.addChild(typingArea);
 
             keyEventDispatcher.addEventListener(
                     KeyboardEvent.KEY_DOWN, onKeyDown);
@@ -31,22 +34,20 @@ package tt {
                 typingTestModel.onRegularChar(plCharFrom(event));
                 typingArea.draw(typingTestModel);
             }
+            if (event.keyCode == Keyboard.ENTER) {
+                typingTestModel.onEnter();
+                typingArea.draw(typingTestModel);
+            }
         }
 
         private static function plCharFrom(event:KeyboardEvent):String {
-            const EN:String = "acelnoszx";
-            const PL:String = "ąćęłńóśżź";
+            const EN:String = "aAcCeElLnNoOsSzZxX";
+            const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
             var index:int;
             if (event.altKey) {
                 index = EN.indexOf(String.fromCharCode(event.charCode));
                 if (index != -1) {
                     return String.fromCharCode(PL.charCodeAt(index));
-                }
-                index = EN.toUpperCase().indexOf(
-                        String.fromCharCode(event.charCode));
-                if (index != -1) {
-                    return String.fromCharCode(
-                            PL.toUpperCase().charCodeAt(index));
                 }
             }
             return String.fromCharCode(event.charCode);
