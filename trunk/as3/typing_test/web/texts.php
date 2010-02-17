@@ -41,9 +41,9 @@ if ($action == 'get_text' && isset($text_index)) {
     $text_files = list_text_files($TEXTS_DIR);
     if ($text_index < 0 || $text_index > count($text_files) - 1) {
         exit('ERROR: parameter text_index must be between 0 and '
-            .(count($text_files) - 1)." ($text_index given)");
+            . (count($text_files) - 1) . " ($text_index given)");
     }
-    $text_file_path = $TEXTS_DIR.'/'.$text_files[$text_index];
+    $text_file_path = $TEXTS_DIR . '/' . $text_files[$text_index];
     echo file_contents($text_file_path);
 } else if ($action == 'get_texts_count') {
     $text_files = list_text_files($TEXTS_DIR);
