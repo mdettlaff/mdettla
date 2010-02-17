@@ -12,6 +12,8 @@ private static const CONTINUE:String = "Wznów";
 
 [Bindable]
 private var speed:int = 0;
+[Bindable]
+private var correctness:int = 0;
 
 private function init():void {
     initEventListeners();
