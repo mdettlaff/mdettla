@@ -5,7 +5,9 @@ package tt {
         public static const MAX_LINE_LENGTH:int = 65;
         public static const LINE_BREAKERS:String = "\n ";
 
+        // text to type
         public var textLines:Array /* of String */;
+        // text typed in by the user
         public var writtenLines:Array /* of String */;
 
         public function TypingTestModel(text:String) {

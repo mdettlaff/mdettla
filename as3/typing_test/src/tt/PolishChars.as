@@ -6,12 +6,8 @@ package tt {
 
     public class PolishChars {
 
-        private static const ISO_8859_2_PRINTABLE:String =
-            " Ą˘Ł¤ĽŚ§¨ŠŞŤŹ­ŽŻ°ą˛ł´ľśˇ¸šşťź˝žżŔÁÂĂÄĹĆÇČÉĘËĚÍÎĎ" +
-            "ĐŃŇÓÔŐÖ×ŘŮÚŰÜÝŢßŕáâăäĺćçčéęëěíîďđńňóôőö÷řůúűüýţ˙";
-
         private var char:ByteArray = new ByteArray();
-        private var isPrevUTFMarker:Boolean = false;
+        private var isPrevUTF8Marker:Boolean = false;
 
         public function charFrom(event:KeyboardEvent):String {
             if (Capabilities.os.indexOf("Linux") != -1) {
@@ -22,17 +18,20 @@ package tt {
         }
 
         private function charForLinux(event:KeyboardEvent):String {
+            const ISO_8859_2_PRINTABLE:String =
+                " Ą˘Ł¤ĽŚ§¨ŠŞŤŹ­ŽŻ°ą˛ł´ľśˇ¸šşťź˝žżŔÁÂĂÄĹĆÇČÉĘËĚÍÎĎ" +
+                "ĐŃŇÓÔŐÖ×ŘŮÚŰÜÝŢßŕáâăäĺćçčéęëěíîďđńňóôőö÷řůúűüýţ˙";
             char.writeByte(event.charCode);
-            var isUTFMarker:Boolean =
+            var isUTF8Marker:Boolean =
                 event.charCode > 194 && event.charCode < 198;
-            if (isUTFMarker) {
-                isPrevUTFMarker = true;
+            if (isUTF8Marker) {
+                isPrevUTF8Marker = true;
                 return null;
             } else {
                 var c:String;
                 char.position = 0;
-                if (isPrevUTFMarker) {
-                    c = char.readMultiByte(2, "UTF-8");
+                if (isPrevUTF8Marker) {
+                    c = char.readUTFBytes(2);
                 } else {
                     if (event.charCode > 160 && event.charCode < 256) {
                         c = ISO_8859_2_PRINTABLE.charAt(event.charCode - 160);
@@ -41,7 +40,7 @@ package tt {
                     }
                 }
                 char.position = 0;
-                isPrevUTFMarker = false;
+                isPrevUTF8Marker = false;
                 return c;
             }
         }
