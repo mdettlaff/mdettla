@@ -13,7 +13,7 @@ package tt {
             writtenLines = [""];
         }
 
-        public function onRegularChar(c:String):void {
+        public function onPrintableChar(c:String):void {
             if (c.length != 1) {
                 throw new Error("parameter c must be a single character!");
             }

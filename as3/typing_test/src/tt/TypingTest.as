@@ -10,12 +10,14 @@ package tt {
 
         private var typingArea:TypingArea;
         private var typingTestModel:TypingTestModel;
+        private var polishChars:PolishChars;
 
         public function TypingTest(mainContainer:DisplayObjectContainer,
                 keyEventDispatcher:IEventDispatcher = null) {
             if (keyEventDispatcher == null) {
                 keyEventDispatcher = mainContainer;
             }
+            polishChars = new PolishChars();
             typingArea = new TypingArea(
                     mainContainer.width, mainContainer.height);
             typingTestModel = new TypingTestModel(
@@ -31,26 +33,15 @@ package tt {
 
         private function onKeyDown(event:KeyboardEvent):void {
             if (event.charCode >= 32) { // not a control character
-                typingTestModel.onRegularChar(plCharFrom(event));
+                var c:String = polishChars.charFrom(event);
+                if (c != null) {
+                    typingTestModel.onPrintableChar(c);
+                }
                 typingArea.draw(typingTestModel);
-            }
-            if (event.keyCode == Keyboard.ENTER) {
+            } else if (event.keyCode == Keyboard.ENTER) {
                 typingTestModel.onEnter();
                 typingArea.draw(typingTestModel);
             }
-        }
-
-        private static function plCharFrom(event:KeyboardEvent):String {
-            const EN:String = "aAcCeElLnNoOsSzZxX";
-            const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
-            var index:int;
-            if (event.altKey) {
-                index = EN.indexOf(String.fromCharCode(event.charCode));
-                if (index != -1) {
-                    return String.fromCharCode(PL.charCodeAt(index));
-                }
-            }
-            return String.fromCharCode(event.charCode);
         }
     }
 }

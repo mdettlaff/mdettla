@@ -20,7 +20,7 @@ then
   then
     main_file=`ls src/$main_class.*`
     mxmlc -sp=src --show-actionscript-warnings=true --strict=true \
-      --debug=true $main_file
+      --actionscript-file-encoding=UTF-8 --debug=true $main_file
     if [ $? == 0 ]
     then
       if [ ! -d bin ]
