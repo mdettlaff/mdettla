@@ -6,12 +6,11 @@
     creationComplete="init()">
 
     <mx:HTTPService id="getTextService"
-        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/texts.php"
-        result="onGetTextServiceResult(event)" />
+        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/texts.php" />
 
     <mx:HTTPService id="submitTestResultsService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/ttlog.php"
-        result="onSubmitTestResultService(event)" />
+        method="POST" />
 
     <mx:Script source="tt/mx/script.as" />
 

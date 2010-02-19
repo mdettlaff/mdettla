@@ -29,6 +29,8 @@ package tt {
 
             keyEventDispatcher.addEventListener(
                     KeyboardEvent.KEY_DOWN, onKeyDown);
+            mainContainer.addEventListener(
+                    TypingTestEvent.NEW_TYPING_TEST, onNewTypingTest);
         }
 
         private function onKeyDown(event:KeyboardEvent):void {
@@ -42,6 +44,11 @@ package tt {
                 typingTestModel.onEnter();
                 typingArea.draw(typingTestModel);
             }
+        }
+
+        private function onNewTypingTest(event:TypingTestEvent):void {
+            typingTestModel = new TypingTestModel(event.text);
+            typingArea.draw(typingTestModel);
         }
     }
 }

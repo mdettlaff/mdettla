@@ -1,4 +1,5 @@
 import tt.TypingTest;
+import tt.TypingTestEvent;
 
 import flash.events.Event;
 
@@ -24,17 +25,33 @@ private function init():void {
 private function initEventListeners():void {
     pauseButton.addEventListener(
             FlexEvent.BUTTON_DOWN, onPauseButtonClicked);
+    newTestButton.addEventListener(
+            FlexEvent.BUTTON_DOWN, onNewTestButtonClicked);
 
-    addEventListener("pause", onPause);
-    addEventListener("continue", onContinue);
+    addEventListener(TypingTestEvent.PAUSE, onPause);
+    addEventListener(TypingTestEvent.CONTINUE, onContinue);
+
+    getTextService.addEventListener("result", onGetTextServiceResult);
 }
 
 private function onPauseButtonClicked(event:Event):void {
     if (event.currentTarget.label == PAUSE) {
-        dispatchEvent(new Event("pause"));
+        typingCanvas.dispatchEvent(
+                new TypingTestEvent(TypingTestEvent.PAUSE));
     } else {
-        dispatchEvent(new Event("continue"));
+        typingCanvas.dispatchEvent(
+                new TypingTestEvent(TypingTestEvent.CONTINUE));
     }
+    callLater(typingCanvas.setFocus);
+}
+
+private function onNewTestButtonClicked(event:Event):void {
+    getTextService.cancel();
+    var params:Object = new Object();
+    params.action = "get_text";
+    params.text_index = (int)(50 * Math.random());
+    getTextService.send(params);
+    callLater(typingCanvas.setFocus);
 }
 
 private function onPause(event:Event):void {
@@ -46,18 +63,12 @@ private function onContinue(event:Event):void {
 }
 
 private function onGetTextServiceResult(event:ResultEvent):void {
-    var serviceResponse:String = event.result.toString();
-    Alert.show(serviceResponse);
+    var text:String = event.result.toString();
+    typingCanvas.dispatchEvent(
+            new TypingTestEvent(TypingTestEvent.NEW_TYPING_TEST, text));
 }
 
-private function onSubmitTestResultService(event:ResultEvent):void {
+private function onSubmitTestResultsServiceResult(event:ResultEvent):void {
     var serviceResponse:String = event.result.toString();
     Alert.show(serviceResponse);
-}
-
-private function getNewText():void {
-    getTextService.cancel();
-    var params:Object = new Object();
-    params.text_index = 25;
-    getTextService.send(params);
 }
