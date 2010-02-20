@@ -4,15 +4,15 @@ package tt {
 
     public class TypingTestModel {
 
-        public static const MAX_LINE_LENGTH:int = 70;
+        public static const MAX_LINE_LENGTH:int = 68;
         public static const LINE_BREAKERS:String = "\n ";
 
         // text to type
         public var textLines:Array /* of String */;
         // text typed in by the user
         public var writtenLines:Array /* of String */;
-        public var mistakes:Array /* of String */;
-        public var mistakesShadow:Array /* of String */;
+        public var mistakes:Array /* of Array of Boolean */;
+        private var mistakesShadow:Array /* of String */;
 
         private var timeStarted:Date;
         private var timeFinished:Date;
@@ -20,7 +20,7 @@ package tt {
         public function TypingTestModel(text:String) {
             textLines = breakLines(text, MAX_LINE_LENGTH);
             writtenLines = [""];
-            mistakes = [""];
+            mistakes = [[]];
             mistakesShadow = [""];
         }
 
@@ -55,8 +55,8 @@ package tt {
                 }
                 isTypedCorrectly = false;
             }
-            writtenLines[last] += correctChar;
-            mistakes[last] += incorrectChar;
+            writtenLines[last] += c; // !
+            mistakes[last].push(incorrectChar != ' ');
             if (writtenLines[last].length > mistakesShadow[last].length) {
                 mistakesShadow[last] += incorrectChar;
             } else if (writtenLines[last].length > textLines[last].length
@@ -81,13 +81,25 @@ package tt {
             if (lastLine.length > 0) {
                 writtenLines[writtenLines.length - 1] =
                     lastLine.substring(0, lastLine.length - 1);
-                mistakes[mistakes.length - 1] =
-                    mistakes[mistakes.length - 1].substring(
-                            0, lastLine.length - 1);
+                mistakes[mistakes.length - 1].pop();
             } else if (writtenLines.length > 1) {
                 writtenLines.pop();
                 mistakes.pop();
             }
+        }
+
+        public function get corrections():Array /* of Array of Boolean */ {
+            var corrections:Array /* of Array of Boolean */ = [];
+            for (var i:int = 0; i < writtenLines.length; i++) {
+                var line:Array /* of Boolean */ = [];
+                for (var j:int = 0; j < mistakes[i].length; j++) {
+                    line.push(
+                            mistakesShadow[i].charAt(j) != ' '
+                            && !mistakes[i][j]);
+                }
+                corrections.push(line);
+            }
+            return corrections;
         }
 
         private function tryBreakLine(c:String):Boolean {
@@ -101,7 +113,7 @@ package tt {
             if (writtenLines[last].length >= textLines[last].length) {
                 if (writtenLines.length < textLines.length) {
                     writtenLines.push("");
-                    mistakes.push("");
+                    mistakes.push([]);
                     if (mistakes.length > mistakesShadow.length) {
                         mistakesShadow.push("");
                     }

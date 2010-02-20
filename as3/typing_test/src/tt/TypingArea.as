@@ -17,9 +17,9 @@ package tt {
         public static const WRITTEN_TEXT_COLOR:uint = 0x0000C0;
 
         // text to type
-        private var visibleTextLines:Array /* of String */;
+        private var visibleTextLines:Array /* of TextField */;
         // text typed in by the user
-        private var visibleWrittenLines:Array /* of String */;
+        private var visibleWrittenLines:Array /* of TextField */;
 
         private var bounds:Rectangle;
 
@@ -44,11 +44,13 @@ package tt {
             }
 
             drawTextLines(typingTestModel.textLines, startLine, endLine);
-            drawWrittenLines(typingTestModel.writtenLines, startLine, endLine);
+            drawWrittenLines(typingTestModel.writtenLines,
+                    typingTestModel.mistakes, typingTestModel.corrections,
+                    startLine, endLine);
         }
 
-        private function initVisibleTextLines():Array /* of String */ {
-            var visibleTextLines:Array /* of String */ = [];
+        private function initVisibleTextLines():Array /* of TextField */ {
+            var visibleTextLines:Array /* of TextField */ = [];
             var yShift:int = TOP_MARGIN_TEXT;
             for (var i:int = 0; i < MAX_LINES; i++) {
                 var line:TextField = createLine(yShift, TEXT_TO_TYPE_COLOR);
@@ -59,8 +61,8 @@ package tt {
             return visibleTextLines;
         }
 
-        private function initVisibleWrittenLines():Array /* of String */ {
-            var visibleWrittenLines:Array /* of String */ = [];
+        private function initVisibleWrittenLines():Array /* of TextField */ {
+            var visibleWrittenLines:Array /* of TextField */ = [];
             var yShift:int = TOP_MARGIN_WRITTEN;
             for (var i:int = 0; i < MAX_LINES; i++) {
                 var line:TextField = createLine(yShift, WRITTEN_TEXT_COLOR);
@@ -93,18 +95,33 @@ package tt {
             }
         }
 
-        private function drawWrittenLines(writtenLines:Array /* of String */,
+        private function drawWrittenLines(
+                writtenLines:Array /* of String */,
+                mistakes:Array /* of Array of Boolean */,
+                corrections:Array /* of Array of Boolean */,
                 startLine:int, endLine:int):void {
             var visibleIndex:int = 0;
             for (var i:int = startLine; i <= endLine; i++) {
-                visibleWrittenLines[visibleIndex].text = writtenLines[i];
+                var htmlLine:String = "";
+                for (var j:int = 0; j < writtenLines[i].length; j++) {
+                    var htmlChar:String = writtenLines[i].charAt(j);
+                    if (mistakes[i][j]) {
+                        htmlChar = "<font color=\"#F00000\"><b>"
+                            + htmlChar + "</b></font>";
+                    } else if (corrections[i][j]) {
+                        htmlChar = "<font color=\"#C000D8\">"
+                            + htmlChar + "</font>";
+                    }
+                    htmlLine += htmlChar;
+                }
+                visibleWrittenLines[visibleIndex].htmlText = htmlLine;
                 visibleIndex += 1;
-                visibleWrittenLines[visibleIndex].text = "";
+                visibleWrittenLines[visibleIndex].htmlText = "";
                 visibleIndex += 1;
             }
-            visibleWrittenLines[visibleIndex - 2].text += '_'; // cursor
+            visibleWrittenLines[visibleIndex - 2].htmlText += '_'; // cursor
             while (visibleIndex < visibleWrittenLines.length) {
-                visibleWrittenLines[visibleIndex].text = "";
+                visibleWrittenLines[visibleIndex].htmlText = "";
                 visibleIndex += 1;
             }
         }
