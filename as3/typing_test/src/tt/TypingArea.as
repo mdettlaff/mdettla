@@ -8,8 +8,11 @@ package tt {
 
     public class TypingArea extends Sprite {
 
-        public static const MAX_LINES:int = 6;
-        public static const LINE_HEIGHT:int = 44;
+        public static const MAX_LINES:int = 12;
+        public static const MAX_TYPING_LINES:int = 3;
+        public static const LINE_HEIGHT:int = 22;
+        public static const TOP_MARGIN_TEXT:int = 4;
+        public static const TOP_MARGIN_WRITTEN:int = 24;
         public static const TEXT_TO_TYPE_COLOR:uint = 0x000000;
         public static const WRITTEN_TEXT_COLOR:uint = 0x0000C0;
 
@@ -19,65 +22,90 @@ package tt {
         private var visibleWrittenLines:Array /* of String */;
 
         private var bounds:Rectangle;
-        private var lineColor:uint;
-        private var fillColor:uint;
 
         public function TypingArea(width:int, height:int,
-                fillColor:uint = 0xFFFFFF, lineColor:uint = 0x000000) {
-            this.fillColor = fillColor;
-            this.lineColor = lineColor;
+                backgroundColor:uint = 0xFFFFFF, borderColor:uint = 0x000000) {
             bounds = new Rectangle(0, 0, width, height);
-            drawBounds();
+            drawBounds(backgroundColor, borderColor);
 
-            initTextLines();
-            initWrittenLines();
+            visibleTextLines = initVisibleTextLines();
+            visibleWrittenLines = initVisibleWrittenLines();
         }
 
         public function draw(typingTestModel:TypingTestModel):void {
-            drawTextLines(typingTestModel.textLines);
-            drawWrittenLines(typingTestModel.writtenLines);
+            var startLine:int =
+                typingTestModel.writtenLines.length - MAX_TYPING_LINES;
+            if (startLine < 0) {
+                startLine = 0;
+            }
+            var endLine:int = startLine + MAX_TYPING_LINES - 1;
+            if (endLine > typingTestModel.writtenLines.length - 1) {
+                endLine = typingTestModel.writtenLines.length - 1;
+            }
+
+            drawTextLines(typingTestModel.textLines, startLine, endLine);
+            drawWrittenLines(typingTestModel.writtenLines, startLine, endLine);
         }
 
-        private function initTextLines():void {
-            visibleTextLines = [];
-            var yShift:int = 4;
+        private function initVisibleTextLines():Array /* of String */ {
+            var visibleTextLines:Array /* of String */ = [];
+            var yShift:int = TOP_MARGIN_TEXT;
             for (var i:int = 0; i < MAX_LINES; i++) {
                 var line:TextField = createLine(yShift, TEXT_TO_TYPE_COLOR);
                 visibleTextLines.push(line);
                 addChild(line);
                 yShift += LINE_HEIGHT;
             }
+            return visibleTextLines;
         }
 
-        private function initWrittenLines():void {
-            visibleWrittenLines = [];
-            var yShift:int = 24;
+        private function initVisibleWrittenLines():Array /* of String */ {
+            var visibleWrittenLines:Array /* of String */ = [];
+            var yShift:int = TOP_MARGIN_WRITTEN;
             for (var i:int = 0; i < MAX_LINES; i++) {
                 var line:TextField = createLine(yShift, WRITTEN_TEXT_COLOR);
                 visibleWrittenLines.push(line);
                 addChild(line);
                 yShift += LINE_HEIGHT;
             }
+            return visibleWrittenLines;
         }
 
-        private function drawTextLines(textLines:Array /* of String */):void {
-            for (var i:int = 0; i < visibleTextLines.length; i++) {
-                if (i < textLines.length) {
-                    visibleTextLines[i].text = textLines[i];
-                } else {
-                    visibleTextLines[i].text = "";
-                }
+        private function drawTextLines(textLines:Array /* of String */,
+                startLine:int, endLine:int):void {
+            var visibleIndex:int = 0;
+            var i:int;
+            for (i = startLine; i <= endLine; i++) {
+                visibleTextLines[visibleIndex].text = textLines[i];
+                visibleIndex += 1;
+                visibleTextLines[visibleIndex].text = "";
+                visibleIndex += 1;
+            }
+            for (i = endLine + 1; i < textLines.length
+                    && i < endLine + 1 + MAX_LINES
+                        - 2 * (1 + endLine - startLine); i++) {
+                visibleTextLines[visibleIndex].text = textLines[i];
+                visibleIndex += 1;
+            }
+            while (visibleIndex < visibleTextLines.length) {
+                visibleTextLines[visibleIndex].text = "";
+                visibleIndex += 1;
             }
         }
 
-        private function drawWrittenLines(
-                writtenLines:Array /* of String */):void {
-            for (var i:int = 0; i < visibleWrittenLines.length; i++) {
-                if (i < writtenLines.length) {
-                    visibleWrittenLines[i].text = writtenLines[i];
-                } else {
-                    visibleWrittenLines[i].text = "";
-                }
+        private function drawWrittenLines(writtenLines:Array /* of String */,
+                startLine:int, endLine:int):void {
+            var visibleIndex:int = 0;
+            for (var i:int = startLine; i <= endLine; i++) {
+                visibleWrittenLines[visibleIndex].text = writtenLines[i];
+                visibleIndex += 1;
+                visibleWrittenLines[visibleIndex].text = "";
+                visibleIndex += 1;
+            }
+            visibleWrittenLines[visibleIndex - 2].text += '_'; // cursor
+            while (visibleIndex < visibleWrittenLines.length) {
+                visibleWrittenLines[visibleIndex].text = "";
+                visibleIndex += 1;
             }
         }
 
@@ -97,10 +125,11 @@ package tt {
             return line;
         }
 
-        private function drawBounds():void {
+        private function drawBounds(
+                backgroundColor:uint, borderColor:uint):void {
             graphics.clear();
-            graphics.lineStyle(1.0, this.lineColor);
-            graphics.beginFill(this.fillColor);
+            graphics.lineStyle(1.0, borderColor);
+            graphics.beginFill(backgroundColor);
             graphics.drawRect(
                     bounds.left, bounds.top,
                     bounds.width, bounds.height);
