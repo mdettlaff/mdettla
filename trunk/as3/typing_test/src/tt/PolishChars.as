@@ -32,12 +32,10 @@ package tt {
                 char.position = 0;
                 if (isPrevUTF8Marker) {
                     c = char.readUTFBytes(2);
+                } else if (event.charCode > 160 && event.charCode < 256) {
+                    c = ISO_8859_2_PRINTABLE.charAt(event.charCode - 160);
                 } else {
-                    if (event.charCode > 160 && event.charCode < 256) {
-                        c = ISO_8859_2_PRINTABLE.charAt(event.charCode - 160);
-                    } else {
-                        c = String.fromCharCode(event.charCode);
-                    }
+                    c = String.fromCharCode(event.charCode);
                 }
                 char.position = 0;
                 isPrevUTF8Marker = false;
@@ -48,11 +46,10 @@ package tt {
         private function charForWindows(event:KeyboardEvent):String {
             const EN:String = "aAcCeElLnNoOsSzZxX";
             const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
-            var index:int;
             if (event.altKey) {
-                index = EN.indexOf(String.fromCharCode(event.charCode));
-                if (index != -1) {
-                    return String.fromCharCode(PL.charCodeAt(index));
+                var i:int = EN.indexOf(String.fromCharCode(event.charCode));
+                if (i != -1) {
+                    return PL.charAt(i);
                 }
             }
             return String.fromCharCode(event.charCode);

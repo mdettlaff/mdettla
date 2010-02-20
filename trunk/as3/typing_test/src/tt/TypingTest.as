@@ -21,8 +21,8 @@ package tt {
             typingArea = new TypingArea(
                     mainContainer.width, mainContainer.height);
             typingTestModel = new TypingTestModel(
-                    "To jest sobie jakiś tekst, który chciałbym ładnie "
-                    + "podzielić na wiele linii.\nTo jest druga linia.");
+                    "To jest tekst.\nNa temat żółwia.\n" +
+                    "To jest trzecia linia.\nCzwarta.\nOraz piąta.");
             typingArea.draw(typingTestModel);
 
             mainContainer.addChild(typingArea);
@@ -39,11 +39,12 @@ package tt {
                 if (c != null) {
                     typingTestModel.onPrintableChar(c);
                 }
-                typingArea.draw(typingTestModel);
             } else if (event.keyCode == Keyboard.ENTER) {
                 typingTestModel.onEnter();
-                typingArea.draw(typingTestModel);
+            } else if (event.keyCode == Keyboard.BACKSPACE) {
+                typingTestModel.onBackspace();
             }
+            typingArea.draw(typingTestModel);
         }
 
         private function onNewTypingTest(event:TypingTestEvent):void {
