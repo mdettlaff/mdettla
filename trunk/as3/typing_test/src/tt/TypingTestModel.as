@@ -12,8 +12,8 @@ package tt {
         // text typed in by the user
         public var writtenLines:Array /* of String */;
         public var mistakes:Array /* of Array of Boolean */;
-        private var mistakesShadow:Array /* of String */;
 
+        private var mistakesShadow:Array /* of Array of Boolean */;
         private var timeStarted:Date;
         private var timeFinished:Date;
 
@@ -21,14 +21,13 @@ package tt {
             textLines = breakLines(text, MAX_LINE_LENGTH);
             writtenLines = [""];
             mistakes = [[]];
-            mistakesShadow = [""];
+            mistakesShadow = [[]];
         }
 
         public function onPrintableChar(c:String):Boolean {
             if (c.length != 1) {
                 throw new Error("parameter c must be a single character!");
             }
-            var isTypedCorrectly:Boolean = true;
             if (timeStarted == null) {
                 timeStarted = new Date();
             }
@@ -38,50 +37,42 @@ package tt {
             var last:int = writtenLines.length - 1;
             if (c == ' ' && LINE_BREAKERS.indexOf(c) != -1
                     && writtenLines[last].length >= textLines[last].length) {
-                return tryBreakLine(' ');
+                return breakLine();
             }
-            var correctChar:String;
-            var incorrectChar:String;
-            if (writtenLines[last].length < textLines[last].length &&
-                    textLines[last].charAt(writtenLines[last].length) == c) {
-                correctChar = c;
-                incorrectChar = ' ';
-            } else {
-                correctChar = ' ';
-                if (c != ' ') {
-                    incorrectChar = c;
-                } else {
-                    incorrectChar = '_';
-                }
-                isTypedCorrectly = false;
-            }
-            writtenLines[last] += c; // !
-            mistakes[last].push(incorrectChar != ' ');
+            var isTypedCorrectly:Boolean =
+                writtenLines[last].length < textLines[last].length
+                    && textLines[last].charAt(writtenLines[last].length) == c;
+            writtenLines[last] += c;
+            mistakes[last].push(!isTypedCorrectly);
             if (writtenLines[last].length > mistakesShadow[last].length) {
-                mistakesShadow[last] += incorrectChar;
+                mistakesShadow[last].push(!isTypedCorrectly);
             } else if (writtenLines[last].length > textLines[last].length
                     || textLines[last].charAt(
                         writtenLines[last].length - 1) != c) {
-                var cIndex:int = writtenLines[last].length - 1;
-                mistakesShadow[last] = mistakesShadow[last].slice(0, cIndex)
-                    + c + mistakesShadow[last].slice(cIndex + 1);
+                mistakesShadow[last].splice(
+                        writtenLines[last].length - 1, 0, !isTypedCorrectly);
             }
             return isTypedCorrectly;
         }
 
         public function onEnter():Boolean {
-            return tryBreakLine('\n');
+            var last:int = writtenLines.length - 1;
+            if (LINE_BREAKERS.indexOf('\n') != -1
+                    && writtenLines[last].length >= textLines[last].length) {
+                return breakLine();
+            }
+            return false;
         }
 
         public function onBackspace():void {
             if (timeStarted == null || timeFinished != null) {
                 return;
             }
-            var lastLine:String = writtenLines[writtenLines.length - 1];
-            if (lastLine.length > 0) {
-                writtenLines[writtenLines.length - 1] =
-                    lastLine.substring(0, lastLine.length - 1);
-                mistakes[mistakes.length - 1].pop();
+            var last:int = writtenLines.length - 1;
+            if (writtenLines[last].length > 0) {
+                writtenLines[last] = writtenLines[last].substring(
+                        0, writtenLines[last].length - 1);
+                mistakes[last].pop();
             } else if (writtenLines.length > 1) {
                 writtenLines.pop();
                 mistakes.pop();
@@ -93,36 +84,28 @@ package tt {
             for (var i:int = 0; i < writtenLines.length; i++) {
                 var line:Array /* of Boolean */ = [];
                 for (var j:int = 0; j < mistakes[i].length; j++) {
-                    line.push(
-                            mistakesShadow[i].charAt(j) != ' '
-                            && !mistakes[i][j]);
+                    line.push(mistakesShadow[i][j] && !mistakes[i][j]);
                 }
                 corrections.push(line);
             }
             return corrections;
         }
 
-        private function tryBreakLine(c:String):Boolean {
+        private function breakLine():Boolean {
             if (timeStarted == null || timeFinished != null) {
                 return false;
             }
-            if (LINE_BREAKERS.indexOf(c) == -1) {
-                return false;
-            }
             var last:int = writtenLines.length - 1;
-            if (writtenLines[last].length >= textLines[last].length) {
-                if (writtenLines.length < textLines.length) {
-                    writtenLines.push("");
-                    mistakes.push([]);
-                    if (mistakes.length > mistakesShadow.length) {
-                        mistakesShadow.push("");
-                    }
-                } else {
-                    timeFinished = new Date();
+            if (writtenLines.length < textLines.length) {
+                writtenLines.push("");
+                mistakes.push([]);
+                if (mistakes.length > mistakesShadow.length) {
+                    mistakesShadow.push([]);
                 }
-                return true;
+            } else {
+                timeFinished = new Date();
             }
-            return false;
+            return true;
         }
 
         private static function breakLines(
