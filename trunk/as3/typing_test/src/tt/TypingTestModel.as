@@ -16,12 +16,15 @@ package tt {
         private var mistakesShadow:Array /* of Array of Boolean */;
         private var timeStarted:Date;
         private var timeFinished:Date;
+        private var isPaused:Boolean;
+        private var timesPaused:Array /* of Date */;
 
         public function TypingTestModel(text:String) {
             textLines = breakLines(text, MAX_LINE_LENGTH);
             writtenLines = [""];
             mistakes = [[]];
             mistakesShadow = [[]];
+            timesPaused = [];
         }
 
         public function onPrintableChar(c:String):Boolean {
@@ -89,6 +92,56 @@ package tt {
                 corrections.push(line);
             }
             return corrections;
+        }
+
+        public function pause():void {
+            isPaused = true;
+            timesPaused.push(new Date());
+        }
+
+        public function unpause():void {
+            isPaused = false;
+            timesPaused.push(new Date());
+        }
+
+        public function get isMistakeMade():Boolean {
+            for (var i:int = mistakes.length - 1; i >= 0; i--) {
+                for (var j:int = mistakes[i].length - 1; j >= 0; j--) {
+                    if (mistakes[i][j]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public function get typingTimeInMilliseconds():Number {
+            if (timeStarted == null) {
+                return -1;
+            } else {
+                var timeElapsed:Date = timeFinished;
+                if (timeFinished == null) {
+                    timeElapsed = new Date();
+                }
+                var interval:Number = timeElapsed.time - timeStarted.time;
+                // subtract paused time
+                var pausedInterval:Number = 0;
+                for (var i:Number = 0; i < timesPaused.length; i++) {
+                    if (i % 2 == 0) {
+                        pausedInterval -= timesPaused[i].time;
+                    } else {
+                        pausedInterval += timesPaused[i].time;
+                    }
+                }
+                if (isPaused) {
+                    pausedInterval += timesPaused[timesPaused.length - 1].time;
+                }
+                return interval - pausedInterval;
+            }
+        }
+
+        public function get isFinished():Boolean {
+            return timeFinished != null;
         }
 
         private function breakLine():Boolean {
