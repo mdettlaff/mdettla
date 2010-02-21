@@ -29,7 +29,7 @@
 
         <mx:HBox>
             <mx:Button id="newTestButton" label="Rozpocznij nowy test" />
-            <mx:Button id="pauseButton" label="{PAUSE}" />
+            <mx:Button id="pauseButton" label="{PAUSE_LABEL}" />
         </mx:HBox>
 
     </mx:Panel>

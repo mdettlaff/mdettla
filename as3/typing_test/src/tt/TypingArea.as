@@ -21,6 +21,7 @@ package tt {
         // text typed in by the user
         private var visibleWrittenLines:Array /* of TextField */;
 
+        private var welcomeText:TextField;
         private var bounds:Rectangle;
 
         public function TypingArea(width:int, height:int,
@@ -30,6 +31,8 @@ package tt {
 
             visibleTextLines = initVisibleTextLines();
             visibleWrittenLines = initVisibleWrittenLines();
+            welcomeText = createWelcomeText();
+            addChild(welcomeText);
         }
 
         public function draw(typingTestModel:TypingTestModel):void {
@@ -46,7 +49,13 @@ package tt {
             drawTextLines(typingTestModel.textLines, startLine, endLine);
             drawWrittenLines(typingTestModel.writtenLines,
                     typingTestModel.mistakes, typingTestModel.corrections,
-                    startLine, endLine);
+                    typingTestModel.isMistakeMade, startLine, endLine);
+        }
+
+        public function removeWelcomeText():void {
+            if (contains(welcomeText)) {
+                removeChild(welcomeText);
+            }
         }
 
         private function initVisibleTextLines():Array /* of TextField */ {
@@ -99,7 +108,7 @@ package tt {
                 writtenLines:Array /* of String */,
                 mistakes:Array /* of Array of Boolean */,
                 corrections:Array /* of Array of Boolean */,
-                startLine:int, endLine:int):void {
+                isMistakeMade:Boolean, startLine:int, endLine:int):void {
             var visibleIndex:int = 0;
             for (var i:int = startLine; i <= endLine; i++) {
                 var htmlLine:String = "";
@@ -119,7 +128,11 @@ package tt {
                 visibleWrittenLines[visibleIndex].htmlText = "";
                 visibleIndex += 1;
             }
-            visibleWrittenLines[visibleIndex - 2].htmlText += '_'; // cursor
+            var cursor:String = '_';
+            if (isMistakeMade) {
+                cursor = "<font color=\"#F00000\">" + cursor + "</font>";
+            }
+            visibleWrittenLines[visibleIndex - 2].htmlText += cursor;
             while (visibleIndex < visibleWrittenLines.length) {
                 visibleWrittenLines[visibleIndex].htmlText = "";
                 visibleIndex += 1;
@@ -152,5 +165,25 @@ package tt {
                     bounds.width, bounds.height);
             graphics.endFill();
         }
+
+        private function createWelcomeText():TextField {
+            var welcomeText:TextField = new TextField();
+            welcomeText.htmlText = "<p align=\"center\">"
+                + "<font face=\"Verdana\" size=\"15\">"
+                + "\n\n\nTest polega na przepisywaniu zadanego tekstu.\n"
+                + "Czas jest mierzony od momentu kiedy zaczniesz pisać.\n\n"
+                + "</font><font face=\"Verdana\" size=\"18\">"
+                + "Kliknij aby rozpocząć.\n"
+                + "Powodzenia!\n\n"
+                + "</font><font face=\"Verdana\" size=\"14\">"
+                + "autor: Michał Dettlaff"
+                + "</font></p>";
+            welcomeText.width = bounds.width;
+            welcomeText.height = bounds.height;
+            welcomeText.background = true;
+            welcomeText.border = true;
+            welcomeText.selectable = false;
+            return welcomeText;
+        };
     }
 }

@@ -7,19 +7,21 @@ import mx.controls.Alert;
 import mx.events.FlexEvent;
 import mx.rpc.events.ResultEvent;
 
-
-private static const PAUSE:String = "Pauza";
-private static const CONTINUE:String = "Wznów";
+private static const PAUSE_LABEL:String = "Pauza";
+private static const CONTINUE_LABEL:String = "Wznów";
 
 [Bindable]
 private var speed:int = 0;
 [Bindable]
 private var correctness:int = 0;
 
+private var isNewTestButtonActive:Boolean = false;
+
 private function init():void {
     initEventListeners();
 
     new TypingTest(typingCanvas, this);
+    //startNewTypingTest(); // DEBUG
 }
 
 private function initEventListeners():void {
@@ -28,6 +30,12 @@ private function initEventListeners():void {
     newTestButton.addEventListener(
             FlexEvent.BUTTON_DOWN, onNewTestButtonClicked);
 
+    addEventListener(TypingTestEvent.TYPING_TEST_ACTIVE,
+            onTypingTestActive);
+    addEventListener(TypingTestEvent.TEST_RESULTS_UPDATE,
+            onTestResultsUpdate);
+    addEventListener(TypingTestEvent.TYPING_TEST_FINISHED,
+            onTypingTestFinished);
     addEventListener(TypingTestEvent.PAUSE, onPause);
     addEventListener(TypingTestEvent.CONTINUE, onContinue);
 
@@ -35,7 +43,7 @@ private function initEventListeners():void {
 }
 
 private function onPauseButtonClicked(event:Event):void {
-    if (event.currentTarget.label == PAUSE) {
+    if (event.currentTarget.label == PAUSE_LABEL) {
         typingCanvas.dispatchEvent(
                 new TypingTestEvent(TypingTestEvent.PAUSE));
     } else {
@@ -46,20 +54,31 @@ private function onPauseButtonClicked(event:Event):void {
 }
 
 private function onNewTestButtonClicked(event:Event):void {
-    getTextService.cancel();
-    var params:Object = new Object();
-    params.action = "get_text";
-    params.text_index = (int)(50 * Math.random());
-    getTextService.send(params);
+    if (isNewTestButtonActive) {
+        startNewTypingTest();
+    }
     callLater(typingCanvas.setFocus);
 }
 
+private function onTypingTestActive(event:TypingTestEvent):void {
+    isNewTestButtonActive = true;
+}
+
+private function onTestResultsUpdate(event:TypingTestEvent):void {
+    speed = event.testResults.speed;
+    correctness = event.testResults.correctness;
+}
+
+private function onTypingTestFinished(event:TypingTestEvent):void {
+    Alert.show(event.testResults.toString());
+}
+
 private function onPause(event:Event):void {
-    pauseButton.label = CONTINUE;
+    pauseButton.label = CONTINUE_LABEL;
 }
 
 private function onContinue(event:Event):void {
-    pauseButton.label = PAUSE;
+    pauseButton.label = PAUSE_LABEL;
 }
 
 private function onGetTextServiceResult(event:ResultEvent):void {
@@ -71,4 +90,12 @@ private function onGetTextServiceResult(event:ResultEvent):void {
 private function onSubmitTestResultsServiceResult(event:ResultEvent):void {
     var serviceResponse:String = event.result.toString();
     Alert.show(serviceResponse);
+}
+
+private function startNewTypingTest():void {
+    getTextService.cancel();
+    var params:Object = new Object();
+    params.action = "get_text";
+    params.text_index = (int)(50 * Math.random());
+    getTextService.send(params);
 }
