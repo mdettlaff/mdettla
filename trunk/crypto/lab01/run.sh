@@ -3,6 +3,8 @@ then
   echo "Użycie: ./run.sh plik_tekstowy"
   exit
 fi
-echo "współczynnik niepodobieństwa rozkładu częstotliwości występowania liter
-w zaszyfrowanym tekście do rozkładu w języku angielskim w ogóle:"
-cat $1 | ./encrypt_subst.py | ./frequencies.py eng_frequencies.txt
+echo "różnica między rozkładem częstotliwości występowania liter
+w zaszyfrowanym tekście a rozkładem w języku angielskim w ogóle:"
+cat $1 | ./encrypt_subst.py | ./frequencies.py frequencies_en.txt
+echo "tekst odszfrowany za pomocą analizy częstości liter:"
+cat $1 | ./encrypt_subst.py | ./decrypt_substr.py letters_by_frequency_en.txt
