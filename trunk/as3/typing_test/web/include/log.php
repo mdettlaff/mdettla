@@ -3,7 +3,7 @@
 include 'db_connection.php';
 
 function log_write($msg) {
-    $msg ;
+    $msg;
     $query = "
         INSERT INTO tt.log
             (date_added, message)
