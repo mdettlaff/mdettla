@@ -129,8 +129,9 @@ echo "<hr width=\"400\" align=\"left\">\n\n";
 
 // 100 najlepszych wyników
 echo "<h2>Typing Test - Top 100</h3>\n";
-$r = pg_query('SELECT date_added, speed, ip, mistakes, pl, chars, minutes, seconds
-    FROM tt.ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
+$r = pg_query('
+    SELECT date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+        FROM tt.ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
 $nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<td><b>miejsce$nbsp3</b></td><td><b>zakończenie pisania$nbsp3</b></td>\n";

@@ -1,19 +1,23 @@
+import tt.mx.TestResultsWindow;
 import tt.TypingTest;
 import tt.TypingTestEvent;
 
 import flash.events.Event;
 
-import mx.controls.Alert;
+import mx.containers.TitleWindow;
+import mx.controls.Text;
+import mx.events.CloseEvent;
 import mx.events.FlexEvent;
+import mx.managers.PopUpManager;
 import mx.rpc.events.ResultEvent;
 
 private static const PAUSE_LABEL:String = "Pauza";
 private static const CONTINUE_LABEL:String = "Wznów";
 
 [Bindable]
-private var speed:int = 0;
+private var speed:Number = 0;
 [Bindable]
-private var correctness:int = 0;
+private var correctness:Number = 0;
 
 private var isNewTestButtonActive:Boolean = false;
 
@@ -70,7 +74,11 @@ private function onTestResultsUpdate(event:TypingTestEvent):void {
 }
 
 private function onTypingTestFinished(event:TypingTestEvent):void {
-    Alert.show(event.testResults.toString());
+    var resultsWindow:TestResultsWindow = PopUpManager.createPopUp(
+            this, TestResultsWindow, true) as TestResultsWindow;
+    resultsWindow.htmlText = event.testResults.toHTMLString();
+    PopUpManager.centerPopUp(resultsWindow);
+    resultsWindow.setFocus();
 }
 
 private function onPause(event:Event):void {
@@ -87,15 +95,7 @@ private function onGetTextServiceResult(event:ResultEvent):void {
             new TypingTestEvent(TypingTestEvent.NEW_TYPING_TEST, text));
 }
 
-private function onSubmitTestResultsServiceResult(event:ResultEvent):void {
-    var serviceResponse:String = event.result.toString();
-    Alert.show(serviceResponse);
-}
-
 private function startNewTypingTest():void {
     getTextService.cancel();
-    var params:Object = new Object();
-    params.action = "get_text";
-    params.text_index = (int)(50 * Math.random());
-    getTextService.send(params);
+    getTextService.send();
 }
