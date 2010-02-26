@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
+    title="Wyniki testu" layout="vertical" horizontalAlign="center"
+    backgroundColor="white" backgroundAlpha="1.0"
+    borderColor="#D0D0E0" borderAlpha="1.0"
+    showCloseButton="false" close="closeWindow()"
+    creationComplete="init()">
+
+    <mx:Script>
+        <![CDATA[
+
+        import flash.events.Event;
+        import flash.events.KeyboardEvent;
+        import flash.ui.Keyboard;
+        import mx.managers.PopUpManager;
+
+        private function init():void {
+            addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+        }
+
+        public function set htmlText(htmlText:String):void {
+            resultsText.htmlText = htmlText;
+        }
+
+        private function onKeyDown(event:KeyboardEvent):void {
+            if (event.keyCode == Keyboard.ESCAPE) {
+                closeWindow();
+            }
+        }
+
+        private function closeWindow():void {
+            PopUpManager.removePopUp(this);
+        }
+
+        ]]>
+    </mx:Script>
+
+    <mx:Text id="resultsText" />
+
+    <mx:Button id="okButton" label="OK" click="closeWindow()" />
+
+</mx:TitleWindow>

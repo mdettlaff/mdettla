@@ -4,7 +4,7 @@ include '../include/db_connection.php';
 
 function get_texts_count() {
     $query = "
-        SELECT count(text) AS texts_count FROM tt.texts
+        SELECT COUNT(text) AS texts_count FROM tt.texts
     ";
     $result = pg_query($query) or die('ERROR: Problem with query.');
     $row = pg_fetch_assoc($result);

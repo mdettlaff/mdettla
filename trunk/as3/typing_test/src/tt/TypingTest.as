@@ -22,8 +22,7 @@ package tt {
             typingArea = new TypingArea(
                     mainContainer.width, mainContainer.height);
             typingTestModel = new TypingTestModel(
-                    "To jest tekst.\nNa temat żółwia.\n" + // DEBUG
-                    "To jest trzecia linia.\nCzwarta.\nOraz piąta.");
+                    "To jest tekst.\nNa temat żółwia.\n"); // DEBUG
             typingArea.draw(typingTestModel);
 
             mainContainer.addChild(typingArea);

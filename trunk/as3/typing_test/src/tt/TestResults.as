@@ -55,9 +55,15 @@ package tt {
                 / writtenCharsCount * 100;
         }
 
-        public function toString():String {
-            return "prędkość: " + speed + " znaków/min\n"
-                + "realna prędkość " + realSpeed + " znaków/min";
+        public function toHTMLString():String {
+            return "<font size=\"14\">prędkość: <b>"
+                + speed.toFixed(1) + "</b> znaków/min\n"
+                + "poprawność: <b>" + correctness.toFixed(1) + "</b>%"
+                + "</font><font size = \"12\">\n\n"
+                + "Popełniono " + mistakesCount + " błędów.\n"
+                + "Przepisano " + writtenCharsCount + " znaków w czasie "
+                + int(timeMinutes) + " min " + (int(timeSeconds) % 60) + " s."
+                + "</font>";
         }
 
         private static function countMistakes(
@@ -80,7 +86,11 @@ package tt {
         }
 
         private function get timeMinutes():Number {
-            return typingTimeInMilliseconds / 1000 / 60;
+            return timeSeconds / 60;
+        }
+
+        private function get timeSeconds():Number {
+            return typingTimeInMilliseconds / 1000;
         }
     }
 }
