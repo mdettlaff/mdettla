@@ -4,6 +4,7 @@ package tt {
 
         public var writtenCharsCount:int;
         public var mistakesCount:int;
+        public var plChars:Boolean;
 
         private var correctionsCount:int;
         private var totalCharsCount:int;
@@ -32,6 +33,7 @@ package tt {
             }
             typingTimeInMilliseconds =
                 typingTestModel.typingTimeInMilliseconds;
+            plChars = typingTestModel.textLines.some(Utils.containsPlChars);
         }
 
         public function get speed():Number {
