@@ -12,11 +12,11 @@ package tt {
         // text typed in by the user
         public var writtenLines:Array /* of String */;
         public var mistakes:Array /* of Array of Boolean */;
+        public var isPaused:Boolean;
 
         private var mistakesShadow:Array /* of Array of Boolean */;
         private var timeStarted:Date;
         private var timeFinished:Date;
-        private var isPaused:Boolean;
         private var timesPaused:Array /* of Date */;
 
         public function TypingTestModel(text:String) {
@@ -138,6 +138,10 @@ package tt {
                 }
                 return interval - pausedInterval;
             }
+        }
+
+        public function get isStarted():Boolean {
+            return timeStarted != null;
         }
 
         public function get isFinished():Boolean {

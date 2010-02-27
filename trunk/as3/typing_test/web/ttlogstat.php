@@ -45,8 +45,6 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 
 <?php
 
-include 'include/db_connection.php';
-
 // wykres słupkowy z prędkościami
 $maxspeed = 400;
 for ($i = 0; $i < $maxspeed / 50; $i++) {

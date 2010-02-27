@@ -15,7 +15,9 @@ private static const PAUSE_LABEL:String = "Pauza";
 private static const CONTINUE_LABEL:String = "Wznów";
 
 [Bindable]
-private var speed:Number = 0;
+private var speedCPM:Number = 0;
+[Bindable]
+private var speedWPM:Number = 0;
 [Bindable]
 private var correctness:Number = 0;
 
@@ -38,6 +40,8 @@ private function initEventListeners():void {
             onTypingTestActive);
     addEventListener(TypingTestEvent.TEST_RESULTS_UPDATE,
             onTestResultsUpdate);
+    addEventListener(TypingTestEvent.TYPING_STARTED,
+            onTypingStarted);
     addEventListener(TypingTestEvent.TYPING_TEST_FINISHED,
             onTypingTestFinished);
     addEventListener(TypingTestEvent.PAUSE, onPause);
@@ -62,14 +66,20 @@ private function onNewTestButtonClicked(event:Event):void {
         startNewTypingTest();
     }
     callLater(typingCanvas.setFocus);
+    pauseButton.enabled = false;
 }
 
 private function onTypingTestActive(event:TypingTestEvent):void {
     isNewTestButtonActive = true;
 }
 
+private function onTypingStarted(event:TypingTestEvent):void {
+    pauseButton.enabled = true;
+}
+
 private function onTestResultsUpdate(event:TypingTestEvent):void {
-    speed = event.testResults.speed;
+    speedCPM = event.testResults.realSpeed;
+    speedWPM = event.testResults.realSpeedWPM;
     correctness = event.testResults.correctness;
 }
 
@@ -79,6 +89,7 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     resultsWindow.htmlText = event.testResults.toHTMLString();
     PopUpManager.centerPopUp(resultsWindow);
     resultsWindow.setFocus();
+    pauseButton.enabled = false;
 }
 
 private function onPause(event:Event):void {

@@ -33,5 +33,6 @@ CREATE SEQUENCE tt.id_log_seq;
 CREATE TABLE tt.log (
     id_log int DEFAULT NEXTVAL('tt.id_log_seq') PRIMARY KEY,
     date_added timestamp NOT NULL,
+    ip varchar(32),
     message varchar NOT NULL
 );

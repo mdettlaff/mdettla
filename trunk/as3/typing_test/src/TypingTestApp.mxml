@@ -2,7 +2,7 @@
 <mx:Application
     xmlns:mx="http://www.adobe.com/2006/mxml"
     xmlns:tt="tt.mx.*"
-    backgroundGradientColors="[#FFFFFF, #FFFFFF]"
+    backgroundGradientColors="[#F5F5F5, #F5F5F5]"
     creationComplete="init()">
 
     <mx:HTTPService id="getTextService"
@@ -22,14 +22,16 @@
 
         <mx:HBox verticalAlign="bottom">
             <mx:Label text="prędkość:" />
-            <mx:Label text="{speed.toFixed(1)} zn./min" fontSize="12" />
-            <mx:Label text="poprawność" />
+            <mx:Label text="{speedCPM.toFixed(1)} znaków/min" fontSize="12" />
+            <mx:Label text="({speedWPM.toFixed(1)} słów/min)" fontSize="12" />
+            <mx:Label text="poprawność" paddingLeft="15" />
             <mx:Label text="{correctness.toFixed(1)}%" fontSize="12" />
         </mx:HBox>
 
         <mx:HBox>
             <mx:Button id="newTestButton" label="Rozpocznij nowy test" />
-            <mx:Button id="pauseButton" label="{PAUSE_LABEL}" />
+            <mx:Button id="pauseButton" label="{PAUSE_LABEL}"
+                enabled="false" />
         </mx:HBox>
 
     </mx:Panel>

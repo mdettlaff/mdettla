@@ -7,6 +7,7 @@ package tt {
         public static const TYPING_TEST_ACTIVE:String = "typingTestActive";
         public static const NEW_TYPING_TEST:String = "newTypingTest";
         public static const TEST_RESULTS_UPDATE:String = "testResultsUpdate";
+        public static const TYPING_STARTED:String = "typingStarted";
         public static const TYPING_TEST_FINISHED:String = "typingTestFinished";
         public static const PAUSE:String = "pause";
         public static const CONTINUE:String = "continue";

@@ -15,6 +15,7 @@ package tt {
         private var typingArea:TypingArea;
         private var typingTestModel:TypingTestModel;
         private var polishChars:PolishChars;
+        private var updateTimer:Timer;
 
         public function TypingTest(mainContainer:DisplayObjectContainer,
                 mainEventDispatcher:IEventDispatcher) {
@@ -33,14 +34,19 @@ package tt {
                     KeyboardEvent.KEY_DOWN, onKeyDown);
             mainContainer.addEventListener(
                     TypingTestEvent.NEW_TYPING_TEST, onNewTypingTest);
+            mainContainer.addEventListener(
+                    TypingTestEvent.PAUSE, onPause);
+            mainContainer.addEventListener(
+                    TypingTestEvent.CONTINUE, onContinue);
 
-            var timer:Timer = new Timer(1000, 0);
-            timer.addEventListener(TimerEvent.TIMER, onTimer);
-            timer.start();
+            updateTimer = new Timer(1000, 0);
+            updateTimer.addEventListener(TimerEvent.TIMER, onUpdateTimer);
+            updateTimer.start();
         }
 
         private function onKeyDown(event:KeyboardEvent):void {
-            if (!typingTestModel.isFinished) {
+            var wasStarted:Boolean = typingTestModel.isStarted;
+            if (!typingTestModel.isFinished && !typingTestModel.isPaused) {
                 if (event.charCode >= 32) { // not a control character
                     var c:String = polishChars.charFrom(event);
                     if (c != null) {
@@ -57,13 +63,17 @@ package tt {
                                 TypingTestEvent.TYPING_TEST_FINISHED,
                                 null, new TestResults(typingTestModel)));
                 }
+                if (!wasStarted && typingTestModel.isStarted) {
+                    typingArea.dispatchEvent(new TypingTestEvent(
+                                TypingTestEvent.TYPING_STARTED));
+                }
                 typingArea.draw(typingTestModel);
             }
         }
 
         private function onActivate(event:Event):void {
             typingArea.removeWelcomeText();
-            setTimeout(typingTestActive, 500);
+            setTimeout(dispatchTypingTestActive, 500);
         }
 
         private function onNewTypingTest(event:TypingTestEvent):void {
@@ -71,13 +81,23 @@ package tt {
             typingArea.draw(typingTestModel);
         }
 
-        private function onTimer(event:TimerEvent):void {
+        private function onUpdateTimer(event:TimerEvent):void {
             typingArea.dispatchEvent(
                     new TypingTestEvent(TypingTestEvent.TEST_RESULTS_UPDATE,
                         null, new TestResults(typingTestModel)));
         }
 
-        private function typingTestActive():void {
+        private function onPause(event:TypingTestEvent):void {
+            updateTimer.stop();
+            typingTestModel.pause();
+        }
+
+        private function onContinue(event:TypingTestEvent):void {
+            typingTestModel.unpause();
+            updateTimer.start();
+        }
+
+        private function dispatchTypingTestActive():void {
             typingArea.dispatchEvent(
                     new TypingTestEvent(TypingTestEvent.TYPING_TEST_ACTIVE));
         }
