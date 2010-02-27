@@ -2,10 +2,11 @@ package tt {
 
     public class TestResults {
 
-        private var mistakesCount:int;
+        public var writtenCharsCount:int;
+        public var mistakesCount:int;
+
         private var correctionsCount:int;
         private var totalCharsCount:int;
-        private var writtenCharsCount:int;
         private var typingTimeInMilliseconds:int;
 
         public function TestResults(typingTestModel:TypingTestModel) {
@@ -59,6 +60,14 @@ package tt {
                 / writtenCharsCount * 100;
         }
 
+        public function get timeMinutes():Number {
+            return timeSeconds / 60;
+        }
+
+        public function get timeSeconds():Number {
+            return typingTimeInMilliseconds / 1000;
+        }
+
         public function toHTMLString():String {
             var html:String = "<font size=\"14\">prędkość: <b>"
                 + realSpeed.toFixed(1) + "</b> znaków/min "
@@ -98,14 +107,6 @@ package tt {
                 }
             }
             return mistakesCount;
-        }
-
-        private function get timeMinutes():Number {
-            return timeSeconds / 60;
-        }
-
-        private function get timeSeconds():Number {
-            return typingTimeInMilliseconds / 1000;
         }
     }
 }

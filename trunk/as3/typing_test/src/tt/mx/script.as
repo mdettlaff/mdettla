@@ -90,6 +90,17 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     PopUpManager.centerPopUp(resultsWindow);
     resultsWindow.setFocus();
     pauseButton.enabled = false;
+
+    submitTestResultsService.cancel();
+    var params:Object = new Object();
+    params.speed = event.testResults.realSpeed.toFixed(1);
+    params.mistakes = event.testResults.mistakesCount;
+    params.plChars = true; // TODO
+    params.correctChars =
+        event.testResults.writtenCharsCount - event.testResults.mistakesCount;
+    params.minutes = int(event.testResults.timeMinutes);
+    params.seconds = int(event.testResults.timeSeconds);
+    submitTestResultsService.send(params);
 }
 
 private function onPause(event:Event):void {
