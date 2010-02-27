@@ -63,6 +63,7 @@ private function onPauseButtonClicked(event:Event):void {
 
 private function onNewTestButtonClicked(event:Event):void {
     if (isNewTestButtonActive) {
+        pauseButton.label = PAUSE_LABEL;
         startNewTypingTest();
     }
     callLater(typingCanvas.setFocus);
@@ -99,7 +100,7 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     params.correctChars =
         event.testResults.writtenCharsCount - event.testResults.mistakesCount;
     params.minutes = int(event.testResults.timeMinutes);
-    params.seconds = int(event.testResults.timeSeconds);
+    params.seconds = int(event.testResults.timeSeconds) % 60;
     submitTestResultsService.send(params);
 }
 

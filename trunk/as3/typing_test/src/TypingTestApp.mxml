@@ -31,7 +31,9 @@
         <mx:HBox>
             <mx:Button id="newTestButton" label="Rozpocznij nowy test" />
             <mx:Button id="pauseButton" label="{PAUSE_LABEL}"
-                enabled="false" />
+                width="70" enabled="false" />
+            <mx:CheckBox id="plCharsCheckBox" label="polskie znaki"
+                selected="true" paddingLeft="15" />
         </mx:HBox>
 
     </mx:Panel>
