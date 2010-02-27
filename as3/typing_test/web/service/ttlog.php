@@ -16,12 +16,22 @@ function isSubmittedTooSoon($submit_time, $last_submit_time) {
         && ($submit_time - $last_submit_time < $min_time_between_submits));
 }
 
+function isHMACValid($hash, $h_data) {
+    if (empty($hash) || empty($h_data)) {
+        return false;
+    }
+    $h_key = 'secret';
+    $valid_hash = hash_hmac('sha256', $h_data, $h_key);
+    return $hash == $valid_hash;
+}
+
 $speed = $_POST['speed'];
 $mistakes = $_POST['mistakes'];
 $pl = $_POST['plChars'];
 $chars = $_POST['correctChars'];
 $minutes = $_POST['minutes'];
 $seconds = $_POST['seconds'];
+$h = $_POST['h'];
 
 $MAX_MISTAKES = 25;
 
@@ -31,6 +41,10 @@ if (validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
         log_write('entry not added to ttlog, submitted too soon; '
             . 'time=' . $current_time . ', last_submit_time='
             . $_SESSION['last_submit_time'] . '; '
+            . 'POST parameters: ' . print_r($_POST, true));
+    } else if (!isHMACValid($h, $_SESSION['h_data'])) {
+        log_write('entry not added to ttlog, wrong HMAC; '
+            . 'h_data=' . $_SESSION['h_data'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
     } else if ($mistakes <= $MAX_MISTAKES) {
         // konwersja polskiego u³amka dziesiêtnego (przecinek)
@@ -64,6 +78,7 @@ if (validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
         . print_r($_POST, true));
 }
 
+unset($_SESSION['h_data']);
 $_SESSION['last_submit_time'] = time();
 
 ?>

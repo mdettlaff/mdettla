@@ -25,7 +25,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 
     <table cellspacing="8">
       <tr>
-        <th>LP</th>
+        <th>nr</th>
         <th>Data</th>
         <th>IP</th>
         <th>Wiadomość</th>

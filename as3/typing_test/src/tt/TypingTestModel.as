@@ -13,13 +13,16 @@ package tt {
         public var writtenLines:Array /* of String */;
         public var mistakes:Array /* of Array of Boolean */;
         public var isPaused:Boolean;
+        public var isReady:Boolean;
 
         private var mistakesShadow:Array /* of Array of Boolean */;
         private var timeStarted:Date;
         private var timeFinished:Date;
         private var timesPaused:Array /* of Date */;
 
-        public function TypingTestModel(text:String, plCharsOn:Boolean) {
+        public function TypingTestModel(text:String,
+                plCharsOn:Boolean, isReady:Boolean = true) {
+            this.isReady = isReady;
             if (!plCharsOn) {
                 text = Utils.shavePlChars(text);
             }
@@ -45,7 +48,7 @@ package tt {
                     && writtenLines[last].length >= textLines[last].length) {
                 return breakLine();
             }
-            var isTypedCorrectly:Boolean =
+            const isTypedCorrectly:Boolean =
                 writtenLines[last].length < textLines[last].length
                     && textLines[last].charAt(writtenLines[last].length) == c;
             writtenLines[last] += c;
@@ -62,7 +65,7 @@ package tt {
         }
 
         public function onEnter():Boolean {
-            var last:int = writtenLines.length - 1;
+            const last:int = writtenLines.length - 1;
             if (LINE_BREAKERS.indexOf('\n') != -1
                     && writtenLines[last].length >= textLines[last].length) {
                 return breakLine();
@@ -74,7 +77,7 @@ package tt {
             if (timeStarted == null || timeFinished != null) {
                 return;
             }
-            var last:int = writtenLines.length - 1;
+            const last:int = writtenLines.length - 1;
             if (writtenLines[last].length > 0) {
                 writtenLines[last] = writtenLines[last].substring(
                         0, writtenLines[last].length - 1);
@@ -126,7 +129,7 @@ package tt {
                 if (timeFinished == null) {
                     timeElapsed = new Date();
                 }
-                var interval:Number = timeElapsed.time - timeStarted.time;
+                const interval:Number = timeElapsed.time - timeStarted.time;
                 // subtract paused time
                 var pausedInterval:Number = 0;
                 for (var i:Number = 0; i < timesPaused.length; i++) {
@@ -155,7 +158,7 @@ package tt {
             if (timeStarted == null || timeFinished != null) {
                 return false;
             }
-            var last:int = writtenLines.length - 1;
+            const last:int = writtenLines.length - 1;
             if (writtenLines.length < textLines.length) {
                 writtenLines.push("");
                 mistakes.push([]);
@@ -170,7 +173,7 @@ package tt {
 
         private static function breakLines(
                 text:String, maxLineLength:int):Array /* of String */ {
-            var multiSpace:RegExp = / +/g;
+            const multiSpace:RegExp = / +/g;
             var textLines:Array =
                 StringUtil.trim(text.replace(multiSpace, ' ')).split('\n');
             var lineEndIndex:int = 0;

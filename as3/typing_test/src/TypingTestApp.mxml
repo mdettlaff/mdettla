@@ -6,6 +6,7 @@
     creationComplete="init()">
 
     <mx:HTTPService id="getTextService"
+        resultFormat="e4x"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/texts.php" />
 
     <mx:HTTPService id="submitTestResultsService"

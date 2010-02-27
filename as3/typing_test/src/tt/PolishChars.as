@@ -47,7 +47,7 @@ package tt {
             const EN:String = "aAcCeElLnNoOsSzZxX";
             const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
             if (event.altKey) {
-                var i:int = EN.indexOf(String.fromCharCode(event.charCode));
+                const i:int = EN.indexOf(String.fromCharCode(event.charCode));
                 if (i != -1) {
                     return PL.charAt(i);
                 }
