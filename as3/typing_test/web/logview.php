@@ -28,30 +28,31 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
       <tr>
         <th>LP</th>
         <th>Data</th>
+        <th>IP</th>
         <th>Wiadomość</th>
       </tr>
 <?php
 
-include 'include/db_connection.php';
-
 $query = "
-    SELECT id_log, date_added, message
+    SELECT id_log, date_added, ip, message
         FROM tt.log
         ORDER BY id_log DESC
 ";
 
 $result = pg_query($query);
-if (!$result) {
-    log_write("ERROR: Problem with query $query");
-    log_write(pg_last_error());
-}
-while($row = pg_fetch_assoc($result)) {
-    echo "      <tr>\n";
-    echo '        <td>' . htmlspecialchars($row['id_log']) . "</td>\n";
-    echo '        <td>' . str_replace(' ', '&nbsp;',
-        htmlspecialchars($row['date_added'])) . "</td>\n";
-    echo '        <td>' . htmlspecialchars($row['message']) . "</td>\n";
-    echo "      </tr>\n";
+if ($result) {
+    while($row = pg_fetch_assoc($result)) {
+        echo "      <tr>\n";
+        echo '        <td>' . htmlspecialchars($row['id_log']) . "</td>\n";
+        echo '        <td>' . str_replace(' ', '&nbsp;',
+            htmlspecialchars($row['date_added'])) . "</td>\n";
+        echo '        <td>' . htmlspecialchars($row['ip']) . "</td>\n";
+        echo '        <td>' . htmlspecialchars($row['message']) . "</td>\n";
+        echo "      </tr>\n";
+    }
+} else {
+    echo("<tr><td colspan=\"4\">ERROR: problem with query</td></tr>\n");
+    log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
 }
 
 ?>

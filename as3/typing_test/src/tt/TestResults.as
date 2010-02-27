@@ -47,6 +47,10 @@ package tt {
             return (writtenCharsCount - mistakesCount) / timeMinutes;
         }
 
+        public function get realSpeedWPM():Number {
+            return realSpeed / 5;
+        }
+
         public function get correctness():Number {
             if (writtenCharsCount == 0) {
                 return 0;
@@ -56,14 +60,25 @@ package tt {
         }
 
         public function toHTMLString():String {
-            return "<font size=\"14\">prędkość: <b>"
-                + speed.toFixed(1) + "</b> znaków/min\n"
+            var html:String = "<font size=\"14\">prędkość: <b>"
+                + realSpeed.toFixed(1) + "</b> znaków/min "
+                + "(" + realSpeedWPM.toFixed(1) + " słów/min)\n"
                 + "poprawność: <b>" + correctness.toFixed(1) + "</b>%"
                 + "</font><font size = \"12\">\n\n"
-                + "Popełniono " + mistakesCount + " błędów.\n"
-                + "Przepisano " + writtenCharsCount + " znaków w czasie "
-                + int(timeMinutes) + " min " + (int(timeSeconds) % 60) + " s."
-                + "</font>";
+                + "Ilość błędów: " + (mistakesCount + correctionsCount);
+            if (correctionsCount > 0 && mistakesCount == 0) {
+                html += ", wszystkie poprawione.\n";
+            } else if (mistakesCount > 0) {
+                html += ", z czego poprawiono " + correctionsCount + ".\n";
+            } else {
+                html += ".\n";
+            }
+            html += "Przepisano " + writtenCharsCount + " znaków w czasie ";
+            if (int(timeMinutes) > 0) {
+                html += int(timeMinutes) + "min ";
+            }
+            html += (int(timeSeconds) % 60) + " s." + "</font>";
+            return html;
         }
 
         private static function countMistakes(

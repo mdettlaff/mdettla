@@ -4,7 +4,7 @@
   <meta name="Language" content="pl">
   <title>Test prędkości online</title>
 </head>
-<body>
+<body bgcolor="#F5F5F5">
 
 Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania.<br />
 <!--
@@ -22,9 +22,9 @@ Learn more about Flex at http://flex.org
         codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
         <param name="movie" value="flash/TypingTestApp.swf" />
         <param name="quality" value="high" />
-        <param name="bgcolor" value="#ffffff" />
+        <param name="bgcolor" value="#f5f5f5" />
         <param name="allowScriptAccess" value="sameDomain" />
-        <embed src="flash/TypingTestApp.swf" quality="high" bgcolor="#ffffff"
+        <embed src="flash/TypingTestApp.swf" quality="high" bgcolor="#f5f5f5"
             width="675" height="450" name="TypingTest" align="middle"
             play="true"
             loop="false"
