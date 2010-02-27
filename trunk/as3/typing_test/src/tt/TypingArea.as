@@ -46,10 +46,12 @@ package tt {
                 endLine = typingTestModel.writtenLines.length - 1;
             }
 
+            if (typingTestModel.isReady) {
+                drawWrittenLines(typingTestModel.writtenLines,
+                        typingTestModel.mistakes, typingTestModel.corrections,
+                        typingTestModel.isMistakeMade, startLine, endLine);
+            }
             drawTextLines(typingTestModel.textLines, startLine, endLine);
-            drawWrittenLines(typingTestModel.writtenLines,
-                    typingTestModel.mistakes, typingTestModel.corrections,
-                    typingTestModel.isMistakeMade, startLine, endLine);
         }
 
         public function removeWelcomeText():void {
@@ -140,12 +142,12 @@ package tt {
         }
 
         private function createLine(yShift:int, color:uint):TextField {
-            var format:TextFormat = new TextFormat();
+            const format:TextFormat = new TextFormat();
             format.font = "Verdana";
             format.size = 15;
             format.color = color;
 
-            var line:TextField = new TextField();
+            const line:TextField = new TextField();
             line.x = 5;
             line.y = yShift;
             line.defaultTextFormat = format;
@@ -167,7 +169,7 @@ package tt {
         }
 
         private function createWelcomeText():TextField {
-            var welcomeText:TextField = new TextField();
+            const welcomeText:TextField = new TextField();
             welcomeText.htmlText = "<p align=\"center\">"
                 + "<font face=\"Verdana\" size=\"15\">"
                 + "\n\n\nTest polega na przepisaniu zadanego tekstu.\n"

@@ -2,6 +2,11 @@ import tt.mx.TestResultsWindow;
 import tt.TypingTest;
 import tt.TypingTestEvent;
 
+import com.hurlant.crypto.hash.HMAC;
+import com.hurlant.crypto.hash.IHMAC;
+import com.hurlant.crypto.hash.SHA256;
+import com.hurlant.util.Hex;
+
 import flash.events.Event;
 
 import mx.containers.TitleWindow;
@@ -22,6 +27,7 @@ private var speedWPM:Number = 0;
 private var correctness:Number = 0;
 
 private var isNewTestButtonActive:Boolean = false;
+private var hData:String = "stuff from server";
 
 private function init():void {
     initEventListeners();
@@ -109,6 +115,7 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
         event.testResults.writtenCharsCount - event.testResults.mistakesCount;
     params.minutes = int(event.testResults.timeMinutes);
     params.seconds = int(event.testResults.timeSeconds) % 60;
+    params.h = h(hData);
     submitTestResultsService.send(params);
 }
 
@@ -121,9 +128,17 @@ private function onContinue(event:TypingTestEvent):void {
 }
 
 private function onGetTextServiceResult(event:ResultEvent):void {
-    var text:String = event.result.toString();
+    const result:XML = XML(event.result);
     typingCanvas.dispatchEvent(
-            new TypingTestEvent(TypingTestEvent.NEW_TYPING_TEST, text));
+            new TypingTestEvent(TypingTestEvent.NEW_TYPING_TEST, result.text));
+    hData = result.hData;
+}
+
+private static function h(hData:String):String {
+    const hKey:String = "secret";
+    const hmac:IHMAC = new HMAC(new SHA256());
+    return Hex.fromArray(hmac.compute(Hex.toArray(Hex.fromString(hKey)),
+                Hex.toArray(Hex.fromString(hData))));
 }
 
 private function startNewTypingTest():void {

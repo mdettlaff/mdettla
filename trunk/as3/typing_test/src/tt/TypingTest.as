@@ -24,9 +24,8 @@ package tt {
             plCharsOn = true;
             typingArea =
                 new TypingArea(mainContainer.width, mainContainer.height);
-            textWithPlChars = "To jest tekst.\nNa temat żółwia.\n"; // DEBUG
-            typingTestModel = new TypingTestModel(
-                    "To jest tekst.\nNa temat żółwia.\n", plCharsOn); // DEBUG
+            typingTestModel = new TypingTestModel("Trwa łączenie z serwerem, "
+                    + "proszę czekać...", plCharsOn, true); // DEBUG
             typingArea.draw(typingTestModel);
 
             mainContainer.addChild(typingArea);
@@ -50,10 +49,11 @@ package tt {
         }
 
         private function onKeyDown(event:KeyboardEvent):void {
-            var wasStarted:Boolean = typingTestModel.isStarted;
-            if (!typingTestModel.isFinished && !typingTestModel.isPaused) {
+            const wasStarted:Boolean = typingTestModel.isStarted;
+            if (typingTestModel.isReady && !typingTestModel.isFinished
+                    && !typingTestModel.isPaused) {
                 if (event.charCode >= 32) { // not a control character
-                    var c:String = polishChars.charFrom(event);
+                    const c:String = polishChars.charFrom(event);
                     if (c != null) {
                         typingTestModel.onPrintableChar(c);
                     }
@@ -62,15 +62,15 @@ package tt {
                 } else if (event.keyCode == Keyboard.BACKSPACE) {
                     typingTestModel.onBackspace();
                 }
+                if (!wasStarted && typingTestModel.isStarted) {
+                    typingArea.dispatchEvent(new TypingTestEvent(
+                                TypingTestEvent.TYPING_STARTED));
+                }
                 if (typingTestModel.isFinished) {
                     typingArea.dispatchEvent(
                             new TypingTestEvent(
                                 TypingTestEvent.TYPING_TEST_FINISHED,
                                 null, new TestResults(typingTestModel)));
-                }
-                if (!wasStarted && typingTestModel.isStarted) {
-                    typingArea.dispatchEvent(new TypingTestEvent(
-                                TypingTestEvent.TYPING_STARTED));
                 }
                 typingArea.draw(typingTestModel);
             }
@@ -106,7 +106,7 @@ package tt {
 
         private function onPlCharsChange(event:TypingTestEvent):void {
             plCharsOn = !plCharsOn;
-            if (!typingTestModel.isStarted) {
+            if (typingTestModel.isReady && !typingTestModel.isStarted) {
                 typingTestModel =
                     new TypingTestModel(textWithPlChars, plCharsOn);
                 typingArea.draw(typingTestModel);
