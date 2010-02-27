@@ -79,6 +79,7 @@ package tt {
         private function onNewTypingTest(event:TypingTestEvent):void {
             typingTestModel = new TypingTestModel(event.text);
             typingArea.draw(typingTestModel);
+            updateTimer.start();
         }
 
         private function onUpdateTimer(event:TimerEvent):void {
