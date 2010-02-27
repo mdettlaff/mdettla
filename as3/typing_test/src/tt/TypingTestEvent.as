@@ -11,6 +11,7 @@ package tt {
         public static const TYPING_TEST_FINISHED:String = "typingTestFinished";
         public static const PAUSE:String = "pause";
         public static const CONTINUE:String = "continue";
+        public static const PL_CHARS_CHANGE:String = "plCharsChange";
 
         public var text:String;
         public var testResults:TestResults;

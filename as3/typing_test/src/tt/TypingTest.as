@@ -1,7 +1,6 @@
 package tt {
 
     import flash.display.DisplayObjectContainer;
-    import flash.display.Sprite;
     import flash.events.IEventDispatcher;
     import flash.events.Event;
     import flash.events.KeyboardEvent;
@@ -16,14 +15,18 @@ package tt {
         private var typingTestModel:TypingTestModel;
         private var polishChars:PolishChars;
         private var updateTimer:Timer;
+        private var plCharsOn:Boolean;
+        private var textWithPlChars:String;
 
         public function TypingTest(mainContainer:DisplayObjectContainer,
                 mainEventDispatcher:IEventDispatcher) {
             polishChars = new PolishChars();
-            typingArea = new TypingArea(
-                    mainContainer.width, mainContainer.height);
+            plCharsOn = true;
+            typingArea =
+                new TypingArea(mainContainer.width, mainContainer.height);
+            textWithPlChars = "To jest tekst.\nNa temat żółwia.\n"; // DEBUG
             typingTestModel = new TypingTestModel(
-                    "To jest tekst.\nNa temat żółwia.\n"); // DEBUG
+                    "To jest tekst.\nNa temat żółwia.\n", plCharsOn); // DEBUG
             typingArea.draw(typingTestModel);
 
             mainContainer.addChild(typingArea);
@@ -38,6 +41,8 @@ package tt {
                     TypingTestEvent.PAUSE, onPause);
             mainContainer.addEventListener(
                     TypingTestEvent.CONTINUE, onContinue);
+            mainContainer.addEventListener(
+                    TypingTestEvent.PL_CHARS_CHANGE, onPlCharsChange);
 
             updateTimer = new Timer(1000, 0);
             updateTimer.addEventListener(TimerEvent.TIMER, onUpdateTimer);
@@ -77,7 +82,8 @@ package tt {
         }
 
         private function onNewTypingTest(event:TypingTestEvent):void {
-            typingTestModel = new TypingTestModel(event.text);
+            textWithPlChars = event.text;
+            typingTestModel = new TypingTestModel(event.text, plCharsOn);
             typingArea.draw(typingTestModel);
             updateTimer.start();
         }
@@ -96,6 +102,15 @@ package tt {
         private function onContinue(event:TypingTestEvent):void {
             typingTestModel.unpause();
             updateTimer.start();
+        }
+
+        private function onPlCharsChange(event:TypingTestEvent):void {
+            plCharsOn = !plCharsOn;
+            if (!typingTestModel.isStarted) {
+                typingTestModel =
+                    new TypingTestModel(textWithPlChars, plCharsOn);
+                typingArea.draw(typingTestModel);
+            }
         }
 
         private function dispatchTypingTestActive():void {

@@ -170,7 +170,7 @@ package tt {
             var welcomeText:TextField = new TextField();
             welcomeText.htmlText = "<p align=\"center\">"
                 + "<font face=\"Verdana\" size=\"15\">"
-                + "\n\n\nTest polega na przepisywaniu zadanego tekstu.\n"
+                + "\n\n\nTest polega na przepisaniu zadanego tekstu.\n"
                 + "Czas jest mierzony od momentu kiedy zaczniesz pisać.\n\n"
                 + "</font><font face=\"Verdana\" size=\"18\">"
                 + "Kliknij aby rozpocząć.\n"

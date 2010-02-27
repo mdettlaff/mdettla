@@ -16,7 +16,6 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 }
 
 ?>
-
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">

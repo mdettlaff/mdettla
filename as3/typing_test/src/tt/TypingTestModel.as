@@ -19,7 +19,10 @@ package tt {
         private var timeFinished:Date;
         private var timesPaused:Array /* of Date */;
 
-        public function TypingTestModel(text:String) {
+        public function TypingTestModel(text:String, plCharsOn:Boolean) {
+            if (!plCharsOn) {
+                text = Utils.shavePlChars(text);
+            }
             textLines = breakLines(text, MAX_LINE_LENGTH);
             writtenLines = [""];
             mistakes = [[]];

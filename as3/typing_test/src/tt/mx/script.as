@@ -35,6 +35,8 @@ private function initEventListeners():void {
             FlexEvent.BUTTON_DOWN, onPauseButtonClicked);
     newTestButton.addEventListener(
             FlexEvent.BUTTON_DOWN, onNewTestButtonClicked);
+    plCharsCheckBox.addEventListener(
+            FlexEvent.BUTTON_DOWN, onPlCharsCheckBoxClicked);
 
     addEventListener(TypingTestEvent.TYPING_TEST_ACTIVE,
             onTypingTestActive);
@@ -70,6 +72,12 @@ private function onNewTestButtonClicked(event:Event):void {
     pauseButton.enabled = false;
 }
 
+private function onPlCharsCheckBoxClicked(event:Event):void {
+    typingCanvas.dispatchEvent(
+            new TypingTestEvent(TypingTestEvent.PL_CHARS_CHANGE));
+    callLater(typingCanvas.setFocus);
+}
+
 private function onTypingTestActive(event:TypingTestEvent):void {
     isNewTestButtonActive = true;
 }
@@ -96,7 +104,7 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     var params:Object = new Object();
     params.speed = event.testResults.realSpeed.toFixed(1);
     params.mistakes = event.testResults.mistakesCount;
-    params.plChars = true; // TODO
+    params.plChars = event.testResults.plChars;
     params.correctChars =
         event.testResults.writtenCharsCount - event.testResults.mistakesCount;
     params.minutes = int(event.testResults.timeMinutes);
@@ -104,11 +112,11 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     submitTestResultsService.send(params);
 }
 
-private function onPause(event:Event):void {
+private function onPause(event:TypingTestEvent):void {
     pauseButton.label = CONTINUE_LABEL;
 }
 
-private function onContinue(event:Event):void {
+private function onContinue(event:TypingTestEvent):void {
     pauseButton.label = PAUSE_LABEL;
 }
 
