@@ -86,7 +86,7 @@ package tt {
             }
             html += "Przepisano " + writtenCharsCount + " znaków w czasie ";
             if (int(timeMinutes) > 0) {
-                html += int(timeMinutes) + "min ";
+                html += int(timeMinutes) + " min ";
             }
             html += (int(timeSeconds) % 60) + " s." + "</font>";
             return html;

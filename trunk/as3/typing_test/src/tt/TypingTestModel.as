@@ -1,11 +1,8 @@
 package tt {
 
-    import mx.utils.StringUtil;
-
     public class TypingTestModel {
 
         public static const MAX_LINE_LENGTH:int = 68;
-        public static const LINE_BREAKERS:String = "\n ";
 
         // text to type
         public var textLines:Array /* of String */;
@@ -14,6 +11,7 @@ package tt {
         public var mistakes:Array /* of Array of Boolean */;
         public var isPaused:Boolean;
         public var isReady:Boolean;
+        public var stayedInTheSameLine:Boolean;
 
         private var mistakesShadow:Array /* of Array of Boolean */;
         private var timeStarted:Date;
@@ -23,10 +21,11 @@ package tt {
         public function TypingTestModel(text:String,
                 plCharsOn:Boolean, isReady:Boolean = true) {
             this.isReady = isReady;
+            this.stayedInTheSameLine = false;
             if (!plCharsOn) {
                 text = Utils.shavePlChars(text);
             }
-            textLines = breakLines(text, MAX_LINE_LENGTH);
+            textLines = Utils.breakLines(text, MAX_LINE_LENGTH);
             writtenLines = [""];
             mistakes = [[]];
             mistakesShadow = [[]];
@@ -34,6 +33,7 @@ package tt {
         }
 
         public function onPrintableChar(c:String):Boolean {
+            stayedInTheSameLine = true;
             if (c.length != 1) {
                 throw new Error("parameter c must be a single character!");
             }
@@ -44,7 +44,7 @@ package tt {
                 return false;
             }
             var last:int = writtenLines.length - 1;
-            if (c == ' ' && LINE_BREAKERS.indexOf(c) != -1
+            if (c == ' '
                     && writtenLines[last].length >= textLines[last].length) {
                 return breakLine();
             }
@@ -65,15 +65,16 @@ package tt {
         }
 
         public function onEnter():Boolean {
+            stayedInTheSameLine = true;
             const last:int = writtenLines.length - 1;
-            if (LINE_BREAKERS.indexOf('\n') != -1
-                    && writtenLines[last].length >= textLines[last].length) {
+            if (writtenLines[last].length >= textLines[last].length) {
                 return breakLine();
             }
             return false;
         }
 
         public function onBackspace():void {
+            stayedInTheSameLine = true;
             if (timeStarted == null || timeFinished != null) {
                 return;
             }
@@ -85,6 +86,7 @@ package tt {
             } else if (writtenLines.length > 1) {
                 writtenLines.pop();
                 mistakes.pop();
+                stayedInTheSameLine = false;
             }
         }
 
@@ -165,33 +167,11 @@ package tt {
                 if (mistakes.length > mistakesShadow.length) {
                     mistakesShadow.push([]);
                 }
+                stayedInTheSameLine = false;
             } else {
                 timeFinished = new Date();
             }
             return true;
-        }
-
-        private static function breakLines(
-                text:String, maxLineLength:int):Array /* of String */ {
-            const multiSpace:RegExp = / +/g;
-            var textLines:Array =
-                StringUtil.trim(text.replace(multiSpace, ' ')).split('\n');
-            var lineEndIndex:int = 0;
-            for (var i:int = 0; i < textLines.length; i++) {
-                for (var j:int = 1; j < textLines[i].length
-                        && j <= maxLineLength; j++) {
-                    if (textLines[i].charAt(j) == ' '
-                            || textLines[i].charAt(j) == '\t') {
-                        lineEndIndex = j;
-                    }
-                    if (j == maxLineLength) { // break line
-                        textLines.splice(i + 1, 0,
-                                textLines[i].substring(lineEndIndex + 1));
-                        textLines[i] = textLines[i].substring(0, lineEndIndex);
-                    }
-                }
-            }
-            return textLines;
         }
     }
 }

@@ -1,4 +1,5 @@
 import tt.mx.TestResultsWindow;
+import tt.TestResults;
 import tt.TypingTest;
 import tt.TypingTestEvent;
 
@@ -106,17 +107,7 @@ private function onTypingTestFinished(event:TypingTestEvent):void {
     resultsWindow.setFocus();
     pauseButton.enabled = false;
 
-    submitTestResultsService.cancel();
-    var params:Object = new Object();
-    params.speed = event.testResults.realSpeed.toFixed(1);
-    params.mistakes = event.testResults.mistakesCount;
-    params.plChars = event.testResults.plChars;
-    params.correctChars =
-        event.testResults.writtenCharsCount - event.testResults.mistakesCount;
-    params.minutes = int(event.testResults.timeMinutes);
-    params.seconds = int(event.testResults.timeSeconds) % 60;
-    params.h = h(hData);
-    submitTestResultsService.send(params);
+    submitTestResults(event.testResults);
 }
 
 private function onPause(event:TypingTestEvent):void {
@@ -134,14 +125,28 @@ private function onGetTextServiceResult(event:ResultEvent):void {
     hData = result.hData;
 }
 
+private function startNewTypingTest():void {
+    getTextService.cancel();
+    getTextService.send();
+}
+
+private function submitTestResults(testResults:TestResults):void {
+    submitTestResultsService.cancel();
+    var params:Object = new Object();
+    params.speed = testResults.realSpeed.toFixed(1);
+    params.mistakes = testResults.mistakesCount;
+    params.plChars = testResults.plChars;
+    params.correctChars =
+        testResults.writtenCharsCount - testResults.mistakesCount;
+    params.minutes = int(testResults.timeMinutes);
+    params.seconds = int(testResults.timeSeconds) % 60;
+    params.h = h(hData);
+    submitTestResultsService.send(params);
+}
+
 private static function h(hData:String):String {
     const hKey:String = "secret";
     const hmac:IHMAC = new HMAC(new SHA256());
     return Hex.fromArray(hmac.compute(Hex.toArray(Hex.fromString(hKey)),
                 Hex.toArray(Hex.fromString(hData))));
-}
-
-private function startNewTypingTest():void {
-    getTextService.cancel();
-    getTextService.send();
 }
