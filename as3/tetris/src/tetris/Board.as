@@ -101,7 +101,7 @@ package tetris {
 
             function isLineNonFull(line:Array, i:int, array:Array):Boolean {
                 return line.some(
-                        function(block:Object, i:int, array:Array):Boolean {
+                        function (block:Object, i:int, array:Array):Boolean {
                             return block == null;
                         });
             };
