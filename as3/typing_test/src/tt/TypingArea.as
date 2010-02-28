@@ -36,6 +36,8 @@ package tt {
         }
 
         public function draw(typingTestModel:TypingTestModel):void {
+            const drawOnlyCurrentLine:Boolean =
+                typingTestModel.stayedInTheSameLine;
             var startLine:int =
                 typingTestModel.writtenLines.length - MAX_TYPING_LINES;
             if (startLine < 0) {
@@ -47,11 +49,12 @@ package tt {
             }
 
             if (typingTestModel.isReady) {
-                drawWrittenLines(typingTestModel.writtenLines,
-                        typingTestModel.mistakes, typingTestModel.corrections,
-                        typingTestModel.isMistakeMade, startLine, endLine);
+                drawWrittenLines(typingTestModel, startLine, endLine,
+                        drawOnlyCurrentLine);
             }
-            drawTextLines(typingTestModel.textLines, startLine, endLine);
+            if (!drawOnlyCurrentLine) {
+                drawTextLines(typingTestModel.textLines, startLine, endLine);
+            }
         }
 
         public function removeWelcomeText():void {
@@ -106,38 +109,43 @@ package tt {
             }
         }
 
-        private function drawWrittenLines(
-                writtenLines:Array /* of String */,
-                mistakes:Array /* of Array of Boolean */,
-                corrections:Array /* of Array of Boolean */,
-                isMistakeMade:Boolean, startLine:int, endLine:int):void {
+        private function drawWrittenLines(typingTestModel:TypingTestModel,
+                startLine:int, endLine:int, drawOnlyCurrentLine:Boolean):void {
             var visibleIndex:int = 0;
             for (var i:int = startLine; i <= endLine; i++) {
-                var htmlLine:String = "";
-                for (var j:int = 0; j < writtenLines[i].length; j++) {
-                    var htmlChar:String = writtenLines[i].charAt(j);
-                    if (mistakes[i][j]) {
-                        htmlChar = "<font color=\"#F00000\"><b>"
-                            + htmlChar + "</b></font>";
-                    } else if (corrections[i][j]) {
-                        htmlChar = "<font color=\"#C000D8\">"
-                            + htmlChar + "</font>";
+                if (!drawOnlyCurrentLine || i == endLine) {
+                    var htmlLine:String = "";
+                    for (var j:int = 0;
+                            j < typingTestModel.writtenLines[i].length; j++) {
+                        var htmlChar:String =
+                            typingTestModel.writtenLines[i].charAt(j);
+                        if (typingTestModel.mistakes[i][j]) {
+                            htmlChar = "<font color=\"#F00000\"><b>"
+                                + htmlChar + "</b></font>";
+                        } else if (typingTestModel.corrections[i][j]) {
+                            htmlChar = "<font color=\"#C000D8\">"
+                                + htmlChar + "</font>";
+                        }
+                        htmlLine += htmlChar;
                     }
-                    htmlLine += htmlChar;
+                    visibleWrittenLines[visibleIndex].htmlText = htmlLine;
+                    visibleIndex += 1;
+                    visibleWrittenLines[visibleIndex].htmlText = "";
+                    visibleIndex += 1;
+                } else {
+                    visibleIndex += 2;
                 }
-                visibleWrittenLines[visibleIndex].htmlText = htmlLine;
-                visibleIndex += 1;
-                visibleWrittenLines[visibleIndex].htmlText = "";
-                visibleIndex += 1;
             }
             var cursor:String = '_';
-            if (isMistakeMade) {
+            if (typingTestModel.isMistakeMade) {
                 cursor = "<font color=\"#F00000\">" + cursor + "</font>";
             }
             visibleWrittenLines[visibleIndex - 2].htmlText += cursor;
-            while (visibleIndex < visibleWrittenLines.length) {
-                visibleWrittenLines[visibleIndex].htmlText = "";
-                visibleIndex += 1;
+            if (!drawOnlyCurrentLine) {
+                while (visibleIndex < visibleWrittenLines.length) {
+                    visibleWrittenLines[visibleIndex].htmlText = "";
+                    visibleIndex += 1;
+                }
             }
         }
 
