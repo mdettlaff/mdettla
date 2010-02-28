@@ -37,15 +37,15 @@ package tetris {
 
             keyEventDispatcher.addEventListener(
                     KeyboardEvent.KEY_DOWN, onKeyDown);
-            board.addEventListener(
+            mainContainer.addEventListener(
                     TetrisEvent.TETROMINO_LANDED, onLanding);
-            board.addEventListener(
+            mainContainer.addEventListener(
                     TetrisEvent.NEW_GAME, onNewGame);
-            board.addEventListener(
+            mainContainer.addEventListener(
                     TetrisEvent.GAME_OVER, onGameOver);
-            board.addEventListener(
+            mainContainer.addEventListener(
                     TetrisEvent.PAUSE, onPause);
-            board.addEventListener(
+            mainContainer.addEventListener(
                     TetrisEvent.CONTINUE, onContinue);
 
             board.dispatchEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
@@ -70,6 +70,9 @@ package tetris {
                     case Keyboard.UP:
                         tetromino.rotateClockwise();
                         break;
+                    case Keyboard.SPACE:
+                        tetromino.dropDown();
+                        break;
                 }
             }
             switch (event.keyCode) {
@@ -91,6 +94,7 @@ package tetris {
         }
 
         private function onNewGame(event:TetrisEvent):void {
+            board.reset();
             tetrominoCreator.reset();
             putNextTetrominoOnBoard();
             event.nextTetromino = tetrominoCreator.peekNextTetromino();
@@ -98,6 +102,7 @@ package tetris {
         }
 
         private function onGameOver(event:TetrisEvent):void {
+            board.gameOver();
             timer.stop();
         }
 
