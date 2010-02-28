@@ -28,8 +28,6 @@ package tetris {
             drawBounds();
 
             addEventListener(TetrisEvent.TETROMINO_LANDED, onLanding);
-            addEventListener(TetrisEvent.NEW_GAME, onNewGame);
-            addEventListener(TetrisEvent.GAME_OVER, onGameOver);
         }
 
         public function isConflictWithTetrominoState(
@@ -48,33 +46,15 @@ package tetris {
             return false;
         }
 
-        private function onLanding(event:TetrisEvent):void {
-
-            var stick:Function = function(t:Tetromino):void {
-                for (var i:int = 0; i < t.shape.length; i++) {
-                    for (var j:int = 0; j < t.shape.length; j++) {
-                        if (t.shape[i][j]) {
-                            board[t.yCoord + i][t.xCoord + j] = t.color;
-                        }
-                    }
-                }
-                drawBlocks();
-            };
-
-            stick(event.tetromino);
-            removeChild(event.tetromino);
-            destroyFullLines();
-        }
-
-        private function onNewGame(event:TetrisEvent):void {
+        public function reset():void {
             Utils.removeAllChildren(this);
             clear();
             draw();
         }
 
-        private function onGameOver(event:TetrisEvent):void {
+        public function gameOver():void {
 
-            var getGameOverLabel:Function = function():TextField {
+            function createGameOverLabel():TextField {
                 var format:TextFormat = new TextFormat();
                 format.font = "Verdana";
                 format.size = 18;
@@ -91,8 +71,26 @@ package tetris {
                 return label;
             };
 
-            addChild(getGameOverLabel());
+            addChild(createGameOverLabel());
             draw();
+        }
+
+        private function onLanding(event:TetrisEvent):void {
+
+            function stick(t:Tetromino):void {
+                for (var i:int = 0; i < t.shape.length; i++) {
+                    for (var j:int = 0; j < t.shape.length; j++) {
+                        if (t.shape[i][j]) {
+                            board[t.yCoord + i][t.xCoord + j] = t.color;
+                        }
+                    }
+                }
+                drawBlocks();
+            };
+
+            stick(event.tetromino);
+            removeChild(event.tetromino);
+            destroyFullLines();
         }
 
         private function clear():void {
@@ -101,17 +99,14 @@ package tetris {
 
         private function destroyFullLines():void {
 
-            var isLineFull:Function = function(line:Array):Boolean {
-                return line.every(
+            function isLineNonFull(line:Array, i:int, array:Array):Boolean {
+                return line.some(
                         function(block:Object, i:int, array:Array):Boolean {
-                            return block != null;
+                            return block == null;
                         });
             };
 
-            var nonFullLines:Array = board.filter(
-                    function(line:Array, i:int, array:Array):Boolean {
-                        return !isLineFull(line);
-                    });
+            var nonFullLines:Array = board.filter(isLineNonFull);
             var destroyedLinesCount:int = HEIGHT - nonFullLines.length;
             if (destroyedLinesCount > 0) {
                 var emptyLines:Array =

@@ -44,15 +44,17 @@ private function initUIComponents():void {
 }
 
 private function onNewGameButtonClicked(event:Event):void {
-    dispatchTetrisEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+    gameArea.dispatchEvent(new TetrisEvent(TetrisEvent.NEW_GAME));
+    callLater(gameArea.setFocus);
 }
 
 private function onPauseButtonClicked(event:Event):void {
     if (event.currentTarget.label == PAUSE) {
-        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.PAUSE));
+        gameArea.dispatchEvent(new TetrisEvent(TetrisEvent.PAUSE));
     } else {
-        dispatchTetrisEvent(new TetrisEvent(TetrisEvent.CONTINUE));
+        gameArea.dispatchEvent(new TetrisEvent(TetrisEvent.CONTINUE));
     }
+    callLater(gameArea.setFocus);
 }
 
 private function awardPoints(event:TetrisEvent):void {
@@ -92,10 +94,6 @@ private function onScoreServiceResult(event:ResultEvent):void {
     if ("OK" != serviceResponse) {
         Alert.show("Wynik nie został zapisany.\n" + serviceResponse);
     }
-}
-
-private function dispatchTetrisEvent(event:TetrisEvent):void {
-    gameArea.getChildAt(0).dispatchEvent(event);
 }
 
 private function submitScore(score:int):void {

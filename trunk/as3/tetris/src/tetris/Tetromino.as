@@ -25,6 +25,11 @@ package tetris {
             }
         }
 
+        public function dropDown():void {
+            while (attemptMove(shape, xCoord, yCoord + 1));
+            dispatchEvent(new TetrisEvent(TetrisEvent.TETROMINO_LANDED, this));
+        }
+
         public function moveLeft():void {
             attemptMove(shape, xCoord - 1, yCoord);
         }
