@@ -1,0 +1,565 @@
+* Szachownica Polibiusza
+
+  	1 	2 	3 	4 	5
+1 	A 	B 	C 	D 	E
+2 	F 	G 	H 	J 	K
+3 	L 	M 	N 	O 	P
+4 	Q 	R 	S 	T 	U
+5 	V 	W 	X 	Y 	Z
+
+    ŚCIŚLE TAJNE
+
+po zaszyfrowaniu (nie uwzględniając polskich znaków) przyjmuje postać:
+
+    43 13 24 43 31 15 44 11 24 33 15
+
+Jest to bardziej kod niż szyfr.
+Zaletą tego szyfru była dogodność do zastosowania
+w sygnalizacji światłami (pochodniami).
+
+* Szachownica
+
+Klucz jest trójwyrazowy. Dwa słowa 5-literowe pisze się na bokach szachownicy,
+do kodowania współrzędnych. Trzecie słowo jest kluczem monoalf.:
+  group
+  -----
+w|board
+h|efghi
+i|klmnp
+t|qstuv
+e|wxyzc
+
+tj: protocol
+sz: ipwuwrtowrepwoir
+
+
+Podane dotychczas były przykłady s. monoalf.; złamać je można już przy 70-100 znakach.
+
+W poniższych s., dwa lub więcej znaków tj zamienianych jest na jeden symbol sz.
+
+* Szyfr digrafowy (Giovanni Battista Porta, 1563: jeden symbol graficzny dla każdego
+z 400 digrafów)
+
+* Playfair (Charles Wheatstone, 1854) (Lord Playfair rozpowszechnił)
+ 12345
+1piano
+2bcdef
+3ghklm
+4qrstu
+5vwxyz
+Powyższy obrazek owiń na torusie.
+0. Podziel tekst na digrafy; dla każdego z nich:
+01. (jeśli są dwie t/s litery, to wstaw między nie 'x')
+1. obie litery w t/s wierszu => weź z prawej
+2.                   kol.    =>     z dołu
+3.            ani-ani        => pierwsza litera->weź z t/s wiersza
+                                i z kolumny jak dla drugiej,
+                                druga litera -> weź z t/s wiersza
+                                i z kolumny jak dla pierwszej litery.
+
+tj: cipher
+k: piano
+'ci'->'hc',  'ph'->'ig',  'er'->'ct'
+sz: hcigct
+
+Analiza częstotliwościowa jest teraz utrudniona,
+bo mamy 676-elementową przestrzeń symboli sz.
+
+
+S. polialfabetyczne
+======================
+
+* Blaise de Vigen`ere
+(tak naprawdę wynalazł s. dużo silniejszy - z autokluczem, w 1586),
+
+właściwie Giovanni Battista Bellaso 1553
+(Johannes Trithemius 1508 - tabula recta, czyli system generowania kluczy)
+
+Jest to s. wykorzystujący 'tabula recta' i okresowy ciąg szyfrujący
+generowany przez klucz. Ciąg szyfrujący daje indeksy wierszy w 'tab. recta'.
+Algebraicznie,
+e_i(m_i) = m_i+k_i (mod 26),
+d_i(c_i) = c_i-k_i (mod 26).
+
+
+
+* Beaufort - zbliżony do Vigenere'a, z tym, że :
+e_i(m_i) = k_i-m_i (mod 26),
+d_i(c_i) = k_i-c_i (mod 26).
+Jest ładnie symetryczny.
+Był sprzedawany z pocztówkami w Anglii.
+
+* Autoklucz.
+-jak zwykły "Vigenere", ale ciąg szyfrujący jest tworzony
+przez doklejenie (concat) tj do klucza.
+
+k:  pianotobeornottobe
+tj: tobeornottobe
+sz: iwbrckbp...
+
+S. homofoniczne
+================
+
+* Grandpre
+macierz 8x8, wypełniona cała tekstem tajnym.
+  12345678
+  --------
+1|abashing
+2|yokohama
+3|coexists
+4|deathful
+5|jackpots
+6|quivered
+7|witching
+8|zodiacal
+
+ t  h  i  s  i  s  a  p  l  a  i  n  t  e  x  t
+44 15 16 14 35 38 11 55 48 43 72 77 73 33 34 44
+
+* Thomas Jefferson Beale 1820
+
+-a właściwie kod, kodowany Deklaracją Niepodległości Stanów Zjednoczonych
+(pierwsze litery ponumerowanych słów utworu dają tj):
+(01) When, in the course of human events, it becomes necessary
+(11) for one people to dissolve the political bands which have
+(21) connected them with another ...
+
+Np. litera 'W' mogła zostać zakodowana pod postacią liczb:
+1,19,40,66,72,290,459.
+
+S. polifoniczne
+===============
+
+* zdanie-klucz
+abcdefghijklmnopqrstuvwxyz
+numbersrepresentingmeaning
+
+howareyou
+rnnnnenne (sic!)
+
+
+Jak łatwo widać, jest on dość uciążliwy w użyciu.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+Metody kryptoanalizy prostych szyfrów.
+++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+1. Częstotliwość liter
+2. test Kasiskiego
+3. indeks koincydencji
+4. łączny indeks koincydencji
+5. metoda prawdopodobnego słowa
+6. połączenia samogłosek i spółgłosek
+7. analiza par liter
+8. anagramowanie
+9. metoda nieprawdopodobnego słowa
+
+Ad. 1.
+=============================================================
+
+tj:
+Aerial reconnaissance reports enemy reinforcements estimated
+at battalion strength entering your sector PD Clarke
+
+Vigenere, k="april":
+atiqllgvkzn...pisp
+
+[handout: wykresy częstotliwościowi liter w szyfrogramach]
+
+Ad. 2.
+=============================================================
+
+Rok, Autor: 1863, Fryderyk Kasiski, ur. w Człuchowie
+
+Metoda daje dł. klucza Vigenere'a.
+
+Szukamy powtórzeń ciągów >=3-literowych; notujemy odległości między dwoma kolejnymi wystąpieniami t/s ciągu,
+np. między literą "F" w pierwszym i literą "F" w drugim wystąpieniu ciągu "FGX" w szyfrogramie "FGXTHJAQWNFGXQ"
+odległość wynosi 10.
+Dokonawszy tego dla wielu różnych powtarzających się ciągów.
+Najprawdopodobniej największym wspólnym dzielnikiem _wszystkich_ zanotowanych odległości będzie 1...;
+jednakże kandydatem na długość klucza jest każda liczba, będąca dzielnikiem _większości_ zanotowanych odległości.
+
+Ad. 3.
+============================================================
+
+Rok, Autor: 1922, William Frederick Friedman, Illinois
+
+Metoda mierzy prawdopodobieństwo, że dwa losowo wybrane znaki tekstu są jednakowe.
+
+IC(X) = \sum_{i=1}^{rozmiar_alfabetu} \frac { n_i(n_i-1) } { N(N-1) },
+
+gdzie n_i = ilość wystąpień i-tej litery w tekście (o długości N).
+
+Language 	Index of Coincidence
+random		1 / rozmiar_alfabetu
+Arabski		7589 * 10^{-5}
+Duński		7073
+Holenderski	7980
+Angielski	6689
+Fiński		7379
+Francuski	7460
+Niemiecki	7666
+Hebrajski	7684
+Włoski		7380
+Hiszpański	7750
+Rosyjski		5290 (cyrylica ma 33 znaki)
+
+Oczekiwany indeks po zaszyfrowaniu Vigenere'em z różnymi długościami klucza:
+1	.067
+2	.052
+5	.044
+10	.041
+>>10 .038 (1/26)
+
+Przykład:
+
+TSMVM MPPCW CZUGX HPECP RFAUE IOBQW PPIMS FXIPC TSQPK
+SZNUL OPACR DDPKT SLVFW ELTKR GHIZS FNIDF ARMUE NOSKR
+GDIPH WSGVL EDMCM SMWKP IYOJS TLVFA HPBJI RAQIW HLDGA
+IYOU
+
+odległość między dwoma IYO jest 25, a LVF - 55; NWD =5;
+ponadto IC = .04066, co sugeruje długi klucz.
+Weźmy d(k)=5. Dzielimy sz na podciągi co piąty znak:
+
+TMCHRIPFTSODSEGFANGWESITHRHI
+SPZPFOPXSZPDLLHNRODSDMYLPALY
+MPUEABIIQNAPVTIIMSIGMWOVBQDO
+VCGCUQMPPUCKFKZDUKPVCKJFJIGU
+MWXPEWSCKLRTWRSFERHLMPSAIWA
+
+Obliczamy IC dla każdego wiersza:
+.04233
+.06614
+.05026
+.06614
+.04843
+Największe podobieństwo do tekstu ang. wykazują 2. i 4.
+W drugim, najczęstszą literą jest "p", więc zgadujemy "p"->"e", co daje tj dla drugiego wiersza:
+HEOEUDEMHOESAAWCGDSHSBNAEPAN
+Zamieniając "u" na "a" w czwartym, dostajemy:
+BIMIAWSVVAIQLQFJAQVBIQPLFOMA
+Mamy więc :
+
+????????????????????????????
+HEOEUDEMHOESAAWCGDSHSBNAEPAN
+????????????????????????????
+BIMIAWSVVAIQLQFJAQVBIQPLFOMA
+????????????????????????????
+
+Standardowe założenie o najczęściej spotykanym słowie "the", pozwala nam na odgadnięcie pierwszej litery
+wiersza 1. i 3.
+Ostatecznie (Lewis Carroll, "Po drugiej stronie lustra"):
+THE TIME HAS COME THE WALRUS SAID
+TO SPEAK OF MANY THINGS
+OF SHOES AND SHIPS AND SEALING WAX
+OF CABBAGES AND KINGS
+AND WHY THE SEA IS BOILING HOT
+AND WHETHER PIGS HAVE WINGS.
+
+Ad. 4.
+======================================================]
+
+Definicja: prawdopodobieństwo, że losowo wybrana litera tekstu x i losowo wybrana litera tekstu y
+będą identyczne.
+
+MIC(x,y) = \sum_{i=0}^{25} n_i/x.len * m_i/y.len,
+
+gdzie x.len - długość x, y.len - długość y,
+zaś n_i i  m_i oznaczają
+ilość wystąpień i-tej litery alfabetu odpowiednio w x i y.
+
+Zaszyfrujmy teraz x i y szyfrem Cezara, z kluczem k_x i k_y, odpowiednio,
+i oznaczmy szyfrogramy przez X, Y.
+Wtedy
+
+MIC(X,Y) = \sum_{i=0}^{25} N_i/x.len * M_i/y.len,
+
+gdzie N_i i  M_i oznaczają
+ilość wystąpień i-tej litery alfabetu odpowiednio w X i Y.
+Mamy:
+
+	n_i = N_{ i + k_x (mod 26) },		m_i = M_{ i + k_y (mod 26) },
+
+skąd
+
+MIC(X,Y) = \sum_{i=0}^{25} n_{i-k_x(mod 26)}/x.len * m_{i-k_y(mod 26)}/y.len
+         = \sum_{i=0}^{25} n_{i}/x.len * m_{i+k_x-k_y(mod 26)}/y.len
+         =: f(k_x-k_y),
+
+tj. łączny i.k. X,Y zależy tylko od różnicy k_x-k_y.
+
+Znamy oczekiwane wartości dla standardowego tekstu angielskiego:
+k_x-k_y	MIC
+0			.065
+1			39
+2			32
+3			34
+4			44
+5			33
+6			36
+7			39
+8			34
+9			34
+10			38
+11			45
+12			39
+13			43
+Istotne jest, że dla (k_x-k_y == 0), wartość MIC jest dobrze oddzielona od pozostałych.
+
+Przesuwając teraz cyklicznie ciąg
+(N_0,N_1,N_2,...,N_25) o 1,2,3,...,13 miejsc (w którą stronę?),
+i wyliczając każdorazowo nową wartość MIC(X,Y)
+znajdziemy k_x-k_y.
+Gdy znamy tę różnicę dla każdego podciągu szyfrogramu,
+nasze zadanie sprowadza się do złamania szyfru monoalfabetycznego.
+
+Ad. 5.
+=======================================================
+
+W lipcu 1799 francuscy żołnierze odnaleźli w Egipcie kamienną tablicę z roku 196 BC
+zapisaną tekstem w trzech językach.
+Górna, najgorzej zachowana, część kamienia pokryta była pismem hieroglificznym,
+środkowa pismem demotycznym (którego używano na co dzień; jest o 2800 lat nowszym wynalazkiem), dolna część zawierała tekst grecki. W 1814 angielski fizyk Thomas Young (moduł sprężystości, falowa teoria światła, ...) odczytał część demotyczną i zabrał się za hieroglify.
+Hieroglify nie były pismem alfabetycznym, musiano jednak sobie radzić z zapisem nazw obcych. Niektórym znakom przypisano więc wartość zgłoskową, i pisano te obce słowa fonetycznie.
+Wiadomo było, że w tekście z Rosetty występowały imiona Ptolemeusza i Kleopatry, nie będące imionami egipskimi.
+Na podstawie tych informacji, oraz przypuszczenia, że imiona władców pisane są w ramce (tzw. kartuszach), Young zdeszyfrował 6 znaków fonetycznych.
+Francuski lingwista Champollion, kontynuując to dzieło,
+ostatecznie odczytał tekst hieroglificzny w 1828.
+
+Następnym przykładem ataku tą metodą jest analiza Enigmy.
+Szyfr zaimplementowany w tej maszynie miał tę cudowną własność,
+że litera tj nie była po zaszyfrowaniu nigdy taka sama.
+Zgadując dostatecznie długi fragment tekstu jawnego,
+przesuwano go wzdłuż szyfrogramu, i notowano fragmenty,
+różniące się na każdej pozycji.
+
+Podstawowe zasady użycia metody:
+
+* stereotypy - jeśli wiadomość była wysłana przez organizację, to prawie na pewno ma standardowy format, zawierający prawdopodobnie nadawcę, odbiorcę,
+datę, klasę tajności, podpisy, identyfikatory;
+
+* użycie liczebników - liczby, zapisane słownie, są dobrym kandydatem na często powtarzający się fragment tekstu jawnego;
+
+* wyrażenia regularne - jeśli odgadniemy część znaków tj,
+to możemy przeszukiwać słownik grep'em.
+
+Rozkład długości słów w słowniku 230tys. słów ang.:
+1	52
+2	155
+3	1351
+4	5110
+5	9987
+6	17477
+7	23734
+8	29926
+9	32380
+
+10	30866
+11	26011
+12	20460
+13	14938
+14	9762
+15	5924
+16	3377
+17	1813
+18	842
+19	428
+20	198
+21	82
+22	41
+23	17
+24	5
+
+Ad. 6.
+=================================================================
+Jeśli tekst jest krótki, albo jeśli nie mamy pojęcia,
+jaki jest temat wiadomości i jakie słowa są prawdopodobne,
+należy wykorzystać dalsze własności statystyczne języka.
+Angielski ma 6 samogłosek i 20 spółgłosek, zwykle występujących naprzemiennie.
+Wystąpienia więcej niż 2-3 samogłosek (lub spółgłosek) pod rząd są rzadkie.
+Przeciętna wybrana samogłoska stanowi 8% tekstu (wszystkie 48%),
+natomiast ustalona spółgłoska statystycznie 2,5%.
+
+Przykład.
+
+LBWYR YAGGB GIOYF BATGT BUUBV GKBSK TEEAT
+HBUYA YWYUF QVTWY VJVBA ATUDR TEECY DTUIG
+XYVBS TWYKN UQVYQ FQFVY FIVIG BVPST VYART
+EEAGB FIGXY VBSBN VSTWY UTUYX
+
+[program generujący obrazek 3.9/13 -> handout]
+
+1. Znajdźmy spółgłoski, a więc najrzadsze;
+to CHJLOP.
+Lewi sąsiedzi to E,T,VV,I, prawi - YY,BB,V,S.
+Na razie to mało.
+Zbierzmy dolne 20% rozkładu:
+
+sąsiedzi
+DNKRXQCHJLOP:
+-------------
+lewi	prawi
+E
+YYYYY	YYYYY
+T		TTTT
+B		BBB
+VV		VVVV
+I
+S		S
+UU		U
+		R
+K
+GGG
+		N
+D
+A
+FF		FF
+--------------
+Prawdopodobnie Y jest samogłoską, jako że sąsiaduje często z obu stron
+z naszymi typami spółgłosek.
+Być może rółnież V.
+Popatrzmy wpierw na sąsiadów Y:
+-------------
+lewi	prawi
+WWWWW	W
+R		R
+A		AAA
+O		FF
+UU		UU
+VVV	VVV
+C		D
+XX		X
+		K
+		Q
+-------------
+Ponieważ V sąsiaduje często z samogłoską ("Y") , może być spółgłoską,
+np. R,L lub N.
+Tym bardziej W; przyjmijmy, że jest spółgłoską; sąsiedzi DNKRXQCHJLOPW:
+-------------
+lewi	prawi
+E
+Y(6)	Y(10)
+TTTT	TTTT
+BB		BBB
+VV		VVVV
+I
+S		S
+UU		U
+		R
+K
+GGG
+		N
+D
+A
+FF		FF
+--------------
+Następnym kandydatem na samogłoskę jest T.
+Jest drugim po "Y" najczęstszym sąsiadem spółgłosek,
+i co rółnie wążne, nie jest sąsiadem naszej samogłoski Y.
+Dodajemy więc T wraz z jej sąsiadami do tabelki sąsiadów samogłosek (dotychczas jedynie Y):
+-------------
+lewi	prawi
+W(5)	WWWW
+RRR	R
+AAAA	AAA
+O		FF
+UU		UUUUU
+VVVV	VVVV
+C
+D		D
+XX		X
+K		K
+		Q
+G		G
+		B
+		EEE
+		H
+SSS
+-------------
+To pokazuje, że prawdopodobnie A i U są spółgłoskami.
+Czytelnik zechce dokończyć ten proces.
+
+Ad. 7.
+===========================================
+
+Przykład ze str. 16.
+
+ ``This  message was received by an intercept
+ station in Scotland. The frequency and format
+ indicate that it is a most urgent message
+ from one of our agents who landed a
+ week ago in Norway. His controllers have been
+ unable to read it. Although it clearly uses
+ his backup cipher, the Playfair, the keys
+ assigned to him do not work. We cannot
+ reach him before his normal scheduled transmission
+ in two weeks, so we urgently request that
+ you attempt to decrypt this and let us know
+ the contents. In case it helps, he is
+ carrying materials to assist a previously dropped
+ team in their work regarding the Norsk Hydro
+ facility at Rjukan. His recognition code should
+ appear in the message: It is "beware ice
+ weasels." If he is operating under duress, he
+ should include the phrase "red penguin frenzy."
+ He will use "STOP" between sentences and "END"
+f at the end.''
+
+Received message:
+ VYTES YEDLU TERVL FNVUH DWARD LCFFB SDEWN PXKIC
+ FTREO LKALZ YLSLT OBKEV LYARM KRBOD NALDY PLAET
+ OLQAD FHSFZ WNAID SMURU OLHRY LLOTW FYLDI CVLUS
+ VSSFZ YLUNF FXLKT GBCDO BFALE WRPFY WLHUL DARLI
+ TFLAB FFZCY FUUFB GXXXX
+
+Analiza:
+
+Wiemy, że powinno wystąpić słowo STOP.
+Ponieważ czwórki liter nie powtarzają się,
+było ono dzielone nieparzyście: S-TO-P (być może prócz jednokrotnego ST-OP).
+Częste: OL, AR, LD - po  3 razy.
+Popatrzmy na odległości między nimi.
+Jedno zdanie (albo "beware..." albo "red...") powinno mieć 16 liter,
+plus P z poprzedniego STOP'a,
+plus S z następnego STOP'a.
+Razem 9 digramów.
+Tylko OL odpowiada temu.
+Jeśli to ma być
+B-EW-AR-EI-CE-WE-AS-EL-S,
+to sz powinien zawierać digram odp. EW i jego odwrócenie, odp. WE;
+tak nie jest.
+Użyto więc zdania "red...".
+Czytelnik zechce dokończyć odgadywanie klucza.
+
+Ad. 8.
+========================================================
+Można łatwo spr., czy zastosowano s. permutacyjny, na podst. a.c.
+W anagramowaniu mogą być pomocne nast. własności języka ang.:
+- żadna często wyst. para liter nie składa się z dwu samogłosek
+- litera występująca w wielu różnych parach to najpewniej samogłoska
+- spółgłoski (prócz N i T) występują najczęściej z samogłoskami
+- jeśli obie pary XY i YX się pojawiają, to jedna z liter jest prawdopodobnie sa.
+
+Przypuśćmy, że mamy n fragmentów tekstu, każdy długości p,
+i każdy z nich jest szyfrogramem uzyskanym przez tę samą permutację.
+(Jest tak w okresowych szyfrach permutacyjnych.)
+Wtedy każdy odgadnięty kawałek permutacji
+działa jednocześnie na wszystkich n fragmentach szyfrogramu.
+
+Popatrzmy na grill z zadania domowego nr 1.
+Przypuśćmy, że pierwsze słowo to "THE".
+Wtedy grill musi mieć dziurki (4,1), (2,1), (2,3) lub (2,6).
+Te dziurki, obrócone o 180 stopni, dają HEV bądź HAV.
+Następny obrót daje "E", więc weźmy bardziej prawdopodobne HAVE.
+Spodziewamy się I HAVE, WE HAVE bądź THEY HAVE;
+rzeczywiście jest I blisko, w (4,5),
+co czytane odwrotnie daje "THE L" i już mamy 4 dziurki z 9...
+
+Ad. 9.
+=======================================================
+Podobna do metody prawdopodobnego słowa,
+ta metoda polega na wykluczaniu pewnych zbitek liter.
+Stosujemy ją do dekryptażu polifonicznej zagadki z zadania domowego nr 1.

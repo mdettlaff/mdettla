@@ -1,0 +1,50 @@
+P. domowa nr 1. (7% oceny z wykładu)
+
+Należy dostarczyć rozwiązanie do 15 marca, na wykładzie.
+Jeśli spędziło się godzinę na rozwiązywaniu zagadki, nie należy pisać:
+"Miałem szczęście i odgadłem, że to 18-literowe słowo brzmi: <<transconfiguration>>",
+ale trzeba opisać, jak się do tego dochodziło, a nawet opisać ślepe zaułki.
+2-3 strony wystarczą. Oceniane będzie rozumowanie i wnioski - prawidłowy tekst jawny to tylko połowa punktów.
+Pracujemy indywidualnie.
+Korzystanie z gotowych rozwiązań nie jest dozwolone.
+
+1) Odszyfrować poniższy cytat w j. angielskim. Zachowano interpunkcję i podział słów. 
+Zastosowano monoalfabetyczny szyfr podstawieniowy. (20%)
+  
+"V H X    Q B S G I    S Q    S P    P H    P S F J C A    Q H    E A 
+P S F J C A ?    G H Q    L Q    L C C .    S    B L Z A    Q M S A N 
+B L M N    R H M    V A L M P ." 
+                                            C A H G L M N    E A M G P Q A S G . 
+
+2) Odszyfrować angielski tekst ukryty w grillu 6x6. 
+Obroty zgodnie z ruchem wsk. zegara, jak na wykładzie. (40%)
+
+S E I T I R 
+H T E I N E 
+C L E S T E 
+A C I E I W 
+H T V E E A 
+E D V E K R 
+ 
+
+3) "HOW TO RUIN AN ASSOCIATION" (autor nieznany)
+
+Once upon a time, the Midtown Chapter was one of the most active chapters in the association. 
+It was a smooth-running, efficient organization that enjoyed great prestige in the community. 
+Then one day, things began to change. One of the members said to himself, "No one will miss 
+ me. I have so many other things to do, I think I'll drop out of the chapter's activities." 
+ So hx bxgan to avoid chaptxr functions. Hx rxfusxd to accxpt his rxsponsibilitixs, and thx 
+ chaptxr had to limp along with onx lxss mxmbxr. Of coursx, thx chaptxr could gxt along without 
+ him, but it mxant that onx of thx rxmaining mxmbxrs had to doublx up and do twicx as much work 
+ as bxforx. 
+Thxn, onx morx mxmbxr dxcidxd to givx up his sharx of chaptxr activitixs. 
+This mxznt thzt two mxmbxrs hzd to do doublx duty. 
+Thxn z third mxmbxr droppxd jut, znd thrxx jf thx jthxrs hzd tj wjrk hzrdxr thzn xvxr. 
+Thxn z fjurth znd z fifth drjppxd jut, znd mjrx jf qhx rxmzknkng zcqkvx mxmbxrs sqzrqxd wjrkkng 
+hzrdxr qhzn xvxr. 
+Zs qkmx wxnq jn, mzny mjrx jf qhx chzptxr mxmbxrs drjppxd jut, znd kq ljjkxd lkkx qhks: 
+Qjx jxxj xkxx qjzq kxqx xxxq jzk qj kj xxxqjqjkxz. 
+Zxk kx jjj zqx zqkxx qxzkkxz qjkz qjqjjzj kq kzz xjq zj kzk zq zxx! 
+  
+Odszyfrować ostatnie 3 linijki (40%).
+Nie zawierają one żadnych trudnych słów.

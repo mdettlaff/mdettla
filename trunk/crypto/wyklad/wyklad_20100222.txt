@@ -1,0 +1,385 @@
+Klasyfikacja ataków
+-------------------
+
+Ataki wymieniamy w kolejności od tych zakładających niewielkie możliwości i
+władzę atakującego, do tych najbardziej nierealistycznych i hipotetycznych.
+
+Tradycja kryptoanalizy każe nam zakładać, że atakujący ma pełną wiedzę o użytym
+algorytmie szyfrowania, nie znając tylko klucza. Druga zasada Kerckhoffs'a mówi,
+że dobry system powinien pozostać bezpieczny w tej sytuacji.
+Trzymanie algorytmu w tajemnicy daje zwodnicze poczucie bezpieczeństwa!
+
+Miarami skuteczności ataku są: ilość wymaganych par tekst jawny/szyfrogram, czas
+potrzebny do ich analizy, i prawdopodobieństwo sukcesu ataku.
+
+Nazewnictwo ataków:
+
+1. Atak z szyfrogramami (ct-only)
+	Dane: C_1=E_K(M_1), ..., C_n=E_K(M_n)
+	Szukane: M_1,...,M_n lub K lub algorytm uzyskania M_{n+1} na podstawie
+	C_{n+1}=E_K(M_{n+1})
+
+2. Atak ze znanym tekstem jawnym (known pt)
+	Dane: M_1,C_1=E_K(M_1), ..., M_n,C_n=E_K(M_n)
+	Szukane: K lub algorytm uzyskania M_{n+1} na podstawie
+	C_{n+1}=E_K(M_{n+1})
+
+3. Atak z wybranym tekstem jawnym (chosen pt)
+	Dane: M_1,C_1=E_K(M_1), ..., M_n,C_n=E_K(M_n), gdzie atakujący wybiera
+	M_i
+	Szukane: K lub algorytm uzyskania M_{n+1} na podstawie
+	C_{n+1}=E_K(M_{n+1})
+
+4. Atak z adaptacyjnie wybranym tekstem jawnym (adaptive-chosen pt)
+	Dane: M_1,C_1=E_K(M_1), ..., M_n,C_n=E_K(M_n), gdzie atakujący wybiera
+	M_i jedno po drugim, w miarę postępów pracy
+	Szukane: K lub algorytm uzyskania M_{n+1} na podstawie
+	C_{n+1}=E_K(M_{n+1})
+
+5. Atak z wybranym szyfrogramem (chosen-ct) (ataki 3. i 5. to 'ataki z wybranym
+tekstem')
+	Dane: C_1,M_1=D_K(C_1), ..., C_n,M_n=D_K(M_n), gdzie atakujący wybiera
+	C_i
+	Szukane: K
+
+6. Atak z kluczami powiązanymi (related-key), łącznie z którymś z ataków wyżej
+opisanych
+	Atakujący porównuje po dwa szyfrogramy odpowiadające jednemu tekstowi
+	jawnemu i dwu kluczom o znanej różnicy.
+	Można w ten sposób wykryć słabości algorytmu generowania kluczy dla
+	kolejnych rund szyfru.
+
+7. Częściowa znajomość klucza
+	Dobry szyfr powinien być odporny na ten rodzaj ataku: znajomość np.
+	jednego lub więcej bitów klucza nie powinna
+	zmniejszać trudności odtworzenia reszty bitów klucza.
+	W przeciwnym wypadku przeszukiwanie wyczerpujące mogłoby zostać
+	ulepszone.
+
+7. Atak z gumową pałką (rubber-hose cryptoanalysis)
+	Dane: osoba znająca klucz, wybrane urządzenia do tortur
+
+Najpopularniejsze są ataki 2. i 3.; w czasie II WŚ przeprowadzano je często
+przeciwko Niemcom i Japończykom.
+
+
+Typy sukcesów kryptoanalizy:
+
+1. Rozróżnienie (najbardziej. podstawowy cel)
+Zwykle punktem wyjścia ataku kryptanalitycznego jest zdolność odróżnienia
+zaszyfrowanej wiadomości od jej losowej permutacji. Jest to plan minimum.
+Zbliżonym celem jest rozpoznanie, jaki algorytm został użyty.
+
+2. Częściowe odtworzenie tekstu jawnego (np. odkrycie że szyfrogram ma t/s
+parzystość jak tekst jawny) lub częściowe odtworzenie klucza.
+
+3. Jednorazowe odtworzenie tekstu jawnego.
+
+4. Znalezienie algorytmu deszyfrowania bez znajomości klucza. Np. dla funkcji
+szyfrującej będącej inwolucją (f=f^{-1}) przeprowadzenie ataku z adaptacyjnie
+wybranym tekstem jawnym daje ten efekt.
+
+5. Znalezienie algorytmu szyfrowania bez znajomości klucza. Chodzi o możliwość
+tworzenia sensownych wiadomości zaszyfrowanych. Szyfru wrażliwego na ten rodzaj
+ataku nie należy używać do uwierzytelniania i identyfikacji. Np. generowanie
+kodów ze zdrapek do doładowywania komórek.
+
+6. Całkowite odtworzenie klucza.
+Najpoważniejszy sukces, zawierający w sobie wszystkie poprzednie.
+
+Co to znaczy złamać szyfr?
+--------------------------
+
+Zależnie od protokołu, w jakim szyfr został użyty, modelu zagrożeń, i mocy
+obliczeniowej atakującego, może to znaczyć różne rzeczy.
+
+Może oznaczać np. zainwestowanie ćwierć miliona dolarów w elektronikę i złamanie
+DES przez przeszukiwanie wyczerpujące w ciągu jednego dnia.
+
+Może oznaczać siedzenie z ołówkiem i kartką papieru i mozolne zliczanie
+częstości liter w prostym szyfrze podstawieniowym.
+
+Może to być napisanie programu wykonującego testy statystyczne systemu.
+
+Szyfr można uważać za złamany, gdy jego wyjście jest odróżnialne od losowej
+permutacji wejścia przy ataku ze znanym tekstem.
+
+Ale może też być uważany za złamany dopiero, gdy ktoś jest w stanie odtworzyć
+klucz przy ataku z szyfrogramem.
+
+Można np. uważać, że złamanie szyfru nastąpiło, gdy jesteśmy w stanie uzyskać
+częściową informację o systemie
+przy ataku z wybranym kluczem.
+
+W skrócie, szyfr jest złamany, jeśli osoba stosująca go, przestaje go używać z
+braku zaufania.
+
+W rzeczywistym świecie, najbardziej narzucającą się metodą kryptoanalizy jest
+p.w.; dla porządnych algorytmów ze 128-bitowym kluczem, można jednak odrzucić tę
+metodę. Uważa się, że dobry szyfr to taki, dla którego najlepszym atakiem jest
+p.w. Dlatego, jeśli znajdziemy sposób aby zmniejszyć ilość próbnych kluczy o
+czynnik, przypuśćmy, 2^{28}, to mimo że pozostał spory margines 2^{100} kluczy
+do sprawdzenia, wiadomo już że projektujący algorytm nie dopatrzyli czegoś.
+Choć nie jest to "pełne złamanie", to takie odkrycie służy jako pierwsze
+ostrzeżenie przed możliwymi słabościami szyfru.
+
+Ołówek i kartka to potężne narzędzia w ręku kryptoanalityka, o ile ma on do
+czynienia z algorytmem szyfrowania o prostej i przejrzystej strukturze. W wielu
+wypadkach analiza na papierze musi być wspomagana analizą komputerową:
+wyszukiwaniem statystycznych prawidłowości i nieregularności.
+
+Z punktu widzenia badacza, szyfr jest złamany, jeśli odkryto takie jego
+własności, które wymuszają zmiany w algorytmie. Zmiany te mogą być różne,
+począwszy od zwiększenia liczby rund aż do zmian w generowaniu kluczy, w
+wewnętrznych tablicach podstawień i w grafie połączeń elementów.
+
+Szyfr jest złamany ostatecznie, jeśli napisanie go od nowa jest łatwiejsze niż
+łatanie dziur, lub gdy sama zasada projektowania okaże się błędna.
+
+Kiedy szyfr jest bezpieczny ?
+-----------------------------
+
+Odp. : nigdy. Poważniej, można rozważać dwa modele mocy ataku:
+teorio-informacyjny i obliczeniowy. W pierwszym moc atakującego jest
+nieograniczona. Może on np. dokonać ataku p.w. Przy takich założeniach tylko
+jeden szyfr jest bezpieczny: One-Time-Pad, algorytm z kluczem jednorazowym.
+Szyfrowanie polega na XORowaniu wiadomości z ciągiem doskonale losowych bitów.
+Odbiorca musi mieć t/s ciąg. Nie może on być nigdy wykorzystany ponownie. OTP
+był używany w czasach zimnej wojny do szyfrowania gorącej linii
+Moskwa-Waszyngton. Drugi model jest bardziej rozsądny. Oszacowujemy moc
+obliczeniową przeciwnika i budujemy system, dla którego p.w. jest, powiedzmy,
+2^{30}-krotnie cięższe. Taki margines jest konieczny, by zdyskontować nowe,
+nieprzewidziane metody ataku, oraz skoki technologiczne. Prawdopodobnie dla
+żadnego współczesnego szyfru nie ma oszacowania dolnego mocy obliczeniowej
+potrzebnej do jego złamania. Z drugiej strony, oszacowanie górne otrzymujemy dla
+każdej ustalonej metody ataku. Sugeruje to projektowanie szyfrów pod kątem
+odporności na najsilniejsze ze znanych metod ataku.
+
+I. Przeszukiwanie wyczerpujące
+
+Sprawdzamy wszystkie możliwe klucze i znajdujemy pasujący do posiadanej przez
+nas pary tj/sz. DES, jako używający kluczy 56-bitowych, nie jest już uważany za
+bezpieczny, głównie ze względu na realne zagrożenie atakiem poprzez p.w. Moc
+wszystkich komputerów podłączonych do Internetu może być z grubsza oszacowana na
+2^{70} prostych operacji na dobę. Liczba atomów w Galaktyce to ok. 2^{223}.
+
+II. Atak słownikowy
+
+Jest to atak na szyfry blokowe; jeśli blok jest krótki, możemy szybko zgromadzić
+wiele różnych bloków szyfrogramu i badać częstości ich występowania. Robi się
+tak np. dla szyfru podstawieniowego, gdzie każda litera jest zamieniana na inną.
+
+Inną odmianą tego ataku jest zaszyfrowanie samemu ustalonego bloku tekstu
+jawnego przy użyciu wszystkich możliwych kluczy i przechowywanie posortowanych
+wyników. Potem nasłuchujemy, czy pojawi się w kanale komunikacyjnym któryś z
+naszych typów. Jeśli tak, to klucz poznajemy natychmiast. Zauważmy, że w użyciu
+są pamięci masowe o pojemności 2^{41} bajtów.
+
+III. Równoważny algorytm
+
+Niekiedy projektanci algorytmów nie dopatrzą pewnych uproszczeń, jakim podlega
+ich wytwór. Może to być np. użycie kilku permutacji złożonych ze sobą
+bezpośrednio jedna po drugiej, co jak wiadomo jest równoważne jednej permutacji,
+tzn. wynikowi złożenia. Analogicznie, XORowanie z kolejnymi kluczami raz za
+razem jest równoważne XORowaniu z sumą kluczy; podobnie dla operacji
+podstawiania.
+
+IV. Okresowość lub niezmienniki
+
+Niezmienniki, tj. własności nie ulegające zmianie przez zaszyfrowanie (np. gdy
+sz ma t/s parzystość jak tj), są niepożądaną własnością szyfrów.
+Jeśli kryptoanalityk potrafi znaleźć niezmiennik, lub nawet tylko przybliżony
+niezmiennik, to otwiera to drogę do ataku rozróżniającego.
+Wszelkiego rodzaju okresowość czy korelacje pomiędzy kolejnymi szyfrowaniami są
+niewskazane w algorytmach. Inne szczególne cechy elementów składowych systemu
+(np. cykle w permutacji, niskie lub wysokie prawdopodobieństwa pewnych wyników
+podstawienia) mogą też być użyteczne dla atakującego.
+
+V. Paradoks dnia urodzin
+
+Prawdopodobieństwo, że napotkana przypadkowo osoba urodziła się tego dnia, co
+my, jest zazwyczaj  równe 1/365.
+Ile osób musimy spotkać, aby z prawdopodobieństwem co najmniej 1/2 co najmniej
+jedna spośród tych osób obchodziła urodziny t/s dnia co my? Oznaczmy odpowiedź
+przez k. Chcemy, by (364/365)^k < 1/2, co zachodzi dla k=253 i większych.
+Całkiem sporo ludzi.
+
+Inne pytanie: ile osób powinno być na imprezie, aby z prawdopodobieństwem co
+najmniej 1/2 co najmniej jedna spośród tych osób obchodziła urodziny t/s dnia co
+inna? P.,że nie będzie takiej pary wynosi
+
+365*364*363*...*(366-k) / 365^k  i jest < 1/2 dla k >= 23, czyli rzędu
+\sqrt{365}.
+
+Ogólnie, dla n możliwych wyników szyfrowania (niekoniecznie = 365) i dla k prób,
+mamy p. niepowtórzenia wyniku równe (1+x <= e^x)
+P = 1 * (1 - 1/n) * (1 - 2/n) * ... * (1 - (k-1)/n )
+<= e^{ -\sum_{j=0}^{k-1} j/n  }
+<= e^{ -k(k-1)/2n }.
+Chcemy, by 1-P>0.5, czyli by P<0.5, a więc wystarczy, gdy będzie
+-k(k-1)/2n < \ln 0.5,
+czyli gdy
+k > 0.5 * (  1 + \sqrt{ 1+8*n*\ln 2 }  ).
+
+Widać więc, że w ogólnym przypadku ilość prób jest rzędu pierwiastka
+kwadratowego z mocy zbioru wyników.
+
+Przypuśćmy, że stosując atak ze znanym tekstem na szyfr blokowy 64-bitowy,
+przeciwnik chce otrzymać dwie pary tj/sz, dla których sz-y różnią się o ustaloną
+stałą.
+Statystycznie po sprawdzeniu 2^{32} tj otrzymamy taką parę.
+
+VI. Właściwości statystyczne
+
+Jakiekolwiek odbieganie wyjścia szyfru od ciągu losowego jest potencjalnym
+słabym punktem.
+
+VII. Klucze słabe względem wybranych ataków
+
+Czasami można wyodrębnić zbiór kluczy, których użycie ułatwia kryptoanalizę
+określonego typu. Zbiór W kluczy nazywamy słabym, jeśli do stwierdzenia, czy
+użyto klucza ze zbioru W wystarcza mniej niż |W| prób.
+Duży odsetek kluczy słabych świadczy na niekorzyść algorytmu.
+Przypuśćmy bowiem, że jeden na tysiąc kluczy jest słaby, i że szyfr taki użyty
+jest w protokole, w którym wymiana kluczy następuje co 10 sekund. Wówczas
+statystycznie po 3 godzinach nasłuchu, trafiamy na sesję szyfrowaną słabym
+kluczem. Zauważmy, że przy 100 Mbitach na sekundę, porcja danych  zaszyfrowanych
+pechowym kluczem będzie wielkości 1 gigabita.
+
+
+
+====================================
+
+KLASYFIKACJA SZYFRÓW KLASYCZNYCH
+
+====================================
+
+S. transpozycyjne
+
+Najst. znany: s. Spartan "σκυτάλη" (skitali), wzmiankowany w 7 w.p.Chr.;
+stosowany przez Spartan do celów wojskowych
+
+"Railfence" (Konfederacja):
+TCESDIW HSIHRAUEICVLA IPWSNIR
+
+T   C   E   S   D   I   W 
+ H S I H R A U E I C V L A 
+  I   P   W   S   N   I   R
+
+Kluczem do szyfru była ilość wierszy.
+
+"Redefence"
+t/s + permutacja wierszy, np. 312 dawało tu sz:
+IPWSNIR TCESDIW HSIHRAUEICVLA 
+
+"Grill"
+Autor: Girolamo Cardano (ten od wzorów na rozw. r. st. 3 i 4), XVI w.;
+stosowany przez kardynała Richelieu.
+Sporo później wymyślono (XVIII w. ?) obracanie grill'ów.
+Niemcy używali je podczas I wojny, w 1917,
+Każdy grill miał swój kryptonim: 
+25-ANNA,36-BERTA,49-KLARA,64-DORA,81-EMIL,100-FRANZ.
+
+Francuzi opracowali ataki wykorzystujące własności geometryczne grill'ów.
+Grille przetrwały 4 miesiące.
+
+Podać przepis na wycinanie grilla.
+
+ITIT ILOH 
+GEHE TCDF 
+LENS IIST 
+FANB FSET 
+EPES HENN 
+URRE NEEN 
+TRCG PR&I 
+ODCT SLOE
+
+Odczytać wiadomość z grilla 8x8! (Czy to prawda?)
+
+Jaka jest złożoność p.w. dla grilla n x n?
+
+"Nihilista"
+tj: nihilist transposition
+k: 23145
+
+ 23145     12345
+2nihil    1sanpo
+3isttr    2hniil
+1anspo -> 3tistr
+4sitio    4tsiio
+5n....    5.n...
+
+sz: sanpohniiltistrtsiio.n...
+
+W ogólności, możemy wybrać jakąkolwiek permutację tekstu jawnego,
+ otrzymując pewien szyfr transpozycyjny.
+
+S. podstawieniowe
+
+-monoalf.-poligraficzne (porta,playfair)
+         -jednoliterowe (Cezara,rozproszona szachownica)
+         -wieloliterowe (polifoniczne)
+-polialf.(Vigenere,Enigma)
+-homofon.(Grandpre,Homofonik)
+
+1. Monoalfabetyczne
+
+Dla alfabetu angielskiego: 26!\approx 4 . 10^26 możliwości
+proste przykłady: 
+E(x)=ax+b (mod 26), E(x)=p(x) (mod 26), p\in\Polynomial
+W ogólności, podstawienie może nie opierać się na żadnej strukturze.
+Tak czy owak, stosujemy atak częstotliwościowy.
+
+2. Homofoniczne
+
+Odwzorowanie jeden-do-wielu. 
+Trudniejsze do analizy, bo sz może mieć prawie jednostajny rozkład znaków.
+Stosowane w Księstwie Mantui od 1401 roku.
+
+3. Polialfabetyczne
+
+=kilka monoalf. naprzemiennie,
+np. z kluczem podawanym co jakiś czas jawnie wewnątrz sz 
+(Leon Battista Alberti 1467).
+Jeden  rodzajów s. polialf. był używany przez Unię w wojnie secesyjnej.
+
+Częstą odmianą tego s. jest s. okresowy:
+e1(x1)..en(xn)e1(xn+1)..en(x2n)...
+
+4. Poligramowy
+
+np. "MAM"->"ZXY"
+
+
+PRZYKŁADY MONOALF.
+
+
+* Cezara, zaprojektowany zgodnie z 6. zasadą Kerckhoffs'a : 
+"kodowanie nie może wymagać zapamiętania licznych reguł".
+Przestrzeń kluczy jest 26-elementowa.
+
+* GA-DE-RY-PO-LU-KI, (klucz zawiera pary zamienników)
+Ala ma kota. -> Gug mg iptg.
+
+* Francis'a Bacon'a - w zasadzie steganografia;
+A = aaaaa
+B = aaaab
+....
+Q = abbbb
+R = baaaa
+...
+Z = babbb
+I=J, U=V
+
+tj:   s     u     c     c     e     s     s
+    baaab baabb aaaba aaaba aabaa baaab baaab
+
+A-M=a, N-Z=b:
+
+    b  a   a       a   b
+sz: We are looking for you. 
+
+Jest grupa ludzi, którzy starają się dowieść 
+autorstwa Bacon'a dzieł Szekspira,
+szukając szyfrogramów Bacona w tych dziełach.
+
