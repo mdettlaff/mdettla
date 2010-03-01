@@ -1,0 +1,79 @@
+Literatura:
+
+Bruce Schneier, Kryptografia dla praktyków. WNT, Warszawa 2002.
+Menezes, van Oorschot & Vanstone, Kryptografia stosowana. WNT, Warszawa 2005.
+Douglas R. Stinson, Kryptografia. WNT, Warszawa 2005.
+
+Każdy, kto przeszedł kurs podstaw kryptografii, lub przeczytał np. książkę
+Schneier'a,
+jest w stanie wymyślić szyfr; na liście dyskusyjnej sci.crypt
+przeciętnie co tydzień pojawia się nowy.
+
+Jeśli jednak nie jesteś uznanym członkiem społeczności kryptograficznej, to
+prawdopodobnie żaden specjalista nie zechce badać nowego szyfru Twojego
+autorstwa. Nie należy się tym zrażać; trzeba pielęgnować w sobie fascynację tą
+dziedziną, jeśli ją czujemy. Nie wyrzucajmy do kosza swoich wczesnych projektów
+systemów kryptograficznych, ale odłóżmy je; z czasem poziom naszych umiejętności
+kryptoanalizy wzrośnie na tyle, że złamiemy własny szyfr w ramach niedzielnej
+rozrywki.
+
+Zasady Kerckhoffs'a (1883)
+--------------------------
+
+1. Złamanie systemu musi być fizycznie, jeśli nie matematycznie, niemożliwe.
+2. Bezpieczeństwo systemu nie może wymagać trzymania jego definicji w sekrecie,
+tak by wpadnięcie tej definicji
+w ręce przeciwnika nie powodowało problemów.
+3. Przenoszenie i przekazywanie klucza nie może wymagać użycia pisma, a strony
+go używające muszą mieć łatwość
+zmiany klucza kiedy tylko zechcą.
+4. Szyfr musi być dogodny do użycia w łączności telegraficznej :)
+5. Musi być łatwo przenośny, a jego używanie nie może wymagać współdziałania
+wielu osób.
+6. W okolicznościach w jakich jest używany, szyfr nie może wymagać od
+użytkownika dużego skupienia ani
+zapamiętania licznych reguł.
+
+Terminologia:
+-------------
+
+tekst jawny / szyfrogram
+
+Podział kryptografii:
+
+cywilna / wojskowa
+symetryczna / asymetryczna (z kluczem tajnym / z kluczem publicznym+prywatnym )
+blokowa /strumieniowa (ta druga zwykle dużo szybsza, sprowadza
+się do generatorów liczb losowych)
+
+Głównymi elementami składowymi współczesnych szyfrów są:
+* podstawienia (substitutions)
+* i permutacje (permutations),
+używane naprzemiennie.
+
+Szyfry podstawieniowe były w użyciu już w Starożytności,
+np. szyfr Cezara. Mimo, że w języku polskim jest aż 32! szyfrów tego typu,
+łatwo je złamać stosując metody statystyczne; jeśli ktoś czytał np. opowiadania
+Arthura Conan Doyle'a, to w jednym z nich taka metoda jest opisana.
+Popularne we współczesnych szyfrach S-box'y to funkcje podstawieniowe,
+przekształcające ciągi bitów, czyli bloki, o stałej długości na inne bloki
+bitów, być może innej długości. Funkcje te nie powinny być liniowe, ani też
+afiniczne, tzn. żaden bit wyjścia nie może być zdefiniowany jako kombinacja
+liniowa bitów z wejścia plus stała.
+
+Permutację w szyfrowaniu rozumiemy tak, jak w algebrze: elementy ciągu z wejścia
+są zachowane, zmienia się tylko ich kolejność. Szyfr permutacyjny był stosowany
+przez Greków starożytnych, którzy używali skórzanego pasa (który przenosił
+posłaniec jako element ubioru) i dwóch walców tej samej średnicy.
+
+Innym szyfrem podstawieniowym jest szyfr szablonowy, polegający na pisaniu i
+czytaniu liter w otworach kartonowego szablonu;
+[rys.]
+puste miejsca pozostałe po wpisaniu tekstu, uzupełniamy losowo wybranymi
+znakami, jak to proponował Hieronim Cardano w 1550, lub, o ile szablon na to
+pozwala, obracamy szablon o 90 stopni i piszemy dalej.
+Ten drugi sposób sugerował Baron Fleissner w roku 1880, i był on stosowany przez
+Niemców w I WŚ, jednak brak bezpieczeństwa wymusił jego wycofanie z użytku
+po kilku miesiącach.
+[szablon]
+

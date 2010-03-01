@@ -1,0 +1,25 @@
+Grille Cipher
+
+Podać przepis na wycinanie grilla.
+
+ITIT ILOH
+GEHE TCDF
+LENS IIST
+FANB FSET
+EPES HENN
+URRE NEEN
+TRCG PR&I
+ODCT SLOE
+
+Odczytać wiadomość z grilla 8x8.
+
+...X ...X ITIT ILOH
+...X ...X GEHE TCDF
+XX.. .X.. LENS IIST
+.... .X.. FANB FSET
+...X ...X EPES HENN
+...X .... URRE NEEN
+.X.X .X.X TRCG PR&I
+.... .X.. ODCT SLOE
+
+the fleissner grill can be turned to...
