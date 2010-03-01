@@ -4,8 +4,11 @@ package tt {
 
     public class Utils {
 
-        private static const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
-        private static const EN:String = "aAcCeElLnNoOsSzZzZ";
+        private static const PL_TO_EN:Object = {
+            'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o',
+            'ś': 's', 'ż': 'z', 'ź': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'E',
+            'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z'
+        }
 
         public static function breakLines(
                 text:String, maxLineLength:int):Array /* of String */ {
@@ -34,8 +37,7 @@ package tt {
             var withoutPlChars:String = "";
             for (var i:int = 0; i < withPlChars.length; i++) {
                 var c:String = withPlChars.charAt(i);
-                var plIndex:int = PL.indexOf(c);
-                withoutPlChars += plIndex != -1 ? EN.charAt(plIndex) : c;
+                withoutPlChars += c in PL_TO_EN ? PL_TO_EN[c] : c;
             }
             return withoutPlChars;
         }
@@ -43,7 +45,7 @@ package tt {
         public static function containsPlChars(s:String,
                 index:int = 0, array:Array = null):Boolean {
             for (var i:int = 0; i < s.length; i++) {
-                if (PL.indexOf(s.charAt(i)) != -1) {
+                if (s.charAt(i) in PL_TO_EN) {
                     return true;
                 }
             }

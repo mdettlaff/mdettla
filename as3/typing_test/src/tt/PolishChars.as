@@ -44,15 +44,18 @@ package tt {
         }
 
         private function charForWindows(event:KeyboardEvent):String {
-            const EN:String = "aAcCeElLnNoOsSzZxX";
-            const PL:String = "ąĄćĆęĘłŁńŃóÓśŚżŻźŹ";
+            const EN_TO_PL:Object = {
+                'a': 'ą', 'c': 'ć', 'e': 'ę', 'l': 'ł', 'n': 'ń', 'o': 'ó',
+                's': 'ś', 'z': 'ż', 'x': 'ź', 'A': 'Ą', 'C': 'Ć', 'E': 'Ę',
+                'L': 'Ł', 'N': 'Ń', 'O': 'Ó', 'S': 'Ś', 'Z': 'Ż', 'X': 'Ź'
+            }
+            const c:String = String.fromCharCode(event.charCode);
             if (event.altKey) {
-                const i:int = EN.indexOf(String.fromCharCode(event.charCode));
-                if (i != -1) {
-                    return PL.charAt(i);
+                if (c in EN_TO_PL) {
+                    return EN_TO_PL[c];
                 }
             }
-            return String.fromCharCode(event.charCode);
+            return c;
         }
     }
 }
