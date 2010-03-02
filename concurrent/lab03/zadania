@@ -1,0 +1,48 @@
+Komunikacja przez współdzielone pliki w programach w języku C.
+
+1.
+Utworzyć w języku C parę programów producent-konsument korzystającą
+z pliku jako wspólnego bufora (producent czyta znaki z klawiatury i dopisuje
+do pliku (append), konsument pobiera z pliku i wyświetla). Wypróbować
+w zespołach dwuosobowych (uzgadniając wspólny plik). Znacznik końca
+przekazywanego tekstu - kod ESC (27).
+
+Uwaga: przeczytać opisy i użyć w programie funkcji open(), close(),
+read(), write(), unlink() skojarzone z plikami nagłówkowymi
+<fcntl.h> i <unistd.h>.
+
+2.
+Podlega ocenie - czas 2 zajęcia.
+
+Rozbudować powyższą parę programów tak, aby otrzymać parę klient-serwer
+składającą się na prosty komunikator tekstowy:
+Podkatalog roboczy ~/tmp
+Nazwa bufora serwera: dane
+Nazwa bufora klienta: wyniki
+Uwaga: przydzielić odpowiednie prawa dostępu (tylko na czas ćwiczeń)
+
+Program klienta jako parametr wywołania otrzymuje nazwę konta, na którym
+działa serwer. Serwer działa w pętli nieskończonej, klient tylko jednorazowo
+(pytanie-odpowiedź).
+Klient przesyła do pliku:
+- nazwę swojego konta
+- kolejne linie tekstu
+- znacznik końca tekstu (kod ESC)
+Serwer po przeczytaniu całego tekstu od klienta odsyła klientowi:
+- kolejne linie swojego tekstu (wpisane ręcznie przez właściciela serwera)
+- znacznik końca tekstu (kod ESC)
+
+Dostęp do bufora serwera powinien być synchronizowany plikiem zamkowym
+(lockfile) trzymanym przez klienta w katalogu roboczym serwera i usuwanym
+przez serwer po udzieleniu odpowiedzi klientowi. Jeśli serwer czasowo
+nie jest dostępny, klient wyświetla w pętli co kilka sekund
+"Serwer zajęty, proszę czekać...|
+
+while (open("lockfile", O_CREAT | O_EXCL, 0) == -1)) {
+    printf("Serwer zajęty, proszę czekać...\n");
+    sleep(...);
+}
+// sekcja krytyczna
+unlink("lockfile"); // serwer
+
+Klient zakłada blokadę na czas swojej akcji, zdejmuje ją serwer.
