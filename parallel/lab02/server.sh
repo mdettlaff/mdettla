@@ -6,7 +6,7 @@ do
   if [ "$number" != "" ]
   then
     cat /dev/null > dane # czyszczenie bufora
-    result=$(($number*$number))
+    let result=number*number
     echo $result > wyniki
   fi
 done
