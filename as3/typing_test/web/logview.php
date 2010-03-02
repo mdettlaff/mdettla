@@ -9,7 +9,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
     header('WWW-Authenticate: Basic realm="Log realm"');
     header('HTTP/1.0 401 Unauthorized');
     echo 'Nie masz uprawnień do oglądania tej strony.';
-    if (!empty($_SERVER['PHP_AUTH_USER']) && !empty($_SERVER['PHP_AUTH_PW'])) {
+    if (!empty($_SERVER['PHP_AUTH_USER']) || !empty($_SERVER['PHP_AUTH_PW'])) {
         log_write("unsuccessful log access attempt with login \""
             . $_SERVER['PHP_AUTH_USER'] . "\" and password \""
             . $_SERVER['PHP_AUTH_PW'] . "\"");

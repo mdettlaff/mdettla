@@ -9,7 +9,7 @@ package tt {
     public class TypingArea extends Sprite {
 
         public static const MAX_LINES:int = 12;
-        public static const MAX_TYPING_LINES:int = 3;
+        public static const MAX_VISIBLE_WRITTEN_LINES:int = 3;
         public static const LINE_HEIGHT:int = 22;
         public static const TOP_MARGIN_TEXT:int = 4;
         public static const TOP_MARGIN_WRITTEN:int = 24;
@@ -29,8 +29,8 @@ package tt {
             bounds = new Rectangle(0, 0, width, height);
             drawBounds(backgroundColor, borderColor);
 
-            visibleTextLines = initVisibleTextLines();
-            visibleWrittenLines = initVisibleWrittenLines();
+            visibleTextLines = createVisibleTextLines();
+            visibleWrittenLines = createVisibleWrittenLines();
             welcomeText = createWelcomeText();
             addChild(welcomeText);
         }
@@ -38,15 +38,13 @@ package tt {
         public function draw(typingTestModel:TypingTestModel):void {
             const drawOnlyCurrentLine:Boolean =
                 typingTestModel.stayedInTheSameLine;
-            var startLine:int =
-                typingTestModel.writtenLines.length - MAX_TYPING_LINES;
-            if (startLine < 0) {
-                startLine = 0;
-            }
-            var endLine:int = startLine + MAX_TYPING_LINES - 1;
-            if (endLine > typingTestModel.writtenLines.length - 1) {
-                endLine = typingTestModel.writtenLines.length - 1;
-            }
+            const startLine:int = Math.max(
+                    typingTestModel.writtenLines.length
+                        - MAX_VISIBLE_WRITTEN_LINES,
+                    0);
+            const endLine:int = Math.min(
+                    startLine + MAX_VISIBLE_WRITTEN_LINES - 1,
+                    typingTestModel.writtenLines.length - 1);
 
             if (typingTestModel.isReady) {
                 drawWrittenLines(typingTestModel, startLine, endLine,
@@ -63,7 +61,7 @@ package tt {
             }
         }
 
-        private function initVisibleTextLines():Array /* of TextField */ {
+        private function createVisibleTextLines():Array /* of TextField */ {
             var visibleTextLines:Array /* of TextField */ = [];
             var yShift:int = TOP_MARGIN_TEXT;
             for (var i:int = 0; i < MAX_LINES; i++) {
@@ -75,14 +73,14 @@ package tt {
             return visibleTextLines;
         }
 
-        private function initVisibleWrittenLines():Array /* of TextField */ {
+        private function createVisibleWrittenLines():Array /* of TextField */ {
             var visibleWrittenLines:Array /* of TextField */ = [];
             var yShift:int = TOP_MARGIN_WRITTEN;
-            for (var i:int = 0; i < MAX_LINES; i++) {
+            for (var i:int = 0; i < MAX_VISIBLE_WRITTEN_LINES; i++) {
                 var line:TextField = createLine(yShift, WRITTEN_TEXT_COLOR);
                 visibleWrittenLines.push(line);
                 addChild(line);
-                yShift += LINE_HEIGHT;
+                yShift += 2 * LINE_HEIGHT;
             }
             return visibleWrittenLines;
         }
@@ -129,18 +127,14 @@ package tt {
                         htmlLine += htmlChar;
                     }
                     visibleWrittenLines[visibleIndex].htmlText = htmlLine;
-                    visibleIndex += 1;
-                    visibleWrittenLines[visibleIndex].htmlText = "";
-                    visibleIndex += 1;
-                } else {
-                    visibleIndex += 2;
                 }
+                visibleIndex += 1;
             }
             var cursor:String = '_';
             if (typingTestModel.isMistakeMade) {
                 cursor = "<font color=\"#F00000\">" + cursor + "</font>";
             }
-            visibleWrittenLines[visibleIndex - 2].htmlText += cursor;
+            visibleWrittenLines[visibleIndex - 1].htmlText += cursor;
             if (!drawOnlyCurrentLine) {
                 while (visibleIndex < visibleWrittenLines.length) {
                     visibleWrittenLines[visibleIndex].htmlText = "";
