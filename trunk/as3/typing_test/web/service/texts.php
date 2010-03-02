@@ -27,7 +27,7 @@ function rand_str($length) {
     return $str;
 }
 
-header("Content-Type: text/xml");
+header('Content-Type: text/xml');
 
 session_start();
 
