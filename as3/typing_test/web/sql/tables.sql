@@ -19,14 +19,23 @@ CREATE TABLE tt.ttlog (
     chars int NOT NULL,
     minutes int NOT NULL,
     seconds int NOT NULL,
-    pl varchar,
-    id_user int
+    corrections int,
+    pl varchar
 );
 
-CREATE SEQUENCE tt.id_user_seq;
-CREATE TABLE tt.users (
-    id_user int DEFAULT NEXTVAL('tt.id_user_seq') PRIMARY KEY,
-    username varchar NOT NULL
+CREATE SEQUENCE tt.id_highscore_seq;
+CREATE TABLE tt.highscore (
+    id_highscore int DEFAULT NEXTVAL('tt.id_highscore_seq') PRIMARY KEY,
+    username varchar NOT NULL,
+    date_added timestamp NOT NULL,
+    ip varchar(32),
+    speed real NOT NULL,
+    mistakes int NOT NULL,
+    corrections int NOT NULL,
+    chars int NOT NULL,
+    minutes int NOT NULL,
+    seconds int NOT NULL,
+    pl varchar
 );
 
 CREATE SEQUENCE tt.id_log_seq;
