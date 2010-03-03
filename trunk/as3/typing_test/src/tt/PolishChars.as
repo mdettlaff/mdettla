@@ -50,12 +50,7 @@ package tt {
                 'L': 'Ł', 'N': 'Ń', 'O': 'Ó', 'S': 'Ś', 'Z': 'Ż', 'X': 'Ź'
             }
             const c:String = String.fromCharCode(event.charCode);
-            if (event.altKey) {
-                if (c in EN_TO_PL) {
-                    return EN_TO_PL[c];
-                }
-            }
-            return c;
+            return event.altKey && c in EN_TO_PL ? EN_TO_PL[c] : c;
         }
     }
 }
