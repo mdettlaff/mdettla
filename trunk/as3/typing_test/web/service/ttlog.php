@@ -1,6 +1,7 @@
 <?php
 
 include '../include/log.php';
+include '../include/utils.php';
 
 session_start();
 
@@ -16,15 +17,6 @@ function isSubmittedTooSoon($submit_time, $last_submit_time) {
         && ($submit_time - $last_submit_time < $min_time_between_submits));
 }
 
-function isHMACValid($hash, $h_data) {
-    if (empty($hash) || empty($h_data)) {
-        return false;
-    }
-    $h_key = 'secret';
-    $valid_hash = hash_hmac('sha256', $h_data, $h_key);
-    return $hash == $valid_hash;
-}
-
 $speed = $_POST['speed'];
 $mistakes = $_POST['mistakes'];
 $pl = $_POST['plChars'];
@@ -35,50 +27,49 @@ $h = $_POST['h'];
 
 $MAX_MISTAKES = 25;
 
-if (validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
-    $current_time = time();
-    if (isSubmittedTooSoon($current_time, $_SESSION['last_submit_time'])) {
-        log_write('entry not added to ttlog, submitted too soon; '
-            . 'time=' . $current_time . ', last_submit_time='
-            . $_SESSION['last_submit_time'] . '; '
-            . 'POST parameters: ' . print_r($_POST, true));
-    } else if (!isHMACValid($h, $_SESSION['h_data'])) {
-        log_write('entry not added to ttlog, wrong HMAC; '
-            . 'h_data=' . $_SESSION['h_data'] . '; '
-            . 'POST parameters: ' . print_r($_POST, true));
-    } else if ($mistakes <= $MAX_MISTAKES) {
-        // konwersja polskiego u³amka dziesiêtnego (przecinek)
-        // na amerykañski (kropka)
-        $speed = str_replace(',', '.', $speed);
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
-        $speed = pg_escape_string($speed);
-        $mistakes = pg_escape_string($mistakes);
-        $pl = pg_escape_string($pl);
-        $chars = pg_escape_string($chars);
-        $minutes = pg_escape_string($minutes);
-        $seconds = pg_escape_string($seconds);
-        $query = "
-            INSERT INTO tt.ttlog
-                (date_added, ip, speed, mistakes,
-                    pl, chars, minutes, seconds)
-                VALUES
-                (NOW(), '$ip', $speed, $mistakes,
-                    '$pl', $chars, $minutes, $seconds)
-        ";
-        pg_query($query) or log_write("ERROR: problem with query: $query ("
-            . pg_last_error() . ')');
-    }
-} else {
+$current_time = time();
+if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
     echo 'Does not compute.';
-    log_write('entry not added to ttlog, validation failed; POST parameters: '
-        . print_r($_POST, true));
+    log_write('entry not added to ttlog, validation failed; '
+        . 'POST parameters: ' . print_r($_POST, true));
+} else if (isSubmittedTooSoon(
+        $current_time, $_SESSION['last_submit_time'])) {
+    log_write('entry not added to ttlog, submitted too soon; '
+        . 'time=' . $current_time . ', last_submit_time='
+        . $_SESSION['last_submit_time'] . '; '
+        . 'POST parameters: ' . print_r($_POST, true));
+} else if (!isHMACValid($h, $_SESSION['ttlog_h_data'])) {
+    log_write('entry not added to ttlog, wrong HMAC; '
+        . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
+        . 'POST parameters: ' . print_r($_POST, true));
+} else if ($mistakes <= $MAX_MISTAKES) {
+    // konwersja polskiego u³amka dziesiêtnego (przecinek)
+    // na amerykañski (kropka)
+    $speed = str_replace(',', '.', $speed);
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    $speed = pg_escape_string($speed);
+    $mistakes = pg_escape_string($mistakes);
+    $pl = pg_escape_string($pl);
+    $chars = pg_escape_string($chars);
+    $minutes = pg_escape_string($minutes);
+    $seconds = pg_escape_string($seconds);
+    $query = "
+        INSERT INTO tt.ttlog
+            (date_added, ip, speed, mistakes,
+                pl, chars, minutes, seconds)
+            VALUES
+            (NOW(), '$ip', $speed, $mistakes,
+                '$pl', $chars, $minutes, $seconds)
+    ";
+    pg_query($query) or log_write("ERROR: problem with query: $query ("
+        . pg_last_error() . ')');
 }
 
-unset($_SESSION['h_data']);
+unset($_SESSION['ttlog_h_data']);
 $_SESSION['last_submit_time'] = time();
 
 ?>
