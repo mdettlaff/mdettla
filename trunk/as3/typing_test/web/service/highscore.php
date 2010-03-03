@@ -23,9 +23,12 @@ $HIGHSCORE_SIZE = 25;
 
 $result = pg_query("
     SELECT MIN(speed) AS required_speed
-        FROM tt.ttlog
-        ORDER BY speed DESC
-        LIMIT $HIGHSCORE_SIZE
+        FROM (
+            SELECT speed
+                FROM tt.highscore
+                ORDER BY speed DESC
+                LIMIT $HIGHSCORE_SIZE
+        ) AS highscore
 ") or log_write("ERROR: problem with query: $query ("
         . pg_last_error() . ')');
 $row = pg_fetch_assoc($result);
