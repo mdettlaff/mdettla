@@ -24,7 +24,9 @@ $HIGHSCORE_SIZE = 25;
 $MIN_REQUIRED_SPEED = 200;
 
 $result = pg_query("
-    SELECT MIN(speed) AS required_speed
+    SELECT
+        MIN(speed) AS required_speed,
+        COUNT(speed) AS current_size
         FROM (
             SELECT speed
                 FROM tt.highscore
@@ -34,7 +36,7 @@ $result = pg_query("
 ") or log_write("ERROR: problem with query: $query ("
         . pg_last_error() . ')');
 $row = pg_fetch_assoc($result);
-if ($row) {
+if ($row && $row['current_size'] == $HIGHSCORE_SIZE) {
     $required_speed = $row['required_speed'];
 }
 if (empty($required_speed)) {
