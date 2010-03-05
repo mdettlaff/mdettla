@@ -5,8 +5,8 @@ package tt {
         public var writtenCharsCount:int;
         public var mistakesCount:int;
         public var plChars:Boolean;
+        public var correctionsCount:int;
 
-        private var correctionsCount:int;
         private var totalCharsCount:int;
         private var typingTimeInMilliseconds:int;
 
