@@ -10,7 +10,7 @@
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
         resultFormat="e4x" />
 
-    <mx:HTTPService id="postHighscoreService"
+    <mx:HTTPService id="submitHighscoreService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
         method="POST" />
 
@@ -31,9 +31,10 @@
                         </mx:FormItem>
                         <mx:FormItem id="formButtons" direction="horizontal">
                             <mx:Button id="submitHighscoreButton"
-                                label="OK" width="65" />
-                            <mx:Button id="cancelButton"
-                                label="Anuluj" click="closeWindow()" />
+                                label="OK" width="65"
+                                click="onSubmitHighscoreButtonClicked()" />
+                            <mx:Button id="cancelButton" label="Anuluj"
+                                click="closeWindow()" />
                         </mx:FormItem>
                     </mx:Form>
                 </mx:VBox>
@@ -44,7 +45,8 @@
         </mx:State>
     </mx:states>
 
-    <mx:StringValidator source="{username}" property="text"
+    <mx:StringValidator id="usernameValidator"
+        source="{username}" property="text"
         requiredFieldError="Imię nie może być puste."
         tooShortError="Imię musi mieć co najmniej 3 znaki."
         tooLongError="Imię musi mieć co najwyżej 32 znaki."
@@ -53,25 +55,83 @@
     <mx:Script>
         <![CDATA[
 
+        import tt.TestResults;
+
+        import com.hurlant.crypto.hash.HMAC;
+        import com.hurlant.crypto.hash.IHMAC;
+        import com.hurlant.crypto.hash.SHA256;
+        import com.hurlant.util.Hex;
+
         import flash.events.Event;
         import flash.events.KeyboardEvent;
         import flash.ui.Keyboard;
 
         import mx.events.FlexEvent;
+        import mx.events.ValidationResultEvent;
         import mx.managers.PopUpManager;
+        import mx.rpc.events.ResultEvent;
+
+        private var _testResults:TestResults;
+        private var hData:String = "";
 
         private function init():void {
-            addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
-            addEventListener(FlexEvent.BUTTON_DOWN, onOKButtonClicked);
-            if (true) {
+            addEventListener(
+                    KeyboardEvent.KEY_DOWN, onKeyDown);
+            okButton.addEventListener(
+                    FlexEvent.BUTTON_DOWN, onOKButtonClicked);
+            getHighscoreRequiredSpeedService.addEventListener(
+                    "result", onGetHighscoreRequiredSpeedServiceResult);
+        }
+
+        public function set testResults(testResults:TestResults):void {
+            this._testResults = testResults;
+            resultsText.htmlText = _testResults.toHTMLString();
+
+            getHighscoreRequiredSpeedService.cancel();
+            var params:Object = new Object();
+            params.q = "get_threshold";
+            getHighscoreRequiredSpeedService.send(params);
+        }
+
+        private function onGetHighscoreRequiredSpeedServiceResult(
+                event:ResultEvent):void {
+            const result:XML = XML(event.result);
+            hData = result.hData;
+            var requiredSpeed:int = int(result.requiredSpeed);
+            if (_testResults.realSpeed > requiredSpeed) {
                 currentState = "HighscoreAchieved";
                 PopUpManager.centerPopUp(this);
                 callLater(username.setFocus);
             }
         }
 
-        public function set htmlText(htmlText:String):void {
-            resultsText.htmlText = htmlText;
+        private function onSubmitHighscoreButtonClicked():void {
+            if (usernameValidator.validate().type ==
+                    ValidationResultEvent.INVALID) {
+                return;
+            }
+            submitHighscoreService.cancel();
+            var params:Object = new Object();
+            params.username = username.text;
+            params.speed = _testResults.realSpeed.toFixed(1);
+            params.mistakes = _testResults.mistakesCount;
+            params.corrections = _testResults.correctionsCount;
+            params.plChars = _testResults.plChars;
+            params.correctChars =
+                _testResults.writtenCharsCount - _testResults.mistakesCount;
+            params.minutes = int(_testResults.timeMinutes);
+            params.seconds = int(_testResults.timeSeconds) % 60;
+            params.h = h(hData);
+            submitHighscoreService.send(params);
+            closeWindow();
+        }
+
+        private static function h(hData:String):String {
+            const hKey:String = "secret";
+            const hmac:IHMAC = new HMAC(new SHA256());
+            return Hex.fromArray(hmac.compute(
+                        Hex.toArray(Hex.fromString(hKey)),
+                        Hex.toArray(Hex.fromString(hData))));
         }
 
         private function onKeyDown(event:KeyboardEvent):void {

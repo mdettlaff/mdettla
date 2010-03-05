@@ -28,13 +28,13 @@ private var speedWPM:Number = 0;
 private var correctness:Number = 0;
 
 private var isNewTestButtonActive:Boolean = false;
-private var hData:String = "stuff from server";
+private var hData:String = "";
 
 private function init():void {
     initEventListeners();
 
     new TypingTest(typingCanvas, this);
-    //startNewTypingTest(); // DEBUG
+    startNewTypingTest();
 }
 
 private function initEventListeners():void {
@@ -102,7 +102,7 @@ private function onTestResultsUpdate(event:TypingTestEvent):void {
 private function onTypingTestFinished(event:TypingTestEvent):void {
     var resultsWindow:TestResultsWindow = PopUpManager.createPopUp(
             this, TestResultsWindow, true) as TestResultsWindow;
-    resultsWindow.htmlText = event.testResults.toHTMLString();
+    resultsWindow.testResults = event.testResults;
     PopUpManager.centerPopUp(resultsWindow);
     resultsWindow.setFocus();
     pauseButton.enabled = false;

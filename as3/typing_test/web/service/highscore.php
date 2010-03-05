@@ -8,9 +8,10 @@ session_start();
 function validate($username, $speed, $mistakes, $corrections,
         $pl, $chars, $minutes, $seconds) {
     return !empty($username) && strlen($username) <= 32
-        && is_numeric(str_replace(',', '.', $speed)) && is_numeric($mistakes)
-        && is_numeric($corrections) && ($pl == 'true' || $pl == 'false')
-        && is_numeric($chars) && is_numeric($minutes) && is_numeric($seconds);
+        && strlen($username) >= 3 && is_numeric(str_replace(',', '.', $speed))
+        && is_numeric($mistakes) && is_numeric($corrections)
+        && ($pl == 'true' || $pl == 'false') && is_numeric($chars)
+        && is_numeric($minutes) && is_numeric($seconds);
 }
 
 function isSubmittedTooSoon($submit_time, $last_submit_time) {
@@ -100,10 +101,10 @@ if ($_GET['q'] == 'get_threshold') {
         $seconds = pg_escape_string($seconds);
         $query = "
             INSERT INTO tt.highscore
-                (date_added, ip, username, speed, mistakes, corrections
+                (date_added, ip, username, speed, mistakes, corrections,
                     pl, chars, minutes, seconds)
                 VALUES
-                (NOW(), '$ip', $username, $speed, $mistakes, $corrections
+                (NOW(), '$ip', '$username', $speed, $mistakes, $corrections,
                     '$pl', $chars, $minutes, $seconds)
         ";
         pg_query($query) or log_write("ERROR: problem with query: $query ("

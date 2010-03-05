@@ -24,8 +24,8 @@ package tt {
             plCharsOn = true;
             typingArea =
                 new TypingArea(mainContainer.width, mainContainer.height);
-            typingTestModel = new TypingTestModel("Tek"
-                    + "st.", plCharsOn, true); // DEBUG
+            typingTestModel = new TypingTestModel("Trwa łączenie z serwerem, "
+                    + "proszę czekać...", plCharsOn, false);
             typingArea.draw(typingTestModel);
 
             mainContainer.addChild(typingArea);

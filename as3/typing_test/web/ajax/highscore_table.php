@@ -5,6 +5,7 @@ include '../include/log.php';
 header('Content-Type: text/xml');
 
 $HIGHSCORE_SIZE = 25;
+$CHARS_ALLOWED_IN_USERNAME = "A-Za-z0-9 _.'-";
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 $result = pg_query("
@@ -21,7 +22,9 @@ if ($result) {
             ($row['chars'] - $row['corrections']) / $row['chars'] * 100);
         echo "<entry>\n";
         echo "<rank>$i</rank>\n";
-        echo "<username>" . $row['username'] . "</username>\n";
+        $username = ereg_replace('[^'. $CHARS_ALLOWED_IN_USERNAME . ']', '',
+            $row['username']);
+        echo "<username>" . $username . "</username>\n";
         echo "<speed>" . $row['speed'] . "</speed>\n";
         echo "<correctness>" . $correctness . "</correctness>\n";
         echo "<chars>" . $row['chars'] . "</chars>\n";
