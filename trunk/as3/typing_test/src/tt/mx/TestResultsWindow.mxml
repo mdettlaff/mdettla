@@ -6,6 +6,50 @@
     showCloseButton="false" close="closeWindow()"
     creationComplete="init()">
 
+    <mx:HTTPService id="getHighscoreRequiredSpeedService"
+        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
+        resultFormat="e4x" />
+
+    <mx:HTTPService id="postHighscoreService"
+        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
+        method="POST" />
+
+    <mx:states>
+        <mx:State name="HighscoreAchieved">
+            <mx:AddChild>
+                <mx:VBox>
+                    <mx:Label text="Gratulacje!"
+                        fontSize="14" fontWeight="bold" />
+                    <mx:Label text="Uzyskałeś bardzo dobry wynik."
+                        fontSize="12" />
+                    <mx:Label
+                        text="Podaj swoje imię aby trafić na listę najlepszych."
+                        fontSize="12" />
+                    <mx:Form>
+                        <mx:FormItem label="Imię:">
+                            <mx:TextInput id="username" />
+                        </mx:FormItem>
+                        <mx:FormItem id="formButtons" direction="horizontal">
+                            <mx:Button id="submitHighscoreButton"
+                                label="OK" width="65" />
+                            <mx:Button id="cancelButton"
+                                label="Anuluj" click="closeWindow()" />
+                        </mx:FormItem>
+                    </mx:Form>
+                </mx:VBox>
+            </mx:AddChild>
+
+            <mx:RemoveChild target="{okButton}"/>
+
+        </mx:State>
+    </mx:states>
+
+    <mx:StringValidator source="{username}" property="text"
+        requiredFieldError="Imię nie może być puste."
+        tooShortError="Imię musi mieć co najmniej 3 znaki."
+        tooLongError="Imię musi mieć co najwyżej 32 znaki."
+        minLength="3" maxLength="32" />
+
     <mx:Script>
         <![CDATA[
 
@@ -13,10 +57,17 @@
         import flash.events.KeyboardEvent;
         import flash.ui.Keyboard;
 
+        import mx.events.FlexEvent;
         import mx.managers.PopUpManager;
 
         private function init():void {
             addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+            addEventListener(FlexEvent.BUTTON_DOWN, onOKButtonClicked);
+            if (true) {
+                currentState = "HighscoreAchieved";
+                PopUpManager.centerPopUp(this);
+                callLater(username.setFocus);
+            }
         }
 
         public function set htmlText(htmlText:String):void {
@@ -29,6 +80,10 @@
             }
         }
 
+        private function onOKButtonClicked(event:FlexEvent):void {
+            closeWindow();
+        }
+
         private function closeWindow():void {
             PopUpManager.removePopUp(this);
         }
@@ -38,6 +93,6 @@
 
     <mx:Text id="resultsText" />
 
-    <mx:Button id="okButton" label="OK" click="closeWindow()" width="65" />
+    <mx:Button id="okButton" label="OK" width="65" />
 
 </mx:TitleWindow>

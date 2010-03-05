@@ -20,6 +20,7 @@ function isSubmittedTooSoon($submit_time, $last_submit_time) {
 }
 
 $HIGHSCORE_SIZE = 25;
+$MIN_REQUIRED_SPEED = 200;
 
 $result = pg_query("
     SELECT MIN(speed) AS required_speed
@@ -34,8 +35,9 @@ $result = pg_query("
 $row = pg_fetch_assoc($result);
 if ($row) {
     $required_speed = $row['required_speed'];
-} else {
-    $required_speed = 200;
+}
+if (empty($required_speed)) {
+    $required_speed = $MIN_REQUIRED_SPEED;
 }
 if ($_GET['q'] == 'get_threshold') {
     $_SESSION['hs_h_data'] = rand_str(32);
