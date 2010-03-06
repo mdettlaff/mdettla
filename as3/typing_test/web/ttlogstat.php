@@ -24,7 +24,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 <style>
   .vertical-bar {
     width: 25px;
-    background-color: #2c7efc;
+    background-color: #2C7EFC;
     position: relative;
     bottom: 0;
   }

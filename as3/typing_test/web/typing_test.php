@@ -8,16 +8,15 @@
 
     <style>
       .highscore-table th {
-        padding-right: 25;
-        padding-left: 4;
-        padding-bottom: 10;
+        padding: 5 7 10 7;
         text-align: left;
       }
       .highscore-table td {
-        padding: 4;
+        padding: 3 10 3 10;
+        text-align: right;
       }
-      .highscore-table tr:nth-child(uneven) {
-        background: #F5F5F5
+      .highscore-table td:nth-child(2) {
+        text-align: left;
       }
       .highscore-table tr:nth-child(even) {
         background: #F1F1DD
@@ -56,6 +55,10 @@ Learn more about Flex at http://flex.org
 
 <br />
 <div id="highscoreTableArea"></div>
+
+<script>
+updateHighscoreTable();
+</script>
 
   </body>
 </html>

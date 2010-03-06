@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
-    title="Wyniki testu" layout="vertical" horizontalAlign="center"
+    title="Wyniki testu" layout="vertical"
     backgroundColor="white" backgroundAlpha="1.0"
     borderColor="#D0D0E0" borderAlpha="1.0"
     showCloseButton="false" close="closeWindow()"
@@ -15,38 +15,56 @@
         method="POST" />
 
     <mx:states>
-        <mx:State name="HighscoreAchieved">
+        <mx:State name="HighscoreAchievedUsernameUnknown">
             <mx:AddChild>
-                <mx:VBox>
-                    <mx:Label text="Gratulacje!"
-                        fontSize="14" fontWeight="bold" />
-                    <mx:Label text="Uzyskałeś bardzo dobry wynik."
-                        fontSize="12" />
-                    <mx:Label
-                        text="Podaj swoje imię aby trafić na listę najlepszych."
-                        fontSize="12" />
-                    <mx:Form>
-                        <mx:FormItem label="Imię:">
-                            <mx:TextInput id="username" />
-                        </mx:FormItem>
-                        <mx:FormItem id="formButtons" direction="horizontal">
-                            <mx:Button id="submitHighscoreButton"
-                                label="OK" width="65"
-                                click="onSubmitHighscoreButtonClicked()" />
-                            <mx:Button id="cancelButton" label="Anuluj"
-                                click="closeWindow()" />
-                        </mx:FormItem>
-                    </mx:Form>
-                </mx:VBox>
+                <mx:Label text="Gratulacje!" fontSize="14" fontWeight="bold" />
             </mx:AddChild>
-
+            <mx:AddChild>
+                <mx:Label text="Uzyskałeś bardzo dobry wynik." fontSize="12" />
+            </mx:AddChild>
+            <mx:AddChild>
+                <mx:Label
+                    text="Podaj swoje imię aby trafić na listę najlepszych."
+                    fontSize="12" />
+            </mx:AddChild>
+            <mx:AddChild>
+                <mx:Form>
+                    <mx:FormItem label="Imię:">
+                        <mx:TextInput id="usernameInput" />
+                    </mx:FormItem>
+                    <mx:FormItem direction="horizontal">
+                        <mx:Button label="OK" width="65"
+                            click="onSubmitHighscoreButtonClicked()" />
+                        <mx:Button id="cancelButton" label="Anuluj"
+                            click="closeWindow()" />
+                    </mx:FormItem>
+                </mx:Form>
+            </mx:AddChild>
             <mx:RemoveChild target="{okButton}"/>
-
+        </mx:State>
+        <mx:State name="HighscoreAchievedUsernameKnown">
+            <mx:AddChild>
+                <mx:Label text="Gratulacje!" fontSize="14" fontWeight="bold" />
+            </mx:AddChild>
+            <mx:AddChild>
+                <mx:Label text="Uzyskałeś bardzo dobry wynik." fontSize="12" />
+            </mx:AddChild>
+            <mx:AddChild>
+                <mx:Label text="Zostanie on umieszczony na liście najlepszych."
+                    fontSize="12" />
+            </mx:AddChild>
+            <mx:AddChild>
+                <mx:Box horizontalAlign="center" width="100%">
+                    <mx:Button label="OK" width="65"
+                        click="onSubmitHighscoreButtonClicked()" />
+                </mx:Box>
+            </mx:AddChild>
+            <mx:RemoveChild target="{okButton}"/>
         </mx:State>
     </mx:states>
 
     <mx:StringValidator id="usernameValidator"
-        source="{username}" property="text"
+        source="{usernameInput}" property="text"
         requiredFieldError="Imię nie może być puste."
         tooShortError="Imię musi składać się z co najmniej 3 znaków."
         tooLongError="Imię może mieć co najwyżej 32 znaki."
@@ -72,6 +90,8 @@
         import mx.events.ValidationResultEvent;
         import mx.managers.PopUpManager;
         import mx.rpc.events.ResultEvent;
+
+        private static var username:String;
 
         private var _testResults:TestResults;
         private var hData:String = "";
@@ -103,20 +123,29 @@
             if (_testResults.realSpeed > requiredSpeed
                     && _testResults.mistakesCount == 0
                     && _testResults.plChars) {
-                currentState = "HighscoreAchieved";
+                if (username == null) {
+                    currentState = "HighscoreAchievedUsernameUnknown";
+                } else {
+                    currentState = "HighscoreAchievedUsernameKnown";
+                }
                 PopUpManager.centerPopUp(this);
-                callLater(username.setFocus);
+                if (currentState == "HighscoreAchievedUsernameUnknown") {
+                    callLater(usernameInput.setFocus);
+                }
             }
         }
 
         private function onSubmitHighscoreButtonClicked():void {
-            if (usernameValidator.validate().type ==
-                    ValidationResultEvent.INVALID) {
-                return;
+            if (currentState == "HighscoreAchievedUsernameUnknown") {
+                if (usernameValidator.validate().type ==
+                        ValidationResultEvent.INVALID) {
+                    return;
+                }
+                username = usernameInput.text;
             }
             submitHighscoreService.cancel();
             var params:Object = new Object();
-            params.username = username.text;
+            params.username = username;
             params.speed = _testResults.realSpeed.toFixed(1);
             params.mistakes = _testResults.mistakesCount;
             params.corrections = _testResults.correctionsCount;
@@ -125,7 +154,7 @@
                 _testResults.writtenCharsCount - _testResults.mistakesCount;
             params.minutes = int(_testResults.timeMinutes);
             params.seconds = int(_testResults.timeSeconds) % 60;
-            params.h = h(hData);
+            params.h = TypingTestApp.h(hData, "secret2");
             submitHighscoreService.send(params);
             closeWindow();
             setTimeout(notifyJavaScript, 1000);
@@ -133,14 +162,6 @@
 
         private static function notifyJavaScript():void {
             ExternalInterface.call("updateHighscoreTable");
-        }
-
-        private static function h(hData:String):String {
-            const hKey:String = "secret2";
-            const hmac:IHMAC = new HMAC(new SHA256());
-            return Hex.fromArray(hmac.compute(
-                        Hex.toArray(Hex.fromString(hKey)),
-                        Hex.toArray(Hex.fromString(hData))));
         }
 
         private function onKeyDown(event:KeyboardEvent):void {
@@ -162,6 +183,8 @@
 
     <mx:Text id="resultsText" />
 
-    <mx:Button id="okButton" label="OK" width="65" />
+    <mx:Box horizontalAlign="center" width="100%">
+        <mx:Button id="okButton" label="OK" width="65" />
+    </mx:Box>
 
 </mx:TitleWindow>
