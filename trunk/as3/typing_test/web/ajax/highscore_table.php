@@ -2,10 +2,21 @@
 
 include '../include/log.php';
 
+function escape_username($username) {
+    $escaped = '';
+    for ($i = 0; $i < strlen($username); $i++) {
+        $c = substr($username, $i, 1);
+        $charcode = ord($c);
+        if ($charcode >= 32) {
+            $escaped .= $c;
+        }
+    }
+    return $escaped;
+}
+
 header('Content-Type: text/xml');
 
 $HIGHSCORE_SIZE = 25;
-$CHARS_ALLOWED_IN_USERNAME = "A-Za-z0-9 _.'-";
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 $result = pg_query("
@@ -22,8 +33,7 @@ if ($result) {
             ($row['chars'] - $row['corrections']) / $row['chars'] * 100);
         echo "<entry>\n";
         echo "<rank>$i</rank>\n";
-        $username = ereg_replace('[^'. $CHARS_ALLOWED_IN_USERNAME . ']', '',
-            $row['username']);
+        $username = escape_username($row['username']);
         echo "<username>" . $username . "</username>\n";
         echo "<speed>" . $row['speed'] . "</speed>\n";
         echo "<correctness>" . $correctness . "</correctness>\n";
