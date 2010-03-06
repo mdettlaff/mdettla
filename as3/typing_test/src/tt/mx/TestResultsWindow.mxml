@@ -161,7 +161,9 @@
         }
 
         private static function notifyJavaScript():void {
-            ExternalInterface.call("updateHighscoreTable");
+            if (ExternalInterface.available) {
+                ExternalInterface.call("updateHighscoreTable");
+            }
         }
 
         private function onKeyDown(event:KeyboardEvent):void {
