@@ -10,11 +10,10 @@ function rand_str($length) {
     return $str;
 }
 
-function isHMACValid($hash, $h_data) {
+function isHMACValid($hash, $h_data, $h_key) {
     if (empty($hash) || empty($h_data)) {
         return false;
     }
-    $h_key = 'secret';
     $valid_hash = hash_hmac('sha256', $h_data, $h_key);
     return $hash == $valid_hash;
 }

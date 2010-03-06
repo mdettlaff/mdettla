@@ -1,12 +1,33 @@
 <html>
-<head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <meta name="Language" content="pl">
-  <title>Test prędkości online</title>
-</head>
-<body bgcolor="#F5F5F5">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="Language" content="pl">
+    <title>Test prędkości online</title>
+
+    <script src="javascript/highscore.js"></script>
+
+    <style>
+      .highscore-table th {
+        padding-right: 25;
+        padding-left: 4;
+        padding-bottom: 10;
+        text-align: left;
+      }
+      .highscore-table td {
+        padding: 4;
+      }
+      .highscore-table tr:nth-child(uneven) {
+        background: #F5F5F5
+      }
+      .highscore-table tr:nth-child(even) {
+        background: #F1F1DD
+      }
+    </style>
+  </head>
+  <body bgcolor="#F5F5F5">
 
 Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania.<br />
+
 <!--
 Smart developers always View Source.
 
@@ -16,7 +37,6 @@ Flash Player or to desktops via Adobe AIR.
 
 Learn more about Flex at http://flex.org
 // -->
-
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
         id="TypingTest" width="675" height="450"
         codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
@@ -34,5 +54,8 @@ Learn more about Flex at http://flex.org
         </embed>
 </object>
 
-</body>
+<br />
+<div id="highscoreTableArea"></div>
+
+  </body>
 </html>

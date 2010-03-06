@@ -5,7 +5,7 @@ include '../include/utils.php';
 
 function get_texts_count() {
     $query = "
-        SELECT COUNT(text) AS texts_count FROM tt.texts
+        SELECT COUNT(text) AS texts_count FROM texts
     ";
     $result = pg_query($query);
     if ($result) {
@@ -30,7 +30,7 @@ if (empty($_SESSION['random_bag_of_text_ids'])) {
 $text_offset = array_pop($_SESSION['random_bag_of_text_ids']) - 1;
 
 $query = "
-    SELECT text FROM tt.texts OFFSET $text_offset LIMIT 1
+    SELECT text FROM texts OFFSET $text_offset LIMIT 1
 ";
 $result = pg_query($query);
 if ($result) {

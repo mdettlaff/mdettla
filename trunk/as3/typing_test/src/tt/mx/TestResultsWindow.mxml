@@ -48,8 +48,8 @@
     <mx:StringValidator id="usernameValidator"
         source="{username}" property="text"
         requiredFieldError="Imię nie może być puste."
-        tooShortError="Imię musi mieć co najmniej 3 znaki."
-        tooLongError="Imię musi mieć co najwyżej 32 znaki."
+        tooShortError="Imię musi składać się z co najmniej 3 znaków."
+        tooLongError="Imię może mieć co najwyżej 32 znaki."
         minLength="3" maxLength="32" />
 
     <mx:Script>
@@ -64,7 +64,9 @@
 
         import flash.events.Event;
         import flash.events.KeyboardEvent;
+        import flash.external.ExternalInterface;
         import flash.ui.Keyboard;
+        import flash.utils.setTimeout;
 
         import mx.events.FlexEvent;
         import mx.events.ValidationResultEvent;
@@ -98,7 +100,9 @@
             const result:XML = XML(event.result);
             hData = result.hData;
             var requiredSpeed:int = int(result.requiredSpeed);
-            if (_testResults.realSpeed > requiredSpeed) {
+            if (_testResults.realSpeed > requiredSpeed
+                    && _testResults.mistakesCount == 0
+                    && _testResults.plChars) {
                 currentState = "HighscoreAchieved";
                 PopUpManager.centerPopUp(this);
                 callLater(username.setFocus);
@@ -124,10 +128,15 @@
             params.h = h(hData);
             submitHighscoreService.send(params);
             closeWindow();
+            setTimeout(notifyJavaScript, 1000);
+        }
+
+        private static function notifyJavaScript():void {
+            ExternalInterface.call("updateHighscoreTable");
         }
 
         private static function h(hData:String):String {
-            const hKey:String = "secret";
+            const hKey:String = "secret2";
             const hmac:IHMAC = new HMAC(new SHA256());
             return Hex.fromArray(hmac.compute(
                         Hex.toArray(Hex.fromString(hKey)),

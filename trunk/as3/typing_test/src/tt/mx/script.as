@@ -145,7 +145,7 @@ private function submitTestResults(testResults:TestResults):void {
 }
 
 private static function h(hData:String):String {
-    const hKey:String = "secret";
+    const hKey:String = "secret1";
     const hmac:IHMAC = new HMAC(new SHA256());
     return Hex.fromArray(hmac.compute(Hex.toArray(Hex.fromString(hKey)),
                 Hex.toArray(Hex.fromString(hData))));
