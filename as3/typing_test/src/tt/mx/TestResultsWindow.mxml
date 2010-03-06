@@ -50,13 +50,12 @@
                 <mx:Label text="Uzyskałeś bardzo dobry wynik." fontSize="12" />
             </mx:AddChild>
             <mx:AddChild>
-                <mx:Label text="Zostanie on umieszczony na liście najlepszych."
+                <mx:Label text="Został on zapisany na liście najlepszych."
                     fontSize="12" />
             </mx:AddChild>
             <mx:AddChild>
                 <mx:Box horizontalAlign="center" width="100%">
-                    <mx:Button label="OK" width="65"
-                        click="onSubmitHighscoreButtonClicked()" />
+                    <mx:Button label="OK" width="65" click="closeWindow()" />
                 </mx:Box>
             </mx:AddChild>
             <mx:RemoveChild target="{okButton}"/>
@@ -125,24 +124,27 @@
                     && _testResults.plChars) {
                 if (username == null) {
                     currentState = "HighscoreAchievedUsernameUnknown";
+                    callLater(usernameInput.setFocus);
                 } else {
                     currentState = "HighscoreAchievedUsernameKnown";
+                    submitHighscore();
+                    setTimeout(notifyJavaScript, 1000);
                 }
                 PopUpManager.centerPopUp(this);
-                if (currentState == "HighscoreAchievedUsernameUnknown") {
-                    callLater(usernameInput.setFocus);
-                }
             }
         }
 
         private function onSubmitHighscoreButtonClicked():void {
-            if (currentState == "HighscoreAchievedUsernameUnknown") {
-                if (usernameValidator.validate().type ==
-                        ValidationResultEvent.INVALID) {
-                    return;
-                }
+            if (usernameValidator.validate().type ==
+                    ValidationResultEvent.VALID) {
                 username = usernameInput.text;
+                submitHighscore();
+                closeWindow();
+                setTimeout(notifyJavaScript, 1000);
             }
+        }
+
+        private function submitHighscore():void {
             submitHighscoreService.cancel();
             var params:Object = new Object();
             params.username = username;
@@ -156,8 +158,6 @@
             params.seconds = int(_testResults.timeSeconds) % 60;
             params.h = TypingTestApp.h(hData, "secret2");
             submitHighscoreService.send(params);
-            closeWindow();
-            setTimeout(notifyJavaScript, 1000);
         }
 
         private static function notifyJavaScript():void {
