@@ -21,29 +21,28 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 <html>
 <head>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<style>
+  .vertical-bar {
+    width: 25px;
+    background-color: #2c7efc;
+    position: relative;
+    bottom: 0;
+  }
+  .large-table td {
+    padding: 2;
+  }
+  .large-table tr:nth-child(1) {
+    background: #D0D0D0
+  }
+  .large-table tr:nth-child(2n+2) {
+    background: #FFFFFF
+  }
+  .large-table tr:nth-child(2n+3) {
+    background: #E0E0E0
+  }
+</style>
 </head>
 <body>
-
-<style>
-.vertical-bar {
-  width: 25px;
-  background-color: #2c7efc;
-  position: relative;
-  bottom: 0;
-}
-.large-table td {
-  padding: 2;
-}
-.large-table tr:nth-child(1) {
-  background: #D0D0D0
-}
-.large-table tr:nth-child(2n+2) {
-  background: #FFFFFF
-}
-.large-table tr:nth-child(2n+3) {
-  background: #E0E0E0
-}
-</style>
 
 <?php
 
@@ -53,14 +52,14 @@ for ($i = 0; $i < $maxspeed / 50; $i++) {
     $xv = $i * 50;
     $r = pg_query("
         SELECT COUNT(speed) AS scount
-            FROM tt.ttlog
+            FROM ttlog
             WHERE speed > " . $xv . " AND speed < " . ($xv + 50)
     );
     $row = pg_fetch_array($r);
     $data[$i] = $row['scount'];
 }
 $r = pg_query("
-    SELECT COUNT(speed) AS scount FROM tt.ttlog
+    SELECT COUNT(speed) AS scount FROM ttlog
         WHERE speed > " . ($i * 50));
 $row = pg_fetch_array($r);
 $data[$i] = $row['scount'];
@@ -96,12 +95,12 @@ echo "<br>\n\n";
 
 // statystyka pisania z polskimi znakami
 $r = pg_query("
-    SELECT COUNT(pl) AS pl_on FROM tt.ttlog WHERE pl = 'true'
+    SELECT COUNT(pl) AS pl_on FROM ttlog WHERE pl = 'true'
 ");
 $row = pg_fetch_array($r);
 $plCharsON = (double)$row['pl_on'];
 $r = pg_query("
-    SELECT COUNT(pl) AS pl_off FROM tt.ttlog WHERE pl = 'false'
+    SELECT COUNT(pl) AS pl_off FROM ttlog WHERE pl = 'false'
 ");
 $row = pg_fetch_array($r);
 $plCharsOFF = (double)$row['pl_off'];
@@ -120,7 +119,7 @@ echo "</tr>\n</table>\n<br>\n\n";
 // średnia prędkość
 // obliczając średnią uwzględniamy tylko prędkości większe niż 50
 $r = pg_query(
-    'SELECT AVG(speed) AS average_speed FROM tt.ttlog WHERE speed > 50'
+    'SELECT AVG(speed) AS average_speed FROM ttlog WHERE speed > 50'
 );
 $row = pg_fetch_array($r);
 $mean = $row['average_speed'];
@@ -131,7 +130,7 @@ echo "<hr width=\"400\" align=\"left\">\n\n";
 echo "<h2>Typing Test - Top 100</h3>\n";
 $r = pg_query('
     SELECT date_added, speed, ip, mistakes, pl, chars, minutes, seconds
-        FROM tt.ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
+        FROM ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
 $nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<td><b>miejsce$nbsp3</b></td><td><b>zakończenie pisania$nbsp3</b></td>\n";
@@ -160,7 +159,7 @@ echo "<br>\n\n";
 echo "<h2>Typing Test - Statystyka</h3>\n";
 $r = pg_query('
     SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
-        FROM tt.ttlog
+        FROM ttlog
         ORDER BY id DESC
 ');
 $nbsp3 = '&nbsp;&nbsp;&nbsp;';

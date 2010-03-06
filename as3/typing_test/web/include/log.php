@@ -11,7 +11,7 @@ function log_write($msg) {
     $ip = pg_escape_string($ip);
     $msg = pg_escape_string($msg);
     $query = "
-        INSERT INTO tt.log
+        INSERT INTO log
             (date_added, ip, message)
             VALUES
             (NOW(), '$ip', \$\$$msg\$\$)

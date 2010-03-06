@@ -10,7 +10,7 @@ $CHARS_ALLOWED_IN_USERNAME = "A-Za-z0-9 _.'-";
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 $result = pg_query("
     SELECT username, speed, corrections, chars, minutes, seconds
-        FROM tt.highscore
+        FROM highscore
         ORDER BY speed DESC
         LIMIT $HIGHSCORE_SIZE
 ");

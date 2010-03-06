@@ -36,7 +36,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 
 $query = "
     SELECT id_log, date_added, ip, message
-        FROM tt.log
+        FROM log
         ORDER BY id_log DESC
 ";
 

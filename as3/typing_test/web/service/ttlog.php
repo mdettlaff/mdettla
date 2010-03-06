@@ -25,6 +25,7 @@ $minutes = $_POST['minutes'];
 $seconds = $_POST['seconds'];
 $h = $_POST['h'];
 
+$H_KEY = 'secret1';
 $MAX_MISTAKES = 25;
 
 $current_time = time();
@@ -38,7 +39,7 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
         . 'time=' . $current_time . ', last_submit_time='
         . $_SESSION['last_submit_time'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
-} else if (!isHMACValid($h, $_SESSION['ttlog_h_data'])) {
+} else if (!isHMACValid($h, $_SESSION['ttlog_h_data'], $H_KEY)) {
     log_write('entry not added to ttlog, wrong HMAC; '
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
@@ -58,7 +59,7 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
     $minutes = pg_escape_string($minutes);
     $seconds = pg_escape_string($seconds);
     $query = "
-        INSERT INTO tt.ttlog
+        INSERT INTO ttlog
             (date_added, ip, speed, mistakes,
                 pl, chars, minutes, seconds)
             VALUES

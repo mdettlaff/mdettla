@@ -20,6 +20,7 @@ function isSubmittedTooSoon($submit_time, $last_submit_time) {
         && ($submit_time - $last_submit_time < $min_time_between_submits));
 }
 
+$H_KEY = 'secret2';
 $HIGHSCORE_SIZE = 25;
 $MIN_REQUIRED_SPEED = 200;
 
@@ -29,7 +30,7 @@ $result = pg_query("
         COUNT(speed) AS current_size
         FROM (
             SELECT speed
-                FROM tt.highscore
+                FROM highscore
                 ORDER BY speed DESC
                 LIMIT $HIGHSCORE_SIZE
         ) AS highscore
@@ -75,16 +76,16 @@ if ($_GET['q'] == 'get_threshold') {
             . 'time=' . $current_time . ', last_hs_submit_time='
             . $_SESSION['last_hs_submit_time'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
-    } else if (!isHMACValid($h, $_SESSION['hs_h_data'])) {
+    } else if (!isHMACValid($h, $_SESSION['hs_h_data'], $H_KEY)) {
         log_write('entry not added to highscore, wrong HMAC; '
             . 'hs_h_data=' . $_SESSION['hs_h_data'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
-    } else if ($speed < $required_speed) {
+    } else if ($speed < $required_speed || $mistakes > $MAX_MISTAKES
+            || $pl == 'false') {
         log_write('entry not added to highscore, test result not accepted; '
-            . "speed=$speed, required_speed=$required_speed, "
-            . "mistakes=$mistakes ; "
+            . "speed=$speed, required_speed=$required_speed; "
             . 'POST parameters: ' . print_r($_POST, true));
-    } else if ($mistakes <= $MAX_MISTAKES) {
+    } else {
         // konwersja polskiego u³amka dziesiêtnego (przecinek)
         // na amerykañski (kropka)
         $speed = str_replace(',', '.', $speed);
@@ -102,7 +103,7 @@ if ($_GET['q'] == 'get_threshold') {
         $minutes = pg_escape_string($minutes);
         $seconds = pg_escape_string($seconds);
         $query = "
-            INSERT INTO tt.highscore
+            INSERT INTO highscore
                 (date_added, ip, username, speed, mistakes, corrections,
                     pl, chars, minutes, seconds)
                 VALUES
