@@ -30,6 +30,13 @@ private var correctness:Number = 0;
 private var isNewTestButtonActive:Boolean = false;
 private var hData:String = "";
 
+public static function h(hData:String, hKey:String):String {
+    const hmac:IHMAC = new HMAC(new SHA256());
+    return Hex.fromArray(hmac.compute(
+                Hex.toArray(Hex.fromString(hKey)),
+                Hex.toArray(Hex.fromString(hData))));
+}
+
 private function init():void {
     initEventListeners();
 
@@ -140,13 +147,6 @@ private function submitTestResults(testResults:TestResults):void {
         testResults.writtenCharsCount - testResults.mistakesCount;
     params.minutes = int(testResults.timeMinutes);
     params.seconds = int(testResults.timeSeconds) % 60;
-    params.h = h(hData);
+    params.h = h(hData, "secret1");
     submitTestResultsService.send(params);
-}
-
-private static function h(hData:String):String {
-    const hKey:String = "secret1";
-    const hmac:IHMAC = new HMAC(new SHA256());
-    return Hex.fromArray(hmac.compute(Hex.toArray(Hex.fromString(hKey)),
-                Hex.toArray(Hex.fromString(hData))));
 }

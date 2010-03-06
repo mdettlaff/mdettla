@@ -18,6 +18,7 @@ function updateHighscoreTable() {
         entries =
             xmlhttp.responseXML.documentElement.getElementsByTagName("entry");
         hsTable += "<tr>";
+        hsTable += "<th>Miejsce</th>";
         hsTable += "<th>Nazwa użytkownika</th>";
         hsTable += "<th>Prędkość<br />(znaki/min)</th>";
         hsTable += "<th>Prędkość<br />(słowa/min)</th>";
@@ -25,6 +26,7 @@ function updateHighscoreTable() {
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
             hsTable += "<tr>";
+            hsTable += "<td>" + (i + 1) + "</td>";
             entryElement = entries[i].getElementsByTagName("username");
             hsTable += "<td>" + entryElement[0].firstChild.nodeValue + "</td>";
             entryElement = entries[i].getElementsByTagName("speed");
@@ -55,5 +57,3 @@ function updateHighscoreTable() {
     xmlhttp.open("GET", url, true);
     xmlhttp.send(null);
 }
-
-updateHighscoreTable();
