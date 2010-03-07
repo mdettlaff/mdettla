@@ -26,10 +26,16 @@ function updateHighscoreTable() {
         hsTable += "<th>Poprawność</th>";
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
-            hsTable += "<tr>";
+            if (i % 2 === 0) {
+                hsTable += "<tr style=\"background: #F1F1DD\">";
+            } else {
+                hsTable += "<tr>";
+            }
             hsTable += "<td>" + (i + 1) + "</td>";
             entryElement = entries[i].getElementsByTagName("username");
-            hsTable += "<td>" + entryElement[0].firstChild.nodeValue + "</td>";
+            hsTable += "<td style=\"text-align: left\">";
+            hsTable += entryElement[0].firstChild.nodeValue;
+            hsTable += "</td>";
             entryElement = entries[i].getElementsByTagName("speed");
             speed = entryElement[0].firstChild.nodeValue;
             hsTable += "<td><b>" + speed.replace('.', ',') + "</b></td>";
