@@ -30,11 +30,12 @@
             <mx:AddChild>
                 <mx:Form>
                     <mx:FormItem label="Imię:">
-                        <mx:TextInput id="usernameInput" />
+                        <mx:TextInput id="usernameInput"
+                            enter="onUsernameEntered()" />
                     </mx:FormItem>
                     <mx:FormItem direction="horizontal">
                         <mx:Button label="OK" width="65"
-                            click="onSubmitHighscoreButtonClicked()" />
+                            click="onUsernameEntered()" />
                         <mx:Button id="cancelButton" label="Anuluj"
                             click="closeWindow()" />
                     </mx:FormItem>
@@ -134,7 +135,7 @@
             }
         }
 
-        private function onSubmitHighscoreButtonClicked():void {
+        private function onUsernameEntered():void {
             if (usernameValidator.validate().type ==
                     ValidationResultEvent.VALID) {
                 username = usernameInput.text;
