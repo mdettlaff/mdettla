@@ -1,22 +1,23 @@
 function updateHighscoreTable() {
     var url = "ajax/highscore_table.php";
-    var xmlhttp;
+    var request;
 
     function onResponse() {
         var i;
         var hsTable;
+        var entries;
         var entryElement;
         var speed;
         var correctness;
 
-        if (xmlhttp.readyState != 4 || xmlhttp.status != 200) {
+        if (request.readyState != 4 || request.status != 200) {
             return;
         }
 
         hsTable = "<h3>Najlepsze wyniki</h3>";
         hsTable += "<table class=\"highscore-table\">";
         entries =
-            xmlhttp.responseXML.documentElement.getElementsByTagName("entry");
+            request.responseXML.documentElement.getElementsByTagName("entry");
         hsTable += "<tr>";
         hsTable += "<th>Miejsce</th>";
         hsTable += "<th>Nazwa użytkownika</th>";
@@ -46,14 +47,15 @@ function updateHighscoreTable() {
         document.getElementById("highscoreTableArea").innerHTML = hsTable;
     }
 
-    if (window.XMLHttpRequest) {
+    if (XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
+        request = new XMLHttpRequest();
     } else {
         // code for IE5, IE6
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        request = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.onreadystatechange = onResponse;
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send(null);
+    request.onreadystatechange = onResponse;
+    url += "?r=" + new Date().getTime(); // prevent IE from caching results
+    request.open("GET", url, true);
+    request.send(null);
 }
