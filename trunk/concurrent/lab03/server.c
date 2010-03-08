@@ -4,18 +4,20 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+#define ever ;;
+
 int main(int argc, char *argv[]) {
     const char REQUEST_BUFFER[] = "dane";
     const char RESPONSE_BUFFER[] = "wyniki";
 
     char message_from_user[1024];
     char response_to_user[1024];
-    int response_len = 0;
+    int response_len;
     int fd; // file descriptor
     int c;
     int i;
 
-    //while (true) {
+    for (ever) {
         // read message from request buffer
         while ((fd = open(REQUEST_BUFFER, O_RDONLY, S_IRWXU)) == -1) {}
         read(fd, message_from_user, 1024);
@@ -31,6 +33,7 @@ int main(int argc, char *argv[]) {
 
         // read response from keyboard
         printf("Wpisz odpowiedź:\n");
+        response_len = 0;
         do {
             c = getchar();
             response_to_user[response_len++] = (char)c;
@@ -44,6 +47,6 @@ int main(int argc, char *argv[]) {
         }
         write(fd, response_to_user, response_len);
         close(fd);
-    //}
+    }
     return 0;
 }
