@@ -36,7 +36,7 @@ Dostęp do bufora serwera powinien być synchronizowany plikiem zamkowym
 (lockfile) trzymanym przez klienta w katalogu roboczym serwera i usuwanym
 przez serwer po udzieleniu odpowiedzi klientowi. Jeśli serwer czasowo
 nie jest dostępny, klient wyświetla w pętli co kilka sekund
-"Serwer zajęty, proszę czekać...|
+"Serwer zajęty, proszę czekać..."
 
 while (open("lockfile", O_CREAT | O_EXCL, 0) == -1)) {
     printf("Serwer zajęty, proszę czekać...\n");
