@@ -3,7 +3,7 @@
 
 import sys
 
-pattern_len = 3
+pattern_len = int(sys.argv[1])
 ciphertext = ''.join([line.strip().upper() for line in sys.stdin.readlines()])
 dist_occurs = {}
 for i in range(len(ciphertext) - pattern_len):
@@ -20,7 +20,6 @@ for i in range(pattern_len, pattern_len + 10):
     for dist, occurs in dist_occurs.iteritems():
         if dist % i == 0:
             len_candidates[i] += occurs
-print len_candidates
 print 'długość\tpasujące'
 print 'klucza\tprzypadki'
 for i in sorted(len_candidates, key = len_candidates.__getitem__, reverse = True):
