@@ -5,11 +5,10 @@
 #include <sys/stat.h>
 
 int main(int argc, char *argv[]) {
-    const char REQUEST_BUFFER[] = "dane";
-    const char RESPONSE_BUFFER[] = "wyniki";
-
+    char request_buffer[128] = "/home/studinf/";
+    char response_buffer[128] = "/home/studinf/";
     char username[128] = "";
-    char buffer[1024];
+    char message[1024];
     char response_from_server[1024];
     int buf_len = 0;
     int fd; // file descriptor
@@ -18,26 +17,31 @@ int main(int argc, char *argv[]) {
 
     // read username from arguments
     if (argc < 2) {
-        printf("Użycie: ./producer nazwa_konta\n");
+        printf("Użycie: ./client nazwa_konta\n");
         return 2;
     }
     strcat(username, argv[1]);
-    strcat(username, "\n");
+    // find server path
+    strcat(request_buffer, username);
+    strcat(request_buffer, "/tmp/dane");
+    strcat(response_buffer, username);
+    strcat(response_buffer, "/tmp/wyniki");
     // read message from keyboard
     printf("Wpisz wiadomość:\n");
     do {
         c = getchar();
-        buffer[buf_len++] = (char)c;
+        message[buf_len++] = (char)c;
     } while (c != 27);
-    buffer[buf_len] = '\0';
+    message[buf_len] = '\0';
     // write message to buffer
-    fd = open(REQUEST_BUFFER,
+    fd = open(request_buffer,
             O_WRONLY | O_CREAT | O_EXCL | O_APPEND, S_IRWXU);
     if (fd == -1) {
         perror("błąd: nie można otworzyć pliku");
     }
     write(fd, username, strlen(username));
-    write(fd, buffer, buf_len);
+    write(fd, "\n", 1);
+    write(fd, message, buf_len);
     close(fd);
 
     // wait while server busy
@@ -47,7 +51,7 @@ int main(int argc, char *argv[]) {
     }
     // wait for server response
     printf("Czekam na odpowiedź z serwera...\n");
-    while ((fd = open(RESPONSE_BUFFER, O_RDONLY, S_IRWXU)) == -1) {}
+    while ((fd = open(response_buffer, O_RDONLY, S_IRWXU)) == -1) {}
     // read response from buffer
     read(fd, response_from_server, 1024);
     for (i = 0; (c = response_from_server[i]) != 27; i++) {}
@@ -56,7 +60,7 @@ int main(int argc, char *argv[]) {
     printf("Serwer odpowiedział:\n%s\n", response_from_server);
     close(fd);
     // flush buffer
-    unlink(RESPONSE_BUFFER);
+    unlink(response_buffer);
 
     return 0;
 }

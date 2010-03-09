@@ -7,8 +7,8 @@
 #define ever ;;
 
 int main(int argc, char *argv[]) {
-    const char REQUEST_BUFFER[] = "dane";
-    const char RESPONSE_BUFFER[] = "wyniki";
+    const char REQUEST_BUFFER[] = "/home/studinf/mdettla/tmp/dane";
+    const char RESPONSE_BUFFER[] = "/home/studinf/mdettla/tmp/wyniki";
 
     char message_from_user[1024];
     char response_to_user[1024];
@@ -16,11 +16,12 @@ int main(int argc, char *argv[]) {
     int c;
     int i;
 
+    printf("Serwer gotowy.\nCzekam na zgłoszenia klientów...\n");
     for (ever) {
         // read and display message from request buffer
         while ((fd = open(REQUEST_BUFFER, O_RDONLY, S_IRWXU)) == -1) {}
         read(fd, message_from_user, 1024);
-        printf("Użytkownik ");
+        printf("\nUżytkownik ");
         i = 0;
         for (; (c = message_from_user[i]) != '\n'; i++) {
             putchar(c);
