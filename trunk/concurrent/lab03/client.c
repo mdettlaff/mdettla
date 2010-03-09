@@ -24,6 +24,7 @@ int main(int argc, char *argv[]) {
     strcat(username, argv[1]);
     strcat(username, "\n");
     // read message from keyboard
+    printf("Wpisz wiadomość:\n");
     do {
         c = getchar();
         buffer[buf_len++] = (char)c;
@@ -39,7 +40,12 @@ int main(int argc, char *argv[]) {
     write(fd, buffer, buf_len);
     close(fd);
 
-    // wait for response
+    // wait while server busy
+    while (open("lockfile", O_CREAT | O_EXCL, 0) == -1) {
+        printf("Serwer zajęty, proszę czekać...\n");
+        sleep(2);
+    }
+    // wait for server response
     printf("Czekam na odpowiedź z serwera...\n");
     while ((fd = open(RESPONSE_BUFFER, O_RDONLY, S_IRWXU)) == -1) {}
     // read response from buffer
@@ -51,5 +57,6 @@ int main(int argc, char *argv[]) {
     close(fd);
     // flush buffer
     unlink(RESPONSE_BUFFER);
+
     return 0;
 }
