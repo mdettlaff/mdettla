@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
         write(fd, response_to_user, strlen(response_to_user));
         close(fd);
         // release lock
-        unlink("lockfile");
+        unlink("/home/studinf/mdettla/tmp/lockfile");
     }
     return 0;
 }
