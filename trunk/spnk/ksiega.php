@@ -2,9 +2,9 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta NAME="Language" content="pl">
-    <meta NAME="Author" content="Michał Dettlaff">
-    <meta NAME="Copyright" content="Michał Dettlaff 2010">
+    <meta name="Language" content="pl">
+    <meta name="Author" content="Michał Dettlaff">
+    <meta name="Copyright" content="Michał Dettlaff 2010">
     <link rel="stylesheet" href="style.css" type="text/css">
 
     <script>
@@ -80,7 +80,6 @@
     <td><p class="tytulb">&nbsp; &nbsp;KSIĘGA GOŚCI</p></td>
   </tr>
 </table>
-
 <?php
 
 function validate($name, $email, $content) {
@@ -99,6 +98,8 @@ function validate($name, $email, $content) {
     return true;
 }
 
+session_start();
+
 pg_connect("dbname=mdettla user=mdettla password=tommyemmanuel");
 
 if (!empty($_POST['name']) && !empty($_POST['content'])) {
@@ -106,6 +107,7 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
     $name = pg_escape_string($_POST['name']);
     $email = pg_escape_string($_POST['email']);
     $content = pg_escape_string($_POST['content']);
+    echo "<br />\n";
     if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie są dozwolone.\n";
     } else if (validate($name, $email, $content)) {
@@ -121,13 +123,13 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
                 VALUES
                 (NOW(), '$ip', '$name', '$email', '$content')
         ");
-        echo "<br />\nTwój wpis został dodany.<br />\n";
+        echo "Twój wpis został dodany.\n";
         $_SESSION['guestbook_entry_added'] = true;
     } else {
-        echo "<br />\n"
-            . "Przykro mi, ale twój wpis nie został zaakceptowany.<br />\n";
+        echo "Przykro mi, ale twój wpis nie został zaakceptowany.\n";
     }
-    echo "<br />\n<a href\"\"><b>Powrót do księgi gości</b></a>\n";
+    echo "<br /><br />\n";
+    echo "<a href=\"\"><b>Powrót do księgi gości</b></a>\n";
 } else {
 ?>
 <table width="100%">
@@ -164,6 +166,7 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
     </tr>
   </table>
 </form>
+
 <?php
     // pokaż księgę gości
     $PAGE_SIZE = 20;
@@ -209,22 +212,22 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
             echo "<br />\n<div style=\"text-align: center\">\n";
             if ($current_page > 1) {
                 echo "<a href=\"?page=" . ($current_page - 1)
-                    . "\"><b>&larr; </b></a> ";
+                    . "\"><b>&larr; </b></a>\n";
             } else {
-                echo "<b>&larr; </b>";
+                echo "<b>&larr; </b>\n";
             }
             for ($i = 1; $i <= $page_count; $i++) {
                 if ($i == $current_page) {
-                    echo "$i ";
+                    echo "$i\n";
                 } else {
-                    echo "<a href=\"?page=$i\"><b>$i</b></a> ";
+                    echo "<a href=\"?page=$i\"><b>$i</b></a>\n";
                 }
             }
             if ($current_page <= $page_count) {
                 echo "<a href=\"?page=" . ($current_page + 1)
-                    . "\"><b>&rarr; </b></a> ";
+                    . "\"><b>&rarr; </b></a>\n";
             } else {
-                echo "<b>&rarr; </b>";
+                echo "<b>&rarr; </b>\n";
             }
             echo "</div>\n";
         }
