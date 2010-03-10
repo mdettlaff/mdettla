@@ -1,6 +1,8 @@
-function updateHighscoreTable() {
+function updateHighscoreTable(page) {
     var url = "ajax/highscore_table.php";
     var request;
+    var PAGE_SIZE = 5;
+    var currentPageElement;
 
     function onResponse() {
         var i;
@@ -9,11 +11,44 @@ function updateHighscoreTable() {
         var entryElement;
         var speed;
         var correctness;
+        var totalHSSize;
+
+        function getHighscorePaging(currentPage, pageCount) {
+            var i;
+            var hsPaging = "";
+
+            if (currentPage === 1) {
+                hsPaging += "&larr; ";
+            } else {
+                hsPaging += "<a href=\"#\" onClick=" +
+                        "\"updateHighscoreTable(" + (currentPage - 1) + "); " +
+                        "return false;\">" +
+                        "&larr; </a>";
+            }
+            for (i = 1; i <= pageCount; i++) {
+                if (i === currentPage) {
+                    hsPaging += "<span id=\"currentPage\">" + i + "</span> ";
+                } else {
+                    hsPaging += "<a href=\"#\" onClick=" +
+                            "\"updateHighscoreTable(" + i + "); " +
+                            "return false;\">" +
+                            i + "</a> ";
+                }
+            }
+            if (currentPage === pageCount) {
+                hsPaging += "&rarr; ";
+            } else {
+                hsPaging += "<a href=\"#\" onClick=" +
+                        "\"updateHighscoreTable(" + (currentPage + 1) + "); " +
+                        "return false;\">" +
+                        "&rarr; </a>";
+            }
+            return hsPaging;
+        }
 
         if (request.readyState != 4 || request.status != 200) {
             return;
         }
-
         hsTable = "<h3>Najlepsze wyniki</h3>";
         hsTable += "<table class=\"highscore-table\">";
         entries =
@@ -31,28 +66,45 @@ function updateHighscoreTable() {
             } else {
                 hsTable += "<tr>";
             }
-            hsTable += "<td>" + (i + 1) + "</td>";
-            entryElement = entries[i].getElementsByTagName("username");
+            entryElement = entries[i].getElementsByTagName("rank")[0];
+            hsTable += "<td>" + entryElement.firstChild.nodeValue + "</td>";
+            entryElement = entries[i].getElementsByTagName("username")[0];
             hsTable += "<td style=\"text-align: left\">";
-            hsTable += entryElement[0].firstChild.nodeValue;
+            hsTable += entryElement.firstChild.nodeValue;
             hsTable += "</td>";
-            entryElement = entries[i].getElementsByTagName("speed");
-            speed = entryElement[0].firstChild.nodeValue;
+            entryElement = entries[i].getElementsByTagName("speed")[0];
+            speed = entryElement.firstChild.nodeValue;
             hsTable += "<td><b>" + speed.replace('.', ',') + "</b></td>";
             hsTable += "<td>";
             hsTable += ((speed / 5).toFixed(1) + "").replace('.', ',');
             hsTable += "</td>";
-            entryElement = entries[i].getElementsByTagName("correctness");
-            correctness = entryElement[0].firstChild.nodeValue;
+            entryElement = entries[i].getElementsByTagName("correctness")[0];
+            correctness = entryElement.firstChild.nodeValue;
             hsTable += "<td>";
             hsTable += correctness.replace('.', ',') + "%";
             hsTable += "</td>";
             hsTable += "</tr>";
         }
+        hsTable += "<tr><td colspan=\"5\" style=\"text-align: center; " +
+                "vertical-align: bottom; height: 35;\">";
+        totalHSSize =
+                request.responseXML.documentElement.getElementsByTagName(
+                    "totalSize")[0].firstChild.nodeValue;
+        hsTable += getHighscorePaging(
+                page, parseInt(((totalHSSize - 1) / PAGE_SIZE) + 1, 10));
+        hsTable += "</td></tr>";
         hsTable += "</table>";
         document.getElementById("highscoreTableArea").innerHTML = hsTable;
     }
 
+    if (page === undefined) {
+        currentPageElement = document.getElementById("currentPage");
+        if (currentPageElement) {
+            page = Number(currentPageElement.innerHTML);
+        } else {
+            page = 1;
+        }
+    }
     if (XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         request = new XMLHttpRequest();
@@ -62,6 +114,8 @@ function updateHighscoreTable() {
     }
     request.onreadystatechange = onResponse;
     url += "?r=" + new Date().getTime(); // prevent IE from caching results
+    url += "&from_place=" + ((page - 1) * PAGE_SIZE + 1);
+    url += "&to_place=" + (page * PAGE_SIZE);
     request.open("GET", url, true);
     request.send(null);
 }
