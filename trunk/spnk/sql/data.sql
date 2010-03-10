@@ -3007,11 +3007,6 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-08-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'kamil', 'mkamilx@op.pl',
-'',
-'2008-08-23'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', 'my-fun-club236@wp.pl',
 'Niewiem jak wam,ale mi ta stronka bardzo przypadła do gustu.szczerze mowiac na poczatku nie potrafiłam pisać szybko a teraz jestem w tym całkowicie zawaansowana. papatki poozdrawiam',
 '2008-08-24'
@@ -3244,7 +3239,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '186zn/min i coraz gorzej;]
 Dobry pomysl z ta strona nigdy sie nie zastanawialem jak szybko potrafie pisac...',
 '2008-12-21'
-);INSERT INTO guestbook (username, email, content, date_added) VALUES (
+);
+INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Klaudia', '',
 'po prostu chcę się nauczyć',
 '2009-01-01'
