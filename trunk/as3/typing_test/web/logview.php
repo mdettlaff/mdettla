@@ -42,7 +42,7 @@ $query = "
 
 $result = pg_query($query);
 if ($result) {
-    while($row = pg_fetch_assoc($result)) {
+    while ($row = pg_fetch_assoc($result)) {
         echo "      <tr>\n";
         echo '        <td>' . htmlspecialchars($row['id_log']) . "</td>\n";
         echo '        <td>' . str_replace(' ', '&nbsp;',

@@ -21,7 +21,7 @@ function isSubmittedTooSoon($submit_time, $last_submit_time) {
 }
 
 $H_KEY = 'secret2';
-$HIGHSCORE_SIZE = 25;
+$HIGHSCORE_SIZE = 150;
 $MIN_REQUIRED_SPEED = 200;
 
 $result = pg_query("
