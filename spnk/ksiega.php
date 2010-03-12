@@ -83,7 +83,8 @@
 <?php
 
 function validate($name, $email, $content) {
-    if (strlen($name) > 32 || strlen($email) > 128
+    if (empty($name) || empty($content)
+            || strlen($name) > 32 || strlen($email) > 128
             || strlen($content) > 5000) {
         return false;
     }
@@ -102,7 +103,7 @@ session_start();
 
 pg_connect("dbname=mdettla user=mdettla password=tommyemmanuel");
 
-if (!empty($_POST['name']) && !empty($_POST['content'])) {
+if (!empty($_POST['submit'])) {
     // dodaj nowy wpis
     $name = pg_escape_string($_POST['name']);
     $email = pg_escape_string($_POST['email']);
@@ -125,6 +126,8 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
         ");
         echo "Twój wpis został dodany.\n";
         $_SESSION['guestbook_entry_added'] = true;
+    } else if (empty($name) || empty($content)) {
+        echo "Musisz podać imię i treść wpisu.\n";
     } else {
         echo "Przykro mi, ale twój wpis nie został zaakceptowany.\n";
     }
@@ -160,7 +163,7 @@ if (!empty($_POST['name']) && !empty($_POST['content'])) {
     <tr bgcolor="#bac5f8" height=30>
       <td></td>
       <td>
-        <input type="submit" name="zapisz" value="     zapisz      ">&nbsp;&nbsp;
+        <input type="submit" name="submit" value="     zapisz      ">&nbsp;&nbsp;
         <input type="reset" name="wyczysc" value="     wyczyść     ">
       </td>
     </tr>
