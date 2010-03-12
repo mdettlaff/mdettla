@@ -52,12 +52,12 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
     } else {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    $speed = mysql_escape_string($speed);
-    $mistakes = mysql_escape_string($mistakes);
-    $pl = mysql_escape_string($pl);
-    $chars = mysql_escape_string($chars);
-    $minutes = mysql_escape_string($minutes);
-    $seconds = mysql_escape_string($seconds);
+    $speed = mysql_real_escape_string($speed);
+    $mistakes = mysql_real_escape_string($mistakes);
+    $pl = mysql_real_escape_string($pl);
+    $chars = mysql_real_escape_string($chars);
+    $minutes = mysql_real_escape_string($minutes);
+    $seconds = mysql_real_escape_string($seconds);
     $query = "
         INSERT INTO ttlog
             (date_added, ip, speed, mistakes,
