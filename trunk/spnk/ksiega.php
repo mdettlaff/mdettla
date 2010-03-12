@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
     <meta name="Language" content="pl">
-    <meta name="Author" content="MichaÅ‚ Dettlaff">
-    <meta name="Copyright" content="MichaÅ‚ Dettlaff 2010">
+    <meta name="Author" content="Micha³ Dettlaff">
+    <meta name="Copyright" content="Micha³ Dettlaff 2010">
     <link rel="stylesheet" href="layout/style.css" type="text/css">
     <script>
       function validate_email(email) {
@@ -15,7 +15,7 @@
 
       function validate_form(form) {
           if (!form.name.value || !form.content.value) {
-              alert("Musisz podaÄ‡ imiÄ™ i treÅ›Ä‡ wpisu.");
+              alert("Musisz podaæ imiê i tre¶æ wpisu.");
               if (!form.name.value) {
                   form.name.focus();
               } else if (!form.content.value) {
@@ -24,7 +24,7 @@
               return false;
           }
           if (form.email.value && !validate_email(form.email.value)) {
-              alert("NieprawidÅ‚owy adres email.");
+              alert("Nieprawid³owy adres email.");
               form.email.focus();
               return false;
           }
@@ -39,7 +39,7 @@
 &nbsp;<br>
 <table width="100%">
   <tr bgcolor="#BAC5F8" height="30">
-    <td class="tytulb">&nbsp; &nbsp;KSIÄ˜GA GOÅšCI</td>
+    <td class="tytulb">&nbsp; &nbsp;KSIÊGA GO¦CI</td>
   </tr>
 </table>
 <?php
@@ -72,7 +72,7 @@ if (!empty($_POST['submit'])) {
     $content = mysql_escape_string($_POST['content']);
     echo "<br>\n";
     if ($_SESSION['guestbook_entry_added']) {
-        echo "Wielokrotne wpisy nie sÄ… dozwolone.\n";
+        echo "Wielokrotne wpisy nie s± dozwolone.\n";
     } else if (validate($name, $email, $content)) {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -86,28 +86,28 @@ if (!empty($_POST['submit'])) {
                 VALUES
                 (NOW(), '$ip', '$name', '$email', '$content')
         ");
-        echo "TwÃ³j wpis zostaÅ‚ dodany.\n";
+        echo "Twój wpis zosta³ dodany.\n";
         $_SESSION['guestbook_entry_added'] = true;
     } else if (empty($name) || empty($content)) {
-        echo "Musisz podaÄ‡ imiÄ™ i treÅ›Ä‡ wpisu.\n";
+        echo "Musisz podaæ imiê i tre¶æ wpisu.\n";
     } else {
-        echo "Przykro mi, ale twÃ³j wpis nie zostaÅ‚ zaakceptowany.\n";
+        echo "Przykro mi, ale twój wpis nie zosta³ zaakceptowany.\n";
     }
     echo "<br><br>\n";
-    echo "<a href=\"\"><b>PowrÃ³t do ksiÄ™gi goÅ›ci</b></a>\n";
+    echo "<a href=\"\"><b>Powrót do ksiêgi go¶ci</b></a>\n";
 } else {
 ?>
 <table width="100%">
   <tr>
     <td>
-JeÅ›li chcesz wyraziÄ‡ swojÄ… opiniÄ™ o tej stronie lub na temat z niÄ… zwiÄ…zany - wpisz siÄ™!
+Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wpisz siê!
     </td>
   </tr>
 </table>
 <form action="" method="POST" onSubmit="return validate_form(this)">
   <table width="100%" border="0" cellspacing="0" cellpadding="2">
     <tr>
-      <td align="right"><b>*ImiÄ™:</b></td>
+      <td align="right"><b>*Imiê:</b></td>
       <td width="95%"><input type="text" name="name" maxlength="32"><br></td>
     </tr>
     <tr>
@@ -115,7 +115,7 @@ JeÅ›li chcesz wyraziÄ‡ swojÄ… opiniÄ™ o tej stronie lub na temat z niÄ… zwiÄ…zan
       <td><input type="text" name="email" maxlength="128"><br></td>
     </tr>
     <tr>
-      <td align="right" valign="top"><b>*TreÅ›Ä‡&nbsp;wpisu:</b></td>
+      <td align="right" valign="top"><b>*Tre¶æ&nbsp;wpisu:</b></td>
       <td><textarea name="content" rows=2 cols=50 wrap="physical"></textarea><br></td>
     </tr>
     <tr>
@@ -125,14 +125,14 @@ JeÅ›li chcesz wyraziÄ‡ swojÄ… opiniÄ™ o tej stronie lub na temat z niÄ… zwiÄ…zan
       <td></td>
       <td>
         <input type="submit" name="submit" value="     zapisz      ">&nbsp;&nbsp;
-        <input type="reset" name="wyczysc" value="     wyczyÅ›Ä‡     ">
+        <input type="reset" name="wyczysc" value="     wyczy¶æ     ">
       </td>
     </tr>
   </table>
 </form>
 
 <?php
-    // pokaÅ¼ ksiÄ™gÄ™ goÅ›ci
+    // poka¿ ksiêgê go¶ci
     $PAGE_SIZE = 20;
     if (is_numeric($_GET['page']) && $_GET['page'] > 0) {
         $current_page = $_GET['page'];
@@ -157,7 +157,7 @@ JeÅ›li chcesz wyraziÄ‡ swojÄ… opiniÄ™ o tej stronie lub na temat z niÄ… zwiÄ…zan
             }
             $date = date("d.m.Y", strtotime($row['date_added']));
             $time = date("H:i", strtotime($row['date_added']));
-            echo "napisaÅ‚(a) dnia $date";
+            echo "napisa³(a) dnia $date";
             if ($time != "00:00") {
                 echo " o godzinie $time\n";
             }

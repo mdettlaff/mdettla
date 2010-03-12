@@ -3,8 +3,8 @@
 function screenshot_link($pic, $width, $height,
         $thumbnail, $thwidth, $thheight) {
     echo "<img src=\"$thumbnail\" width=\"$thwidth\" height=\"$thheight\" "
-        . "border=\"0\" hspace=\"6\" align=\"right\" title=\"PowiÄ™ksz\" "
-        . "alt=\"PowiÄ™ksz\" style=\"cursor: pointer;\" "
+        . "border=\"0\" hspace=\"6\" align=\"right\" title=\"Powiêksz\" "
+        . "alt=\"Powiêksz\" style=\"cursor: pointer;\" "
         . "onClick=\"window.open('screenshot.php?pic=$pic', 'podglad', "
         . "'width=$width, height=$height, left=0, top=0')\">";
 }
@@ -13,10 +13,10 @@ function screenshot_link($pic, $width, $height,
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
     <meta name="Language" content="pl">
-    <meta name="Author" content="MichaÅ‚ Dettlaff">
-    <meta name="Copyright" content="MichaÅ‚ Dettlaff 2010">
+    <meta name="Author" content="Micha³ Dettlaff">
+    <meta name="Copyright" content="Micha³ Dettlaff 2010">
     <link rel="stylesheet" href="layout/style.css" type="text/css">
     <title>Szybkie Pisanie na Klawiaturze</title>
   </head>
@@ -25,7 +25,7 @@ function screenshot_link($pic, $width, $height,
 
 <p class="tytulb">
 &nbsp;<br>
-SPIS TREÅšCI:
+SPIS TRE¦CI:
 </p><p>
 &nbsp; &nbsp; - <a href="#mk2">Mistrz Klawiatury II</a><br>
 &nbsp; &nbsp; - <a href="#mk">Mistrz Klawiatury</a><br>
@@ -72,19 +72,19 @@ shareware
 <a href="http://www.nahliksoft.com.pl/phtml/pliki.html" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
 
 <br><br>
-Mistrz Klawiatury II jest obecnie jednym z najlepszych dostÄ™pnych na rynku programÃ³w, sÅ‚uÅ¼Ä…cych do nauki szybkiego pisania na klawiaturze. ZostaÅ‚ stworzony przez firmÄ™ Nahlik Soft, ktÃ³ra zajmuje siÄ™ tworzeniem oprogramowania edukacyjnego. Jest dostÄ™pny na licencji shareware, co oznacza, Å¼e za jego peÅ‚nÄ… wersjÄ™ trzeba zapÅ‚aciÄ‡.
+Mistrz Klawiatury II jest obecnie jednym z najlepszych dostêpnych na rynku programów, s³u¿±cych do nauki szybkiego pisania na klawiaturze. Zosta³ stworzony przez firmê Nahlik Soft, która zajmuje siê tworzeniem oprogramowania edukacyjnego. Jest dostêpny na licencji shareware, co oznacza, ¿e za jego pe³n± wersjê trzeba zap³aciæ.
 <br><br>
-Jest on najwiÄ™kszym i najbardziej rozbudowanym programem z tych tutaj opisywanych. Za jego pomocÄ… moÅ¼na nauczyÄ‡ siÄ™ szybkiego pisania na wiele sposobÃ³w. Pierwszy z nich, to wybÃ³r odpowiedniego kursu skÅ‚adajÄ…cego siÄ™ z szeregu lekcji i konsekwentne jego realizowanie. Mistrz Klawiatury II umie bardzo dobrze oceniÄ‡ twoje postÄ™py w nauce i zawsze doradzi, czy moÅ¼esz juÅ¼ przejÅ›Ä‡ do kolejnych Ä‡wiczeÅ„, czy teÅ¼ powinieneÅ› jeszcze jakieÅ› elementy doszlifowaÄ‡. Chwilami miaÅ‚em wraÅ¼enie, Å¼e czuwa nade mnÄ… prawdziwy nauczyciel. OprÃ³cz szybkoÅ›ci pisania i poprawnoÅ›ci, program bierze pod uwagÄ™ rytmikÄ™ pisania, ktÃ³ra takÅ¼e ma duÅ¼e znaczenie. Warto nadmieniÄ‡, Å¼e do wyboru dostÄ™pne sÄ… rÃ³Å¼ne rodzaje kursÃ³w. Inny dla caÅ‚kiem poczÄ…tkujÄ…cych, inny dla osÃ³b uzdolnionych manualnie, inny z kolei dla chcÄ…cych uÅ¼ywaÄ‡ klawiatury do innych celÃ³w niÅ¼ pisanie.
+Jest on najwiêkszym i najbardziej rozbudowanym programem z tych tutaj opisywanych. Za jego pomoc± mo¿na nauczyæ siê szybkiego pisania na wiele sposobów. Pierwszy z nich, to wybór odpowiedniego kursu sk³adaj±cego siê z szeregu lekcji i konsekwentne jego realizowanie. Mistrz Klawiatury II umie bardzo dobrze oceniæ twoje postêpy w nauce i zawsze doradzi, czy mo¿esz ju¿ przej¶æ do kolejnych æwiczeñ, czy te¿ powiniene¶ jeszcze jakie¶ elementy doszlifowaæ. Chwilami mia³em wra¿enie, ¿e czuwa nade mn± prawdziwy nauczyciel. Oprócz szybko¶ci pisania i poprawno¶ci, program bierze pod uwagê rytmikê pisania, która tak¿e ma du¿e znaczenie. Warto nadmieniæ, ¿e do wyboru dostêpne s± ró¿ne rodzaje kursów. Inny dla ca³kiem pocz±tkuj±cych, inny dla osób uzdolnionych manualnie, inny z kolei dla chc±cych u¿ywaæ klawiatury do innych celów ni¿ pisanie.
 <br><br>
-Poza kursami, dobrym sposobem nauki sÄ… dowolne Ä‡wiczenia z rÃ³Å¼nego rodzaju tekstami i grami. SzczegÃ³lnie te drugie zasÅ‚ugujÄ… na uwagÄ™. Odkrywanie obrazka albo chronienie fabryki przed zniszczeniem to bardzo przyjemne formy Ä‡wiczeÅ„. Cel osiÄ…gamy oczywiÅ›cie poprzez uderzanie klawiszy z odpowiednimi literami. Teksty zawarte w programie rÃ³wnieÅ¼ sÄ… bardzo ciekawe. Wiele z nich zostaÅ‚o napisanych przez znanego poetÄ™, StanisÅ‚awa BaraÅ„czaka. I to specjalnie na potrzeby Mistrza Klawiatury II ! SÄ… bardzo ciekawe, a jednoczeÅ›nie zostaÅ‚y przygotowane tak, aby Ä‡wiczyÄ‡ konkretne partie klawiszy. Najlepiej przeczytaÄ‡ je sobie wczeÅ›niej, aby uniknÄ…Ä‡ &quot;zaczytania&quot; siÄ™ w trakcie Ä‡wiczeÅ„.
+Poza kursami, dobrym sposobem nauki s± dowolne æwiczenia z ró¿nego rodzaju tekstami i grami. Szczególnie te drugie zas³uguj± na uwagê. Odkrywanie obrazka albo chronienie fabryki przed zniszczeniem to bardzo przyjemne formy æwiczeñ. Cel osi±gamy oczywi¶cie poprzez uderzanie klawiszy z odpowiednimi literami. Teksty zawarte w programie równie¿ s± bardzo ciekawe. Wiele z nich zosta³o napisanych przez znanego poetê, Stanis³awa Barañczaka. I to specjalnie na potrzeby Mistrza Klawiatury II ! S± bardzo ciekawe, a jednocze¶nie zosta³y przygotowane tak, aby æwiczyæ konkretne partie klawiszy. Najlepiej przeczytaæ je sobie wcze¶niej, aby unikn±æ &quot;zaczytania&quot; siê w trakcie æwiczeñ.
 <br><br>
-Kolejnym atutem programu (pod warunkiem, Å¼e siÄ™ zarejestrujesz) jest moÅ¼liwoÅ›Ä‡ zobaczenia swoich wynikÃ³w szybkoÅ›ci i poprawnoÅ›ci pisania. SÄ… one przedstawione doÅ›Ä‡ przejrzyÅ›cie, za pomocÄ… diagramÃ³w sÅ‚upkowych. Opcjom programu rÃ³wnieÅ¼ nie mam nic do zarzucenia - umoÅ¼liwiajÄ… odpowiednie dostosowanie programu, nawet jeÅ›li chciaÅ‚byÅ› uÅ¼ywaÄ‡ bardzo egzotycznego typu klawiatury. Z pewnoÅ›ciÄ… warta uwagi jest pomoc Mistrza Klawiatury II. Wyczerpuje ona chyba wszystkie zagadnienia dotyczÄ…ce szybkiego pisania.
+Kolejnym atutem programu (pod warunkiem, ¿e siê zarejestrujesz) jest mo¿liwo¶æ zobaczenia swoich wyników szybko¶ci i poprawno¶ci pisania. S± one przedstawione do¶æ przejrzy¶cie, za pomoc± diagramów s³upkowych. Opcjom programu równie¿ nie mam nic do zarzucenia - umo¿liwiaj± odpowiednie dostosowanie programu, nawet je¶li chcia³by¶ u¿ywaæ bardzo egzotycznego typu klawiatury. Z pewno¶ci± warta uwagi jest pomoc Mistrza Klawiatury II. Wyczerpuje ona chyba wszystkie zagadnienia dotycz±ce szybkiego pisania.
 <br><br>
-Mistrz Klawiatury II to Å›wietny program, dziÄ™ki ktÃ³rym kaÅ¼dy moÅ¼e rozwinÄ…Ä‡ umiejÄ™tnoÅ›Ä‡ pisania na klawiaturze, niezaleÅ¼nie od swojego stopnia zaawansowania. Niestety, dla wielu osÃ³b przeszkodÄ… moÅ¼e byÄ‡ cena programu, wynoszÄ…ca okoÅ‚o 70 zÅ‚.
+Mistrz Klawiatury II to ¶wietny program, dziêki którym ka¿dy mo¿e rozwin±æ umiejêtno¶æ pisania na klawiaturze, niezale¿nie od swojego stopnia zaawansowania. Niestety, dla wielu osób przeszkod± mo¿e byæ cena programu, wynosz±ca oko³o 70 z³.
 <br><br>
-JAK KORZYSTAÄ† Z PROGRAMU?
+JAK KORZYSTAÆ Z PROGRAMU?
 <br><br>
-Tutaj wÅ‚aÅ›ciwie nie mam o czym pisaÄ‡. Wszystkie potrzebne informacje sÄ… zawarte w pliku pomocy programu.
+Tutaj w³a¶ciwie nie mam o czym pisaæ. Wszystkie potrzebne informacje s± zawarte w pliku pomocy programu.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -121,17 +121,17 @@ shareware
 <a href="http://www.nahliksoft.com.pl/phtml/pliki.html" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
 
 <br><br>
-Mistrz Klawiatury jest poprzednikiem Mistrza Klawiatury II i - podobnie jak on - sÅ‚uÅ¼y do nauki maszynopisania. Ma jednak znacznie mniejsze moÅ¼liwoÅ›ci od swego nastÄ™pcy.
+Mistrz Klawiatury jest poprzednikiem Mistrza Klawiatury II i - podobnie jak on - s³u¿y do nauki maszynopisania. Ma jednak znacznie mniejsze mo¿liwo¶ci od swego nastêpcy.
 <br><br>
-Kurs nauki klawiszy jest doÅ›Ä‡ dobrze zaplanowany, choÄ‡ posiada kilka bÅ‚Ä™dÃ³w - czasem w lekcji pojawiajÄ… siÄ™ litery jeszcze nie przerobione. Na plus za to moÅ¼na zaliczyÄ‡ moÅ¼liwoÅ›Ä‡ Ä‡wiczenia konkretnych palcÃ³w oraz naukÄ™ szybkiego wprowadzania cyfr za pomocÄ… klawiatury numerycznej. Po nauczeniu siÄ™ podstaw pisania, moÅ¼na Ä‡wiczyÄ‡ przepisywanie tekstÃ³w, a ich proponowany wybÃ³r jest bardzo szeroki (literatura piÄ™kna, poradniki, eseje). Niestety, sÄ… one zbyt dÅ‚ugie i program bÅ‚Ä™dnie ocenia twojÄ… prÄ™dkoÅ›Ä‡ pisania. BÅ‚Ä…d ten pojawia siÄ™ w wersji 1.00 programu i daje o sobie znaÄ‡ rÃ³wnieÅ¼ wtedy, gdy Å‚adujesz wÅ‚asne teksty o duÅ¼ej objÄ™toÅ›ci, przez co do przepisywania nadajÄ… siÄ™ tylko krÃ³tkie. Na szczÄ™Å›cie moÅ¼na go naprawiÄ‡ poprzez Å›ciÄ…gniÄ™cie patcha ze strony firmy Nahlik Soft.
+Kurs nauki klawiszy jest do¶æ dobrze zaplanowany, choæ posiada kilka b³êdów - czasem w lekcji pojawiaj± siê litery jeszcze nie przerobione. Na plus za to mo¿na zaliczyæ mo¿liwo¶æ æwiczenia konkretnych palców oraz naukê szybkiego wprowadzania cyfr za pomoc± klawiatury numerycznej. Po nauczeniu siê podstaw pisania, mo¿na æwiczyæ przepisywanie tekstów, a ich proponowany wybór jest bardzo szeroki (literatura piêkna, poradniki, eseje). Niestety, s± one zbyt d³ugie i program b³êdnie ocenia twoj± prêdko¶æ pisania. B³±d ten pojawia siê w wersji 1.00 programu i daje o sobie znaæ równie¿ wtedy, gdy ³adujesz w³asne teksty o du¿ej objêto¶ci, przez co do przepisywania nadaj± siê tylko krótkie. Na szczê¶cie mo¿na go naprawiæ poprzez ¶ci±gniêcie patcha ze strony firmy Nahlik Soft.
 <br><br>
-Do zalet Mistrza Klawiatury moÅ¼na zaliczyÄ‡ spory i przydatny plik pomocy (choÄ‡ mniejszy niÅ¼ w Mistrzu Klawiatury II). ZnajdujÄ… siÄ™ w nim miÄ™dzy innymi wskazÃ³wki co do tego, jak przygotowaÄ‡ sobie warunki pracy i co zrobiÄ‡, aby pisaÄ‡ jak najszybciej. InnÄ… bardzo ciekawÄ… opcjÄ… jest wyÅ›wietlenie statystyk dotyczÄ…cych twojego pisania - moÅ¼esz poznaÄ‡ prÄ™dkoÅ›Ä‡ i poprawnoÅ›Ä‡, z jakÄ… naciskasz poszczegÃ³lne klawisze, po czym przeÄ‡wiczyÄ‡ te, z ktÃ³rymi jeszcze nie radzisz sobie zbyt dobrze.
+Do zalet Mistrza Klawiatury mo¿na zaliczyæ spory i przydatny plik pomocy (choæ mniejszy ni¿ w Mistrzu Klawiatury II). Znajduj± siê w nim miêdzy innymi wskazówki co do tego, jak przygotowaæ sobie warunki pracy i co zrobiæ, aby pisaæ jak najszybciej. Inn± bardzo ciekaw± opcj± jest wy¶wietlenie statystyk dotycz±cych twojego pisania - mo¿esz poznaæ prêdko¶æ i poprawno¶æ, z jak± naciskasz poszczególne klawisze, po czym przeæwiczyæ te, z którymi jeszcze nie radzisz sobie zbyt dobrze.
 <br><br>
-PodsumowujÄ…c, Mistrz Klawiatury to dobry program, dziÄ™ki ktÃ³remu Å‚atwo nauczysz siÄ™ pisania na klawiaturze od podstaw.
+Podsumowuj±c, Mistrz Klawiatury to dobry program, dziêki któremu ³atwo nauczysz siê pisania na klawiaturze od podstaw.
 <br><br>
-JAK KORZYSTAÄ† Z PROGRAMU?
+JAK KORZYSTAÆ Z PROGRAMU?
 <br><br>
-Jest to doÅ›Ä‡ proste. Najpierw zarejestruj siÄ™, Å¼eby mieÄ‡ pÃ³Åºniej dostÄ™p do statystyk. Aby rozpoczÄ…c naukÄ™ pisania od podstaw, wybierz opcjÄ™ LEKCJA -&gt; WYBÃ“R LEKCJI -&gt; NAUKA KLAWISZY ASDF. Zapoznaj siÄ™ z informacjÄ… wyÅ›wietlonÄ… w okienku, aby odpowiednio uÅ‚oÅ¼yÄ‡ palce, po czym wciÅ›nij spacjÄ™ lub kliknij na OK. Lekcja polega na przepisywaniu tekstu, ktÃ³ry pojawiaÄ‡ siÄ™ bÄ™dzie na ekranie. PamiÄ™taj, Å¼eby nie patrzeÄ‡ na klawiaturÄ™! Po przepisaniu caÅ‚ego wiersza naleÅ¼y wcisnÄ…Ä‡ ENTER. Kiedy przepiszesz juÅ¼ caÅ‚y tekst, pojawiÄ… siÄ™ wyniki. JeÅ›li bÄ™dÄ… one dobre, tzn. prÄ™dkoÅ›Ä‡ okoÅ‚o 100 znakÃ³w na minutÄ™ i maÅ‚o bÅ‚Ä™dÃ³w (poprawnoÅ›Ä‡ ponad 98%), moÅ¼esz przejÅ›Ä‡ do nastÄ™pnej lekcji. JeÅ›li nie - powtÃ³rz lekcjÄ™, aÅ¼ do osiÄ…gniÄ™cia dobrych wynikÃ³w. W ten sposÃ³b powinieneÅ› przerabiaÄ‡ kolejne lekcje, z gÃ³ry na dÃ³Å‚. PamiÄ™taj, Å¼eby nie przechodziÄ‡ do nastÄ™pnej lekcji, dopÃ³ki nie osiÄ…gniesz dobrych wynikÃ³w w aktualnej. Kiedy przerobisz juÅ¼ wszystkie lekcje (z nauki cyfr i wprawek dla palcÃ³w moÅ¼esz jednak zrezygnowaÄ‡), moÅ¼esz zabraÄ‡ siÄ™ za przepisywanie &quot;normalnych&quot; tekstÃ³w literackich. W tym celu skorzystaj z opcji LEKCJA -&gt; WÅASNE TEKSTY.
+Jest to do¶æ proste. Najpierw zarejestruj siê, ¿eby mieæ pó¼niej dostêp do statystyk. Aby rozpocz±c naukê pisania od podstaw, wybierz opcjê LEKCJA -&gt; WYBÓR LEKCJI -&gt; NAUKA KLAWISZY ASDF. Zapoznaj siê z informacj± wy¶wietlon± w okienku, aby odpowiednio u³o¿yæ palce, po czym wci¶nij spacjê lub kliknij na OK. Lekcja polega na przepisywaniu tekstu, który pojawiaæ siê bêdzie na ekranie. Pamiêtaj, ¿eby nie patrzeæ na klawiaturê! Po przepisaniu ca³ego wiersza nale¿y wcisn±æ ENTER. Kiedy przepiszesz ju¿ ca³y tekst, pojawi± siê wyniki. Je¶li bêd± one dobre, tzn. prêdko¶æ oko³o 100 znaków na minutê i ma³o b³êdów (poprawno¶æ ponad 98%), mo¿esz przej¶æ do nastêpnej lekcji. Je¶li nie - powtórz lekcjê, a¿ do osi±gniêcia dobrych wyników. W ten sposób powiniene¶ przerabiaæ kolejne lekcje, z góry na dó³. Pamiêtaj, ¿eby nie przechodziæ do nastêpnej lekcji, dopóki nie osi±gniesz dobrych wyników w aktualnej. Kiedy przerobisz ju¿ wszystkie lekcje (z nauki cyfr i wprawek dla palców mo¿esz jednak zrezygnowaæ), mo¿esz zabraæ siê za przepisywanie &quot;normalnych&quot; tekstów literackich. W tym celu skorzystaj z opcji LEKCJA -&gt; W£ASNE TEKSTY.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -169,11 +169,11 @@ freeware
 <a href="download/q-typing.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (904 kB)</a>
 
 <br><br>
-Jeden z moich ulubionych programÃ³w do nauki bezwzrokowego pisania na klawiaturze. WyglÄ…d i struktura programu sÄ… przyjemne dla oka i przejrzyste, podobne do innych aplikacji tej klasy. Mamy wiÄ™c okno, w ktÃ³rym widzimy kolejne linie przepisywanego przez nas tekstu, a pod nimi tekst, ktÃ³ry sami wpisujemy. Pod spodem moÅ¼na wyÅ›wietliÄ‡ klawiaturÄ™, na ktÃ³rej podÅ›wietlane sÄ… kolejne klawisze, ktÃ³re musimy uderzaÄ‡ (opcja dla poczÄ…tkujÄ…cych). MiÅ‚ym dodatkiem jest kilka wykresÃ³w po prawej stronie, pokazujÄ…cych prÄ™dkoÅ›ci Å›redniÄ… (liczonÄ… z bÅ‚Ä™dami i bez) oraz chwilowÄ…. OprÃ³cz tego widzimy iloÅ›Ä‡ popeÅ‚nionych bÅ‚Ä™dÃ³w, postÄ™p lekcji oraz pozostaÅ‚Ä… iloÅ›Ä‡ znakÃ³w i czas. JeÅ›li zrobimy z jakiegoÅ› powodu przerwÄ™ w pisaniu, program automatycznie zapauzuje lekcjÄ™, aby nie znieksztaÅ‚ciÄ‡ naszego wyniku.
+Jeden z moich ulubionych programów do nauki bezwzrokowego pisania na klawiaturze. Wygl±d i struktura programu s± przyjemne dla oka i przejrzyste, podobne do innych aplikacji tej klasy. Mamy wiêc okno, w którym widzimy kolejne linie przepisywanego przez nas tekstu, a pod nimi tekst, który sami wpisujemy. Pod spodem mo¿na wy¶wietliæ klawiaturê, na której pod¶wietlane s± kolejne klawisze, które musimy uderzaæ (opcja dla pocz±tkuj±cych). Mi³ym dodatkiem jest kilka wykresów po prawej stronie, pokazuj±cych prêdko¶ci ¶redni± (liczon± z b³êdami i bez) oraz chwilow±. Oprócz tego widzimy ilo¶æ pope³nionych b³êdów, postêp lekcji oraz pozosta³± ilo¶æ znaków i czas. Je¶li zrobimy z jakiego¶ powodu przerwê w pisaniu, program automatycznie zapauzuje lekcjê, aby nie zniekszta³ciæ naszego wyniku.
 <br><br>
-Do wyboru mamy dziewiÄ™Ä‡ lekcji, ktÃ³re pomagajÄ… nam w opanowaniu kolejnych liter na klawiaturze. OprÃ³cz tego mamy lekcje wprawkowe, umoÅ¼liwiajÄ…ce Ä‡wiczenie z naciskiem na opanowanie konkretnych liter czy pisania konkretnymi palcami. W programie wbudowano teÅ¼ opcjÄ™ przepisywania losowych wyrazÃ³w z jÄ™zyka polskiego lub angielskiego, oraz caÅ‚ych gotowych tekstÃ³w. Niestety, tych ostatnich nie jest zbyt duÅ¼o i sÄ… monotematyczne (wszystkie dotyczÄ… komputerÃ³w). Na szczÄ™Å›cie istnieje moÅ¼liwoÅ›Ä‡ uÅ¼ycia wÅ‚asnych tekstÃ³w. To wÅ‚aÅ›ciwie wszystko - program zawiera narzÄ™dzia niezbÄ™dne do nauki bezwzrokowego pisania i nie znajdziemy w nim Å¼adnych "bajerÃ³w". WadÄ… jest to, Å¼e program nie Å›ledzi naszych postÄ™pÃ³w i nie doradza co mamy nastÄ™pnego zrobiÄ‡, wiÄ™c wymaga od uÅ¼ytkownika pewnej samodzielnoÅ›ci w dobieraniu Ä‡wiczeÅ„. DostÄ™pna jest jednak instrukcja objaÅ›niajÄ…ca w jaki sposÃ³b przystÄ…piÄ‡ do nauki.
+Do wyboru mamy dziewiêæ lekcji, które pomagaj± nam w opanowaniu kolejnych liter na klawiaturze. Oprócz tego mamy lekcje wprawkowe, umo¿liwiaj±ce æwiczenie z naciskiem na opanowanie konkretnych liter czy pisania konkretnymi palcami. W programie wbudowano te¿ opcjê przepisywania losowych wyrazów z jêzyka polskiego lub angielskiego, oraz ca³ych gotowych tekstów. Niestety, tych ostatnich nie jest zbyt du¿o i s± monotematyczne (wszystkie dotycz± komputerów). Na szczê¶cie istnieje mo¿liwo¶æ u¿ycia w³asnych tekstów. To w³a¶ciwie wszystko - program zawiera narzêdzia niezbêdne do nauki bezwzrokowego pisania i nie znajdziemy w nim ¿adnych "bajerów". Wad± jest to, ¿e program nie ¶ledzi naszych postêpów i nie doradza co mamy nastêpnego zrobiæ, wiêc wymaga od u¿ytkownika pewnej samodzielno¶ci w dobieraniu æwiczeñ. Dostêpna jest jednak instrukcja obja¶niaj±ca w jaki sposób przyst±piæ do nauki.
 <br><br>
-Q-typing nie jest programem zbyt rozbudowanym, ale dobrze nadaje siÄ™ do nauki szybkiego pisania. Jest teÅ¼ znakomity jeÅ›li chcemy zmierzyÄ‡ swojÄ… prÄ™dkoÅ›Ä‡ pisania za pomocÄ… przygotowanych wczeÅ›niej tekstÃ³w (moÅ¼esz je na przykÅ‚ad Å›ciÄ…gnÄ…Ä‡ z dziaÅ‚u <a href="test.htm">Test prÄ™dkoÅ›ci online</a>). Jest to jeden z najlepszych programÃ³w do nauki bezwzrokowego pisania dostÄ™pnych za darmo.
+Q-typing nie jest programem zbyt rozbudowanym, ale dobrze nadaje siê do nauki szybkiego pisania. Jest te¿ znakomity je¶li chcemy zmierzyæ swoj± prêdko¶æ pisania za pomoc± przygotowanych wcze¶niej tekstów (mo¿esz je na przyk³ad ¶ci±gn±æ z dzia³u <a href="test.htm">Test prêdko¶ci online</a>). Jest to jeden z najlepszych programów do nauki bezwzrokowego pisania dostêpnych za darmo.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -210,17 +210,17 @@ freeware
 <a href="download/kspnk.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (389 kB)</a>
 
 <br><br>
-Autorem programu jest Daniel KrÃ³l, programista z Chorzowa. Prowadzi on takÅ¼e serwis internetowy <a href="http://www.kspnk.prv.pl">www.kspnk.prv.pl</a>, ktÃ³ry poÅ›wiÄ™cony jest szybkiemu pisaniu na klawiaturze. SÄ… na nim publikowane co jakiÅ› czas nowe wersje programu, ktÃ³re moÅ¼na Å›ciÄ…gnÄ…Ä‡ na dysk. Aktualna nosi numer 1.1, natomiast opisywana tutaj to 1.0.
+Autorem programu jest Daniel Król, programista z Chorzowa. Prowadzi on tak¿e serwis internetowy <a href="http://www.kspnk.prv.pl">www.kspnk.prv.pl</a>, który po¶wiêcony jest szybkiemu pisaniu na klawiaturze. S± na nim publikowane co jaki¶ czas nowe wersje programu, które mo¿na ¶ci±gn±æ na dysk. Aktualna nosi numer 1.1, natomiast opisywana tutaj to 1.0.
 <br><br>
-KSPNK jest programem bardzo prostym, ale funkcjonalnym i posiada wiÄ™kszoÅ›Ä‡ niezbÄ™dnych opcji. UmoÅ¼liwia zarÃ³wno uczenie siÄ™ korzystania z wszystkich klawiszy, jak i mierzenie prÄ™dkoÅ›ci pisania poprzez przepisywanie dowolnego tekstu. W programie moÅ¼na dla uÅ‚atwienia wyÅ›wietliÄ‡ sobie rysunek klawiatury z zaznaczonym nastÄ™pnym klawiszem do wciÅ›niÄ™cia, co jest sporym uÅ‚atwieniem na poczÄ…tku nauki. Jest teÅ¼ moÅ¼liwe korzystanie z jednego programu przez kilku uÅ¼ytkownikÃ³w tak, aby kaÅ¼dy miaÅ‚ swÃ³j profil.
+KSPNK jest programem bardzo prostym, ale funkcjonalnym i posiada wiêkszo¶æ niezbêdnych opcji. Umo¿liwia zarówno uczenie siê korzystania z wszystkich klawiszy, jak i mierzenie prêdko¶ci pisania poprzez przepisywanie dowolnego tekstu. W programie mo¿na dla u³atwienia wy¶wietliæ sobie rysunek klawiatury z zaznaczonym nastêpnym klawiszem do wci¶niêcia, co jest sporym u³atwieniem na pocz±tku nauki. Jest te¿ mo¿liwe korzystanie z jednego programu przez kilku u¿ytkowników tak, aby ka¿dy mia³ swój profil.
 <br><br>
-Niestety, choÄ‡ wÅ›rÃ³d programistÃ³w panuje maksyma, Å¼e im program mniejszy, tym lepszy, KSPNK sporo brakuje do doskonaÅ‚oÅ›ci. Zawiera on bardzo niewiele opcji - dotyczÄ… one tylko ustawieÅ„ uÅ¼ytkownikÃ³w, dÅºwiÄ™kÃ³w i wyÅ›wietlania rysunku klawiatury. Poza tym, podczas przepisywania wÅ‚asnych tekstÃ³w natykamy siÄ™ od razu na pewnÄ… niedogodnoÅ›Ä‡. Mianowicie, przepisywany tekst musi byÄ‡ podzielony na okoÅ‚o 50-znakowe linijki, co wymaga jego odpowiedniego przygotowania. KolejnÄ… wadÄ… jest maksymalnie uproszczona grafika programu; szczegÃ³lnie denerwujÄ…ce sÄ… czarno-biaÅ‚e kontrasty. Ponadto, nie jest dostÄ™pny Å¼aden plik pomocy - odpowiednich informacji trzeba szukaÄ‡ w Internecie, na stronie programu. DenerwujÄ… teÅ¼ literÃ³wki i zwykÅ‚e bÅ‚Ä™dy ortograficzne w poleceniach programu - Å›wiadczy to niechybnie o tym, Å¼e autor nie poÅ›wiÄ™ciÅ‚ zbyt duÅ¼o czasu na jego testowanie... no, chyba Å¼e ma dysleksjÄ™.
+Niestety, choæ w¶ród programistów panuje maksyma, ¿e im program mniejszy, tym lepszy, KSPNK sporo brakuje do doskona³o¶ci. Zawiera on bardzo niewiele opcji - dotycz± one tylko ustawieñ u¿ytkowników, d¼wiêków i wy¶wietlania rysunku klawiatury. Poza tym, podczas przepisywania w³asnych tekstów natykamy siê od razu na pewn± niedogodno¶æ. Mianowicie, przepisywany tekst musi byæ podzielony na oko³o 50-znakowe linijki, co wymaga jego odpowiedniego przygotowania. Kolejn± wad± jest maksymalnie uproszczona grafika programu; szczególnie denerwuj±ce s± czarno-bia³e kontrasty. Ponadto, nie jest dostêpny ¿aden plik pomocy - odpowiednich informacji trzeba szukaæ w Internecie, na stronie programu. Denerwuj± te¿ literówki i zwyk³e b³êdy ortograficzne w poleceniach programu - ¶wiadczy to niechybnie o tym, ¿e autor nie po¶wiêci³ zbyt du¿o czasu na jego testowanie... no, chyba ¿e ma dysleksjê.
 <br><br>
-Mimo tych wad i prostoty programu, speÅ‚nia on doÅ›Ä‡ dobrze swÄ… rolÄ™ i moÅ¼na siÄ™ z jego pomocÄ… nauczyÄ‡ szybkiego pisania.
+Mimo tych wad i prostoty programu, spe³nia on do¶æ dobrze sw± rolê i mo¿na siê z jego pomoc± nauczyæ szybkiego pisania.
 <br><br>
-JAK KORZYSTAÄ† Z PROGRAMU?
+JAK KORZYSTAÆ Z PROGRAMU?
 <br><br>
-Korzystanie z KSPNK jest bardzo podobne do uÅ¼ywania Mistrza Klawiatury; zobacz nieco wyÅ¼ej instrukcjÄ™ tego programu. GÅ‚Ã³wna rÃ³Å¼nica polega tylko na tym, Å¼e do rozpoczÄ™cia lekcji sÅ‚uÅ¼y opcja PLIK -&gt; LEKCJE, a do przepisywania wÅ‚asnych tekstÃ³w PLIK -&gt; TESTY -&gt; ZAÅADUJ PLIK TEKSTOWY.
+Korzystanie z KSPNK jest bardzo podobne do u¿ywania Mistrza Klawiatury; zobacz nieco wy¿ej instrukcjê tego programu. G³ówna ró¿nica polega tylko na tym, ¿e do rozpoczêcia lekcji s³u¿y opcja PLIK -&gt; LEKCJE, a do przepisywania w³asnych tekstów PLIK -&gt; TESTY -&gt; ZA£ADUJ PLIK TEKSTOWY.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -250,18 +250,18 @@ shareware
 </table>
 
 <br>
-<a href="download/keyspeed.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ WERSJÄ˜ DEMO (1,25 MB)</a>...
+<a href="download/keyspeed.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ WERSJÊ DEMO (1,25 MB)</a>...
 <br>
-&nbsp;...albo <a href="http://www.keyspeed.pl/zamow.php" target="_blank">KUP PEÅNÄ„ WERSJÄ˜ ZA 9 ZÅOTYCH</a>
+&nbsp;...albo <a href="http://www.keyspeed.pl/zamow.php" target="_blank">KUP PE£N¡ WERSJÊ ZA 9 Z£OTYCH</a>
 
 <br><br>
-Kolejny program do nauki pisania na klawiaturze stworzony przez mÅ‚odego zdolnego programistÄ™ - Roberta Najdziona. Na stronie <a href="http://www.keyspeed.prv.pl">www.keyspeed.prv.pl</a> moÅ¼na dowiedzieÄ‡ siÄ™ wiÄ™cej o programie, Å›ciÄ…gnÄ…Ä‡ jego wersjÄ™ demonstracyjnÄ… lub kupiÄ‡ peÅ‚nÄ… wersjÄ™ za 9 zÅ‚otych. Formy pÅ‚atnoÅ›ci sÄ… przy tym dogodne: istnieje nawet moÅ¼liwoÅ›Ä‡ nabycia programu poprzez wysÅ‚anie SMSa.
+Kolejny program do nauki pisania na klawiaturze stworzony przez m³odego zdolnego programistê - Roberta Najdziona. Na stronie <a href="http://www.keyspeed.prv.pl">www.keyspeed.prv.pl</a> mo¿na dowiedzieæ siê wiêcej o programie, ¶ci±gn±æ jego wersjê demonstracyjn± lub kupiæ pe³n± wersjê za 9 z³otych. Formy p³atno¶ci s± przy tym dogodne: istnieje nawet mo¿liwo¶æ nabycia programu poprzez wys³anie SMSa.
 <br><br>
-Przyjrzyjmy siÄ™ samemu programowi. Zawiera on standardowe skÅ‚adniki dla tego rodzaju aplikacji: LEKCJE, PORADY, UCZNIOWIE, WYNIKI, POMOC, OPCJE. Opcji nie jest zbyt wiele, ale moÅ¼na ustawiÄ‡ najwaÅ¼niejsze parametry: dÅºwiÄ™ki wydawane przez klawisze, wÅ‚Ä…czyÄ‡ metronom, reakcje programu na popeÅ‚nienie bÅ‚Ä™du i napotkanie koÅ„ca linii. W POMOCY opisane sÄ… treÅ›ciwie zasadnicze funkcje programu; podobnie PORADY lakonicznie wyjaÅ›niajÄ…, na co nowy uÅ¼ytkownik powinien zwracaÄ‡ uwagÄ™ i warto je poznaÄ‡ przez rozpoczÄ™ciem Ä‡wiczeÅ„. WYNIKI pozwalajÄ… wyÅ›wietliÄ‡ poprawnoÅ›Ä‡ i szybkoÅ›Ä‡ uderzania w poszczegÃ³lne klawisze, przypominajÄ… statystyki z Mistrza Klawiatury. Program pozwala na korzystanie z niego przez kilku rÃ³Å¼nych uÅ¼ytkownikÃ³w, maksymalnie oÅ›miu. PodsumowywujÄ…c, sÄ… tu tylko opcje standardowe dla programÃ³w uczÄ…cych szybkiego pisania, ale teÅ¼ Å¼adnej waÅ¼nej z nich nie brakuje.
+Przyjrzyjmy siê samemu programowi. Zawiera on standardowe sk³adniki dla tego rodzaju aplikacji: LEKCJE, PORADY, UCZNIOWIE, WYNIKI, POMOC, OPCJE. Opcji nie jest zbyt wiele, ale mo¿na ustawiæ najwa¿niejsze parametry: d¼wiêki wydawane przez klawisze, w³±czyæ metronom, reakcje programu na pope³nienie b³êdu i napotkanie koñca linii. W POMOCY opisane s± tre¶ciwie zasadnicze funkcje programu; podobnie PORADY lakonicznie wyja¶niaj±, na co nowy u¿ytkownik powinien zwracaæ uwagê i warto je poznaæ przez rozpoczêciem æwiczeñ. WYNIKI pozwalaj± wy¶wietliæ poprawno¶æ i szybko¶æ uderzania w poszczególne klawisze, przypominaj± statystyki z Mistrza Klawiatury. Program pozwala na korzystanie z niego przez kilku ró¿nych u¿ytkowników, maksymalnie o¶miu. Podsumowywuj±c, s± tu tylko opcje standardowe dla programów ucz±cych szybkiego pisania, ale te¿ ¿adnej wa¿nej z nich nie brakuje.
 <br><br>
-Zasadnicza czÄ™Å›Ä‡ programu to LEKCJE. Jest ich 21. PrzerabiajÄ…c je po kolei zaznajamiamy siÄ™ stopniowo z caÅ‚Ä… klawiaturÄ…, rÃ³wnieÅ¼ numerycznÄ…. Za kaÅ¼dym razem wyÅ›wietlana jest instrukcja objaÅ›niajÄ…ca, ktÃ³rym palcem naleÅ¼y uderzaÄ‡ ktÃ³ry klawisz. Po rozpoczÄ™ciu lekcji na bieÅ¼Ä…co wyÅ›wietlane sÄ… prÄ™dkoÅ›Ä‡, poprawnoÅ›Ä‡ i tym podobne. DuÅ¼Ä… zaletÄ… jest moÅ¼liwoÅ›Ä‡ wÅ‚Ä…czenia metronomu, ktÃ³ry pomaga uzyskaÄ‡ odpowiednie, wybrane przez nas tempo. Niestety, nie istnieje moÅ¼liwoÅ›Ä‡ zaÅ‚adowania wÅ‚asnych lekcji i tekstÃ³w, ale istnieje na to prosty trik. Wystarczy tylko podmieniÄ‡ oryginalne pliki KeySpeed z lekcjami na swoje wÅ‚asne (stare nazwy muszÄ… jednak zostaÄ‡ zachowane).
+Zasadnicza czê¶æ programu to LEKCJE. Jest ich 21. Przerabiaj±c je po kolei zaznajamiamy siê stopniowo z ca³± klawiatur±, równie¿ numeryczn±. Za ka¿dym razem wy¶wietlana jest instrukcja obja¶niaj±ca, którym palcem nale¿y uderzaæ który klawisz. Po rozpoczêciu lekcji na bie¿±co wy¶wietlane s± prêdko¶æ, poprawno¶æ i tym podobne. Du¿± zalet± jest mo¿liwo¶æ w³±czenia metronomu, który pomaga uzyskaæ odpowiednie, wybrane przez nas tempo. Niestety, nie istnieje mo¿liwo¶æ za³adowania w³asnych lekcji i tekstów, ale istnieje na to prosty trik. Wystarczy tylko podmieniæ oryginalne pliki KeySpeed z lekcjami na swoje w³asne (stare nazwy musz± jednak zostaæ zachowane).
 <br><br>
-Program jest doÅ›Ä‡ prosty i nie zawiera dodatkÃ³w takich jak gry, ale nie jest to duÅ¼a wada. WaÅ¼ne jest to, Å¼e program jest dobrze dopracowany i nie sprawia w czasie uÅ¼ytkowania Å¼adnych problemÃ³w. Jedynym powaÅ¼nym uniedogodnieniem jest tylko problem z Å‚adowaniem wÅ‚asnych plikÃ³w. Warto wydaÄ‡ te 9 zÅ‚ na KeySpeed, uwaÅ¼am Å¼e jest on wart nawet wiÄ™cej.
+Program jest do¶æ prosty i nie zawiera dodatków takich jak gry, ale nie jest to du¿a wada. Wa¿ne jest to, ¿e program jest dobrze dopracowany i nie sprawia w czasie u¿ytkowania ¿adnych problemów. Jedynym powa¿nym uniedogodnieniem jest tylko problem z ³adowaniem w³asnych plików. Warto wydaæ te 9 z³ na KeySpeed, uwa¿am ¿e jest on wart nawet wiêcej.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -297,13 +297,13 @@ shareware
 <a href="http://www.accutech.com.pl" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
 
 <br><br>
-Polski program do nauki pisania na klawiaturze. Tryb nauki wyglÄ…da w nim nieco inaczej niÅ¼ w pozostaÅ‚ych opisywanych tu programach.
+Polski program do nauki pisania na klawiaturze. Tryb nauki wygl±da w nim nieco inaczej ni¿ w pozosta³ych opisywanych tu programach.
 <br><br>
-Produkt firmy AccuTech Polska podzielony jest na cztery gÅ‚Ã³wne segmenty: Pisanie Bezwzrokowe, Test Pisania, Rozwijanie SzybkoÅ›ci i MaÅ‚a Dywersja. Pierwsza z nich, jak sama nazwa wskazuje, umoÅ¼liwia nauczenie siÄ™ pisania na klawiaturze wszystkimi palcami, bez patrzenia na niÄ…. Podczas Ä‡wiczeÅ„ na ekranie caÅ‚y czas widoczna jest klawiatura, a naszym zadaniem jest przepisywanie liter pojawiajÄ…cych siÄ™ na dole ekranu. Po zakoÅ„czeniu lekcji nasze wyniki sÄ… oceniane i jeÅ›li bÄ™dÄ… wystarczajÄ…co dobre, program sam wybierze dla nas nastÄ™pne Ä‡wiczenia o wiÄ™kszym stopniu zaawansowania. PostÄ™py w nauce moÅ¼na obejrzeÄ‡ uÅ¼ywajÄ…c opcji WYNIKI, ktÃ³ra pokaÅ¼e poziom, na ktÃ³rym aktualnie znajduje siÄ™ uÅ¼ytkownik (od 1 do 8) oraz zaleÅ¼noÅ›Ä‡ poprawnoÅ›ci i szybkoÅ›ci pisania od czasu. Nasze osiÄ…gniÄ™cia moÅ¼emy w kaÅ¼dej chwili wydrukowaÄ‡.
+Produkt firmy AccuTech Polska podzielony jest na cztery g³ówne segmenty: Pisanie Bezwzrokowe, Test Pisania, Rozwijanie Szybko¶ci i Ma³a Dywersja. Pierwsza z nich, jak sama nazwa wskazuje, umo¿liwia nauczenie siê pisania na klawiaturze wszystkimi palcami, bez patrzenia na ni±. Podczas æwiczeñ na ekranie ca³y czas widoczna jest klawiatura, a naszym zadaniem jest przepisywanie liter pojawiaj±cych siê na dole ekranu. Po zakoñczeniu lekcji nasze wyniki s± oceniane i je¶li bêd± wystarczaj±co dobre, program sam wybierze dla nas nastêpne æwiczenia o wiêkszym stopniu zaawansowania. Postêpy w nauce mo¿na obejrzeæ u¿ywaj±c opcji WYNIKI, która poka¿e poziom, na którym aktualnie znajduje siê u¿ytkownik (od 1 do 8) oraz zale¿no¶æ poprawno¶ci i szybko¶ci pisania od czasu. Nasze osi±gniêcia mo¿emy w ka¿dej chwili wydrukowaæ.
 <br><br>
-Nieco innymi zasadami rzÄ…dzi siÄ™ Test Pisania. Tam trzeba przepisaÄ‡ tekst z jednego pola do drugiego, co jest dobrym rozwiÄ…zaniem, bo przypomina przepisywanie z kartki. Istnieje teÅ¼ moÅ¼liwoÅ›Ä‡ wyboru charakteru przepisywanego tekstu (np. tylko cyfry, tylko litery lub caÅ‚a klawiatura). Niestety, teksty sÄ… zbyt krÃ³tkie i maÅ‚o liczne, przez co trudno mÃ³wiÄ‡ o wiarygodnych wynikach. Na dodatek nie moÅ¼na zaÅ‚adowaÄ‡ do programu wÅ‚asnych plikÃ³w tekstowych, co jest juÅ¼ jego bardzo powaÅ¼nym minusem. Rozwijanie SzybkoÅ›ci rÃ³Å¼ni siÄ™ od Testu Pisania tym, Å¼e program bÄ™dzie nas poganiaÅ‚ podÅ›wietlajÄ…c tekst z prÄ™dkoÅ›ciÄ… docelowÄ…, jakÄ… sobie wybierzemy. Pod tajemniczÄ… nazwÄ… MaÅ‚a Dywersja kryje siÄ™ zaÅ› zwykÅ‚a, prosta gra Ä‡wiczÄ…ca refleks. To doÅ›Ä‡ miÅ‚a odskocznia, jeÅ¼eli ktoÅ› uwaÅ¼a Ä‡wiczenia za nuÅ¼Ä…ce.
+Nieco innymi zasadami rz±dzi siê Test Pisania. Tam trzeba przepisaæ tekst z jednego pola do drugiego, co jest dobrym rozwi±zaniem, bo przypomina przepisywanie z kartki. Istnieje te¿ mo¿liwo¶æ wyboru charakteru przepisywanego tekstu (np. tylko cyfry, tylko litery lub ca³a klawiatura). Niestety, teksty s± zbyt krótkie i ma³o liczne, przez co trudno mówiæ o wiarygodnych wynikach. Na dodatek nie mo¿na za³adowaæ do programu w³asnych plików tekstowych, co jest ju¿ jego bardzo powa¿nym minusem. Rozwijanie Szybko¶ci ró¿ni siê od Testu Pisania tym, ¿e program bêdzie nas pogania³ pod¶wietlaj±c tekst z prêdko¶ci± docelow±, jak± sobie wybierzemy. Pod tajemnicz± nazw± Ma³a Dywersja kryje siê za¶ zwyk³a, prosta gra æwicz±ca refleks. To do¶æ mi³a odskocznia, je¿eli kto¶ uwa¿a æwiczenia za nu¿±ce.
 <br><br>
-Accu-Type 4 to dobry program, ktÃ³ry Å‚atwo i bez stresÃ³w przeprowadzi uÅ¼ytkownika przez peÅ‚ny kurs nauki szybkiego pisania. RÃ³wnie przydatny byÅ‚by dla tych, ktÃ³rzy chcÄ… rozwinÄ…Ä‡ swÄ… prÄ™dkoÅ›Ä‡ pisania, ale niestety posiada maÅ‚o przykÅ‚adowych tekstÃ³w i nie umoÅ¼liwia stosowania wÅ‚asnych.
+Accu-Type 4 to dobry program, który ³atwo i bez stresów przeprowadzi u¿ytkownika przez pe³ny kurs nauki szybkiego pisania. Równie przydatny by³by dla tych, którzy chc± rozwin±æ sw± prêdko¶æ pisania, ale niestety posiada ma³o przyk³adowych tekstów i nie umo¿liwia stosowania w³asnych.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -340,7 +340,7 @@ freeware
 <a href="download/klawiaturka.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (547 kB)</a>
 
 <br><br>
-Klawiaturka! jest nastÄ™pcÄ… programu Klawisz 2000. Na pierwszy rzut oka wyglÄ…da zupeÅ‚nie jak poprzednik, ale jest nieco lepszym programem. Jest w nim nie za dÅ‚uga instrukcja objaÅ›niajÄ…ca, w jaki sposÃ³b zabraÄ‡ siÄ™ do nauki. Posiada mnÃ³stwo lekcji, w ktÃ³rych kolejno wprowadzane sÄ… litery i inne znaki. W lekcjach zdaniowych jest niewiele tekstÃ³w i sÄ… maÅ‚o interesujÄ…ce, ale istnieje moÅ¼liwoÅ›Ä‡ Ä‡wiczenia wÅ‚asnych tekstÃ³w. MiÅ‚ym urozmaiceniem jest gra edukacyjna - rodzaj Tetrisa, w ktÃ³rym trzeba wpisywaÄ‡ szybko sÅ‚owa zanim spadnÄ… w dÃ³Å‚. PodsumowywujÄ…c, moÅ¼na siÄ™ nauczyÄ‡ za pomocÄ… tego programu szybkiego pisania, choÄ‡ nie ma tu specjalnych fajerwerkÃ³w.
+Klawiaturka! jest nastêpc± programu Klawisz 2000. Na pierwszy rzut oka wygl±da zupe³nie jak poprzednik, ale jest nieco lepszym programem. Jest w nim nie za d³uga instrukcja obja¶niaj±ca, w jaki sposób zabraæ siê do nauki. Posiada mnóstwo lekcji, w których kolejno wprowadzane s± litery i inne znaki. W lekcjach zdaniowych jest niewiele tekstów i s± ma³o interesuj±ce, ale istnieje mo¿liwo¶æ æwiczenia w³asnych tekstów. Mi³ym urozmaiceniem jest gra edukacyjna - rodzaj Tetrisa, w którym trzeba wpisywaæ szybko s³owa zanim spadn± w dó³. Podsumowywuj±c, mo¿na siê nauczyæ za pomoc± tego programu szybkiego pisania, choæ nie ma tu specjalnych fajerwerków.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -364,7 +364,7 @@ typ licencji
 <img src="img/gwiazda.gif" width="12" height="12" border="0" alt="X">
 <img src="img/gwiazdap.gif" width="12" height="12" border="0" alt="O">
 <img src="img/gwiazdap.gif" width="12" height="12" border="0" alt="O"><br>
-freeware (dla czytelnikÃ³w NoName)
+freeware (dla czytelników NoName)
 </td>
 </tr>
 </table>
@@ -373,11 +373,11 @@ freeware (dla czytelnikÃ³w NoName)
 <a href="http://www.nnmag.net/nn/index.php?redir=mod_download.php&amp;id=47" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY NONAME</a>
 
 <br><br>
-Typ licencji, jaki podaÅ‚em (freeware dla czytelnikÃ³w NoName) moÅ¼e byÄ‡ niezrozumiaÅ‚y, wiÄ™c wyjaÅ›niam. Program Klawisz 2000 nie moÅ¼e byÄ‡ rozprowadzany za darmo, ale wyjÄ…tkiem jest niekomercyjny internetowy magazyn NoName, publikujÄ…cy artykuÅ‚y czytelnikÃ³w. StamtÄ…d wÅ‚aÅ›nie moÅ¼na Å›ciÄ…gnÄ…Ä‡ program bezproblemowo i bez Å¼adnych opÅ‚at.
+Typ licencji, jaki poda³em (freeware dla czytelników NoName) mo¿e byæ niezrozumia³y, wiêc wyja¶niam. Program Klawisz 2000 nie mo¿e byæ rozprowadzany za darmo, ale wyj±tkiem jest niekomercyjny internetowy magazyn NoName, publikuj±cy artyku³y czytelników. Stamt±d w³a¶nie mo¿na ¶ci±gn±æ program bezproblemowo i bez ¿adnych op³at.
 <br><br>
-Klawisz 2000 sÅ‚uÅ¼y oczywiÅ›cie do nauki bezwzrokowego pisania. To stosunkowo prosty program, nie wymagajÄ…cy nawet instalacji. Zawiera niewiele ponad lekcje sÅ‚uÅ¼Ä…ce do nauki kolejnych klawiszy i teksty do przepisywania. MoÅ¼emy wyÅ›wietliÄ‡ sobie obraz klawiatury, co moÅ¼e byÄ‡ pomocne na poczÄ…tku nauki. Mamy moÅ¼liwoÅ›Ä‡ Ä‡wiczenia wÅ‚asnych plikÃ³w tekstowych. Z kolei pliki tekstowe wbudowane w program sÄ… niezbyt liczne i maÅ‚o interesujÄ…ce - gÅ‚Ã³wnie sÄ… to reklamy producenta lub nieskÅ‚adne myÅ›li autora Klawisza 2000 przelane do komputera.
+Klawisz 2000 s³u¿y oczywi¶cie do nauki bezwzrokowego pisania. To stosunkowo prosty program, nie wymagaj±cy nawet instalacji. Zawiera niewiele ponad lekcje s³u¿±ce do nauki kolejnych klawiszy i teksty do przepisywania. Mo¿emy wy¶wietliæ sobie obraz klawiatury, co mo¿e byæ pomocne na pocz±tku nauki. Mamy mo¿liwo¶æ æwiczenia w³asnych plików tekstowych. Z kolei pliki tekstowe wbudowane w program s± niezbyt liczne i ma³o interesuj±ce - g³ównie s± to reklamy producenta lub niesk³adne my¶li autora Klawisza 2000 przelane do komputera.
 <br><br>
-Jednym sÅ‚owem, Klawisz 2000 to co najwyÅ¼ej przeciÄ™tny program umoÅ¼liwiajÄ…cy opanowanie klawiatury. Ale poniewaÅ¼ jest darmowy, moÅ¼na zdecydowaÄ‡ siÄ™ na jego wyprÃ³bowanie.
+Jednym s³owem, Klawisz 2000 to co najwy¿ej przeciêtny program umo¿liwiaj±cy opanowanie klawiatury. Ale poniewa¿ jest darmowy, mo¿na zdecydowaæ siê na jego wypróbowanie.
 <br><br>&nbsp;
 
 <hr width="100%" size="1" color="#222222" align="left">
@@ -410,7 +410,7 @@ freeware
 <a href="download/klawiatura.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (118 kB)</a>
 
 <br><br>
-Malutki programik z minimalnÄ… liczbÄ… opcji. Posiada doÅ›Ä‡ skromny zestaw lekcji, ktÃ³re jednak pozwalajÄ… na opanowanie wszystkich znakÃ³w na klawiaturze, takÅ¼e numerycznej. Niestety, tylko jedna z nich zawiera tekst pisany, pozwalajÄ…cy na utrwalenie umiejÄ™tnoÅ›ci. JedynÄ… dodatkowÄ… opcjÄ… jest wyÅ›wietlenie statystyk. Mimo to "Klawiatura" nadaje siÄ™ do wstÄ™pnego Ä‡wiczenia szybkiego pisania.
+Malutki programik z minimaln± liczb± opcji. Posiada do¶æ skromny zestaw lekcji, które jednak pozwalaj± na opanowanie wszystkich znaków na klawiaturze, tak¿e numerycznej. Niestety, tylko jedna z nich zawiera tekst pisany, pozwalaj±cy na utrwalenie umiejêtno¶ci. Jedyn± dodatkow± opcj± jest wy¶wietlenie statystyk. Mimo to "Klawiatura" nadaje siê do wstêpnego æwiczenia szybkiego pisania.
 <br><br>&nbsp;
 
 <br>&nbsp;
