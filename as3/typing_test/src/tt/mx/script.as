@@ -10,9 +10,6 @@ import com.hurlant.util.Hex;
 
 import flash.events.Event;
 
-import mx.containers.TitleWindow;
-import mx.controls.Text;
-import mx.events.CloseEvent;
 import mx.events.FlexEvent;
 import mx.managers.PopUpManager;
 import mx.rpc.events.ResultEvent;

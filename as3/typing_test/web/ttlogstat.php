@@ -157,11 +157,21 @@ echo "<br>\n\n";
 
 // wszystkie wpisy w ttlog
 echo "<h2>Typing Test - Statystyka</h3>\n";
-$r = pg_query('
-    SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+$range = $_GET['range'];
+if ($range == 'all') {
+    $r = pg_query('
+        SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
         FROM ttlog
         ORDER BY id DESC
-');
+        ');
+} else {
+    $r = pg_query('
+        SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+        FROM ttlog
+        ORDER BY id DESC
+        LIMIT 1000
+        ');
+}
 $nbsp3 = '&nbsp;&nbsp;&nbsp;';
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<td><b>nr</b></td><td><b>zakończenie pisania$nbsp3</b></td>\n";
@@ -188,6 +198,11 @@ while ($row = pg_fetch_assoc($r)) {
 ?>
 </tr>
 </table>
+<?php
+if ($range != 'all') {
+    echo "<a href=\"?range=all\">Pokaż wszystkie</a>\n";
+}
+?>
 
 </body>
 </html>
