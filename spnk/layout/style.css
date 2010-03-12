@@ -1,52 +1,58 @@
 body {
   font-family: "Arial CE", Arial;
   font-size: 10pt;
-  line-height: 12pt
+  line-height: 12pt;
 }
 td {
   font-family: "Arial CE", Arial;
   font-size: 10pt;
-  line-height: 12pt
+  line-height: 12pt;
+}
+td.tytulb {
+  font-family: "Arial CE", Arial;
+  font-size: 10pt;
+  line-height: 12pt;
+  font-weight: bold;
 }
 p {
   font-family: "Arial CE", Arial;
   font-size: 10pt;
   line-height: 12pt;
-  text-align: justify
+  text-align: justify;
 }
 p.tytul {
   font-family: "Arial CE", Arial;
   font-size: 13pt;
   line-height: 16pt;
-  font-weight: bold
+  font-weight: bold;
 }
 p.tytulb {
   font-family: "Arial CE", Arial;
   font-size: 10pt;
   line-height: 12pt;
-  font-weight: bold
+  font-weight: bold;
 }
 p.podpis {
   font-family: "Arial CE", Arial;
   font-size: 10pt;
   line-height: 12pt;
   text-align: right;
-  font-style: italic
+  font-style: italic;
 }
 a {
   text-decoration: none;
   font-family: "Arial CE", Arial;
   font-size: 10pt;
   line-height: 12pt;
-  font-weight: normal
+  font-weight: normal;
 }
 a.menu {
   text-decoration: none;
   font-family: Tahoma, "Arial CE", Arial;
   font-size: 10pt;
   line-height: 17px;
-  font-weight: bold
+  font-weight: bold;
 }
 a:hover {
-  color: #000000
+  color: #000000;
 }
