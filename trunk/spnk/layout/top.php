@@ -1,14 +1,3 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <meta name="Language" content="pl">
-    <meta name="Author" content="Michał Dettlaff">
-    <meta name="Copyright" content="Michał Dettlaff 2010">
-    <link rel="stylesheet" href="layout/style.css" type="text/css">
-    <title>Szybkie Pisanie na Klawiaturze</title>
-  </head>
-
   <body link="#7777EE" alink="#7777EE" vlink="#7777EE" bgcolor="#F5F5F5" text="#000001"
       leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
 
@@ -47,36 +36,3 @@
             <tr>
               <td valign="top" background="layout/img/menu3.jpg" bgcolor="#F5F5F5"
                   style="background-repeat: no-repeat">
-
-<p>
-&nbsp;<br>
-Nazywam się Michał Dettlaff, ale w Internecie podpisuję się zwykle jako Wundżun. Często piszę różne rzeczy na komputerze, zwykle artykuły do magazynów internetowych, emaile lub kody programów. Z czasem nauczyłem się szybkiego bezwzrokowego pisania na klawiaturze i zauważyłem, jakie jest to praktyczne i ergonomiczne. Dlatego też wpadłem na pomysł stworzenia tej strony, aby internauci tacy jak ty mogli szybko i łatwo się nauczyć tej umiejętności.
-<br><br>
-Jeśli masz jakieś pytania, uwagi, sugestie czy cokolwiek innego dotyczącego tej strony, pisz do mnie pod ten adres:
-<br><br>
-<a href="mailto:wundzunhome@wp.pl" class="menu">wundzunhome@wp.pl</a>
-<br>&nbsp;
-&nbsp;<br>
-
-Jeśli chcesz wymienić się bannerami, też napisz! Na pewno się dogadamy. Mój banner wygląda tak:
-<br><br>
-
-<a href="http://www.szybkiepisanie.webpark.pl" target="_blank">
-<img src="banner1.gif" width="400" height="50" border="0" alt="Szybkie Pisanie na Klawiaturze">
-</a>
-
-<br>&nbsp;
-<br>&nbsp;
-</p>
-
-            </td>
-            <td width="25"></td>
-            </tr>
-          </table>
-
-        </td>
-      </tr>
-    </table>
-
-  </body>
-</html>

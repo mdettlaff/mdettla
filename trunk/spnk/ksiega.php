@@ -5,8 +5,7 @@
     <meta name="Language" content="pl">
     <meta name="Author" content="Michał Dettlaff">
     <meta name="Copyright" content="Michał Dettlaff 2010">
-    <link rel="stylesheet" href="style.css" type="text/css">
-
+    <link rel="stylesheet" href="layout/style.css" type="text/css">
     <script>
       function validate_email(email) {
           var atpos = email.indexOf("@");
@@ -34,50 +33,13 @@
     <title>Szybkie Pisanie na Klawiaturze</title>
   </head>
 
-  <body link="#7777EE" alink="#7777EE" vlink="#7777EE" bgcolor="#F5F5F5" text="#000001"
-      leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
-
-    <table border="0" cellpadding="0" cellspacing="0" width="100%">
-      <tr>
-        <td width="260" valign="top">
-
-          <table align="left" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td rowspan="2" width="32" height="350" valign="top" background="menu1.jpg"
-                  bgcolor="#F5F5F5" style="background-repeat: no-repeat">
-              </td>
-              <td width="228" height="112" valign="top" background="menu2a.jpg"
-                  bgcolor="#F5F5F5" style="background-repeat: no-repeat">
-              </td>
-            </tr>
-            <tr>
-              <td width="228" height="238" valign="top" background="menu2b.jpg"
-                  bgcolor="#f5f5f5" style="background-repeat: no-repeat">
-                <a href="index.html" class="menu">Strona główna</a><br />&nbsp;<br />
-                <a href="nauka.htm" class="menu">Jak nauczyć się<br />
-                  szybkiego pisania?</a><br />&nbsp;<br />
-                <a href="programy.php" class="menu">Programy</a><br />&nbsp;<br />
-                <a href="test.htm" class="menu">Test prędkości online</a><br />&nbsp;<br />
-                <a href="linki.htm" class="menu">Linki</a><br />&nbsp;<br />
-                <a href="ksiega.php" class="menu">Księga gości</a><br />&nbsp;<br />
-                <a href="autor.htm" class="menu">Autor strony</a>
-              </td>
-            </tr>
-          </table>
-
-        </td>
-        <td valign="top">
-
-          <table width="100%" border="0" cellpadding="0" cellspacing="0">
-            <tr>
-              <td valign="top" background="menu3.jpg" bgcolor="#F5F5F5"
-                  style="background-repeat: no-repeat">
+<?php include 'layout/top.php'; ?>
 
 <p>
 &nbsp;<br>
 <table width="100%">
   <tr bgcolor="#BAC5F8" height="30">
-    <td><p class="tytulb">&nbsp; &nbsp;KSIĘGA GOŚCI</p></td>
+    <td class="tytulb">&nbsp; &nbsp;KSIĘGA GOŚCI</td>
   </tr>
 </table>
 <?php
@@ -108,7 +70,7 @@ if (!empty($_POST['submit'])) {
     $name = pg_escape_string($_POST['name']);
     $email = pg_escape_string($_POST['email']);
     $content = pg_escape_string($_POST['content']);
-    echo "<br />\n";
+    echo "<br>\n";
     if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie są dozwolone.\n";
     } else if (validate($name, $email, $content)) {
@@ -131,15 +93,14 @@ if (!empty($_POST['submit'])) {
     } else {
         echo "Przykro mi, ale twój wpis nie został zaakceptowany.\n";
     }
-    echo "<br /><br />\n";
+    echo "<br><br>\n";
     echo "<a href=\"\"><b>Powrót do księgi gości</b></a>\n";
 } else {
 ?>
 <table width="100%">
   <tr>
     <td>
-      <p>Jeśli chcesz wyrazić swoją opinię o tej stronie lub na temat
-          z nią związany - wpisz się!</p>
+Jeśli chcesz wyrazić swoją opinię o tej stronie lub na temat z nią związany - wpisz się!
     </td>
   </tr>
 </table>
@@ -200,10 +161,10 @@ if (!empty($_POST['submit'])) {
             if ($time != "00:00") {
                 echo " o godzinie $time\n";
             }
-            echo "<br /><br />\n";
+            echo "<br><br>\n";
             echo str_replace("\n", "<br>\n",
                 htmlspecialchars($row['content']));
-            echo "\n<br /><br />\n<hr />\n\n";
+            echo "\n<br><br>\n<hr>\n\n";
         }
         // stronicowanie
         $result = pg_query("
@@ -212,7 +173,7 @@ if (!empty($_POST['submit'])) {
         if ($result && ($row = pg_fetch_assoc($result))) {
             $total_guestbook_size = $row['guestbook_size'];
             $page_count = (int)((($total_guestbook_size - 1) / $PAGE_SIZE) + 1);
-            echo "<br />\n<div style=\"text-align: center\">\n";
+            echo "<br>\n<div style=\"text-align: center\">\n";
             if ($current_page > 1) {
                 echo "<a href=\"?page=" . ($current_page - 1)
                     . "\"><b>&larr; </b></a>\n";
@@ -239,18 +200,10 @@ if (!empty($_POST['submit'])) {
 
 ?>
 
-<br />
-<br />&nbsp;
+<br>
+<br>&nbsp;
 </p>
 
-            </td>
-            <td width="25"></td>
-            </tr>
-          </table>
+<?php include 'layout/bottom.php'; ?>
 
-        </td>
-      </tr>
-    </table>
-
-  </body>
 </html>
