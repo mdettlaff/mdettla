@@ -67,9 +67,9 @@ mysql_connect();
 
 if (!empty($_POST['submit'])) {
     // dodaj nowy wpis
-    $name = mysql_escape_string($_POST['name']);
-    $email = mysql_escape_string($_POST['email']);
-    $content = mysql_escape_string($_POST['content']);
+    $name = mysql_real_escape_string($_POST['name']);
+    $email = mysql_real_escape_string($_POST['email']);
+    $content = mysql_real_escape_string($_POST['content']);
     echo "<br>\n";
     if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie s± dozwolone.\n";
@@ -79,7 +79,7 @@ if (!empty($_POST['submit'])) {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $ip = mysql_escape_string($ip);
+        $ip = mysql_real_escape_string($ip);
         mysql_query("
             INSERT INTO guestbook
                 (date_added, ip, username, email, content)

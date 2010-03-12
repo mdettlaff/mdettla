@@ -8,8 +8,8 @@ function log_write($msg) {
     } else {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    $ip = mysql_escape_string($ip);
-    $msg = mysql_escape_string($msg);
+    $ip = mysql_real_escape_string($ip);
+    $msg = mysql_real_escape_string($msg);
     $query = "
         INSERT INTO log
             (date_added, ip, message)

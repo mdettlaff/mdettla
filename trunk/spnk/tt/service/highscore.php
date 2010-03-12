@@ -94,14 +94,14 @@ if ($_GET['q'] == 'get_threshold') {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $username = mysql_escape_string($username);
-        $speed = mysql_escape_string($speed);
-        $mistakes = mysql_escape_string($mistakes);
-        $corrections = mysql_escape_string($corrections);
-        $pl = mysql_escape_string($pl);
-        $chars = mysql_escape_string($chars);
-        $minutes = mysql_escape_string($minutes);
-        $seconds = mysql_escape_string($seconds);
+        $username = mysql_real_escape_string($username);
+        $speed = mysql_real_escape_string($speed);
+        $mistakes = mysql_real_escape_string($mistakes);
+        $corrections = mysql_real_escape_string($corrections);
+        $pl = mysql_real_escape_string($pl);
+        $chars = mysql_real_escape_string($chars);
+        $minutes = mysql_real_escape_string($minutes);
+        $seconds = mysql_real_escape_string($seconds);
         $query = "
             INSERT INTO highscore
                 (date_added, ip, username, speed, mistakes, corrections,
