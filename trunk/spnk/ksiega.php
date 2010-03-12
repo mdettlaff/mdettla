@@ -63,13 +63,13 @@ function validate($name, $email, $content) {
 
 session_start();
 
-pg_connect("dbname=mdettla user=mdettla password=tommyemmanuel");
+mysql_connect();
 
 if (!empty($_POST['submit'])) {
     // dodaj nowy wpis
-    $name = pg_escape_string($_POST['name']);
-    $email = pg_escape_string($_POST['email']);
-    $content = pg_escape_string($_POST['content']);
+    $name = mysql_escape_string($_POST['name']);
+    $email = mysql_escape_string($_POST['email']);
+    $content = mysql_escape_string($_POST['content']);
     echo "<br>\n";
     if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie są dozwolone.\n";
@@ -79,8 +79,8 @@ if (!empty($_POST['submit'])) {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $ip = pg_escape_string($ip);
-        pg_query("
+        $ip = mysql_escape_string($ip);
+        mysql_query("
             INSERT INTO guestbook
                 (date_added, ip, username, email, content)
                 VALUES
@@ -139,7 +139,7 @@ Jeśli chcesz wyrazić swoją opinię o tej stronie lub na temat z nią związan
     } else {
         $current_page = 1;
     }
-    $result = pg_query("
+    $result = mysql_query("
         SELECT date_added, username, email, content
             FROM guestbook
             ORDER BY date_added DESC
@@ -147,7 +147,7 @@ Jeśli chcesz wyrazić swoją opinię o tej stronie lub na temat z nią związan
             OFFSET " . ($PAGE_SIZE * ($current_page - 1)) . "
     ");
     if ($result) {
-        while ($row = pg_fetch_assoc($result)) {
+        while ($row = mysql_fetch_assoc($result)) {
             if (!empty($row['email'])) {
                 echo "<a href=\"mailto:"
                     . htmlspecialchars($row['email']) . "\"><b>";
@@ -167,10 +167,10 @@ Jeśli chcesz wyrazić swoją opinię o tej stronie lub na temat z nią związan
             echo "\n<br><br>\n<hr>\n\n";
         }
         // stronicowanie
-        $result = pg_query("
+        $result = mysql_query("
             SELECT COUNT(id_guestbook) AS guestbook_size FROM guestbook
         ");
-        if ($result && ($row = pg_fetch_assoc($result))) {
+        if ($result && ($row = mysql_fetch_assoc($result))) {
             $total_guestbook_size = $row['guestbook_size'];
             $page_count = (int)((($total_guestbook_size - 1) / $PAGE_SIZE) + 1);
             echo "<br>\n<div style=\"text-align: center\">\n";
