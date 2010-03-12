@@ -52,12 +52,12 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
     } else {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    $speed = pg_escape_string($speed);
-    $mistakes = pg_escape_string($mistakes);
-    $pl = pg_escape_string($pl);
-    $chars = pg_escape_string($chars);
-    $minutes = pg_escape_string($minutes);
-    $seconds = pg_escape_string($seconds);
+    $speed = mysql_escape_string($speed);
+    $mistakes = mysql_escape_string($mistakes);
+    $pl = mysql_escape_string($pl);
+    $chars = mysql_escape_string($chars);
+    $minutes = mysql_escape_string($minutes);
+    $seconds = mysql_escape_string($seconds);
     $query = "
         INSERT INTO ttlog
             (date_added, ip, speed, mistakes,
@@ -66,8 +66,8 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
             (NOW(), '$ip', $speed, $mistakes,
                 '$pl', $chars, $minutes, $seconds)
     ";
-    pg_query($query) or log_write("ERROR: problem with query: $query ("
-        . pg_last_error() . ')');
+    mysql_query($query) or log_write("ERROR: problem with query: $query ("
+        . mysql_error() . ')');
 }
 
 unset($_SESSION['ttlog_h_data']);

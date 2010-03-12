@@ -16,13 +16,15 @@ function escape_username($username) {
 
 header('Content-Type: text/xml');
 
+$MAX_HIGHSCORE_SIZE = 150;
+
 $from_place = $_GET['from_place'];
 if (!is_numeric($from_place)) {
     $from_place = 1;
 }
 $to_place = $_GET['to_place'];
 if (!is_numeric($to_place)) {
-    $to_place = 25;
+    $to_place = $MAX_HIGHSCORE_SIZE;
 }
 if ($from_place > $to_place) {
     $to_place = $from_place;
@@ -30,29 +32,28 @@ if ($from_place > $to_place) {
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 echo "<highscore>\n";
-$result = pg_query("
+$result = mysql_query("
     SELECT COUNT(id_highscore) AS total_size FROM highscore
 ");
 if ($result) {
-    $row = pg_fetch_assoc($result);
+    $row = mysql_fetch_assoc($result);
     $total_highscore_size = $row['total_size'];
-    if ($total_highscore_size > 150) {
-        $total_highscore_size = 150;
+    if ($total_highscore_size > $MAX_HIGHSCORE_SIZE) {
+        $total_highscore_size = $MAX_HIGHSCORE_SIZE;
     }
     echo "<totalSize>" . $total_highscore_size . "</totalSize>";
 } else {
-    log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
+    log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
 }
-$result = pg_query("
+$result = mysql_query("
     SELECT username, speed, corrections, chars, minutes, seconds
         FROM highscore
         ORDER BY speed DESC
-        LIMIT " . ($to_place - $from_place + 1) . "
-        OFFSET " . ($from_place - 1) . "
+        LIMIT " . ($from_place - 1) . ", " . ($to_place - $from_place + 1) . "
 ");
 if ($result) {
     $i = 0;
-    while ($row = pg_fetch_assoc($result)) {
+    while ($row = mysql_fetch_assoc($result)) {
         $correctness = sprintf('%.1f',
             ($row['chars'] - $row['corrections']) / $row['chars'] * 100);
         echo "<entry>\n";
@@ -68,7 +69,7 @@ if ($result) {
         $i++;
     }
 } else {
-    log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
+    log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
 }
 echo "</highscore>\n";
 

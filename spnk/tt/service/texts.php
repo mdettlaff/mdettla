@@ -7,13 +7,13 @@ function get_texts_count() {
     $query = "
         SELECT COUNT(text) AS texts_count FROM texts
     ";
-    $result = pg_query($query);
+    $result = mysql_query($query);
     if ($result) {
-        $row = pg_fetch_assoc($result);
+        $row = mysql_fetch_assoc($result);
         return $row['texts_count'];
     } else {
         log_write("ERROR: problem with query: $query ("
-            . pg_last_error() . ')');
+            . mysql_error() . ')');
         exit(1);
     }
 }
@@ -30,19 +30,19 @@ if (empty($_SESSION['random_bag_of_text_ids'])) {
 $text_offset = array_pop($_SESSION['random_bag_of_text_ids']) - 1;
 
 $query = "
-    SELECT text FROM texts OFFSET $text_offset LIMIT 1
+    SELECT text FROM texts LIMIT $text_offset, 1
 ";
-$result = pg_query($query);
+$result = mysql_query($query);
 if ($result) {
     $_SESSION['ttlog_h_data'] = rand_str(32);
-    $row = pg_fetch_assoc($result);
+    $row = mysql_fetch_assoc($result);
     echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
     echo "<response>\n";
     echo '<text>' . $row['text'] . "</text>\n";
     echo '<hData>' . $_SESSION['ttlog_h_data'] . "</hData>\n";
     echo '</response>';
 } else {
-    log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
+    log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
     exit(1);
 }
 

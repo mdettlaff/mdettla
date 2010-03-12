@@ -8,7 +8,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
         || $_SERVER['PHP_AUTH_PW'] != $password) {
     header('WWW-Authenticate: Basic realm="Log realm"');
     header('HTTP/1.0 401 Unauthorized');
-    echo 'Nie masz uprawnieÅ„ do oglÄ…dania tej strony.';
+    echo 'Nie masz uprawnieñ do ogl±dania tej strony.';
     if (!empty($_SERVER['PHP_AUTH_USER']) || !empty($_SERVER['PHP_AUTH_PW'])) {
         log_write("unsuccessful log access attempt with login \""
             . $_SERVER['PHP_AUTH_USER'] . "\" and password \""
@@ -20,7 +20,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 ?>
 <html>
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
   </head>
   <body>
     <h2>Log</h2>
@@ -30,7 +30,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
         <th>nr</th>
         <th>Data</th>
         <th>IP</th>
-        <th>WiadomoÅ›Ä‡</th>
+        <th>Wiadomo¶æ</th>
       </tr>
 <?php
 
@@ -40,9 +40,9 @@ $query = "
         ORDER BY id_log DESC
 ";
 
-$result = pg_query($query);
+$result = mysql_query($query);
 if ($result) {
-    while ($row = pg_fetch_assoc($result)) {
+    while ($row = mysql_fetch_assoc($result)) {
         echo "      <tr>\n";
         echo '        <td>' . htmlspecialchars($row['id_log']) . "</td>\n";
         echo '        <td>' . str_replace(' ', '&nbsp;',
@@ -53,7 +53,7 @@ if ($result) {
     }
 } else {
     echo("<tr><td colspan=\"4\">ERROR: problem with query</td></tr>\n");
-    log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
+    log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
 }
 
 ?>
