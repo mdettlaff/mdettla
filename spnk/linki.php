@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
     <meta name="Language" content="pl">
-    <meta name="Author" content="MichaÅ‚ Dettlaff">
-    <meta name="Copyright" content="MichaÅ‚ Dettlaff 2010">
+    <meta name="Author" content="Micha³ Dettlaff">
+    <meta name="Copyright" content="Micha³ Dettlaff 2010">
     <link rel="stylesheet" href="layout/style.css" type="text/css">
     <title>Szybkie Pisanie na Klawiaturze</title>
   </head>
@@ -16,54 +16,54 @@
 &nbsp;<br>
 <a target="_blank" href="http://www.klawiator.pl/" class="menu">www.klawiator.pl</a>
 <br>
-Åšwietna strona umoÅ¼liwiajÄ…ca Ä‡wiczenie pisania na klawiaturze w formie zabawy. Przepisywanie tekstu ma postaÄ‡ wyÅ›cigu, a ranking najlepszych wynikÃ³w pozwala na porÃ³wnanie swoich umiejÄ™tnoÅ›ci z innymi uczestnikami. MoÅ¼na teÅ¼ obejrzeÄ‡ swoje statystyki dotyczÄ…ce prÄ™dkoÅ›ci i poprawnoÅ›ci.
+¦wietna strona umo¿liwiaj±ca æwiczenie pisania na klawiaturze w formie zabawy. Przepisywanie tekstu ma postaæ wy¶cigu, a ranking najlepszych wyników pozwala na porównanie swoich umiejêtno¶ci z innymi uczestnikami. Mo¿na te¿ obejrzeæ swoje statystyki dotycz±ce prêdko¶ci i poprawno¶ci.
 <br><br>
 <a target="_blank" href="http://www.nahliksoft.com.pl/" class="menu">www.nahliksoft.com.pl</a>
 <br>
-Strona firmy Nahlik Soft, zajmujÄ…cej siÄ™ tworzeniem oprogramowania edukacyjnego. W jej ofercie znajdujÄ… siÄ™ miÄ™dzy innymi programy Mistrz Klawiatury i Mistrz Klawiatury II. Na stronie moÅ¼na uzyskaÄ‡ informacje na ich temat oraz skorzystaÄ‡ z pomocy technicznej.
+Strona firmy Nahlik Soft, zajmuj±cej siê tworzeniem oprogramowania edukacyjnego. W jej ofercie znajduj± siê miêdzy innymi programy Mistrz Klawiatury i Mistrz Klawiatury II. Na stronie mo¿na uzyskaæ informacje na ich temat oraz skorzystaæ z pomocy technicznej.
 <br><br>
 <a target="_blank" href="http://www.keyspeed.prv.pl/" class="menu">www.keyspeed.prv.pl</a>
 <br>
-Strona autora programu KeySpeed, sÅ‚uÅ¼Ä…cego do nauki szybkiego pisania na klawiaturze. MoÅ¼na na niej dowiedzieÄ‡ siÄ™ najistotniejszych rzeczy o programie i kupiÄ‡ go (kosztuje 9 zÅ‚).
+Strona autora programu KeySpeed, s³u¿±cego do nauki szybkiego pisania na klawiaturze. Mo¿na na niej dowiedzieæ siê najistotniejszych rzeczy o programie i kupiæ go (kosztuje 9 z³).
 <br><br>
 <a target="_blank" href="http://www.kspnk.prv.pl/" class="menu">www.kspnk.prv.pl</a>
 <br>
-Witryna Daniela KrÃ³la, programisty z Chorzowa. PoÅ›wiÄ™cona jest programowi Kurs Szybkiego Pisania na Klawiaturze, rÃ³wnieÅ¼ stworzonemu przez Daniela. MoÅ¼na na niej znaleÅºÄ‡ informacje na temat tego programu i Å›ciÄ…gnÄ…Ä‡ najnowszÄ… wersjÄ™.
+Witryna Daniela Króla, programisty z Chorzowa. Po¶wiêcona jest programowi Kurs Szybkiego Pisania na Klawiaturze, równie¿ stworzonemu przez Daniela. Mo¿na na niej znale¼æ informacje na temat tego programu i ¶ci±gn±æ najnowsz± wersjê.
 <br><br>
 <a target="_blank" href="http://typingsoft.com/all_typing_tutors.htm" class="menu">http://typingsoft.com/all_typing_tutors.htm</a>
 <br>
-Darmowe programy do nauki bezwzrokowego pisania, kursy online i testy prÄ™dkoÅ›ci (po angielsku).
+Darmowe programy do nauki bezwzrokowego pisania, kursy online i testy prêdko¶ci (po angielsku).
 <br><br>
 <a target="_blank" href="http://web.syr.edu/~rcranger/blackburn.htm" class="menu">http://web.syr.edu/~rcranger/blackburn.htm</a>
 <br>
-ArtykuÅ‚ na temat Barbary Blackburn - aktualnej posiadaczki rekordu Guinnessa w szybkim pisaniu na klawiaturze.
+Artyku³ na temat Barbary Blackburn - aktualnej posiadaczki rekordu Guinnessa w szybkim pisaniu na klawiaturze.
 <br><br>
 <a target="_blank" href="http://www.jgsoft.com/" class="menu">www.jgsoft.com</a>
 <br>
-Strona firmy JGSoft, gdzie moÅ¼na znaleÅºÄ‡ program EditPad. To Å›wietny edytor plikÃ³w tekstowych i przyjaciel kaÅ¼dego, kto duÅ¼o pisze na klawiaturze.
+Strona firmy JGSoft, gdzie mo¿na znale¼æ program EditPad. To ¶wietny edytor plików tekstowych i przyjaciel ka¿dego, kto du¿o pisze na klawiaturze.
 <br><br>
 <a target="_blank" href="http://www.nnmag.net/" class="menu">www.nnmag.net</a>
 <br>
-Strona magazynu internetowego NoName. CaÅ‚e mnÃ³stwo rzeczy do czytania: artykuÅ‚y na rÃ³Å¼ne tematy, recenzje, opowiadania, poezja i wiele innych. JeÅ›li lubisz pisaÄ‡ &quot;do szuflady&quot;, ten serwis moÅ¼e byÄ‡ idealnym miejscem, aby pokazaÄ‡ swÄ… twÃ³rczoÅ›Ä‡ Å›wiatu. MuszÄ™ takÅ¼e wspomnieÄ‡, Å¼e moÅ¼na stamtÄ…d Å›ciÄ…gnÄ…Ä‡ za darmo program do nauki pisania na klawiaturze - Klawisz 2000.
+Strona magazynu internetowego NoName. Ca³e mnóstwo rzeczy do czytania: artyku³y na ró¿ne tematy, recenzje, opowiadania, poezja i wiele innych. Je¶li lubisz pisaæ &quot;do szuflady&quot;, ten serwis mo¿e byæ idealnym miejscem, aby pokazaæ sw± twórczo¶æ ¶wiatu. Muszê tak¿e wspomnieæ, ¿e mo¿na stamt±d ¶ci±gn±æ za darmo program do nauki pisania na klawiaturze - Klawisz 2000.
 <br><br>
 <a href="http://www.cda.pl/programy" title="programy" target="_blank" class="menu"><b>www.cda.pl/programy</b></A><br>
-Programy komputerowe rÃ³Å¼nego rodzaju.
+Programy komputerowe ró¿nego rodzaju.
 <br><br>
 <a target="_blank" href="http://www.amkomputery.glt.pl" class="menu">www.amkomputery.glt.pl</a>
 <br>
-Wersja on-line wszechstronnego kÄ…cika komputerowego. Jest on czÄ™Å›ciÄ… magazynu Action Mag, dostÄ™pnego w Internecie lub na pÅ‚ycie doÅ‚Ä…czanej do czasopisma CD-Action. Na stronie znajdujÄ… siÄ™ archiwalne numery kÄ…cika i ksiÄ™ga goÅ›ci.
+Wersja on-line wszechstronnego k±cika komputerowego. Jest on czê¶ci± magazynu Action Mag, dostêpnego w Internecie lub na p³ycie do³±czanej do czasopisma CD-Action. Na stronie znajduj± siê archiwalne numery k±cika i ksiêga go¶ci.
 <br><br>
 <a target="_blank" href="http://queencorner.ovh.org" class="menu">Queen Corner online</a>
 <br>
-Strona magazynu o zespole Queen. Recenzje, artykuÅ‚y, wywiady, teksty, tÅ‚umaczenia, tabulatury, zdjÄ™cia i inne. Jestem tam webmasterem.
+Strona magazynu o zespole Queen. Recenzje, artyku³y, wywiady, teksty, t³umaczenia, tabulatury, zdjêcia i inne. Jestem tam webmasterem.
 <br><br>
-<a target="_blank" href="http://glosmas.fm.interia.pl" class="menu">GÅ‚os Mas</a>
+<a target="_blank" href="http://glosmas.fm.interia.pl" class="menu">G³os Mas</a>
 <br>
-Magazyn poÅ›wiÄ™cony komunizmowi i socjalizmowi. Jestem jego wspÃ³Å‚twÃ³rcÄ….
+Magazyn po¶wiêcony komunizmowi i socjalizmowi. Jestem jego wspó³twórc±.
 <br><br>
 <a href="http://science.eu.org" target="_blank" title="Science Servis" class="menu">Internetowy Serwis Naukowy</a><br>
-Science Servis - nowoÅ›ci i ciekawostki ze Å›wiata nauki oraz biografie, wynalazki i wiele innych
-ciekawych dziaÅ‚Ã³w.
+Science Servis - nowo¶ci i ciekawostki ze ¶wiata nauki oraz biografie, wynalazki i wiele innych
+ciekawych dzia³ów.
 
 <br>&nbsp;
 <br>&nbsp;
