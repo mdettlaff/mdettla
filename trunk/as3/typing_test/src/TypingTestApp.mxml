@@ -15,7 +15,7 @@
 
     <mx:Script source="tt/mx/script.as" />
 
-    <mx:Panel title="Test prędkości pisania" layout="vertical"
+    <mx:Panel title="Test prędkości pisania na klawiaturze" layout="vertical"
         backgroundColor="#E0E0F0" borderColor="#8090C0"
         paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10">
 

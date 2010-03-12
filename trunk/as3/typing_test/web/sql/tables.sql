@@ -24,7 +24,6 @@ CREATE TABLE ttlog (
     chars int NOT NULL,
     minutes int NOT NULL,
     seconds int NOT NULL,
-    corrections int,
     pl varchar
 );
 
