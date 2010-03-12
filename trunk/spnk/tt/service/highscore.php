@@ -24,7 +24,7 @@ $H_KEY = 'secret2';
 $HIGHSCORE_SIZE = 150;
 $MIN_REQUIRED_SPEED = 120;
 
-$result = pg_query("
+$result = mysql_query("
     SELECT
         MIN(speed) AS required_speed,
         COUNT(speed) AS current_size
@@ -35,8 +35,8 @@ $result = pg_query("
                 LIMIT $HIGHSCORE_SIZE
         ) AS highscore
 ") or log_write("ERROR: problem with query: $query ("
-        . pg_last_error() . ')');
-$row = pg_fetch_assoc($result);
+        . mysql_error() . ')');
+$row = mysql_fetch_assoc($result);
 if ($row && $row['current_size'] == $HIGHSCORE_SIZE) {
     $required_speed = $row['required_speed'];
 }
@@ -94,14 +94,14 @@ if ($_GET['q'] == 'get_threshold') {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $username = pg_escape_string($username);
-        $speed = pg_escape_string($speed);
-        $mistakes = pg_escape_string($mistakes);
-        $corrections = pg_escape_string($corrections);
-        $pl = pg_escape_string($pl);
-        $chars = pg_escape_string($chars);
-        $minutes = pg_escape_string($minutes);
-        $seconds = pg_escape_string($seconds);
+        $username = mysql_escape_string($username);
+        $speed = mysql_escape_string($speed);
+        $mistakes = mysql_escape_string($mistakes);
+        $corrections = mysql_escape_string($corrections);
+        $pl = mysql_escape_string($pl);
+        $chars = mysql_escape_string($chars);
+        $minutes = mysql_escape_string($minutes);
+        $seconds = mysql_escape_string($seconds);
         $query = "
             INSERT INTO highscore
                 (date_added, ip, username, speed, mistakes, corrections,
@@ -110,8 +110,8 @@ if ($_GET['q'] == 'get_threshold') {
                 (NOW(), '$ip', '$username', $speed, $mistakes, $corrections,
                     '$pl', $chars, $minutes, $seconds)
         ";
-        pg_query($query) or log_write("ERROR: problem with query: $query ("
-            . pg_last_error() . ')');
+        mysql_query($query) or log_write("ERROR: problem with query: $query ("
+            . mysql_error() . ')');
     }
 
     unset($_SESSION['hs_h_data']);

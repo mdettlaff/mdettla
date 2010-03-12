@@ -8,7 +8,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
         || $_SERVER['PHP_AUTH_PW'] != $password) {
     header('WWW-Authenticate: Basic realm="Log realm"');
     header('HTTP/1.0 401 Unauthorized');
-    echo 'Nie masz uprawnieÅ„ do oglÄ…dania tej strony.';
+    echo 'Nie masz uprawnieñ do ogl±dania tej strony.';
     if (!empty($_SERVER['PHP_AUTH_USER']) || !empty($_SERVER['PHP_AUTH_PW'])) {
         log_write("unsuccessful ttlog access attempt with login \""
             . $_SERVER['PHP_AUTH_USER'] . "\" and password \""
@@ -20,7 +20,7 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 ?>
 <html>
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
 <style>
   .vertical-bar {
     width: 25px;
@@ -46,22 +46,22 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 
 <?php
 
-// wykres sÅ‚upkowy z prÄ™dkoÅ›ciami
+// wykres s³upkowy z prêdko¶ciami
 $maxspeed = 400;
 for ($i = 0; $i < $maxspeed / 50; $i++) {
     $xv = $i * 50;
-    $r = pg_query("
+    $r = mysql_query("
         SELECT COUNT(speed) AS scount
             FROM ttlog
             WHERE speed > " . $xv . " AND speed < " . ($xv + 50)
     );
-    $row = pg_fetch_array($r);
+    $row = mysql_fetch_array($r);
     $data[$i] = $row['scount'];
 }
-$r = pg_query("
+$r = mysql_query("
     SELECT COUNT(speed) AS scount FROM ttlog
         WHERE speed > " . ($i * 50));
-$row = pg_fetch_array($r);
+$row = mysql_fetch_array($r);
 $data[$i] = $row['scount'];
 
 $sum = array_sum($data);
@@ -94,20 +94,20 @@ echo "</tr>\n</table>\n";
 echo "<br>\n\n";
 
 // statystyka pisania z polskimi znakami
-$r = pg_query("
+$r = mysql_query("
     SELECT COUNT(pl) AS pl_on FROM ttlog WHERE pl = 'true'
 ");
-$row = pg_fetch_array($r);
+$row = mysql_fetch_array($r);
 $plCharsON = (double)$row['pl_on'];
-$r = pg_query("
+$r = mysql_query("
     SELECT COUNT(pl) AS pl_off FROM ttlog WHERE pl = 'false'
 ");
-$row = pg_fetch_array($r);
+$row = mysql_fetch_array($r);
 $plCharsOFF = (double)$row['pl_off'];
 $plCharsSUM = $plCharsON + $plCharsOFF;
 echo "<table cellspacing=\"0\" cellpadding=\"0\" border=\"0\">\n<tr>\n";
 echo "<td colspan=\"4\" height=\"25\" valign=\"top\">";
-echo "<b>Polskie znaki wÅ‚Ä…czone:</b></td></tr>\n<tr>\n";
+echo "<b>Polskie znaki w³±czone:</b></td></tr>\n<tr>\n";
 printf("<td>tak %.0f%%&nbsp;</td>"
     . "<td width=\"%.0f\" bgcolor=\"#00FF00\"></td>\n",
     $plCharsON / $plCharsSUM * 100, $plCharsON / $plCharsSUM * 275);
@@ -116,29 +116,29 @@ printf("<td width=%.0f bgcolor=\"#FF0000\"></td>"
     $plCharsOFF / $plCharsSUM * 275, $plCharsOFF / $plCharsSUM * 100);
 echo "</tr>\n</table>\n<br>\n\n";
 
-// Å›rednia prÄ™dkoÅ›Ä‡
-// obliczajÄ…c Å›redniÄ… uwzglÄ™dniamy tylko prÄ™dkoÅ›ci wiÄ™ksze niÅ¼ 50
-$r = pg_query(
+// ¶rednia prêdko¶æ
+// obliczaj±c ¶redni± uwzglêdniamy tylko prêdko¶ci wiêksze ni¿ 50
+$r = mysql_query(
     'SELECT AVG(speed) AS average_speed FROM ttlog WHERE speed > 50'
 );
-$row = pg_fetch_array($r);
+$row = mysql_fetch_array($r);
 $mean = $row['average_speed'];
-printf("<big>Åšrednia prÄ™dkoÅ›Ä‡: <b>%.1f</b> znakÃ³w/min</big><br>\n", $mean);
+printf("<big>¦rednia prêdko¶æ: <b>%.1f</b> znaków/min</big><br>\n", $mean);
 echo "<hr width=\"400\" align=\"left\">\n\n";
 
-// 100 najlepszych wynikÃ³w
+// 100 najlepszych wyników
 echo "<h2>Typing Test - Top 100</h3>\n";
-$r = pg_query('
+$r = mysql_query('
     SELECT date_added, speed, ip, mistakes, pl, chars, minutes, seconds
         FROM ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
 $nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
-echo "<td><b>miejsce$nbsp3</b></td><td><b>zakoÅ„czenie pisania$nbsp3</b></td>\n";
-echo "<td><b>ip</b></td><td><b>prÄ™dkoÅ›Ä‡$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>bÅ‚Ä™dy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
+echo "<td><b>miejsce$nbsp3</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
+echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
+echo "<td><b>b³êdy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
 $i = 0;
-while ($row = pg_fetch_assoc($r)) {
+while ($row = mysql_fetch_assoc($r)) {
     $i++;
     $plTxt = "";
     if ($row['pl'] == 'true') {
@@ -159,27 +159,27 @@ echo "<br>\n\n";
 echo "<h2>Typing Test - Statystyka</h3>\n";
 $range = $_GET['range'];
 if ($range == 'all') {
-    $r = pg_query('
+    $r = mysql_query('
         SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
-        FROM ttlog
-        ORDER BY id DESC
-        ');
+            FROM ttlog
+            ORDER BY id DESC
+    ');
 } else {
-    $r = pg_query('
+    $r = mysql_query('
         SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
-        FROM ttlog
-        ORDER BY id DESC
-        LIMIT 1000
-        ');
+            FROM ttlog
+            ORDER BY id DESC
+            LIMIT 1000
+    ');
 }
 $nbsp3 = '&nbsp;&nbsp;&nbsp;';
 echo "<table class=\"large-table\">\n<tr>\n";
-echo "<td><b>nr</b></td><td><b>zakoÅ„czenie pisania$nbsp3</b></td>\n";
-echo "<td><b>ip</b></td><td><b>prÄ™dkoÅ›Ä‡$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>bÅ‚Ä™dy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
+echo "<td><b>nr</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
+echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
+echo "<td><b>b³êdy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
 $i = 0;
-while ($row = pg_fetch_assoc($r)) {
+while ($row = mysql_fetch_assoc($r)) {
     $i++;
     $plTxt = "";
     if ($row['pl'] == 'true') {
@@ -200,7 +200,7 @@ while ($row = pg_fetch_assoc($r)) {
 </table>
 <?php
 if ($range != 'all') {
-    echo "<a href=\"?range=all\">PokaÅ¼ wszystkie</a>\n";
+    echo "<a href=\"?range=all\">Poka¿ wszystkie</a>\n";
 }
 ?>
 

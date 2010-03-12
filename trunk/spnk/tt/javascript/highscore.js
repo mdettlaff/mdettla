@@ -1,5 +1,5 @@
 function updateHighscoreTable(page) {
-    var url = "ajax/highscore_table.php";
+    var url = "tt/ajax/highscore_table.php";
     var request;
     var PAGE_SIZE = 15;
     var currentPageElement;
@@ -55,10 +55,10 @@ function updateHighscoreTable(page) {
             request.responseXML.documentElement.getElementsByTagName("entry");
         hsTable += "<tr>";
         hsTable += "<th>Miejsce</th>";
-        hsTable += "<th>Nazwa uÅ¼ytkownika</th>";
-        hsTable += "<th>PrÄ™dkoÅ›Ä‡<br />(znaki/min)</th>";
-        hsTable += "<th>PrÄ™dkoÅ›Ä‡<br />(sÅ‚owa/min)</th>";
-        hsTable += "<th>PoprawnoÅ›Ä‡</th>";
+        hsTable += "<th>Nazwa u¿ytkownika</th>";
+        hsTable += "<th>Prêdko¶æ<br />(znaki/min)</th>";
+        hsTable += "<th>Prêdko¶æ<br />(s³owa/min)</th>";
+        hsTable += "<th>Poprawno¶æ</th>";
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
             if (i % 2 === 0) {
