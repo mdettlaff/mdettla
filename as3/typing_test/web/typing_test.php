@@ -20,7 +20,8 @@
   </head>
   <body bgcolor="#F5F5F5">
 
-Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania.<br />
+Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania.
+<div>
 
 <!--
 Smart developers always View Source.
@@ -88,7 +89,7 @@ if (hasProductInstall && !hasRequestedVersion) {
         "pluginspage", "http://www.adobe.com/go/getflashplayer"
     );
 } else { // flash is too old or we can't detect the plugin
-    var alternateContent = '<br />Do wyświetlenia strony wymagany jest Adobe Flash Player. '
+    var alternateContent = '<br>Do wyświetlenia strony wymagany jest Adobe Flash Player. '
     + '<a href=http://www.adobe.com/go/getflash/>Pobierz Flash</a>';
     document.write(alternateContent); // insert non-flash content
 }
@@ -113,7 +114,7 @@ if (hasProductInstall && !hasRequestedVersion) {
 </object>
 </noscript>
 
-<br />
+</div>
 <div id="highscoreTableArea"></div>
 
 <script>
