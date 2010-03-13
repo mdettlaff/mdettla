@@ -81,7 +81,7 @@ if ($_GET['q'] == 'get_threshold') {
             . 'hs_h_data=' . $_SESSION['hs_h_data'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
     } else if ($speed < $required_speed || $mistakes > $MAX_MISTAKES
-            || $pl == 'false' || ($chars - $corrections) / $chars * 100 < 98) {
+            || $pl == 'false' || ($chars - $corrections) / $chars * 100 < 95) {
         log_write('entry not added to highscore, test result not accepted; '
             . "speed=$speed, required_speed=$required_speed; "
             . 'POST parameters: ' . print_r($_POST, true));
