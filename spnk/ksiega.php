@@ -143,8 +143,7 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
         SELECT date_added, username, email, content
             FROM guestbook
             ORDER BY date_added DESC
-            LIMIT $PAGE_SIZE
-            OFFSET " . ($PAGE_SIZE * ($current_page - 1)) . "
+            LIMIT " . ($PAGE_SIZE * ($current_page - 1)) . ", $PAGE_SIZE
     ");
     if ($result) {
         while ($row = mysql_fetch_assoc($result)) {
