@@ -21,11 +21,16 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
+    <style>
+      .logview-table td {
+        vertical-align: top;
+      }
+    </style>
   </head>
   <body>
     <h2>Log</h2>
 
-    <table cellspacing="8">
+    <table class="logview-table" cellspacing="8">
       <tr>
         <th>nr</th>
         <th>Data</th>
