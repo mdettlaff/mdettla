@@ -56,8 +56,8 @@ function updateHighscoreTable(page) {
         hsTable += "<tr>";
         hsTable += "<th>Miejsce</th>";
         hsTable += "<th>Nazwa użytkownika</th>";
-        hsTable += "<th>Prędkość<br />(znaki/min)</th>";
-        hsTable += "<th>Prędkość<br />(słowa/min)</th>";
+        hsTable += "<th>Prędkość<br>(znaki/min)</th>";
+        hsTable += "<th>Prędkość<br>(słowa/min)</th>";
         hsTable += "<th>Poprawność</th>";
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
