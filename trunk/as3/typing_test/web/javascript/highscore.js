@@ -1,7 +1,7 @@
 function updateHighscoreTable(page) {
     var url = "ajax/highscore_table.php";
     var request;
-    var PAGE_SIZE = 5;
+    var PAGE_SIZE = 15;
     var currentPageElement;
 
     function onResponse() {
@@ -105,10 +105,10 @@ function updateHighscoreTable(page) {
             page = 1;
         }
     }
-    if (XMLHttpRequest) {
+    try {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         request = new XMLHttpRequest();
-    } else {
+    } catch (e) {
         // code for IE5, IE6
         request = new ActiveXObject("Microsoft.XMLHTTP");
     }
