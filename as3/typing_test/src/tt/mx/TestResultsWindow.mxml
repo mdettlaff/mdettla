@@ -117,7 +117,7 @@
             if (_testResults.realSpeed > requiredSpeed
                     && _testResults.mistakesCount == 0
                     && _testResults.plChars
-                    && _testResults.correctness > 98) {
+                    && _testResults.correctness > 95) {
                 if (username == null) {
                     currentState = "HighscoreAchievedUsernameUnknown";
                     callLater(usernameInput.setFocus);

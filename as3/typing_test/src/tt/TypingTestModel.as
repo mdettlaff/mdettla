@@ -61,6 +61,10 @@ package tt {
                 mistakesShadow[last].splice(
                         writtenLines[last].length - 1, 0, !isTypedCorrectly);
             }
+            if (writtenLines.length == textLines.length
+                    && writtenLines[last].length >= textLines[last].length) {
+                timeFinished = new Date();
+            }
             return isTypedCorrectly;
         }
 
@@ -168,8 +172,6 @@ package tt {
                     mistakesShadow.push([]);
                 }
                 stayedInTheSameLine = false;
-            } else {
-                timeFinished = new Date();
             }
             return true;
         }
