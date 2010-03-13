@@ -56,8 +56,8 @@ function updateHighscoreTable(page) {
         hsTable += "<tr>";
         hsTable += "<th>Miejsce</th>";
         hsTable += "<th>Nazwa u¿ytkownika</th>";
-        hsTable += "<th>Prêdko¶æ<br />(znaki/min)</th>";
-        hsTable += "<th>Prêdko¶æ<br />(s³owa/min)</th>";
+        hsTable += "<th>Prêdko¶æ<br>(znaki/min)</th>";
+        hsTable += "<th>Prêdko¶æ<br>(s³owa/min)</th>";
         hsTable += "<th>Poprawno¶æ</th>";
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
