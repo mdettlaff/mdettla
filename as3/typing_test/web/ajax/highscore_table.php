@@ -11,10 +11,13 @@ function escape_username($username) {
             $escaped .= $c;
         }
     }
+    $escaped = htmlspecialchars($escaped);
     return $escaped;
 }
 
 header('Content-Type: text/xml');
+
+$MAX_HIGHSCORE_SIZE = 150;
 
 $from_place = $_GET['from_place'];
 if (!is_numeric($from_place)) {
@@ -22,7 +25,7 @@ if (!is_numeric($from_place)) {
 }
 $to_place = $_GET['to_place'];
 if (!is_numeric($to_place)) {
-    $to_place = 25;
+    $to_place = $MAX_HIGHSCORE_SIZE;
 }
 if ($from_place > $to_place) {
     $to_place = $from_place;
@@ -36,10 +39,10 @@ $result = pg_query("
 if ($result) {
     $row = pg_fetch_assoc($result);
     $total_highscore_size = $row['total_size'];
-    if ($total_highscore_size > 150) {
-        $total_highscore_size = 150;
+    if ($total_highscore_size > $MAX_HIGHSCORE_SIZE) {
+        $total_highscore_size = $MAX_HIGHSCORE_SIZE;
     }
-    echo "<totalSize>" . $total_highscore_size . "</totalSize>";
+    echo "<totalSize>" . $total_highscore_size . "</totalSize>\n";
 } else {
     log_write("ERROR: problem with query: $query (" . pg_last_error() . ')');
 }
@@ -58,7 +61,7 @@ if ($result) {
         echo "<entry>\n";
         echo "<rank>" . ($from_place + $i) . "</rank>\n";
         $username = escape_username($row['username']);
-        echo "<username>" . $username . "</username>\n";
+        echo "<username><![CDATA[" . $username . "]]></username>\n";
         echo "<speed>" . $row['speed'] . "</speed>\n";
         echo "<correctness>" . $correctness . "</correctness>\n";
         echo "<chars>" . $row['chars'] . "</chars>\n";
