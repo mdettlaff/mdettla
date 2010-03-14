@@ -14,7 +14,7 @@ function validate($username, $speed, $mistakes, $corrections,
         && is_numeric($minutes) && is_numeric($seconds);
 }
 
-function isSubmittedTooSoon($submit_time, $last_submit_time) {
+function is_submitted_too_soon($submit_time, $last_submit_time) {
     $min_time_between_submits = 30;
     return (is_numeric($last_submit_time)
         && ($submit_time - $last_submit_time < $min_time_between_submits));
@@ -70,13 +70,13 @@ if ($_GET['q'] == 'get_threshold') {
         echo 'Does not compute.';
         log_write('entry not added to highscore, validation failed; '
             . 'POST parameters: ' . print_r($_POST, true));
-    } else if (isSubmittedTooSoon(
+    } else if (is_submitted_too_soon(
             $current_time, $_SESSION['last_hs_submit_time'])) {
         log_write('entry not added to highscore, submitted too soon; '
             . 'time=' . $current_time . ', last_hs_submit_time='
             . $_SESSION['last_hs_submit_time'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
-    } else if (!isHMACValid($h, $_SESSION['hs_h_data'], $H_KEY)) {
+    } else if (!is_hmac_valid($h, $_SESSION['hs_h_data'], $H_KEY)) {
         log_write('entry not added to highscore, wrong HMAC; '
             . 'hs_h_data=' . $_SESSION['hs_h_data'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
