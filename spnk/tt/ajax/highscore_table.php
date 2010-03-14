@@ -11,6 +11,7 @@ function escape_username($username) {
             $escaped .= $c;
         }
     }
+    $escaped = htmlspecialchars($escaped);
     return $escaped;
 }
 
@@ -41,7 +42,7 @@ if ($result) {
     if ($total_highscore_size > $MAX_HIGHSCORE_SIZE) {
         $total_highscore_size = $MAX_HIGHSCORE_SIZE;
     }
-    echo "<totalSize>" . $total_highscore_size . "</totalSize>";
+    echo "<totalSize>" . $total_highscore_size . "</totalSize>\n";
 } else {
     log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
 }
@@ -59,7 +60,7 @@ if ($result) {
         echo "<entry>\n";
         echo "<rank>" . ($from_place + $i) . "</rank>\n";
         $username = escape_username($row['username']);
-        echo "<username>" . $username . "</username>\n";
+        echo "<username><![CDATA[" . $username . "]]></username>\n";
         echo "<speed>" . $row['speed'] . "</speed>\n";
         echo "<correctness>" . $correctness . "</correctness>\n";
         echo "<chars>" . $row['chars'] . "</chars>\n";
