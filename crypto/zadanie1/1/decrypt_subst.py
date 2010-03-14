@@ -8,6 +8,7 @@ freqs = {}
 for c in std_chars_by_freq:
     freqs[c] = float(encrypted.count(c)) / len(encrypted)
 chars_by_freq = sorted(freqs, key=freqs.__getitem__)
+#chars_by_freq = '      E        CNM PGSHLQA'
 chars_by_freq = '    IZEJV R FX CNMBPGSHLQA'
 #                ZQXJKVBPYGFWMUCLDRHSNIOATE
 #CAHGLMN EAMGPQASG

@@ -1,0 +1,85 @@
+zadanie 1
+
+Szyfrogram:
+VHX QBSGI SQ SP PH PSFJCA QH EA PSFJCA? GHQ LQ LCC. S BLZA QMSAN BLMN RHM VALMP. CAHGLMN EAMGPQASG.
+
+Odszyfrowany tekst:
+YOU THINK IT IS SO SIMPLE TO BE SIMPLE? NOT AT ALL. I HAVE TRIED HARD FOR YEARS. LEONARD BERNSTEIN.
+
+Sposób odszyfrowania (z opisem ślepych zaułków):
+
+Najpierw próbowałem standardowego sposobu analizy częstotliwości liter.
+Otrzymałem taki tekst:
+CSG ALTHP TA TO OS OTMURE AS WE OTMURE? HSA IA IRR. T LIFE ANTED LIND YSN CEINO. RESHIND WENHOAETH.
+
+Hmm, mało pomocne. Skupiłem się na fragmencie "OTMURE AS WE OTMURE", bo
+pomyślałem że fragment "AS WE" jest dobrą wskazówką. Może "MATURE AS WE
+MATURE"? Zdawało się mieć sens, ale nie doprowadziło do niczego.
+Było dość oczywiste, że cały tekst jest cytatem a ostatnie dwa słowa to
+imię i nazwisko autora. Pomyślałem, że może imię to RICHARD bo zdawało się
+trochę pasować, ale zauważyłem zaraz, że to nie może być dobre bo pierwsza
+i przedostatnia litera są różne, więc nie mogą być równe "R".
+Doszedłem do wniosku, że ze względu na to, że tekst jest bardzo krótki,
+częstotliwości liter prawdopodobnie nie będą się zgadzać i trzeba
+spróbować innej metody.
+Przyjrzałem się dwuliterowym wyrazom i próbowałem odgadnąć czy są
+to słowa typu OF, AS, TO itp., ale okazało się że możliwości jest zbyt dużo.
+Postanowiłem znaleźć nazwisko autora w słowniku. Przeszukałem więc słownik
+/usr/share/dict/words w poszukiwaniu słowa, które zaczyna się z wielkiej
+litery, ma 9 liter, litera druga jest równa siódmej, a czwarta dziewiątej
+(zrobiłem to za pomocą bardzo prostego skryptu w Pythonie).
+Skrypt wypluł taki wynik:
+Bernstein
+Dionysian
+Johnstown
+Macdonald
+Miltonist
+Pakistani
+
+Najbardziej obiecujące wydawało się nazwisko Bernstein. Jeśli Bernstein, to
+imię musiałoby być Leonard, więc sprawdziłem czy pasuje ono do kryteriów:
+długość 7 liter i wszystkie niepowtarzające się, oraz druga litera taka sama
+jak druga litera w nazwisku ("E").
+Pasowało i w tym momencie byłem już w miarę pewny, że odgadłem autora.
+Po podstawieniu znanych liter, wiadomość przyjęła taką postać:
+ O  T IN  IT IS SO SI  LE TO BE SI  LE? NOT AT ALL. I  A E TRIED  ARD  OR  EARS. LEONARD BERNSTEIN.
+Od tego miejsca odszyfrowanie było już bardzo proste, widać od razu
+że SI..LE powinno być SIMPLE, .A.E TRIED powinno być HAVE TRIED itp.
+
+
+zadanie 2
+
+Szyfrogram:
+S E I T I R
+H T E I N E
+C L E S T E
+A C I E I W
+H T V E E A
+E D V E K R
+
+Odszyfrowany tekst:
+IT IS A WEEK SINCE I HAVE RECEIVED THE LETTER.
+
+Sposób odszyfrowania:
+
+Próbowałem ułożyć jakieś słowa z początkowych trzech wierszy grilla,
+spodziewając się, że będzie tam około 4-5 liter (skoro cały grill będzie
+miał 9 dziur). Dość obiecującą hipotezą było THE. Porównałem to ze słowem
+które powstałoby w analogicznych dziurach po obróceniu grilla o 180 stopni.
+Okazało się, że wyszłoby HAV, prawdopodobnie część słowa HAVE.
+Przed HAVE wystąpiłoby I HAVE, THEY HAVE lub coś takiego. Pasowało I HAVE.
+W takim razie na górze byłoby THE L.
+Teraz wykreśliłem wszystkie dziury, które nie mogłyby być użyte z powodu
+geometrii grilla, tzn. faktu, że po każdym obrocie muszą być wskazywane inne
+litery.
+Powstało coś takiego:
+      T
+H         E
+  L E S T E
+A C I E
+  T   E E
+E     E   R
+Na górze pasowało teraz THE LETTER. Drugie E w LETTER było niejednoznaczne,
+ale patrząc na dole pasowało tylko SINCE I HAVE, więc już miałem pozycje
+wszystkich dziur grilla. Wystarczyło teraz tylko sprawdzić co wyjdzie
+w dwóch pozostałych obrotach.
