@@ -10,7 +10,7 @@ function rand_str($length) {
     return $str;
 }
 
-function isHMACValid($hash, $h_data, $h_key) {
+function is_hmac_valid($hash, $h_data, $h_key) {
     if (empty($hash) || empty($h_data)) {
         return false;
     }
