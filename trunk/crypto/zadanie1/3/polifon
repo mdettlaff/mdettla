@@ -1,0 +1,17 @@
+x -> e
+z -> a
+j -> o
+q -> t
+k -> i
+
+j -> o, h
+
+Zs qkmx wxnq jn, mzny mjrx jf qhx chzptxr mxmbxrs drjppxd jut, znd kq ljjkxd lkkx qhks:
+Qjx jxxj xkxx qjzq kxqx xxxq jzk qj kj xxxqjqjkxz.
+Zxk kx jjj zqx zqkxx qxzkkxz qjkz qjqjjzj kq kzz xjq zj kzk zq zxx!
+
+As time went on, many more of the chapter members dropped out, and it looked like this:
+The only five that were left had to do everything.
+And if you are still reading this through it was not so bad at all!
+
+Our task is to decipher these two lines of text. Let us look now at the word \xxxqjqjkxz". If we will generate (for example by some program) a list of words, using the dictionary, that might besubstituted by \xxxqjqjkxz" we can detect the illegal words and remove them from this list. Usingtable of 3.8 we see that there are 32380 9-letter words in a 230000 word list. We can lter the wordsfrom this list based on our partial knowledge of the polyphones. For example in the rst 3 letters’xxx’ there has to be at least one vowel and it can be only ’e’ or ’u’ or ’y’. This simple observationleaves us only with 174 candidate words. From these, for example, reproduced, and surroundedare not valid because the last D implies D!Z and there is no other Z in \xxxqjqjkxz", so therecan not be another D in the word. Similarly in performing the rst R implies R!X while theseconds R implies R!Q. The word responding fails because the two N’s. So really the only choicethat were left with for \xxxqjqjkxz" is everything [9]. Using the similar methods of Probable andImprobable Words we receive the nal answer :The only five that were left had to do everything.And if you are still reading this through it was not so bad at all!
