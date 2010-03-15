@@ -1,0 +1,275 @@
+===================================================
+                     Enigma
+===================================================
+
+Pierwsze patenty zw. z E : 1919, tzw. reflektor Kocha
+Pierwsza wersja komercyjna 1923
+Kriegsmarine 1926
+Armia (Heere) 1928
+Ulepszony stnadard dla całego Wehrmachtu : czerwiec 1930
+Luftwaffe 1935
+także Abwehra, koleje, inne instytucje rządowe
+
+Każda instytucja używała innego wariantu maszyny,
+aż do końca w 1945 wprowadzono stopniowe ulepszenia
+i zmiany zasad użycia.
+
+Co najmniej 30 tysięcy takich maszyn wzięło udział w 2wś.
+
+W roku 1945 nadal używano rotorów okablowanych identycznie jak w 1920.
+
+-----------------------------------------------------------------------
+
+Początkowe wersje były zbudowane następująco.
+
+Trzy rotory N,M,L okablowane tak, by wykonywały proste podstawienia;
+żadna litera nie mogła być mapowana na samą siebie.
+One dawały pewną permutację będącą złożeniem trzech permutacji.
+Do tego reflektor, wykonujący podstawienie będące inwolucją:
+RR = Id;
+cykle w inwolucji są wszystkie długości 2.
+Była też łącznica kablowa, inwolucja, ale zamieniająca tylko niektóre litery.
+
+Maszyna działała na prąd; p. płynął przez styk,
+zwierany klawiszem klawiatury, łącznicę, trzy rotory, reflektor,
+trzy rotory w odwrotnym kierunku, i z powrotem przez łącznicę.
+
+Przed zakodowaniem każdej litery, następował obrót rotorów.
+Pierwszy obracał się o 1/26 za każdym razem,
+drugi o 1/26 po pełnym obrocie pierwszego.
+
+Modyfikacje
+-------------
+
+Po wprowadzeniu w 1930 łącznicy, n byli przekonani o niemożliwości złamania E.
+Ilość stosowanych połączeń wahała się od 4 do wszystkich 13 wraz z miejscem
+ i czasem stosowania. Abwehra używała E bez łącznicy. Armia używała 6 kabli
+do listopada 1937, potem od 5 do 8 połączeń, codziennie innych.
+W listopadzie 1939 zwiększono ich liczbę do 10, co zburzyło pracę Polaków.
+
+Łatwo się pogubić w różnych wariantach i zmiennych zasadach użytku E.
+Skoncentruemy się na wariancie używanym w Armii.
+W Wehrmachcie używano kluczy dziennych,
+identycznych dla każdej maszyny w tej instytucji.
+Pomysł ten porzucono w 1938, na rzecz kluczy jednorazowych,
+wybieranych losowo przez operatora,
+i wysyłanych otwartym tekstem na początku wiadomości;
+potem następował zaszyfrowany tym kluczem powtórzony klucz wiadomości - właściwy.
+W maju 1940 porzucono powtarzanie klucza wiadomości.
+1. łącznica 1930.VI
+2. Zmiana w konstruowaniu klucza 1938.I.15
+3. Dodane rotory 4. i 5. 1938.XII.15
+4. Wzrost liczby połączeń w łącznicy 1939.I.1
+5. Koniec powtarzania klucza wiadomości 1940.V.1
+
+Metoda kijkowa dla E bez  łącznicy
+----------------
+W wojnie domowej w Hiszpanii 1938-9, wszystkie strony konfliktu używały E bez
+łącznicy:
+Anglicy, Niemcy, Włosi i Hiszpańscy republikanie.
+Odkryto prostą metodę ustalania położenia 1. rotoru; to był powód wprowadzenia
+przez Niemców łącznicy.
+Metoda ta znana była pod nazwą 'methode des batons' u Fracuzów.
+Założenia:
+-bez łącznicy
+-okablowanie rotorów znane
+-tylko pierwszy rotor się obraca
+-znamy prawdopodobne słowa
+
+Rozważmy równanie maszyny.
+Niech Z będzie złożeniem rotorów 2 i 3, reflektora, a następnie odwróconych
+rotorów 3 i 2.
+Ponieważ zakładamy, że tylko pierwzsy rotor się porusza,
+Z będzie stałą permutacją.
+Niech N będzie permutacją pierwszego rotora (zgadujemy który jest pierwszy, są
+trzy możliwości).
+Dla pierwwszej litery tekstu, wynikowe przekształcenie bęðzeie miało postać
+NZN^.
+Niech c - litera szyfrogramu, p - litera tj:
+	N^ZN(p) = c,
+czyli
+	ZN(p) = N(c).
+Jeśli odgadniemy literę tekstu jawnego (prawdopodobne słowo), to mamy (znając N
+i __ODGADUJĄC 1 Z 26 JEGO USTAWIEŃ POCZĄTKOWYCH__ ) część Z:
+N(p)-->N(c) oraz N(c)-->N(p) (bo Z jest inwolucją).
+Możemy powtarzać tę procedurę dla każdej litery naszego prawdopodobnego słowa,
+pamiętając że rotor N się obraca.
+Równanie dla i-tej litery tekstu to:
+	ZP^{i}NP^{-i}(p) = P^iNP^{-i}(c),
+gdzie P jest cyklicznym przesunięciem alfabetu o 1 w prawo, cyklem (abc...).
+Jeśli w trakcie otrzymamy jakieś sprzeczne infomacje o Z, to źle odgadliśmy
+ustawienie początkowe rotora N,
+bierzemy następne; jeśli żadne ustawienie nie pasuje, to albo źle odgadliśmy
+który rotor jest pierwszy,
+albo w trakcie szyfrowania drugi rotor się poruszył
+(choć w tym ostatnim wypadku można jeszcze coś próbować, o ile tekst jest
+dostatecznie długi).
+
+Rozkład okablowania wirników I-V
+        A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+I       E K M F L G D Q V Z N T O W Y H X U S P A I B R C J
+II      A J D K S I R U X B L H W T M C Q G Z N P Y F V O E
+III     B D F H J L C P R T X V Z N Y E I W G A K M U S Q O
+IV      E S O V P Z J A Y Q U I R H X L N F T G K D C M W B
+V       V Z B R G I T Y U P S D N H L X A W M J Q O F E C K
+
+Przykład:
+odgadujemy prawdopodobne słowo:
+RECONNAISSANCE
+dla sz
+UPYTEZOJZEGBOT,
+zakładamy że najszybszym rotorem jest I (p. tabelka powyżej).
+
+Kije - kolumny tabeli poniżej, układamy jak na rysunku - osobno dla tj i sz.
+Choć każdy kij reprezentuje ustaloną literę, zaszyfrowaną kolejnymi 26
+alfabetami rotora I,
+to dla potrzeb metody wydłużamy kije o długość tekstu minus jeden, aby po ich
+wzajemnym poprzesuwaniu
+otrzymać 26 wariantów N(tekst), po jednym na pełny wiersz układanki.
+
+[handout_batons.txt]
+
+Innymi słowy, na handoucie wiersze pełnej długości są kandydatami na listę
+dwuelementowych cykli Z.
+[Pytanie: w jakiej pozycji (podać numer z lewego marginesu)
+był rotor N, gdy szyfrowano pierwszą literę R tekstu RECONNAISSANCE ?]
+
+Metoda kijkowa nie sprawdza się, jeśli wprowadzimy łącznicę.
+Francuzi, Anglicy i Amerykanie eksperymentowali z rotorem nr 2 poruszającym się
+ nie co 26 ruchów pierwszego, ale co 3-4, a także m.in. próbowali ustawiać
+najszybszy (zamiast najwolniejszego) rotor obok reflektora (dlaczego?).
+
+Polska analiza Enigmy
+=====================
+
+W styczniu 1929 na Uniwersytecie Poznańskim zorganizowano kurs kryptologii,
+ przeznaczony głównie dla studentów matematyki znających język niemiecki.
+Wybór uczelni poznańskiej nie był przypadkowy, gdyż ze względu na położenie
+miasta znajomość niemieckiego była tam umiejętnością powszechną.
+Na kurs, którego wykładowcami byli dojeżdżający z Warszawy
+ mjr Franciszek Pokorny, kpt. Maksymilian Ciężki oraz inż. Antoni Palluth,
+zostali skierowani trzej najzdolniejsi uczniowie profesora Zdzisława Krygowskiego
+– Marian Rejewski, Jerzy Różycki i Henryk Zygalski.
+
+Marian Rejewski (1905-80)
+Henryk Zygalski (1908-78)
+Jerzy Różycki (1909-42)
+
+Jesienią 1930 utworzono w Poznaniu filię Biura Szyfrów
+w której zatrudniono ośmiu najzdolniejszych absolwentów kursu kryptologii.
+Wśród zatrudnionych znalazł się także Marian Rejewski.
+
+Dwa lata później filia została rozwiązana, a Marian Rejewski, Jerzy Różycki
+i Henryk Zygalski stali się od 1 września 1932 pracownikami warszawskiego
+Biura Szyfrów Sztabu Głównego Wojska Polskiego.
+
+Od września 1932 roku Rejewski zaczął pracować nad Enigmą.
+
+Francuski wywiad przekazał plany budowy maszyn Enigma zdobyte około roku 1931 przez
+Hans-Thilo Schmidta (ps. Asché) Polakom, traktując te informacje jako bezwartościowe.
+
+W grudniu 1932 udało się Rejewskiemu rozwiązać szyfr Enigmy, a w lutym 1933 zamówiono
+w Wytwórni Radiotechnicznej AVA kopię niemieckiej maszyny szyfrującej.
+
+Zaprojektowany przez Rejewskiego cyklometr i karty charakterystyk,
+ze względu na zmianę kodowania wprowadzoną 15 września 1938 przestały
+być wykorzystywane. Do tego czasu ustalenie kodu dziennego przy pomocy powyższych
+narzędzi zajmowało około 15 minut.
+
+Około października 1938 Rejewski opracował kolejne elektromechaniczne urządzenie
+nazwane bombą kryptologiczną, którego zadaniem było automatyczne łamanie szyfru Enigmy.
+
+Bomba kryptologiczna składała się z sześciu sprzężonych polskich kopii Enigmy
+napędzanych silnikiem elektrycznym. W połowie listopada tego samego roku
+zbudowano sześć takich bomb, wykorzystywanych wyłącznie do rozszyfrowywania
+podwójnie szyfrowanych kluczy dziennych, nigdy zaś do dekodowania samych szyfrogramów,
+które dekodowano przy pomocy perforowanych płacht Zygalskiego opracowanych w celu
+znajdowania właściwego położenia wirników Enigmy.
+
+Jedna bomba kryptologiczna pozwalała na odkodowanie klucza dziennego w ciągu
+około dwóch godzin i zastępowała pracę około 100 ludzi.
+
+
+
+W 1939 Niemcy kolejny raz zmienili sposób szyfrowania,
+co wymusiło konieczność zbudowania dalszych 54 bomb kryptologicznych
+(aby łączna ich liczba wynosiła 60)
+i opracowania 60 kompletów bardzo pracochłonnych w wykonaniu płacht Zygalskiego
+(jeden komplet liczył 26 płacht).
+
+Inwestycja taka znacznie wykraczała poza możliwości finansowe polskiego wywiadu,
+dlatego postanowiono przekazać po jednym egzemplarzu polskiej Enigmy
+wraz z dokumentacją agencjom wywiadu Wielkiej Brytanii i Francji.
+Przekazanie odbyło się 25 lipca 1939 w Pyrach pod Warszawą,
+w których znajdował się polski ośrodek dekryptażu.
+
+Pomimo skromnych funduszy zespół polskich kryptologów kontynuował pracę przy Enigmie.
+Wkrótce potem w Wielkiej Brytanii w ośrodku dekryptażu w Bletchley Park
+pod kierunkiem Alana Turinga i w oparciu o polskie materiały
+rozpoczęto prace nad dekryptażem Enigmy z wykorzystaniem rozbudowanych
+i zmodyfikowanych bomb kryptologicznych.
+
+------------------------------
+
+Szerzej o zadniu Rejewskiego:
+
+Wiedział, że:
+1. używano wspólnego dla wszystkich klucza dziennego
+2. w każdym sz, pary liter: 1.i 4., 2.i 5., 3.i 6. były powiązane,
+ np. jeśli 1. była E, to 4. była G (każdego dnia inaczej).
+3. porządek rotorów zmieniał się co 3 miesiące
+Nie wiedział:
+1. jak były okablowane rotory ani reflektor
+2. jaki jest porządek rotorów
+3. jak jest okablowana łącznica, choć przypuszczano, że nie więcej niż 6 kablami
+4. jak są ustawione pierścienie
+ (jaka pozycja na 1. rotorze wywołuje ruch drugiego rotora, a na 2.-trzeciego)
+Musiał ustalić:
+1. klucz dzienny
+2. klucz wiadomości
+
+Ilość możliwych ustawień Enigmy:
+okablowanie 	(26!)^3
+reflektor   	(26 po 2)(24 po 2)···(2 po 2) / 13! \approx 8·10^{12}
+porządek r. 	3! = 6
+łącznica    	(26 po 2)(24 po 2)···(16 po 2) / 6! \approx 10^{11}
+pierścienie		26^2 (tylko na 1.(>2) i 2.(>3))
+klucz wiad.		26^3
+Iloczyn powyższych to około 2^{369} - taka jest moc przestrzeni kluczy
+(atomów we Wszechświecie jest ok. 2^{265}).
+
+Napiszmy dokładnie równanie Enigmy:
+
+SNMLRL^M^N^S^ (czytamy od lewej do prawej)
+
+Jednakże, gdy naciskamy klawisz na klawiaturze, rotor N obraca się o 1/26 obrotu;
+załóżmy, że w czasie kodowania interesujących nas pierwszych 6 liter tekstu
+pozostałe rotory są nieruchome; będzie tak w 20 / 26 przypadków.
+Obrót rotora można wyrazić, posługując się dodatkową permutacją, mianowicie cyklem
+	P = (abcdefg···xyz)
+Oznaczmy przekształcenia szyfrujące litery 1-6 tekstu przez A-F, wtedy:
+	A = SP^1NP^{-1}MLRL^M^P^1N^P^{-1}S^
+	B = SP^2NP^{-2}MLRL^M^P^2N^P^{-2}S^
+	C = SP^3NP^{-3}MLRL^M^P^3N^P^{-3}S^
+	D = SP^4NP^{-4}MLRL^M^P^4N^P^{-4}S^
+	E = SP^5NP^{-5}MLRL^M^P^5N^P^{-5}S^
+	F = SP^6NP^{-6}MLRL^M^P^6N^P^{-6}S^
+Zauważmy, że są to inwolucje, bo podobieństwo permutacji zachowuje
+długości cykli (np. wszystkie dł. 2), zaś centralne R jest inwolucją właśnie.
+
+Składamy je parami:
+	AD = SP^1NP^{-1}MLRL^M^P^1N^P^{3}NP^{-4}MLRL^M^P^4N^P^{-4}S^
+	BE = SP^2NP^{-2}MLRL^M^P^2N^P^{3}NP^{-5}MLRL^M^P^5N^P^{-5}S^
+	CF = SP^3NP^{-3}MLRL^M^P^3N^P^{3}NP^{-6}MLRL^M^P^6N^P^{-6}S^
+Zauważmy, że powyższe przekształcenia są znane, na podstawie początkowych ciągów
+przechwyconych szyfrogramów:
+np.      A               D
+     ? -----> E     ? -----> G   (A i D szyfrują ten sam, pierwszy,
+                                  znak powtórzonego klucza wiad.)
+  skąd (bo Enigma jest inwolucją)
+         A         D
+     E -----> ? -----> G.
+Ponieważ MLRL^M^ się powtarza, podstawmy Q = MLRL^M^, wtedy:
+	AD = SP^1NP^{-1}QP^1N^P^{3}NP^{-4}QP^4N^P^{-4}S^
+	BE = SP^2NP^{-2}QP^2N^P^{3}NP^{-5}QP^5N^P^{-5}S^
+	CF = SP^3NP^{-3}QP^3N^P^{3}NP^{-6}QP^6N^P^{-6}S^
