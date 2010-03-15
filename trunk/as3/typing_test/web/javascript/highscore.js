@@ -90,8 +90,10 @@ function updateHighscoreTable(page) {
         totalHSSize =
                 request.responseXML.documentElement.getElementsByTagName(
                     "totalSize")[0].firstChild.nodeValue;
-        hsTable += getHighscorePaging(
-                page, parseInt(((totalHSSize - 1) / PAGE_SIZE) + 1, 10));
+        if (totalHSSize > PAGE_SIZE) {
+            hsTable += getHighscorePaging(
+                    page, parseInt(((totalHSSize - 1) / PAGE_SIZE) + 1, 10));
+        }
         hsTable += "</td></tr>";
         hsTable += "</table>";
         document.getElementById("highscoreTableArea").innerHTML = hsTable;
