@@ -14,24 +14,24 @@ then
 fi
 
 # wypisujemy znalezione pliki i liczymy je
-files=`ls -1 $haystack`
 found_count=0
+files=`ls -1 $haystack`
 for file in $files
 do
   if [ "$file" == "$needle" ]
   then
     echo "$haystack/$file"
     found_count=$[$found_count+1]
+  elif [ -d $haystack/$file ]
+  then
+    $0 $needle $haystack/$file false &
+    pids=("${pids[@]}" $!)
   fi
 done
-for dir in $files
+for pid in $pids
 do
-  if [ -d $haystack/$dir ]
-  then
-    $0 $needle $haystack/$dir false &
-    wait $!
-    found_count=$[$found_count+$?]
-  fi
+  wait $!
+  found_count=$[$found_count+$?]
 done
 
 if [ ! $first_recursion_level ]
