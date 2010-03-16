@@ -1,11 +1,11 @@
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'WundÅ¼un (autor strony)', 'wundzunhome@wp.pl',
-'To jest wpis prÃ³bny. Zapraszam do wpisywania siÄ™ do ksiÄ™gi.',
+'Wund¿un (autor strony)', 'wundzunhome@wp.pl',
+'To jest wpis próbny. Zapraszam do wpisywania siê do ksiêgi.',
 '2003-11-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'nati', 'misia_92@interia',
-'Ruda mapa nie umi pisaÄ‡ na klawiaturze szybko i innych do tego goni (bije ci na Å‚ep)',
+'Ruda mapa nie umi pisaæ na klawiaturze szybko i innych do tego goni (bije ci na ³ep)',
 '2003-11-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -20,7 +20,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Jacek S.', 'ciemnogrod@hotmail.com',
-'Do Nati: Ty to dopiero jesteÅ› mistrzyniÄ… klawiatury (przynajmniej jeÅ¼eli chodzi o poprawnoÅ›Ä‡ i sens pisania).',
+'Do Nati: Ty to dopiero jeste¶ mistrzyni± klawiatury (przynajmniej je¿eli chodzi o poprawno¶æ i sens pisania).',
 '2003-12-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -30,7 +30,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kamil', 'kamkam@poczta.fm',
-'Kurs Pisania na Klawiaturze to super program!! ZainstalowaÅ‚em go sobie i strasznie mnie wciÄ…gnÄ…Å‚! PiszÄ™ juÅ¼ 150 znakÃ³w na minutÄ™, a to dopiero pierwsze dni treningu. Koncze, bo ide cwiczyc dalej!!!',
+'Kurs Pisania na Klawiaturze to super program!! Zainstalowa³em go sobie i strasznie mnie wci±gn±³! Piszê ju¿ 150 znaków na minutê, a to dopiero pierwsze dni treningu. Koncze, bo ide cwiczyc dalej!!!',
 '2003-12-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -45,7 +45,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Bartek', '',
-'Ok. WpisaÅ‚em siÄ™. Bardzo powoli. No cÃ³Å¼. Nie kaÅ¼dy jest mistrzem. No tak i uruchomiÅ‚em jÄ…. Fajna strona. ZrÃ³b teÅ¼ o szybkim czytaniu. Powoli ale duÅ¼o. TeÅ¼ dobrze. Prawda? Szybko 10x wiÄ™cej. TeÅ¼ dobrze. Tak?',
+'Ok. Wpisa³em siê. Bardzo powoli. No có¿. Nie ka¿dy jest mistrzem. No tak i uruchomi³em j±. Fajna strona. Zrób te¿ o szybkim czytaniu. Powoli ale du¿o. Te¿ dobrze. Prawda? Szybko 10x wiêcej. Te¿ dobrze. Tak?',
 '2004-01-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -75,7 +75,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Aneta', 'anetakuc@buziaczek.pl',
-'Cool, mega, giga, super, fajna, fajowa,fajniutka, zaje****, sÅ‚odziutka, wyjechana, odjazdowa, spoko stronka! Å»ycze kolejnych sukcesÃ³w i tak fajnych stronek! :P',
+'Cool, mega, giga, super, fajna, fajowa,fajniutka, zaje****, s³odziutka, wyjechana, odjazdowa, spoko stronka! ¯ycze kolejnych sukcesów i tak fajnych stronek! :P',
 '2004-02-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -100,22 +100,22 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz', 'matysek91@op.pl',
-'ZostaÅ‚em mistrzem klawiatury w psp nr 5 w Ostrowcu ÅšwiÄ™tokrzyskim miaÅ‚em prÄ™dkoÅ›Ä‡ pisania 140 znakÃ³w/min. i poprawnoÅ›Ä‡: 98%',
+'Zosta³em mistrzem klawiatury w psp nr 5 w Ostrowcu ¦wiêtokrzyskim mia³em prêdko¶æ pisania 140 znaków/min. i poprawno¶æ: 98%',
 '2004-04-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'adrian', 'szkolne14@wp.pl',
-'me again...co by tu powiedziec...NIENAWIDZE polskich liter, normalnie moja predkosc w pisaniu tekstow to okolo 300 znakow na minute,(jesli pisze bez polskich znakow- Ä…,Ä™,Ä‡,Å‚,Ã³Å¼) jednak jesli pisze z tymi znakami to moja predkosc jest jakies 230 znakow na minutke, ma ktos jakiegos dobrego pomysla by sie nauczyc pisac bez patrzenia te zafajdane znaki???? Pozdrawiam i nara :)',
+'me again...co by tu powiedziec...NIENAWIDZE polskich liter, normalnie moja predkosc w pisaniu tekstow to okolo 300 znakow na minute,(jesli pisze bez polskich znakow- ±,ê,æ,³,ó¿) jednak jesli pisze z tymi znakami to moja predkosc jest jakies 230 znakow na minutke, ma ktos jakiegos dobrego pomysla by sie nauczyc pisac bez patrzenia te zafajdane znaki???? Pozdrawiam i nara :)',
 '2004-04-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'iwona_p', 'iwona_p5@op.pl',
-'ta strona jest dla mnie zbawieniem gdyz jestm nauczycielem techniki biurowej i pisania na maszynie. JESTEÅšCIE  OK',
+'ta strona jest dla mnie zbawieniem gdyz jestm nauczycielem techniki biurowej i pisania na maszynie. JESTE¦CIE  OK',
 '2004-04-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'T.', '',
-'ja piszÄ™ z prÄ™dkoÅ›ciÄ… 305-315 znakÃ³w na minutÄ™ uÅ¼ywajÄ…c przy tym polskich znakÃ³w, wiÄ™c.... :))',
+'ja piszê z prêdko¶ci± 305-315 znaków na minutê u¿ywaj±c przy tym polskich znaków, wiêc.... :))',
 '2004-05-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -140,7 +140,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marta', '',
-'Å›wietna stronka zobaczymy czy da rezultaty ;))',
+'¶wietna stronka zobaczymy czy da rezultaty ;))',
 '2004-06-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -150,12 +150,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Karolina', 'karolina_slonko@poczta.onet.pl',
-'czeÅ›Ä‡ fajna stronka. Mimo Å¼e umie szybko pisaÄ‡ ale to jeszcze nie najszybciej pisze!!! Musze sie poduczyÄ‡:)))',
+'cze¶æ fajna stronka. Mimo ¿e umie szybko pisaæ ale to jeszcze nie najszybciej pisze!!! Musze sie poduczyæ:)))',
 '2004-06-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Olka', '',
-'Bardzo przydatna stronka, dzieki, Å¼e ktoÅ› o czyms takim pomyslaÅ‚, bo kiedys nie mieÅ›ciÅ‚am siÄ™ nawet poniÅ¼ej przeciÄ™tnej w szybkoÅ›ci pisania. Teraz klawisze muszÄ™ studziÄ‡:P  Pozdrawiam!',
+'Bardzo przydatna stronka, dzieki, ¿e kto¶ o czyms takim pomysla³, bo kiedys nie mie¶ci³am siê nawet poni¿ej przeciêtnej w szybko¶ci pisania. Teraz klawisze muszê studziæ:P  Pozdrawiam!',
 '2004-06-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -165,7 +165,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Macin ', 'zziemboll@wp.pl',
-'spox tylko na to czekaloem juz oddawna szukaÅ‚em jakies str na ktÃ³rej znalazÅ‚o by siÄ™ coÅ› tak Å›wietngo pozdrowienia z N.rudy Å›le Marcin',
+'spox tylko na to czekaloem juz oddawna szuka³em jakies str na której znalaz³o by siê co¶ tak ¶wietngo pozdrowienia z N.rudy ¶le Marcin',
 '2004-06-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -180,27 +180,27 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'pozka', '',
-'fajnie Å¼e istnieje taka stronka o szybkim pisaniu na klawiaturze, ale myÅ›lÄ™ Å¼e nie wszyscy bÄ™dÄ… mogli osiÄ…gaÄ‡ dobre czasy w pisaniu.Np.ja teraz piszÄ™ dwoma palcami i jako.Å› mi to szczegÃ³lnie nia przeszkadza',
+'fajnie ¿e istnieje taka stronka o szybkim pisaniu na klawiaturze, ale my¶lê ¿e nie wszyscy bêd± mogli osi±gaæ dobre czasy w pisaniu.Np.ja teraz piszê dwoma palcami i jako.¶ mi to szczególnie nia przeszkadza',
 '2004-07-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kolo', '',
-'Bardzo fajna stronka, przejrzysta i jest wszystko co potrzba pod rÄ™kÄ…. sam nauczyÅ‚em siÄ™ pisaÄ‡ bezwzrokowo na klawiaturze jakieÅ› 2 lata temu, niezÅ‚a jest jazda na poczÄ…tku, trzeba siÄ™ nieÅºle zawziÄ…Ä‡, aby przejÅ›c caÅ‚y kurs - ALE SIÄ˜ OPÅACA.polecam Mistrza (jak sama nazwa mÃ³wi to poprostu mistrz tej roboty)',
+'Bardzo fajna stronka, przejrzysta i jest wszystko co potrzba pod rêk±. sam nauczy³em siê pisaæ bezwzrokowo na klawiaturze jakie¶ 2 lata temu, niez³a jest jazda na pocz±tku, trzeba siê nie¼le zawzi±æ, aby przej¶c ca³y kurs - ALE SIÊ OP£ACA.polecam Mistrza (jak sama nazwa mówi to poprostu mistrz tej roboty)',
 '2004-07-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Dactylo', '',
-'Bardzo ciekawa strona. PiszÄ™ bezwzrokowo, okoÅ‚o 300 zn./min. Ale za to robiÄ™ strasznie duÅ¼o bÅ‚Ä™dÃ³w. MoÅ¼e dziÄ™ki tym programom uda siÄ™ to zmieniÄ‡. Pozdrawiam',
+'Bardzo ciekawa strona. Piszê bezwzrokowo, oko³o 300 zn./min. Ale za to robiê strasznie du¿o b³êdów. Mo¿e dziêki tym programom uda siê to zmieniæ. Pozdrawiam',
 '2004-07-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'andrzej', 'forman9@op.pl',
-'WÅ‚aÅ›nie skoÅ„czyÅ‚em 50-tkÄ™ i uwazam,Å¼e to Å›wietny momwnt na rozpoczÄ™cie nauki.',
+'W³a¶nie skoñczy³em 50-tkê i uwazam,¿e to ¶wietny momwnt na rozpoczêcie nauki.',
 '2004-07-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Adam', 'adamole52@autograf.pl',
-'Fajna strona ale czemu same podstawy?? I tak juz nigdy nie naucze sie tak pisaÄ‡...',
+'Fajna strona ale czemu same podstawy?? I tak juz nigdy nie naucze sie tak pisaæ...',
 '2004-08-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -209,8 +209,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2004-08-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'WundÅ¼un (webmaster strony)', 'wundzunhome@wp.pl',
-'PomyÅ›lÄ™ nad umieszczeniem forum... biorÄ…c pod uwagÄ™ popularnoÅ›Ä‡ strony i ksiÄ™gi goÅ›ci, to moÅ¼e byÄ‡ dobry pomysÅ‚!',
+'Wund¿un (webmaster strony)', 'wundzunhome@wp.pl',
+'Pomy¶lê nad umieszczeniem forum... bior±c pod uwagê popularno¶æ strony i ksiêgi go¶ci, to mo¿e byæ dobry pomys³!',
 '2004-08-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -220,7 +220,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'agusia', '',
-'Gratuluje! Michal- eine schÃ¶ne, konstruktive Seite!Ja jestem juz na dobrej drodze do szybkiego pisania na Tastatur.',
+'Gratuluje! Michal- eine schöne, konstruktive Seite!Ja jestem juz na dobrej drodze do szybkiego pisania na Tastatur.',
 '2004-08-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -250,7 +250,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'b_e_t_i', '',
-'mam nadzieje Å¼e sie czegos nauczÄ™',
+'mam nadzieje ¿e sie czegos nauczê',
 '2004-09-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -265,12 +265,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Krzysztof ', 'k.klisowski@interia.pl',
-'Strona jest ok, ale reklamowany tu na niej program P. Roberta Najdziona okazuje siÄ™ byÄ‡ zwykÅ‚Ä… drogÄ… do uszustwa. PrÃ³bowaÅ‚em nabyÄ‡ ten program przez opÅ‚atÄ™ SMS-em i okazaÅ‚o siÄ™, Å¼e to P. Najdzion nabyÅ‚ moje pieniÄ…dze, a system podaje absurdalny monit o bÅ‚Ä™dnym adresie e-mail (moim). To naprawdÄ™ godne kary. UwaÅ¼ajcie PaÅ„stwo na podobne tranzakcje. Krzysztof z Warszawy',
+'Strona jest ok, ale reklamowany tu na niej program P. Roberta Najdziona okazuje siê byæ zwyk³± drog± do uszustwa. Próbowa³em nabyæ ten program przez op³atê SMS-em i okaza³o siê, ¿e to P. Najdzion naby³ moje pieni±dze, a system podaje absurdalny monit o b³êdnym adresie e-mail (moim). To naprawdê godne kary. Uwa¿ajcie Pañstwo na podobne tranzakcje. Krzysztof z Warszawy',
 '2004-09-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Asia', 'asienka131@op.pl',
-'fajna stronka i to bardzo &quot;cool&quot;',
+'fajna stronka i to bardzo "cool"',
 '2004-09-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -290,7 +290,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'GrzeQ', 'nie@podam.wam',
-'hehe, a ja piszÄ™ Åºle, bo nie uÅ¼ywam maÅ‚ych palcÃ³w, a i tak moja prÄ™dkoÅ›Ä‡ pisania to ok. 300 znakÃ³w na minutÄ™. Ostatnio mialÅ‚em nawet 315 :P',
+'hehe, a ja piszê ¼le, bo nie u¿ywam ma³ych palców, a i tak moja prêdko¶æ pisania to ok. 300 znaków na minutê. Ostatnio mial³em nawet 315 :P',
 '2004-09-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -325,17 +325,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'spirox', 'spirox@op.pl',
-'Ludzie jest bardzo dobry program do nauki pisania na klawiaturze Klawiaturka! Jest teraz bezpÅ‚atna!',
+'Ludzie jest bardzo dobry program do nauki pisania na klawiaturze Klawiaturka! Jest teraz bezp³atna!',
 '2004-11-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'spirox', 'spirox@op.pl',
-'MoÅ¼na go Å›ciÄ…gnÄ…Ä‡ ze strony http://delix.republika.pl/',
+'Mo¿na go ¶ci±gn±æ ze strony http://delix.republika.pl/',
 '2004-11-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'KatKa', '',
-'Ufff.... Nauka jakos mi idzie, ale mam problem z zadko uzywanymi klawiszmi typu &quot;v&quot; i &quot;q&quot;, ktorych sie musze nauczyc. Co smieszniejsze, polskie znaki nie sa problemem. Zyczcie mi powodzenia. Zawiadamiam, ze zaliczylam juz prawie 3/4 materialu. Niedlugo koniec. :D Mam nadzieje, ze starczy mi zapalu. Bo to, ze powinnam to zaliczyc na Technice biurowej jakos mnie nie przekonuje. Trzymajcie za mnie kciuki!!! Przydadza sie tak samo jak silna motywacja. Pozdrawiam wszystkich uczacych sie maszynopisania. Warto to umiec, zapewniam!!!',
+'Ufff.... Nauka jakos mi idzie, ale mam problem z zadko uzywanymi klawiszmi typu "v" i "q", ktorych sie musze nauczyc. Co smieszniejsze, polskie znaki nie sa problemem. Zyczcie mi powodzenia. Zawiadamiam, ze zaliczylam juz prawie 3/4 materialu. Niedlugo koniec. :D Mam nadzieje, ze starczy mi zapalu. Bo to, ze powinnam to zaliczyc na Technice biurowej jakos mnie nie przekonuje. Trzymajcie za mnie kciuki!!! Przydadza sie tak samo jak silna motywacja. Pozdrawiam wszystkich uczacych sie maszynopisania. Warto to umiec, zapewniam!!!',
 '2004-11-05'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -350,12 +350,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'iza', '',
-'a ja znalazÅ‚am jeszcze inny, fajny i darmowy programik - http://www.konradp.com/polska/products/klawiatura/, chociaÅ¼ trochÄ™ malo tekstÃ³w ale jest spoko, myÅ›lÄ™ Å¼e powinnien byÄ‡ dodany do listy &quot;ProgramÃ³w&quot;',
+'a ja znalaz³am jeszcze inny, fajny i darmowy programik - http://www.konradp.com/polska/products/klawiatura/, chocia¿ trochê malo tekstów ale jest spoko, my¶lê ¿e powinnien byæ dodany do listy "Programów"',
 '2004-11-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Arek', 'arek_stefanski@poczta.onet.pl',
-'Hej spoko stronka na pewno skorzystam z ktÃ³regos z programÃ³w bo pidanie nie idzie mi najlepiej :)',
+'Hej spoko stronka na pewno skorzystam z któregos z programów bo pidanie nie idzie mi najlepiej :)',
 '2004-11-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -364,13 +364,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2004-11-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'WundÅ¼un (webmaster strony)', '',
-'W koÅ„cu zaktualizowaÅ‚em stronÄ™. DodaÅ‚em programy Klawiatura i Klawiaturka! i ich opisy (w dziale Programy).',
+'Wund¿un (webmaster strony)', '',
+'W koñcu zaktualizowa³em stronê. Doda³em programy Klawiatura i Klawiaturka! i ich opisy (w dziale Programy).',
 '2004-11-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Adam', 'adam-elektronik@wp.pl',
-'Ja pisze 420 znakÃ³w na minute. ZmierzyÅ‚em piszÄ…c 5 razy rÃ³Å¼ne teksty (z gÅ‚owy teksty piosenek) i po obliczeniu Å›redniej wyszlo mi 70 znakÃ³w na 10 sekund. Po przemnoÅ¼eniu przez 6 wyszÅ‚o mi caÅ‚e 420 znakÃ³w. To jest jakiÅ› rekord moÅ¼e? PrzecieÅ¼ chyba zawodowe sekretarki piszÄ… o wiele szybciej ode mnie?? Czy moÅ¼e sie myle??',
+'Ja pisze 420 znaków na minute. Zmierzy³em pisz±c 5 razy ró¿ne teksty (z g³owy teksty piosenek) i po obliczeniu ¶redniej wyszlo mi 70 znaków na 10 sekund. Po przemno¿eniu przez 6 wysz³o mi ca³e 420 znaków. To jest jaki¶ rekord mo¿e? Przecie¿ chyba zawodowe sekretarki pisz± o wiele szybciej ode mnie?? Czy mo¿e sie myle??',
 '2004-11-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -389,18 +389,18 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2004-12-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å»aneta', 'Å»aneta@210.pl',
+'¯aneta', '¯aneta@210.pl',
 '',
 '2004-12-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å»aneta', 'Å»aneta@210.pl',
-'Spoko jest ta strona poniewaÅ¼ napisaÅ‚am w ciÄ…gu 5 minut 444 wyrazy',
+'¯aneta', '¯aneta@210.pl',
+'Spoko jest ta strona poniewa¿ napisa³am w ci±gu 5 minut 444 wyrazy',
 '2004-12-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å»aneta', 'Å»aneta@210.pl',
-'Spoko jest ta strona poniewaÅ¼ napisaÅ‚am w ciÄ…gu 5 minut 444 wyrazy',
+'¯aneta', '¯aneta@210.pl',
+'Spoko jest ta strona poniewa¿ napisa³am w ci±gu 5 minut 444 wyrazy',
 '2004-12-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -410,7 +410,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'karol', 'kt1@vp.pl',
-'spoko strona posciogaÅ‚Ä™m sobie kilka zeczy !!',
+'spoko strona poscioga³êm sobie kilka zeczy !!',
 '2004-12-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -425,7 +425,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Dominika', 'Dominika.miske@wp.pl',
-'obojÄ™tnie',
+'obojêtnie',
 '2004-12-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -450,7 +450,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', 'aniadz5@buziaczek.pl',
-'daj coÅ› ciekawego',
+'daj co¶ ciekawego',
 '2005-01-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -459,13 +459,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2005-01-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'karwid', 'karwid75@wtyÅ‚ek',
+'karwid', 'karwid75@wty³ek',
 'hetero',
 '2005-01-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'DawiD', '',
-'ja napisaÅ‚em w cigu 1min 1897234872354 wyrazÃ³w i sie  klawiatura zjebaÅ‚a ',
+'ja napisa³em w cigu 1min 1897234872354 wyrazów i sie  klawiatura zjeba³a ',
 '2005-01-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -475,17 +475,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Valdek', 'xspidermanx@wp.pl',
-'Witam wszystkich. TrenujÄ™ pisanie na klawiaturze juÅ¼ ponad 2 lata (zaczynaÅ‚em od Accu type, potem przesiadÅ‚em siÄ™ na kspnk a teraz stukam sobie teksty na Mistrzu klawiatury II), na razie moje wyniki oscylujÄ… w granicach 380 do nawet 450 zn/min z dokÅ‚adnoÅ›ciÄ… ok. 98,7 do ponad 99%. ChciaÅ‚bym porÃ³wnaÄ‡ moje wyniki z innymi, proszÄ™ pochwalcie siÄ™ nimi :P  A i jeszcze jedno, ostatnio zmieniÅ‚em sobie klawiaturkÄ™ (wcale nie duÅ¼o lepszÄ… od poprzedniej cena ok. 35 zÅ‚) a szybkoÅ›Ä‡ poprawiÅ‚a mi siÄ™ na niej z miejsca o 80 znakÃ³w. Zna moÅ¼e ktoÅ› jakiÅ› typ klawiatury, na ktÃ³rej naprawdÄ™ szybko moÅ¼na sobie postukaÄ‡?   ',
+'Witam wszystkich. Trenujê pisanie na klawiaturze ju¿ ponad 2 lata (zaczyna³em od Accu type, potem przesiad³em siê na kspnk a teraz stukam sobie teksty na Mistrzu klawiatury II), na razie moje wyniki oscyluj± w granicach 380 do nawet 450 zn/min z dok³adno¶ci± ok. 98,7 do ponad 99%. Chcia³bym porównaæ moje wyniki z innymi, proszê pochwalcie siê nimi :P  A i jeszcze jedno, ostatnio zmieni³em sobie klawiaturkê (wcale nie du¿o lepsz± od poprzedniej cena ok. 35 z³) a szybko¶æ poprawi³a mi siê na niej z miejsca o 80 znaków. Zna mo¿e kto¶ jaki¶ typ klawiatury, na której naprawdê szybko mo¿na sobie postukaæ?   ',
 '2005-02-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'..:: RafaÅ‚ ::.', '',
+'..:: Rafa³ ::.', '',
 'fajna strona ale za duzo czytania ale jest spox',
 '2005-02-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'ZiomuÅ›', 'ukasz.bzymek@neostrada.pl',
-'siema ludzie!dajcie ziomkowi stronke z ktÃ³rej moÅ¼na Å›ciÄ…gnÄ…Ä‡ taki programik:)',
+'Ziomu¶', 'ukasz.bzymek@neostrada.pl',
+'siema ludzie!dajcie ziomkowi stronke z której mo¿na ¶ci±gn±æ taki programik:)',
 '2005-02-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -505,7 +505,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'juhasek', '',
-'no i tego.. no..wÅ‚aÅ›nie',
+'no i tego.. no..w³a¶nie',
 '2005-02-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -520,7 +520,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kaczortt', 'kaczortt@op.pl',
-'witam ja Ä‡wicze pisanie okoÅ‚o roku :D moja szybkoÅ›c wynosi okoÅ‚o 350 znakÃ³w na minuta :] przy poprawnoÅ›ci 99% ma ktoÅ› moÅ¼e jakieÅ› rady co do dalszej nauki :] bo czym szybciej tym mniejsze sÄ… efekty patrze :/ pozdro',
+'witam ja æwicze pisanie oko³o roku :D moja szybko¶c wynosi oko³o 350 znaków na minuta :] przy poprawno¶ci 99% ma kto¶ mo¿e jakie¶ rady co do dalszej nauki :] bo czym szybciej tym mniejsze s± efekty patrze :/ pozdro',
 '2005-02-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -530,7 +530,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mati', '',
-'Poda mi ktoÅ› adres do strony gdzie mozna na prawdÄ™ szybko nauczyc sie pisania bezwzrokowego :)',
+'Poda mi kto¶ adres do strony gdzie mozna na prawdê szybko nauczyc sie pisania bezwzrokowego :)',
 '2005-02-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -550,7 +550,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marta', 'martunia@wp.88@wp.pl',
-'kochani pomÃ³Å¼cie. Jak mogÄ™ nauczyÄ‡ siÄ™ szybkiego pisania-bez warunkÃ³w?ProszÄ™ poÃ³Å¼cie mi :(',
+'kochani pomó¿cie. Jak mogê nauczyæ siê szybkiego pisania-bez warunków?Proszê poó¿cie mi :(',
 '2005-02-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -570,12 +570,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Sandra', '',
-'zna ktoÅ› program do pisania TYPE98',
+'zna kto¶ program do pisania TYPE98',
 '2005-03-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å‚ukasz', 'luki200@poczta.fm',
-'Mam nie dowÅ‚ad lewej renki ale mimo wszystko ucze sie pisma bezwzrokowego',
+'³ukasz', 'luki200@poczta.fm',
+'Mam nie dow³ad lewej renki ale mimo wszystko ucze sie pisma bezwzrokowego',
 '2005-03-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -590,12 +590,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'katalog stron', '',
-'dodaj swojÄ… stronÄ™ do katalogu, a zyskasz na popularnoÅ›ci ! www.waszestrony.com',
+'dodaj swoj± stronê do katalogu, a zyskasz na popularno¶ci ! www.waszestrony.com',
 '2005-03-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'adek', 'szkolne14@o2.pl',
-'http://www.typingtest.com/contents/java/typetest/default.htm   -----&gt; tutaj mozna sobie zrobic testy z 4 tekstami po angielsku 05c do wyboru czas jednej minuty, dwoch minut albo trzech minut. Wybiera sie takze cos takiego jakby eh....jednostke predkosci albo ilosc znakow na minute albo jakies tam inne hehe. Z tego co widze winiki w 100 najlepszych to ludzie tam pisza nawet 3 razy szybciej odemnie, a ja pisze przecietnie 320 znakow na minute. Jak to mozliwe???? hehe. Zycze powodzenia i osiagania dobrych efektow. :)',
+'http://www.typingtest.com/contents/java/typetest/default.htm   -----> tutaj mozna sobie zrobic testy z 4 tekstami po angielsku 05c do wyboru czas jednej minuty, dwoch minut albo trzech minut. Wybiera sie takze cos takiego jakby eh....jednostke predkosci albo ilosc znakow na minute albo jakies tam inne hehe. Z tego co widze winiki w 100 najlepszych to ludzie tam pisza nawet 3 razy szybciej odemnie, a ja pisze przecietnie 320 znakow na minute. Jak to mozliwe???? hehe. Zycze powodzenia i osiagania dobrych efektow. :)',
 '2005-03-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -610,7 +610,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Arek', 'szwanek1@wp.pl',
-'Siema skÄ…d moÅ¼na Å›ciÄ…gnÄ…Ä‡ Tmaster taki programik:)',
+'Siema sk±d mo¿na ¶ci±gn±æ Tmaster taki programik:)',
 '2005-03-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -620,7 +620,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '', 'spamic@interia.pl',
-'Ja mam inna kwestiÄ™ jakÄ… klawiaturÄ™(y) polecacie do pisania, absolutne maksimum to 100zÅ‚. Mam na oku kilka o niskim skoku i standardowym ukÅ‚adzie przyciskÃ³w jak tracer czy Logitech Ultra-X Flat. ProszÄ™ o wypowiedÅ¼ tych co duÅ¼Ä… piszÄ… i mogÄ… powiedzieÄ‡ co nieco i majÄ… pewne porÃ³wnanie.',
+'Ja mam inna kwestiê jak± klawiaturê(y) polecacie do pisania, absolutne maksimum to 100z³. Mam na oku kilka o niskim skoku i standardowym uk³adzie przycisków jak tracer czy Logitech Ultra-X Flat. Proszê o wypowied¿ tych co du¿± pisz± i mog± powiedzieæ co nieco i maj± pewne porównanie.',
 '2005-03-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -630,22 +630,22 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'PREDATOR', 'predatormariusz@o2.pl',
-'Nie ma to jak otworzyÄ‡ sobie notatnik i samemu Ä‡wiczyÄ‡ pisanie (oczywiÅ›cie jak zna siÄ™ podstawowe zasady pisania na klawiaturze)',
+'Nie ma to jak otworzyæ sobie notatnik i samemu æwiczyæ pisanie (oczywi¶cie jak zna siê podstawowe zasady pisania na klawiaturze)',
 '2005-04-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'karolinka:)', 'karolcia_sz_1993@buziaczek.pl',
-'chce sie nauczyÄ‡ pisaÄ‡ szybko na konkurs...trzymajcie kciuki',
+'chce sie nauczyæ pisaæ szybko na konkurs...trzymajcie kciuki',
 '2005-04-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'adrian', 'szkolne14@o2.pl',
-'Ja chcÄ™ konkursa w krakowie!!!!!!!!',
+'Ja chcê konkursa w krakowie!!!!!!!!',
 '2005-04-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'anitka', 'anitka.88@interia.pl',
-'podajcie mi stronke skÄ…d mozna sciÄ…gnaÄ‡ TMASTERA plosieeee',
+'podajcie mi stronke sk±d mozna sci±gnaæ TMASTERA plosieeee',
 '2005-04-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -659,13 +659,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2005-04-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'SÅ‚awomir ', 'czaina@op.pl',
-'ZnalazÅ‚em to co szukaÅ‚em dziÄ™ki',
+'S³awomir ', 'czaina@op.pl',
+'Znalaz³em to co szuka³em dziêki',
 '2005-05-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'konrad', 'konradlichacz',
-'bÅ‚agam przeÅ›lijcie mi na mejla jakiÅ› program do pisania na klawieturze',
+'b³agam prze¶lijcie mi na mejla jaki¶ program do pisania na klawieturze',
 '2005-05-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -680,7 +680,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', 'karol.rkm.@.wp.pl',
-'MiÅ‚o siÄ™ z tobÄ… rozmawiaÅ‚o .Czekam na spotkanie.Pa',
+'Mi³o siê z tob± rozmawia³o .Czekam na spotkanie.Pa',
 '2005-06-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -695,7 +695,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kamil Hatem', 'kamilhatem@gmail.com',
-'Fane gÃ³wienko z tych programÃ³w rzadne nic niedaje!!!!!!!! Niekali sie i odradzam!!! :[[[[[[[[',
+'Fane gówienko z tych programów rzadne nic niedaje!!!!!!!! Niekali sie i odradzam!!! :[[[[[[[[',
 '2005-06-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -705,7 +705,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'pytajnik', '',
-'mam pytanie. czy naleÅ¼y uderze &quot;b&quot; koniecznie lewym palcem wskazujÄ…cym, czy mogÄ™ sobie zmodyfikowaÄ‡, tak jak mi pasuje  (czyli prawÄ…?)Jaka jest zasada przyporzÄ…dkowywania klawiszy do palcÃ³w. Przepraszam za infantylne pytanie. Pozdr.',
+'mam pytanie. czy nale¿y uderze "b" koniecznie lewym palcem wskazuj±cym, czy mogê sobie zmodyfikowaæ, tak jak mi pasuje  (czyli praw±?)Jaka jest zasada przyporz±dkowywania klawiszy do palców. Przepraszam za infantylne pytanie. Pozdr.',
 '2005-06-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -735,12 +735,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'wojtek', '',
-'umiem 60 znak&amp;#8364;w na minutÄ™',
+'umiem 60 znaków na minutê',
 '2005-07-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'wojtek', '',
-'jest super pisze 60 znak&amp;#8364;w na minutÄ™',
+'jest super pisze 60 znaków na minutê',
 '2005-07-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -750,32 +750,32 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ble', '',
-'mam 7 lat i piszÄ™ 60 znakÃ³w na minutÄ™',
+'mam 7 lat i piszê 60 znaków na minutê',
 '2005-07-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ela16', '',
-'ja mam za to 16 lat i piszÄ™ dwa do szeÅ›ciu znakÃ³w na 1/100 sekundy ',
+'ja mam za to 16 lat i piszê dwa do sze¶ciu znaków na 1/100 sekundy ',
 '2005-07-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Andre', 'andre12@wp.pl',
-'prÄ™dkoÅ›Ä‡ kaÅ‚asznikowa :0',
+'prêdko¶æ ka³asznikowa :0',
 '2005-08-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'KasieÅ„ka', 'kasienka_19_19@o2.pl',
-'ma ktoÅ› peÅ‚na wersjÄ™??:&gt; prosiÅ‚abym o przesÅ‚anie na wyÅ¼ej podany adres :)',
+'Kasieñka', 'kasienka_19_19@o2.pl',
+'ma kto¶ pe³na wersjê??:> prosi³abym o przes³anie na wy¿ej podany adres :)',
 '2005-08-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Alicja', 'osa86a@interia.pl',
-'ZnakÃ³w mam 270 Å›wietna jestem, no i do tego jaka skromna :) ',
+'Znaków mam 270 ¶wietna jestem, no i do tego jaka skromna :) ',
 '2005-08-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Justyna', 'justynka2904@buziaczke.pl',
-'Ja jestem szybka ele nie tak jak inni i czÄ™sto sie myle  na klawiatuÅ¼e ale przeczytaÅ‚am to co jest napisane i na pewno  sie doucze dziÄ™ki za pomoc!!!!',
+'Ja jestem szybka ele nie tak jak inni i czêsto sie myle  na klawiatu¿e ale przeczyta³am to co jest napisane i na pewno  sie doucze dziêki za pomoc!!!!',
 '2005-08-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -795,7 +795,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kharlamov', '',
-'witam wszystkich jeÅ¼eli chcesz zostaÄ‡ moim instruktorem to moje gg 7391579 pozdrawiam',
+'witam wszystkich je¿eli chcesz zostaæ moim instruktorem to moje gg 7391579 pozdrawiam',
 '2005-08-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -825,7 +825,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Dawid', 'brunoolaf@wp.pl',
-'oby wiÄ™cej takich synÃ³w jak Ty pÅ‚odziÅ‚a nam Nasza Matka Polska',
+'oby wiêcej takich synów jak Ty p³odzi³a nam Nasza Matka Polska',
 '2005-09-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -834,13 +834,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2005-09-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'SÅ‚awek', 'owenas@gazeta.pl',
-'kto ma program TMaster bardzo go potrzebuje byÅ‚bym wdzieczny jak by mi ktoÅ› go przysÅ‚aÅ‚',
+'S³awek', 'owenas@gazeta.pl',
+'kto ma program TMaster bardzo go potrzebuje by³bym wdzieczny jak by mi kto¶ go przys³a³',
 '2005-09-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kasia :)', 'kasiap89@tlen.pl',
-'TeÅ¼ bym bardzo potrzebowaÅ‚a ten programik TMaster. Pliss jeÅ›li ktoÅ› wie skÄ…d go wziÄ…Ä‡ to niech pisze na maila :) z gÃ³ry dziÄ™ki pa',
+'Te¿ bym bardzo potrzebowa³a ten programik TMaster. Pliss je¶li kto¶ wie sk±d go wzi±æ to niech pisze na maila :) z góry dziêki pa',
 '2005-09-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -850,7 +850,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Natalii', 'nataliias@gazeta.pl',
-'Kto ma program TMaste rto prosze o przesÅ‚anie lub jakiÅ› link gdzie go mozna znaleÅ›Ä‡ prosze to pilne',
+'Kto ma program TMaste rto prosze o przes³anie lub jaki¶ link gdzie go mozna znale¶æ prosze to pilne',
 '2005-09-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -880,7 +880,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'KOCIA', 'kocia_ania9@vp.pl',
-'Mi dzis na infie wyszÅ‚o ze pisze 184ltery na minute i na 97% bez bÅ‚Ä™dÃ³w ale chce siÄ™ poprawiÄ‡ !!!!!! pomurzcie',
+'Mi dzis na infie wysz³o ze pisze 184ltery na minute i na 97% bez b³êdów ale chce siê poprawiæ !!!!!! pomurzcie',
 '2005-10-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -895,17 +895,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Luiza', 'lizaczek1000@interia.pl',
-'proszÄ™ nich ktoÅ› mi przyÅ›le program do nauki szybkiego pisania',
+'proszê nich kto¶ mi przy¶le program do nauki szybkiego pisania',
 '2005-10-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'keti-31', 'keti-31@go2.pl',
-'piszÄ™ bezwrokowo,ale przydaÅ‚by siÄ™ mi ten program dla moich blliskich.',
+'piszê bezwrokowo,ale przyda³by siê mi ten program dla moich blliskich.',
 '2005-10-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Grzesiek', '',
-'Pisze tez bezwrokowo, ale chcialbym dowiedziec sie jaki jest rekord guinessa w pisaniu :) ile znakÃ³w na minutÄ™. Z gÃ³ry dziÄ™kujÄ™.',
+'Pisze tez bezwrokowo, ale chcialbym dowiedziec sie jaki jest rekord guinessa w pisaniu :) ile znaków na minutê. Z góry dziêkujê.',
 '2005-10-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -929,7 +929,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2005-11-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'PaweÅ‚', 'pako86@',
+'Pawe³', 'pako86@',
 '',
 '2005-11-02'
 );
@@ -940,17 +940,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'MAJKA', 'majka0808@buziaczek.pl',
-'zajefajne programy:)napiszcie cos do mnie bo nudy....chÅ‚opaczki:',
+'zajefajne programy:)napiszcie cos do mnie bo nudy....ch³opaczki:',
 '2005-11-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'anka', 'anka0405@op.pl',
-'czeÅ›Ä‡ wszystkim co tam u was.ProszÄ™ napiszcie coÅ› do mnie',
+'cze¶æ wszystkim co tam u was.Proszê napiszcie co¶ do mnie',
 '2005-11-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'anka', 'anka0405@op.pl',
-'czeÅ›Ä‡ wszystkim co tam u was.ProszÄ™ napiszcie coÅ› do mnie',
+'cze¶æ wszystkim co tam u was.Proszê napiszcie co¶ do mnie',
 '2005-11-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -965,7 +965,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'sylwia', 'sylwiamalinowska@wp.pl',
-'Pozdrawiam, Czy ktoÅ› moÅ¼e wie jak zdobyÄ‡ niemieckÄ… czcionkÄ™ z umlaÅ‚tami ',
+'Pozdrawiam, Czy kto¶ mo¿e wie jak zdobyæ niemieck± czcionkê z umla³tami ',
 '2005-11-09'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -975,7 +975,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Natalka', 'Angelodevil@wp.pl',
-'Bardzo potrzebuje programu TMASTER -nauka szybkiego pisania, musze poprawiÄ‡ ocene z techniki biurowej i bardzo go potrzebuje, czy ktoÅ› go ma, jeÅ›li tak, moÅ¼e mi przesÅ‚aÄ‡ ma maila?bardzo bym byÅ‚a wdziÄ™czna.JesteÅ›cie mojÄ… jedynÄ… deskÄ… ratunku:((',
+'Bardzo potrzebuje programu TMASTER -nauka szybkiego pisania, musze poprawiæ ocene z techniki biurowej i bardzo go potrzebuje, czy kto¶ go ma, je¶li tak, mo¿e mi przes³aæ ma maila?bardzo bym by³a wdziêczna.Jeste¶cie moj± jedyn± desk± ratunku:((',
 '2005-11-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -985,7 +985,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kasia', 'katsori@poczta.fm',
-'Mam zamiar skorzystaÄ‡ z info. z tej storny ale na razie nie mam czasu. Pozdro. papa',
+'Mam zamiar skorzystaæ z info. z tej storny ale na razie nie mam czasu. Pozdro. papa',
 '2005-11-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1000,7 +1000,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'qwe', '',
-'ta strona to niezÅ‚y pokarm dla spambotÃ³w (takie co to szukajÄ… maili do spamowania:)',
+'ta strona to niez³y pokarm dla spambotów (takie co to szukaj± maili do spamowania:)',
 '2005-11-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1015,17 +1015,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'jola', 'jolagie@interia.pl',
-'Bardzo potrzebuje programu TMASTER -nauka szybkiego pisania, musze poprawiÄ‡ ocene z techniki biurowej i bardzo go potrzebuje, czy ktoÅ› go ma, jeÅ›li tak, moÅ¼e mi przesÅ‚aÄ‡ ma maila?bardzo bym byÅ‚a wdziÄ™czna.JesteÅ›cie mojÄ… jedynÄ… deskÄ… ratunku',
+'Bardzo potrzebuje programu TMASTER -nauka szybkiego pisania, musze poprawiæ ocene z techniki biurowej i bardzo go potrzebuje, czy kto¶ go ma, je¶li tak, mo¿e mi przes³aæ ma maila?bardzo bym by³a wdziêczna.Jeste¶cie moj± jedyn± desk± ratunku',
 '2005-12-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Emila', 'elmirka100@gmail.com',
-'Fajna stronka, ale dopiero sie przymierzam do jej caÅ‚kowitego przejrzenia i nauli szybkiego pisania zgodnie z instrukcjami w niej zawartymi..a dostaÅ‚am ten adres od mojego Kochaniutkiego Maciejka, ktÃ³ry pisze na komp. szybciej niÅ¼ mÃ³wi..;/;/ heh, kiedys mu dorÃ³wnam!;))) Pozdrawiam Wszystkich cieplutko i zycze udanej nauki pisania!!! A i podziekowania dla Autora stronki:* :)',
+'Fajna stronka, ale dopiero sie przymierzam do jej ca³kowitego przejrzenia i nauli szybkiego pisania zgodnie z instrukcjami w niej zawartymi..a dosta³am ten adres od mojego Kochaniutkiego Maciejka, który pisze na komp. szybciej ni¿ mówi..;/;/ heh, kiedys mu dorównam!;))) Pozdrawiam Wszystkich cieplutko i zycze udanej nauki pisania!!! A i podziekowania dla Autora stronki:* :)',
 '2005-12-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Olcia =]', 'ola1311@vp.pl',
-'FatalnoÅ›Ä‡',
+'Fatalno¶æ',
 '2005-12-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1050,22 +1050,22 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'sylwia', '',
-'umiem szybko pisaÄ‡',
+'umiem szybko pisaæ',
 '2005-12-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Grzegorz Piechna', 'grzesiu@korona.kielce.pl',
-'Åo co tu chodzi!?',
+'£o co tu chodzi!?',
 '2005-12-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'PaweÅ‚ maz', 'pmaz24@wp.pl',
-'ja proponuje jak ktoÅ› chce sie nauczyÄ‡ szybko pisaÄ‡ to proponuje program Gadu-Gadu. ja sie tak nauczyÅ‚em. tylko jeden bÅ‚Ä…d robie patrze siÄ™ na klawiature jak pisze. i tego chce sie oduczyÄ‡. no i bÅ‚edy ort. teÅ¼ sie robi. piszÄ…c szybko.',
+'Pawe³ maz', 'pmaz24@wp.pl',
+'ja proponuje jak kto¶ chce sie nauczyæ szybko pisaæ to proponuje program Gadu-Gadu. ja sie tak nauczy³em. tylko jeden b³±d robie patrze siê na klawiature jak pisze. i tego chce sie oduczyæ. no i b³edy ort. te¿ sie robi. pisz±c szybko.',
 '2005-12-31'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kamil', 'magot@op.pl',
-'Hmm...a ja maszyno pisania nauczylem sie w szkole. Teraz pisze 10 palcami nie patrzac na klawiature...W szkole mialem tai przedmiot &quot;maszyno pisanie&quot; i dziekuje oswiacie ze go wprowadzili. Jest to naprawde wygodne i przydatne w zyciu...Polecam rozne ksiazki do tego. Ja nie pamietam jaka ja uzywalem bo juz ja odsprzedalem. Pozdro',
+'Hmm...a ja maszyno pisania nauczylem sie w szkole. Teraz pisze 10 palcami nie patrzac na klawiature...W szkole mialem tai przedmiot "maszyno pisanie" i dziekuje oswiacie ze go wprowadzili. Jest to naprawde wygodne i przydatne w zyciu...Polecam rozne ksiazki do tego. Ja nie pamietam jaka ja uzywalem bo juz ja odsprzedalem. Pozdro',
 '2006-01-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1075,7 +1075,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Pawel', '',
-'Nauka szybkiego pisania szÅ‚a mi baaardzo ciÄ™Å¼ko, ale siÄ™ opÅ‚aciÅ‚o. Teraz piszÄ™ ponad 400 znakÃ³w na minutÄ™. Wszystkim gorÄ…co polecam to bardzo cenna umiejÄ™tnoÅ›Ä‡.',
+'Nauka szybkiego pisania sz³a mi baaardzo ciê¿ko, ale siê op³aci³o. Teraz piszê ponad 400 znaków na minutê. Wszystkim gor±co polecam to bardzo cenna umiejêtno¶æ.',
 '2006-01-09'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1085,7 +1085,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Iwona', 'ivo91_1991@o2.pl',
-'Jestem tu pierwszy raz ale mam nadzieje Å¼e nauczÄ™ siÄ™ pisaÄ‡ szybko na klawiaturze. ',
+'Jestem tu pierwszy raz ale mam nadzieje ¿e nauczê siê pisaæ szybko na klawiaturze. ',
 '2006-01-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1095,7 +1095,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '', '',
-'juz zaczynam Ä‡wiczyÄ‡',
+'juz zaczynam æwiczyæ',
 '2006-01-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1110,7 +1110,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kaja', '',
-'fajna, pomocna strona, bardzo chce siÄ™ nauczyÄ‡ tak szybko pisaÄ‡, ODEZWE SIÄ˜ JAK TO OSIÄ„GNE',
+'fajna, pomocna strona, bardzo chce siê nauczyæ tak szybko pisaæ, ODEZWE SIÊ JAK TO OSI¡GNE',
 '2006-02-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1124,18 +1124,18 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-02-05'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'PaweÅ‚', 'pawellos11@interia.pl',
-'dziÄ™ki za pomoc w nauce pisania na klawie',
+'Pawe³', 'pawellos11@interia.pl',
+'dziêki za pomoc w nauce pisania na klawie',
 '2006-02-05'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz Janda', 'matt@elzab.com.pl',
-'Bardzo dobra i pomocna strona jeÅ›li zaczynasz siÄ™ uczyÄ‡ ale nawet niektorym starym wyjadaczom klawiatury moÅ¼e siÄ™ przydaÄ‡. Zachecam wszystkich do nauki, szybkie i bezwzrokowe pisanie na klawiaturze jest naprawdÄ™ przydatne. Pozdrawiam ',
+'Bardzo dobra i pomocna strona je¶li zaczynasz siê uczyæ ale nawet niektorym starym wyjadaczom klawiatury mo¿e siê przydaæ. Zachecam wszystkich do nauki, szybkie i bezwzrokowe pisanie na klawiaturze jest naprawdê przydatne. Pozdrawiam ',
 '2006-02-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Dorota', 'dorota.glazik@wp.pl',
-'Ta stronka jest fajna ale szkoda ze nie moÅ¼na tego mistrz klawiatury zainstalowac bo prÃ³bowaÅ‚am kilka razy bardzo prosze zeby na mojÄ… pocztÄ™ w najbliÅ¼szym czasie napisano konstrukcje dowidzenia',
+'Ta stronka jest fajna ale szkoda ze nie mo¿na tego mistrz klawiatury zainstalowac bo próbowa³am kilka razy bardzo prosze zeby na moj± pocztê w najbli¿szym czasie napisano konstrukcje dowidzenia',
 '2006-02-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1145,7 +1145,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'jacek', '',
-'jeÅ›li teraz piszac dwoma palcami potrafiÄ™ osiagnÄ…Ä‡ do 5 znakÃ³w na sekundÄ™, czyli 300 na minutÄ™, to ile bede mÃ³gÅ‚ osiÄ…gnÄ…Ä‡ piszÄ…c wszystkimi 10 palcami?',
+'je¶li teraz piszac dwoma palcami potrafiê osiagn±æ do 5 znaków na sekundê, czyli 300 na minutê, to ile bede móg³ osi±gn±æ pisz±c wszystkimi 10 palcami?',
 '2006-02-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1160,27 +1160,27 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'normalnieUla=]', 'marijuana00@wp.pl',
-'no i co ??ta stronka ma nauczyc szybko pisac tak??a jak niby ?chyba kazdy sam sie nauczy szybko pisac jak chce... no nie wiem ale tak mi sie wydaje ,ze do nauki szybkiego pisania na klawiaturze potrzeba tylko zdeka checi i czasu no i kompa a raczej klawiatury;)pozdro Å›le... ludziska szybko piszacy=)',
+'no i co ??ta stronka ma nauczyc szybko pisac tak??a jak niby ?chyba kazdy sam sie nauczy szybko pisac jak chce... no nie wiem ale tak mi sie wydaje ,ze do nauki szybkiego pisania na klawiaturze potrzeba tylko zdeka checi i czasu no i kompa a raczej klawiatury;)pozdro ¶le... ludziska szybko piszacy=)',
 '2006-03-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marijuana', 'marijuana00@wp.pl',
-'tresc: jeÅ›li teraz piszac dwoma palcami potrafiÄ™ osiagnÄ…Ä‡ do 5 znakÃ³w na sekundÄ™, czyli 300 na minutÄ™, to ile bede mÃ³gÅ‚ osiÄ…gnÄ…Ä‡ piszÄ…c wszystkimi 10 palcami?no wlasnie!tez nap******** dwoma palcami i tez okolo sekundy zajmuje mi napisanie pieciu znakow a nawet szeÅ›ciu=P  to jak 10palcÃ³w uzyje to ide zdolam napisac znakow??? a ciekawa jestem=]',
+'tresc: je¶li teraz piszac dwoma palcami potrafiê osiagn±æ do 5 znaków na sekundê, czyli 300 na minutê, to ile bede móg³ osi±gn±æ pisz±c wszystkimi 10 palcami?no wlasnie!tez nap******** dwoma palcami i tez okolo sekundy zajmuje mi napisanie pieciu znakow a nawet sze¶ciu=P  to jak 10palców uzyje to ide zdolam napisac znakow??? a ciekawa jestem=]',
 '2006-03-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'YAROON', '',
-'WyrzuÄ‡ chamÃ³w. ZrÃ³b cenzurÄ™!!! &quot;0&quot;tolerancji dla popapraÅ„cÃ³w i grafomanÃ³w!',
+'Wyrzuæ chamów. Zrób cenzurê!!! "0"tolerancji dla popaprañców i grafomanów!',
 '2006-03-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'YAROON', '',
-'to po co piszesz Ä‡woku!',
+'to po co piszesz æwoku!',
 '2006-03-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paulina', '',
-'FajnA StronA I PomysÅ‚owA',
+'FajnA StronA I Pomys³owA',
 '2006-03-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1219,8 +1219,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-04-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'aÅ›ka', '------------------',
-'super ta wasza strona warto na niÄ… wejÅ›Ä‡',
+'a¶ka', '------------------',
+'super ta wasza strona warto na ni± wej¶æ',
 '2006-04-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1235,27 +1235,27 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Minia', 'Maja',
-'wiecie kiedy siÄ™ urodziÅ‚a ta syrona a ja wiem i wam nie powiem hihihihi :):):) wiecie o co chodzi bo ja tak myÅ›le hihihih :):):):):):):):):):):):):):):):):):):):',
+'wiecie kiedy siê urodzi³a ta syrona a ja wiem i wam nie powiem hihihihi :):):) wiecie o co chodzi bo ja tak my¶le hihihih :):):):):):):):):):):):):):):):):):):):',
 '2006-04-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ktosik', '',
-'dzieki nauczyÅ‚em sie szybko pisac dzieki',
+'dzieki nauczy³em sie szybko pisac dzieki',
 '2006-04-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ktosik', '',
-'dzieki nauczyÅ‚em sie szybko pisac dzieki',
+'dzieki nauczy³em sie szybko pisac dzieki',
 '2006-04-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ol@13%', '',
-'hej hej! JA umiem szybko pisaÄ‡ 2 palcami, ale obiÄ™ bÄ™y',
+'hej hej! JA umiem szybko pisaæ 2 palcami, ale obiê bêy',
 '2006-05-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'weronika', 'nikolia.',
-'chcÄ™ byÄ‡ piÄ™kna',
+'chcê byæ piêkna',
 '2006-05-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1270,16 +1270,11 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz', '',
-'KtoÅ› tu pytaÅ‚:  Jak za darmo dzwonic na tel stacjonarne z Internetu? Mam linka i zapodaje: http://voip.website.pl',
+'Kto¶ tu pyta³:  Jak za darmo dzwonic na tel stacjonarne z Internetu? Mam linka i zapodaje: http://voip.website.pl',
 '2006-05-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'anna', 'adzamolscy@op.pl',
-'',
-'2006-05-22'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'julia;;Å¼ulia', 'zulia1@vp.pl.',
+'julia;;¿ulia', 'zulia1@vp.pl.',
 'jestem super',
 '2006-05-22'
 );
@@ -1289,23 +1284,18 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-05-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Leszek', 'sabina2005@autograf.pl',
-'',
-'2006-05-30'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'karina', ',,,,',
 'ejjjjj jak moge normalnie zciagnac mistrza klawiatury ???',
 '2006-06-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Klaudia ', ' nie podam !! Wypchaj siÄ™ !!',
-'jak moÅ¼na Å›ciÄ…gnÄ…Ä‡ &quot;Mistrza Klawiatury ze stronki internetowej !!',
+'Klaudia ', ' nie podam !! Wypchaj siê !!',
+'jak mo¿na ¶ci±gn±æ "Mistrza Klawiatury ze stronki internetowej !!',
 '2006-06-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'klaudia', 'placek_71@tlen.pl',
-'jak moÅ¼na Å›ciÄ…gnoÅ„Ä‡ mistrz klawiatury',
+'jak mo¿na ¶ci±gnoñæ mistrz klawiatury',
 '2006-06-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1315,7 +1305,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marlena', 'marliczek@buziaczek.pl',
-'Z jakiej strony internetowej moÅ¼na Å›ciÄ…gnÄ…Ä‡ mistrza klawiaturu',
+'Z jakiej strony internetowej mo¿na ¶ci±gn±æ mistrza klawiaturu',
 '2006-06-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1324,43 +1314,38 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-06-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'', 'M_S_9367djm@fun-email-online.com',
-'',
-'2006-06-30'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Gocha', 'wyrgo@poczta.onet.pl',
-'Super!  Tego szukaÅ‚am . DziÄ™ki ',
+'Super!  Tego szuka³am . Dziêki ',
 '2006-07-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Madzia', 'eurobus16@wp.pl',
-'DziÄ™ki, peÅ‚ne informacje!',
+'Dziêki, pe³ne informacje!',
 '2006-07-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Magdzia', 'magdaprzygodzka@wp.pl',
-'Jak moÅ¼na Å›ciÄ…gnÄ…Ä‡ mistrza klawiatury',
+'Jak mo¿na ¶ci±gn±æ mistrza klawiatury',
 '2006-07-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Iza', 'izka1466@wp.pl',
-'to jets niezÅ‚e. ',
+'to jets niez³e. ',
 '2006-07-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz', 'rogal2424@wp.pl',
-'to mi sie przyda &lt;pzdro&gt;',
+'to mi sie przyda <pzdro>',
 '2006-08-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz', 'rogal2424@wp.pl',
-'to mi sie przyda &lt;pzdro&gt;',
+'to mi sie przyda <pzdro>',
 '2006-08-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Agnieszka', 'aj_zak@tlen.pl',
-'dziÄ™kujÄ™ za cenne infomacje.',
+'dziêkujê za cenne infomacje.',
 '2006-08-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1395,7 +1380,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Anulka', '',
-'stronka powiecmy, Å¼e moÅ¼e byÄ‡, ale muszÄ… jeszcze nad niÄ… poracowaÄ‡!! :D:D:D',
+'stronka powiecmy, ¿e mo¿e byæ, ale musz± jeszcze nad ni± poracowaæ!! :D:D:D',
 '2006-09-05'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1405,7 +1390,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'anna', '',
-'Strona moze byc ale troche muszaja rozpisaÄ‡',
+'Strona moze byc ale troche muszaja rozpisaæ',
 '2006-09-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1415,12 +1400,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Asia :)', 'asienka_102@interia .pl',
-'hej!ma ktoÅ› moze TMastera!jesli tak to bardzo przosze na mojego meila!z gory dziekuje i pozdrawiam! :):):)',
+'hej!ma kto¶ moze TMastera!jesli tak to bardzo przosze na mojego meila!z gory dziekuje i pozdrawiam! :):):)',
 '2006-09-14'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Gosia:))', 'gosik1109@interia.pl',
-'witam!!! pilnie potrzebuje peÅ‚nej werstii mistrza klawiatury lub tmaster... proszÄ™ o kontakt',
+'witam!!! pilnie potrzebuje pe³nej werstii mistrza klawiatury lub tmaster... proszê o kontakt',
 '2006-09-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1434,13 +1419,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-09-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'RafaÅ‚', '',
+'Rafa³', '',
 'Fajne !!!',
 '2006-09-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Andzia', 'andzia_k@onet.eu',
-'Super stronka, wreszcie nauczyÅ‚am sie szybko pisaÄ‡.',
+'Super stronka, wreszcie nauczy³am sie szybko pisaæ.',
 '2006-09-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1455,17 +1440,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'olga', '',
-'popieram natalie lipna ta strona dali byÅ›cie cos poÄ‡wiczyc',
+'popieram natalie lipna ta strona dali by¶cie cos poæwiczyc',
 '2006-10-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Jacek', 'jacek@tlen.pl',
-'Elvis teÅ¼ pisaÅ‚ bezwzrokowo!!!',
+'Elvis te¿ pisa³ bezwzrokowo!!!',
 '2006-10-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Jacek', 'jacek@tlen.pl',
-'Wonder teÅ¼ jest bezwzrokowcem!!!!',
+'Wonder te¿ jest bezwzrokowcem!!!!',
 '2006-10-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1485,17 +1470,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'lama', 'ufdeugfihs@wp.pl',
-'Bardzo Å›mieszne Dalej dawaj',
+'Bardzo ¶mieszne Dalej dawaj',
 '2006-10-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'spier***', 'auchan@ghd.pl',
-'on kÅ‚amie',
+'on k³amie',
 '2006-10-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Inqwizytor', '',
-'Tylko Huck Noris umie pisaÄ‡ pÃ³Å‚ obrotem',
+'Tylko Huck Noris umie pisaæ pó³ obrotem',
 '2006-10-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1530,7 +1515,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'lama', '',
-'dlaczego oni piszÄ… za mnie??',
+'dlaczego oni pisz± za mnie??',
 '2006-10-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1550,22 +1535,22 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'lama', '',
-'bo jestem gÅ‚opi i sam nie umiem pisaÄ‡. dla tego muszÄ… pisaÄ‡ za mnie ',
+'bo jestem g³opi i sam nie umiem pisaæ. dla tego musz± pisaæ za mnie ',
 '2006-10-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ewa', '',
-'sprawdÅºmy siÄ™',
+'sprawd¼my siê',
 '2006-10-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kasia', '',
-'nie umiem pisaÄ‡',
+'nie umiem pisaæ',
 '2006-10-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'monika', 'sweet-girls94@wp.pl',
-'nieumiem pisaÄ‡ szybko',
+'nieumiem pisaæ szybko',
 '2006-10-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1575,7 +1560,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Weronika', 'www.werkas@buziaczek',
-'nie umiem szybko pisaÄ‡',
+'nie umiem szybko pisaæ',
 '2006-10-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1590,17 +1575,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'mumin', '',
-'ÅšciÄ…gnÄ…Å‚em mistrza klawiatury, ale pisania za pomocÄ… tamtej metody jest bez sensu. NauczyÅ‚em siÄ™ wczeÅ›niej pisaÄ‡ w inny sposÃ³b, w ktÃ³rym uÅ¼ywam 5-6 palcÃ³w. RobiÅ‚em sobie test i wyszÅ‚o mi 570 znakÃ³w na minutÄ™. Czy to dobry wynik?',
+'¦ci±gn±³em mistrza klawiatury, ale pisania za pomoc± tamtej metody jest bez sensu. Nauczy³em siê wcze¶niej pisaæ w inny sposób, w którym u¿ywam 5-6 palców. Robi³em sobie test i wysz³o mi 570 znaków na minutê. Czy to dobry wynik?',
 '2006-11-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'tomciu', 'inka0000@op.pl',
-'jak siÄ™ TMastera Å›ciÄ…ga',
+'jak siê TMastera ¶ci±ga',
 '2006-11-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Tardziel', 'tardziel@op.pl',
-'NiezÅ‚a strona, duÅ¼o porad, moim zdaniem niestety za maÅ‚o instrukcji co do poszczegÃ³lnych programÃ³w.',
+'Niez³a strona, du¿o porad, moim zdaniem niestety za ma³o instrukcji co do poszczególnych programów.',
 '2006-11-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1609,7 +1594,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2006-11-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'PaweÅ‚', '647657hughvfuyg',
+'Pawe³', '647657hughvfuyg',
 'u0896y08',
 '2006-11-20'
 );
@@ -1625,12 +1610,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marek', 'Marek_oczko@tlen.pl',
-'Hej Umiem mam sprawe:) umiem bardoz szybko pisac na klawiaturce w szkole jestem:) tzw sekretarkÄ… od pani:) z inforamtyki:) jakie sa szanse znalezienia pracy w tym dziale!!:) prosze o odpowiedz!!',
+'Hej Umiem mam sprawe:) umiem bardoz szybko pisac na klawiaturce w szkole jestem:) tzw sekretark± od pani:) z inforamtyki:) jakie sa szanse znalezienia pracy w tym dziale!!:) prosze o odpowiedz!!',
 '2006-11-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ula', 'uleczka_85@wp.pl',
-'fajnie szkoda tylko Å¼e nie ma sprawdzania szybkoÅ›ci pisania online',
+'fajnie szkoda tylko ¿e nie ma sprawdzania szybko¶ci pisania online',
 '2006-12-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1645,7 +1630,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kasia', '',
-'szkoda Å¼e nie ma jakis gier zeby szybko nauczyÄ‡ sie pisac',
+'szkoda ¿e nie ma jakis gier zeby szybko nauczyæ sie pisac',
 '2006-12-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1665,7 +1650,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Daruc17', 'daruc16@poczta.onet.pl',
-'Kto ma jakiÅ› link do Å›ciÄ…gniÄ™cia TMastera??Plosze:)))',
+'Kto ma jaki¶ link do ¶ci±gniêcia TMastera??Plosze:)))',
 '2006-12-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1700,7 +1685,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Piotr', '',
-'Ta strona bardzo mi pomogÅ‚a :-),',
+'Ta strona bardzo mi pomog³a :-),',
 '2006-12-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1720,7 +1705,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Krzysztof', '1025',
-'krzyÅ›',
+'krzy¶',
 '2006-12-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1745,7 +1730,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'klaudia :)', '',
-'dziÄ™ki waszej stronce umiem szybko pisaÄ‡',
+'dziêki waszej stronce umiem szybko pisaæ',
 '2006-12-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1755,7 +1740,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'nacia', '',
-'lubiÄ™ pisaÄ‡',
+'lubiê pisaæ',
 '2006-12-31'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1770,12 +1755,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ewa', 'ewa251@wp.pl',
-'chce siÄ™ nauczyÄ‡ szybko pisaÄ‡!!!',
+'chce siê nauczyæ szybko pisaæ!!!',
 '2007-01-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'monika', '',
-'jakas gÅ‚upia stona',
+'jakas g³upia stona',
 '2007-01-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1860,7 +1845,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ania ', '',
-'fajne pobiÅ‚am rekor 1 blÄ…d 45 s',
+'fajne pobi³am rekor 1 bl±d 45 s',
 '2007-02-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1890,7 +1875,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'barti', '',
-'usze sie szybkiego pisania ale Å¼le mi idze',
+'usze sie szybkiego pisania ale ¿le mi idze',
 '2007-03-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1910,12 +1895,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Martyniocha', '',
-'Siemka bardzu lubie pisac na kalwiaturz ale szczegÃ³lnie lubiÄ™ pisac szybko!!! Pozdro dla kl 6c z sosnicy',
+'Siemka bardzu lubie pisac na kalwiaturz ale szczególnie lubiê pisac szybko!!! Pozdro dla kl 6c z sosnicy',
 '2007-03-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kolum', '',
-'Martynocha szybko to pojÄ™cie wzglÄ™dne jak szybko piszesz? Ja np pisze ostatnio z szybkoÅ›ciÄ… Å›rednio 370 znakÃ³w na minute a mÃ³j rekord na nieznanym mi tekÅ›cie to 417 znakÃ³w na minute :)',
+'Martynocha szybko to pojêcie wzglêdne jak szybko piszesz? Ja np pisze ostatnio z szybko¶ci± ¶rednio 370 znaków na minute a mój rekord na nieznanym mi tek¶cie to 417 znaków na minute :)',
 '2007-03-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1925,7 +1910,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania ', '',
-'mi coÅ› kiepsko idzie....',
+'mi co¶ kiepsko idzie....',
 '2007-04-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1935,7 +1920,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'annnn', '',
-'jaka ta strona jest gÅ‚upia',
+'jaka ta strona jest g³upia',
 '2007-04-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -1945,17 +1930,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Basia', '',
-'no poÄ‡wicze zobaczymy czy sie uda',
+'no poæwicze zobaczymy czy sie uda',
 '2007-04-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', 'aniamorela@gmail.com',
-'sparawdze siÄ™',
+'sparawdze siê',
 '2007-05-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Reik', '',
-'Fajna stronka. UczyÅ‚em juÅ¼ siÄ™ kiedyÅ› bezwzrokowego pisania na klawiaturze... A teraz mogÄ™ dalej to doskonalaÄ‡ ;) Masz ode mnie 10 pkt za stronkÄ™. PS ciekawe to jest naciskanie alta prawym kciukiem - nie wiedziaÅ‚em o tym...',
+'Fajna stronka. Uczy³em ju¿ siê kiedy¶ bezwzrokowego pisania na klawiaturze... A teraz mogê dalej to doskonalaæ ;) Masz ode mnie 10 pkt za stronkê. PS ciekawe to jest naciskanie alta prawym kciukiem - nie wiedzia³em o tym...',
 '2007-05-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2005,7 +1990,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Beata', 'beata911@vp.pl',
-'chcÄ™ nauczyÄ‡ siÄ™ szybko pisaÄ‡',
+'chcê nauczyæ siê szybko pisaæ',
 '2007-06-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2020,7 +2005,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kleo', 'gaba93@autograf.pl',
-'chcÄ™ znaleÅ›Ä‡ strone gdzie moge siÄ™ uczyÄ‡ szybkiego pisania bez Å›ciÄ…gania programu : Misrz Klawiatury :)',
+'chcê znale¶æ strone gdzie moge siê uczyæ szybkiego pisania bez ¶ci±gania programu : Misrz Klawiatury :)',
 '2007-06-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2035,17 +2020,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'janek', 'janek_@interia.pl',
-'ChciaÅ‚bym bardzo szybko nauczyÄ‡ siÄ™ pisaÄ‡ na klawiaturze.',
+'Chcia³bym bardzo szybko nauczyæ siê pisaæ na klawiaturze.',
 '2007-06-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paula', '',
-'super strona wÅ‚aÅ›nie tego szukaÅ‚am',
+'super strona w³a¶nie tego szuka³am',
 '2007-06-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paula', '',
-'super strona wÅ‚aÅ›nie tego szukaÅ‚am',
+'super strona w³a¶nie tego szuka³am',
 '2007-06-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2055,17 +2040,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Daniel', 'Siery10@wp.pl',
-'chcÄ™ znaleÅ›Ä‡ strone gdzie moge siÄ™ uczyÄ‡ szybkiego pisania bez Å›ciÄ…gania programuw',
+'chcê znale¶æ strone gdzie moge siê uczyæ szybkiego pisania bez ¶ci±gania programuw',
 '2007-06-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Sebastian', 'ZieliÅ„ski',
-'Ja ruwnieÅ¼ chciaÅ‚bym znaleÅ›Ä‡ strone na ktÃ³rej moge siÄ™ nauczyÄ‡ szybkiego pisania na klawiatuÅ¼e',
+'Sebastian', 'Zieliñski',
+'Ja ruwnie¿ chcia³bym znale¶æ strone na której moge siê nauczyæ szybkiego pisania na klawiatu¿e',
 '2007-06-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania ', 'neil234@vp.pl',
-'Ja chciaÅ‚abym znaleÅ¼Ä‡ program gdzie mogÄ™ nauczyc sie szybko pisac...w prawdze pisze szybko ale fajnie byÅ‚oby umiec szybciej',
+'Ja chcia³abym znale¿æ program gdzie mogê nauczyc sie szybko pisac...w prawdze pisze szybko ale fajnie by³oby umiec szybciej',
 '2007-06-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2089,8 +2074,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2007-07-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å›mieszka16', 'mala_mi15@o2.pl',
-'fajna stronka:) i wogÃ³le to fajnie jest umiec tak szybko pisaÄ‡ ale ja po zrbieniu trzech Ä‡wiczeÅ„ na programie mistrz klawiatury mam doÅ›c strzasznie bolÄ… mnie rÄ™ce zwÅ‚aszcza nadgastki i palce nie wiem czy kiedykolwiek jeszce sprÃ³buje...:(',
+'¶mieszka16', 'mala_mi15@o2.pl',
+'fajna stronka:) i wogóle to fajnie jest umiec tak szybko pisaæ ale ja po zrbieniu trzech æwiczeñ na programie mistrz klawiatury mam do¶c strzasznie bol± mnie rêce zw³aszcza nadgastki i palce nie wiem czy kiedykolwiek jeszce spróbuje...:(',
 '2007-07-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2100,7 +2085,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Diana', '',
-'Åšwietna strona! Ä†wicze od tygodnia na programie KSPNK i aÅ¼ sama jestem pod wraÅ¼eniem jak Å›migam bez patrzenia!:) Buziak dla WundÅ¼un!',
+'¦wietna strona! Æwicze od tygodnia na programie KSPNK i a¿ sama jestem pod wra¿eniem jak ¶migam bez patrzenia!:) Buziak dla Wund¿un!',
 '2007-08-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2115,17 +2100,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Janusz', '',
-'Fajna stronka. Polecam mojÄ… kudowiak.webpark.pl',
+'Fajna stronka. Polecam moj± kudowiak.webpark.pl',
 '2007-08-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'justyna', '',
-'czy jest na tej stronie do poÄ‡wiczenia mistrz klawiatury jeÅ¼eli ktoÅ› zna odpowiedz do niech napisze',
+'czy jest na tej stronie do poæwiczenia mistrz klawiatury je¿eli kto¶ zna odpowiedz do niech napisze',
 '2007-08-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'gabrysia ', '',
-'super stronka bÄ™de wpadac codziennie ',
+'super stronka bêde wpadac codziennie ',
 '2007-08-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2140,13 +2125,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '', '',
-'nieÅºle :)',
+'nie¼le :)',
 '2007-09-07'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'sebastian', '',
-'',
-'2007-09-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'karolina', 'karcia953@buziaczek.pl',
@@ -2155,22 +2135,22 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'LIKA', '....',
-'Nie wiem jak ja nauczÄ™ siÄ™ szybkiego pisania na maszynie...niby to jest Å‚atwe ale naprawdÄ™ mozna siÄ™ zagubiÄ‡...poszÅ‚am na hotelarstwo wiÄ™c napewno mi siÄ™ to przyda...ale nie potrafiÄ™... ): troszku umiem...pozdrowionka !',
+'Nie wiem jak ja nauczê siê szybkiego pisania na maszynie...niby to jest ³atwe ale naprawdê mozna siê zagubiæ...posz³am na hotelarstwo wiêc napewno mi siê to przyda...ale nie potrafiê... ): troszku umiem...pozdrowionka !',
 '2007-09-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kredka', 'ewcia.wariatka@wp.pl',
-'spoxik stronka polecam...pozdro 3majcie siÄ™ cieplutko:*',
+'spoxik stronka polecam...pozdro 3majcie siê cieplutko:*',
 '2007-10-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Patrycja', 'dyzio1968@o2.pl',
-'wejdÅºcie na www.mojegry.pl ',
+'wejd¼cie na www.mojegry.pl ',
 '2007-10-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Patry13', '',
-'Bardzo fajna stronka ;) Pozdrawiam Autora i Å¼yczÄ™ dalszej dobrej pracy :)',
+'Bardzo fajna stronka ;) Pozdrawiam Autora i ¿yczê dalszej dobrej pracy :)',
 '2007-10-07'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2195,47 +2175,47 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'falcone', 'email@email.pl',
-'Do listy polecanych programow dodaÅ‚bym Q-typing... darmowy ale solidny',
+'Do listy polecanych programow doda³bym Q-typing... darmowy ale solidny',
 '2007-10-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Sarka', '',
-'gdzie tu mozna na uczyÄ‡ siÄ™ szybko pisaÄ‡?',
+'gdzie tu mozna na uczyæ siê szybko pisaæ?',
 '2007-11-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'andzia', 'andzia94@inMail.pl',
-'czy moÅ¼na poczwiczyÄ‡ mistrza klawiatury odpiszcie czekam!',
+'czy mo¿na poczwiczyæ mistrza klawiatury odpiszcie czekam!',
 '2007-11-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'joannA', 'asiunia4491@onet.eu',
-'POTRZEBUJE PROGRAMU DO PISANIA NA KLAWIATURZE POMÃ“Å»CIE:):):):):):p',
+'POTRZEBUJE PROGRAMU DO PISANIA NA KLAWIATURZE POMÓ¯CIE:):):):):):p',
 '2007-11-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Sandra', 'trutka14@poczta.onet.pl',
-'Potrzebuje prostego w obsÅ‚udze programu do psania na klawiaturz!',
+'Potrzebuje prostego w obs³udze programu do psania na klawiaturz!',
 '2007-11-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Basia', 'karat24@amorki.pl',
-'potrzebujÄ™ prostego programu',
+'potrzebujê prostego programu',
 '2007-11-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 ' daria', 'daria08-9@o2.pl',
-'potrzeba mi programÃ³w do pisania bo ja bardzo lubiÄ™ pisaÄ‡!',
+'potrzeba mi programów do pisania bo ja bardzo lubiê pisaæ!',
 '2007-11-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Gabr', 'zastrzeÅ¼ony',
-'Fajna stronka, ale widziaÅ‚em lepsze. xD',
+'Gabr', 'zastrze¿ony',
+'Fajna stronka, ale widzia³em lepsze. xD',
 '2007-11-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Arkadiush', 'hidden',
-'strona fajna, napewno siÄ™ zastosuje do rad tu podanych :]',
+'strona fajna, napewno siê zastosuje do rad tu podanych :]',
 '2007-11-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2244,23 +2224,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2007-12-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'marika', '',
-'',
-'2007-12-11'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'marika', '',
-'',
-'2007-12-11'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'marika', 'nie mam',
 'szybkie pisanie',
 '2007-12-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kamila', 'nie mam',
-'nie umiem pisaÄ‡ ;(',
+'nie umiem pisaæ ;(',
 '2007-12-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2280,27 +2250,27 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'martyna', 'po co to',
-'uczy szybko pisaÄ‡',
+'uczy szybko pisaæ',
 '2007-12-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Natalka', 'nie podam',
-'chcialabym to Å›ciagnoÄ‡ ale jak pomuzcie jak cos bedziecie wiedziec to piszczie w komentarzach',
+'chcialabym to ¶ciagnoæ ale jak pomuzcie jak cos bedziecie wiedziec to piszczie w komentarzach',
 '2007-12-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', '',
-'To jest niezÅ‚e',
+'To jest niez³e',
 '2007-12-16'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Basia', '',
-'bardzo fajna stronka, zrozumiaÅ‚a i przejrzysta',
+'bardzo fajna stronka, zrozumia³a i przejrzysta',
 '2007-12-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Krzysiek', '',
-'fajna stronka zrobiona na 3,5MB objÄ™toÅ›ci',
+'fajna stronka zrobiona na 3,5MB objêto¶ci',
 '2007-12-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2315,32 +2285,32 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kamilka', 'nr.g.g 6664088',
-'niezÅ‚y  jest ten program nawet zaczeÅ‚am szybciej pisaÄ‡ na komputerze jest nieÅºle oby tak dalej :)piszcie na g.g odpisze napewno !!! =)=)=)',
+'niez³y  jest ten program nawet zacze³am szybciej pisaæ na komputerze jest nie¼le oby tak dalej :)piszcie na g.g odpisze napewno !!! =)=)=)',
 '2007-12-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'juzek', 'juzek121@gmail.com',
-'jak szybko pisaÄ‡',
+'jak szybko pisaæ',
 '2007-12-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kasanowa', '',
-'jak szybko pisaÄ‡',
+'jak szybko pisaæ',
 '2007-12-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kadzia', '',
-'pisaÄ‡ pisaÄ‡',
+'pisaæ pisaæ',
 '2007-12-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kolekcjonerka', '',
-'pisaÄ‡ i tylko pisaÄ‡',
+'pisaæ i tylko pisaæ',
 '2007-12-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'marta', '',
-'Bardzo fajna stronka, przydatne info, naprawdÄ™ bardzo jasno wytÅ‚umaczone ;)',
+'Bardzo fajna stronka, przydatne info, naprawdê bardzo jasno wyt³umaczone ;)',
 '2007-12-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2350,12 +2320,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'marcia', '',
-'pisaÄ‡ i pisaÄ‡',
+'pisaæ i pisaæ',
 '2007-12-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'spidi', 'mateusz193@interia.pl',
-'niezÅ‚a stronka',
+'niez³a stronka',
 '2007-12-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2365,12 +2335,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'patrycja', '',
-'ta strona jest bÄ…ba superowa. dziÄ™ki niej nauczyÅ‚am siÄ™ szybko pisaÄ‡. jest super!!!!!!!',
+'ta strona jest b±ba superowa. dziêki niej nauczy³am siê szybko pisaæ. jest super!!!!!!!',
 '2007-12-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kamila strzelczyk', '',
-'to jest super nareszcie umiem szybko pisaÄ‡!',
+'to jest super nareszcie umiem szybko pisaæ!',
 '2007-12-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2380,7 +2350,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'uuuuuuu', ';p',
-'to nic nie nauczylo;( szukam czegos innego jak ktoÅ› coÅ› znajdzie to  napiszcie na gg : 1870674',
+'to nic nie nauczylo;( szukam czegos innego jak kto¶ co¶ znajdzie to  napiszcie na gg : 1870674',
 '2007-12-27'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2390,17 +2360,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ILONA', 'ilonastec@o2.pl',
-'spoko stronka&lt;ok&gt; nawet mi troche pomogla :D',
+'spoko stronka<ok> nawet mi troche pomogla :D',
 '2007-12-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'martucha', '',
-'ujdzie w tÅ‚oku',
+'ujdzie w t³oku',
 '2007-12-31'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'kamila', 'podaÅ‚am gg.',
-'czemu nie piszecie przecierz bym odpisaÅ‚a bo szybko pisze bo sie naÅ‚uczyÅ‚am z pomocÄ… tej stronki hehe ale macie pisaÄ‡!!!!!!!!!',
+'kamila', 'poda³am gg.',
+'czemu nie piszecie przecierz bym odpisa³a bo szybko pisze bo sie na³uczy³am z pomoc± tej stronki hehe ale macie pisaæ!!!!!!!!!',
 '2008-01-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2415,17 +2385,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'olaaaaaaaaaaaaa', 'oleczka1108@wp.pl',
-'&lt;LOL&gt;',
+'<LOL>',
 '2008-01-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'karolina', 'cieplok',
-'byÅ‚a',
+'by³a',
 '2008-01-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'olaaaaaaaaaaaaaaa', '1108@wp.pl',
-'&lt;LOL&gt;',
+'<LOL>',
 '2008-01-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2445,11 +2415,11 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'xxxx', 'xxxx@wp.pl',
-'Å‚oÅ‚ 372,61 zn/min 96% poprawnoÅ›Ä‡',
+'³o³ 372,61 zn/min 96% poprawno¶æ',
 '2008-01-20'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å‚ukasz', 'ania-lukasz21@wp.pl',
+'³ukasz', 'ania-lukasz21@wp.pl',
 'NAUKA',
 '2008-01-26'
 );
@@ -2470,12 +2440,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Damian', 'Damiano127@interia.pl',
-'http://www.SzybkiTomek.pl/?ref=Damiano127 sprobujcie tej gry moÅ¼na Å‚atwo wygra kase a przy okazji poprawic szybkosc pisania. zarejestruj sie i zostan moim poleconym',
+'http://www.SzybkiTomek.pl/?ref=Damiano127 sprobujcie tej gry mo¿na ³atwo wygra kase a przy okazji poprawic szybkosc pisania. zarejestruj sie i zostan moim poleconym',
 '2008-02-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Bartek', 'poland_48@yahoo.com',
-'SprawdzaliÅ›cie wtronkÄ™ www.nasniegu.pl ? Fajna gra, polecam. JeÅ¼eli sprÃ³bujecie to podajcie swoje wyniki. MÃ³j rekord to 9:09.',
+'Sprawdzali¶cie wtronkê www.nasniegu.pl ? Fajna gra, polecam. Je¿eli spróbujecie to podajcie swoje wyniki. Mój rekord to 9:09.',
 '2008-02-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2485,7 +2455,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Chucky', '',
-'Super krutko i na temat. DziÄ™ki.',
+'Super krutko i na temat. Dziêki.',
 '2008-02-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2530,12 +2500,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'salciarz', 'salciarz@o2.pl',
-'DziÄ™ki zwÅ‚aszcza za tabelkÄ™ z prÄ™dkoÅ›ciami. Czy mÃ³gÅ‚byÅ› daÄ‡ znaÄ‡ skÄ…d jÄ… masz? ',
+'Dziêki zw³aszcza za tabelkê z prêdko¶ciami. Czy móg³by¶ daæ znaæ sk±d j± masz? ',
 '2008-03-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Parycja', 'siostry18@wp.pl',
-'Åšwietna stronka, jasno i konkretnie wytÅ‚umaczone:) ZaczeÅ‚am nauke pisania od wczoraj.Ymm..idzie mi baaardzo wolno:Pale dla chcacego nic trudnego:)Pozdraiwm wszyskich i Å¼ycze wytrwaÅ‚oÅ›ci.',
+'¦wietna stronka, jasno i konkretnie wyt³umaczone:) Zacze³am nauke pisania od wczoraj.Ymm..idzie mi baaardzo wolno:Pale dla chcacego nic trudnego:)Pozdraiwm wszyskich i ¿ycze wytrwa³o¶ci.',
 '2008-03-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2575,7 +2545,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Mateusz', 'kozieleckim@gmail.com',
-'MiaÅ‚em nadziejÄ™ Å¼e strona bÄ™dzie troszke bardziej rozbudowana poniewaÅ¼ moÅ¼na jedynie przeczytaÄ‡ &quot;podstawy&quot; i opis programÃ³w do nauki.',
+'Mia³em nadziejê ¿e strona bêdzie troszke bardziej rozbudowana poniewa¿ mo¿na jedynie przeczytaæ "podstawy" i opis programów do nauki.',
 '2008-03-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2589,29 +2559,9 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-04-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'nie uczy ', '',
-'',
-'2008-04-03'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kinga', 'kini12ulka@op.pl',
 'klawiatura',
 '2008-04-04'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'dusia', '',
-'',
-'2008-04-04'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Paulina', '',
-'',
-'2008-04-05'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Heronim', 'hertek@op.pl',
-'',
-'2008-04-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Alan', 'ktm85@interia.pl',
@@ -2620,13 +2570,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Jacek', '',
-'Stronka super , szczegÃ³lnie test prÄ™dkoÅ›ci :)',
+'Stronka super , szczególnie test prêdko¶ci :)',
 '2008-04-10'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'', 'gawex123@wp.pl',
-'????????????????????',
-'2008-04-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ania ', '',
@@ -2634,33 +2579,18 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-04-15'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'sebastian', 'paula169@vp.pl',
-'',
-'2008-04-17'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'paula', 'www.paula169@vp.pl',
-'',
-'2008-04-17'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'sebastian', '',
-'',
-'2008-04-17'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Maciek300', '',
-'Jak bÄ™de szybko pisaÄ‡ to siÄ™ w pisze.',
+'Jak bêde szybko pisaæ to siê w pisze.',
 '2008-04-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Madzia!!', '',
-'Moja prÄ™dkoÅ›Ä‡ 264,9 znakÃ³w na minutÄ™! ha rzÄ…dzÄ™, rzÄ…dzÄ™ xD',
+'Moja prêdko¶æ 264,9 znaków na minutê! ha rz±dzê, rz±dzê xD',
 '2008-04-19'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'hubin', '',
-'KorzystÅ‚em do niedawna z 8 palcÃ³w i moja prÄ™tkoÅ›Ä‡ byÅ‚a ledwie w granicach 140 znakÃ³w, przy prestawieniu siÄ™ na bezwzrokowe ledwie 70 znakÃ³w.',
+'Korzyst³em do niedawna z 8 palców i moja prêtko¶æ by³a ledwie w granicach 140 znaków, przy prestawieniu siê na bezwzrokowe ledwie 70 znaków.',
 '2008-04-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2670,7 +2600,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paulina', '',
-'piszÄ™ szybko ale chcem nauczyÄ‡ sie piszaÄ‡ szybciej',
+'piszê szybko ale chcem nauczyæ sie piszaæ szybciej',
 '2008-04-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2690,19 +2620,19 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'marcovitz', '',
-'Witam, niedawno zaczÄ…Å‚em uczyÄ‡ siÄ™ pisania bezwzrokowego, jak na razie prÄ™dkoÅ›Ä‡ mam w granicach 180 znakÃ³w na minutÄ™, ale myÅ›lÄ™, Å¼e w trakcie Ä‡wiczenia bÄ™dzie siÄ™ ona stopniowo zwiÄ™kszaÄ‡ :) Do Ä‡wiczeÅ„ wykorzystujÄ™ q-typing, podoba mi siÄ™ ten program takÅ¼e z tego wzglÄ™du, Å¼e jest darmowy ;) Strona teÅ¼ jest ciekawa i pomocna. Tak trzymaÄ‡, pozdrawiam, 
+'Witam, niedawno zacz±³em uczyæ siê pisania bezwzrokowego, jak na razie prêdko¶æ mam w granicach 180 znaków na minutê, ale my¶lê, ¿e w trakcie æwiczenia bêdzie siê ona stopniowo zwiêkszaæ :) Do æwiczeñ wykorzystujê q-typing, podoba mi siê ten program tak¿e z tego wzglêdu, ¿e jest darmowy ;) Strona te¿ jest ciekawa i pomocna. Tak trzymaæ, pozdrawiam, 
 Mariusz',
 '2008-05-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'milena', 'milena14@amorki.pl',
-'sÅ‚obo jeszcze pisze niemoge sie nauczyc szybko pisac
+'s³obo jeszcze pisze niemoge sie nauczyc szybko pisac
 ',
 '2008-05-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'alicja', '',
-'stronka fajna ale wkurza mnie to ze trzeba uzywac znakow polskich Ä…, Ä™, Ä‡ ... ja pisze szybko ale tylko bez znakow polskich',
+'stronka fajna ale wkurza mnie to ze trzeba uzywac znakow polskich ±, ê, æ ... ja pisze szybko ale tylko bez znakow polskich',
 '2008-05-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2721,30 +2651,20 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-05-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Dominika', 'domi@.22.pl',
-'',
-'2008-05-24'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'natalia', 'patrycjaelo@o2.pl',
 'elo',
 '2008-05-25'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'kasia', 'katarzyna2909',
-'',
-'2008-05-26'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Sylwia', '',
 'elo elo super jest ta stronka :)
-Ja na minutÄ™ mam 265 znakÃ³w to chyba nieÅºle :)',
+Ja na minutê mam 265 znaków to chyba nie¼le :)',
 '2008-05-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Madzik', '',
-'Mnie to nic nie pomaga, i tak szybko piszÄ™ :)
-Po za tym to ja hazardzistkÄ… jestem i mi nie potrzebne takie pisanie ;)',
+'Mnie to nic nie pomaga, i tak szybko piszê :)
+Po za tym to ja hazardzistk± jestem i mi nie potrzebne takie pisanie ;)',
 '2008-05-29'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2754,7 +2674,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Krzysztof', '',
-'czeÅ›Ä‡. reguÅ‚e 10 palcÃ³w osiÄ…gnÄ…Å‚em w wieku 11 lat....  :)))))  a teraz mam 17. na minute wychodzi mi okoÅ‚o 1300 znaczkÃ³w  :D:D:D  a czasami nawet 1600 znaczkÃ³w. pozdrawiam.',
+'cze¶æ. regu³e 10 palców osi±gn±³em w wieku 11 lat....  :)))))  a teraz mam 17. na minute wychodzi mi oko³o 1300 znaczków  :D:D:D  a czasami nawet 1600 znaczków. pozdrawiam.',
 '2008-06-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2790,12 +2710,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Jula', 'agnesmi@onet.op.pl',
-'CzeÅ›Ä‡, jak wam idzie nauka szybkiego pisania, bo mi beznadziejnie, nic nie chciaÅ‚o siÄ™ wÅ‚Ä…czyÄ‡, ale prÃ³bujÄ™.',
-'2008-06-11'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Jula', '',
-'',
+'Cze¶æ, jak wam idzie nauka szybkiego pisania, bo mi beznadziejnie, nic nie chcia³o siê w³±czyæ, ale próbujê.',
 '2008-06-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2805,7 +2720,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Justyna', '',
-'chciaÅ‚am bym pisaÄ‡ szybko jak moja siostra',
+'chcia³am bym pisaæ szybko jak moja siostra',
 '2008-06-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2815,12 +2730,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ptrycja', 'patiradzikowska@o2.pl',
-'Hej! jak wam idzie ...?!:) uczÄ™ siÄ™ dopiero jakieÅ› 2 miesiÄ…ce ale postÄ™py sÄ…  spuper:D!',
-'2008-06-12'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Patrycja', 'patiradzikowska@o2.pl',
-'',
+'Hej! jak wam idzie ...?!:) uczê siê dopiero jakie¶ 2 miesi±ce ale postêpy s±  spuper:D!',
 '2008-06-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2841,12 +2751,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'mila', 'leo80@tlen.pl',
-'ja umiem  szybko pisaÄ‡ i jutro naucze moja koleÅ¼ankke  pisaÄ‡ szybko tak jak ja :)',
+'ja umiem  szybko pisaæ i jutro naucze moja kole¿ankke  pisaæ szybko tak jak ja :)',
 '2008-06-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'mila', 'nie podam',
-'umiem pisaÄ‡ na klawiaturze bez patrzenia.
+'umiem pisaæ na klawiaturze bez patrzenia.
 ',
 '2008-06-26'
 );
@@ -2866,7 +2776,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-06-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å»aÅ„cia', 'ni podam',
+'¯añcia', 'ni podam',
 'umiem szybko pisac ha ha aha ',
 '2008-07-01'
 );
@@ -2877,17 +2787,17 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'atomofka', ':):P',
-'skoro umiecie pisaÄ‡ szybko na klawiaturze i bez patrzenia na niÄ…, to zastanawia mnie czemu wogÃ³le ptrzycie ÅOSIE na tÄ… strone?????!!!!!',
+'skoro umiecie pisaæ szybko na klawiaturze i bez patrzenia na ni±, to zastanawia mnie czemu wogóle ptrzycie £OSIE na t± strone?????!!!!!',
 '2008-07-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Basia', '',
-'Hej. Strona bardzo w porzÄ…dku. Czytelna, Å‚adnie zorganizowana, wszystko, co potrzebne, moÅ¼na tutaj znaleÅºÄ‡. ÅšciÄ…gnÄ™Å‚am program Q-typing (darmowy ^^) i jestem zadowolona. Wprawdzie nie doszÅ‚am jeszcze do koÅ„ca i nie piszÄ™ jeszcze bardzo szybko, ale Ä‡wiczÄ™ i z dnia na dzieÅ„ jest coraz lepiej. DziÄ™ki!',
+'Hej. Strona bardzo w porz±dku. Czytelna, ³adnie zorganizowana, wszystko, co potrzebne, mo¿na tutaj znale¼æ. ¦ci±gnê³am program Q-typing (darmowy ^^) i jestem zadowolona. Wprawdzie nie dosz³am jeszcze do koñca i nie piszê jeszcze bardzo szybko, ale æwiczê i z dnia na dzieñ jest coraz lepiej. Dziêki!',
 '2008-07-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Martyna :) :* ^^ xD ;]', '',
-'Heyo :) ^^ Ja UmiÄ™, A Wy Umicie .?. ;] xD Hyhy :) :* Ale Faza ^^ Xd',
+'Heyo :) ^^ Ja Umiê, A Wy Umicie .?. ;] xD Hyhy :) :* Ale Faza ^^ Xd',
 '2008-07-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2898,7 +2808,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'hanna', '',
-'mam nadzieje Å¼e to pomaga',
+'mam nadzieje ¿e to pomaga',
 '2008-07-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2926,19 +2836,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ormin', 'win@win.com',
-'&lt;script&gt;
-To ja siÄ™ pochwale :
+'To ja siê pochwale:
 http://img100.imageshack.us/img100/8172/07232008220831qj3.jpg',
 '2008-07-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'&lt;script&gt;', '&lt;script&gt;@&lt;script&gt;.com',
-'&lt;script&gt;',
-'2008-07-23'
-);
-INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'olgaaa3', 'olgaaa3@tlen.pl',
-'to mi pomaga w nauczeniu szybkiego pisania i ciesze sie ze macie taka stronÄ™ bo ja juÅ¼ dawno uczÄ™ sie szybkiego pisania ale tamte strony  mi nie pomagali sie uczyÄ‡  dziÄ™kuje za wszystko',
+'to mi pomaga w nauczeniu szybkiego pisania i ciesze sie ze macie taka stronê bo ja ju¿ dawno uczê sie szybkiego pisania ale tamte strony  mi nie pomagali sie uczyæ  dziêkuje za wszystko',
 '2008-07-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2948,7 +2852,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marta', 'marta.skowronska11@wp.pl',
-'wreszcie nauczyÅ‚am siÄ™ szybko pisaÄ‡! ;)',
+'wreszcie nauczy³am siê szybko pisaæ! ;)',
 '2008-07-28'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -2958,42 +2862,42 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Miki (Monika)Sol)', 'monika10.10@o2.pl',
-'Umiem szybko pisaÄ‡ ale przewaÅ¼nie zawsze robie bÅ‚endy))))))))xxxDD',
+'Umiem szybko pisaæ ale przewa¿nie zawsze robie b³endy))))))))xxxDD',
 '2008-08-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Edytka(Edyta)Sol)', 'poco macie wiedzieÄ‡',
-'jak moja siostra ciÄ…gle sie myle!!!!)))xd',
+'Edytka(Edyta)Sol)', 'poco macie wiedzieæ',
+'jak moja siostra ci±gle sie myle!!!!)))xd',
 '2008-08-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Kasia(KasieÅ„ka)', 'ukryty',
-'ha ha umiem szybko pisaÄ‡!!!!!!',
+'Kasia(Kasieñka)', 'ukryty',
+'ha ha umiem szybko pisaæ!!!!!!',
 '2008-08-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'aneta', 'an@eta',
-'dla mnie klawiatura to buÅ‚ka z masÅ‚em:)',
+'dla mnie klawiatura to bu³ka z mas³em:)',
 '2008-08-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ada', 'ada@aaa',
-'aneta to moja siostra i wolniej pisze niÅ¼ ja , a wszystkim mÃ³wi Å¼e jest mistrzyniÄ… klawiatury :}',
+'aneta to moja siostra i wolniej pisze ni¿ ja , a wszystkim mówi ¿e jest mistrzyni± klawiatury :}',
 '2008-08-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'SÅ‚awek', 'slawek_k1',
-'Ta stronka jest superr!!! ja po 2 tygodniach Ä‡wiczeÅ„ pisze juÅ¼ o 2 razy szybciej  ',
+'S³awek', 'slawek_k1',
+'Ta stronka jest superr!!! ja po 2 tygodniach æwiczeñ pisze ju¿ o 2 razy szybciej  ',
 '2008-08-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Julita', 'julita1600@wp.pl',
-'UczÄ™ siÄ™ ale idzie mi z dnia na dzieÅ„ coraz lepiej:)',
+'Uczê siê ale idzie mi z dnia na dzieñ coraz lepiej:)',
 '2008-08-06'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Damian', 'damian@wp.pl',
-'piszÄ™ juÅ¼ bez patrzenia na klawiaturÄ™ jupi',
+'piszê ju¿ bez patrzenia na klawiaturê jupi',
 '2008-08-09'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3003,37 +2907,37 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Pi90fi', '',
-'Super strona. Nie wiem czy to dobrze ale prawie ciÄ…gle wychodzi mi 128,5 znakÃ³w/min',
+'Super strona. Nie wiem czy to dobrze ale prawie ci±gle wychodzi mi 128,5 znaków/min',
 '2008-08-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Ania', 'my-fun-club236@wp.pl',
-'Niewiem jak wam,ale mi ta stronka bardzo przypadÅ‚a do gustu.szczerze mowiac na poczatku nie potrafiÅ‚am pisaÄ‡ szybko a teraz jestem w tym caÅ‚kowicie zawaansowana. papatki poozdrawiam',
+'Niewiem jak wam,ale mi ta stronka bardzo przypad³a do gustu.szczerze mowiac na poczatku nie potrafi³am pisaæ szybko a teraz jestem w tym ca³kowicie zawaansowana. papatki poozdrawiam',
 '2008-08-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'zuzia ', 'www.kropa451@wp.pl',
-'ja bardzo szybko pisze 6 zdaÅ„ w 7 sekund',
+'ja bardzo szybko pisze 6 zdañ w 7 sekund',
 '2008-08-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ta sama osoba zuzia ', 'www.kropa451@wp.pl',
-'ja nawet te 6 zdaÅ„ napisze w 7 sekund bez patrzenia dzienki tej stronie ',
+'ja nawet te 6 zdañ napisze w 7 sekund bez patrzenia dzienki tej stronie ',
 '2008-08-31'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'MArcyl', '',
-'jak na narazie bez uczenia mam 150 znakÃ³w na minute zobacyzmy co bedize za kilka togodni',
+'jak na narazie bez uczenia mam 150 znaków na minute zobacyzmy co bedize za kilka togodni',
 '2008-09-04'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Maciej', 'maciej1646@wp.pl',
-'aby osiÄ…gnÄ…Ä‡ mistrzowski poziom pisania na klawiaturze cwiczylam dzien w dzien przez rok czasu teraz dochodze nawed do 300 znakÃ³w na minutÄ™ ',
+'aby osi±gn±æ mistrzowski poziom pisania na klawiaturze cwiczylam dzien w dzien przez rok czasu teraz dochodze nawed do 300 znaków na minutê ',
 '2008-09-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paula', '',
-'suchajcie ja dopiero teraz weszÅ‚am  na ta stonÄ™;/;/i jest super...ale przeraza mnie to jak mam sie tego nauczyc...;(?',
+'suchajcie ja dopiero teraz wesz³am  na ta stonê;/;/i jest super...ale przeraza mnie to jak mam sie tego nauczyc...;(?',
 '2008-09-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3043,43 +2947,43 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'monika', '',
-'wszystcy umieja szybko pisac po swojemu taka strona jest nie potrzebna maÅ‚o osob na nia wchodzi',
+'wszystcy umieja szybko pisac po swojemu taka strona jest nie potrzebna ma³o osob na nia wchodzi',
 '2008-09-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'lola', '',
-'ta strona jest super naprawde super pomogÅ‚a mi napisac szybko wypracowanie na komputerze a dla mnie jest to wysiÅ‚ek od dwÃ³ch miesiecy to buÅ‚ka z masÅ‚em',
+'ta strona jest super naprawde super pomog³a mi napisac szybko wypracowanie na komputerze a dla mnie jest to wysi³ek od dwóch miesiecy to bu³ka z mas³em',
 '2008-09-18'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'patrycja (frycia)', '',
-'niewiem cz wszyscy umiom szybko pisac ale raczej tak bo jak w dedy by odpisywali na gg  ta strona moim zdaniem jest super bo pomogÅ‚a mi napisac o janie siebastjanie bachu zrobilam w ciagu 2 godzn 23 strony na jego tamat ',
+'niewiem cz wszyscy umiom szybko pisac ale raczej tak bo jak w dedy by odpisywali na gg  ta strona moim zdaniem jest super bo pomog³a mi napisac o janie siebastjanie bachu zrobilam w ciagu 2 godzn 23 strony na jego tamat ',
 '2008-09-21'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Marek', 'marek.kopij@onet.eu',
-'Nie wystarczy szybko pisaÄ‡. Trzeba teÅ¼ poprawnie pisaÄ‡, wiÄ™c uczmy siÄ™ jednego i drugiego.',
+'Nie wystarczy szybko pisaæ. Trzeba te¿ poprawnie pisaæ, wiêc uczmy siê jednego i drugiego.',
 '2008-09-22'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'wiktoria', 'trzecia',
-'zapis treÅ›ci',
+'zapis tre¶ci',
 '2008-09-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kaja', 'czwarta',
-'Lubie  szybko  pisaÄ‡  na  klawiaturze poniewaÅ¼  duÅ¼o  pisze ',
+'Lubie  szybko  pisaæ  na  klawiaturze poniewa¿  du¿o  pisze ',
 '2008-09-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kaja', 'czwarta',
 'jak  narazie
-  mam 300znakÃ³w na min.',
+  mam 300znaków na min.',
 '2008-09-24'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Renata', 'nie waÅ¼ne',
-'200 znakÃ³w przez minute nie wiem czy to tak duÅ¼o ale jak na mnie to spox ',
+'Renata', 'nie wa¿ne',
+'200 znaków przez minute nie wiem czy to tak du¿o ale jak na mnie to spox ',
 '2008-09-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3089,7 +2993,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'tomasir', '',
-'275-300 znakÃ³w regularnie (najczÄ™Å›niej 280) bez patrzenia i bez uczenia...',
+'275-300 znaków regularnie (najczê¶niej 280) bez patrzenia i bez uczenia...',
 '2008-10-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3098,12 +3002,12 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-10-01'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Agata ', 'niewaÅ¼ne',
-'ej a tam to trzeba Å›ciÄ…gnÄ…Ä‡ coÅ›, Å¼eby zrobic test szybkiego pisania?',
+'Agata ', 'niewa¿ne',
+'ej a tam to trzeba ¶ci±gn±æ co¶, ¿eby zrobic test szybkiego pisania?',
 '2008-10-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'MaÅ‚aMi', 'sratata',
+'Ma³aMi', 'sratata',
 'mi to niepotrzebne, sama sie ucze szybkiego pisania :PP',
 '2008-10-07'
 );
@@ -3123,8 +3027,8 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 '2008-10-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'Å‚ukasz', 'nie znam',
-'obecnie pisz ponad 160(znakÃ³w)/min, kiedyÅ› wyrabiaÅ‚em ok. 250    ale jak sie nie pisze to siÄ™ traci wprawe :D',
+'³ukasz', 'nie znam',
+'obecnie pisz ponad 160(znaków)/min, kiedy¶ wyrabia³em ok. 250    ale jak sie nie pisze to siê traci wprawe :D',
 '2008-10-30'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3139,13 +3043,13 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Beata', 'beatakononczuk@wp.pl',
-'tego mi byÅ‚o trzeba tylko rÄ™ka boli',
+'tego mi by³o trzeba tylko rêka boli',
 '2008-11-05'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Piotrek', '',
 'Kolego!:)
-Wielkie dziÄ™ki za tÄ™ stronÄ™! 30 min Ä‡wiczeÅ„ i widaÄ‡ postempy. DziÄ™ki!',
+Wielkie dziêki za tê stronê! 30 min æwiczeñ i widaæ postempy. Dziêki!',
 '2008-11-08'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3155,37 +3059,37 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Paulina ', 'zlotka15@amorki.pl',
-'tego mi byÅ‚o trzeba',
+'tego mi by³o trzeba',
 '2008-11-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
-'MichaÅ‚', '',
+'Micha³', '',
 'Super  stronka pozdro dla wszystkich:)',
 '2008-11-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kolo', '',
-'fajna stronka, od jutra zaczynam cwiczyÄ‡',
+'fajna stronka, od jutra zaczynam cwiczyæ',
 '2008-11-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'paula', 'paula@fotki.com',
-'juÅ¼ Ä‡wicze na tej super stronce',
+'ju¿ æwicze na tej super stronce',
 '2008-11-11'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'beata', '',
-'w koÅ„cu dowiedziaÅ‚am siÄ™ jak szybko piszÄ™. Im wiÄ™cej testÃ³w, tym wolniejsze tempo',
+'w koñcu dowiedzia³am siê jak szybko piszê. Im wiêcej testów, tym wolniejsze tempo',
 '2008-11-12'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'agata', 'agata_ania 1 @ o2.pl',
-'lubie szybko pisaÄ‡ i chcÄ™ siÄ™ szybko nauczyÄ‡',
+'lubie szybko pisaæ i chcê siê szybko nauczyæ',
 '2008-11-13'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'ania', 'ania.dziuba@interia.pl',
-'super jest ta stronka dziÄ™ki niej uczÄ™ siÄ™ szbko pisaÄ‡',
+'super jest ta stronka dziêki niej uczê siê szbko pisaæ',
 '2008-11-17'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3195,23 +3099,23 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kasia', 'pukupuk@.gmail.pl',
-'mam pytanko to siÄ™ niechcÄ™ odtwarzaÄ‡.',
+'mam pytanko to siê niechcê odtwarzaæ.',
 '2008-11-23'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Kacha', 'duaresi@go2.pl',
-'Fajna stronka - od dziÅ› zaczynam siÄ™ regularnie uczyÄ‡ szybko pisaÄ‡:)',
+'Fajna stronka - od dzi¶ zaczynam siê regularnie uczyæ szybko pisaæ:)',
 '2008-11-26'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'domi', 'mumin@got.pl',
-'zajebista stronka tylko rÄ™ka czasami boli',
+'zajebista stronka tylko rêka czasami boli',
 '2008-12-02'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Diablo', '',
-'Fajna stronka, nieÅºle zrobiona.
-TrochÄ™ Ä‡wiczeÅ„ i bÄ™dÄ™ miaÅ‚ ok. 250 znakÃ³w/min :)',
+'Fajna stronka, nie¼le zrobiona.
+Trochê æwiczeñ i bêdê mia³ ok. 250 znaków/min :)',
 '2008-12-03'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3221,7 +3125,7 @@ INSERT INTO guestbook (username, email, content, date_added) VALUES (
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'kinga', 'nie dam',
-'moÅ¼e byÄ‡ mam takie coÅ› w szkole:)',
+'mo¿e byæ mam takie co¶ w szkole:)',
 '2008-12-10'
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
@@ -3242,6 +3146,6 @@ Dobry pomysl z ta strona nigdy sie nie zastanawialem jak szybko potrafie pisac..
 );
 INSERT INTO guestbook (username, email, content, date_added) VALUES (
 'Klaudia', '',
-'po prostu chcÄ™ siÄ™ nauczyÄ‡',
+'po prostu chcê siê nauczyæ',
 '2009-01-01'
 );
