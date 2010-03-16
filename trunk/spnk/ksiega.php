@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
   <head>
@@ -61,8 +64,6 @@ function validate($name, $email, $content) {
     return true;
 }
 
-session_start();
-
 mysql_connect();
 
 if (!empty($_POST['submit'])) {
@@ -94,7 +95,7 @@ if (!empty($_POST['submit'])) {
         echo "Przykro mi, ale twój wpis nie zosta³ zaakceptowany.\n";
     }
     echo "<br><br>\n";
-    echo "<a href=\"\"><b>Powrót do ksiêgi go¶ci</b></a>\n";
+    echo "<a href=\"$PHP_SELF\"><b>Powrót do ksiêgi go¶ci</b></a>\n";
 } else {
 ?>
 <table width="100%">
