@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <mx:TitleWindow xmlns:mx="http://www.adobe.com/2006/mxml"
     title="Wyniki testu" layout="vertical"
     backgroundColor="white" backgroundAlpha="1.0"

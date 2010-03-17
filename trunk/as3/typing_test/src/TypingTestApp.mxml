@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <mx:Application
     xmlns:mx="http://www.adobe.com/2006/mxml"
     xmlns:tt="tt.mx.*"
@@ -7,7 +7,7 @@
 
     <mx:HTTPService id="getTextService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/texts.php"
-        resultFormat="e4x" />
+        resultFormat="e4x" showBusyCursor="true" />
 
     <mx:HTTPService id="submitTestResultsService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/ttlog.php"
