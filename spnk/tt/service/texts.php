@@ -18,16 +18,16 @@ function get_texts_count() {
     }
 }
 
-header('Content-Type: text/xml');
+header('Content-Type: text/xml; charset=utf-8');
 
 session_start();
 
-if (empty($_SESSION['random_bag_of_text_ids'])) {
+if (empty($_SESSION['shuffle_bag'])) {
     $shuffled_numbers = range(1, get_texts_count());
     shuffle($shuffled_numbers);
-    $_SESSION['random_bag_of_text_ids'] = $shuffled_numbers;
+    $_SESSION['shuffle_bag'] = $shuffled_numbers;
 }
-$text_offset = array_pop($_SESSION['random_bag_of_text_ids']) - 1;
+$text_offset = array_pop($_SESSION['shuffle_bag']) - 1;
 
 $query = "
     SELECT text FROM texts LIMIT $text_offset, 1
@@ -38,7 +38,7 @@ if ($result) {
     $row = mysql_fetch_assoc($result);
     echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
     echo "<response>\n";
-    echo '<text>' . $row['text'] . "</text>\n";
+    echo '<text>' . latin2_to_utf8($row['text']) . "</text>\n";
     echo '<hData>' . $_SESSION['ttlog_h_data'] . "</hData>\n";
     echo '</response>';
 } else {

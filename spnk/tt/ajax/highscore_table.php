@@ -1,23 +1,11 @@
 <?php
 
 include '../include/log.php';
+include '../include/utils.php';
 
-function escape_username($username) {
-    $escaped = '';
-    for ($i = 0; $i < strlen($username); $i++) {
-        $c = substr($username, $i, 1);
-        $charcode = ord($c);
-        if ($charcode >= 32) {
-            $escaped .= $c;
-        }
-    }
-    $escaped = htmlspecialchars($escaped);
-    return $escaped;
-}
+header('Content-Type: text/xml; charset=utf-8');
 
-header('Content-Type: text/xml');
-
-$MAX_HIGHSCORE_SIZE = 150;
+$MAX_HIGHSCORE_SIZE = 200;
 
 $from_place = $_GET['from_place'];
 if (!is_numeric($from_place)) {
@@ -59,7 +47,7 @@ if ($result) {
             ($row['chars'] - $row['corrections']) / $row['chars'] * 100);
         echo "<entry>\n";
         echo "<rank>" . ($from_place + $i) . "</rank>\n";
-        $username = escape_username($row['username']);
+        $username = htmlspecialchars(latin2_to_utf8($row['username']));
         echo "<username><![CDATA[" . $username . "]]></username>\n";
         echo "<speed>" . $row['speed'] . "</speed>\n";
         echo "<correctness>" . $correctness . "</correctness>\n";
