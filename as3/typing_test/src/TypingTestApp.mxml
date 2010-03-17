@@ -3,11 +3,16 @@
     xmlns:mx="http://www.adobe.com/2006/mxml"
     xmlns:tt="tt.mx.*"
     backgroundGradientColors="[#F5F5F5, #F5F5F5]"
+    horizontalAlign="left"
+    paddingLeft="0"
+    paddingTop="0"
+    paddingBottom="0"
+    paddingRight="0"
     creationComplete="init()">
 
     <mx:HTTPService id="getTextService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/texts.php"
-        resultFormat="e4x" showBusyCursor="true" />
+        resultFormat="e4x" />
 
     <mx:HTTPService id="submitTestResultsService"
         url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/ttlog.php"
