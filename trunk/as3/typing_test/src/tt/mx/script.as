@@ -127,6 +127,7 @@ private function onGetTextServiceResult(event:ResultEvent):void {
     typingCanvas.dispatchEvent(
             new TypingTestEvent(TypingTestEvent.NEW_TYPING_TEST, result.text));
     hData = result.hData;
+    getTextService.showBusyCursor = true;
 }
 
 private function startNewTypingTest():void {
