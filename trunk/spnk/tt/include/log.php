@@ -14,7 +14,7 @@ function log_write($msg) {
         INSERT INTO log
             (date_added, ip, message)
             VALUES
-            (NOW(), '$ip', \$\$$msg\$\$)
+            (NOW(), '$ip', '$msg')
     ";
     mysql_query($query) or die('ERROR: cannot write to log!');
 }

@@ -21,23 +21,26 @@ function is_submitted_too_soon($submit_time, $last_submit_time) {
 }
 
 $H_KEY = 'secret2';
-$HIGHSCORE_SIZE = 150;
+$MAX_HIGHSCORE_SIZE = 200;
 $MIN_REQUIRED_SPEED = 120;
 
 $result = mysql_query("
-    SELECT
-        MIN(speed) AS required_speed,
-        COUNT(speed) AS current_size
-        FROM (
-            SELECT speed
-                FROM highscore
-                ORDER BY speed DESC
-                LIMIT $HIGHSCORE_SIZE
-        ) AS highscore
-") or log_write("ERROR: problem with query: $query ("
-        . mysql_error() . ')');
+    SELECT COUNT(id_highscore) AS current_size FROM highscore
+") or log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
 $row = mysql_fetch_assoc($result);
-if ($row && $row['current_size'] == $HIGHSCORE_SIZE) {
+$current_size = $row['current_size'];
+if ($current_size > $MAX_HIGHSCORE_SIZE) {
+    $current_size = $MAX_HIGHSCORE_SIZE;
+}
+$result = mysql_query("
+    SELECT
+        speed AS required_speed
+        FROM highscore
+        ORDER BY speed DESC
+        LIMIT " . ($current_size - 1) . ", 1
+") or log_write("ERROR: problem with query: $query (" . mysql_error() . ')');
+$row = mysql_fetch_assoc($result);
+if ($row && $current_size == $MAX_HIGHSCORE_SIZE) {
     $required_speed = $row['required_speed'];
 }
 if (empty($required_speed)) {
@@ -94,7 +97,7 @@ if ($_GET['q'] == 'get_threshold') {
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        $username = mysql_real_escape_string($username);
+        $username = mysql_real_escape_string(utf8_to_latin2($username));
         $speed = mysql_real_escape_string($speed);
         $mistakes = mysql_real_escape_string($mistakes);
         $corrections = mysql_real_escape_string($corrections);
