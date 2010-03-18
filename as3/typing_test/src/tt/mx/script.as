@@ -5,7 +5,7 @@ import tt.TypingTestEvent;
 
 import com.hurlant.crypto.hash.HMAC;
 import com.hurlant.crypto.hash.IHMAC;
-import com.hurlant.crypto.hash.SHA256;
+import com.hurlant.crypto.hash.SHA1;
 import com.hurlant.util.Hex;
 
 import flash.events.Event;
@@ -28,7 +28,7 @@ private var isNewTestButtonActive:Boolean = false;
 private var hData:String = "";
 
 public static function h(hData:String, hKey:String):String {
-    const hmac:IHMAC = new HMAC(new SHA256());
+    const hmac:IHMAC = new HMAC(new SHA1());
     return Hex.fromArray(hmac.compute(
                 Hex.toArray(Hex.fromString(hKey)),
                 Hex.toArray(Hex.fromString(hData))));
