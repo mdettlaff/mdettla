@@ -86,7 +86,7 @@ function updateHighscoreTable(page) {
             hsTable += "</tr>";
         }
         hsTable += "<tr><td colspan=\"5\" style=\"text-align: center; " +
-                "vertical-align: bottom; height: 35;\">";
+                "vertical-align: bottom; height: 32px;\">";
         totalHSSize =
                 request.responseXML.documentElement.getElementsByTagName(
                     "totalSize")[0].firstChild.nodeValue;
