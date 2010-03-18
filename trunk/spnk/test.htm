@@ -8,6 +8,21 @@
     <meta name="Author" content="Micha³ Dettlaff">
     <meta name="Copyright" content="Micha³ Dettlaff 2010">
     <link rel="stylesheet" href="layout/style.css" type="text/css">
+
+    <script src="tt/javascript/highscore.js"></script>
+    <script src="tt/javascript/AC_OETags.js"></script>
+
+    <style>
+      .highscore-table th {
+        font-size: 10pt;
+        padding: 2 7 10 7;
+        text-align: left;
+      }
+      .highscore-table td {
+        padding: 3 10 3 10;
+        text-align: right;
+      }
+    </style>
     <title>Szybkie Pisanie na Klawiaturze - Test szybko¶ci online</title>
   </head>
 
@@ -50,20 +65,111 @@
               <td valign="top" background="layout/img/menu3.jpg" bgcolor="#F5F5F5"
                   style="background-repeat: no-repeat">
 
-<p class="tytulb">
+<p>
 &nbsp;<br>
-<strong>TEST PRÊDKO¦CI PISANIA</strong>
-</p><p>
 Poni¿szy test pozwoli ci na zmierzenie swojej prêdko¶ci pisania; jest te¿ dobrym sposobem na trenowanie szybko¶ci, po tym jak opanujesz ju¿ bezwzrokowo ca³± klawiaturê.
+<div style="padding-top: 2px; padding-bottom: 25px">
+
+<!--
+Smart developers always View Source.
+
+This application was built using Adobe Flex, an open source framework
+for building rich Internet applications that get delivered via the
+Flash Player or to desktops via Adobe AIR.
+
+Learn more about Flex at http://flex.org
+// -->
+<script>
+<!--
+// -----------------------------------------------------------------------------
+// Globals
+// Major version of Flash required
+var requiredMajorVersion = 9;
+// Minor version of Flash required
+var requiredMinorVersion = 0;
+// Minor version of Flash required
+var requiredRevision = 28;
+// -----------------------------------------------------------------------------
+
+// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
+var hasProductInstall = DetectFlashVer(6, 0, 65);
+
+// Version check based upon the values defined in globals
+var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+
+if (hasProductInstall && !hasRequestedVersion) {
+    // DO NOT MODIFY THE FOLLOWING FOUR LINES
+    // Location visited after installation is complete if installation is required
+    var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
+    var MMredirectURL = window.location;
+    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+    var MMdoctitle = document.title;
+
+    AC_FL_RunContent(
+        "src", "tt/flash/playerProductInstall",
+        "FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
+        "width", "620",
+        "height", "400",
+        "align", "middle",
+        "id", "TypingTestApp",
+        "quality", "high",
+        "bgcolor", "#869ca7",
+        "name", "TypingTestApp",
+        "allowScriptAccess","sameDomain",
+        "type", "application/x-shockwave-flash",
+        "pluginspage", "http://www.adobe.com/go/getflashplayer"
+    );
+} else if (hasRequestedVersion) {
+    // if we've detected an acceptable version
+    // embed the Flash Content SWF when all tests are passed
+    AC_FL_RunContent(
+        "src", "tt/flash/TypingTestApp",
+        "width", "620",
+        "height", "400",
+        "align", "middle",
+        "id", "TypingTestApp",
+        "quality", "high",
+        "bgcolor", "#f5f5f5",
+        "name", "TypingTestApp",
+        "allowScriptAccess","sameDomain",
+        "type", "application/x-shockwave-flash",
+        "pluginspage", "http://www.adobe.com/go/getflashplayer"
+    );
+} else { // flash is too old or we can't detect the plugin
+    var alternateContent = '<br />Do wy¶wietlenia strony wymagany jest Adobe Flash Player. '
+    + '<a href=http://www.adobe.com/go/getflash/>Pobierz Flash</a>';
+    document.write(alternateContent); // insert non-flash content
+}
+// -->
+</script>
+<noscript>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+        id="TypingTest" width="620" height="400"
+        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
+        <param name="movie" value="tt/flash/TypingTestApp.swf" />
+        <param name="quality" value="high" />
+        <param name="bgcolor" value="#f5f5f5" />
+        <param name="allowScriptAccess" value="sameDomain" />
+        <embed src="tt/flash/TypingTestApp.swf" quality="high" bgcolor="#f5f5f5"
+            width="620" height="400" name="TypingTest" align="middle"
+            play="true"
+            loop="false"
+            allowScriptAccess="sameDomain"
+            type="application/x-shockwave-flash"
+            pluginspage="http://www.adobe.com/go/getflashplayer">
+        </embed>
+</object>
+</noscript>
+
+</div>
+<div id="highscoreTableArea" style="padding-bottom: 20px"></div>
+
+<script>
+updateHighscoreTable();
+</script>
+
 </p><p>
-<applet width="635" height="320"
-        code="TypingTest.class"
-        archive="TypingTest.jar">
-<b>Do uruchomienia testu prêdko¶ci wymagane jest Java Runtime Environment.</b><br>
-Aktualn± wersjê mo¿esz pobraæ ze strony <a target="_blank" href="http://www.java.com/pl/download/index.jsp">www.java.com/pl/download</a>
-</applet>
-</p><p>
-Mo¿esz te¿ w podobny sposób trenowaæ przy pomocy programów Mistrz Klawiatury, Mistrz Klawiatury II, Q-typing, KSPNK lub Klawisz 2000. Niestety, KSPNK i Klawisz 2000 posiadaj± bardzo ma³o przyk³adowych tekstów do przepisywania, a w Mistrzu Klawiatury mog± pojawiæ siê b³êdy podczas korzystania z tekstów wbudowanych w program. Dlatego te¿ warto pos³ugiwaæ siê w³asnymi plikami tekstowymi. Ich stworzenie - np. poprzez kopiowanie tekstów ze stron internetowych - mo¿e byæ nieco pracoch³onne, dlatego te¿ zamie¶ci³em tutaj przyk³ady ró¿nych tekstów do przepisywania. Aby z nich skorzystaæ, ¶ci±gnij je na dysk, rozpakuj, a nastêpnie otwórz przy pomocy programu do nauki pisania, którego u¿ywasz.
+Podobne do powy¿szego testy prêdko¶ci znajdziesz w programach Mistrz Klawiatury, Mistrz Klawiatury II, Q-typing, KSPNK i Klawisz 2000. Niestety, KSPNK i Klawisz 2000 posiadaj± bardzo ma³o przyk³adowych tekstów do przepisywania, a w Mistrzu Klawiatury mog± pojawiæ siê b³êdy podczas korzystania z tekstów wbudowanych w program. Dlatego te¿ warto pos³ugiwaæ siê w³asnymi plikami tekstowymi. Stworzenie ich samemu mo¿e byæ do¶æ pracoch³onne, dlatego zamie¶ci³em tutaj przyk³ady ró¿nych tekstów do przepisywania. Po rozpakowaniu otwórz je przy pomocy programu do nauki pisania, którego u¿ywasz.
 <br>
 </p><p style="margin-left: 10px">
 <a href="download/teksty.zip">Pobierz teksty (34 kB)</a><br>
@@ -75,8 +181,8 @@ A mo¿e masz ochotê zmierzyæ prêdko¶æ, z jak± przepisujesz tekst z papieru (np. z
 A kiedy ju¿ zmierzysz swoj± prêdko¶æ, spójrz na poni¿sze zestawienie.
 <br><br>
 
-<table border="1" cellpadding="3" cellspacing="0" width="600">
-  <tr bgcolor="#F1F1DD">
+<table border="0" cellpadding="3" cellspacing="0" width="600">
+  <tr style="font-weight: bold; vertical-align: bottom;">
     <td width="15%">
     prêdko¶æ<br>
     (w znakach na minutê)

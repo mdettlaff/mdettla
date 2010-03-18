@@ -54,7 +54,7 @@ function validate($name, $email, $content) {
         return false;
     }
     $RESTRICTED_WORDS = array(
-        "http", "href", "www", "viagra"
+        "href", "viagra"
     );
     for ($i = 0; $i < count($RESTRICTED_WORDS); $i++) {
         if (eregi($RESTRICTED_WORDS[$i], $content)) {
