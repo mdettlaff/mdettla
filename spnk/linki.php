@@ -73,10 +73,6 @@ r &nbsp; e &nbsp; k &nbsp; l &nbsp; a &nbsp; m &nbsp; a<br>
 <a href="http://queencorner.ovh.org" target="_blank">
 <img src="img/bannerqc.gif" width="400" height="50" border="0" alt="Queen Corner online">
 </a>
-<br>
-<a href="http://mondziks.w.interia.pl" target="_blank">
-<img src="img/mondziks.gif" width="400" height="50" border="0" alt="Strona Mondziksa">
-</a>
 
 <br>
 <br>&nbsp;
