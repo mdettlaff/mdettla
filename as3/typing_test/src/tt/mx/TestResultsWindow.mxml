@@ -7,11 +7,11 @@
     creationComplete="init()">
 
     <mx:HTTPService id="getHighscoreRequiredSpeedService"
-        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
+        url="../service/highscore.php"
         resultFormat="e4x" />
 
     <mx:HTTPService id="submitHighscoreService"
-        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/highscore.php"
+        url="../service/highscore.php"
         method="POST" />
 
     <mx:states>
