@@ -14,7 +14,7 @@ function is_hmac_valid($hash, $h_data, $h_key) {
     if (empty($hash) || empty($h_data)) {
         return false;
     }
-    $valid_hash = hash_hmac('sha256', $h_data, $h_key);
+    $valid_hash = hash_hmac('sha1', $h_data, $h_key);
     return $hash == $valid_hash;
 }
 
