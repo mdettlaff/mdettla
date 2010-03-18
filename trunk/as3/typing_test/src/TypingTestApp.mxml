@@ -11,11 +11,11 @@
     creationComplete="init()">
 
     <mx:HTTPService id="getTextService"
-        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/texts.php"
+        url="../service/texts.php"
         resultFormat="e4x" />
 
     <mx:HTTPService id="submitTestResultsService"
-        url="http://sigma.ug.edu.pl/~mdettla/typing_test/web/service/ttlog.php"
+        url="../service/ttlog.php"
         method="POST" />
 
     <mx:Script source="tt/mx/script.as" />
