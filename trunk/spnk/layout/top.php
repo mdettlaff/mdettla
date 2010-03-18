@@ -17,13 +17,13 @@
             <tr>
               <td width="228" height="238" valign="top" background="layout/img/menu2b.jpg"
                   bgcolor="#F5F5F5" style="background-repeat: no-repeat">
-                <a href="index.html" class="menu">Strona gÅ‚Ã³wna</a><br>&nbsp;<br>
-                <a href="nauka.htm" class="menu">Jak nauczyÄ‡ siÄ™<br>
+                <a href="index.html" class="menu">Strona g³ówna</a><br>&nbsp;<br>
+                <a href="nauka.htm" class="menu">Jak nauczyæ siê<br>
                   szybkiego pisania?</a><br>&nbsp;<br>
                 <a href="programy.php" class="menu">Programy</a><br>&nbsp;<br>
-                <a href="test.htm" class="menu">Test prÄ™dkoÅ›ci online</a><br>&nbsp;<br>
+                <a href="test.htm" class="menu">Test prêdko¶ci online</a><br>&nbsp;<br>
                 <a href="linki.php" class="menu">Linki</a><br>&nbsp;<br>
-                <a href="ksiega.php" class="menu">KsiÄ™ga goÅ›ci</a><br>&nbsp;<br>
+                <a href="ksiega.php" class="menu">Ksiêga go¶ci</a><br>&nbsp;<br>
                 <a href="autor.htm" class="menu">Autor strony</a>
               </td>
             </tr>
