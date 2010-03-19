@@ -140,6 +140,7 @@ private function submitTestResults(testResults:TestResults):void {
     var params:Object = new Object();
     params.speed = testResults.realSpeed.toFixed(1);
     params.mistakes = testResults.mistakesCount;
+    params.corrections = testResults.correctionsCount;
     params.plChars = testResults.plChars;
     params.correctChars =
         testResults.writtenCharsCount - testResults.mistakesCount;
