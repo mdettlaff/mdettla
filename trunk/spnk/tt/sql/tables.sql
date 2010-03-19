@@ -11,6 +11,7 @@ CREATE TABLE ttlog (
     ip varchar(32),
     speed real NOT NULL,
     mistakes int NOT NULL,
+    corrections int,
     chars int NOT NULL,
     minutes int NOT NULL,
     seconds int NOT NULL,

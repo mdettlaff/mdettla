@@ -2,6 +2,14 @@
 
 include 'include/log.php';
 
+function compute_correctness($chars, $mistakes, $corrections) {
+    if (isset($corrections)) {
+        return sprintf('%.1f',
+            ($chars - $corrections) / ($chars + $mistakes) * 100);
+    }
+    return '';
+}
+
 mysql_connect();
 
 $username = 'admin';
@@ -131,13 +139,14 @@ echo "<hr width=\"400\" align=\"left\">\n\n";
 // 100 najlepszych wyników
 echo "<h2>Typing Test - Top 100</h3>\n";
 $r = mysql_query('
-    SELECT date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+    SELECT date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
         FROM ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
 $nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<td><b>miejsce$nbsp3</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
 echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>b³êdy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
+echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
+echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
@@ -148,10 +157,13 @@ while ($row = mysql_fetch_assoc($r)) {
     } else if ($row['pl'] == 'false') {
         $plTxt = 'nie';
     }
+    $correctness = compute_correctness(
+        $row['chars'], $row['mistakes'], $row['corrections']);
     echo "</tr><tr>\n";
-    echo "<td>$i</td><td>" . $row['date_added'] . '</td><td>' . $row['ip']
-        . '</td><td><b>' . $row['speed'] . '</b></td><td>' . $row['mistakes']
-        . '</td><td>' . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
+    echo "<td>$i</td><td>" . $row['date_added'] . '</td><td>'
+        . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
+        . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
+        . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
         . $row['minutes']. ' min ' . $row['seconds'] . " s</td>\n";
 }
 echo "</tr>\n</table>\n";
@@ -162,13 +174,13 @@ echo "<h2>Typing Test - Statystyka</h3>\n";
 $range = $_GET['range'];
 if ($range == 'all') {
     $r = mysql_query('
-        SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+        SELECT id, date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
             FROM ttlog
             ORDER BY id DESC
     ');
 } else {
     $r = mysql_query('
-        SELECT id, date_added, speed, ip, mistakes, pl, chars, minutes, seconds
+        SELECT id, date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
             FROM ttlog
             ORDER BY id DESC
             LIMIT 1000
@@ -178,7 +190,8 @@ $nbsp3 = '&nbsp;&nbsp;&nbsp;';
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<td><b>nr</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
 echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>b³êdy$nbsp3</b></td><td><b>polskie$nbsp3<br>znaki</b></td>\n";
+echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
+echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
@@ -189,12 +202,14 @@ while ($row = mysql_fetch_assoc($r)) {
     } else if ($row['pl'] == 'false') {
         $plTxt = 'nie';
     }
+    $correctness = compute_correctness(
+        $row['chars'], $row['mistakes'], $row['corrections']);
     echo "</tr><tr>\n";
     echo '<td>' . $row['id'] . '</td><td>' . $row['date_added'] . '</td><td>'
         . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
-        . $row['mistakes'] . '</td><td>' . $plTxt . '</td><td>'
-        . $row['chars'] . '</td><td>' . $row['minutes']. ' min '
-        . $row['seconds'] . " s</td>\n";
+        . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
+        . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
+        . $row['minutes']. ' min ' . $row['seconds'] . " s</td>\n";
 }
 
 ?>
