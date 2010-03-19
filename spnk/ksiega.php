@@ -72,9 +72,9 @@ if (!empty($_POST['submit'])) {
     $email = mysql_real_escape_string($_POST['email']);
     $content = mysql_real_escape_string($_POST['content']);
     echo "<br>\n";
-    if ($_SESSION['guestbook_entry_added']) {
+    /*if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie s± dozwolone.\n";
-    } else if (validate($name, $email, $content)) {
+    } else */if (validate($name, $email, $content)) {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {

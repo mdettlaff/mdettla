@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 include '../include/log.php';
 include '../include/utils.php';
 
@@ -20,7 +22,7 @@ function get_texts_count() {
 
 header('Content-Type: text/xml; charset=utf-8');
 
-session_start();
+mysql_connect();
 
 if (empty($_SESSION['shuffle_bag'])) {
     $shuffled_numbers = range(1, get_texts_count());
