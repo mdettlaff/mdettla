@@ -118,12 +118,12 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
     </tr>
     <tr>
       <td align="right" valign="top"><b>*Tre¶æ&nbsp;wpisu:</b></td>
-      <td><textarea name="content" rows=2 cols=50 wrap="physical"></textarea><br></td>
+      <td><textarea name="content" rows="2" cols="60" wrap="physical"></textarea><br></td>
     </tr>
     <tr>
       <td colspan="2" style="font-size: 8pt">* - pole wymagane</td>
     </tr>
-    <tr bgcolor="#bac5f8" height=30>
+    <tr bgcolor="#bac5f8" height="30">
       <td></td>
       <td>
         <input type="submit" name="submit" value="     zapisz      ">&nbsp;&nbsp;
@@ -164,7 +164,7 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
             }
             echo "<br><br>\n";
             echo str_replace("\n", "<br>\n",
-                htmlspecialchars($row['content']));
+                htmlspecialchars(trim($row['content'])));
             echo "\n<br><br>\n<hr>\n\n";
         }
         // stronicowanie
