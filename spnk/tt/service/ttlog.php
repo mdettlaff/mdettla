@@ -1,6 +1,7 @@
 <?php
 
 session_start();
+setcookie('PHPSESSID', session_id(), 0, '/', '.szybkiepisanie.webpark.pl');
 
 include '../include/log.php';
 include '../include/utils.php';
