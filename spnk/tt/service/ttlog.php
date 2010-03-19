@@ -5,10 +5,11 @@ session_start();
 include '../include/log.php';
 include '../include/utils.php';
 
-function validate($speed, $mistakes, $pl, $chars, $minutes, $seconds) {
+function validate($speed, $mistakes, $corrections, $pl, $chars,
+        $minutes, $seconds) {
     return is_numeric(str_replace(',', '.', $speed)) && is_numeric($mistakes)
-        && ($pl == 'true' || $pl == 'false') && is_numeric($chars)
-        && is_numeric($minutes) && is_numeric($seconds);
+        && is_numeric($corrections) && ($pl == 'true' || $pl == 'false')
+        && is_numeric($chars) && is_numeric($minutes) && is_numeric($seconds);
 }
 
 function is_submitted_too_soon($submit_time, $last_submit_time) {
@@ -19,6 +20,7 @@ function is_submitted_too_soon($submit_time, $last_submit_time) {
 
 $speed = $_POST['speed'];
 $mistakes = $_POST['mistakes'];
+$corrections = $_POST['corrections'];
 $pl = $_POST['plChars'];
 $chars = $_POST['correctChars'];
 $minutes = $_POST['minutes'];
@@ -31,7 +33,8 @@ $MAX_MISTAKES = 25;
 mysql_connect();
 
 $current_time = time();
-if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
+if (!validate($speed, $mistakes, $corrections, $pl, $chars,
+        $minutes, $seconds)) {
     echo 'Does not compute.';
     log_write('entry not added to ttlog, validation failed; '
         . 'POST parameters: ' . print_r($_POST, true));
@@ -56,16 +59,17 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
     }
     $speed = mysql_real_escape_string($speed);
     $mistakes = mysql_real_escape_string($mistakes);
+    $corrections = mysql_real_escape_string($corrections);
     $pl = mysql_real_escape_string($pl);
     $chars = mysql_real_escape_string($chars);
     $minutes = mysql_real_escape_string($minutes);
     $seconds = mysql_real_escape_string($seconds);
     $query = "
         INSERT INTO ttlog
-            (date_added, ip, speed, mistakes,
+            (date_added, ip, speed, mistakes, corrections,
                 pl, chars, minutes, seconds)
             VALUES
-            (NOW(), '$ip', $speed, $mistakes,
+            (NOW(), '$ip', $speed, $mistakes, $corrections,
                 '$pl', $chars, $minutes, $seconds)
     ";
     mysql_query($query) or log_write("ERROR: problem with query: $query ("
