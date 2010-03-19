@@ -1,7 +1,5 @@
 <?php
 
-mysql_connect();
-
 function log_write($msg) {
     if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
         $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];

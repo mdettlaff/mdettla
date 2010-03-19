@@ -1,9 +1,9 @@
 <?php
 
+session_start();
+
 include '../include/log.php';
 include '../include/utils.php';
-
-session_start();
 
 function validate($username, $speed, $mistakes, $corrections,
         $pl, $chars, $minutes, $seconds) {
@@ -23,6 +23,8 @@ function is_submitted_too_soon($submit_time, $last_submit_time) {
 $H_KEY = 'secret2';
 $MAX_HIGHSCORE_SIZE = 200;
 $MIN_REQUIRED_SPEED = 120;
+
+mysql_connect();
 
 $result = mysql_query("
     SELECT COUNT(id_highscore) AS current_size FROM highscore

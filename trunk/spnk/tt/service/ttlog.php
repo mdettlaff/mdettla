@@ -1,9 +1,9 @@
 <?php
 
+session_start();
+
 include '../include/log.php';
 include '../include/utils.php';
-
-session_start();
 
 function validate($speed, $mistakes, $pl, $chars, $minutes, $seconds) {
     return is_numeric(str_replace(',', '.', $speed)) && is_numeric($mistakes)
@@ -27,6 +27,8 @@ $h = $_POST['h'];
 
 $H_KEY = 'secret1';
 $MAX_MISTAKES = 25;
+
+mysql_connect();
 
 $current_time = time();
 if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {

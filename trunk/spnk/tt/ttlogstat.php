@@ -2,6 +2,8 @@
 
 include 'include/log.php';
 
+mysql_connect();
+
 $username = 'admin';
 $password = 'tschipp';
 if ($_SERVER['PHP_AUTH_USER'] != $username
