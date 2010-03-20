@@ -7,22 +7,14 @@ package tt {
         public var plChars:Boolean;
         public var correctionsCount:int;
 
-        private var totalCharsCount:int;
         private var typingTimeInMilliseconds:int;
 
         public function TestResults(typingTestModel:TypingTestModel) {
-            totalCharsCount = 0;
-            for each (var textLine:String in typingTestModel.textLines) {
-                totalCharsCount += textLine.length + 1; // +1 for Enter key
-            }
             writtenCharsCount = 0;
             for each (var writtenLine:String in typingTestModel.writtenLines) {
                 writtenCharsCount += writtenLine.length;
             }
             writtenCharsCount += typingTestModel.writtenLines.length - 1;
-            if (typingTestModel.isFinished) {
-                writtenCharsCount += 1; // +1 for last Enter key
-            }
             mistakesCount = countMistakes(typingTestModel);
             correctionsCount = 0;
             for (var i:int = 0; i < typingTestModel.corrections.length; i++) {
@@ -84,7 +76,8 @@ package tt {
             } else {
                 html += ".\n";
             }
-            html += "Przepisano " + writtenCharsCount + " znaków w czasie ";
+            html += "Przepisano "
+                + (writtenCharsCount - mistakesCount) + " znaków w czasie ";
             if (int(timeMinutes) > 0) {
                 html += int(timeMinutes) + " min ";
             }
