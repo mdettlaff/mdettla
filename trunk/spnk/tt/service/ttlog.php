@@ -48,7 +48,8 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
 } else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'], $H_KEY)) {
     log_write('entry not added to ttlog, wrong HMAC; '
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
-        . 'POST parameters: ' . print_r($_POST, true));
+        . 'POST parameters: ' . print_r($_POST, true) . '; '
+        . 'user agent: ' . $_SERVER['HTTP_USER_AGENT']);
 } else if ($mistakes <= $MAX_MISTAKES) {
     // konwersja polskiego u³amka dziesiêtnego (przecinek)
     // na amerykañski (kropka)
