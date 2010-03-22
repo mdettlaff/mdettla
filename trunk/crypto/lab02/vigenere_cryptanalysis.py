@@ -1,8 +1,34 @@
 #!/usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
+from vigenere_decrypt import vigenere_decrypt
 from string import ascii_uppercase
 import sys
+
+def kasiski(ciphertext, pattern_len = 4):
+    dist_occurs = {}
+    for i in range(len(ciphertext) - pattern_len):
+        pattern = ciphertext[i:i + pattern_len]
+        for j in range(i + 1, len(ciphertext) - pattern_len + 1):
+            if ciphertext[j:j + pattern_len] == pattern:
+                distance = j - i
+                if distance not in dist_occurs:
+                    dist_occurs[distance] = 0
+                dist_occurs[distance] += 1
+                break
+    len_candidates = {}
+    for i in range(pattern_len, pattern_len + 10):
+        len_candidates[i] = 0
+        for dist, occurs in dist_occurs.iteritems():
+            if dist % i == 0:
+                len_candidates[i] += occurs
+    print 'długość\tpasujące'
+    print 'klucza\tprzypadki'
+    lengths = sorted(len_candidates, key = len_candidates.__getitem__, reverse = True)
+    for i in lengths:
+        if len_candidates[i] > 0:
+            print '%d\t%d' % (i, len_candidates[i])
+    return lengths[0]
 
 def caesar_shift(plaintext, shift):
     return ''.join([ascii_uppercase[(ascii_uppercase.index(c) + shift) % \
@@ -17,9 +43,11 @@ def MIC(x, y):
     return sum([MIC_avg(x, i) * MIC_avg(y, i) \
             for i in range(len(ascii_uppercase))])
 
-key_len = 5 # obliczyć z Kasiskiego
-
 ciphertext = ''.join([line.strip().upper() for line in sys.stdin.readlines()])
+
+print 'Szukanie długości klucza metodą Kasiskiego...'
+key_len = kasiski(ciphertext)
+print 'Znaleziona długość klucza:', key_len
 
 best_matching_shifts = []
 for key_shift in range(1, key_len):
@@ -41,5 +69,5 @@ for c in ascii_uppercase:
     key = c
     for shift in best_matching_shifts:
         key += ascii_uppercase[ascii_uppercase.index(c) - shift]
-    print key
+    print key, '->', vigenere_decrypt(ciphertext[:50], key)
 
