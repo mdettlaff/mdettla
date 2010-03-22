@@ -1,0 +1,8 @@
+Parametry:
+  permutacje N, Z (Z jest inwolucją)
+  Enigma bez łącznicy NZN^1
+
+a) realizacja takiej Enigmy
+b) metoda kijkowa - propozycje Z i pozycji startowej N
+   (we: tj, sz; wy: Z, p.st.N)
+

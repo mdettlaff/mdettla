@@ -6,4 +6,4 @@ echo $plaintext
 echo "tajny klucz:"
 echo $key
 echo "tekst zaszyfrowany:"
-echo $plaintext | ./encrypt_vigenere.py $key
+echo $plaintext | ./vigenere_encrypt.py $key
