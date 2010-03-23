@@ -19,6 +19,7 @@ function is_submitted_too_soon($submit_time, $last_submit_time) {
 
 $speed = $_POST['speed'];
 $mistakes = $_POST['mistakes'];
+$corrections = $_POST['corrections'];
 $pl = $_POST['plChars'];
 $chars = $_POST['correctChars'];
 $minutes = $_POST['minutes'];
@@ -39,7 +40,9 @@ if (!validate($speed, $mistakes, $pl, $chars, $minutes, $seconds)) {
         . 'time=' . $current_time . ', last_submit_time='
         . $_SESSION['last_submit_time'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
-} else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'], $H_KEY)) {
+} else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'] . ':'
+        . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl,
+        $H_KEY)) {
     log_write('entry not added to ttlog, wrong HMAC; '
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
