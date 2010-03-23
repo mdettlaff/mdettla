@@ -20,8 +20,9 @@
   </head>
   <body bgcolor="#F5F5F5">
 
+<center>
 Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania.
-<div>
+<div style="padding-top: 20; padding-bottom: 25;">
 
 <!--
 Smart developers always View Source.
@@ -61,8 +62,8 @@ if (hasProductInstall && !hasRequestedVersion) {
     AC_FL_RunContent(
         "src", "flash/playerProductInstall",
         "FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
-        "width", "675",
-        "height", "450",
+        "width", "620",
+        "height", "400",
         "align", "middle",
         "id", "TypingTestApp",
         "quality", "high",
@@ -77,8 +78,8 @@ if (hasProductInstall && !hasRequestedVersion) {
     // embed the Flash Content SWF when all tests are passed
     AC_FL_RunContent(
         "src", "flash/TypingTestApp",
-        "width", "675",
-        "height", "450",
+        "width", "620",
+        "height", "400",
         "align", "middle",
         "id", "TypingTestApp",
         "quality", "high",
@@ -97,14 +98,14 @@ if (hasProductInstall && !hasRequestedVersion) {
 </script>
 <noscript>
 <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-        id="TypingTest" width="675" height="450"
+        id="TypingTest" width="620" height="400"
         codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
         <param name="movie" value="flash/TypingTestApp.swf" />
         <param name="quality" value="high" />
         <param name="bgcolor" value="#f5f5f5" />
         <param name="allowScriptAccess" value="sameDomain" />
         <embed src="flash/TypingTestApp.swf" quality="high" bgcolor="#f5f5f5"
-            width="675" height="450" name="TypingTest" align="middle"
+            width="620" height="400" name="TypingTest" align="middle"
             play="true"
             loop="false"
             allowScriptAccess="sameDomain"
@@ -120,6 +121,8 @@ if (hasProductInstall && !hasRequestedVersion) {
 <script>
 updateHighscoreTable();
 </script>
+
+</center>
 
   </body>
 </html>

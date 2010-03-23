@@ -152,7 +152,12 @@
                 _testResults.writtenCharsCount - _testResults.mistakesCount;
             params.minutes = int(_testResults.timeMinutes);
             params.seconds = int(_testResults.timeSeconds) % 60;
-            params.h = TypingTestApp.h(hData, "secret2");
+            params.h = TypingTestApp.h(hData + ':'
+                    + params.speed + ':'
+                    + params.mistakes + ':'
+                    + params.corrections + ':'
+                    + params.plChars,
+                    "secret2");
             submitHighscoreService.send(params);
         }
 

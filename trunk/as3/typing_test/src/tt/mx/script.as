@@ -146,6 +146,11 @@ private function submitTestResults(testResults:TestResults):void {
         testResults.writtenCharsCount - testResults.mistakesCount;
     params.minutes = int(testResults.timeMinutes);
     params.seconds = int(testResults.timeSeconds) % 60;
-    params.h = h(hData, "secret1");
+    params.h = h(hData + ':'
+            + params.speed + ':'
+            + params.mistakes + ':'
+            + params.corrections + ':'
+            + params.plChars,
+            "secret1");
     submitTestResultsService.send(params);
 }
