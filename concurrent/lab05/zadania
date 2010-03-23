@@ -1,0 +1,40 @@
+Kolejki FIFO i sygnały w bash'u
+
+1.
+Przy użyciu kolejek FIFO przeprowadzić rozmowę:
+a) pomiędzy dwoma oknami testowymi na jednym ekranie
+b) pomiędzy oknami na monitorach dwóch różnych użytkowników
+
+mkfifo nazwa1    cat < nazwa1 &  |  cat < nazwa2 &
+mkfifo nazwa2    cat > nazwa2    |  cat > nazwa1
+chmod ...
+chmod ...
+
+CTRL-D kończy komunikację
+
+Podlega odbiorowi
+2.
+Utworzyć parę skryptów klient-serwer komunikującą się przez parę łącz
+nazwanych. Nazwy łącz:
+~/tmp/klientfifo
+~/tmp/serwerfifo
+
+Klient wstawia do łącza po stronie serwera łańcuch zawierający:
+a) jego $HOME
+b) jedną liczbę całkowitą.
+Serwer oblicza pewną funkcję arytmetyczną i wynik wstawia do łącza po stronie
+klienta.
+Klient otrzymuje dwa argumenty wywołania:
+a) liczbę do wysłania
+b) nazwę konta, na którym działa serwer
+Działa tylko jednorazowo (nie w pętli).
+Serwer powinien być serwerem współbieżnym, tj. jego główny proces powinien
+jedynie pobierać dane z kolejki i przekazywać je do obsługi swoim kolejnym
+procesom potomnym, które obliczają wynik i odsyłają bezpośrednio do klienta
+(główny proces nie czeka na ich zakończenie).
+Zapewnić w programie serwera przechwytywanie sygnałów SIGHUP i SIGTERM (aby
+mógł działać również po zakończeniu sesji użytkownika). Zakończenie pracy
+serwera - przechwycenie sygnału SIGUSR1 (polecenie trap "" SIG...).
+
+Uwaga: zwrócić uwagę na to, że sygnał SIGCHLD od kończonego procesu potomnego
+może spowodować powrót z błędem z funkcji czytania w procesie głównym serwera.

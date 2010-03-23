@@ -1,0 +1,34 @@
+Operowanie na kolejkach FIFO w języku C
+
+Podlega odbiorowi.
+1.
+Napisać program serwera prostej wielodostępowej bazy danych oraz program
+klienta tej usługi.
+Treść bazy danych wpisujemy na sztywno w programie.
+Baza danych - tablica o rozmiarze 20, zawierająca struktury:
+{ int ID; char *nazwisko; }
+(maksymalna długość nazwiska - 20 znaków wraz z kończącym znakiem '\0'),
+tworzona i wypełniana statycznie przez program serwera.
+Serwer odbiera ze swojej kolejki wejściowej ID i odsyła do kolejki klienta
+odpowiadające mu nazwisko lub komunikat "Nie ma", jeśli nie ma takiego ID.
+Serwer działa w pętli nieskończonej, klient - tylko jednorazowo (pytanie -
+odpowiedź).
+
+Struktura komunikatu od klienta do serwera:
++-------------------+-----+---------- . . . ----------+
+| int               | int | łańcuch (zmienna długość) |
++-------------------+-----+---------- . . . ----------+
+ długość pozostałej   ID    $HOME klienta
+ części komunikatu
+
+Struktura komunikatu od serwera do klienta:
++-------------------+---------- . . . ----------+
+| int               | łańcuch (zmienna długość) |
++-------------------+---------- . . . ----------+
+ długość pozostałej   odpowiedź
+ części komunikatu
+
+Komunikacja kolejkami: ~/tmp/serwerfifo, ~/tmp/klientfifo
+
+Uwaga: zapewnić niepodzielność wysyłania komunikatów! (użyć pojedynczego
+wywołania funkcji write())
