@@ -45,7 +45,9 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
         . 'time=' . $current_time . ', last_submit_time='
         . $_SESSION['last_submit_time'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
-} else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'], $H_KEY)) {
+} else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'] . ':'
+        . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl,
+        $H_KEY)) {
     log_write('entry not added to ttlog, wrong HMAC; '
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
         . 'POST parameters: ' . print_r($_POST, true) . '; '
