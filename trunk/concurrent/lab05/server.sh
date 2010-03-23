@@ -1,5 +1,9 @@
 #!/bin/bash
 
+trap "exit 0" SIGUSR1
+trap "" SIGHUP
+trap "" SIGTERM
+
 if [ ! -p ~/tmp/serwerfifo ]
 then
   mkfifo ~/tmp/serwerfifo
