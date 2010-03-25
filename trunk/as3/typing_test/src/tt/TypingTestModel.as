@@ -2,7 +2,7 @@ package tt {
 
     public class TypingTestModel {
 
-        public static const MAX_LINE_LENGTH:int = 68;
+        public static const MAX_LINE_LENGTH:int = 66;
 
         // text to type
         public var textLines:Array /* of String */;

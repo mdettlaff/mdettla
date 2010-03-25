@@ -15,6 +15,7 @@ package tt {
         private var typingTestModel:TypingTestModel;
         private var polishChars:PolishChars;
         private var updateTimer:Timer;
+        private var typingTimeVerifierTimer:Timer;
         private var plCharsOn:Boolean;
         private var textWithPlChars:String;
 
@@ -43,6 +44,7 @@ package tt {
             mainContainer.addEventListener(
                     TypingTestEvent.PL_CHARS_CHANGE, onPlCharsChange);
 
+            typingTimeVerifierTimer = new Timer(1000, 0);
             updateTimer = new Timer(1000, 0);
             updateTimer.addEventListener(TimerEvent.TIMER, onUpdateTimer);
             updateTimer.start();
@@ -63,6 +65,8 @@ package tt {
                     typingTestModel.onBackspace();
                 }
                 if (!wasStarted && typingTestModel.isStarted) {
+                    typingTimeVerifierTimer.reset();
+                    typingTimeVerifierTimer.start();
                     typingArea.dispatchEvent(new TypingTestEvent(
                                 TypingTestEvent.TYPING_STARTED));
                 }
@@ -70,7 +74,9 @@ package tt {
                     typingArea.dispatchEvent(
                             new TypingTestEvent(
                                 TypingTestEvent.TYPING_TEST_FINISHED,
-                                null, new TestResults(typingTestModel)));
+                                null, new TestResults(typingTestModel,
+                                    typingTimeVerifierTimer.currentCount)));
+                    typingTimeVerifierTimer.reset();
                 }
                 typingArea.draw(typingTestModel);
             }
@@ -96,11 +102,13 @@ package tt {
 
         private function onPause(event:TypingTestEvent):void {
             updateTimer.stop();
+            typingTimeVerifierTimer.stop();
             typingTestModel.pause();
         }
 
         private function onContinue(event:TypingTestEvent):void {
             typingTestModel.unpause();
+            typingTimeVerifierTimer.start();
             updateTimer.start();
         }
 
