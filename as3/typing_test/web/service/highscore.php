@@ -6,12 +6,13 @@ include '../include/utils.php';
 session_start();
 
 function validate($username, $speed, $mistakes, $corrections,
-        $pl, $chars, $minutes, $seconds) {
+        $pl, $chars, $minutes, $seconds, $time_verifier) {
     return !empty($username) && strlen($username) <= 32
         && strlen($username) >= 3 && is_numeric(str_replace(',', '.', $speed))
         && is_numeric($mistakes) && is_numeric($corrections)
         && ($pl == 'true' || $pl == 'false') && is_numeric($chars)
-        && is_numeric($minutes) && is_numeric($seconds);
+        && is_numeric($minutes) && is_numeric($seconds)
+        && is_numeric($time_verifier);
 }
 
 function is_submitted_too_soon($submit_time, $last_submit_time) {
@@ -61,12 +62,13 @@ if ($_GET['q'] == 'get_threshold') {
     $minutes = $_POST['minutes'];
     $seconds = $_POST['seconds'];
     $h = $_POST['h'];
+    $time_verifier = $_POST['timeVerifier'];
 
     $MAX_MISTAKES = 0;
 
     $current_time = time();
     if (!validate($username, $speed, $mistakes, $corrections,
-            $pl, $chars, $minutes, $seconds)) {
+            $pl, $chars, $minutes, $seconds, $time_verifier)) {
         echo 'Does not compute.';
         log_write('entry not added to highscore, validation failed; '
             . 'POST parameters: ' . print_r($_POST, true));
@@ -76,9 +78,12 @@ if ($_GET['q'] == 'get_threshold') {
             . 'time=' . $current_time . ', last_hs_submit_time='
             . $_SESSION['last_hs_submit_time'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));
+    } else if (!verify_typing_time($minutes, $seconds, $time_verifier)) {
+        log_write('entry not added to highscore, suspicious typing time; '
+            . 'POST parameters: ' . print_r($_POST, true));
     } else if (!is_hmac_valid($h, $_SESSION['hs_h_data'] . ':'
-            . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl,
-            $H_KEY)) {
+            . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl . ':'
+            . $minutes . ':' . $seconds . ':' . $time_verifier, $H_KEY)) {
         log_write('entry not added to highscore, wrong HMAC; '
             . 'hs_h_data=' . $_SESSION['hs_h_data'] . '; '
             . 'POST parameters: ' . print_r($_POST, true));

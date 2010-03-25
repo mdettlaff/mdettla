@@ -6,10 +6,13 @@ package tt {
         public var mistakesCount:int;
         public var plChars:Boolean;
         public var correctionsCount:int;
+        public var timeSecondsVerifier:int;
 
         private var typingTimeInMilliseconds:int;
 
-        public function TestResults(typingTestModel:TypingTestModel) {
+        public function TestResults(typingTestModel:TypingTestModel,
+                timeSecondsVerifier:int = 0) {
+            this.timeSecondsVerifier = timeSecondsVerifier;
             writtenCharsCount = 0;
             for each (var writtenLine:String in typingTestModel.writtenLines) {
                 writtenCharsCount += writtenLine.length;
