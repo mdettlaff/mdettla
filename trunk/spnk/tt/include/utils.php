@@ -33,6 +33,10 @@ function is_hmac_valid($hash, $h_data, $h_key) {
     return $hash == $valid_hash;
 }
 
+function verify_typing_time($minutes, $seconds, $time_verifier) {
+    return abs($time_verifier / ($minutes * 60 + $seconds) - 1) < 0.1;
+}
+
 function latin2_to_utf8($latin2_str) {
     $UNKNOWN_CHAR = ' ';
     $utf8_str = '';
