@@ -7,10 +7,11 @@ include '../include/log.php';
 include '../include/utils.php';
 
 function validate($speed, $mistakes, $corrections, $pl, $chars,
-        $minutes, $seconds) {
+        $minutes, $seconds, $time_verifier) {
     return is_numeric(str_replace(',', '.', $speed)) && is_numeric($mistakes)
         && is_numeric($corrections) && ($pl == 'true' || $pl == 'false')
-        && is_numeric($chars) && is_numeric($minutes) && is_numeric($seconds);
+        && is_numeric($chars) && is_numeric($minutes) && is_numeric($seconds)
+        && is_numeric($time_verifier);
 }
 
 function is_submitted_too_soon($submit_time, $last_submit_time) {
@@ -27,6 +28,7 @@ $chars = $_POST['correctChars'];
 $minutes = $_POST['minutes'];
 $seconds = $_POST['seconds'];
 $h = $_POST['h'];
+$time_verifier = $_POST['timeVerifier'];
 
 $H_KEY = 'secret1';
 $MAX_MISTAKES = 25;
@@ -35,7 +37,7 @@ mysql_connect();
 
 $current_time = time();
 if (!validate($speed, $mistakes, $corrections, $pl, $chars,
-        $minutes, $seconds)) {
+        $minutes, $seconds, $time_verifier)) {
     echo 'Does not compute.';
     log_write('entry not added to ttlog, validation failed; '
         . 'POST parameters: ' . print_r($_POST, true));
@@ -45,9 +47,12 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
         . 'time=' . $current_time . ', last_submit_time='
         . $_SESSION['last_submit_time'] . '; '
         . 'POST parameters: ' . print_r($_POST, true));
+} else if (!verify_typing_time($minutes, $seconds, $time_verifier)) {
+    log_write('entry not added to ttlog, suspicious typing time; '
+        . 'POST parameters: ' . print_r($_POST, true));
 } else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'] . ':'
-        . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl,
-        $H_KEY)) {
+        . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl . ':'
+        . $minutes . ':' . $seconds . ':' . $time_verifier, $H_KEY)) {
     log_write('entry not added to ttlog, wrong HMAC; '
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
         . 'POST parameters: ' . print_r($_POST, true) . '; '
