@@ -6,6 +6,7 @@ then
   fi
   javac -d bin src/mdettla/imgproc/*.java \
   src/mdettla/imgproc/algorithms/fuzzy/edge/*.java \
+  src/mdettla/imgproc/algorithms/fuzzy/noiseremoval/*.java \
   src/mdettla/imgproc/algorithms/edge/*.java
 else
   if [ $1 == "edge" ]
