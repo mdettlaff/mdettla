@@ -1,6 +1,7 @@
 package mdettla.imgproc;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 
 public class Util {
 
@@ -18,5 +19,10 @@ public class Util {
 		0.587 * color.getGreen() +
 		0.114 * color.getBlue() +
 		0.5;
+	}
+
+	public static int q(int x, int y, BufferedImage image) {
+		Color color = new Color(image.getRGB(x, y));
+		return (int)((color.getRed() + color.getGreen() + color.getBlue()) / 3.0);
 	}
 }
