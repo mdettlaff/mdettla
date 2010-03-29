@@ -20,7 +20,14 @@ else
       mdettla.imgproc.algorithms.fuzzy.edge.EdgeDetectionWithFuzzyClassifier \
       $2 $3
     else
-      echo "Nieznany parametr"
+      if [ $1 == "mff" ]
+      then
+        java -cp bin mdettla.imgproc.ProcessImage \
+        mdettla.imgproc.algorithms.fuzzy.noiseremoval.MultipassFuzzyFilter \
+        $2 $3
+      else
+        echo "Nieznany parametr"
+      fi
     fi
   fi
 fi
