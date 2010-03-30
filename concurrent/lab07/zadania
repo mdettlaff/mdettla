@@ -1,0 +1,19 @@
+Kolejki komunikatów w języku C.
+
+1.
+Obejrzeć parę programów przykładowych dołączonych do wykładu, zastąpić ustalony
+numer klucza (10) numerem wygenerowanym przez funkcję ftok() (przeczytać opis
+funkcji) skompilować i uruchomić.
+2.
+Przeczytać opisy poleceń ipcs oraz ipcrm, wypróbować działanie.
+
+Podlega odbiorowi
+3.
+Utworzyć program serwera udostępniający dwie kolejki komunikatów: wejściową i
+wyjściową oraz program klienta przesyłający pojedyncze zapytanie ze swoim PID
+jako identyfikatorem komunikatu, a następnie odbierający odpowiedź z drugiej
+kolejki. Serwer realizuje funkcję słownika polsko-angielskiego (otrzymuje
+łańcuch zawierający słowo polskie, odsyła odpowiadające mu słowo angielskie lub
+komunikat "nie znam takiego słowa").
+Uwaga: przyjąć, że numery (klucze) obu kolejek serwera są ustalone i znane
+klientom.
