@@ -5,12 +5,14 @@ function updateHighscoreTable(page) {
     var currentPageElement;
 
     function onResponse() {
+        var USERNAME_CUT = 17;
         var i;
         var hsTable;
         var entries;
         var entryElement;
         var speed;
         var correctness;
+        var username;
         var totalHSSize;
 
         function getHighscorePaging(currentPage, pageCount) {
@@ -69,8 +71,15 @@ function updateHighscoreTable(page) {
             entryElement = entries[i].getElementsByTagName("rank")[0];
             hsTable += "<td>" + entryElement.firstChild.nodeValue + "</td>";
             entryElement = entries[i].getElementsByTagName("username")[0];
-            hsTable += "<td style=\"text-align: left;\">";
-            hsTable += entryElement.firstChild.nodeValue;
+            username = entryElement.firstChild.nodeValue;
+            if (username.length > USERNAME_CUT) {
+                hsTable += "<td style=\"text-align: left;\" ";
+                hsTable += "title=\"" + username + "\">";
+                hsTable += username.substring(0, USERNAME_CUT).trim() + "...";
+            } else {
+                hsTable += "<td style=\"text-align: left;\">";
+                hsTable += username;
+            }
             hsTable += "</td>";
             entryElement = entries[i].getElementsByTagName("speed")[0];
             speed = entryElement.firstChild.nodeValue;
