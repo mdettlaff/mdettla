@@ -39,7 +39,7 @@ if ($result) {
 $result = mysql_query("
     SELECT username, speed, corrections, chars, minutes, seconds
         FROM highscore
-        ORDER BY speed DESC
+        ORDER BY speed DESC, (chars - corrections) / (chars + mistakes) DESC
         LIMIT " . ($from_place - 1) . ", " . ($to_place - $from_place + 1) . "
 ");
 if ($result) {

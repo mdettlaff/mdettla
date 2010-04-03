@@ -16,12 +16,13 @@ CREATE TABLE ttlog (
     minutes int NOT NULL,
     seconds int NOT NULL,
     pl varchar(8),
+    username varchar(64),
     PRIMARY KEY(id)
 );
 
 CREATE TABLE highscore (
     id_highscore int NOT NULL auto_increment,
-    username varchar(64) NOT NULL,
+    username varchar(64) UNIQUE NOT NULL,
     date_added datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
     ip varchar(32),
     speed real NOT NULL,

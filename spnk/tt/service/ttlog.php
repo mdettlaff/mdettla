@@ -73,13 +73,19 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
     $chars = mysql_real_escape_string($chars);
     $minutes = mysql_real_escape_string($minutes);
     $seconds = mysql_real_escape_string($seconds);
+    if (isset($_COOKIE['username'])) {
+        $username = '\'' . mysql_real_escape_string(
+            utf8_to_latin2($_COOKIE['username'])) . '\'';
+    } else {
+        $username = 'NULL';
+    }
     $query = "
         INSERT INTO ttlog
             (date_added, ip, speed, mistakes, corrections,
-                pl, chars, minutes, seconds)
+                pl, chars, minutes, seconds, username)
             VALUES
             (NOW(), '$ip', $speed, $mistakes, $corrections,
-                '$pl', $chars, $minutes, $seconds)
+                '$pl', $chars, $minutes, $seconds, $username)
     ";
     mysql_query($query) or log_write("ERROR: problem with query: $query ("
         . mysql_error() . ')');

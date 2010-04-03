@@ -85,6 +85,9 @@ function updateHighscoreTable(page) {
             hsTable += "</td>";
             hsTable += "</tr>";
         }
+        for (i = entries.length; i < PAGE_SIZE; i++) {
+            hsTable += "<tr><td colspan=\"5\">&nbsp;</td></tr>";
+        }
         hsTable += "<tr><td colspan=\"5\" style=\"text-align: center; " +
                 "vertical-align: bottom; height: 32px;\">";
         totalHSSize =
