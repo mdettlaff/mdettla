@@ -139,7 +139,8 @@ echo "<hr width=\"400\" align=\"left\">\n\n";
 // 100 najlepszych wyników
 echo "<h2>Typing Test - Top 100</h3>\n";
 $r = mysql_query('
-    SELECT date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
+    SELECT date_added, speed, ip, mistakes, corrections,
+        pl, chars, minutes, seconds, username
         FROM ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
 $nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
@@ -148,6 +149,7 @@ echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
 echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
 echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
+echo "<td><b>u¿ytkownik</b></td>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
     $i++;
@@ -164,7 +166,8 @@ while ($row = mysql_fetch_assoc($r)) {
         . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
         . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
         . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
-        . $row['minutes']. ' min ' . $row['seconds'] . " s</td>\n";
+        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td><td>'
+        . htmlspecialchars($row['username']) . "</td>\n";
 }
 echo "</tr>\n</table>\n";
 echo "<br>\n\n";
@@ -174,13 +177,15 @@ echo "<h2>Typing Test - Statystyka</h3>\n";
 $range = $_GET['range'];
 if ($range == 'all') {
     $r = mysql_query('
-        SELECT id, date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
+        SELECT id, date_added, speed, ip, mistakes, corrections,
+            pl, chars, minutes, seconds, username
             FROM ttlog
             ORDER BY id DESC
     ');
 } else {
     $r = mysql_query('
-        SELECT id, date_added, speed, ip, mistakes, corrections, pl, chars, minutes, seconds
+        SELECT id, date_added, speed, ip, mistakes, corrections,
+            pl, chars, minutes, seconds, username
             FROM ttlog
             ORDER BY id DESC
             LIMIT 1000
@@ -193,6 +198,7 @@ echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
 echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
 echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
 echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
+echo "<td><b>u¿ytkownik</b></td>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
     $i++;
@@ -209,7 +215,8 @@ while ($row = mysql_fetch_assoc($r)) {
         . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
         . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
         . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
-        . $row['minutes']. ' min ' . $row['seconds'] . " s</td>\n";
+        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td><td>'
+        . htmlspecialchars($row['username']) . "</td>\n";
 }
 
 ?>
