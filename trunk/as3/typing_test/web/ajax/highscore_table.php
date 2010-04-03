@@ -49,7 +49,7 @@ if ($result) {
 $result = pg_query("
     SELECT username, speed, corrections, chars, minutes, seconds
         FROM highscore
-        ORDER BY speed DESC
+        ORDER BY speed DESC, (chars - corrections) / (chars + mistakes) DESC
         LIMIT " . ($to_place - $from_place + 1) . "
         OFFSET " . ($from_place - 1) . "
 ");
