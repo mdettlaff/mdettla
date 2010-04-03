@@ -1,14 +1,24 @@
 <?php
 
+session_start();
+
+if (isset($_POST['username'])) {
+    $MONTH = 3600 * 24 * 30;
+    setcookie('username', trim($_POST['username']), time() + 3 * $MONTH);
+}
+
 include '../include/log.php';
 include '../include/utils.php';
 
-session_start();
+function validate_username($username) {
+    return !empty($username)
+        && strlen($username) <= 32 && strlen($username) >= 3;
+}
 
 function validate($username, $speed, $mistakes, $corrections,
         $pl, $chars, $minutes, $seconds, $time_verifier) {
-    return !empty($username) && strlen($username) <= 32
-        && strlen($username) >= 3 && is_numeric(str_replace(',', '.', $speed))
+    return validate_username($username)
+        && is_numeric(str_replace(',', '.', $speed))
         && is_numeric($mistakes) && is_numeric($corrections)
         && ($pl == 'true' || $pl == 'false') && is_numeric($chars)
         && is_numeric($minutes) && is_numeric($seconds)
@@ -21,39 +31,75 @@ function is_submitted_too_soon($submit_time, $last_submit_time) {
         && ($submit_time - $last_submit_time < $min_time_between_submits));
 }
 
-$H_KEY = 'secret2';
-$HIGHSCORE_SIZE = 150;
-$MIN_REQUIRED_SPEED = 120;
-
-$result = pg_query("
-    SELECT
-        MIN(speed) AS required_speed,
-        COUNT(speed) AS current_size
-        FROM (
-            SELECT speed
+function query_required_speed($min_required_speed, $max_highscore_size) {
+    $query = "
+        SELECT COUNT(id_highscore) AS current_size FROM highscore
+    ";
+    $result = pg_query($query) or log_write(
+        "ERROR: problem with query: $query (" . pg_last_error() . ')');
+    $row = pg_fetch_assoc($result);
+    $current_size = $row['current_size'];
+    if ($current_size > $max_highscore_size) {
+        $current_size = $max_highscore_size;
+    }
+    if ($current_size > 0) {
+        $query = "
+            SELECT
+                speed AS required_speed
                 FROM highscore
                 ORDER BY speed DESC
-                LIMIT $HIGHSCORE_SIZE
-        ) AS highscore
-") or log_write("ERROR: problem with query: $query ("
-        . pg_last_error() . ')');
-$row = pg_fetch_assoc($result);
-if ($row && $row['current_size'] == $HIGHSCORE_SIZE) {
-    $required_speed = $row['required_speed'];
+                LIMIT 1 OFFSET " . ($current_size - 1) . "
+        ";
+        $result = pg_query($query) or log_write(
+            "ERROR: problem with query: $query (" . pg_last_error() . ')');
+        $row = pg_fetch_assoc($result);
+        if ($row && $current_size == $max_highscore_size) {
+            $required_speed = $row['required_speed'];
+        }
+    }
+    if (empty($required_speed)) {
+        $required_speed = $min_required_speed;
+    }
+    if (isset($_COOKIE['username'])) {
+        $username = pg_escape_string($_COOKIE['username']);
+        $query = "
+            SELECT
+                speed AS speed_for_user
+                FROM highscore
+                WHERE username = '$username'
+                LIMIT 1
+        ";
+        $result = pg_query($query) or log_write(
+            "ERROR: problem with query: $query (" . pg_last_error() . ')');
+        $row = pg_fetch_assoc($result);
+        if ($row && $row['speed_for_user'] > $required_speed) {
+            $required_speed = $row['speed_for_user'];
+        }
+    }
+    return $required_speed;
 }
-if (empty($required_speed)) {
-    $required_speed = $MIN_REQUIRED_SPEED;
-}
+
+$H_KEY = 'secret2';
+$MAX_HIGHSCORE_SIZE = 150;
+$MIN_REQUIRED_SPEED = 120;
+
+$required_speed = query_required_speed(
+        $MIN_REQUIRED_SPEED, $MAX_HIGHSCORE_SIZE);
 if ($_GET['q'] == 'get_threshold') {
     $_SESSION['hs_h_data'] = rand_str(32);
     header('Content-Type: text/xml');
     echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
     echo "<response>\n";
     echo '<requiredSpeed>' . $required_speed . "</requiredSpeed>\n";
+    if (isset($_COOKIE['username'])) {
+        echo "<username><![CDATA[" . $_COOKIE['username'] . "]]></username>\n";
+    } else {
+        echo "<username />\n";
+    }
     echo '<hData>' . $_SESSION['hs_h_data'] . "</hData>\n";
     echo '</response>';
 } else {
-    $username = $_POST['username'];
+    $username = trim($_POST['username']);
     $speed = $_POST['speed'];
     $mistakes = $_POST['mistakes'];
     $corrections = $_POST['corrections'];
@@ -110,15 +156,43 @@ if ($_GET['q'] == 'get_threshold') {
         $minutes = pg_escape_string($minutes);
         $seconds = pg_escape_string($seconds);
         $query = "
-            INSERT INTO highscore
-                (date_added, ip, username, speed, mistakes, corrections,
-                    pl, chars, minutes, seconds)
-                VALUES
-                (NOW(), '$ip', '$username', $speed, $mistakes, $corrections,
-                    '$pl', $chars, $minutes, $seconds)
+            SELECT
+                speed AS speed_for_user
+                FROM highscore
+                WHERE username = '$username'
+                LIMIT 1
         ";
-        pg_query($query) or log_write("ERROR: problem with query: $query ("
-            . pg_last_error() . ')');
+        $result = pg_query($query) or log_write(
+            "ERROR: problem with query: $query (" . pg_last_error() . ')');
+        $row = pg_fetch_assoc($result);
+        if (!$row) {
+            $query = "
+                INSERT INTO highscore
+                    (date_added, ip, username, speed, mistakes,
+                        corrections, pl, chars, minutes, seconds)
+                    VALUES
+                    (NOW(), '$ip', '$username', $speed, $mistakes,
+                        $corrections, '$pl', $chars, $minutes, $seconds)
+            ";
+            pg_query($query) or log_write("ERROR: problem with query: $query ("
+                . pg_last_error() . ')');
+        } else if ($row && $speed > $row['speed_for_user']) {
+            $query = "
+                UPDATE highscore
+                    SET date_added = NOW(),
+                        ip = '$ip',
+                        speed = $speed,
+                        mistakes = $mistakes,
+                        corrections = $corrections,
+                        pl = '$pl',
+                        chars = $chars,
+                        minutes = $minutes,
+                        seconds = $seconds
+                    WHERE username = '$username'
+            ";
+            pg_query($query) or log_write(
+                "ERROR: problem with query: $query (" . pg_last_error() . ')');
+        }
     }
 
     unset($_SESSION['hs_h_data']);

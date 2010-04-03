@@ -62,14 +62,14 @@ function updateHighscoreTable(page) {
         hsTable += "</tr>";
         for (i = 0; i < entries.length; i++) {
             if (i % 2 === 0) {
-                hsTable += "<tr style=\"background: #F1F1DD\">";
+                hsTable += "<tr style=\"background: #F1F1DD;\">";
             } else {
                 hsTable += "<tr>";
             }
             entryElement = entries[i].getElementsByTagName("rank")[0];
             hsTable += "<td>" + entryElement.firstChild.nodeValue + "</td>";
             entryElement = entries[i].getElementsByTagName("username")[0];
-            hsTable += "<td style=\"text-align: left\">";
+            hsTable += "<td style=\"text-align: left;\">";
             hsTable += entryElement.firstChild.nodeValue;
             hsTable += "</td>";
             entryElement = entries[i].getElementsByTagName("speed")[0];
@@ -85,8 +85,11 @@ function updateHighscoreTable(page) {
             hsTable += "</td>";
             hsTable += "</tr>";
         }
+        for (i = entries.length; i < PAGE_SIZE; i++) {
+            hsTable += "<tr><td colspan=\"5\">&nbsp;</td></tr>";
+        }
         hsTable += "<tr><td colspan=\"5\" style=\"text-align: center; " +
-                "vertical-align: bottom; height: 35;\">";
+                "vertical-align: bottom; height: 32px;\">";
         totalHSSize =
                 request.responseXML.documentElement.getElementsByTagName(
                     "totalSize")[0].firstChild.nodeValue;

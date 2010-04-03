@@ -30,7 +30,7 @@ CREATE TABLE ttlog (
 CREATE SEQUENCE id_highscore_seq;
 CREATE TABLE highscore (
     id_highscore int DEFAULT NEXTVAL('id_highscore_seq') PRIMARY KEY,
-    username varchar NOT NULL,
+    username varchar UNIQUE NOT NULL,
     date_added timestamp NOT NULL,
     ip varchar(32),
     speed real NOT NULL,

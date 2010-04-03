@@ -118,6 +118,9 @@
                     && _testResults.mistakesCount == 0
                     && _testResults.plChars
                     && _testResults.correctness > 95) {
+                if (result.username != null && result.username != "") {
+                    username = result.username;
+                }
                 if (username == null) {
                     currentState = "HighscoreAchievedUsernameUnknown";
                     callLater(usernameInput.setFocus);
