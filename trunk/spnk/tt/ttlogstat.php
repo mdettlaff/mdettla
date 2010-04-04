@@ -10,6 +10,20 @@ function compute_correctness($chars, $mistakes, $corrections) {
     return '';
 }
 
+function td_cut($content, $maxlen) {
+    $result = '';
+    if (strlen($content) > $maxlen) {
+        $result .= '<td title="' . htmlspecialchars($content) . '">';
+        $result .= htmlspecialchars(
+            trim(substr($content, 0, $maxlen - 1))) . '...';
+    } else {
+        $result .= '<td>';
+        $result .= htmlspecialchars($content);
+    }
+    $result .= '</td>';
+    return $result;
+}
+
 mysql_connect();
 
 $username = 'admin';
@@ -38,8 +52,19 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
     position: relative;
     bottom: 0;
   }
+  .large-table th {
+    text-align: center;
+  }
   .large-table td {
-    padding: 2;
+    padding: 3 4 2 2;
+    text-align: right;
+  }
+  .large-table td:nth-child(3) {
+    text-align: left;
+    padding-left: 7;
+  }
+  .large-table td:nth-child(10) {
+    text-align: left;
   }
   .large-table tr:nth-child(1) {
     background: #D0D0D0
@@ -136,20 +161,20 @@ $mean = $row['average_speed'];
 printf("<big>¦rednia prêdko¶æ: <b>%.1f</b> znaków/min</big><br>\n", $mean);
 echo "<hr width=\"400\" align=\"left\">\n\n";
 
+$USERNAME_CUT = 15;
 // 100 najlepszych wyników
 echo "<h2>Typing Test - Top 100</h3>\n";
 $r = mysql_query('
     SELECT date_added, speed, ip, mistakes, corrections,
         pl, chars, minutes, seconds, username
         FROM ttlog WHERE mistakes < 100 ORDER BY speed DESC LIMIT 100');
-$nbsp3 = "&nbsp;&nbsp;&nbsp;";
 echo "<table class=\"large-table\">\n<tr>\n";
-echo "<td><b>miejsce$nbsp3</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
-echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
-echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
-echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
-echo "<td><b>u¿ytkownik</b></td>\n";
+echo "<th>miejsce</th><th>zakoñczenie pisania</th>\n";
+echo "<th>ip</th><th>prêdko¶æ<br>(zn./min)</th>\n";
+echo "<th>b³êdy</th><th>poprawno¶æ<br>(%)</th>\n";
+echo "<th>polskie<br>znaki</th>\n";
+echo "<th>przepisane<br>znaki</th><th>czas</th>\n";
+echo "<th>u¿ytkownik</th>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
     $i++;
@@ -166,8 +191,8 @@ while ($row = mysql_fetch_assoc($r)) {
         . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
         . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
         . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
-        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td><td>'
-        . htmlspecialchars($row['username']) . "</td>\n";
+        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td>'
+        . td_cut($row['username'], $USERNAME_CUT) . "\n";
 }
 echo "</tr>\n</table>\n";
 echo "<br>\n\n";
@@ -191,14 +216,13 @@ if ($range == 'all') {
             LIMIT 1000
     ');
 }
-$nbsp3 = '&nbsp;&nbsp;&nbsp;';
 echo "<table class=\"large-table\">\n<tr>\n";
-echo "<td><b>nr</b></td><td><b>zakoñczenie pisania$nbsp3</b></td>\n";
-echo "<td><b>ip</b></td><td><b>prêdko¶æ$nbsp3<br>(zn./min)</b></td>\n";
-echo "<td><b>b³êdy$nbsp3</b></td><td><b>poprawno¶æ</b></td>\n";
-echo "<td><b>polskie$nbsp3<br>znaki</b></td>\n";
-echo "<td><b>przepisane<br>znaki</b></td><td><b>czas</b></td>\n";
-echo "<td><b>u¿ytkownik</b></td>\n";
+echo "<th>nr</th><th>zakoñczenie pisania</th>\n";
+echo "<th>ip</th><th>prêdko¶æ<br>(zn./min)</th>\n";
+echo "<th>b³êdy</th><th>poprawno¶æ<br>(%)</th>\n";
+echo "<th>polskie<br>znaki</th>\n";
+echo "<th>przepisane<br>znaki</th><th>czas</th>\n";
+echo "<th>u¿ytkownik</th>\n";
 $i = 0;
 while ($row = mysql_fetch_assoc($r)) {
     $i++;
@@ -215,8 +239,8 @@ while ($row = mysql_fetch_assoc($r)) {
         . $row['ip'] . '</td><td><b>' . $row['speed'] . '</b></td><td>'
         . $row['mistakes'] . '</td><td>' . $correctness . '</td><td>'
         . $plTxt . '</td><td>' . $row['chars'] . '</td><td>'
-        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td><td>'
-        . htmlspecialchars($row['username']) . "</td>\n";
+        . $row['minutes']. ' min ' . $row['seconds'] . ' s</td>'
+        . td_cut($row['username'], $USERNAME_CUT) . "\n";
 }
 
 ?>
