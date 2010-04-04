@@ -5,7 +5,7 @@ function updateHighscoreTable(page) {
     var currentPageElement;
 
     function onResponse() {
-        var USERNAME_CUT = 17;
+        var USERNAME_CUT = 18;
         var i;
         var hsTable;
         var entries;
@@ -75,7 +75,8 @@ function updateHighscoreTable(page) {
             if (username.length > USERNAME_CUT) {
                 hsTable += "<td style=\"text-align: left;\" ";
                 hsTable += "title=\"" + username + "\">";
-                hsTable += username.substring(0, USERNAME_CUT).trim() + "...";
+                hsTable += username.substring(
+                        0, USERNAME_CUT - 1).trim() + "...";
             } else {
                 hsTable += "<td style=\"text-align: left;\">";
                 hsTable += username;
