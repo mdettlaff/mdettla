@@ -12,9 +12,9 @@ import mdettla.imgproc.Util;
 
 public class MultilevelMedianFilter implements ImageProcessingAlgorithm {
 
-	private static final int MARGIN = 2;
+	protected static final int MARGIN = 2;
 
-	private static int[][][] W = {
+	protected static int[][][] W = {
 		{
 			{0, 0, 1, 0, 0},
 			{0, 0, 1, 0, 0},
@@ -64,7 +64,7 @@ public class MultilevelMedianFilter implements ImageProcessingAlgorithm {
 		return processedImage;
 	}
 
-	private static Integer median(List<Integer> list) {
+	protected static Integer median(List<Integer> list) {
 		Collections.sort(list);
 		return list.get(list.size() / 2);
 	}
@@ -72,7 +72,7 @@ public class MultilevelMedianFilter implements ImageProcessingAlgorithm {
 	/**
 	 * Mediana z pikseli z podanego okna.
 	 */
-	private static int med(int[][] w, int x, int y, BufferedImage image) {
+	protected static int med(int[][] w, int x, int y, BufferedImage image) {
 		List<Integer> windowPixels = new ArrayList<Integer>();
 		for (int i = 0; i < w.length; i++) {
 			for (int j = 0; j < w.length; j++) {
@@ -87,7 +87,7 @@ public class MultilevelMedianFilter implements ImageProcessingAlgorithm {
 		return median(windowPixels);
 	}
 
-	private static int medMin(int x, int y, BufferedImage image) {
+	protected static int medMin(int x, int y, BufferedImage image) {
 		List<Integer> medians = new ArrayList<Integer>();
 		for (int i = 0; i < W.length; i++) {
 			medians.add(med(W[i], x, y, image));
@@ -95,7 +95,7 @@ public class MultilevelMedianFilter implements ImageProcessingAlgorithm {
 		return Collections.min(medians);
 	}
 
-	private static int medMax(int x, int y, BufferedImage image) {
+	protected static int medMax(int x, int y, BufferedImage image) {
 		List<Integer> medians = new ArrayList<Integer>();
 		for (int i = 0; i < W.length; i++) {
 			medians.add(med(W[i], x, y, image));
