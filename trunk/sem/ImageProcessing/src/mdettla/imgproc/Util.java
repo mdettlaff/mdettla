@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 
 public class Util {
 
+	public static final int COLOR_WHITE = 255;
+	public static final int COLOR_BLACK = 0;
+
 	/**
 	 * Oblicza składową Y z modelu YUV dla danego koloru.
 	 * Składowa Y reprezentuje poziom jasności (luma).
