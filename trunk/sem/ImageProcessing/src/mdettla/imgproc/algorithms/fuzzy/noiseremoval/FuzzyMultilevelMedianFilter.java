@@ -3,6 +3,8 @@ package mdettla.imgproc.algorithms.fuzzy.noiseremoval;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
@@ -23,7 +25,10 @@ public class FuzzyMultilevelMedianFilter extends MultilevelMedianFilter {
 			for (int x = MARGIN; x < inputImage.getWidth() - MARGIN; x++) {
 				int q = Util.q(x, y, inputImage);
 				Map<Integer, Double> s = s(W, x, y, inputImage);
-				Iterator<Integer> it = s.keySet().iterator();
+				Map<Integer, Double> sortedS = new TreeMap<Integer, Double>(
+						new ValueComparator(s));
+				sortedS.putAll(s);
+				Iterator<Integer> it = sortedS.keySet().iterator();
 				int sMax1 = it.next();
 				int sMax2 = it.hasNext() ? it.next() : sMax1;
 				q = median(Arrays.asList(
@@ -77,11 +82,31 @@ public class FuzzyMultilevelMedianFilter extends MultilevelMedianFilter {
 
 	private static Map<Integer, Double> s(int[][][] windows, int x, int y,
 			BufferedImage image) {
-		Map<Integer, Double> s = new TreeMap<Integer, Double>();
+		Map<Integer, Double> s = new HashMap<Integer, Double>();
 		for (int i = 0; i < windows.length; i++) {
 			int med = med(windows[i], x, y, image);
 			s.put(med, s(windows[i], med, x, y, image));
 		}
 		return s;
 	}
+
+
+	private static class ValueComparator implements Comparator<Number> {
+
+		Map<Integer, Double> base;
+		public ValueComparator(Map<Integer, Double> base) {
+			this.base = base;
+		}
+
+		public int compare(Number a, Number b) {
+			if((Double)base.get(a) < (Double)base.get(b)) {
+				return 1;
+			} else if((Double)base.get(a) == (Double)base.get(b)) {
+				return 0;
+			} else {
+				return -1;
+			}
+		}
+	}
+
 }
