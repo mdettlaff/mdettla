@@ -5,6 +5,11 @@ import java.awt.image.BufferedImage;
 
 public class Util {
 
+	/**
+	 * Maximum luminance.
+	 */
+	public static final int L = 256;
+
 	public static final int COLOR_WHITE = 255;
 	public static final int COLOR_BLACK = 0;
 
