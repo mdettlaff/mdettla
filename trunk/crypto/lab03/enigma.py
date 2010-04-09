@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
-from string import ascii_uppercase as CHARS
+from string import ascii_uppercase
 import doctest
 import random
 import sys
@@ -22,13 +22,13 @@ class Enigma:
 
     def __encrypt_char(self, c):
         self.__rotate(self.rotors)
-        position = CHARS.index(c)
+        position = ascii_uppercase.index(c)
         for rotor in self.rotors:
             position = rotor.out_position_forward(position)
         position = self.reflector.out_position(position)
         for rotor in reversed(self.rotors):
             position = rotor.out_position_backward(position)
-        return CHARS[position]
+        return ascii_uppercase[position]
 
 class Rotor:
     def __init__(self, permutation, initial_rotation):
@@ -62,26 +62,25 @@ def permutation(sequence):
 
 def involution(sequence):
     u"""
-    >>> invol = involution(range(len(CHARS)))
-    >>> all([invol[invol[i]] == i for i in range(len(CHARS))])
+    >>> invol = involution(range(len(ascii_uppercase)))
+    >>> all([invol[invol[i]] == i for i in range(len(ascii_uppercase))])
     True
     """
-    sample = random.sample(sequence, len(sequence))
+    perm = permutation(sequence)
     invol = [None for i in range(len(sequence))]
-    for i in range(0, len(sample), 2):
-        invol[sequence.index(sample[i])] = sample[i + 1]
-        invol[sequence.index(sample[i + 1])] = sample[i]
+    for i in range(0, len(perm), 2):
+        invol[sequence.index(perm[i])] = perm[i + 1]
+        invol[sequence.index(perm[i + 1])] = perm[i]
     return invol
 
 def main():
     input = ''.join([line.strip().upper() for line in sys.stdin.readlines()])
-    N = permutation(range(len(CHARS)))
-    Z = involution(range(len(CHARS)))
+    N = permutation(range(len(ascii_uppercase)))
+    Z = involution(range(len(ascii_uppercase)))
 
     print u'Enigma bez łącznicy NZN^1'
-#    print '   ', [c for c in CHARS]
-    print 'N =', [CHARS[i] for i in N]
-    print 'Z =', [CHARS[i] for i in Z]
+    print 'N =', ''.join([ascii_uppercase[i] for i in N])
+    print 'Z =', ''.join([ascii_uppercase[i] for i in Z])
 
     enigma = Enigma([Rotor(N, 0)], Reflector(Z))
     encrypted = enigma.encrypt(input)
