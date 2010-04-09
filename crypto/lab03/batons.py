@@ -31,6 +31,6 @@ for starting_position in range(len(CHARS)):
         char2 = rod_char(CHARS.index(ciphertext[i]), i + starting_position, N)
         involution_str += CHARS[char1] + CHARS[char2] + ' '
     if is_involution_valid(involution_str):
-        print u'Pasująca inwolucja:', involution_str
-        print u'na pozycji', starting_position
+        print u'Znaleziono pasującą inwolucję:', involution_str
+        print u'dla pozycji startowej', starting_position
 
