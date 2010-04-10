@@ -113,8 +113,7 @@
                 event:ResultEvent):void {
             const result:XML = XML(event.result);
             hData = result.hData;
-            var requiredSpeed:int = int(result.requiredSpeed);
-            if (_testResults.realSpeed > requiredSpeed
+            if (_testResults.realSpeed > Number(result.requiredSpeed)
                     && _testResults.mistakesCount == 0
                     && _testResults.plChars
                     && _testResults.correctness > 95) {
