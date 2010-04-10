@@ -12,10 +12,7 @@ int main(int argc, char *argv[]) {
     char message[1024] = "";
     char response_from_server[1024];
     char name_found[1024];
-    int buf_len = 0;
     int fd; // file descriptor
-    int c;
-    int i;
     int id;
     int response_len;
 
@@ -35,9 +32,9 @@ int main(int argc, char *argv[]) {
     // read message from keyboard
     printf("Podaj ID rekordu:\n");
     scanf("%d", &id);
-    message[strlen(message)] = id;
+    message[strlen(message)] = strlen(username) + 1;
     message[strlen(message) + 1] = '\0';
-    message[strlen(message)] = strlen(username);
+    message[strlen(message)] = id;
     message[strlen(message) + 1] = '\0';
     strcat(message, username);
     // write message to buffer
