@@ -5,7 +5,8 @@ function updateHighscoreTable(page) {
     var currentPageElement;
 
     function onResponse() {
-        var USERNAME_CUT = 18;
+        var USERNAME_CUT = 19;
+        var usernameCut;
         var i;
         var hsTable;
         var entries;
@@ -48,6 +49,10 @@ function updateHighscoreTable(page) {
             return hsPaging;
         }
 
+        function trim(str) {
+            return str.replace(/^\s+|\s+$/g, "");
+        }
+
         if (request.readyState != 4 || request.status != 200) {
             return;
         }
@@ -57,7 +62,7 @@ function updateHighscoreTable(page) {
             request.responseXML.documentElement.getElementsByTagName("entry");
         hsTable += "<tr>";
         hsTable += "<th>Miejsce</th>";
-        hsTable += "<th>Nazwa użytkownika</th>";
+        hsTable += "<th style=\"padding-right: 20;\">Nazwa użytkownika</th>";
         hsTable += "<th>Prędkość<br>(znaki/min)</th>";
         hsTable += "<th>Prędkość<br>(słowa/min)</th>";
         hsTable += "<th>Poprawność</th>";
@@ -72,15 +77,18 @@ function updateHighscoreTable(page) {
             hsTable += "<td>" + entryElement.firstChild.nodeValue + "</td>";
             entryElement = entries[i].getElementsByTagName("username")[0];
             username = entryElement.firstChild.nodeValue;
-            if (username.length > USERNAME_CUT) {
-                hsTable += "<td style=\"text-align: left;\" ";
-                hsTable += "title=\"" + username + "\">";
-                hsTable += username.substring(
-                        0, USERNAME_CUT - 1).trim() + "...";
-            } else {
-                hsTable += "<td style=\"text-align: left;\">";
-                hsTable += username;
+            usernameCut = USERNAME_CUT;
+            if (username.toUpperCase() === username) {
+                usernameCut -= 4;
             }
+            hsTable += "<td style=\"text-align: left; padding-right: 0;\"";
+            if (username.length > usernameCut) {
+                hsTable += " title=\"" + username + "\"";
+                username = trim(username.substring(
+                        0, usernameCut - 1)) + "...";
+            }
+            hsTable += ">";
+            hsTable += username;
             hsTable += "</td>";
             entryElement = entries[i].getElementsByTagName("speed")[0];
             speed = entryElement.firstChild.nodeValue;
