@@ -1,0 +1,20 @@
+Pamięć dzielona i semafory
+
+1.
+Utworzyć nieduży segment pamięci współdzielonej i dołączyć go w dwóch miejscach
+do przestrzeni adresowej procesu. Sprawdzić, że umieszczona w nim wartość jest
+widoczna pod dwoma różnymi adresami.
+
+2.
+Podlega odbiorowi
+Zaprogramować grę w "kółko i krzyżyk" dla dwóch graczy (plansza - tablica
+znakowa 3x3, wypełniona spacjami, znakami 'X' lub 'O'). Umieścić planszę w
+pamięci dzielonej, zrobić synchronizację dostępu przy użyciu pary semaforów.
+Uwaga:
+Ulepszyć rozwiązanie synchronizacji podane w przykładowym programie na
+wykładzie - zrobić jednakowe programy dla obydwu graczy (zaczyna ten, kto
+pierwszy utworzy semafory).
+
+- program powinien sprawdzać prawidłowość ruchów, rozpoznawać sytuację
+  wygranej/przegranej/remisu i wyświetlać odpowiednie komunikaty
+
