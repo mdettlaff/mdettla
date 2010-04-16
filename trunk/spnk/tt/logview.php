@@ -1,6 +1,7 @@
 <?php
 
 include 'include/log.php';
+include 'include/utils.php';
 
 mysql_connect();
 
@@ -42,21 +43,24 @@ if ($_SERVER['PHP_AUTH_USER'] != $username
 <?php
 
 $query = "
-    SELECT id_log, date_added, ip, message
+    SELECT date_added, ip, message
         FROM log
-        ORDER BY id_log DESC
+        ORDER BY date_added DESC
 ";
 
 $result = mysql_query($query);
+$i = mysql_num_rows($result);
 if ($result) {
     while ($row = mysql_fetch_assoc($result)) {
+        $message = htmlspecialchars(utf8_to_latin2($row['message']));
         echo "      <tr>\n";
-        echo '        <td>' . htmlspecialchars($row['id_log']) . "</td>\n";
+        echo '        <td>' . $i . "</td>\n";
         echo '        <td>' . str_replace(' ', '&nbsp;',
             htmlspecialchars($row['date_added'])) . "</td>\n";
         echo '        <td>' . htmlspecialchars($row['ip']) . "</td>\n";
-        echo '        <td>' . htmlspecialchars($row['message']) . "</td>\n";
+        echo '        <td>' . $message . "</td>\n";
         echo "      </tr>\n";
+        $i--;
     }
 } else {
     echo("<tr><td colspan=\"4\">ERROR: problem with query</td></tr>\n");
