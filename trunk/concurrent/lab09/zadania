@@ -1,0 +1,16 @@
+Gniazda BSD
+
+Podlega odbiorowi
+1.
+Na komputerze o adresie 153.19.1.240 uruchomiony jest serwer prostej funkcji
+arytmetycznej, który przez port UDP o numerze 5000 przyjmuje jedną liczbę
+całkowitą czterobajtową (int) i w odpowiedzi odsyła liczbę tego samego typu.
+Napisać program klienta, który komunikuje się z tym serwerm i odgadnąć, jaką
+funkcję oblicza serwer.
+
+Uwaga:
+Pamiętać o przekształcaniu danych i adresów do postaci sieciowej i na odwrót.
+htonl() ntohl() htons() ntohs()
+
+Program serwera (z wyciętą obliczaną funkcją) można obejrzeć na komputerze sigma
+w pliku /home/pracinf/jsk/manta/Public/serverstud.c
