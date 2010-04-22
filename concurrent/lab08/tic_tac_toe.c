@@ -1,8 +1,5 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/ipc.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
 
@@ -10,10 +7,10 @@
 
 #define TRUE 1
 #define FALSE 0
-#define BOARD_SIZE 3 /* plansza ma wymiary BOARD_SIZE x BOARD_SIZE */
+#define BOARD_SIZE 3 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE
 #define EMPTY_CELL ' '
-#define SHM_KEY 1236 /* klucz pamięci współdzielonej */
-#define SEM_KEY 1116 /* klucz semafora */
+#define SHM_KEY 1236 // klucz pamięci współdzielonej
+#define SEM_KEY 1116 // klucz semafora
 
 
 struct shared_use_st {
@@ -34,14 +31,14 @@ void init_shared_memory() {
         fprintf(stderr, "shmget failed\n");
         exit(EXIT_FAILURE);
     }
-    shared_memory = shmat(shm_id, (void *)0, 0);
-    if (shared_memory == (void *)-1) {
+    shared_memory = shmat(shm_id, (void*)0, 0);
+    if (shared_memory == (void*)-1) {
         fprintf(stderr, "shmat failed\n");
         exit(EXIT_FAILURE);
     }
     //printf("memory attached at %X\n", (int)shared_memory);
-    struct shared_use_st *shared_variables;
-    shared_variables = (struct shared_use_st *)shared_memory;
+    struct shared_use_st* shared_variables;
+    shared_variables = (struct shared_use_st*)shared_memory;
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
@@ -67,7 +64,7 @@ int init_semaphore() {
 }
 
 void clean_up() {
-    /* pozbywamy się pamięci współdzielonej */
+    // pozbywamy się pamięci współdzielonej
     printf("odłączam pamięć współdzieloną... ");
     if (shmdt(shared_memory) == -1) {
         fprintf(stderr, "shmdt failed\n");
@@ -79,7 +76,7 @@ void clean_up() {
         fprintf(stderr, "shmctl(IPC_RMID) failed\n");
         exit(EXIT_FAILURE);
     }
-    /* pozbywamy się semafów */
+    // pozbywamy się semafów
     printf("usuwam semafor\n");
     del_semvalue(sem_id);
 }
@@ -100,33 +97,54 @@ int is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
     return TRUE;
 }
 
-int are_three_marks_in_a_row(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
-    return board[0][0] == mark; // TODO
-}
-
-void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
-    int winner;
-    if (are_three_marks_in_a_row(get_player_mark(1), board)) {
-        winner = 1; // wygrał gracz 1
-    } else if (are_three_marks_in_a_row(get_player_mark(2), board)) {
-        winner = 2; // wygrał gracz 2
-    } else if (is_board_full(board)) {
-        winner = 0; // remis
-    } else  {
-        winner = -1; // gra toczy się dalej
-    }
-    if (winner > 0) {
-        printf("wygrał gracz %d\n", winner);
-        if (player_id != winner) {
-            clean_up(); // przegrany musi posprzątać
+int is_any_row_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
+    int i, j;
+    int is_row_complete = FALSE;
+    // poziomo
+    for (i = 0; i < BOARD_SIZE; i++) {
+        is_row_complete = TRUE;
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] != mark) {
+                is_row_complete = FALSE;
+            }
         }
-        exit(EXIT_SUCCESS);
+        if (is_row_complete) {
+            return TRUE;
+        }
     }
-}
-
-void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
-        int player_id) {
-    board[row - 1][column - 1] = get_player_mark(player_id);
+    // pionowo
+    for (i = 0; i < BOARD_SIZE; i++) {
+        is_row_complete = TRUE;
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (board[j][i] != mark) {
+                is_row_complete = FALSE;
+            }
+        }
+        if (is_row_complete) {
+            return TRUE;
+        }
+    }
+    // na ukos NW-SE
+    is_row_complete = TRUE;
+    for (i = 0; i < BOARD_SIZE; i++) {
+        if (board[i][i] != mark) {
+            is_row_complete = FALSE;
+        }
+    }
+    if (is_row_complete) {
+        return TRUE;
+    }
+    // na ukos NE-SW
+    is_row_complete = TRUE;
+    for (i = 0; i < BOARD_SIZE; i++) {
+        if (board[i][BOARD_SIZE - 1 - i] != mark) {
+            is_row_complete = FALSE;
+        }
+    }
+    if (is_row_complete) {
+        return TRUE;
+    }
+    return FALSE;
 }
 
 void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
@@ -151,6 +169,53 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     }
 }
 
+void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    int winner;
+    if (is_any_row_complete(get_player_mark(1), board)) {
+        winner = 1; // wygrał gracz 1
+    } else if (is_any_row_complete(get_player_mark(2), board)) {
+        winner = 2; // wygrał gracz 2
+    } else if (is_board_full(board)) {
+        winner = 0; // remis
+    } else {
+        winner = -1; // gra toczy się dalej
+    }
+    if (winner > 0) {
+        if (player_id == winner) {
+            printf("wygrałeś!\n");
+        } else {
+            print_board(board);
+            printf("przegrałeś\n");
+            clean_up(); // przegrany musi posprzątać
+        }
+        exit(EXIT_SUCCESS);
+    } else if (winner == 0) {
+        // TODO
+    }
+}
+
+void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
+        int player_id) {
+    board[row - 1][column - 1] = get_player_mark(player_id);
+}
+
+int is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
+    return row >= 1 && row <= BOARD_SIZE && column >= 1 && column <= BOARD_SIZE
+        && board[row - 1][column - 1] == EMPTY_CELL;
+}
+
+void scan_legal_move(int* row, int* column,
+        char board[BOARD_SIZE][BOARD_SIZE]) {
+    int is_first_iteration = TRUE;
+    do {
+        if (!is_first_iteration) {
+            printf("nieprawidłowy ruch! podaj inną pozycję: ");
+        }
+        scanf("%d %d", row, column);
+        is_first_iteration = FALSE;
+    } while (!is_legal_move(*row, *column, board));
+}
+
 void play_tic_tac_toe(int player_id) {
     struct shared_use_st* shared_variables;
     shared_variables = (struct shared_use_st*)shared_memory;
@@ -166,7 +231,7 @@ void play_tic_tac_toe(int player_id) {
         printf("gracz %d: ", player_id);
         printf("podaj pozycję rząd, kolumna: ");
         int row, column;
-        scanf("%d %d", &row, &column);
+        scan_legal_move(&row, &column, shared_variables->board);
         write_move(row, column, shared_variables->board, player_id);
         print_board(shared_variables->board);
         check_winner(shared_variables->board, player_id);
