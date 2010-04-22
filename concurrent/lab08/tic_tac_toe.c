@@ -190,7 +190,11 @@ void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         }
         exit(EXIT_SUCCESS);
     } else if (winner == 0) {
-        // TODO
+        printf("remis\n");
+        if (player_id == 2) {
+            clean_up();
+        }
+        exit(EXIT_SUCCESS);
     }
 }
 
