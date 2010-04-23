@@ -12,10 +12,10 @@ union semun {
 };
 
 
-int set_semvalue(int sem_id) {
+int set_semvalue(int sem_id, int sem_num, int value) {
     union semun sem_union;
-    sem_union.val = 1;
-    if (semctl(sem_id, 0, SETVAL, sem_union) == -1) return 0;
+    sem_union.val = value;
+    if (semctl(sem_id, sem_num, SETVAL, sem_union) == -1) return 0;
     return 1;
 }
 
@@ -25,9 +25,9 @@ void del_semvalue(int sem_id) {
         fprintf(stderr, "Failed to delete semaphore\n");
 }
 
-int semaphore_p(int sem_id) {
+int semaphore_p(int sem_id, int sem_num) {
     struct sembuf sem_b;
-    sem_b.sem_num = 0;
+    sem_b.sem_num = sem_num;
     sem_b.sem_op = -1; /* P() */
     sem_b.sem_flg = SEM_UNDO;
     if (semop(sem_id, &sem_b, 1) == -1) {
@@ -37,9 +37,9 @@ int semaphore_p(int sem_id) {
     return 1;
 }
 
-int semaphore_v(int sem_id) {
+int semaphore_v(int sem_id, int sem_num) {
     struct sembuf sem_b;
-    sem_b.sem_num = 0;
+    sem_b.sem_num = sem_num;
     sem_b.sem_op = 1; /* V() */
     sem_b.sem_flg = SEM_UNDO;
     if (semop(sem_id, &sem_b, 1) == -1) {

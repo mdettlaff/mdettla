@@ -47,23 +47,30 @@ void init_shared_memory() {
     }
 }
 
-int init_semaphore() {
-    int player_id; // graczem 1 zostaje ten, kto pierwszy utworzył semafor
-    if ((sem_id = semget((key_t)SEM_KEY, 1, 0666 | IPC_CREAT | IPC_EXCL))
+int init_semaphores() {
+    int player_id; // graczem 1 zostaje ten, kto pierwszy utworzył semafory
+    if ((sem_id = semget((key_t)SEM_KEY, 2, 0666 | IPC_CREAT | IPC_EXCL))
             != -1) {
-        if (!set_semvalue(sem_id)) {
-            fprintf(stderr, "Failed to initialize semaphore\n");
-            exit(EXIT_FAILURE);
-        }
         player_id = 1;
     } else {
-        sem_id = semget((key_t)SEM_KEY, 1, 0666 | IPC_CREAT);
+        sem_id = semget((key_t)SEM_KEY, 2, 0666 | IPC_CREAT);
         player_id = 2;
+    }
+    if (!set_semvalue(sem_id, 0, 0)) {
+        fprintf(stderr, "Failed to initialize semaphore\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!set_semvalue(sem_id, 1, 1)) {
+        fprintf(stderr, "Failed to initialize semaphore\n");
+        exit(EXIT_FAILURE);
     }
     return player_id;
 }
 
 void clean_up() {
+    // pozbywamy się semafów
+    printf("usuwam semafor\n");
+    del_semvalue(sem_id);
     // pozbywamy się pamięci współdzielonej
     printf("odłączam pamięć współdzieloną... ");
     if (shmdt(shared_memory) == -1) {
@@ -76,9 +83,6 @@ void clean_up() {
         fprintf(stderr, "shmctl(IPC_RMID) failed\n");
         exit(EXIT_FAILURE);
     }
-    // pozbywamy się semafów
-    printf("usuwam semafor\n");
-    del_semvalue(sem_id);
 }
 
 char get_player_mark(int player_id) {
@@ -97,51 +101,51 @@ int is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
     return TRUE;
 }
 
-int is_any_row_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
+int is_any_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
-    int is_row_complete = FALSE;
+    int is_line_complete = FALSE;
     // poziomo
     for (i = 0; i < BOARD_SIZE; i++) {
-        is_row_complete = TRUE;
+        is_line_complete = TRUE;
         for (j = 0; j < BOARD_SIZE; j++) {
             if (board[i][j] != mark) {
-                is_row_complete = FALSE;
+                is_line_complete = FALSE;
             }
         }
-        if (is_row_complete) {
+        if (is_line_complete) {
             return TRUE;
         }
     }
     // pionowo
     for (i = 0; i < BOARD_SIZE; i++) {
-        is_row_complete = TRUE;
+        is_line_complete = TRUE;
         for (j = 0; j < BOARD_SIZE; j++) {
             if (board[j][i] != mark) {
-                is_row_complete = FALSE;
+                is_line_complete = FALSE;
             }
         }
-        if (is_row_complete) {
+        if (is_line_complete) {
             return TRUE;
         }
     }
     // na ukos NW-SE
-    is_row_complete = TRUE;
+    is_line_complete = TRUE;
     for (i = 0; i < BOARD_SIZE; i++) {
         if (board[i][i] != mark) {
-            is_row_complete = FALSE;
+            is_line_complete = FALSE;
         }
     }
-    if (is_row_complete) {
+    if (is_line_complete) {
         return TRUE;
     }
     // na ukos NE-SW
-    is_row_complete = TRUE;
+    is_line_complete = TRUE;
     for (i = 0; i < BOARD_SIZE; i++) {
         if (board[i][BOARD_SIZE - 1 - i] != mark) {
-            is_row_complete = FALSE;
+            is_line_complete = FALSE;
         }
     }
-    if (is_row_complete) {
+    if (is_line_complete) {
         return TRUE;
     }
     return FALSE;
@@ -171,9 +175,9 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 
 void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     int winner;
-    if (is_any_row_complete(get_player_mark(1), board)) {
+    if (is_any_line_complete(get_player_mark(1), board)) {
         winner = 1; // wygrał gracz 1
-    } else if (is_any_row_complete(get_player_mark(2), board)) {
+    } else if (is_any_line_complete(get_player_mark(2), board)) {
         winner = 2; // wygrał gracz 2
     } else if (is_board_full(board)) {
         winner = 0; // remis
@@ -183,8 +187,9 @@ void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     if (winner > 0) {
         if (player_id == winner) {
             printf("wygrałeś!\n");
+            // zwalniamy przegranego, żeby mógł posprzątać
+            if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
         } else {
-            print_board(board);
             printf("przegrałeś\n");
             clean_up(); // przegrany musi posprzątać
         }
@@ -192,7 +197,10 @@ void check_winner(char board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     } else if (winner == 0) {
         printf("remis\n");
         if (player_id == 2) {
-            clean_up();
+            // zwalniamy gracza 1, żeby mógł posprzątać
+            if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+        } else {
+            clean_up(); // w razie remisu gracz 1 sprząta
         }
         exit(EXIT_SUCCESS);
     }
@@ -224,14 +232,14 @@ void play_tic_tac_toe(int player_id) {
     struct shared_use_st* shared_variables;
     shared_variables = (struct shared_use_st*)shared_memory;
     int other_player_id = 3 - player_id;
-    if (player_id != 1) {
+    if (player_id == 1) {
         print_board(shared_variables->board);
         printf("oczekiwanie na ruch gracza %d...\n", other_player_id);
     }
     while (TRUE) {
-        if (!semaphore_p(sem_id)) exit(EXIT_FAILURE);
-        check_winner(shared_variables->board, player_id);
+        if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
         print_board(shared_variables->board);
+        check_winner(shared_variables->board, player_id);
         printf("gracz %d: ", player_id);
         printf("podaj pozycję rząd, kolumna: ");
         int row, column;
@@ -240,14 +248,14 @@ void play_tic_tac_toe(int player_id) {
         print_board(shared_variables->board);
         check_winner(shared_variables->board, player_id);
         printf("oczekiwanie na ruch gracza %d...\n", other_player_id);
-        if (!semaphore_v(sem_id)) exit(EXIT_FAILURE);
+        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
 }
 
 int main() {
     init_shared_memory();
-    // graczem 1 zostaje ten, kto pierwszy utworzył semafor
-    int player_id = init_semaphore();
+    // graczem 1 zostaje ten, kto pierwszy utworzył semafory
+    int player_id = init_semaphores();
 
     play_tic_tac_toe(player_id);
 
