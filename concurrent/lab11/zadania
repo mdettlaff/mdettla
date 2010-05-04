@@ -1,0 +1,19 @@
+Wątki według standardku POSIX
+
+1.
+Obejrzeć, skompilować i uruchomić dowolny spośród programów przykładowych
+podanych na wykładzie.
+
+gcc -lpthread ...
+
+Podlega odbiorowi
+2.
+Napisać wielowątkowy program obliczający współbieżnie wyznacznik metodą
+podwyznaczników (zrobić a) albo b)):
+a)
+dla macierzy 4x4 (za 1 punkt)
+w tym wypadku tylko cztery wątki
+b)
+rekurencyjnie dla macierzy nxn (n >= 4) (za 2 punkty)
+
+funkcja xinitthread rozwiązuje konflit między pthreads a Xlib.
