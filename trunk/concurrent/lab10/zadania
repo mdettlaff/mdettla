@@ -1,0 +1,24 @@
+Biblioteka funkcji graficznych Xlib
+1.
+Obejrzeć, skompilować i wypróbować działanie dowolnego spośród programów
+graficznych przedstawionych na wykładzie. Zmieniając argument funkcji
+XOpenDisplay() wymusić wyświetlanie rysunku na motitorze jednego z sąsiadów.
+Uwaga: przeczytać manual polecenia xhost, przy jego użyciu udzielać uprawnień
+do wyświetlania innym uczestnikom ćwiczeń.
+xhost +
+
+2.
+Napisać program, który wyświetla na ekranie 10 różnokolorowych koncentrycznych
+kół o liniowo malejących promieniach ("pawie oko").
+
+3.
+Podlega odbiorowi
+Napisać program, który wyświetla kolorowe prostokąty na ekranach kilkorga
+sąsiadów (o adresach podawanych jako argumenty w linii poleceń - zmienna
+liczba), a następnie (w oknie tekstowym) odnotowuje czasy (w sekundach), po
+jakich je zgaszą (naciskając dowolny klucz na klawiaturze).
+
+Program jako argumeny bierze adresy (nazwy komputerów) innych użytkowników.
+Rozforkowujemy, każdy proces rysuje prostokąt u innego użytkownika.
+Adres podajemy jako:
+p210-<numer_komputera>.labpk.inf:0.0
