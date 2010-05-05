@@ -1,4 +1,4 @@
-Wątki według standardku POSIX
+Wątki według standardu POSIX
 
 1.
 Obejrzeć, skompilować i uruchomić dowolny spośród programów przykładowych
@@ -16,4 +16,4 @@ w tym wypadku tylko cztery wątki
 b)
 rekurencyjnie dla macierzy nxn (n >= 4) (za 2 punkty)
 
-funkcja xinitthread rozwiązuje konflit między pthreads a Xlib.
+Funkcja XInitThreads rozwiązuje konflit między pthreads a Xlib.
