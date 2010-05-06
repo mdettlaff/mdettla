@@ -1,3 +1,9 @@
+/*
+ * Program obliczający wyznacznik podanej przez użytkownika macierzy.
+ * Wyznacznik jest obliczany z rozwinięcia Laplace'a, rekurencyjnie
+ * i współbieżnie z wykorzystaniem wątków POSIX.
+ */
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,9 +25,9 @@ matrix_t *read_matrix() {
     matrix_t *matrix;
     int i, j;
     matrix = malloc(sizeof (matrix_t));
-    printf("Podaj wymiar macierzy:\n");
+    printf("podaj wymiar macierzy:\n");
     scanf("%d", &matrix->dim);
-    printf("Podaj zawartość macierzy:\n");
+    printf("podaj zawartość macierzy:\n");
     matrix->a = malloc(matrix->dim * sizeof (*matrix->a));
     for (i = 0; i < matrix->dim; i++) {
         matrix->a[i] = malloc(matrix->dim * sizeof (**matrix->a));
@@ -43,18 +49,14 @@ void print_matrix(matrix_t *matrix) {
 }
 
 /*
- * Oblicza wyznacznik podanej macierzy, jeśli jej wymiar (dim) jest
- * równy 2 lub 1 (trywialne przypadki).
+ * Zwraca wyznacznik podanej macierzy o wymiarze 2x2.
  */
-double det_trivial(matrix_t *matrix) {
-    if (matrix->dim == 1) {
-        return matrix->a[0][0];
-    }
-    return matrix->a[0][0] * matrix->a[1][1] - matrix->a[1][0] * matrix->a[0][1];
+double det_2d(matrix_t *A) {
+    return A->a[0][0] * A->a[1][1] - A->a[1][0] * A->a[0][1];
 }
 
 /*
- * Oblicza wyznacznik podanej macierzy 3x3 metodą Sarrusa.
+ * Zwraca wyznacznik podanej macierzy o wymiarze 3x3 obliczony metodą Sarrusa.
  */
 double det_sarrus(matrix_t *A) {
     int i;
@@ -71,7 +73,7 @@ double det_sarrus(matrix_t *A) {
 /*
  * Tworzy macierz powstałą z macierzy matrix poprzez skreślenie z niej
  * wiersza i oraz kolumny j, po czym zwraca wskaźnik do niej. Jeśli macierz
- * matrix jest wymiaru n, to zwracana macierz jest wymiaru n-1.
+ * matrix jest wymiaru n x n, to zwracana macierz jest wymiaru n-1 x n-1.
  */
 matrix_t *create_minor(matrix_t *matrix, int i, int j) {
     matrix_t *minor;
@@ -91,15 +93,23 @@ matrix_t *create_minor(matrix_t *matrix, int i, int j) {
 }
 
 /*
- * Wątek, który bierze jako argument wejściowy wskaźnik do macierzy
- * i wpisuje w jej polu ->det obliczoną wartość wyznacznika tej macierzy.
+ * Wątek, który bierze jako argument wejściowy wskaźnik do macierzy i wpisuje
+ * w jej polu ->det wartość wyznacznika tej macierzy obliczoną z rozwinięcia
+ * Laplace'a. Jeśli macierz ma rozmiar 3x3 lub mniejszy, do obliczenia
+ * wyznacznika stosowane są prostsze metody (np. reguła Sarrusa).
  */
 void *det_laplace_thread(void *arg) {
     matrix_t *matrix;
     int k;
     int res;
     matrix = (matrix_t *)arg;
-    if (matrix->dim > 3) {
+    if (matrix->dim == 1) {
+        matrix->det = matrix->a[0][0];
+    } else if (matrix->dim == 2) {
+        matrix->det = det_2d(matrix);
+    } else if (matrix->dim == 3) {
+        matrix->det = det_sarrus(matrix);
+    } else {
         // tworzymy minory macierzy potrzebne do obliczenia rozwinięcia
         // Laplace'a według pierwszego wiersza
         matrix_t *minors[matrix->dim];
@@ -138,41 +148,24 @@ void *det_laplace_thread(void *arg) {
             // stosujemy rozwinięcie według pierwszego wiersza
             matrix->det += matrix->a[0][k] * cofactor;
         }
-    } else if (matrix->dim == 3) {
-        matrix->det = det_sarrus(matrix);
-    } else {
-        matrix->det = det_trivial(matrix);
     }
-    pthread_exit(NULL);
+    return NULL;
 }
 
 /*
- * Zwraca wyznacznik podanej macierzy obliczony z rozwinięcia Laplace'a.
- * Jeśli macierz ma rozmiar 3x3 lub mniejszy, do obliczenia wyznacznika
- * stosowane są prostsze metody (np. reguła Sarrusa).
+ * Oblicza wyznacznik danej macierzy z rozwinięcia Laplace'a i wpisuje go do
+ * pola ->det tej macierzy.
  */
-double det_laplace(matrix_t *matrix) {
-    pthread_t thread;
-    void *thread_result;
-    int res = pthread_create(
-            &thread, NULL, det_laplace_thread, (void *)matrix);
-    if (res != 0) {
-        perror("Thread creation failed");
-        exit(EXIT_FAILURE);
-    }
-    res = pthread_join(thread, &thread_result);
-    if (res != 0) {
-        perror("Thread join failed");
-        exit(EXIT_FAILURE);
-    }
-    return matrix->det;
+void det_laplace(matrix_t *matrix) {
+    det_laplace_thread(matrix);
 }
 
 int main() {
     matrix_t *matrix;
 
     matrix = read_matrix();
-    printf("wyznacznik macierzy jest równy %.1lf\n", det_laplace(matrix));
+    det_laplace(matrix);
+    printf("wyznacznik macierzy jest równy %.1lf\n", matrix->det);
 
     return EXIT_SUCCESS;
 }
