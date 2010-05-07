@@ -142,11 +142,16 @@ void *det_laplace_thread(void *arg) {
         // po tym jak wątki zakończyły działanie, każdy minor ma wpisany
         // swój wyznacznik w polu ->det
 
+        // obliczamy wyznacznik z rozwinięcia Laplace'a
         matrix->det = 0;
         for (k = 0; k < matrix->dim; k++) {
             double cofactor = pow(-1, 0 + k) * minors[k]->det;
             // stosujemy rozwinięcie według pierwszego wiersza
             matrix->det += matrix->a[0][k] * cofactor;
+        }
+        // zwalniamy pamięć zajętą przez minory
+        for (k = 0; k < matrix->dim; k++) {
+            free(minors[k]);
         }
     }
     return NULL;
