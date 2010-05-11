@@ -1,0 +1,23 @@
+Przydział zadań semestralnych
+
+Warunki zaliczenia zadania semestralnego
+1. Zademonstrowaniej działającego programu (na dwóch lub więcej terminalach
+graficznych w laboratorium).
+2. Przysłanie na adres jsk@inf.ug.edu.pl skróconej dokumentacji programu
+zawierającej:
+  a) imię i nazwisko autora i sformułowanie zadania
+  b) merytoryczne uzasadnienie wyboru mechanizmu komunikacji międzyprocesowej
+     (2-3 zdania)
+  c) opis użytkowania programu (w tym lista obsługiwanych sytuacji błędnych)
+  d) kod źródłowy programu
+
+Kryteria oceny (według malejącej ważności):
+1. prawidłowość koordynacji procesów (ogólnie: zaimplementowanego algorytmu)
+2. prawidłowość i czytelność kodu programu
+3. jakość interfejsu użytkownika (czytelność, ergonomia)
+
+Programy powinny dysponować graficznym interfejsem użytkownika utworzonym w
+Xlib.
+
+Treść zadania:
+Kółko i krzyżyk dla dwóch graczy, trzeba ułożyć 5 w rzędzie.
