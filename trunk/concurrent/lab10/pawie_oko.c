@@ -1,6 +1,7 @@
 #include <X11/Xlib.h>
 #include <X11/X.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 Display *mydisplay;
 Window mywindow;
