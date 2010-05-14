@@ -63,10 +63,8 @@ XEvent event;
 /*===========================================================================*/
 
 void clean_up() {
-    // pozbywamy się semafów
-    printf("usuwam semafor\n");
+    printf("usuwam semafory\n");
     del_semvalue(sem_id);
-    // pozbywamy się pamięci współdzielonej
     printf("odłączam pamięć współdzieloną... ");
     if (shmdt(shared_memory) == -1) {
         fprintf(stderr, "shmdt failed\n");
