@@ -15,8 +15,9 @@
 #define SEM_KEY 1116 // klucz semafora
 
 
-typedef int bool_t;
+typedef int bool_t; // typ boolean
 
+// struktura przechowująca zmienne znajdujące się w pamięci współdzielonej
 struct shared_use_st {
     char board[BOARD_SIZE][BOARD_SIZE];
     bool_t is_player_quit;
@@ -78,7 +79,7 @@ void init_shared_memory() {
             (shared_variables->board)[i][j] = EMPTY_CELL;
         }
     }
-    shared_variables->is_player_quit = 0;
+    shared_variables->is_player_quit = FALSE;
 }
 
 int init_semaphores() {
@@ -105,7 +106,7 @@ char get_player_mark(int player_id) {
     return player_id == 1 ? 'X' : 'O';
 }
 
-int is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
+bool_t is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
@@ -117,52 +118,66 @@ int is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
     return TRUE;
 }
 
-int is_any_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
-    int i, j;
-    int is_line_complete = FALSE;
+/*
+ * Czy na planszy jest ułożona linia ze znaków mark pionowo, poziomo lub
+ * na ukos.
+ */
+bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
+    int i, j, k;
+    bool_t is_line_complete = FALSE;
     // poziomo
     for (i = 0; i < BOARD_SIZE; i++) {
-        is_line_complete = TRUE;
-        for (j = 0; j < BOARD_SIZE; j++) {
-            if (board[i][j] != mark) {
-                is_line_complete = FALSE;
+        for (j = 0; j < BOARD_SIZE - LINE_LEN; j++) {
+            is_line_complete = TRUE;
+            for (k = 0; k < LINE_LEN; k++) {
+                if (board[i][j + k] != mark) {
+                    is_line_complete = FALSE;
+                }
             }
-        }
-        if (is_line_complete) {
-            return TRUE;
+            if (is_line_complete) {
+                return TRUE;
+            }
         }
     }
     // pionowo
-    for (i = 0; i < BOARD_SIZE; i++) {
-        is_line_complete = TRUE;
+    for (i = 0; i < BOARD_SIZE - LINE_LEN; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
-            if (board[j][i] != mark) {
-                is_line_complete = FALSE;
+            is_line_complete = TRUE;
+            for (k = 0; k < LINE_LEN; k++) {
+                if (board[i + k][j] != mark) {
+                    is_line_complete = FALSE;
+                }
+            }
+            if (is_line_complete) {
+                return TRUE;
             }
         }
-        if (is_line_complete) {
-            return TRUE;
-        }
     }
-    // na ukos NW-SE
+    // na ukos
     is_line_complete = TRUE;
-    for (i = 0; i < BOARD_SIZE; i++) {
-        if (board[i][i] != mark) {
-            is_line_complete = FALSE;
+    for (i = 0; i < BOARD_SIZE - LINE_LEN; i++) {
+        for (j = 0; j < BOARD_SIZE - LINE_LEN; j++) {
+            // na ukos NW-SE
+            is_line_complete = TRUE;
+            for (k = 0; k < LINE_LEN; k++) {
+                if (board[i + k][j + k] != mark) {
+                    is_line_complete = FALSE;
+                }
+            }
+            if (is_line_complete) {
+                return TRUE;
+            }
+            // na ukos NE-SW
+            is_line_complete = TRUE;
+            for (k = 0; k < LINE_LEN; k++) {
+                if (board[i + k][LINE_LEN + j - k] != mark) {
+                    is_line_complete = FALSE;
+                }
+            }
+            if (is_line_complete) {
+                return TRUE;
+            }
         }
-    }
-    if (is_line_complete) {
-        return TRUE;
-    }
-    // na ukos NE-SW
-    is_line_complete = TRUE;
-    for (i = 0; i < BOARD_SIZE; i++) {
-        if (board[i][BOARD_SIZE - 1 - i] != mark) {
-            is_line_complete = FALSE;
-        }
-    }
-    if (is_line_complete) {
-        return TRUE;
     }
     return FALSE;
 }
@@ -191,10 +206,9 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 
 void check_winner(struct shared_use_st *shared_variables, int player_id) {
     int winner;
-    if (is_any_line_complete(get_player_mark(1), shared_variables->board)) {
+    if (is_line_complete(get_player_mark(1), shared_variables->board)) {
         winner = 1; // wygrał gracz 1
-    } else if (is_any_line_complete(get_player_mark(2),
-                shared_variables->board)) {
+    } else if (is_line_complete(get_player_mark(2), shared_variables->board)) {
         winner = 2; // wygrał gracz 2
     } else if (is_board_full(shared_variables->board)) {
         winner = 0; // remis
@@ -231,14 +245,14 @@ void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
     board[row - 1][column - 1] = get_player_mark(player_id);
 }
 
-int is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
+bool_t is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
     return row >= 1 && row <= BOARD_SIZE && column >= 1 && column <= BOARD_SIZE
         && board[row - 1][column - 1] == EMPTY_CELL;
 }
 
 void scan_legal_move(int *row, int *column,
         char board[BOARD_SIZE][BOARD_SIZE]) {
-    int is_first_iteration = TRUE;
+    bool_t is_first_iteration = TRUE;
     do {
         if (!is_first_iteration) {
             printf("nieprawidłowy ruch! podaj inną pozycję: ");
