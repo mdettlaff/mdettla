@@ -1,7 +1,7 @@
 Przydział zadań semestralnych
 
-Warunki zaliczenia zadania semestralnego
-1. Zademonstrowaniej działającego programu (na dwóch lub więcej terminalach
+Warunki zaliczenia zadania semestralnego:
+1. Zademonstrowanie działającego programu (na dwóch lub więcej terminalach
 graficznych w laboratorium).
 2. Przysłanie na adres jsk@inf.ug.edu.pl skróconej dokumentacji programu
 zawierającej:
@@ -20,4 +20,4 @@ Programy powinny dysponować graficznym interfejsem użytkownika utworzonym w
 Xlib.
 
 Treść zadania:
-Kółko i krzyżyk dla dwóch graczy, trzeba ułożyć 5 w rzędzie.
+Kółko i krzyżyk dla dwóch graczy, trzeba ułożyć 5 w jednej linii.
