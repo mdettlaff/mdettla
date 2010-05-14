@@ -240,7 +240,7 @@ void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
 }
 
 bool_t is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
-    return row >= 1 && row <= BOARD_SIZE && column >= 1 && column <= BOARD_SIZE
+    return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE
         && board[row][column] == EMPTY_CELL;
 }
 
@@ -252,6 +252,11 @@ void read_legal_move(int *row, int *column,
         char board[BOARD_SIZE][BOARD_SIZE]) {
     bool_t is_legal_move_read = FALSE;
     int i, j;
+    while (XPending(mydisplay) > 0) {
+        // ignorujemy zdarzenia z czasu, kiedy gracz oczekiwał na ruch
+        // przeciwnika
+        XNextEvent(mydisplay, &myevent);
+    }
     while (!is_legal_move_read) {
         XNextEvent(mydisplay, &myevent);
         switch (myevent.type) {
