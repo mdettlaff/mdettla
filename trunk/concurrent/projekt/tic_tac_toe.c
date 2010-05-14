@@ -3,12 +3,15 @@
 #include <sys/sem.h>
 #include <sys/shm.h>
 #include <signal.h>
+#include <X11/Xlib.h>
+#include <X11/X.h>
 
 #include "binary_sem.h"
 
 #define TRUE 1
 #define FALSE 0
 #define BOARD_SIZE 10 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE
+#define CELL_SIZE 50 // pole na planszy ma wymiary CELL_SIZE x CELL_SIZE
 #define LINE_LEN 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
 #define EMPTY_CELL ' '
 #define SHM_KEY 1236 // klucz pamięci współdzielonej
@@ -29,6 +32,19 @@ int sem_id;
 int shm_id;
 void *shared_memory;
 int player_id;
+
+// zmienne globalne Xlib
+Display *mydisplay;
+Window mywindow;
+XSetWindowAttributes mywindowattributes;
+XGCValues mygcvalues;
+GC mygc;
+Visual *myvisual;
+int mydepth;
+int myscreen;
+Colormap mycolormap;
+XColor foreground, mycolor1, mycolor2, dummy;
+XEvent myevent;
 
 
 void clean_up() {
@@ -182,28 +198,6 @@ bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
     return FALSE;
 }
 
-void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
-    int i, j;
-    for (i = 0; i < BOARD_SIZE; i++) {
-        if (i != 0) {
-            for (j = 0; j < BOARD_SIZE; j++) {
-                if (j != 0) {
-                    printf("+");
-                }
-                printf("-");
-            }
-            printf("\n");
-        }
-        for (j = 0; j < BOARD_SIZE; j++) {
-            if (j != 0) {
-                printf("|");
-            }
-            printf("%c", board[i][j]);
-        }
-        printf("\n");
-    }
-}
-
 void check_winner(struct shared_use_st *shared_variables, int player_id) {
     int winner;
     if (is_line_complete(get_player_mark(1), shared_variables->board)) {
@@ -242,24 +236,95 @@ void check_winner(struct shared_use_st *shared_variables, int player_id) {
 
 void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
         int player_id) {
-    board[row - 1][column - 1] = get_player_mark(player_id);
+    board[row][column] = get_player_mark(player_id);
 }
 
 bool_t is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
     return row >= 1 && row <= BOARD_SIZE && column >= 1 && column <= BOARD_SIZE
-        && board[row - 1][column - 1] == EMPTY_CELL;
+        && board[row][column] == EMPTY_CELL;
 }
 
-void scan_legal_move(int *row, int *column,
+/*
+ * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
+ * pole na planszy.
+ */
+void read_legal_move(int *row, int *column,
         char board[BOARD_SIZE][BOARD_SIZE]) {
-    bool_t is_first_iteration = TRUE;
-    do {
-        if (!is_first_iteration) {
-            printf("nieprawidłowy ruch! podaj inną pozycję: ");
+    bool_t is_legal_move_read = FALSE;
+    int i, j;
+    while (!is_legal_move_read) {
+        XNextEvent(mydisplay, &myevent);
+        switch (myevent.type) {
+            case Expose:
+                break;
+            case ButtonPress:
+                i = myevent.xbutton.y / CELL_SIZE;
+                j = myevent.xbutton.x / CELL_SIZE;
+                if (is_legal_move(i, j, board)) {
+                    *row = i;
+                    *column = j;
+                    is_legal_move_read = TRUE;
+                }
+                break;
+            case KeyPress:
+                XCloseDisplay(mydisplay);
+                quit_game(0);
+                break;
         }
-        scanf("%d %d", row, column);
-        is_first_iteration = FALSE;
-    } while (!is_legal_move(*row, *column, board));
+        printf("event processed\n");
+    }
+}
+
+void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
+    int i, j;
+    for (i = 0; i < BOARD_SIZE; i++) {
+        if (i != 0) {
+            for (j = 0; j < BOARD_SIZE; j++) {
+                if (j != 0) {
+                    printf("+");
+                }
+                printf("-");
+            }
+            printf("\n");
+        }
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (j != 0) {
+                printf("|");
+            }
+            printf("%c", board[i][j]);
+        }
+        printf("\n");
+    }
+    XSetForeground(mydisplay, mygc, foreground.pixel);
+    // rysuj linie poziome
+    for (i = 0; i < BOARD_SIZE; i++) {
+        XDrawLine(mydisplay, mywindow, mygc,
+                0, i * CELL_SIZE,
+                BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
+    }
+    // rysuj linie pionowe
+    for (i = 0; i < BOARD_SIZE; i++) {
+        XDrawLine(mydisplay, mywindow, mygc,
+                i * CELL_SIZE, 0,
+                i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
+    }
+    // rysujemy pola oznaczone przez graczy
+    for (i = 0; i < BOARD_SIZE; i++) {
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] == get_player_mark(1)) {
+                XSetForeground(mydisplay, mygc, mycolor1.pixel);
+            } else {
+                XSetForeground(mydisplay, mygc, mycolor2.pixel);
+            }
+            if (board[i][j] != EMPTY_CELL) {
+                XFillArc(mydisplay, mywindow, mygc,
+                        j * CELL_SIZE, i * CELL_SIZE,
+                        CELL_SIZE, CELL_SIZE,
+                        0, 360 * 64);
+            }
+        }
+    }
+    XFlush(mydisplay);
 }
 
 void play_tic_tac_toe(int player_id) {
@@ -277,7 +342,7 @@ void play_tic_tac_toe(int player_id) {
         printf("gracz %d: ", player_id);
         printf("podaj pozycję rząd, kolumna: ");
         int row, column;
-        scan_legal_move(&row, &column, shared_variables->board);
+        read_legal_move(&row, &column, shared_variables->board);
         write_move(row, column, shared_variables->board, player_id);
         print_board(shared_variables->board);
         check_winner(shared_variables, player_id);
@@ -286,9 +351,37 @@ void play_tic_tac_toe(int player_id) {
     }
 }
 
+void init_display() {
+    mydisplay = XOpenDisplay("");
+    myscreen = DefaultScreen(mydisplay);
+    myvisual = DefaultVisual(mydisplay, myscreen);
+    mydepth = DefaultDepth(mydisplay, myscreen);
+    mywindowattributes.background_pixel = XWhitePixel(mydisplay, myscreen);
+    mywindowattributes.override_redirect = False;
+
+    int window_size = BOARD_SIZE * CELL_SIZE;
+    mywindow = XCreateWindow(mydisplay, XRootWindow(mydisplay, myscreen),
+            100, 100, window_size, window_size, 10, mydepth, InputOutput,
+            myvisual, CWBackPixel|CWOverrideRedirect,
+            &mywindowattributes);
+
+    XSelectInput(mydisplay, mywindow,
+            ExposureMask|KeyPressMask|ButtonPressMask);
+
+    mycolormap = DefaultColormap(mydisplay, myscreen);
+
+    XAllocNamedColor(mydisplay, mycolormap, "black", &foreground, &dummy);
+    XAllocNamedColor(mydisplay, mycolormap, "blue", &mycolor1, &dummy);
+    XAllocNamedColor(mydisplay, mycolormap, "red", &mycolor2, &dummy);
+
+    XMapWindow(mydisplay, mywindow);
+    mygc = DefaultGC(mydisplay, myscreen);
+}
+
 int main() {
     signal(SIGINT, quit_game);
 
+    init_display();
     init_shared_memory();
     // graczem 1 zostaje ten, kto pierwszy utworzył semafory
     player_id = init_semaphores();
