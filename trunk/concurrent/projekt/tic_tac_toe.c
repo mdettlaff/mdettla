@@ -8,7 +8,8 @@
 
 #define TRUE 1
 #define FALSE 0
-#define BOARD_SIZE 3 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE
+#define BOARD_SIZE 10 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE
+#define LINE_LEN 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
 #define EMPTY_CELL ' '
 #define SHM_KEY 1236 // klucz pamięci współdzielonej
 #define SEM_KEY 1116 // klucz semafora
@@ -29,12 +30,31 @@ void *shared_memory;
 int player_id;
 
 
+void clean_up() {
+    // pozbywamy się semafów
+    printf("usuwam semafor\n");
+    del_semvalue(sem_id);
+    // pozbywamy się pamięci współdzielonej
+    printf("odłączam pamięć współdzieloną... ");
+    if (shmdt(shared_memory) == -1) {
+        fprintf(stderr, "shmdt failed\n");
+        exit(EXIT_FAILURE);
+    } else {
+        printf("OK\n");
+    }
+    if (shmctl(shm_id, IPC_RMID, 0) == -1) {
+        fprintf(stderr, "shmctl(IPC_RMID) failed\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 void quit_game(int sig) {
     struct shared_use_st *shared_variables;
     shared_variables = (struct shared_use_st *)shared_memory;
     printf("koniec gry\n");
     shared_variables->is_player_quit = TRUE;
     if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+    clean_up();
     exit(EXIT_SUCCESS);
 }
 
@@ -79,24 +99,6 @@ int init_semaphores() {
         exit(EXIT_FAILURE);
     }
     return player_id;
-}
-
-void clean_up() {
-    // pozbywamy się semafów
-    printf("usuwam semafor\n");
-    del_semvalue(sem_id);
-    // pozbywamy się pamięci współdzielonej
-    printf("odłączam pamięć współdzieloną... ");
-    if (shmdt(shared_memory) == -1) {
-        fprintf(stderr, "shmdt failed\n");
-        exit(EXIT_FAILURE);
-    } else {
-        printf("OK\n");
-    }
-    if (shmctl(shm_id, IPC_RMID, 0) == -1) {
-        fprintf(stderr, "shmctl(IPC_RMID) failed\n");
-        exit(EXIT_FAILURE);
-    }
 }
 
 char get_player_mark(int player_id) {
@@ -219,7 +221,6 @@ void check_winner(struct shared_use_st *shared_variables, int player_id) {
         }
         exit(EXIT_SUCCESS);
     } else if (shared_variables->is_player_quit) {
-        clean_up();
         printf("przeciwnik zrezygnował z dalszej gry\n");
         exit(EXIT_SUCCESS);
     }
