@@ -341,18 +341,12 @@ void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 /*
  * Rysuje informacje o grze wyświetlane pod planszą.
  */
-void draw_info(int player_id, int whose_turn) {
+void draw_info(char *message) {
     XClearArea(display, window, 0, BOARD_SIZE * CELL_SIZE + 1,
             BOARD_SIZE * CELL_SIZE, 50, False);
     XSetForeground(display, gc, foreground.pixel);
-    char *text;
-    if (player_id == whose_turn) {
-        text = "twoja kolej";
-    } else {
-        text = "oczekiwanie na ruch przeciwnika...";
-    }
     XDrawString(display, window, gc, 25, BOARD_SIZE * CELL_SIZE + 32,
-            text, strlen(text));
+            message, strlen(message));
     XFlush(display);
 }
 
@@ -367,7 +361,7 @@ void init_window(char board[BOARD_SIZE][BOARD_SIZE],
     XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
     set_window_title();
     draw_board(board);
-    draw_info(player_id, other_player_id);
+    draw_info("oczekiwanie na drugiego gracza...");
 }
 
 /*
@@ -414,13 +408,13 @@ void play_tic_tac_toe(int player_id) {
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
         draw_board(shared_variables->board);
-        draw_info(player_id, player_id);
+        draw_info("twoja kolej");
         check_winner(shared_variables, player_id);
         int row, column; // indeksowane od zera
         read_legal_move(&row, &column, shared_variables->board);
         write_move(row, column, shared_variables->board, player_id);
         draw_board(shared_variables->board);
-        draw_info(player_id, other_player_id);
+        draw_info("oczekiwanie na ruch przeciwnika...");
         check_winner(shared_variables, player_id);
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
