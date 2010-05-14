@@ -1,7 +1,7 @@
 /*
  * Gra w kółko i krzyżyk dla dwóch graczy, na dużej planszy.
  * Kto pierwszy zaznaczy 5 pól swojego koloru w jednej linii (poziomo,
- * pionowo lub na skos), wygrywa.
+ * pionowo lub na skos), ten wygrywa.
  *
  * Każdy gracz uruchamia swoją własną instancję programu. Kliknięcie na polu
  * planszy powoduje jego zaznaczenie kolorem gracza.
@@ -23,6 +23,7 @@
 #define CELL_SIZE 50 // pole planszy ma wymiary CELL_SIZE x CELL_SIZE pikseli
 #define LINE_LEN 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
 #define EMPTY_CELL ' '
+#define PLAYER_MARK(player_id) (player_id == 1 ? 'X' : 'O')
 #define SHM_KEY 1236 // klucz pamięci współdzielonej
 #define SEM_KEY 1116 // klucz semafora
 
@@ -82,7 +83,6 @@ void clean_up() {
 void quit_game(int sig) {
     struct shared_use_st *shared_variables;
     shared_variables = (struct shared_use_st *)shared_memory;
-    printf("koniec gry\n");
     shared_variables->is_player_quit = TRUE;
     if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     clean_up();
@@ -130,6 +130,151 @@ int init_semaphores() {
         exit(EXIT_FAILURE);
     }
     return player_id;
+}
+
+
+/*===========================================================================*/
+/* Funkcje Graficznego Interfejsu Użytkownika (w Xlib).                      */
+/*===========================================================================*/
+
+void init_display() {
+    display = XOpenDisplay("");
+    screen = DefaultScreen(display);
+    visual = DefaultVisual(display, screen);
+    depth = DefaultDepth(display, screen);
+    window_attributes.background_pixel = XWhitePixel(display, screen);
+    window_attributes.override_redirect = False;
+
+    int window_size = BOARD_SIZE * CELL_SIZE;
+    window = XCreateWindow(display, XRootWindow(display, screen),
+            100, 100, window_size, window_size + 50, 0, depth, InputOutput,
+            visual, CWBackPixel|CWOverrideRedirect,
+            &window_attributes);
+    XSelectInput(display, window, ExposureMask|KeyPressMask|ButtonPressMask);
+
+    colormap = DefaultColormap(display, screen);
+    XAllocNamedColor(display, colormap, "black", &foreground, &dummy);
+    XAllocNamedColor(display, colormap, "red", &color1, &dummy);
+    XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
+
+    XMapWindow(display, window);
+    gc = DefaultGC(display, screen);
+
+    XFontStruct* font_info;
+    char* font_name = "*-helvetica-medium-r-*-24-*";
+    font_info = XLoadQueryFont(display, font_name);
+    if (!font_info) {
+        fprintf(stderr, "XLoadQueryFont: failed loading font %s\n", font_name);
+    }
+    XSetFont(display, gc, font_info->fid);
+}
+
+void set_window_title() {
+    char title[128];
+    sprintf(title, "Gracz %d", player_id);
+    XStoreName(display, window, title);
+}
+
+void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
+    int i, j;
+    XSetForeground(display, gc, foreground.pixel);
+    // rysuj linie poziome
+    for (i = 0; i < BOARD_SIZE + 1; i++) {
+        XDrawLine(display, window, gc,
+                0, i * CELL_SIZE,
+                BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
+    }
+    // rysuj linie pionowe
+    for (i = 0; i < BOARD_SIZE + 1; i++) {
+        XDrawLine(display, window, gc,
+                i * CELL_SIZE, 0,
+                i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
+    }
+    // rysuje pola oznaczone przez graczy
+    for (i = 0; i < BOARD_SIZE; i++) {
+        for (j = 0; j < BOARD_SIZE; j++) {
+            if (board[i][j] == PLAYER_MARK(1)) {
+                XSetForeground(display, gc, color1.pixel);
+            } else {
+                XSetForeground(display, gc, color2.pixel);
+            }
+            if (board[i][j] != EMPTY_CELL) {
+                XFillArc(display, window, gc,
+                        j * CELL_SIZE, i * CELL_SIZE,
+                        CELL_SIZE, CELL_SIZE,
+                        0, 360 * 64);
+            }
+        }
+    }
+    XFlush(display);
+}
+
+/*
+ * Rysuje informacje o grze wyświetlane pod planszą.
+ */
+void draw_info(char *message) {
+    XClearArea(display, window, 0, BOARD_SIZE * CELL_SIZE + 1,
+            BOARD_SIZE * CELL_SIZE, 50, False);
+    XSetForeground(display, gc, foreground.pixel);
+    XDrawString(display, window, gc, 25, BOARD_SIZE * CELL_SIZE + 32,
+            message, strlen(message));
+    XFlush(display);
+}
+
+void init_window(char board[BOARD_SIZE][BOARD_SIZE],
+        int player_id, int other_player_id) {
+    XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
+    set_window_title();
+    draw_board(board);
+    draw_info("oczekiwanie na drugiego gracza...");
+}
+
+void exit_after_keypress() {
+    while (TRUE) {
+        XNextEvent(display, &event);
+        if (event.type == KeyPress) {
+            XCloseDisplay(display);
+            exit(EXIT_SUCCESS);
+            break;
+        }
+    }
+}
+
+bool_t is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
+    return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE
+        && board[row][column] == EMPTY_CELL;
+}
+
+/*
+ * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
+ * pole na planszy, po czym wpisuje pozycję pola do zmiennych row i column.
+ */
+void read_legal_move(int *row, int *column,
+        char board[BOARD_SIZE][BOARD_SIZE]) {
+    bool_t is_legal_move_read = FALSE;
+    int i, j;
+    while (XPending(display) > 0) {
+        // ignorujemy ruchy wykonane w czasie oczekiwania na ruch przeciwnika
+        XNextEvent(display, &event);
+    }
+    while (!is_legal_move_read) {
+        XNextEvent(display, &event);
+        switch (event.type) {
+            case ButtonPress:
+                i = event.xbutton.y / CELL_SIZE;
+                j = event.xbutton.x / CELL_SIZE;
+                if (is_legal_move(i, j, board)) {
+                    *row = i;
+                    *column = j;
+                    is_legal_move_read = TRUE;
+                }
+                break;
+            case KeyPress:
+                XCloseDisplay(display);
+                quit_game(0);
+                break;
+        }
+    }
 }
 
 
@@ -213,189 +358,41 @@ bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
     return FALSE;
 }
 
-char get_player_mark(int player_id) {
-    return player_id == 1 ? 'X' : 'O';
-}
-
 /*
  * Sprawdza, czy należy już zakończyć grę (z powodu wygranej, remisu lub
  * wyłączenia gry przez któregoś z graczy).
  */
 void check_winner(struct shared_use_st *shared_variables, int player_id) {
     int winner;
-    if (is_line_complete(get_player_mark(1), shared_variables->board)) {
+    if (is_line_complete(PLAYER_MARK(1), shared_variables->board)) {
         winner = 1; // wygrał gracz 1
-    } else if (is_line_complete(get_player_mark(2), shared_variables->board)) {
+    } else if (is_line_complete(PLAYER_MARK(2), shared_variables->board)) {
         winner = 2; // wygrał gracz 2
     } else if (is_board_full(shared_variables->board)) {
         winner = 0; // remis
     } else {
         winner = -1; // gra toczy się dalej
     }
-    if (winner > 0) {
-        if (player_id == winner) {
-            printf("wygrałeś!\n");
-            // zwalnia przegranego, żeby mógł posprzątać
-            if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-        } else {
-            printf("przegrałeś\n");
-            clean_up(); // przegrany musi posprzątać
-        }
-        exit(EXIT_SUCCESS);
+    if (winner > 0 && player_id == winner) {
+        draw_info("wygrana!");
+        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+        clean_up();
+        exit_after_keypress();
+    } else if (winner > 0 && player_id != winner) {
+        draw_info("przegrana");
+        exit_after_keypress();
     } else if (winner == 0) {
-        printf("remis\n");
-        if (player_id == 2) {
-            // zwalnia gracza 1, żeby mógł posprzątać
-            if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-        } else {
-            clean_up(); // w razie remisu gracz 1 sprząta
-        }
-        exit(EXIT_SUCCESS);
+        draw_info("remis");
     } else if (shared_variables->is_player_quit) {
-        printf("przeciwnik zrezygnował z dalszej gry\n");
+        draw_info("wygrana walkowerem");
         exit(EXIT_SUCCESS);
     }
 }
 
 void write_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE],
         int player_id) {
-    board[row][column] = get_player_mark(player_id);
+    board[row][column] = PLAYER_MARK(player_id);
 }
-
-bool_t is_legal_move(int row, int column, char board[BOARD_SIZE][BOARD_SIZE]) {
-    return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE
-        && board[row][column] == EMPTY_CELL;
-}
-
-
-/*===========================================================================*/
-/* Funkcje związane z biblioteką Xlib.                                       */
-/*===========================================================================*/
-
-void init_display() {
-    display = XOpenDisplay("");
-    screen = DefaultScreen(display);
-    visual = DefaultVisual(display, screen);
-    depth = DefaultDepth(display, screen);
-    window_attributes.background_pixel = XWhitePixel(display, screen);
-    window_attributes.override_redirect = False;
-
-    int window_size = BOARD_SIZE * CELL_SIZE;
-    window = XCreateWindow(display, XRootWindow(display, screen),
-            100, 100, window_size, window_size + 50, 0, depth, InputOutput,
-            visual, CWBackPixel|CWOverrideRedirect,
-            &window_attributes);
-    XSelectInput(display, window, ExposureMask|KeyPressMask|ButtonPressMask);
-
-    colormap = DefaultColormap(display, screen);
-    XAllocNamedColor(display, colormap, "black", &foreground, &dummy);
-    XAllocNamedColor(display, colormap, "red", &color1, &dummy);
-    XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
-
-    XMapWindow(display, window);
-    gc = DefaultGC(display, screen);
-
-    XFontStruct* font_info;
-    char* font_name = "*-helvetica-medium-r-*-24-*";
-    font_info = XLoadQueryFont(display, font_name);
-    if (!font_info) {
-        fprintf(stderr, "XLoadQueryFont: failed loading font %s\n", font_name);
-    }
-    XSetFont(display, gc, font_info->fid);
-}
-
-void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
-    int i, j;
-    XSetForeground(display, gc, foreground.pixel);
-    // rysuj linie poziome
-    for (i = 0; i < BOARD_SIZE + 1; i++) {
-        XDrawLine(display, window, gc,
-                0, i * CELL_SIZE,
-                BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
-    }
-    // rysuj linie pionowe
-    for (i = 0; i < BOARD_SIZE + 1; i++) {
-        XDrawLine(display, window, gc,
-                i * CELL_SIZE, 0,
-                i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
-    }
-    // rysuje pola oznaczone przez graczy
-    for (i = 0; i < BOARD_SIZE; i++) {
-        for (j = 0; j < BOARD_SIZE; j++) {
-            if (board[i][j] == get_player_mark(1)) {
-                XSetForeground(display, gc, color1.pixel);
-            } else {
-                XSetForeground(display, gc, color2.pixel);
-            }
-            if (board[i][j] != EMPTY_CELL) {
-                XFillArc(display, window, gc,
-                        j * CELL_SIZE, i * CELL_SIZE,
-                        CELL_SIZE, CELL_SIZE,
-                        0, 360 * 64);
-            }
-        }
-    }
-    XFlush(display);
-}
-
-/*
- * Rysuje informacje o grze wyświetlane pod planszą.
- */
-void draw_info(char *message) {
-    XClearArea(display, window, 0, BOARD_SIZE * CELL_SIZE + 1,
-            BOARD_SIZE * CELL_SIZE, 50, False);
-    XSetForeground(display, gc, foreground.pixel);
-    XDrawString(display, window, gc, 25, BOARD_SIZE * CELL_SIZE + 32,
-            message, strlen(message));
-    XFlush(display);
-}
-
-void set_window_title() {
-    char title[128];
-    sprintf(title, "Gracz %d", player_id);
-    XStoreName(display, window, title);
-}
-
-void init_window(char board[BOARD_SIZE][BOARD_SIZE],
-        int player_id, int other_player_id) {
-    XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
-    set_window_title();
-    draw_board(board);
-    draw_info("oczekiwanie na drugiego gracza...");
-}
-
-/*
- * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
- * pole na planszy.
- */
-void read_legal_move(int *row, int *column,
-        char board[BOARD_SIZE][BOARD_SIZE]) {
-    bool_t is_legal_move_read = FALSE;
-    int i, j;
-    while (XPending(display) > 0) {
-        // ignoruje ruchy wykonane w czasie oczekiwania na ruch przeciwnika
-        XNextEvent(display, &event);
-    }
-    while (!is_legal_move_read) {
-        XNextEvent(display, &event);
-        switch (event.type) {
-            case ButtonPress:
-                i = event.xbutton.y / CELL_SIZE;
-                j = event.xbutton.x / CELL_SIZE;
-                if (is_legal_move(i, j, board)) {
-                    *row = i;
-                    *column = j;
-                    is_legal_move_read = TRUE;
-                }
-                break;
-            case KeyPress:
-                XCloseDisplay(display);
-                quit_game(0);
-                break;
-        }
-    }
-}
-
 
 /*
  * Pętla główna gry.
@@ -419,6 +416,7 @@ void play_tic_tac_toe(int player_id) {
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
 }
+
 
 int main() {
     signal(SIGINT, quit_game);
