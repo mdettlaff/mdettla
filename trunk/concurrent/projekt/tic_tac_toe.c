@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <signal.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
@@ -281,33 +282,39 @@ void init_display() {
 
     int window_size = BOARD_SIZE * CELL_SIZE;
     window = XCreateWindow(display, XRootWindow(display, screen),
-            100, 100, window_size, window_size, 0, depth, InputOutput,
+            100, 100, window_size, window_size + 50, 0, depth, InputOutput,
             visual, CWBackPixel|CWOverrideRedirect,
             &window_attributes);
-
     XSelectInput(display, window, ExposureMask|KeyPressMask|ButtonPressMask);
 
     colormap = DefaultColormap(display, screen);
-
     XAllocNamedColor(display, colormap, "black", &foreground, &dummy);
     XAllocNamedColor(display, colormap, "red", &color1, &dummy);
     XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
 
     XMapWindow(display, window);
     gc = DefaultGC(display, screen);
+
+    XFontStruct* font_info;
+    char* font_name = "*-helvetica-medium-r-*-24-*";
+    font_info = XLoadQueryFont(display, font_name);
+    if (!font_info) {
+        fprintf(stderr, "XLoadQueryFont: failed loading font %s\n", font_name);
+    }
+    XSetFont(display, gc, font_info->fid);
 }
 
 void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
     XSetForeground(display, gc, foreground.pixel);
     // rysuj linie poziome
-    for (i = 1; i < BOARD_SIZE; i++) {
+    for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
                 0, i * CELL_SIZE,
                 BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
     }
     // rysuj linie pionowe
-    for (i = 1; i < BOARD_SIZE; i++) {
+    for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
                 i * CELL_SIZE, 0,
                 i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
@@ -332,6 +339,38 @@ void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 }
 
 /*
+ * Rysuje informacje o grze wyświetlane pod planszą.
+ */
+void draw_info(int player_id, int whose_turn) {
+    XClearArea(display, window, 0, BOARD_SIZE * CELL_SIZE + 1,
+            BOARD_SIZE * CELL_SIZE, 50, False);
+    XSetForeground(display, gc, foreground.pixel);
+    char *text;
+    if (player_id == whose_turn) {
+        text = "twoja kolej";
+    } else {
+        text = "oczekiwanie na ruch przeciwnika...";
+    }
+    XDrawString(display, window, gc, 25, BOARD_SIZE * CELL_SIZE + 32,
+            text, strlen(text));
+    XFlush(display);
+}
+
+void set_window_title() {
+    char title[128];
+    sprintf(title, "Gracz %d", player_id);
+    XStoreName(display, window, title);
+}
+
+void init_window(char board[BOARD_SIZE][BOARD_SIZE],
+        int player_id, int other_player_id) {
+    XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
+    set_window_title();
+    draw_board(board);
+    draw_info(player_id, other_player_id);
+}
+
+/*
  * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
  * pole na planszy.
  */
@@ -346,8 +385,6 @@ void read_legal_move(int *row, int *column,
     while (!is_legal_move_read) {
         XNextEvent(display, &event);
         switch (event.type) {
-            case Expose:
-                break;
             case ButtonPress:
                 i = event.xbutton.y / CELL_SIZE;
                 j = event.xbutton.x / CELL_SIZE;
@@ -373,22 +410,18 @@ void play_tic_tac_toe(int player_id) {
     struct shared_use_st *shared_variables;
     shared_variables = (struct shared_use_st *)shared_memory;
     int other_player_id = 3 - player_id;
-    XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
-    printf("jesteś graczem numer %d\n", player_id);
-    if (player_id == 1) {
-        draw_board(shared_variables->board);
-        printf("oczekiwanie na ruch gracza %d...\n", other_player_id);
-    }
+    init_window(shared_variables->board, player_id, other_player_id);
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
         draw_board(shared_variables->board);
+        draw_info(player_id, player_id);
         check_winner(shared_variables, player_id);
         int row, column; // indeksowane od zera
         read_legal_move(&row, &column, shared_variables->board);
         write_move(row, column, shared_variables->board, player_id);
         draw_board(shared_variables->board);
+        draw_info(player_id, other_player_id);
         check_winner(shared_variables, player_id);
-        printf("oczekiwanie na ruch gracza %d...\n", other_player_id);
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
 }
