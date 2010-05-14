@@ -1,23 +1,25 @@
 /*
  * Gra w kółko i krzyżyk dla dwóch graczy, na dużej planszy.
- * Kto pierwszy zaznaczy 5 pól w jednej linii, wygrywa.
- * Każdy gracz uruchamia swoją własną instancję programu.
+ * Kto pierwszy zaznaczy 5 pól swojego koloru w jednej linii (poziomo,
+ * pionowo lub na skos), wygrywa.
+ *
+ * Każdy gracz uruchamia swoją własną instancję programu. Kliknięcie na polu
+ * planszy powoduje jego zaznaczenie kolorem gracza.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
-#include <signal.h>
 #include <X11/Xlib.h>
-#include <X11/X.h>
 
 #include "binary_sem.h"
 
 #define TRUE 1
 #define FALSE 0
-#define BOARD_SIZE 10 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE
-#define CELL_SIZE 50 // pole na planszy ma wymiary CELL_SIZE x CELL_SIZE
+#define BOARD_SIZE 10 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE pól
+#define CELL_SIZE 50 // pole planszy ma wymiary CELL_SIZE x CELL_SIZE pikseli
 #define LINE_LEN 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
 #define EMPTY_CELL ' '
 #define SHM_KEY 1236 // klucz pamięci współdzielonej
@@ -28,8 +30,8 @@ typedef int bool_t; // typ boolean
 
 // struktura przechowująca zmienne znajdujące się w pamięci współdzielonej
 struct shared_use_st {
-    char board[BOARD_SIZE][BOARD_SIZE];
-    bool_t is_player_quit;
+    char board[BOARD_SIZE][BOARD_SIZE]; // plansza na której odbywa się gra
+    bool_t is_player_quit; // czy gracz wyszedł z gry
 };
 
 
@@ -37,19 +39,19 @@ struct shared_use_st {
 int sem_id;
 int shm_id;
 void *shared_memory;
-int player_id;
+int player_id; // numer gracza, może być równy 1 lub 2
 
 // zmienne globalne Xlib
 Display *display;
 Window window;
-XSetWindowAttributes windowattributes;
+XSetWindowAttributes window_attributes;
 XGCValues gcvalues;
 GC gc;
 Visual *visual;
 int depth;
 int screen;
 Colormap colormap;
-XColor foreground, color1, color2, dum;
+XColor foreground, color1, color2, dummy;
 XEvent event;
 
 
@@ -59,10 +61,10 @@ XEvent event;
 /*===========================================================================*/
 
 void clean_up() {
-    // pozbywa się semafów
+    // pozbywamy się semafów
     printf("usuwam semafor\n");
     del_semvalue(sem_id);
-    // pozbywa się pamięci współdzielonej
+    // pozbywamy się pamięci współdzielonej
     printf("odłączam pamięć współdzieloną... ");
     if (shmdt(shared_memory) == -1) {
         fprintf(stderr, "shmdt failed\n");
@@ -119,11 +121,11 @@ int init_semaphores() {
         player_id = 2;
     }
     if (!set_semvalue(sem_id, 0, 0)) {
-        fprintf(stderr, "Failed to initialize semaphore\n");
+        fprintf(stderr, "failed to initialize semaphore\n");
         exit(EXIT_FAILURE);
     }
     if (!set_semvalue(sem_id, 1, 1)) {
-        fprintf(stderr, "Failed to initialize semaphore\n");
+        fprintf(stderr, "failed to initialize semaphore\n");
         exit(EXIT_FAILURE);
     }
     return player_id;
@@ -133,10 +135,6 @@ int init_semaphores() {
 /*===========================================================================*/
 /* Funkcje związane z logiką gry.                                            */
 /*===========================================================================*/
-
-char get_player_mark(int player_id) {
-    return player_id == 1 ? 'X' : 'O';
-}
 
 bool_t is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
@@ -152,7 +150,7 @@ bool_t is_board_full(char board[BOARD_SIZE][BOARD_SIZE]) {
 
 /*
  * Czy na planszy jest ułożona linia ze znaków mark pionowo, poziomo lub
- * na ukos.
+ * na skos.
  */
 bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j, k;
@@ -185,11 +183,11 @@ bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
             }
         }
     }
-    // na ukos
+    // na skos
     is_line_complete = TRUE;
     for (i = 0; i < BOARD_SIZE - LINE_LEN + 1; i++) {
         for (j = 0; j < BOARD_SIZE - LINE_LEN + 1; j++) {
-            // na ukos NW-SE
+            // na skos NW-SE
             is_line_complete = TRUE;
             for (k = 0; k < LINE_LEN; k++) {
                 if (board[i + k][j + k] != mark) {
@@ -199,7 +197,7 @@ bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
             if (is_line_complete) {
                 return TRUE;
             }
-            // na ukos NE-SW
+            // na skos NE-SW
             is_line_complete = TRUE;
             for (k = 0; k < LINE_LEN; k++) {
                 if (board[i + k][j + LINE_LEN - 1 - k] != mark) {
@@ -212,6 +210,10 @@ bool_t is_line_complete(char mark, char board[BOARD_SIZE][BOARD_SIZE]) {
         }
     }
     return FALSE;
+}
+
+char get_player_mark(int player_id) {
+    return player_id == 1 ? 'X' : 'O';
 }
 
 /*
@@ -274,23 +276,22 @@ void init_display() {
     screen = DefaultScreen(display);
     visual = DefaultVisual(display, screen);
     depth = DefaultDepth(display, screen);
-    windowattributes.background_pixel = XWhitePixel(display, screen);
-    windowattributes.override_redirect = False;
+    window_attributes.background_pixel = XWhitePixel(display, screen);
+    window_attributes.override_redirect = False;
 
     int window_size = BOARD_SIZE * CELL_SIZE;
     window = XCreateWindow(display, XRootWindow(display, screen),
-            100, 100, window_size, window_size, 10, depth, InputOutput,
+            100, 100, window_size, window_size, 0, depth, InputOutput,
             visual, CWBackPixel|CWOverrideRedirect,
-            &windowattributes);
+            &window_attributes);
 
-    XSelectInput(display, window,
-            ExposureMask|KeyPressMask|ButtonPressMask);
+    XSelectInput(display, window, ExposureMask|KeyPressMask|ButtonPressMask);
 
     colormap = DefaultColormap(display, screen);
 
-    XAllocNamedColor(display, colormap, "black", &foreground, &dum);
-    XAllocNamedColor(display, colormap, "red", &color1, &dum);
-    XAllocNamedColor(display, colormap, "blue", &color2, &dum);
+    XAllocNamedColor(display, colormap, "black", &foreground, &dummy);
+    XAllocNamedColor(display, colormap, "red", &color1, &dummy);
+    XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
 
     XMapWindow(display, window);
     gc = DefaultGC(display, screen);
@@ -300,13 +301,13 @@ void draw_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
     XSetForeground(display, gc, foreground.pixel);
     // rysuj linie poziome
-    for (i = 0; i < BOARD_SIZE; i++) {
+    for (i = 1; i < BOARD_SIZE; i++) {
         XDrawLine(display, window, gc,
                 0, i * CELL_SIZE,
                 BOARD_SIZE * CELL_SIZE, i * CELL_SIZE);
     }
     // rysuj linie pionowe
-    for (i = 0; i < BOARD_SIZE; i++) {
+    for (i = 1; i < BOARD_SIZE; i++) {
         XDrawLine(display, window, gc,
                 i * CELL_SIZE, 0,
                 i * CELL_SIZE, BOARD_SIZE * CELL_SIZE);
