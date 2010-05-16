@@ -146,6 +146,10 @@ void quit_game(int sig) {
 
 void init_display() {
     display = XOpenDisplay("");
+    if (display == NULL) {
+        fprintf(stderr, "cannot open display\n");
+        exit(EXIT_FAILURE);
+    }
     screen = DefaultScreen(display);
     visual = DefaultVisual(display, screen);
     depth = DefaultDepth(display, screen);
