@@ -45,20 +45,16 @@ struct shared_use_st {
 int sem_id;
 int shm_id;
 void *shared_memory;
+struct shared_use_st *shared_variables;
 int player_id; // numer gracza, może być równy 1 lub 2
 
 // zmienne globalne Xlib
 Display *display;
 Window window;
-XSetWindowAttributes window_attributes;
-XGCValues gcvalues;
 GC gc;
-Visual *visual;
-int depth;
-int screen;
-Colormap colormap;
 XColor foreground, color1, color2, dummy;
 XEvent event;
+Atom wmDeleteMessage;
 
 
 /*===========================================================================*/
@@ -78,7 +74,6 @@ void init_shared_memory() {
         fprintf(stderr, "shmat failed\n");
         exit(EXIT_FAILURE);
     }
-    struct shared_use_st *shared_variables;
     shared_variables = (struct shared_use_st *)shared_memory;
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {
@@ -131,8 +126,7 @@ void clean_up() {
 }
 
 void quit_game(int sig) {
-    struct shared_use_st *shared_variables;
-    shared_variables = (struct shared_use_st *)shared_memory;
+    XCloseDisplay(display);
     shared_variables->is_player_quit = TRUE;
     if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     clean_up();
@@ -150,9 +144,10 @@ void init_display() {
         fprintf(stderr, "cannot open display\n");
         exit(EXIT_FAILURE);
     }
-    screen = DefaultScreen(display);
-    visual = DefaultVisual(display, screen);
-    depth = DefaultDepth(display, screen);
+    int screen = DefaultScreen(display);
+    Visual *visual = DefaultVisual(display, screen);
+    int depth = DefaultDepth(display, screen);
+    XSetWindowAttributes window_attributes;
     window_attributes.background_pixel = XWhitePixel(display, screen);
     window_attributes.override_redirect = False;
 
@@ -161,9 +156,9 @@ void init_display() {
             100, 100, window_size, window_size + TOP_MARGIN + BOTTOM_MARGIN,
             0, depth, InputOutput, visual, CWBackPixel|CWOverrideRedirect,
             &window_attributes);
-    XSelectInput(display, window, ExposureMask|KeyPressMask|ButtonPressMask);
+    XSelectInput(display, window, ExposureMask|ButtonPressMask);
 
-    colormap = DefaultColormap(display, screen);
+    Colormap colormap = DefaultColormap(display, screen);
     XAllocNamedColor(display, colormap, "black", &foreground, &dummy);
     XAllocNamedColor(display, colormap, "red", &color1, &dummy);
     XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
@@ -178,6 +173,9 @@ void init_display() {
         fprintf(stderr, "XLoadQueryFont: failed loading font %s\n", font_name);
     }
     XSetFont(display, gc, font_info->fid);
+
+    wmDeleteMessage = XInternAtom(display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(display, window, &wmDeleteMessage, 1);
 }
 
 /*
@@ -197,22 +195,25 @@ void draw_player_name(int player_id) {
     XFlush(display);
 }
 
+/*
+ * Rysuje planszę.
+ */
 void draw_board(int board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
     XSetForeground(display, gc, foreground.pixel);
-    // rysuj linie poziome
+    // rysuje linie poziome
     for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
                 0, BOTTOM_MARGIN + i * CELL_SIZE,
                 BOARD_SIZE * CELL_SIZE, BOTTOM_MARGIN + i * CELL_SIZE);
     }
-    // rysuj linie pionowe
+    // rysuje linie pionowe
     for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
                 i * CELL_SIZE, BOTTOM_MARGIN,
                 i * CELL_SIZE, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE);
     }
-    // rysuje pola oznaczone przez graczy
+    // rysuje pola zaznaczone przez graczy ich kolorami
     for (i = 0; i < BOARD_SIZE; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
             XColor player_color;
@@ -234,34 +235,52 @@ void draw_board(int board[BOARD_SIZE][BOARD_SIZE]) {
 }
 
 /*
- * Wyświetla informacje o grze pod planszą.
+ * Wyświetla napis game_info pod planszą. Jeśli parametr game_info jest
+ * równy NULL, wyświetla ostatnio podany napis, który nie był równy NULL.
  */
-void draw_info(char *message) {
+void draw_info(char *game_info) {
+    static char *info;
+    if (game_info != NULL) {
+        info = game_info;
+    }
     XClearArea(display, window, 0, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE + 1,
             BOARD_SIZE * CELL_SIZE, BOTTOM_MARGIN, False);
     XSetForeground(display, gc, foreground.pixel);
     XDrawString(display, window, gc,
             LEFT_MARGIN, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE + 32,
-            message, strlen(message));
+            info, strlen(info));
     XFlush(display);
+}
+
+/*
+ * Rysuje od nowa zawartość okna.
+ */
+void draw_everything(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    draw_player_name(player_id);
+    draw_board(board);
+    draw_info(NULL);
 }
 
 void init_window(int board[BOARD_SIZE][BOARD_SIZE],
         int player_id, int other_player_id) {
     XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
     XStoreName(display, window, "Tic Tac Toe");
-    draw_player_name(player_id);
-    draw_board(board);
     draw_info("oczekiwanie na drugiego gracza...");
+    draw_everything(board, player_id);
 }
 
-void exit_after_keypress() {
+void wait_until_close_window() {
     while (TRUE) {
         XNextEvent(display, &event);
-        if (event.type == KeyPress) {
-            XCloseDisplay(display);
-            exit(EXIT_SUCCESS);
-            break;
+        switch (event.type) {
+            case ClientMessage:
+                if (event.xclient.data.l[0] == wmDeleteMessage) {
+                    XCloseDisplay(display);
+                    exit(EXIT_SUCCESS);
+                }
+            case Expose:
+                draw_everything(shared_variables->board, player_id);
+                break;
         }
     }
 }
@@ -295,9 +314,13 @@ void read_legal_move(int *row, int *column,
                     is_legal_move_read = TRUE;
                 }
                 break;
-            case KeyPress:
-                XCloseDisplay(display);
-                quit_game(0);
+            case ClientMessage:
+                if (event.xclient.data.l[0] == wmDeleteMessage) {
+                    quit_game(0);
+                }
+                break;
+            case Expose:
+                draw_everything(board, player_id);
                 break;
         }
     }
@@ -388,7 +411,7 @@ bool_t is_line_complete(int player_id, int board[BOARD_SIZE][BOARD_SIZE]) {
  * Sprawdza, czy należy już zakończyć grę (z powodu wygranej, remisu lub
  * wyłączenia gry przez któregoś z graczy).
  */
-void check_winner(struct shared_use_st *shared_variables, int player_id) {
+void check_winner(int player_id) {
     int winner;
     if (is_line_complete(1, shared_variables->board)) {
         winner = 1; // wygrał gracz 1
@@ -403,10 +426,10 @@ void check_winner(struct shared_use_st *shared_variables, int player_id) {
         draw_info("wygrana!");
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
         clean_up();
-        exit_after_keypress();
+        wait_until_close_window();
     } else if (winner > 0 && player_id != winner) {
         draw_info("przegrana");
-        exit_after_keypress();
+        wait_until_close_window();
     } else if (winner == 0) {
         draw_info("remis");
         if (!shared_variables->is_tie) {
@@ -414,10 +437,10 @@ void check_winner(struct shared_use_st *shared_variables, int player_id) {
             if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
             clean_up();
         }
-        exit_after_keypress();
+        wait_until_close_window();
     } else if (shared_variables->is_player_quit) {
         draw_info("wygrana walkowerem");
-        exit_after_keypress();
+        wait_until_close_window();
     }
 }
 
@@ -425,21 +448,19 @@ void check_winner(struct shared_use_st *shared_variables, int player_id) {
  * Pętla główna gry.
  */
 void play_tic_tac_toe(int player_id) {
-    struct shared_use_st *shared_variables;
-    shared_variables = (struct shared_use_st *)shared_memory;
     int other_player_id = 3 - player_id;
     init_window(shared_variables->board, player_id, other_player_id);
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
-        draw_board(shared_variables->board);
+        draw_everything(shared_variables->board, player_id);
         draw_info("twoja kolej");
-        check_winner(shared_variables, player_id);
+        check_winner(player_id);
         int row, column; // indeksowane od zera
         read_legal_move(&row, &column, shared_variables->board);
         shared_variables->board[row][column] = player_id;
-        draw_board(shared_variables->board);
+        draw_everything(shared_variables->board, player_id);
         draw_info("oczekiwanie na ruch przeciwnika...");
-        check_winner(shared_variables, player_id);
+        check_winner(player_id);
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
 }
