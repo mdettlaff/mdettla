@@ -37,7 +37,6 @@ typedef int bool_t; // typ boolowski
 struct shared_use_st {
     int board[BOARD_SIZE][BOARD_SIZE]; // plansza na której odbywa się gra
     bool_t is_player_quit; // czy przeciwnik wyszedł z gry
-    bool_t is_tie;
 };
 
 
@@ -82,7 +81,6 @@ void init_shared_memory() {
         }
     }
     shared_variables->is_player_quit = FALSE;
-    shared_variables->is_tie = FALSE;
 }
 
 /*
@@ -127,9 +125,14 @@ void clean_up() {
 
 void quit_game(int sig) {
     XCloseDisplay(display);
-    shared_variables->is_player_quit = TRUE;
-    if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-    clean_up();
+    if (!shared_variables->is_player_quit) {
+        shared_variables->is_player_quit = TRUE;
+        // kto wyłącza grę pierwszy, ten zwalnia przeciwnika
+        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+    } else {
+        // kto wyłącza grę ostatni, ten sprząta
+        clean_up();
+    }
     exit(EXIT_SUCCESS);
 }
 
@@ -261,8 +264,7 @@ void draw_everything(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     draw_info(NULL);
 }
 
-void init_window(int board[BOARD_SIZE][BOARD_SIZE],
-        int player_id, int other_player_id) {
+void init_window(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
     XStoreName(display, window, "Tic Tac Toe");
     draw_info("oczekiwanie na drugiego gracza...");
@@ -275,8 +277,7 @@ void wait_until_close_window() {
         switch (event.type) {
             case ClientMessage:
                 if (event.xclient.data.l[0] == wmDeleteMessage) {
-                    XCloseDisplay(display);
-                    exit(EXIT_SUCCESS);
+                    quit_game(0);
                 }
             case Expose:
                 draw_everything(shared_variables->board, player_id);
@@ -347,12 +348,12 @@ bool_t is_board_full(int board[BOARD_SIZE][BOARD_SIZE]) {
  * Czy na planszy jest ułożona linia pionowo, poziomo lub na skos przez
  * danego gracza.
  */
-bool_t is_line_complete(int player_id, int board[BOARD_SIZE][BOARD_SIZE]) {
+bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     int i, j, k;
     bool_t is_line_complete = FALSE;
     // poziomo
     for (i = 0; i < BOARD_SIZE; i++) {
-        for (j = 0; j < BOARD_SIZE - LINE_LEN; j++) {
+        for (j = 0; j < BOARD_SIZE - LINE_LEN + 1; j++) {
             is_line_complete = TRUE;
             for (k = 0; k < LINE_LEN; k++) {
                 if (board[i][j + k] != player_id) {
@@ -365,7 +366,7 @@ bool_t is_line_complete(int player_id, int board[BOARD_SIZE][BOARD_SIZE]) {
         }
     }
     // pionowo
-    for (i = 0; i < BOARD_SIZE - LINE_LEN; i++) {
+    for (i = 0; i < BOARD_SIZE - LINE_LEN + 1; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
             is_line_complete = TRUE;
             for (k = 0; k < LINE_LEN; k++) {
@@ -408,59 +409,49 @@ bool_t is_line_complete(int player_id, int board[BOARD_SIZE][BOARD_SIZE]) {
 }
 
 /*
- * Sprawdza, czy należy już zakończyć grę (z powodu wygranej, remisu lub
+ * Zaznacza pole o podanych współrzędnych dla podanego gracza.
+ */
+void make_move(int row, int column,
+        int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    board[row][column] = player_id;
+}
+
+/*
+ * Sprawdza, czy należy już skończyć grę (z powodu wygranej, remisu lub
  * wyłączenia gry przez któregoś z graczy).
  */
-void check_winner(int player_id) {
-    int winner;
-    if (is_line_complete(1, shared_variables->board)) {
-        winner = 1; // wygrał gracz 1
-    } else if (is_line_complete(2, shared_variables->board)) {
-        winner = 2; // wygrał gracz 2
-    } else if (is_board_full(shared_variables->board)) {
-        winner = 0; // remis
-    } else {
-        winner = -1; // gra toczy się dalej
-    }
-    if (winner > 0 && player_id == winner) {
+void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    int other_player_id = 3 - player_id;
+    if (is_line_complete(board, player_id)) {
         draw_info("wygrana!");
-        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-        clean_up();
-        wait_until_close_window();
-    } else if (winner > 0 && player_id != winner) {
+    } else if (is_line_complete(board, other_player_id)) {
         draw_info("przegrana");
-        wait_until_close_window();
-    } else if (winner == 0) {
+    } else if (is_board_full(board)) {
         draw_info("remis");
-        if (!shared_variables->is_tie) {
-            shared_variables->is_tie = TRUE;
-            if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-            clean_up();
-        }
-        wait_until_close_window();
     } else if (shared_variables->is_player_quit) {
         draw_info("wygrana walkowerem");
-        wait_until_close_window();
+    } else {
+        return; // gramy dalej
     }
+    if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+    wait_until_close_window();
 }
 
 /*
  * Pętla główna gry.
  */
-void play_tic_tac_toe(int player_id) {
-    int other_player_id = 3 - player_id;
-    init_window(shared_variables->board, player_id, other_player_id);
+void play_tic_tac_toe(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
-        draw_everything(shared_variables->board, player_id);
+        draw_everything(board, player_id);
         draw_info("twoja kolej");
-        check_winner(player_id);
+        check_winner(board, player_id);
         int row, column; // indeksowane od zera
-        read_legal_move(&row, &column, shared_variables->board);
-        shared_variables->board[row][column] = player_id;
-        draw_everything(shared_variables->board, player_id);
+        read_legal_move(&row, &column, board);
+        make_move(row, column, board, player_id);
+        draw_everything(board, player_id);
         draw_info("oczekiwanie na ruch przeciwnika...");
-        check_winner(player_id);
+        check_winner(board, player_id);
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     }
 }
@@ -472,8 +463,9 @@ int main() {
     init_display();
     init_shared_memory();
     player_id = init_semaphores();
+    init_window(shared_variables->board, player_id);
 
-    play_tic_tac_toe(player_id);
+    play_tic_tac_toe(shared_variables->board, player_id);
 
     return EXIT_SUCCESS;
 }
