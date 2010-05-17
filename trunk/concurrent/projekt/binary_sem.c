@@ -15,14 +15,17 @@ union semun {
 int set_semvalue(int sem_id, int sem_num, int value) {
     union semun sem_union;
     sem_union.val = value;
-    if (semctl(sem_id, sem_num, SETVAL, sem_union) == -1) return 0;
+    if (semctl(sem_id, sem_num, SETVAL, sem_union) == -1) {
+        return 0;
+    }
     return 1;
 }
 
 void del_semvalue(int sem_id) {
     union semun sem_union;
-    if (semctl(sem_id, 0, IPC_RMID, sem_union) == -1)
-        fprintf(stderr, "Failed to delete semaphore\n");
+    if (semctl(sem_id, 0, IPC_RMID, sem_union) == -1) {
+        fprintf(stderr, "failed to delete semaphore\n");
+    }
 }
 
 int semaphore_p(int sem_id, int sem_num) {
