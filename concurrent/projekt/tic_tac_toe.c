@@ -31,20 +31,25 @@
 #define EMPTY_CELL 0 // wartość wolnego pola na planszy
 
 
-typedef int bool_t; // typ boolowski
-
+// typ boolowski
+typedef int bool_t;
 // struktura przechowująca zmienne znajdujące się w pamięci współdzielonej
-struct shared_use_st {
+typedef struct shared_st {
     int board[BOARD_SIZE][BOARD_SIZE]; // plansza na której odbywa się gra
-    bool_t is_player_quit; // czy przeciwnik wyszedł z gry
-};
+    bool_t is_only_one_player;
+} shared_t;
+// współrzędne pola na planszy, indeksowane od zera
+typedef struct coords_st {
+    int row;
+    int column;
+} coords_t;
 
 
 // zmienne globalne
 int sem_id;
 int shm_id;
 void *shared_memory;
-struct shared_use_st *shared_variables;
+shared_t *shared_variables;
 int player_id; // numer gracza, może być równy 1 lub 2
 
 // zmienne globalne Xlib
@@ -62,7 +67,7 @@ Atom wmDeleteMessage;
 /*===========================================================================*/
 
 void init_shared_memory() {
-    shm_id = shmget((key_t)SHM_KEY, sizeof(struct shared_use_st),
+    shm_id = shmget((key_t)SHM_KEY, sizeof(shared_t),
             0666 | IPC_CREAT);
     if (shm_id == -1) {
         fprintf(stderr, "shmget failed\n");
@@ -73,14 +78,14 @@ void init_shared_memory() {
         fprintf(stderr, "shmat failed\n");
         exit(EXIT_FAILURE);
     }
-    shared_variables = (struct shared_use_st *)shared_memory;
+    shared_variables = (shared_t *)shared_memory;
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
             (shared_variables->board)[i][j] = EMPTY_CELL;
         }
     }
-    shared_variables->is_player_quit = FALSE;
+    shared_variables->is_only_one_player = TRUE;
 }
 
 /*
@@ -110,12 +115,10 @@ int init_semaphores() {
 void clean_up() {
     printf("usuwam semafory\n");
     del_semvalue(sem_id);
-    printf("odłączam pamięć współdzieloną... ");
+    printf("usuwam pamięć współdzieloną\n");
     if (shmdt(shared_memory) == -1) {
         fprintf(stderr, "shmdt failed\n");
         exit(EXIT_FAILURE);
-    } else {
-        printf("OK\n");
     }
     if (shmctl(shm_id, IPC_RMID, 0) == -1) {
         fprintf(stderr, "shmctl(IPC_RMID) failed\n");
@@ -125,8 +128,8 @@ void clean_up() {
 
 void quit_game(int sig) {
     XCloseDisplay(display);
-    if (!shared_variables->is_player_quit) {
-        shared_variables->is_player_quit = TRUE;
+    if (!shared_variables->is_only_one_player) {
+        shared_variables->is_only_one_player = TRUE;
         // kto wyłącza grę pierwszy, ten zwalnia przeciwnika
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     } else {
@@ -286,32 +289,30 @@ void wait_until_close_window() {
     }
 }
 
-bool_t is_legal_move(int row, int column, int board[BOARD_SIZE][BOARD_SIZE]) {
-    return row >= 0 && row < BOARD_SIZE && column >= 0 && column < BOARD_SIZE
-        && board[row][column] == EMPTY_CELL;
+bool_t is_legal_move(coords_t *coords, int board[BOARD_SIZE][BOARD_SIZE]) {
+    return coords->row >= 0 && coords->row < BOARD_SIZE
+        && coords->column >= 0 && coords->column < BOARD_SIZE
+        && board[coords->row][coords->column] == EMPTY_CELL;
 }
 
 /*
  * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
- * pole na planszy, po czym wpisuje pozycję pola do zmiennych row i column.
+ * pole na planszy, po czym zwraca współrzędne tego pola.
  */
-void read_legal_move(int *row, int *column,
-        int board[BOARD_SIZE][BOARD_SIZE]) {
-    bool_t is_legal_move_read = FALSE;
-    int i, j;
+coords_t *read_legal_move(int board[BOARD_SIZE][BOARD_SIZE]) {
+    coords_t *coords = malloc(sizeof(*coords));
     while (XPending(display) > 0) {
         // ignorujemy ruchy wykonane w czasie oczekiwania na ruch przeciwnika
         XNextEvent(display, &event);
     }
+    bool_t is_legal_move_read = FALSE;
     while (!is_legal_move_read) {
         XNextEvent(display, &event);
         switch (event.type) {
             case ButtonPress:
-                i = (event.xbutton.y - BOTTOM_MARGIN) / CELL_SIZE;
-                j = event.xbutton.x / CELL_SIZE;
-                if (is_legal_move(i, j, board)) {
-                    *row = i;
-                    *column = j;
+                coords->row = (event.xbutton.y - BOTTOM_MARGIN) / CELL_SIZE;
+                coords->column = event.xbutton.x / CELL_SIZE;
+                if (is_legal_move(coords, board)) {
                     is_legal_move_read = TRUE;
                 }
                 break;
@@ -325,6 +326,7 @@ void read_legal_move(int *row, int *column,
                 break;
         }
     }
+    return coords;
 }
 
 
@@ -411,9 +413,9 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
 /*
  * Zaznacza pole o podanych współrzędnych dla podanego gracza.
  */
-void make_move(int row, int column,
+void make_move(coords_t *coords,
         int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
-    board[row][column] = player_id;
+    board[coords->row][coords->column] = player_id;
 }
 
 /*
@@ -428,7 +430,7 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         draw_info("przegrana");
     } else if (is_board_full(board)) {
         draw_info("remis");
-    } else if (shared_variables->is_player_quit) {
+    } else if (shared_variables->is_only_one_player) {
         draw_info("wygrana walkowerem");
     } else {
         return; // gramy dalej
@@ -441,14 +443,15 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
  * Pętla główna gry.
  */
 void play_tic_tac_toe(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    if (player_id != 1) {
+        shared_variables->is_only_one_player = FALSE;
+    }
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
         draw_everything(board, player_id);
         draw_info("twoja kolej");
         check_winner(board, player_id);
-        int row, column; // indeksowane od zera
-        read_legal_move(&row, &column, board);
-        make_move(row, column, board, player_id);
+        make_move(read_legal_move(board), board, player_id);
         draw_everything(board, player_id);
         draw_info("oczekiwanie na ruch przeciwnika...");
         check_winner(board, player_id);
