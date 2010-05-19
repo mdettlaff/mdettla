@@ -4,7 +4,7 @@
  * pionowo lub na skos), ten wygrywa.
  *
  * Program można skompilować używając polecenia:
- * gcc -Wall -lX11 binary_sem.h binary_sem.c tic_tac_toe.c -o tic_tac_toe
+ * gcc -Wall -lX11 -lpthread binary_sem.h binary_sem.c tic_tac_toe.c -o tic_tac_toe
  * Każdy gracz uruchamia swoją własną instancję programu. Kliknięcie na polu
  * planszy powoduje jego zaznaczenie kolorem gracza.
  */
@@ -15,6 +15,7 @@
 #include <signal.h>
 #include <sys/sem.h>
 #include <sys/shm.h>
+#include <pthread.h>
 #include <X11/Xlib.h>
 
 #include "binary_sem.h"
@@ -41,6 +42,7 @@ typedef int bool_t;
 typedef struct shared_st {
     int board[BOARD_SIZE][BOARD_SIZE]; // plansza na której odbywa się gra
     int players_count; // ilu graczy aktualnie bierze udział w grze
+    bool_t is_game_over;
 } shared_t;
 // współrzędne pola na planszy, indeksowane od zera
 typedef struct coords_st {
@@ -54,6 +56,9 @@ int sem_id;
 int shm_id;
 shared_t *shared; // pamięć współdzielona
 int player_id; // numer gracza, może być równy 1 lub 2
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t user_input = PTHREAD_COND_INITIALIZER;
+coords_t *coords; // współrzędne pola na planszy na które kliknął gracz
 
 // zmienne globalne Xlib
 Display *display;
@@ -99,8 +104,9 @@ int init_shared_memory() {
             }
         }
         shared->players_count = 0;
+        shared->is_game_over = FALSE;
     }
-    if (shared->players_count >= 2) {
+    if (shared->players_count >= 2 || shared->is_game_over) {
         fprintf(stderr, "w grze może brać udział co najwyżej dwóch graczy\n");
         exit(EXIT_FAILURE);
     }
@@ -158,6 +164,7 @@ void quit_game(int sig) {
 /*===========================================================================*/
 
 void init_display() {
+    XInitThreads();
     display = XOpenDisplay("");
     if (display == NULL) {
         fprintf(stderr, "cannot open display\n");
@@ -265,7 +272,7 @@ void draw_info(char *game_info) {
             BOARD_SIZE_PX, BOTTOM_MARGIN, False);
     XSetForeground(display, gc, foreground.pixel);
     XDrawString(display, window, gc,
-            TEXT_LEFT_MARGIN, BOARD_Y + BOARD_SIZE_PX + 36,
+            TEXT_LEFT_MARGIN, BOARD_Y + BOARD_SIZE_PX + 34,
             info, strlen(info));
     XFlush(display);
 }
@@ -287,60 +294,42 @@ void init_window(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     draw_everything(board, player_id);
 }
 
-void wait_until_close_window() {
+/*
+ * Wątek do obsługi zdarzeń XEvent.
+ */
+void *event_thread(void *arg) {
+    coords = malloc(sizeof (*coords));
     while (TRUE) {
         XNextEvent(display, &event);
         switch (event.type) {
-            case ClientMessage:
-                if (event.xclient.data.l[0] == wm_delete_message) {
-                    quit_game(0);
+            case ButtonPress:
+                pthread_mutex_lock(&mutex);
+                coords->row = (event.xbutton.y - BOARD_Y) / CELL_SIZE_PX;
+                coords->column = (event.xbutton.x - BOARD_X) / CELL_SIZE_PX;
+                if (event.xbutton.y >= BOARD_Y && event.xbutton.x >= BOARD_X) {
+                    pthread_cond_signal(&user_input);
                 }
+                pthread_mutex_unlock(&mutex);
+                break;
             case Expose:
                 draw_everything(shared->board, player_id);
                 break;
-        }
-    }
-}
-
-bool_t is_legal_move(coords_t *coords, int board[BOARD_SIZE][BOARD_SIZE]) {
-    return coords->row >= 0 && coords->row < BOARD_SIZE
-        && coords->column >= 0 && coords->column < BOARD_SIZE
-        && board[coords->row][coords->column] == EMPTY_CELL;
-}
-
-/*
- * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
- * pole na planszy, po czym zwraca współrzędne tego pola.
- */
-coords_t *read_legal_move(int board[BOARD_SIZE][BOARD_SIZE]) {
-    coords_t *coords = malloc(sizeof (*coords));
-    while (XPending(display) > 0) {
-        // ignorujemy ruchy wykonane w czasie oczekiwania na ruch przeciwnika
-        XNextEvent(display, &event);
-    }
-    bool_t is_legal_move_read = FALSE;
-    while (!is_legal_move_read) {
-        XNextEvent(display, &event);
-        switch (event.type) {
-            case ButtonPress:
-                coords->row = (event.xbutton.y - BOARD_Y) / CELL_SIZE_PX;
-                coords->column = (event.xbutton.x - BOARD_X) / CELL_SIZE_PX;
-                if (event.xbutton.y >= BOARD_Y && event.xbutton.x >= BOARD_X
-                        && is_legal_move(coords, board)) {
-                    is_legal_move_read = TRUE;
-                }
-                break;
             case ClientMessage:
                 if (event.xclient.data.l[0] == wm_delete_message) {
                     quit_game(0);
                 }
                 break;
-            case Expose:
-                draw_everything(board, player_id);
-                break;
         }
     }
-    return coords;
+    pthread_exit(NULL);
+}
+
+void create_event_thread() {
+    pthread_t thread;
+    if (pthread_create(&thread, NULL, event_thread, NULL) != 0) {
+        fprintf(stderr, "thread creation failed\n");
+        exit(EXIT_FAILURE);
+    }
 }
 
 
@@ -424,13 +413,33 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     return FALSE;
 }
 
+bool_t is_legal_move(coords_t *coords, int board[BOARD_SIZE][BOARD_SIZE]) {
+    return coords->row >= 0 && coords->row < BOARD_SIZE
+        && coords->column >= 0 && coords->column < BOARD_SIZE
+        && board[coords->row][coords->column] == EMPTY_CELL;
+}
+
+/*
+ * Czeka, aż użytkownik wykona prawidłowy ruch poprzez kliknięcie na wolne
+ * pole na planszy, po czym zwraca współrzędne tego pola.
+ */
+coords_t *read_legal_move(int board[BOARD_SIZE][BOARD_SIZE]) {
+    pthread_mutex_lock(&mutex);
+    do {
+        // czekamy, aż wątek event_thread wpisze do zmiennej globalnej coords
+        // współrzędne prawidłowego ruchu
+        pthread_cond_wait(&user_input, &mutex);
+    } while (!is_legal_move(coords, shared->board) || shared->is_game_over);
+    pthread_mutex_unlock(&mutex);
+    return coords;
+}
+
 /*
  * Zaznacza pole o podanych współrzędnych dla podanego gracza.
  */
 void make_move(coords_t *coords,
         int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     board[coords->row][coords->column] = player_id;
-    free(coords);
 }
 
 /*
@@ -450,8 +459,8 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     } else {
         return; // gramy dalej
     }
+    shared->is_game_over = TRUE;
     if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
-    wait_until_close_window();
 }
 
 /*
@@ -481,6 +490,7 @@ int main() {
     init_semaphores();
     init_window(shared->board, player_id);
 
+    create_event_thread();
     play_tic_tac_toe(shared->board, player_id);
 
     return EXIT_SUCCESS;

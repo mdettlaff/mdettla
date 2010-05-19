@@ -19,7 +19,7 @@ jednocześnie synchronizację dostępu do pamięci współdzielonej.
 3. Opis użytkowania programu
 
 Program można skompilować używając polecenia:
-gcc -Wall -lX11 binary_sem.h binary_sem.c tic_tac_toe.c -o tic_tac_toe
+gcc -Wall -lX11 -lpthread binary_sem.h binary_sem.c tic_tac_toe.c -o tic_tac_toe
 Każdy gracz uruchamia swoją własną instancję programu. Kliknięcie na polu
 planszy powoduje jego zaznaczenie kolorem gracza.
 
