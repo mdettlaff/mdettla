@@ -21,11 +21,12 @@ int set_semvalue(int sem_id, int sem_num, int value) {
     return 1;
 }
 
-void del_semvalue(int sem_id) {
+int del_semvalue(int sem_id) {
     union semun sem_union;
     if (semctl(sem_id, 0, IPC_RMID, sem_union) == -1) {
-        fprintf(stderr, "failed to delete semaphore\n");
+        return 0;
     }
+    return 1;
 }
 
 int semaphore_p(int sem_id, int sem_num) {

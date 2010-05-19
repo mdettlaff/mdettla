@@ -3,6 +3,8 @@
  * Kto pierwszy zaznaczy 5 pól swojego koloru w jednej linii (poziomo,
  * pionowo lub na skos), ten wygrywa.
  *
+ * Program można skompilować używając polecenia:
+ * gcc -Wall -lX11 binary_sem.h binary_sem.c tic_tac_toe.c -o tic_tac_toe
  * Każdy gracz uruchamia swoją własną instancję programu. Kliknięcie na polu
  * planszy powoduje jego zaznaczenie kolorem gracza.
  */
@@ -23,11 +25,13 @@
 #define SEM_KEY 1116 // klucz semafora
 
 #define BOARD_SIZE 12 // plansza ma wymiary BOARD_SIZE x BOARD_SIZE pól
-#define LINE_LEN 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
-#define CELL_SIZE 50 // pole planszy ma wymiary CELL_SIZE x CELL_SIZE pikseli
-#define LEFT_MARGIN 25 // odległość tekstu od lewego brzegu okna
-#define TOP_MARGIN 50 // odległość między planszą a górnym brzegiem okna
+#define LINE_LENGTH 5 // ile pól trzeba zaznaczyć w jednej linii aby wygrać
+#define CELL_SIZE_PX 50 // rozmiar pola planszy w pikselach
+#define BOARD_X 0 // odległość między planszą a lewym brzegiem okna
+#define BOARD_Y 50 // odległość między planszą a górnym brzegiem okna
+#define TEXT_LEFT_MARGIN 25 // odległość tekstu od lewego brzegu okna
 #define BOTTOM_MARGIN 50 // odległość między planszą a dolnym brzegiem okna
+#define BOARD_SIZE_PX BOARD_SIZE * CELL_SIZE_PX // rozmiar planszy w pikselach
 #define EMPTY_CELL 0 // wartość wolnego pola na planszy
 
 
@@ -36,7 +40,7 @@ typedef int bool_t;
 // struktura przechowująca zmienne znajdujące się w pamięci współdzielonej
 typedef struct shared_st {
     int board[BOARD_SIZE][BOARD_SIZE]; // plansza na której odbywa się gra
-    bool_t is_only_one_player;
+    int players_count; // ilu graczy aktualnie bierze udział w grze
 } shared_t;
 // współrzędne pola na planszy, indeksowane od zera
 typedef struct coords_st {
@@ -48,8 +52,7 @@ typedef struct coords_st {
 // zmienne globalne
 int sem_id;
 int shm_id;
-void *shared_memory;
-shared_t *shared_variables;
+shared_t *shared; // pamięć współdzielona
 int player_id; // numer gracza, może być równy 1 lub 2
 
 // zmienne globalne Xlib
@@ -58,7 +61,7 @@ Window window;
 GC gc;
 XColor foreground, color1, color2, dummy;
 XEvent event;
-Atom wmDeleteMessage;
+Atom wm_delete_message;
 
 
 /*===========================================================================*/
@@ -66,57 +69,67 @@ Atom wmDeleteMessage;
 /* współdzielonej.                                                           */
 /*===========================================================================*/
 
-void init_shared_memory() {
-    shm_id = shmget((key_t)SHM_KEY, sizeof(shared_t),
-            0666 | IPC_CREAT);
-    if (shm_id == -1) {
+/*
+ * Tworzy pamięć współdzieloną i zwraca numer gracza. Graczem 1 zostaje ten,
+ * kto pierwszy utworzy pamięć współdzieloną.
+ */
+int init_shared_memory() {
+    int player_id;
+    if ((shm_id = shmget((key_t)SHM_KEY, sizeof (shared_t),
+                    0666 | IPC_CREAT | IPC_EXCL)) != -1) {
+        player_id = 1;
+    } else if ((shm_id = shmget((key_t)SHM_KEY, sizeof (shared_t),
+                    0666 | IPC_CREAT)) != -1) {
+        player_id = 2;
+    } else {
         fprintf(stderr, "shmget failed\n");
         exit(EXIT_FAILURE);
     }
-    shared_memory = shmat(shm_id, (void *)0, 0);
+    void *shared_memory = shmat(shm_id, (void *)0, 0);
     if (shared_memory == (void *)-1) {
         fprintf(stderr, "shmat failed\n");
         exit(EXIT_FAILURE);
     }
-    shared_variables = (shared_t *)shared_memory;
-    int i, j;
-    for (i = 0; i < BOARD_SIZE; i++) {
-        for (j = 0; j < BOARD_SIZE; j++) {
-            (shared_variables->board)[i][j] = EMPTY_CELL;
+    shared = (shared_t *)shared_memory;
+    if (player_id == 1) {
+        int i, j;
+        for (i = 0; i < BOARD_SIZE; i++) {
+            for (j = 0; j < BOARD_SIZE; j++) {
+                (shared->board)[i][j] = EMPTY_CELL;
+            }
         }
+        shared->players_count = 0;
     }
-    shared_variables->is_only_one_player = TRUE;
-}
-
-/*
- * Tworzy semafory i zwraca numer gracza. Graczem 1 zostaje ten, kto pierwszy
- * utworzył semafory.
- */
-int init_semaphores() {
-    int player_id;
-    if ((sem_id = semget((key_t)SEM_KEY, 2, 0666 | IPC_CREAT | IPC_EXCL))
-            != -1) {
-        player_id = 1;
-    } else {
-        sem_id = semget((key_t)SEM_KEY, 2, 0666 | IPC_CREAT);
-        player_id = 2;
-    }
-    if (!set_semvalue(sem_id, 0, 0)) {
-        fprintf(stderr, "failed to initialize semaphore\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!set_semvalue(sem_id, 1, 1)) {
-        fprintf(stderr, "failed to initialize semaphore\n");
+    if (shared->players_count >= 2) {
+        fprintf(stderr, "w grze może brać udział co najwyżej dwóch graczy\n");
         exit(EXIT_FAILURE);
     }
     return player_id;
 }
 
+void init_semaphores() {
+    if ((sem_id = semget((key_t)SEM_KEY, 2, 0666 | IPC_CREAT)) == -1) {
+        fprintf(stderr, "semget failed\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!set_semvalue(sem_id, 0, 0)) {
+        fprintf(stderr, "set_semvalue failed\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!set_semvalue(sem_id, 1, 1)) {
+        fprintf(stderr, "set_semvalue failed\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 void clean_up() {
     printf("usuwam semafory\n");
-    del_semvalue(sem_id);
+    if (!del_semvalue(sem_id)) {
+        fprintf(stderr, "del_semvalue failed\n");
+        exit(EXIT_FAILURE);
+    }
     printf("usuwam pamięć współdzieloną\n");
-    if (shmdt(shared_memory) == -1) {
+    if (shmdt(shared) == -1) {
         fprintf(stderr, "shmdt failed\n");
         exit(EXIT_FAILURE);
     }
@@ -128,8 +141,8 @@ void clean_up() {
 
 void quit_game(int sig) {
     XCloseDisplay(display);
-    if (!shared_variables->is_only_one_player) {
-        shared_variables->is_only_one_player = TRUE;
+    if (shared->players_count > 1) {
+        shared->players_count--;
         // kto wyłącza grę pierwszy, ten zwalnia przeciwnika
         if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
     } else {
@@ -157,9 +170,9 @@ void init_display() {
     window_attributes.background_pixel = XWhitePixel(display, screen);
     window_attributes.override_redirect = False;
 
-    int window_size = BOARD_SIZE * CELL_SIZE;
     window = XCreateWindow(display, XRootWindow(display, screen),
-            100, 100, window_size, window_size + TOP_MARGIN + BOTTOM_MARGIN,
+            100, 100, BOARD_X + BOARD_SIZE_PX,
+            BOARD_Y + BOARD_SIZE_PX + BOTTOM_MARGIN,
             0, depth, InputOutput, visual, CWBackPixel|CWOverrideRedirect,
             &window_attributes);
     XSelectInput(display, window, ExposureMask|ButtonPressMask);
@@ -169,7 +182,6 @@ void init_display() {
     XAllocNamedColor(display, colormap, "red", &color1, &dummy);
     XAllocNamedColor(display, colormap, "blue", &color2, &dummy);
 
-    XMapWindow(display, window);
     gc = DefaultGC(display, screen);
 
     XFontStruct* font_info;
@@ -180,15 +192,15 @@ void init_display() {
     }
     XSetFont(display, gc, font_info->fid);
 
-    wmDeleteMessage = XInternAtom(display, "WM_DELETE_WINDOW", False);
-    XSetWMProtocols(display, window, &wmDeleteMessage, 1);
+    wm_delete_message = XInternAtom(display, "WM_DELETE_WINDOW", False);
+    XSetWMProtocols(display, window, &wm_delete_message, 1);
 }
 
 /*
- * Wyświetla imię gracza nad planszą.
+ * Wyświetla imię gracza nad planszą, w kolorze gracza.
  */
 void draw_player_name(int player_id) {
-    char text[128];
+    char text[32];
     sprintf(text, "Gracz %d", player_id);
     XColor player_color;
     if (player_id == 1) {
@@ -197,12 +209,12 @@ void draw_player_name(int player_id) {
         player_color = color2;
     }
     XSetForeground(display, gc, player_color.pixel);
-    XDrawString(display, window, gc, LEFT_MARGIN, 32, text, strlen(text));
+    XDrawString(display, window, gc, TEXT_LEFT_MARGIN, 36, text, strlen(text));
     XFlush(display);
 }
 
 /*
- * Rysuje planszę.
+ * Wyświetla planszę.
  */
 void draw_board(int board[BOARD_SIZE][BOARD_SIZE]) {
     int i, j;
@@ -210,14 +222,14 @@ void draw_board(int board[BOARD_SIZE][BOARD_SIZE]) {
     // rysuje linie poziome
     for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
-                0, BOTTOM_MARGIN + i * CELL_SIZE,
-                BOARD_SIZE * CELL_SIZE, BOTTOM_MARGIN + i * CELL_SIZE);
+                BOARD_X, BOARD_Y + i * CELL_SIZE_PX,
+                BOARD_X + BOARD_SIZE_PX, BOARD_Y + i * CELL_SIZE_PX);
     }
     // rysuje linie pionowe
     for (i = 0; i < BOARD_SIZE + 1; i++) {
         XDrawLine(display, window, gc,
-                i * CELL_SIZE, BOTTOM_MARGIN,
-                i * CELL_SIZE, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE);
+                BOARD_X + i * CELL_SIZE_PX, BOARD_Y,
+                BOARD_X + i * CELL_SIZE_PX, BOARD_Y + BOARD_SIZE_PX);
     }
     // rysuje pola zaznaczone przez graczy ich kolorami
     for (i = 0; i < BOARD_SIZE; i++) {
@@ -231,8 +243,8 @@ void draw_board(int board[BOARD_SIZE][BOARD_SIZE]) {
             XSetForeground(display, gc, player_color.pixel);
             if (board[i][j] != EMPTY_CELL) {
                 XFillArc(display, window, gc,
-                        j * CELL_SIZE, BOTTOM_MARGIN + i * CELL_SIZE,
-                        CELL_SIZE, CELL_SIZE,
+                        BOARD_X + j * CELL_SIZE_PX, BOARD_Y + i * CELL_SIZE_PX,
+                        CELL_SIZE_PX, CELL_SIZE_PX,
                         0, 360 * 64);
             }
         }
@@ -249,11 +261,11 @@ void draw_info(char *game_info) {
     if (game_info != NULL) {
         info = game_info;
     }
-    XClearArea(display, window, 0, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE + 1,
-            BOARD_SIZE * CELL_SIZE, BOTTOM_MARGIN, False);
+    XClearArea(display, window, BOARD_X, BOARD_Y + BOARD_SIZE_PX + 1,
+            BOARD_SIZE_PX, BOTTOM_MARGIN, False);
     XSetForeground(display, gc, foreground.pixel);
     XDrawString(display, window, gc,
-            LEFT_MARGIN, BOTTOM_MARGIN + BOARD_SIZE * CELL_SIZE + 32,
+            TEXT_LEFT_MARGIN, BOARD_Y + BOARD_SIZE_PX + 36,
             info, strlen(info));
     XFlush(display);
 }
@@ -268,6 +280,7 @@ void draw_everything(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
 }
 
 void init_window(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
+    XMapWindow(display, window);
     XNextEvent(display, &event); // czekamy na pierwsze zdarzenie Expose
     XStoreName(display, window, "Tic Tac Toe");
     draw_info("oczekiwanie na drugiego gracza...");
@@ -279,11 +292,11 @@ void wait_until_close_window() {
         XNextEvent(display, &event);
         switch (event.type) {
             case ClientMessage:
-                if (event.xclient.data.l[0] == wmDeleteMessage) {
+                if (event.xclient.data.l[0] == wm_delete_message) {
                     quit_game(0);
                 }
             case Expose:
-                draw_everything(shared_variables->board, player_id);
+                draw_everything(shared->board, player_id);
                 break;
         }
     }
@@ -300,7 +313,7 @@ bool_t is_legal_move(coords_t *coords, int board[BOARD_SIZE][BOARD_SIZE]) {
  * pole na planszy, po czym zwraca współrzędne tego pola.
  */
 coords_t *read_legal_move(int board[BOARD_SIZE][BOARD_SIZE]) {
-    coords_t *coords = malloc(sizeof(*coords));
+    coords_t *coords = malloc(sizeof (*coords));
     while (XPending(display) > 0) {
         // ignorujemy ruchy wykonane w czasie oczekiwania na ruch przeciwnika
         XNextEvent(display, &event);
@@ -310,14 +323,15 @@ coords_t *read_legal_move(int board[BOARD_SIZE][BOARD_SIZE]) {
         XNextEvent(display, &event);
         switch (event.type) {
             case ButtonPress:
-                coords->row = (event.xbutton.y - BOTTOM_MARGIN) / CELL_SIZE;
-                coords->column = event.xbutton.x / CELL_SIZE;
-                if (is_legal_move(coords, board)) {
+                coords->row = (event.xbutton.y - BOARD_Y) / CELL_SIZE_PX;
+                coords->column = (event.xbutton.x - BOARD_X) / CELL_SIZE_PX;
+                if (event.xbutton.y >= BOARD_Y && event.xbutton.x >= BOARD_X
+                        && is_legal_move(coords, board)) {
                     is_legal_move_read = TRUE;
                 }
                 break;
             case ClientMessage:
-                if (event.xclient.data.l[0] == wmDeleteMessage) {
+                if (event.xclient.data.l[0] == wm_delete_message) {
                     quit_game(0);
                 }
                 break;
@@ -355,9 +369,9 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     bool_t is_line_complete = FALSE;
     // poziomo
     for (i = 0; i < BOARD_SIZE; i++) {
-        for (j = 0; j < BOARD_SIZE - LINE_LEN + 1; j++) {
+        for (j = 0; j < BOARD_SIZE - LINE_LENGTH + 1; j++) {
             is_line_complete = TRUE;
-            for (k = 0; k < LINE_LEN; k++) {
+            for (k = 0; k < LINE_LENGTH; k++) {
                 if (board[i][j + k] != player_id) {
                     is_line_complete = FALSE;
                 }
@@ -368,10 +382,10 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         }
     }
     // pionowo
-    for (i = 0; i < BOARD_SIZE - LINE_LEN + 1; i++) {
+    for (i = 0; i < BOARD_SIZE - LINE_LENGTH + 1; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
             is_line_complete = TRUE;
-            for (k = 0; k < LINE_LEN; k++) {
+            for (k = 0; k < LINE_LENGTH; k++) {
                 if (board[i + k][j] != player_id) {
                     is_line_complete = FALSE;
                 }
@@ -383,11 +397,11 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     }
     // na skos
     is_line_complete = TRUE;
-    for (i = 0; i < BOARD_SIZE - LINE_LEN + 1; i++) {
-        for (j = 0; j < BOARD_SIZE - LINE_LEN + 1; j++) {
+    for (i = 0; i < BOARD_SIZE - LINE_LENGTH + 1; i++) {
+        for (j = 0; j < BOARD_SIZE - LINE_LENGTH + 1; j++) {
             // na skos NW-SE
             is_line_complete = TRUE;
-            for (k = 0; k < LINE_LEN; k++) {
+            for (k = 0; k < LINE_LENGTH; k++) {
                 if (board[i + k][j + k] != player_id) {
                     is_line_complete = FALSE;
                 }
@@ -397,8 +411,8 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
             }
             // na skos NE-SW
             is_line_complete = TRUE;
-            for (k = 0; k < LINE_LEN; k++) {
-                if (board[i + k][j + LINE_LEN - 1 - k] != player_id) {
+            for (k = 0; k < LINE_LENGTH; k++) {
+                if (board[i + k][j + LINE_LENGTH - 1 - k] != player_id) {
                     is_line_complete = FALSE;
                 }
             }
@@ -416,6 +430,7 @@ bool_t is_line_complete(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
 void make_move(coords_t *coords,
         int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     board[coords->row][coords->column] = player_id;
+    free(coords);
 }
 
 /*
@@ -430,7 +445,7 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         draw_info("przegrana");
     } else if (is_board_full(board)) {
         draw_info("remis");
-    } else if (shared_variables->is_only_one_player) {
+    } else if (shared->players_count == 1) {
         draw_info("wygrana walkowerem");
     } else {
         return; // gramy dalej
@@ -443,9 +458,7 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
  * Pętla główna gry.
  */
 void play_tic_tac_toe(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
-    if (player_id != 1) {
-        shared_variables->is_only_one_player = FALSE;
-    }
+    shared->players_count++;
     while (TRUE) {
         if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
         draw_everything(board, player_id);
@@ -464,11 +477,11 @@ int main() {
     signal(SIGINT, quit_game);
 
     init_display();
-    init_shared_memory();
-    player_id = init_semaphores();
-    init_window(shared_variables->board, player_id);
+    player_id = init_shared_memory();
+    init_semaphores();
+    init_window(shared->board, player_id);
 
-    play_tic_tac_toe(shared_variables->board, player_id);
+    play_tic_tac_toe(shared->board, player_id);
 
     return EXIT_SUCCESS;
 }
