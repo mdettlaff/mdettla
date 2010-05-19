@@ -16,7 +16,7 @@ int set_semvalue(int sem_id, int sem_num, int value);
  * The del_semvalue function has almost the same form, except that the call
  * to semctl uses the command IPC_RMID to remove the semaphore's ID.
  */
-void del_semvalue(int sem_id);
+int del_semvalue(int sem_id);
 
 /*
  * semaphore_p changes the semaphore by -1. This is the "wait" operation.
