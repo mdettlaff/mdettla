@@ -132,16 +132,13 @@ void clean_up() {
     printf("usuwam semafory\n");
     if (!del_semvalue(sem_id)) {
         fprintf(stderr, "del_semvalue failed\n");
-        exit(EXIT_FAILURE);
     }
     printf("usuwam pamięć współdzieloną\n");
     if (shmdt(shared) == -1) {
         fprintf(stderr, "shmdt failed\n");
-        exit(EXIT_FAILURE);
     }
     if (shmctl(shm_id, IPC_RMID, 0) == -1) {
         fprintf(stderr, "shmctl(IPC_RMID) failed\n");
-        exit(EXIT_FAILURE);
     }
 }
 
@@ -150,7 +147,7 @@ void quit_game(int sig) {
     if (shared->players_count > 1) {
         shared->players_count--;
         // kto wyłącza grę pierwszy, ten zwalnia przeciwnika
-        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+        semaphore_v(sem_id, 1 - (player_id - 1));
     } else {
         // kto wyłącza grę ostatni, ten sprząta
         clean_up();
@@ -460,7 +457,7 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         return; // gramy dalej
     }
     shared->is_game_over = TRUE;
-    if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+    semaphore_v(sem_id, 1 - (player_id - 1));
 }
 
 /*
@@ -469,7 +466,7 @@ void check_winner(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
 void play_tic_tac_toe(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
     shared->players_count++;
     while (TRUE) {
-        if (!semaphore_p(sem_id, player_id - 1)) exit(EXIT_FAILURE);
+        semaphore_p(sem_id, player_id - 1);
         draw_everything(board, player_id);
         draw_info("twoja kolej");
         check_winner(board, player_id);
@@ -477,7 +474,7 @@ void play_tic_tac_toe(int board[BOARD_SIZE][BOARD_SIZE], int player_id) {
         draw_everything(board, player_id);
         draw_info("oczekiwanie na ruch przeciwnika...");
         check_winner(board, player_id);
-        if (!semaphore_v(sem_id, 1 - (player_id - 1))) exit(EXIT_FAILURE);
+        semaphore_v(sem_id, 1 - (player_id - 1));
     }
 }
 

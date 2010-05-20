@@ -44,10 +44,6 @@ Sytuacja: Zamknięcie okna gry przed zakończeniem rozgrywki.
 Zachowanie programu: Program kończy działanie, a drugi program wyświetla
 komunikat "wygrana walkowerem".
 
-Sytuacja: Nie można utworzyć/usunąć semaforów lub pamięci współdzielonej.
-Zachowanie programu: Wypisanie komunikatu o błędzie na stderr i zakończenie
-pracy programu z kodem błędu.
-
 Sytuacja: Kliknięcie przez gracza poza planszą, lub na zajętym polu.
 Zachowanie programu: Nieprawidłowe ruchy są ignorowane.
 
