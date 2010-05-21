@@ -14,5 +14,5 @@ def main(argv):
     print vigenere_decrypt(ciphertext, key)
 
 if __name__ == '__main__':
-    main(sys.argv[1])
+    main(sys.argv)
 
