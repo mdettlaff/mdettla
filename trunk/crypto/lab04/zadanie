@@ -1,0 +1,6 @@
+Przeszukiwanie wyczerpujące - automat do weryfikacji p. a posteriori.
+
+Dane:
+Plik z kandydatami na tekst jawny (jeden tekst w jednej linii).
+Porównać testy statystyczne (częstotliwość liter, diagrafów, p. warunkowe -
+ciągi Markowa) z grepem stosowanym łącznie ze słownikiem.
