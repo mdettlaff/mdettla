@@ -68,8 +68,7 @@ shareware
 </tr>
 </table>
 
-<br>
-<a href="http://www.nahliksoft.com.pl/phtml/pliki.html" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
+<a href="http://www.nahliksoft.com.pl/phtml/pliki.html" target="_blank">Pobierz ze strony producenta</a>
 
 <br><br>
 Mistrz Klawiatury II jest obecnie jednym z najlepszych dostêpnych na rynku programów, s³u¿±cych do nauki szybkiego pisania na klawiaturze. Zosta³ stworzony przez firmê Nahlik Soft, która zajmuje siê tworzeniem oprogramowania edukacyjnego. Jest dostêpny na licencji shareware, co oznacza, ¿e za jego pe³n± wersjê trzeba zap³aciæ.
@@ -80,7 +79,7 @@ Poza kursami, dobrym sposobem nauki s± dowolne æwiczenia z ró¿nego rodzaju tekst
 <br><br>
 Kolejnym atutem programu (pod warunkiem, ¿e siê zarejestrujesz) jest mo¿liwo¶æ zobaczenia swoich wyników szybko¶ci i poprawno¶ci pisania. S± one przedstawione do¶æ przejrzy¶cie, za pomoc± diagramów s³upkowych. Opcjom programu równie¿ nie mam nic do zarzucenia - umo¿liwiaj± odpowiednie dostosowanie programu, nawet je¶li chcia³by¶ u¿ywaæ bardzo egzotycznego typu klawiatury. Z pewno¶ci± warta uwagi jest pomoc Mistrza Klawiatury II. Wyczerpuje ona chyba wszystkie zagadnienia dotycz±ce szybkiego pisania.
 <br><br>
-Mistrz Klawiatury II to ¶wietny program, dziêki którym ka¿dy mo¿e rozwin±æ umiejêtno¶æ pisania na klawiaturze, niezale¿nie od swojego stopnia zaawansowania. Niestety, dla wielu osób przeszkod± mo¿e byæ cena programu, wynosz±ca oko³o 70 z³.
+Mistrz Klawiatury II to ¶wietny program, dziêki którym ka¿dy mo¿e rozwin±æ umiejêtno¶æ pisania na klawiaturze, niezale¿nie od swojego stopnia zaawansowania. Niestety, dla wielu osób przeszkod± mo¿e byæ cena programu, wynosz±ca 49 z³.
 <br><br>
 JAK KORZYSTAÆ Z PROGRAMU?
 <br><br>
@@ -117,8 +116,7 @@ shareware
 </tr>
 </table>
 
-<br>
-<a href="http://www.nahliksoft.com.pl/phtml/pliki.html" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
+<a href="http://www.idg.pl/ftp/pc_7755/Mistrz.Klawiatury.1.0.html" target="_blank">Pobierz wersjê demo</a>
 
 <br><br>
 Mistrz Klawiatury jest poprzednikiem Mistrza Klawiatury II i - podobnie jak on - s³u¿y do nauki maszynopisania. Ma jednak znacznie mniejsze mo¿liwo¶ci od swego nastêpcy.
@@ -166,7 +164,7 @@ freeware
 </table>
 
 <br>
-<a href="download/q-typing.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (904 kB)</a>
+<a href="download/q-typing.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">Pobierz (904 kB)</a>
 
 <br><br>
 Jeden z moich ulubionych programów do nauki bezwzrokowego pisania na klawiaturze. Wygl±d i struktura programu s± przyjemne dla oka i przejrzyste, podobne do innych aplikacji tej klasy. Mamy wiêc okno, w którym widzimy kolejne linie przepisywanego przez nas tekstu, a pod nimi tekst, który sami wpisujemy. Pod spodem mo¿na wy¶wietliæ klawiaturê, na której pod¶wietlane s± kolejne klawisze, które musimy uderzaæ (opcja dla pocz±tkuj±cych). Mi³ym dodatkiem jest kilka wykresów po prawej stronie, pokazuj±cych prêdko¶ci ¶redni± (liczon± z b³êdami i bez) oraz chwilow±. Oprócz tego widzimy ilo¶æ pope³nionych b³êdów, postêp lekcji oraz pozosta³± ilo¶æ znaków i czas. Je¶li zrobimy z jakiego¶ powodu przerwê w pisaniu, program automatycznie zapauzuje lekcjê, aby nie zniekszta³ciæ naszego wyniku.
@@ -207,7 +205,7 @@ freeware
 </table>
 
 <br>
-<a href="download/kspnk.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (389 kB)</a>
+<a href="download/kspnk.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">Pobierz (389 kB)</a>
 
 <br><br>
 Autorem programu jest Daniel Król, programista z Chorzowa. Prowadzi on tak¿e serwis internetowy <a href="http://www.kspnk.prv.pl">www.kspnk.prv.pl</a>, który po¶wiêcony jest szybkiemu pisaniu na klawiaturze. S± na nim publikowane co jaki¶ czas nowe wersje programu, które mo¿na ¶ci±gn±æ na dysk. Aktualna nosi numer 1.1, natomiast opisywana tutaj to 1.0.
@@ -250,9 +248,9 @@ shareware
 </table>
 
 <br>
-<a href="download/keyspeed.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ WERSJÊ DEMO (1,25 MB)</a>...
+<a href="download/keyspeed.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">Pobierz wersjê demo (1,25 MB)</a>...
 <br>
-&nbsp;...albo <a href="http://www.keyspeed.pl/zamow.php" target="_blank">KUP PE£N¡ WERSJÊ ZA 9 Z£OTYCH</a>
+&nbsp;...albo <a href="http://www.keyspeed.pl/zamow.php" target="_blank">kup pe³n± wersjê za 9 z³otych</a>
 
 <br><br>
 Kolejny program do nauki pisania na klawiaturze stworzony przez m³odego zdolnego programistê - Roberta Najdziona. Na stronie <a href="http://www.keyspeed.prv.pl">www.keyspeed.prv.pl</a> mo¿na dowiedzieæ siê wiêcej o programie, ¶ci±gn±æ jego wersjê demonstracyjn± lub kupiæ pe³n± wersjê za 9 z³otych. Formy p³atno¶ci s± przy tym dogodne: istnieje nawet mo¿liwo¶æ nabycia programu poprzez wys³anie SMSa.
@@ -293,8 +291,7 @@ shareware
 </tr>
 </table>
 
-<br>
-<a href="http://www.accutech.com.pl" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY PRODUCENTA</a>
+<a href="http://www.accutech.com.pl" target="_blank">Pobierz ze strony producenta</a>
 
 <br><br>
 Polski program do nauki pisania na klawiaturze. Tryb nauki wygl±da w nim nieco inaczej ni¿ w pozosta³ych opisywanych tu programach.
@@ -337,7 +334,7 @@ freeware
 </table>
 
 <br>
-<a href="download/klawiaturka.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (547 kB)</a>
+<a href="download/klawiaturka.zip"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">Pobierz (547 kB)</a>
 
 <br><br>
 Klawiaturka! jest nastêpc± programu Klawisz 2000. Na pierwszy rzut oka wygl±da zupe³nie jak poprzednik, ale jest nieco lepszym programem. Jest w nim nie za d³uga instrukcja obja¶niaj±ca, w jaki sposób zabraæ siê do nauki. Posiada mnóstwo lekcji, w których kolejno wprowadzane s± litery i inne znaki. W lekcjach zdaniowych jest niewiele tekstów i s± ma³o interesuj±ce, ale istnieje mo¿liwo¶æ æwiczenia w³asnych tekstów. Mi³ym urozmaiceniem jest gra edukacyjna - rodzaj Tetrisa, w którym trzeba wpisywaæ szybko s³owa zanim spadn± w dó³. Podsumowywuj±c, mo¿na siê nauczyæ za pomoc± tego programu szybkiego pisania, choæ nie ma tu specjalnych fajerwerków.
@@ -369,8 +366,7 @@ freeware (dla czytelników NoName)
 </tr>
 </table>
 
-<br>
-<a href="http://www.nnmag.net/nn/index.php?redir=mod_download.php&amp;id=47" target="_blank"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ ZE STRONY NONAME</a>
+<a href="http://www.nnmag.net/nn/index.php?redir=mod_download.php&amp;id=47" target="_blank">Pobierz ze strony NoName</a>
 
 <br><br>
 Typ licencji, jaki poda³em (freeware dla czytelników NoName) mo¿e byæ niezrozumia³y, wiêc wyja¶niam. Program Klawisz 2000 nie mo¿e byæ rozprowadzany za darmo, ale wyj±tkiem jest niekomercyjny internetowy magazyn NoName, publikuj±cy artyku³y czytelników. Stamt±d w³a¶nie mo¿na ¶ci±gn±æ program bezproblemowo i bez ¿adnych op³at.
@@ -407,7 +403,7 @@ freeware
 </table>
 
 <br>
-<a href="download/klawiatura.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">POBIERZ (118 kB)</a>
+<a href="download/klawiatura.rar"><img src="img/zipicon.gif" width="32" height="30" border="0" alt="zip" hspace="5" align="middle">Pobierz (118 kB)</a>
 
 <br><br>
 Malutki programik z minimaln± liczb± opcji. Posiada do¶æ skromny zestaw lekcji, które jednak pozwalaj± na opanowanie wszystkich znaków na klawiaturze, tak¿e numerycznej. Niestety, tylko jedna z nich zawiera tekst pisany, pozwalaj±cy na utrwalenie umiejêtno¶ci. Jedyn± dodatkow± opcj± jest wy¶wietlenie statystyk. Mimo to "Klawiatura" nadaje siê do wstêpnego æwiczenia szybkiego pisania.
