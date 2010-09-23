@@ -18,6 +18,10 @@
 <br>
 ¦wietna strona umo¿liwiaj±ca æwiczenie pisania na klawiaturze w formie zabawy. Przepisywanie tekstu ma postaæ wy¶cigu, a ranking najlepszych wyników pozwala na porównanie swoich umiejêtno¶ci z innymi uczestnikami. Mo¿na te¿ obejrzeæ swoje statystyki dotycz±ce prêdko¶ci i poprawno¶ci.
 <br><br>
+<a target="_blank" href="http://www.interinfopolska.free.ngo.pl/" class="menu">www.interinfopolska.free.ngo.pl</a>
+<br>
+Strona stowarzyszenia Interinfo Polska, nale¿±cego do ¶wiatowej organizacji Intersteno Group, które zajmuje siê propagowaniem efektywnego pisania na klawiaturze. Mo¿na tam znale¼æ informacje o II Mistrzostwach Polski w pisaniu na komputerze, które odbêd± siê 6 listopada 2010 r. w Tychach.
+<br><br>
 <a target="_blank" href="http://www.nahliksoft.com.pl/" class="menu">www.nahliksoft.com.pl</a>
 <br>
 Strona firmy Nahlik Soft, zajmuj±cej siê tworzeniem oprogramowania edukacyjnego. W jej ofercie znajduj± siê miêdzy innymi programy Mistrz Klawiatury i Mistrz Klawiatury II. Na stronie mo¿na uzyskaæ informacje na ich temat oraz skorzystaæ z pomocy technicznej.
