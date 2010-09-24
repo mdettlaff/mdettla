@@ -16,7 +16,7 @@ def download_webcomic(url, img_regex, download_dir, filename):
             if re.match(img_regex, line):
                 pic_url = re.match(img_regex, line).group(1)
                 return pic_url
-        raise Exception(u'brak obrazów na stronie ' + url)
+        raise Exception('nie znaleziono komiksu na stronie ' + url)
 
     print u'pobieranie ' + filename + '...',; sys.stdout.flush()
     img_url = get_img_url(url, img_regex)
@@ -25,12 +25,10 @@ def download_webcomic(url, img_regex, download_dir, filename):
         if img_url.startswith('/'):
             img_url = img_url[1:]
         img_url = url + '/' + img_url
-    ext = img_url[-3:]
+    ext = img_url[-3:] if img_url[-4] == '.' else 'png'
     if download_dir.endswith('/'):
         download_dir = download_dir[:-1]
     download_file = download_dir + '/' + filename + '.' + ext
-    #print 'img_url =', img_url
-    #print 'download_file =', download_file
     urllib.urlretrieve(img_url, download_file)
     print 'gotowe'
 
@@ -48,4 +46,14 @@ if __name__ == '__main__':
             r'<img src="(.*?)" />', dl_dir, 'dilbert')
     download_webcomic('http://xkcd.com/',
             r'.*embedding\): (.*?)</h3>', dl_dir, 'xkcd')
+    download_webcomic('http://notinventedhe.re/',
+            r'.*<img alt="Not Invented Here.* src="(.*?)".*', dl_dir, 'nih')
+    download_webcomic('http://sinfest.net/',
+            r'.*<img src="(.*?comikaze.*?)".*', dl_dir, 'sinfest')
+    download_webcomic('http://freefall.purrsia.com/',
+            r'.*<img src="(.*?)".*', dl_dir, 'freefall')
+    download_webcomic('http://questionablecontent.net/',
+            r'<img id="strip" src="(.*?)">', dl_dir, 'qc')
+    download_webcomic('http://phdcomics.com/comics.php',
+            r'.*<img src=(.*?comics/archive/phd.*?) .*', dl_dir, 'phdcomics')
 
