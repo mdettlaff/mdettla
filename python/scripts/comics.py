@@ -3,8 +3,8 @@
 
 u"""Ściąga komiksy internetowe do podanego katalogu."""
 
-import re
 import os
+import re
 import sys
 import urllib
 
@@ -14,8 +14,8 @@ def download_webcomic(url, img_regex, download_dir, filename):
     def get_img_url(url, img_regex):
         for line in urllib.urlopen(url).readlines():
             if re.match(img_regex, line):
-                pic_url = re.match(img_regex, line).group(1)
-                return pic_url
+                img_url = re.match(img_regex, line).group(1)
+                return img_url
         raise Exception('nie znaleziono komiksu na stronie ' + url)
 
     print u'pobieranie ' + filename + '...',; sys.stdout.flush()
@@ -25,7 +25,7 @@ def download_webcomic(url, img_regex, download_dir, filename):
         if img_url.startswith('/'):
             img_url = img_url[1:]
         img_url = url + '/' + img_url
-    ext = img_url[-3:] if img_url[-4] == '.' else 'png'
+    ext = img_url[-3:].lower() if img_url[-4] == '.' else 'png'
     if download_dir.endswith('/'):
         download_dir = download_dir[:-1]
     download_file = download_dir + '/' + filename + '.' + ext
@@ -45,15 +45,29 @@ if __name__ == '__main__':
     download_webcomic('http://www.dilbert.com/fast/',
             r'<img src="(.*?)" />', dl_dir, 'dilbert')
     download_webcomic('http://xkcd.com/',
-            r'.*embedding\): (.*?)</h3>', dl_dir, 'xkcd')
+            r'.*embedding\): (.*?)</h3>$', dl_dir, 'xkcd')
     download_webcomic('http://notinventedhe.re/',
-            r'.*<img alt="Not Invented Here.* src="(.*?)".*', dl_dir, 'nih')
+            r'.*<img alt="Not Invented Here.*? src="(.*?)"', dl_dir, 'nih')
     download_webcomic('http://sinfest.net/',
-            r'.*<img src="(.*?comikaze.*?)".*', dl_dir, 'sinfest')
+            r'.*<img src="(.*?comikaze.*?)"', dl_dir, 'sinfest')
     download_webcomic('http://freefall.purrsia.com/',
-            r'.*<img src="(.*?)".*', dl_dir, 'freefall')
+            r'.*<img src="(.*?)"', dl_dir, 'freefall')
     download_webcomic('http://questionablecontent.net/',
-            r'<img id="strip" src="(.*?)">', dl_dir, 'qc')
+            r'<img id="strip" src="(.*?)">$', dl_dir, 'qc')
     download_webcomic('http://phdcomics.com/comics.php',
-            r'.*<img src=(.*?comics/archive/phd.*?) .*', dl_dir, 'phdcomics')
+            r'.*<img src=(.*?comics/archive/phd.*?) ', dl_dir, 'phdcomics')
+    download_webcomic('http://www.penny-arcade.com/comic/',
+            r'\s+<img src="(.*?)"', dl_dir, 'penny_arcade')
+    download_webcomic('http://comics.com/pearls_before_swine/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'pearls')
+    download_webcomic('http://comics.com/scary_gary/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'scary_gary')
+    download_webcomic('http://explosm.net/comics/',
+            r'.*<img.*? src="(.*?files/Comics.*?)"', dl_dir, 'cyanide')
+    download_webcomic('http://www.smbc-comics.com/',
+            r'\s+<img src=\'(.*?)\'><br>$', dl_dir, 'smbc')
+    download_webcomic('http://www.smbc-comics.com/',
+            r'<img src=\'(.*?after.*?)\'>$', dl_dir, 'smbc_bonus')
+    download_webcomic('http://abstrusegoose.com/',
+            r'.*?<img.*? src="(.*?strips.*?)"', dl_dir, 'abstrusegoose')
 
