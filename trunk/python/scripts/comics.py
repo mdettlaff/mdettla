@@ -16,21 +16,23 @@ def download_webcomic(url, img_regex, download_dir, filename):
             if re.match(img_regex, line):
                 img_url = re.match(img_regex, line).group(1)
                 return img_url
-        raise Exception('nie znaleziono komiksu na stronie ' + url)
 
     print u'pobieranie ' + filename + '...',; sys.stdout.flush()
     img_url = get_img_url(url, img_regex)
-    if not img_url.startswith('http'):
-        url = re.sub(r'(http://.*?)/.*', '\\1', url)
-        if img_url.startswith('/'):
-            img_url = img_url[1:]
-        img_url = url + '/' + img_url
-    ext = img_url[-3:].lower() if img_url[-4] == '.' else 'png'
-    if download_dir.endswith('/'):
-        download_dir = download_dir[:-1]
-    download_file = download_dir + '/' + filename + '.' + ext
-    urllib.urlretrieve(img_url, download_file)
-    print 'gotowe'
+    if img_url is None:
+        print u'nie znaleziono komiksu na stronie ' + url
+    else:
+        if not img_url.startswith('http'):
+            url = re.sub(r'(http://.*?)/.*', '\\1', url)
+            if img_url.startswith('/'):
+                img_url = img_url[1:]
+            img_url = url + '/' + img_url
+        ext = img_url[-3:].lower() if img_url[-4] == '.' else 'png'
+        if download_dir.endswith('/'):
+            download_dir = download_dir[:-1]
+        download_file = download_dir + '/' + filename + '.' + ext
+        urllib.urlretrieve(img_url, download_file)
+        print u'OK'
 
 
 if __name__ == '__main__':
@@ -70,4 +72,6 @@ if __name__ == '__main__':
             r'<img src=\'(.*?after.*?)\'>$', dl_dir, 'smbc_bonus')
     download_webcomic('http://abstrusegoose.com/',
             r'.*?<img.*? src="(.*?strips.*?)"', dl_dir, 'abstrusegoose')
+    download_webcomic('http://qwantz.com/index.php',
+            r'.*<img src="(.*?)" class="comic"', dl_dir, 'dinosaur')
 
