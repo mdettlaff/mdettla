@@ -7,19 +7,22 @@ import os
 import re
 import sys
 import urllib
+import urllib2
 
 
-def download_webcomic(url, img_regex, download_dir, filename):
+def download_webcomic(url, img_regex, download_dir, filename, def_ext='png'):
 
     def get_img_url(url, img_regex):
-        for line in urllib.urlopen(url).readlines():
+        request = urllib2.Request(url)
+        request.add_header('User-Agent', 'Mozilla/5.0')
+        for line in urllib2.urlopen(request).readlines():
             if re.match(img_regex, line):
                 img_url = re.match(img_regex, line).group(1)
                 return img_url
 
     print u'pobieranie ' + filename + '...',; sys.stdout.flush()
     img_url = get_img_url(url, img_regex)
-    if img_url is None:
+    if img_url is None or len(img_url) < 4:
         print u'nie znaleziono komiksu na stronie ' + url
     else:
         if not img_url.startswith('http'):
@@ -27,7 +30,7 @@ def download_webcomic(url, img_regex, download_dir, filename):
             if img_url.startswith('/'):
                 img_url = img_url[1:]
             img_url = url + '/' + img_url
-        ext = img_url[-3:].lower() if img_url[-4] == '.' else 'png'
+        ext = img_url[-3:].lower() if img_url[-4] == '.' else def_ext
         if download_dir.endswith('/'):
             download_dir = download_dir[:-1]
         download_file = download_dir + '/' + filename + '.' + ext
@@ -74,4 +77,11 @@ if __name__ == '__main__':
             r'.*?<img.*? src="(.*?strips.*?)"', dl_dir, 'abstrusegoose')
     download_webcomic('http://qwantz.com/index.php',
             r'.*<img src="(.*?)" class="comic"', dl_dir, 'dinosaur')
+    download_webcomic('http://gocomics.com/garfield/',
+            r'\s+<link rel="image_src" href="(.*?)" />$', dl_dir, 'garfield',
+            'gif')
+    download_webcomic('http://userfriendly.org/',
+            r'.*<IMG ALT="Latest Strip".*? SRC="(.*?)"', dl_dir, 'uf')
+    download_webcomic('http://comics.com/monty/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'monty')
 
