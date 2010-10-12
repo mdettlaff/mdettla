@@ -1,0 +1,67 @@
+<title>Christoph Schwarzweller: Haskell</title>
+<link rel="stylesheet" type="text/css" href="../cs.css"/>
+</head>
+
+<body class="main">
+
+	<br>
+	<H2> Zadania (Haskell) </H2>
+	<br>
+	<ol>
+		<li>  Jakie s&#x0105; warto&#x015B;ci nast&#x0119;puj&#x0105;cych wyra&#x017C;e&#x0144;?
+		<br><br>
+		<pre>
+> 10 <br><br>
+> 5 + 3 + 4 <br><br>
+> 9 - 1  <br><br>
+> 6 / 2 <br><br>
+> 2 * 3 + 4 * 6 <br><br>
+> let a = 3 in a + 1 <br><br>
+> let a = 1 in let b = a + 1 in a + b + a * b <br><br>
+> let square n = n * n in square 4 <br><br>
+> let fac n = if n == 0 then 1 else n * fac (n-1) in fac 5 <br><br>
+
+</pre>
+
+		<li> Prosz&#x0119; napisa&#x0107; funkcje
+		<tt>smaller x y</tt>, <tt>greater x y</tt>, <tt>equal x y</tt>, <tt>smaller_equal x y</tt>, <tt>greater_equal x y</tt> oraz <tt>not_equal x y</tt>.
+		Nale&#x017C;y z wbudowanych funkcji u&#x017C;ywa&#x0107; wy&#x0142;&#x0105;cznie funckcj&#x0119; <tt><</tt> (oraz predykaty oczywi&#x015B;cie). <br><br>
+
+		<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>call_with_5 f</tt>, kt&#x00F3;rej warto&#x015B;&#x0107; jest warto&#x015B;ci&#x0105; funkcji f dla argumentu <tt>5</tt>.
+		<pre>Przyk&#x0142;ad: > call_with_5 square
+          25
+</pre>
+		Jaka jest warto&#x015B;&#x0107; wyra&#x017C;enia <tt>call_with_5 call_with_5</tt>? <br><br>
+
+		<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>same_values p1 p2 x y</tt>, kt&#x00F3;rej warto&#x015B;&#x0107; jest <tt>True</tt>, je&#x017C;eli <tt>p1(x,y)</tt> i <tt>p2(x,y)</tt> maj&#x0105; t&#x0105; sam&#x0105; warto&#x015B;&#x0107; i <tt>False</tt> w przecziwnym przypadku.
+		<pre>Przyk&#x0142;ady: > same_values plus times 2 3
+           False
+           > same_values plus times 2 2
+           True
+           > same_values equal not_equal 2 4
+           False
+</pre>
+
+		<li> Prosz&#x0119; napisa&#x0107; funkcje <tt>odd n</tt> oraz <tt>even n</tt>, kt&#x00F3;re sprawdzaj&#x0105;, czy liczba naturalna <tt>n</tt> jest nieparzysta wzgl&#x0119;dnie parzysta.
+		        Nale&#x017C;y u&#x017C;ywa&#x0107; wy&#x0142;&#x0105;cznie funkcje <tt>True</tt>, <tt>False</tt>, <tt>0</tt>, <tt>1</tt> oraz "<tt>-1</tt>".<br><br>
+
+
+      <li>  Prosz&#x0119; napisa&#x0107; funkcje <tt>nwd a b</tt> oraz <tt>nww a b</tt>, kt&#x00F3;rych warto&#347;ciami s&#261; najwi&#281;kszy wsp&#243;lny dzielnik i najmniejsza wsp&#243;lna wielokrotno&#347;&#263;.
+      <br><br>
+
+      <li>  Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>kwad a b c</tt>, kt&#243;ra obliczy miejsca zerowe r&#243;wnania kwadratowego <tt>ax^2 + bx + c</tt> dla danych <tt>a</tt>, <tt>b</tt> i <tt>c</tt>. <br><br>
+
+       <li> Prosz&#x0119; napisa&#x0107; rekurencyjn&#x0105; oraz iteracyn&#x0105; funkcj&#x0119; <tt>fib n</tt>, kt&#x00F3;ra obliczy <tt>n</tt>-t&#x0105; liczb&#x0119; Fibonacci. <br><br>
+
+
+      <li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>Hanoi n</tt>, kt&#x00F3;ra rozwi&#x0105;zuje problem Wie&#x017C;y Hanoi dla <tt>n</tt> kr&#x0105;&#x017c;k&#x00F3;w. <br><br>
+
+   <li>  Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>Pascal n</tt>, kt&#243;rej warto&#347;ci&#261; jest <tt>n</tt>-ty wiersz tr&#243;jk&#261;ta Pascala.
+         <br><br>
+
+
+ </ol>
+ </body>
+ </html>
+
+
