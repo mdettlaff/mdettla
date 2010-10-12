@@ -1,0 +1,282 @@
+<html>
+<head>
+<title>Christoph Schwarzweller: Haskell</title>
+<link rel="stylesheet" type="text/css" href="../cs.css"/>
+</head>
+
+<body class="main">
+
+<br>
+<H2> Zadania (Haskell) </H2>
+<br>
+<ol>
+<li>  Jakie s&#x0105; warto&#x015B;ci nast&#x0119;puj&#x0105;cych wyra&#x017C;e&#x0144;?
+<br><br>
+<pre>
+> 10 <br><br>
+> 5 + 3 + 4 <br><br>
+> 9 - 1  <br><br>
+> 6 / 2 <br><br>
+> 2 * 3 + 4 * 6 <br><br>
+> let a = 3 in a + 1 <br><br>
+> let a = 1 in let b = a + 1 in a + b + a * b <br><br>
+> let square n = n * n in square 4 <br><br>
+> let fac n = if n == 0 then 1 else n * fac (n-1) in fac 5 <br><br>
+</pre>
+	
+<li> Prosz&#x0119; napisa&#x0107; funkcje 
+<tt>smaller x y</tt>, <tt>greater x y</tt>, <tt>equal x y</tt>, <tt>smaller_equal x y</tt>, <tt>greater_equal x y</tt> oraz <tt>not_equal x y</tt>.
+Nale&#x017C;y z wbudowanych funkcji u&#x017C;ywa&#x0107; wy&#x0142;&#x0105;cznie funckcj&#x0119; <tt><</tt> (oraz predykaty oczywi&#x015B;cie). <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>call_with_5 f</tt>, kt&#x00F3;rej warto&#x015B;&#x0107; jest warto&#x015B;ci&#x0105; funkcji f dla argumentu <tt>5</tt>.
+<pre>Przyk&#x0142;ad: > call_with_5 square
+          25
+</pre>
+Jaka jest warto&#x015B;&#x0107; wyra&#x017C;enia <tt>call_with_5 call_with_5</tt>? <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>same_values p1 p2 x y</tt>, kt&#x00F3;rej warto&#x015B;&#x0107; jest <tt>True</tt>, je&#x017C;eli <tt>p1(x,y)</tt> i <tt>p2(x,y)</tt> maj&#x0105; t&#x0105; sam&#x0105; warto&#x015B;&#x0107; i <tt>False</tt> w przecziwnym przypadku.
+<pre>Przyk&#x0142;ady: > same_values plus times 2 3
+           False
+           > same_values plus times 2 2
+	   True
+           > same_values equal not_equal 2 4
+           False
+</pre>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcje <tt>odd n</tt> oraz <tt>even n</tt>, kt&#x00F3;re sprawdzaj&#x0105;, czy liczba naturalna <tt>n</tt> jest nieparzysta wzgl&#x0119;dnie parzysta.
+	Nale&#x017C;y u&#x017C;ywa&#x0107; wy&#x0142;&#x0105;cznie funkcje <tt>True</tt>, <tt>False</tt>, <tt>0</tt>, <tt>1</tt> oraz "<tt>-1</tt>".<br><br>
+
+	<li>  Prosz&#x0119; napisa&#x0107; funkcje <tt>nwd a b</tt> oraz <tt>nww a b</tt>, kt&#x00F3;rych warto&#347;ciami s&#261; najwi&#281;kszy wsp&#243;lny dzielnik i najmniejsza wsp&#243;lna wielokrotno&#347;&#263;.
+<br><br>
+<li> U&#380;ywaj&#261;c reprezentacji <tt>(a,b)</tt> dla liczby wymiernej <tt>a/b</tt> prosz&#281; zdefiniowa&#263; dodawanie, odejmowanie, mno&#380;enie i dzielenie dla liczb wymiernych. <br><br>
+
+<li>  Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>kwad a b c</tt>, kt&#243;ra obliczy miejsca zerowe r&#243;wnania kwadratowego <tt>ax^2 + bx + c</tt> dla danych <tt>a</tt>, <tt>b</tt> i <tt>c</tt>. <br><br>
+
+<li>  Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>Pascal n</tt>, kt&#243;rej warto&#347;ci&#261; jest <tt>n</tt>-ty wiersz tr&#243;jk&#261;ta Pascala.
+<br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>Hanoi n</tt>, kt&#x00F3;ra rozwi&#x0105;zuje problem Wie&#x017C;y Hanoi dla <tt>n</tt> kr&#x0105;&#x017c;k&#x00F3;w. <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; rekurencyjn&#x0105; oraz iteracyn&#x0105; funkcj&#x0119; <tt>fib n</tt>, kt&#x00F3;ra obliczy <tt>n</tt>-t&#x0105; liczb&#x0119; Fibonacci. <br><br>
+
+<li> Pot&#x0119;gowanie b^e mo&#x017C;na szybko wykona&#x0107; u&#x017C;ywaj&#x0105;c b^e = (b^(e/2))^2.
+Prosz&#x0119; napisa&#x0107; rekurencyjn&#x0105; oraz iteracyjn&#x0105; funkcj&#x0119; <tt>exp b e</tt> na podstawie tej w&#x0142;a&#x015B;ciwo&#x015B;ci.
+<br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; nast&#x0119;puj&#x0105;ce funkcje dla list: <br><br>
+a) <tt>append l m</tt>, kt&#x00F3;ra konkatenuje listy <tt>l</tt> i <tt>m</tt>.<br><br>
+b) <tt>reverse l</tt>, kt&#x00F3;ra przewraca list&#x0119; <tt>l</tt>.<br><br>
+c) <tt>last l</tt>, kt&#x00F3;ra znajduje ostatni element w liscie <tt>l</tt>.<br><br>
+d) <tt>delete x l</tt>, kt&#x00F3;ra skasuje element <tt>x</tt> z listy <tt>l</tt>.<br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt> my_map f l</tt>, kt&#x00F3;rej warto&#x015B;ci&#x0105; jest lista warto&#x015B;ci <tt>f(e)</tt> dla wszystkich element&#x00F3;w <tt>e</tt> w liscie <tt>l</tt>. <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt> permutation l</tt>, kt&#x00F3;rej warto&#x015B;ci&#x0105; jest lista wszystkich permutacji element&#x00F3;w listy <tt>l</tt>. <br><br> 
+
+<li> Prosz&#x0119; implementowa&#x0107; arytmetyk&#x0119; liczb zespolonych <br><br>
+a) u&#x017C;ywaj&#x0105;c metod&#x0119; "mainfest types". <br><br>
+b) u&#x017C;ywaj&#x0105;c metod&#x0119; "message passing". <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>product term a next b</tt> analogicznie do funkcji <tt>sum</tt> z wyk&#x0142;adu.
+Prosz&#x0119; pokazywa&#x0107;, jak u&#x017C;ywaj&#x0105;c <tt> product</tt> mo&#x017C;na definiowa&#x0107; funkcj&#x0119; <tt>silnia</tt> oraz przybli&#x017C;a&#x0107; <FONT face=Symbol size=2>p</FONT> na podstawie formu&#x0142;y &nbsp;
+<FONT face=Symbol size=2>p</FONT>/4 = 2 &middot; 4 &middot; 4 &middot; 6 &middot; 6 &middot; 8 &middot;&middot;&middot; / 3 &middot; 3 &middot; 5 &middot; 5 &middot; 7 &middot; 7 &middot;&middot;&middot; . <br><br>
+
+<li> Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>accumulate combiner null-value term a next b</tt>, kt&#x00F3;ra jest uog&#x00F3;lnieniem funkcji <tt>sum</tt> i <tt>prod</tt>.
+Argumenty <tt>term</tt>, <tt>next</tt>, <tt>a</tt> i <tt>b</tt> zachowuj&#x0105; to same znaczenie ni&#x017C; w funkcjach <tt>sum</tt> i <tt>prod</tt>.
+<tt>combiner</tt> jest dwuargumentow&#x0105; funkcj&#x0105;, kt&#x00F3;ra opisuje, jak <tt>term a</tt> zostaje dodane do akkumulacji dalszych term&#x00F3;w.
+<tt>null-value</tt> jest warto&#x015B;ci&#x0105; inicjaln&#x0105; do u&#x017C;ywania w ko&#x0144;cowym przypadku. <br>
+Prosz&#x0119; pokazywa&#x0107;, jak mo&#x017C;na definiowa&#x0107; funkcje <tt>sum</tt> i <tt>prod</tt> u&#x017C;ywaj&#x0105;c <tt>accumulate</tt>.
+Prosz&#x0119; te&#x017C; napisa&#x0107; iteracyjn&#x0105; wersj&#x0119; funkcji <tt>accumulate</tt>. <br><br>
+
+<li> Nawet funkcj&#x0119; <tt>accumulate</tt> mo&#x017C;na dalej uog&#x00F3;lni&#x0107;.
+Prosz&#x0119; napisa&#x0107; funkcj&#x0119; <tt>filter_accumulate</tt>, kt&#x00F3;ra ma dodatkowy argument <tt>pred</tt>.
+<tt>pred</tt> jest (jednoargumentowym) predykatem a <tt>filter_accumulate</tt> dodaje <tt>term a</tt> do wynika tylko, je&#x017C;eli <tt>a</tt> spe&#x0142;nie predykat <tt>pred</tt>.  <br>
+U&#x017C;ywaj&#x0105;c <tt>filter_accumulate</tt> prosz&#x0119; obliczy&#x0107; sum&#x0119; kwadrat&#x00F3;w liczb pierwszych w interwale [<tt>a</tt>,<tt>b</tt>]
+oraz produkt wszystkich liczb naturalnych <tt>i</tt> mniejsze ni&#x017C; <tt>n</tt>, takie &#x017C;e <tt> nwd(i,n) = 1</tt>. <br> <br>
+
+<li> W Haskell ju&#380; zdefiniowane s&#261; funkcje <tt>foldl</tt> i 
+<tt>foldr</tt> przez
+<pre>foldl f e []     = e                          foldr f e []     = e
+foldl f e (x:xs) = foldl f (f e x) xs         foldr f e (x:xs) = f x (foldr f e xs)
+</pre>
+Prosz&#x0119; zdefiniowa&#263; funkcje <tt>length</tt>, <tt>and</tt> (dla listy warto&#347;ci boole'owskich), <tt>sum</tt>, <tt>prod</tt>, <tt>map</tt> i <tt>reverse</tt> u&#380;ywaj&#261;c funkcje <tt>foldl</tt> i <tt>foldr</tt>. 
+<br><br>
+
+<li> Funkcja <tt>flatten :: [[a]] -> [a]</tt> transformuje list&#x0119; list do zwyk&#322;ej listy.
+<pre>Przyk&#322;ad: > flatten [[1,2,3], [8,9], [4,6]]
+          [1,2,3,8,9,4,6]
+</pre>
+Prosz&#x0119; t&#261; funkcj&#x0119; napisa&#263; raz "r&#x0119;cznie" i raz u&#380;ywaj&#261;c funkcje <tt>fold</tt> z zadania 20.  
+<br><br>
+
+<li> a) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>insertionsort :: [a] -> [a]</tt>.
+<br><br>
+b) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>insertionsort :: (a -> a -> Bool) -> [a] -> [a]</tt>.
+<br><br>
+Prosz&#x0119; wykonywa&#263; a) i b) raz "r&#x0119;cznie" i raz u&#380;ywaj&#261;c funkcje <tt>fold</tt> z zadania 20.
+<br><br>
+
+<li> Prosz&#x0119; napisa&#263; funkcj&#x0119; <tt> dz</tt>, kt&#x00F3;ra realizuje schemat do rozwi&#261;zania problem&#x00F3;w typu "dziel i zwyci&#x0119;&#380;aj" (divide and conquer) na abstrakcyjnym po&#380;omie.
+<tt>dz</tt> ma u&#380;ywa&#263; nast&#x0119;puj&#261;ce argumenty: <br><br>
+<ol> 
+<li> <tt>test</tt>, kt&#x00F3;ry sprawdza czy przypadek jest triwialny
+<li> <tt>koniec</tt>, kt&#x00F3;ry rozwi&#261;zuje triwialny przypadek
+<li> <tt>dziel</tt>, kt&#x00F3;ry dzieli problem do podproblemow
+<li> <tt>po&#322&#261;cz</tt>, kt&#x00F3;ry po&#322&#261;czy rozwi&#261;zania podproblem&#x00F3;w.
+</ol>
+<br>
+Prosz&#x0119; zdefiniowa&#263; funkcje <tt>quicksort</tt> i <tt>mergesort</tt> u&#380;ywaj&#261;c funkcj&#x0119; <tt>dz</tt>.
+<br><br>
+
+<li> Niech b&#x0119;d&#261; dane nast&#x0119;puj&#261;ce wyra&#380;enia. <br>
+<br>
+a)  &nbsp; <tt> f 7 </tt> <br>
+b)  &nbsp; <tt> f 7 (g 'x') </tt> <br>
+c)  &nbsp; <tt> f (g x) </tt> <br>
+d)  &nbsp; <tt> add (f x) (g x) </tt> <br>
+<br>
+Prosz&#x0119; obliczy&#263; typy tych wyra&#380;e&#x0144; u&#380;ywaj&#261;c inferencj&#x0119; typ&#x00F3;w.
+<br><br> 
+
+<li> Niech b&#x0119;d&#261; dane nast&#x0119;puj&#261;ce definicje.
+<pre> a) append [] l     = l                         b) fun []     = []
+    append (x:xs) l = x : (append xs l)            fun (x:xs) = 1 + (fun x) + (fun xs)
+</pre>
+Prosz&#x0119; obliczy&#263; typy tych funkcji u&#380;ywaj&#261;c inferencj&#x0119; typ&#x00F3;w.
+<br><br>
+
+<li> Pary i ich selektory mo&#380;na zdefiniowa&#263; bez konstruktor&#x00F3;w:
+<pre> mkPair a b sel = sel a b
+ first p        = p (\x y -> x)
+ second p       = p (\x y -> y) 
+</pre>
+Niech te&#380; b&#x0119;dzie dana  nast&#x0119;puj&#261;ca funkcja.
+<pre> pairId p = mkPair (first p) (second p)
+</pre>
+Prosz&#x0119; obliczy&#263; typ funkcji <tt>pairId</tt> u&#380;ywaj&#261;c inferencj&#x0119; typ&#x00F3;w.
+Mo&#380;na u&#380;ywa&#263; nast&#x0119;puj&#261;ce za&#x0142;o&#380;enia.
+<pre> first  :: ((a1 -> b1 -> a1) -> c1) -> c1
+ second :: ((a2 -> b2 -> b2) -> c2) -> c2
+ mkPair :: a3 -> b3 -> (a3 -> b3 -> c3) -> c3
+</pre>
+Dodoatkowo prosz&#x0119; pokaza&#263;, &#380;e <tt>first :: ((a1 -> b1 -> a1) -> c1) -> c1</tt>.
+<br><br>
+
+<li> a) Prosz&#x0119; napisa&#263; funkcj&#x0119; <tt> pozycja</tt>, kt&#x00F3;ra znajduje pozycj&#x0119; elementu <tt>x</tt> w li&#x015B;cie <tt>l</tt>.
+<br><br> 
+b) Prosz&#x0119; napisa&#263; funkcj&#x0119; <tt> drop</tt>, kt&#x00F3;ra eliminuje pierwsze <tt>n</tt> elementy z listy <tt>l</tt>.
+<br><br>
+Nale&#380;y u&#380;ywa&#263; typ <tt> Maybe a</tt>.
+<br><br>
+
+<li> Niech b&#x0119;dzie dany nast&#x0119;puj&#261;cy typ dla drzew binarnych.
+<pre> data BinTree a = Leaf a | Node (BinTree a) (BinTree a)
+</pre>
+Prosz&#x0119; napisa&#263; modu&#x0142; <tt>BinTree</tt> z funkcjami <br><br>
+&nbsp;&nbsp;a) <tt>heightBinTree</tt>, kt&#x00F3;ra obliczy g&#x0142;&#x0119;boko&#x015B;&#x0107; drzewa. <br><br>
+&nbsp;&nbsp;b) <tt>sizeBinTree</tt>, kt&#x00F3;ra obliczy ilo&#x015B;&#x0107; w&#x0119;z&#x0142;&#x00F3;w w drzewie. <br><br>
+&nbsp;&nbsp;c) <tt> sumBinTree</tt>, kt&#x00F3;ra obliczy sum&#x0119; element&#x00F3;w w drzewie. <br><br>
+&nbsp;&nbsp;d) <tt> postBinTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku postfiksowym.<br><br>
+Nale&#380;y do tego u&#380;ywa&#263; nadaj&#261;ce si&#x0119; funkcje <tt>mapBinTree</tt> i <tt>foldBinTree</tt>. <br><br>
+
+<li> Niech b&#x0119;dzie dany nast&#x0119;puj&#261;cy typ dla drzew og&#x00F3;lnych.
+<pre> data Tree a = Node a [Tree a]
+</pre>
+Prosz&#x0119; napisa&#263; modu&#x0142; <tt>Tree</tt> z funkcjami <br><br>
+&nbsp;&nbsp;a) <tt>sizeTree</tt>, kt&#x00F3;ra obliczy ilo&#x015B;&#x0107; w&#x0119;z&#x0142;&#x00F3;w w drzewie. <br><br>
+&nbsp;&nbsp;b) <tt> sumTree</tt>, kt&#x00F3;ra obliczy sum&#x0119; element&#x00F3;w w drzewie. <br><br>
+&nbsp;&nbsp;c) <tt> postTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku postfiksowym.<br><br>
+&nbsp;&nbsp;d) <tt> inTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku infiksowym.<br><br>
+Nale&#380;y do tego u&#380;ywa&#263; nadaj&#261;ce si&#x0119; funkcje <tt>mapTree</tt> i <tt>foldTree</tt>. <br><br>
+
+<li> Prosz&#x0119; napisa&#263; modu&#x0142; <tt>Set</tt> z funkcjami <tt>member</tt>,
+ <tt>subset</tt>, <tt>union</tt>, <tt>intersection</tt> oraz <tt>delete</tt>.
+<br><br>
+
+<li> Prosz&#x0119; zdefiniowa&#263; drzewa z zbiorami na w&#x0119;z&#x0142;ach
+przy pomocy modu&#x0142;&#x00F3;w <tt>Tree</tt> i <tt>Set</tt> oraz funkcje <br><br>
+&nbsp;&nbsp;a) <tt> deleteTree</tt>, kt&#x00F3;ra eliminuje dany element <tt>x</tt> z ka&#x017C;dego zbioru w drzewa.<br><br>
+&nbsp;&nbsp;b) <tt>unionTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest
+lista wszystkich element&#x00F3;w drzewa. <br><br>
+&nbsp;&nbsp;c) <tt> allTree</tt>, kt&#x00F3;ra sprawdza, czy dany element <tt>x</tt> znajduje si&#x0119; w ka&#x017C;dym zbiorze w drzewa.  
+<br><br>
+
+<li> Prosz&#x0119; zdefiniowa&#263; typ drzew binarnych <tt>BinTree</tt> z zadania 28 jako
+instancj&#x0119; klas <tt>Show</tt>, <tt>Eq</tt> oraz <tt>Ord</tt>.
+<br><br>
+
+<li>
+a) Prosz&#x0119; zdefiniowa&#263; klas&#x0119; <tt>Queue</tt> kolejek z zwyk&#x0142;ami
+operacjami
+<tt>isEmptyQueue</tt>, <tt>enQueue</tt>, <tt>deq<F11>Queue</tt> oraz <tt>getFrontQueue</tt>.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; te&#380; zdefiniowa&#263; funkcj&#x0119; <tt>showQueue</tt> razem
+z default-implementacj&#x0119;. <br><br>
+b) Prosz&#x0119; zdefiniowa&#263; instancj&#x0119; klasy <tt>Queue</tt>
+u&#380;ywaj&#261;c konstruktory. <br><br>
+c) Prosz&#x0119; zdefiniowa&#263; instancj&#x0119; klasy <tt>Queue</tt>
+u&#380;ywaj&#261;c listy jako reprezentacj&#x0119; kolejki. <br><br>
+
+<li> Niech b&#x0119;dzie dany &#955;-term  
+<tt> N <font face="Symbol">&#186;</font> </tt>&#955;x. (&#955;x. xy) (x (&#955;x. &#955;y. yzx)).
+Prosz&#x0119; obliczy&#263; zbi&#x00F3;r wolnych zmiennych termu <tt>N</tt>.
+ <br><br>
+
+<li> Prosz&#x0119; ewaluowa&#263; nast&#x0119;puj&#261;ce &#955;-termy.
+<br><br>
+a) (&#955;x. x) (xy) <br><br>
+b) (&#955;x. xy) (&#955;x. xz) <br><br>
+c) (&#955;x. &#955;y. xy) (xy) <br><br>
+
+<li> Zadanie to zajmuje si&#x0119; implementacj&#261; ewaluacji &#955;-term&#x00F3;w w Haskell'u.
+<br><br>
+a) Prosz&#x0119; zdefiniowa&#263; typ reprezentuj&#261;cy &#955;-termy.
+<br><br>
+b) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>subst</tt>, kt&#x00F3;ra
+realizuje substytucj&#x0119; <tt>M[x/N]</tt>.
+Mo&#x017C;na za&#x0142;o&#x017C;y&#263;, &#x017C; nie ma wolnych zmiennych.
+<br><br>
+c) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>ewal</tt>, kt&#x00F3;ra ewaluuje &#955;-termy.
+<br><br>
+
+<li> a) Niech b&#x0119;d&#261; dane nast&#x0119;puj&#261;ce &#955;-termy.
+<br><br>
+&nbsp;&nbsp;
+&nbsp;&nbsp;<tt> true <font face="Symbol">&#186;</font> </tt>&#955;x. &#955;y. x
+<br><br>
+&nbsp;&nbsp;
+&nbsp;&nbsp;<tt> false <font face="Symbol">&#186;</font> </tt>&#955;x. &#955;y. y
+<br><br>
+&nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; znale&#x017A;&#263; &#955;-termy <tt>not</tt> i <tt>xor</tt>
+realizuj&#261;ce operacje bool'owskie negacj&#x0119; i xor.
+<br><br>
+b) Niech b&#x0119;dzie </tt>&#955;f. &#955;x. f<sup>n</sup> x
+ reprezentacj&#261; liczby naturalnej <tt> n</tt>.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; znale&#x017A;&#263; &#955;-termy <tt>add</tt> i <tt>mult</tt>
+realizuj&#261;ce operacje dodawanie i mno&#x017C;enie dwuch liczb naturalnych.
+<br><br>
+
+<li> Niech b&#x0119;d&#261; dane &#955;-termy
+<tt> A <font face="Symbol">&#186;</font>  </tt>&#955;x. &#955;y. y(xxy)
+oraz <tt> Z <font face="Symbol">&#186;</font> AA</tt>.
+Prosz&#x0119; pokaza&#263;, &#x017C;e <tt>ZF</tt> redukuje si&#x0119; do
+<tt>F(ZF)</tt>.<br>
+Czy to te&#x017C; prawda dla kombinatora punktu sta&#x0142;ego <tt>Y</tt>?
+<br><br>
+
+<li> Dla dowolnych funkcji <tt>g(x)</tt>, <tt>f(x,y,z)</tt> i <tt>h(x,y)</tt> schematy rekursji prostej i minimalizacji s&#x0105; dane przez
+<pre>primRek(x,y) = g(x),                <I>je&#x017C;eli <tt>y = 0</tt></I>                 &mu;h(x) = min{ i | h(x,i) = 0 }, <I>je&#x017C;eli minimum to istnieje</I>
+primRek(x,y) = f(x,y-1,Rek(x,y-1)), <I>je&#x017C;eli <tt>y > 0</tt></I>                 &mu;h(x)&uarr;,                        <I>w przeciwnym przypadku.</I>
+</pre>
+Prosz&#x0119; napisa&#x0107; w Hakell'u funkcje <tt>(Rek g f)</tt> i <tt>(mu h)</tt>, kt&#x00F3;rych warto&#x015B;ci s&#x0105; funkcjami realizuj&#x0105;cymi te schematy.
+<br> U&#x017C;waj&#x0105;c te schematy prosz&#x0119; zdefiniowa&#263;
+dodawania i mno&#x017C;enia.
+ <br><br>
+
+<li> Prosz&#x0119; pokaza&#263;, &#x017C;e wszystkie funkcje pierwotnie rekurencyjne mo&#x017C;na zdefiniowa&#263; w &#955;-rachunku.
+<br><br>
+
+</ol>
+</body>
+</html>
+
