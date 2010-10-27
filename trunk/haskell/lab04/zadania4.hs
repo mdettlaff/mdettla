@@ -23,3 +23,8 @@ prod v1 v2 = my_foldl (+) 0 (my_zip_with (*) v1 v2)
 --flatten [] = []
 --flatten (x:xs) = x ++ (flatten xs)
 flatten = my_foldl (++) []
+
+insertion_sort [] = []
+insertion_sort (x:xs) = insert x (insertion_sort xs)
+    where insert x xs = [y | y <- xs, y < x] ++ [x] ++ [y | y <- xs, x <= y]
+
