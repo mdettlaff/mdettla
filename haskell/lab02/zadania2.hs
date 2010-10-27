@@ -4,8 +4,8 @@ nwd a b = nwd b (mod a b)
 nww a b = div (a * b) (nwd a b)
 
 delta a b c = b^2 - 4 * a * c
-kwad a b c = ((-b - sqrt (delta a b c)) / (2 * a),
-    (-b + sqrt (delta a b c) / (2 * a)))
+kwad a b c = (((-b - sqrt (delta a b c)) / (2 * a)),
+    ((-b + sqrt (delta a b c)) / (2 * a)))
 
 fib 0 = 1
 fib 1 = 1
