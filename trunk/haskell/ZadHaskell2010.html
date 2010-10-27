@@ -84,9 +84,37 @@
            625
            > iter 0 square 7
            7 </pre>
-			
-			
-			
+
+			 <li>  Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>filter pred l</tt>, kt&#x00F3;rej warto&#x015B;ci&#x0105; jest lista wszystkich element&#x00F3;w listy <tt>l</tt>, kt&#x00F3;re spe&#x0142;ni&#x0105; predykat <tt>pred</tt>.<br>
+			 Jaki ma typ funkcja <tt>filter</tt>? <br><br>	 
+			 <li> a) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119;
+			 <tt>foldr</tt> analogicznie do funkcji <tt> foldl</tt>.<br>
+			 <br>			 b) Prosz&#x0119; zdefiniowa&#263; funkcje <tt>length</tt>, <tt>and</tt> (dla listy warto&#347;ci boole'owskich), <tt>sum</tt>, <tt>prod</tt>, <tt>map</tt> i <tt>reverse</tt> u&#380;ywaj&#261;c funkcje <tt>foldl</tt> i <tt>foldr</tt>.
+			 <br><br>
+			 <li>a) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119;
+			 <tt>map2 f l1 l2</tt>, kt&#x00F3;ra zastosuje dwuargumentow&#x0105; funkcj&#x0119; <tt>f</tt> do wszystkich element&#x00F3;w list <tt>l1</tt> i <tt>l2</tt>.
+	<pre>&ensp;&ensp; Przyk&#322;ad: > map2 (+) [1,2,3] [8,9,10]
+          &ensp;&emsp;[9,11,13]
+</pre>
+			 &ensp;&ensp;Jaki ma typ funkcja <tt>map2</tt>? <br><br>
+			 
+		b) Prosz&#x0119; przy pomocy <tt>map2</tt> (i innych kombinator&#x00F3;w) zrealizowa&#x0107; produkt wektorowy.	
+		<br><br>
+			 <li> Funkcja <tt>flatten :: [[a]] -> [a]</tt> transformuje list&#x0119; list do zwyk&#322;ej listy.
+		<pre>Przyk&#322;ad: > flatten [[1,2,3], [8,9], [4,6]]
+          [1,2,3,8,9,4,6]
+</pre>
+			 Prosz&#x0119; t&#261; funkcj&#x0119; napisa&#263; raz "r&#x0119;cznie" i raz u&#380;ywaj&#261;c funkcje <tt>fold</tt> z zadania 17.
+			 <br><br>
+
+
+			 <li> a) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>insertionsort :: [a] -> [a]</tt>.
+			 <br><br>
+			 b) Prosz&#x0119; zdefiniowa&#263; funkcj&#x0119; <tt>insertionsort :: (a -> a -> Bool) -> [a] -> [a]</tt>.
+			 <br><br>
+			 Prosz&#x0119; wykonywa&#263; a) i b) raz "r&#x0119;cznie" i raz u&#380;ywaj&#261;c funkcje <tt>fold</tt> z zadania 17.
+			 <br><br>
+
 			 </ol>
  </body>
  </html>
