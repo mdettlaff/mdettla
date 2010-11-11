@@ -41,6 +41,10 @@ def show_users_loc(users_loc):
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         sys.exit(USAGE)
-    users_loc = get_users_loc(sys.argv[1:])
-    show_users_loc(users_loc)
+    else:
+        users_loc = get_users_loc(sys.argv[1:])
+        if users_loc:
+            show_users_loc(users_loc)
+        else:
+            print >> sys.stderr, 'Brak wyników dla cvs annotate.'
 
