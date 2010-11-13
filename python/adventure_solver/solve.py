@@ -10,8 +10,15 @@ class Graph(object):
     def __init__(self, nodes):
         self.nodes = nodes
 
+    def remove_node(self, node):
+        for dependent in set(node.dependents):
+            remove_edge(node, dependent)
+        for dependency in set(node.dependencies):
+            remove_edge(dependency, node)
+        self.nodes.remove(node)
+
     def __get_leaves(self):
-        return set(filter(lambda node: not node.dependencies, self.nodes))
+        return set(filter(lambda node: node.is_leaf, self.nodes))
 
     leaves = property(__get_leaves)
 
@@ -74,9 +81,7 @@ def solve_naive(graph, game):
         game.location = leaf.value.location
         solution.append(leaf)
         dependents = set(leaf.dependents)
-        for dependent in dependents:
-            remove_edge(leaf, dependent)
-        graph.nodes.remove(leaf)
+        graph.remove_node(leaf)
     return solution
 
 
@@ -127,13 +132,13 @@ if __name__ == '__main__':
     def solve_larry(solve_function):
 
         def create_nodes():
-            order_whiskey = Node(NodeValue('sit down, order whiskey', L[1]))
-            give_whiskey = Node(NodeValue('give him whiskey', L[1]))
-            read_wall = Node(NodeValue('read wall 4 times', L[1]))
+            change_channel = Node(NodeValue('change channel 7 times', L[1]))
+            use_remote = Node(NodeValue('use remote', L[1]))
             knock_say_password = \
                     Node(NodeValue('knock, say "Ken sent me"', L[1]))
-            use_remote = Node(NodeValue('use remote', L[1]))
-            change_channel = Node(NodeValue('change channel 7 times', L[1]))
+            read_wall = Node(NodeValue('read wall 4 times', L[1]))
+            give_whiskey = Node(NodeValue('give him whiskey', L[1]))
+            order_whiskey = Node(NodeValue('sit down, order whiskey', L[1]))
             add_edge(order_whiskey, give_whiskey)
             add_edge(give_whiskey, use_remote)
             add_edge(read_wall, knock_say_password)
