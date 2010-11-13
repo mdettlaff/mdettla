@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+# -*- encoding: UTF-8 -*-
 
 
-LOCATIONS = ['bar', 'store/disco', 'casino', 'hotel']
+# locations
+L = [None, 'bar', 'store/disco', 'casino', 'hotel']
 
 
 class Graph(object):
@@ -15,9 +17,8 @@ class Graph(object):
 
 
 class Node(object):
-    def __init__(self, value, location):
+    def __init__(self, value):
         self.value = value
-        self.location = location
         self.dependents = set()
         self.dependencies = set()
 
@@ -25,9 +26,18 @@ class Node(object):
         return not self.dependencies
 
     def __str__(self):
-        return '%s {%s}' % (self.value, LOCATIONS[self.location - 1])
+        return str(self.value)
 
     is_leaf = property(__is_leaf)
+
+
+class NodeValue(object):
+    def __init__(self, action, location):
+        self.action = action
+        self.location = location
+
+    def __str__(self):
+        return '%s {%s}' % (self.action, self.location)
 
 
 class Game(object):
@@ -53,7 +63,7 @@ def remove_edge(node1, node2):
 
 
 def min_cost_node(nodes, game):
-    cost = lambda node: game.distance_to(node.location)
+    cost = lambda node: game.distance_to(node.value.location)
     return min(nodes, key = cost)
 
 
@@ -61,7 +71,7 @@ def solve_naive(graph, game):
     solution = []
     while graph.leaves:
         leaf = min_cost_node(graph.leaves, game)
-        game.location = leaf.location
+        game.location = leaf.value.location
         solution.append(leaf)
         dependents = set(leaf.dependents)
         for dependent in dependents:
@@ -75,7 +85,7 @@ def solve(graph, game):
     leaves = graph.leaves
     while leaves:
         leaf = min_cost_node(leaves, game)
-        game.location = leaf.location
+        game.location = leaf.value.location
         solution.append(leaf)
         leaves.remove(leaf)
         dependents = set(leaf.dependents)
@@ -91,7 +101,7 @@ def generate_walkthrough(graph, game):
     leaves = graph.leaves
     leaf = min_cost_node(leaves, game)
     while leaves:
-        game.location = leaf.location
+        game.location = leaf.value.location
         walkthrough.append(leaf)
         leaves.remove(leaf)
         dependents = set(leaf.dependents)
@@ -117,25 +127,28 @@ if __name__ == '__main__':
     def solve_larry(solve_function):
 
         def create_nodes():
-            sit = Node('sit at bar', 1)
-            order_whiskey = Node('order whiskey', 1)
-            give_whiskey = Node('give him whiskey', 1)
-            read_wall = Node('read wall 4 times', 1)
-            knock_say_password = Node('knock, say "Ken sent me"', 1)
-            use_remote = Node('use remote', 1)
-            change_channel = Node('change channel 7 times', 1)
-            add_edge(sit, order_whiskey)
+            order_whiskey = Node(NodeValue('sit down, order whiskey', L[1]))
+            give_whiskey = Node(NodeValue('give him whiskey', L[1]))
+            read_wall = Node(NodeValue('read wall 4 times', L[1]))
+            knock_say_password = \
+                    Node(NodeValue('knock, say "Ken sent me"', L[1]))
+            use_remote = Node(NodeValue('use remote', L[1]))
+            change_channel = Node(NodeValue('change channel 7 times', L[1]))
             add_edge(order_whiskey, give_whiskey)
             add_edge(give_whiskey, use_remote)
             add_edge(read_wall, knock_say_password)
             add_edge(knock_say_password, use_remote)
             add_edge(use_remote, change_channel)
-            return set([sit, order_whiskey, give_whiskey, read_wall,
+            return set([order_whiskey, give_whiskey, read_wall,
                     knock_say_password, use_remote, change_channel])
 
-        distances = set([((1, 2), 1), ((1, 3), 2), ((1, 4), 2),
-                ((2, 3), 1), ((2, 4), 1), ((3, 4), 0)])
-        solve_game(solve_function, Graph(create_nodes()), Game(1, distances))
+        distances = set([
+            ((L[1], L[2]), 1), ((L[1], L[3]), 2), ((L[1], L[4]), 2),
+            ((L[2], L[3]), 1), ((L[2], L[4]), 1), ((L[3], L[4]), 0)])
+
+        graph = Graph(create_nodes())
+        game = Game(L[1], distances)
+        solve_game(solve_function, graph, game)
 
     solve_larry(solve_naive)
     print
