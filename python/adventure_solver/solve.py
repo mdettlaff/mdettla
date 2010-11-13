@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- encoding: UTF-8 -*-
 
+"""Solves adventure games given a dependency graph and a map of locations."""
+
 
 # locations
 L = [None, 'bar', 'store/disco', 'casino', 'hotel']
@@ -48,13 +50,15 @@ class NodeValue(object):
 
 
 class Game(object):
-    def __init__(self, location, distances):
-        self.location = location
+    def __init__(self, initial_location, distances):
+        self.current_location = initial_location
         self.distances = distances
 
     def distance_to(self, location):
+        if location == self.current_location:
+            return 0
         for locations, distance in self.distances:
-            if location in locations and self.location in locations:
+            if location in locations and self.current_location in locations:
                 return distance
         raise Exception('unknown location: ' + location)
 
@@ -74,18 +78,18 @@ def min_cost_node(nodes, game):
     return min(nodes, key = cost)
 
 
-def solve_naive(graph, game):
+def naive_topological_sort(graph, game = None):
     solution = []
     while graph.leaves:
-        leaf = min_cost_node(graph.leaves, game)
-        game.location = leaf.value.location
+        leaf = graph.leaves.pop()
         solution.append(leaf)
-        dependents = set(leaf.dependents)
         graph.remove_node(leaf)
     return solution
 
 
 def solve(graph, game):
+    """Generates an efficient solution."""
+
     solution = []
     leaves = graph.leaves
     while leaves:
@@ -102,6 +106,8 @@ def solve(graph, game):
 
 
 def generate_walkthrough(graph, game):
+    """Generates an efficient and narratively coherent solution."""
+
     walkthrough = []
     leaves = graph.leaves
     leaf = min_cost_node(leaves, game)
@@ -121,7 +127,7 @@ def generate_walkthrough(graph, game):
     return walkthrough
 
 
-def solve_game(solve_function, graph, game):
+def print_solution(solve_function, graph, game):
     print solve_function.__name__ + ':'
     for node in solve_function(graph, game):
         print node
@@ -132,6 +138,25 @@ if __name__ == '__main__':
     def solve_larry(solve_function):
 
         def create_nodes():
+
+            push_button = Node(NodeValue('look desk, push button', L[4]))
+            give_pills = Node(NodeValue('give pills to her', L[4]))
+            get_pills = Node(NodeValue('get pills', L[1]))
+            smash_window = Node(NodeValue('smash window', L[1]))
+            get_hammer = Node(NodeValue('get hammer', L[1]))
+            go_in_trash_bin = Node(NodeValue('go in trash bin', L[1]))
+            lean_over = Node(NodeValue('lean over', L[1]))
+            get_rope = Node(NodeValue('get rope', L[4]))
+            cut_rope = Node(NodeValue('cut rope with knife', L[4]))
+            get_in_bed = Node(NodeValue('get in bed', L[4]))
+            # TODO pour_wine = ...
+            give_wine = Node(NodeValue('give wine to wino', L[2]))
+            get_wine = Node(NodeValue('get wine, pay', L[2]))
+            read_magazine = Node(NodeValue('read magazine', L[2]))
+            get_magazine = Node(NodeValue('get magazine, pay', L[2]))
+            tie_rope = Node(NodeValue(
+                'tie rope to me, tie rope to balcony', L[1]))
+            open_window = Node(NodeValue('open window', L[1]))
             change_channel = Node(NodeValue('change channel 7 times', L[1]))
             use_remote = Node(NodeValue('use remote', L[1]))
             knock_say_password = \
@@ -139,13 +164,32 @@ if __name__ == '__main__':
             read_wall = Node(NodeValue('read wall 4 times', L[1]))
             give_whiskey = Node(NodeValue('give him whiskey', L[1]))
             order_whiskey = Node(NodeValue('sit down, order whiskey', L[1]))
-            add_edge(order_whiskey, give_whiskey)
-            add_edge(give_whiskey, use_remote)
-            add_edge(read_wall, knock_say_password)
-            add_edge(knock_say_password, use_remote)
-            add_edge(use_remote, change_channel)
-            return set([order_whiskey, give_whiskey, read_wall,
-                    knock_say_password, use_remote, change_channel])
+            nodes = set()
+            def edge(node1, node2):
+                add_edge(node1, node2)
+                return nodes.union(set([node1, node2]))
+            nodes = edge(give_pills, push_button)
+            nodes = edge(get_pills, give_pills)
+            nodes = edge(smash_window, get_pills)
+            nodes = edge(get_hammer, smash_window)
+            nodes = edge(go_in_trash_bin, get_hammer)
+            nodes = edge(lean_over, smash_window)
+            nodes = edge(tie_rope, lean_over)
+            nodes = edge(get_rope, tie_rope)
+            nodes = edge(cut_rope, get_rope)
+            nodes = edge(get_in_bed, cut_rope)
+            nodes = edge(give_wine, cut_rope)
+            nodes = edge(get_wine, give_wine)
+            nodes = edge(read_magazine, tie_rope)
+            nodes = edge(get_magazine, read_magazine)
+            nodes = edge(open_window, tie_rope)
+            nodes = edge(change_channel, open_window)
+            nodes = edge(use_remote, change_channel)
+            nodes = edge(knock_say_password, use_remote)
+            nodes = edge(read_wall, knock_say_password)
+            nodes = edge(give_whiskey, use_remote)
+            nodes = edge(order_whiskey, give_whiskey)
+            return nodes
 
         distances = set([
             ((L[1], L[2]), 1), ((L[1], L[3]), 2), ((L[1], L[4]), 2),
@@ -153,9 +197,9 @@ if __name__ == '__main__':
 
         graph = Graph(create_nodes())
         game = Game(L[1], distances)
-        solve_game(solve_function, graph, game)
+        print_solution(solve_function, graph, game)
 
-    solve_larry(solve_naive)
+    solve_larry(naive_topological_sort)
     print
     solve_larry(solve)
     print
