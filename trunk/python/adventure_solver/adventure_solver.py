@@ -46,7 +46,6 @@ class NodeValue(object):
         self.location = location
 
     def __str__(self):
-        #return '%s {%s}' % (self.action, self.location)
         return '%s: %s' % (self.location, self.action)
 
 
