@@ -24,3 +24,6 @@ angle z = z "angle"
 sum_complex z1 z2 =
   make_rect ((real_part z1) + (real_part z2)) ((im_part z1) + (im_part z2))
 
+multiply_complex z1 z2 =
+  make_polar (magnitude z1 * magnitude z2) (angle z1 + angle z2)
+
