@@ -3,7 +3,7 @@ dc test end divide comb p =
   if test p
     then end p
     else comb (map (dc test end divide comb)
-                    (divide p))
+                   (divide p))
 
 
 split [] = []
