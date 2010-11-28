@@ -37,8 +37,8 @@ mergesort = dc (\ xs -> length xs <= 1) ident halve (\ [xs, ys] -> merge xs ys)
 
 digits_count n = if -10 < n && n < 10 then 1 else 1 + digits_count (div n 10)
 
-karatsuba_divide [a, b] =
-  [[x1, y1], [x1, y0], [x0, y1], [x0, y0], [m, 1]]
+karatsuba_divide (a, b) =
+  [(x1, y1), (x1, y0), (x0, y1), (x0, y0), (m, 1)]
   where m = div (digits_count a) 2; p = 10^m;
         x0 = mod a p; x1 = div a p; y0 = mod b p; y1 = div b p
 
@@ -46,9 +46,9 @@ karatsuba_combine ps =
   (ps !! 0) * 10^(2 * m) + ((ps !! 1) + (ps !! 2)) * 10^m + (ps !! 3)
   where m = ps !! 4
 
-karatsuba a b = dc (\ [a, b] -> a < 10 || b < 10)
-                   (\ [a, b] -> a * b)
+karatsuba a b = dc (\ (a, b) -> a < 10 || b < 10)
+                   (\ (a, b) -> a * b)
                    karatsuba_divide
                    karatsuba_combine
-                   [a, b]
+                   (a, b)
 
