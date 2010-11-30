@@ -65,7 +65,7 @@
 
 	 <li> Prosz&#x0119; napisa&#x0107; nast&#x0119;puj&#x0105;ce funkcje dla list: <br><br>
 	 a) <tt>append l m</tt>, kt&#x00F3;ra konkatenuje listy <tt>l</tt> i <tt>m</tt>.<br><br>
-	 b) <tt>member x l</tt>, kt&#x00F3;ra sprawdza, czy <tt>x</tt> jest lementem listy <tt>l</tt> <br><br>
+	 b) <tt>member x lp;/tt>, kt&#x00F3;ra sprawdza, czy <tt>x</tt> jest lementem listy <tt>l</tt> <br><br>
 	 c)<tt>reverse l</tt>, kt&#x00F3;ra przewraca list&#x0119; <tt>l</tt>.<br><br>
 	 d) <tt>last l</tt>, kt&#x00F3;ra znajduje ostatni element w liscie <tt>l</tt>.<br><br>
 	 e) <tt>delete x l</tt>, kt&#x00F3;ra skasuje element <tt>x</tt> z listy <tt>l</tt>.<br><br>
@@ -143,9 +143,55 @@
                          e)  &nbsp; <tt> add (f x) (g x) </tt> <br>
 			 f)  &nbsp; <tt> f 7 (g 'x') </tt> <br>
 			 g)  &nbsp; <tt> \f -> f (g x) </tt> <br>
+			 <br>
+
+			 <li>Prosz&#x0119; obliczy&#263; mgu dla nast&#x0119;puj&#261;cych wyra&#380;e&#x0144;. <br>
+			 <br> a) &nbsp; f(x,g(b))  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   f(a,y) <br>
+			 b) &nbsp; f(h(x,b),y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  f(h(a,y),x) <br>
+			 c) &nbsp; f(x,y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(h(x,b),y) <br>
+			 d) &nbsp; g(x,h(x,y),h(y,h(x,y))) &nbsp;&nbsp;&nbsp; g(x,y',h(z,y')) <br>
+			 e) &nbsp; g(x,h(x,y),h(y,h(x,y))) &nbsp;&nbsp;&nbsp; g(x,y',h(y',z)) <br>
+			 f) &nbsp; f(a,x,h(g(y))) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(z,h(z),h(z')) <br><br>
+
+			 <li> Prosz&#x0119; obliczyczy&#263; typ nast&#x0119;puj&#261;cych wyra&#380;e&#x0144;.
+<pre>
+a) \x -> 2 * x
+b) \x -> x x
+c) \f -> f x
+d) append [] l     = l                        
+   append (x:xs) l = x : (append xs l)   
+e) fun []     = []
+   fun (x:xs) = 1 + (fun x) + (fun xs)
+</pre>
+
+			 <li> a) Prosz&#x0119; napisa&#263; funkcj&#x0119; <tt> pozycja</tt>, kt&#x00F3;ra znajduje pozycj&#x0119; elementu <tt>x</tt> w li&#x015B;cie <tt>l</tt>.
+			 <br><br>
+			 b) Prosz&#x0119; napisa&#263; funkcj&#x0119; <tt> drop</tt>, kt&#x00F3;ra eliminuje pierwsze <tt>n</tt> elementy z listy <tt>l</tt>.
+			 <br><br>
+			 Nale&#380;y u&#380;ywa&#263; typ <tt> Maybe a</tt>.
 			 <br><br>
 
-			 </ol>
+			 <li> Niech b&#x0119;dzie dany nast&#x0119;puj&#261;cy typ dla drzew binarnych.
+			 <pre> data BinTree a = Leaf a | Node (BinTree a) (BinTree a)
+</pre>
+			 Prosz&#x0119; napisa&#263; modu&#x0142; <tt>BinTree</tt> z funkcjami <br><br>
+			 &nbsp;&nbsp;a) <tt>heightBinTree</tt>, kt&#x00F3;ra obliczy g&#x0142;&#x0119;boko&#x015B;&#x0107; drzewa. <br><br>
+			 &nbsp;&nbsp;b) <tt>sizeBinTree</tt>, kt&#x00F3;ra obliczy ilo&#x015B;&#x0107; w&#x0119;z&#x0142;&#x00F3;w w drzewie. <br><br>
+			 &nbsp;&nbsp;c) <tt> sumBinTree</tt>, kt&#x00F3;ra obliczy sum&#x0119; element&#x00F3;w w drzewie. <br><br>
+			 &nbsp;&nbsp;d) <tt> preBinTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku prefiksowym.<br><br>
+			 Nale&#380;y do tego u&#380;ywa&#263; nadaj&#261;ce si&#x0119; funkcje <tt>mapBinTree</tt> i <tt>foldBinTree</tt>. <br><br>
+
+			 <li> Niech b&#x0119;dzie dany nast&#x0119;puj&#261;cy typ dla drzew og&#x00F3;lnych.
+			 <pre> data Tree a = Node a [Tree a]
+</pre>
+			 Prosz&#x0119; napisa&#263; modu&#x0142; <tt>Tree</tt> z funkcjami <br><br>
+			 &nbsp;&nbsp;a) <tt>sizeTree</tt>, kt&#x00F3;ra obliczy ilo&#x015B;&#x0107; w&#x0119;z&#x0142;&#x00F3;w w drzewie. <br><br>
+			 &nbsp;&nbsp;b) <tt> sumTree</tt>, kt&#x00F3;ra obliczy sum&#x0119; element&#x00F3;w w drzewie. <br><br>
+			 &nbsp;&nbsp;c) <tt> postTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku postfiksowym.<br><br>
+			 &nbsp;&nbsp;d) <tt> inTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku infiksowym.<br><br>
+			 Nale&#380;y do tego u&#380;ywa&#263; nadaj&#261;ce si&#x0119; funkcje <tt>mapTree</tt> i <tt>foldTree</tt>. <br><br>
+
+		 </ol>
  </body>
  </html>
 
