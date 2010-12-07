@@ -65,7 +65,7 @@
 
 	 <li> Prosz&#x0119; napisa&#x0107; nast&#x0119;puj&#x0105;ce funkcje dla list: <br><br>
 	 a) <tt>append l m</tt>, kt&#x00F3;ra konkatenuje listy <tt>l</tt> i <tt>m</tt>.<br><br>
-	 b) <tt>member x lp;/tt>, kt&#x00F3;ra sprawdza, czy <tt>x</tt> jest lementem listy <tt>l</tt> <br><br>
+	 b) <tt>member x </tt>, kt&#x00F3;ra sprawdza, czy <tt>x</tt> jest lementem listy <tt>l</tt> <br><br>
 	 c)<tt>reverse l</tt>, kt&#x00F3;ra przewraca list&#x0119; <tt>l</tt>.<br><br>
 	 d) <tt>last l</tt>, kt&#x00F3;ra znajduje ostatni element w liscie <tt>l</tt>.<br><br>
 	 e) <tt>delete x l</tt>, kt&#x00F3;ra skasuje element <tt>x</tt> z listy <tt>l</tt>.<br><br>
@@ -146,12 +146,12 @@
 			 <br>
 
 			 <li>Prosz&#x0119; obliczy&#263; mgu dla nast&#x0119;puj&#261;cych wyra&#380;e&#x0144;. <br>
-			 <br> a) &nbsp; f(x,g(b))  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   f(a,y) <br>
-			 b) &nbsp; f(h(x,b),y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  f(h(a,y),x) <br>
-			 c) &nbsp; f(x,y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(h(x,b),y) <br>
+			 <br> a) &nbsp; f(x,g(b)) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   f(a,y) <br>
+			 b) &nbsp; f(h(x,b),y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  f(h(a,y),x) <br>
+			 c) &nbsp; f(x,y) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(h(x,b),y) <br>
 			 d) &nbsp; g(x,h(x,y),h(y,h(x,y))) &nbsp;&nbsp;&nbsp; g(x,y',h(z,y')) <br>
 			 e) &nbsp; g(x,h(x,y),h(y,h(x,y))) &nbsp;&nbsp;&nbsp; g(x,y',h(y',z)) <br>
-			 f) &nbsp; f(a,x,h(g(y))) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(z,h(z),h(z')) <br><br>
+			 f) &nbsp; f(a,x,h(g(y))) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(z,h(z),h(z')) <br><br>
 
 			 <li> Prosz&#x0119; obliczyczy&#263; typ nast&#x0119;puj&#261;cych wyra&#380;e&#x0144;.
 <pre>
@@ -160,7 +160,7 @@ b) \x -> x x
 c) \f -> f x
 d) append [] l     = l                        
    append (x:xs) l = x : (append xs l)   
-e) fun []     = []
+e) fun []     = 0
    fun (x:xs) = 1 + (fun x) + (fun xs)
 </pre>
 
@@ -190,6 +190,18 @@ e) fun []     = []
 			 &nbsp;&nbsp;c) <tt> postTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku postfiksowym.<br><br>
 			 &nbsp;&nbsp;d) <tt> inTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest lista element&#x00F3;w drzewa w porz&#261;ku infiksowym.<br><br>
 			 Nale&#380;y do tego u&#380;ywa&#263; nadaj&#261;ce si&#x0119; funkcje <tt>mapTree</tt> i <tt>foldTree</tt>. <br><br>
+
+			 <li> Prosz&#x0119; napisa&#263; modu&#x0142; <tt>Set</tt> z funkcjami <tt>member</tt>,
+			  <tt>subset</tt>, <tt>union</tt>, <tt>intersection</tt> oraz <tt>delete</tt>.
+			  <br><br>
+
+			  <li> Prosz&#x0119; zdefiniowa&#263; drzewa z zbiorami na w&#x0119;z&#x0142;ach
+			  przy pomocy modu&#x0142;&#x00F3;w <tt>Tree</tt> i <tt>Set</tt> oraz funkcje <br><br>
+			  &nbsp;&nbsp;a) <tt> deleteTree</tt>, kt&#x00F3;ra eliminuje dany element <tt>x</tt> z ka&#x017C;dego zbioru w drzewa.<br><br>
+			  &nbsp;&nbsp;b) <tt>unionTree</tt>, kt&#x00F3;rej warto&#x015B;ci&#261; jest
+			  lista wszystkich element&#x00F3;w drzewa. <br><br>
+			  &nbsp;&nbsp;c) <tt> allTree</tt>, kt&#x00F3;ra sprawdza, czy dany element <tt>x</tt> znajduje si&#x0119; w ka&#x017C;dym zbiorze w drzewa.
+			  <br><br>
 
 		 </ol>
  </body>
