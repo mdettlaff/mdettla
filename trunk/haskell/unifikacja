@@ -1,0 +1,23 @@
+chcemy obliczyć najbardziej ogólny unifikator
+
+a)
+f(x, g(b)) =b f(a, y)    σ != Ø
+x =σ a                   σ = {x -> a}
+g(b) =σ y                σ = {x -> a, y -> g(b)}
+
+b)
+f(h(x, b), y) =σ f(h(a, y), x)
+h(x, b) =σ h(a, y)
+  x =σ a, σ = {x -> a}
+  b =σ y, σ = {x -> a, y -> b}
+  b =σ a (σ(y) =σ σ(x))
+  więc nie dają się unifikować
+
+c)
+g(x, h(x, y), h(y, h(x, y))) =σ g(x, y', h(z, y'))
+  h(x, y) =σ y', σ = {y' -> h(x, y)}
+  h(y, h(x, y)) =σ h(z, y')
+  h(y, h(x, y)) =σ h(z, h(x, y))
+  y =σ z
+  σ = {y' -> h(x, y), y -> z}
+
