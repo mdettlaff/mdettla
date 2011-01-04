@@ -203,6 +203,74 @@ e) fun []     = 0
 			  &nbsp;&nbsp;c) <tt> allTree</tt>, kt&#x00F3;ra sprawdza, czy dany element <tt>x</tt> znajduje si&#x0119; w ka&#x017C;dym zbiorze w drzewa.
 			  <br><br>
 
+			  <li> Prosz&#x0119; zdefiniowa&#263; typ drzew binarnych <tt>BinTree</tt> z zadania 27 jako
+			  instancj&#x0119; klas <tt>Show</tt>, <tt>Eq</tt> oraz <tt>Ord</tt>.
+			  <br><br>
+
+			  <li>
+			  a) Prosz&#x0119; zdefiniowa&#263; klas&#x0119; <tt>Queue</tt> kolejek z zwyk&#x0142;ami
+			  operacjami
+			  <tt>isEmptyQueue</tt>, <tt>enQueue</tt>, <tt>deq<F11>Queue</tt> oraz <tt>getFrontQueue</tt>.<br>
+			  &nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; te&#380; zdefiniowa&#263; funkcj&#x0119; <tt>showQueue</tt> razem
+			  z default-implementacj&#x0119;. <br><br>
+			  b) Prosz&#x0119; zdefiniowa&#263; instancj&#x0119; klasy <tt>Queue</tt>
+			  u&#380;ywaj&#261;c konstruktory. <br><br>
+			  c) Prosz&#x0119; zdefiniowa&#263; instancj&#x0119; klasy <tt>Queue</tt>
+			  u&#380;ywaj&#261;c listy jako reprezentacj&#x0119; kolejki. <br><br>
+
+			  <li> Zosta&#x0142;o ju&#x017C; zdefiniowane par&#x0119; funkcji <tt>map</tt> i <tt>fold</tt> dla list i r&#x00F3;&#x017C;nych dzrew. <br>
+			  Przy pomocy klasy typ&#x00F3;w prosz&#x0119; zastosowa&#x0107; mechanism overloading do tych funkcji.
+			  Prosz&#x0119; te&#x017C; zdefiniowa&#x0107; funkcje <tt>map</tt> i <tt>fold</tt> dla zbior&#x00F3;w z zadania 29. <br><br> 
+
+			  <li> Niech b&#x0119;dzie dany &#955;-term
+			  <tt> N <font face="Symbol">&#186;</font> </tt>&#955;x. (&#955;x. xy) (x (&#955;x. &#955;y. yzx)).
+			  Prosz&#x0119; obliczy&#263; zbi&#x00F3;r wolnych zmiennych termu <tt>N</tt>.
+			   <br><br>
+
+			   <li> Prosz&#x0119; ewaluowa&#263; nast&#x0119;puj&#261;ce &#955;-termy.
+			   <br><br>
+			   a) (&#955;x. x) (xy) <br><br>
+			   b) (&#955;x. xy) (&#955;x. xz) <br><br>
+			   c) (&#955;x. &#955;y. xy) (xy) <br><br>
+
+			   <li> a) Niech b&#x0119;d&#261; dane nast&#x0119;puj&#261;ce &#955;-termy.
+			   <br><br>
+			   &nbsp;&nbsp;
+			   &nbsp;&nbsp;<tt> true <font face="Symbol">&#186;</font> </tt>&#955;x. &#955;y. x
+			   <br><br>
+			   &nbsp;&nbsp;
+			   &nbsp;&nbsp;<tt> false <font face="Symbol">&#186;</font> </tt>&#955;x. &#955;y. y
+			   <br><br>
+			   &nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; znale&#x017A;&#263; &#955;-termy <tt>not</tt> i <tt>xor</tt>
+			   realizuj&#261;ce operacje bool'owskie negacj&#x0119; i xor.
+			   <br><br>
+			   b) Niech b&#x0119;dzie </tt>&#955;f. &#955;x. f<sup>n</sup> x
+		    reprezentacj&#261; liczby naturalnej <tt> n</tt>.
+		    <br>
+		    &nbsp;&nbsp;&nbsp;&nbsp;Prosz&#x0119; znale&#x017A;&#263; &#955;-termy <tt>add</tt> i <tt>mult</tt>
+		    realizuj&#261;ce operacje dodawanie i mno&#x017C;enie dwuch liczb naturalnych.
+		    <br><br>
+
+		    <li> Niech b&#x0119;d&#261; dane &#955;-termy
+		    <tt> A <font face="Symbol">&#186;</font>  </tt>&#955;x. &#955;y. y(xxy)
+		    oraz <tt> Z <font face="Symbol">&#186;</font> AA</tt>.
+		    Prosz&#x0119; pokaza&#263;, &#x017C;e <tt>ZF</tt> redukuje si&#x0119; do
+		    <tt>F(ZF)</tt>.<br>
+		    Czy to te&#x017C; prawda dla kombinatora punktu sta&#x0142;ego <tt>Y</tt>?
+		    <br><br>
+
+		    <li> Dla dowolnych funkcji <tt>g(x)</tt>, <tt>f(x,y,z)</tt> i <tt>h(x,y)</tt> schematy rekursji prostej i minimalizacji s&#x0105; dane przez
+		    <pre>primRek(x,y) = g(x),                    <I>je&#x017C;eli <tt>y = 0</tt></I>                 &mu;h(x) = min{ i | h(x,i) = 0 }, <I>je&#x017C;eli minimum to istnieje</I>
+primRek(x,y) = f(x,y-1,primRek(x,y-1)), <I>je&#x017C;eli <tt>y > 0</tt></I>                 &mu;h(x)&uarr;,                        <I>w przeciwnym przypadku.</I>
+</pre>
+		    Prosz&#x0119; napisa&#x0107; w Hakell'u funkcje <tt>(Rek g f)</tt> i <tt>(mu h)</tt>, kt&#x00F3;rych warto&#x015B;ci s&#x0105; funkcjami realizuj&#x0105;cymi te schematy.
+		    <br> U&#x017C;waj&#x0105;c te schematy prosz&#x0119; zdefiniowa&#263;
+		    dodawania i mno&#x017C;enia.
+		     <br><br>
+
+		     <li> Prosz&#x0119; pokaza&#263;, &#x017C;e wszystkie funkcje pierwotnie rekurencyjne mo&#x017C;na zdefiniowa&#263; w &#955;-rachunku.
+		     <br><br>
+
 		 </ol>
  </body>
  </html>
