@@ -21,3 +21,10 @@ g(x, h(x, y), h(y, h(x, y))) =σ g(x, y', h(z, y'))
   y =σ z
   σ = {y' -> h(x, y), y -> z}
 
+d)
+f(h(x, b), y) =σ f(h(a, x), x)
+  h(x, b) =σ h(a, x)
+  x =σ a, σ = {x -> a}
+  σ(b) =σ σ(x) -> b =σ a
+  więc nie da się unifikować
+
