@@ -17,6 +17,7 @@ f :: α -> β, x :: ɣ
    (f x) :: σ(β)
 
 
+a)
 ti(\x -> 2*x) "=" ti(* 2 x)
                      --- -
 
@@ -31,3 +32,66 @@ ti(* 2) = Ø |- Int -> Int
 σ = {α' -> Int}
 
 ti(* 2 x) = {x :: Int} |- (* 2 x) :: Int
+
+ti(\x -> 2*x) = Ø |- (\x -> 2*x) :: Int -> Int
+
+
+b)
+ti(\x -> x x)
+ti(x x)
+ti(x) = {x :: α} |- x :: α
+type(x) = α  !=σ  α =σ α -> β
+
+f :: α -> β, y :: ɣ
+------------------- σ(α) = σ(ɣ)
+    (f x) :: σ(β)
+
+x :: α -> β, x :: ɣ
+------------------- σ(α) = σ(ɣ)
+     ....
+σ(α) = σ(ɣ)
+     = σ(α')
+σ(α') = σ(α' -> β)
+
+
+c)
+length [] = 0
+length (x:xs) = length (xs) + 1
+
+[length[1, 2, 3]]
+
+
+analizujemy lewą stronę:
+
+length :: α1 -> α2
+
+α1 =σ type([]) = [α3]
+[α3] =σ α1 =σ type(x:xs)  "="  type((:) x x s)
+
+Ø |- (:) :: α -> [α] -> [α]
+
+{x :: α4} |- X :: α4
+|   σ(α4) = σ(α)
+`--> {x :: α4} |- (:) x :: [α4] -=> [α4]
+
+{xs :: α5} |- x :: α5
+|   σ(α5) = σ([α4])
+`--> {x :: α4} |- (x:xs) :: [α4]
+`--> α4 =σ α3
+
+
+analizujemy prawą stronę:
+
+α2 =σ type(0) = Int
+
+z tego wynika, że typ length (xs) + 1 musi zgadzać się z Int
+
+α2 =σ type(1 + length (xs))
+               ----------- type(length xs) =σ α2
+
+(+1) :: Int -> Int
+Int = σ(α2) =σ Int
+
+length :: σ(α1) -> σ(α2)
+  = [α] -> Int
+
