@@ -1,4 +1,4 @@
-data BinTree a = Leaf a | Node (BinTree a) (BinTree a)
+data BinTree a = Leaf a | Node (BinTree a) (BinTree a) deriving Show
 
 foldBinTree g f (Leaf x) = g x
 foldBinTree g f (Node l r) = f (foldBinTree g f l) (foldBinTree g f r)
@@ -13,15 +13,18 @@ sumBinTree = foldBinTree (\ x -> x) (+)
 
 sizeBinTree = foldBinTree (\ x -> 1) (+)
 
-mapBinTree f (Leaf x) = [(f x)]
-mapBinTree f (Node l r) = (mapBinTree f l) ++ (mapBinTree f r)
+mapBinTree f (Leaf x) = Leaf (f x)
+mapBinTree f (Node l r) = Node (mapBinTree f l) (mapBinTree f r)
 
-preBinTree = mapBinTree (\ x -> x)
+--preBinTree (Leaf x) = [x]
+--preBinTree (Node l r) = (preBinTree l) ++ (preBinTree r)
+preBinTree = foldBinTree (\ x -> [x]) (++)
 
 tree1 = Leaf 1
 tree2 = Node (Leaf 5) (Leaf 3)
 tree3 = Node tree1 tree2
 tree4 = Node tree1 (Leaf 4)
+tree5 = Node (Node (Leaf 6) (Leaf 4)) tree3
 
 --     tree3
 --     /   \
