@@ -13,7 +13,18 @@ sumBinTree = foldBinTree (\ x -> x) (+)
 
 sizeBinTree = foldBinTree (\ x -> 1) (+)
 
+mapBinTree f (Leaf x) = [(f x)]
+mapBinTree f (Node l r) = (mapBinTree f l) ++ (mapBinTree f r)
+
+preBinTree = mapBinTree (\ x -> x)
+
 tree1 = Leaf 1
 tree2 = Node (Leaf 5) (Leaf 3)
 tree3 = Node tree1 tree2
 tree4 = Node tree1 (Leaf 4)
+
+--     tree3
+--     /   \
+--    1   tree2
+--         /  \
+--        5    3
