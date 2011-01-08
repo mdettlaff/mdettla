@@ -10,5 +10,4 @@ tree1 = Node 1 [Node 2 [], tree3, tree4]
 --    / \  \
 --    5 6   7
 
-sizeTree (Node n []) = 1
-sizeTree (Node n (x:xs)) = 1 + (sizeTree x) + sum (map sizeTree xs)
+sizeTree (Node n xs) = 1 + sum (map sizeTree xs)
