@@ -6,7 +6,7 @@ module Set
 , delete
 ) where
 
-data Set a = EmptySet | Cons a (Set a) deriving Show
+data Set a = EmptySet | Cons a (Set a) deriving (Eq, Show)
 
 set1 = Cons 1 (Cons 5 (Cons 4 EmptySet))
 set2 = Cons 2 (Cons 8 (Cons 7 EmptySet))
