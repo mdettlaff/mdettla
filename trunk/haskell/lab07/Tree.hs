@@ -1,3 +1,9 @@
+module Tree
+( sizeTree
+, sumTree
+, preTree
+) where
+
 data Tree a = Node a [Tree a] deriving Show
 
 tree3 = Node 3 [(Node 5 []), (Node 6 [])]

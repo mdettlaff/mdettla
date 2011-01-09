@@ -1,3 +1,11 @@
+module Set
+( member
+, subset
+, union
+, intersection
+, delete
+) where
+
 data Set a = EmptySet | Cons a (Set a) deriving Show
 
 set1 = Cons 1 (Cons 5 (Cons 4 EmptySet))
