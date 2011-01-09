@@ -1,3 +1,11 @@
+module BinTree
+( foldBinTree
+, heightBinTree
+, sizeBinTree
+, sumBinTree
+, preBinTree
+) where
+
 data BinTree a = Leaf a | Node (BinTree a) (BinTree a) deriving Show
 
 foldBinTree g f (Leaf x) = g x
