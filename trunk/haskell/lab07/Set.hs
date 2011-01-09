@@ -32,3 +32,8 @@ delete x (Cons head tail) =
     then tail
     else Cons head (delete x tail)
 
+mapSet f EmptySet = EmptySet
+mapSet f (Cons x xs) = (Cons (f x) (mapSet f xs))
+
+foldSet f g EmptySet = g
+foldSet f g (Cons x xs) = foldSet f (f g x) xs
