@@ -3,6 +3,8 @@ module Tree
 , sizeTree
 , sumTree
 , preTree
+, mapTree
+, foldTree
 ) where
 
 data Tree a = Node a [Tree a] deriving Show
