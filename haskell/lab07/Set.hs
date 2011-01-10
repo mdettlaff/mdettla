@@ -5,6 +5,7 @@ module Set
 , union
 , intersection
 , delete
+, setToList
 ) where
 
 data Set a = EmptySet | Cons a (Set a) deriving (Eq, Show)

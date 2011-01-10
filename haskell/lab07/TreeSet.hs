@@ -11,4 +11,6 @@ ts2 =
          Node (Cons 1 EmptySet) []]
 
 
-deleteTree x ts = mapTree (\ s -> delete x s) ts
+deleteTree x = mapTree (\ s -> delete x s)
+
+unionTree = foldTree (\ s -> (setToList s)) (++)
