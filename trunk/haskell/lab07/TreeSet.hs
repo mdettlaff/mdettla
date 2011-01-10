@@ -9,8 +9,14 @@ ts2 =
         [Node (Cons 2 (Cons 3 EmptySet))
             [Node (Cons 2 (Cons 1 (Cons 5 EmptySet))) []],
          Node (Cons 1 EmptySet) []]
+ts3 =
+    Node (Cons 1 (Cons 2 EmptySet))
+        [Node (Cons 2 (Cons 3 (Cons 1 EmptySet))) [],
+         Node (Cons 1 EmptySet) []]
 
 
 deleteTree x = mapTree (\ s -> delete x s)
 
-unionTree = foldTree (\ s -> (setToList s)) (++)
+unionTree = foldTree (\ s -> setToList s) (++)
+
+allTree x = foldTree (\ s -> member x s) (&&)
