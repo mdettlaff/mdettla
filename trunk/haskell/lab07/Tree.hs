@@ -1,5 +1,6 @@
 module Tree
-( sizeTree
+( Tree(..)
+, sizeTree
 , sumTree
 , preTree
 ) where
