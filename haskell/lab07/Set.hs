@@ -1,5 +1,6 @@
 module Set
-( member
+( Set(..)
+, member
 , subset
 , union
 , intersection
