@@ -1,0 +1,41 @@
+<project default="compile">
+
+	<property name="jade.home" value="/home/studinf/mdettla/agent/jade/lib" />
+	<property name="build.dir" value="bin" />
+
+	<path id="compile.classpath">
+		<fileset dir="${jade.home}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="run.classpath">
+		<path refid="compile.classpath" />
+		<pathelement location="${build.dir}" />
+	</path>
+
+	<target name="all" depends="clean, compile" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete>
+			<fileset dir=".">
+				<include name="*.txt" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="compile">
+		<mkdir dir="bin" />
+		<javac srcdir="src" destdir="bin">
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="run" depends="compile">
+		<java classname="jade.Boot" fork="true">
+			<classpath refid="run.classpath" />
+			<arg value="-detect-main false ta:MyAgent()" />
+		</java>
+	</target>
+</project>
