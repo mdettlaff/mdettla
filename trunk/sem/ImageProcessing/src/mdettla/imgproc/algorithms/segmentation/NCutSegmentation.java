@@ -34,6 +34,34 @@ public class NCutSegmentation {
 		throw new IllegalStateException("second smallest value does not exist");
 	}
 
+	public static double nCut(int[] indexesA, int[] indexesB, double[][] weights) {
+		int[] indexesV = range(weights.length);
+		return cut(indexesA, indexesB, weights) *
+			(1 / assoc(indexesA, indexesV, weights) + 1 / assoc(indexesB, indexesV, weights));
+	}
+
+	public static double cut(int[] indexesA, int[] indexesB, double[][] weights) {
+		double cut = 0;
+		for (int i = 0; i < indexesA.length; i++) {
+			for (int j = 0; j < indexesB.length; j++) {
+				cut += weights[indexesB[j]][indexesA[i]];
+			}
+		}
+		return cut;
+	}
+
+	public static double assoc(int[] indexesA, int[] indexesB, double[][] weights) {
+		return cut(indexesA, indexesB, weights);
+	}
+
+	public static int[] range(int n) {
+		int[] range = new int[n];
+		for (int i = 0; i < range.length; i++) {
+			range[i] = i;
+		}
+		return range;
+	}
+
 //	private static Double[] getWrapping(double[] array) {
 //		Double[] result = new Double[array.length];
 //		for (int i = 0; i < array.length; i++) {
