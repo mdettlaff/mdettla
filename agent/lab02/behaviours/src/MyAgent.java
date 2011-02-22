@@ -18,7 +18,7 @@ public class MyAgent extends Agent {
 		};
 		addBehaviour(oneShot);
 
-		Behaviour waker = new WakerBehaviour(this, 4000) {
+		Behaviour waker = new WakerBehaviour(this, 400) {
 			@Override
 			protected void onWake() {
 				System.out.println("Cthulhu budzi sie ze snu!!!");
@@ -26,7 +26,7 @@ public class MyAgent extends Agent {
 		};
 		addBehaviour(waker);
 
-		Behaviour ticker = new TickerBehaviour(this, 5000) {
+		Behaviour ticker = new TickerBehaviour(this, 500) {
 			private static final long serialVersionUID = 1L;
 			@Override
 			protected void onTick() {
