@@ -2,6 +2,7 @@
 
 	<property name="jade.home" value="/home/studinf/mdettla/agent/jade/lib" />
 	<property name="build.dir" value="bin" />
+	<property name="args" value="" />
 
 	<path id="compile.classpath">
 		<fileset dir="${jade.home}">
@@ -35,7 +36,10 @@
 	<target name="run" depends="compile">
 		<java classname="jade.Boot" fork="true">
 			<classpath refid="run.classpath" />
-			<arg value="-detect-main false ta:MyAgent()" />
+			<arg value="-detect-main" />
+			<arg value="false" />
+			<arg line="${args}" />
+			<arg value="my_agent:MyAgent()" />
 		</java>
 	</target>
 </project>
