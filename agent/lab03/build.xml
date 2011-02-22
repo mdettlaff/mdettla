@@ -1,6 +1,6 @@
 <project default="compile">
 
-	<import file="../../build.xml" />
+	<import file="../build.xml" />
 
 	<target name="run" depends="compile">
 		<java classname="jade.Boot" fork="true">
@@ -8,7 +8,10 @@
 			<arg value="-detect-main" />
 			<arg value="false" />
 			<arg line="${args}" />
-			<arg value="my_agent:MyAgent()" />
+			<arg value="jobagent:JobAgent(3)" />
+			<arg value="tempagent1:TemperatureAgent(20)" />
+			<arg value="tempagent2:TemperatureAgent(25)" />
+			<arg value="tempagent3:TemperatureAgent(30)" />
 		</java>
 	</target>
 </project>
