@@ -20,7 +20,7 @@ def download_webcomic(url, img_regex, download_dir, filename, def_ext='png'):
                 img_url = re.match(img_regex, line).group(1)
                 return img_url
 
-    print u'pobieranie ' + filename + '...',; sys.stdout.flush()
+    print filename + '...',; sys.stdout.flush()
     img_url = get_img_url(url, img_regex)
     if img_url is None or len(img_url) < 4:
         print u'nie znaleziono komiksu na stronie ' + url
