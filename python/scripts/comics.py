@@ -68,7 +68,7 @@ if __name__ == '__main__':
     download_webcomic('http://comics.com/scary_gary/',
             r'.*StripImage.*<img src="(.*?)"', dl_dir, 'scary_gary')
     download_webcomic('http://explosm.net/comics/',
-            r'.*<img.*? src="(.*?files/Comics.*?)"', dl_dir, 'cyanide')
+            r'.*<img.*? src="(.*?net/db/files/Comics.*?)"', dl_dir, 'cyanide')
     download_webcomic('http://www.smbc-comics.com/',
             r'\s+<img src=\'(.*?)\'><br>$', dl_dir, 'smbc')
     download_webcomic('http://www.smbc-comics.com/',
