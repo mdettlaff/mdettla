@@ -26,7 +26,7 @@ public class FeedItemTest {
 	static FeedItem getExampleFeedItem() {
 		FeedItem item = new FeedItem();
 		item.setTitle("A cool page");
-		item.setURL("http://coolpage.com");
+		item.setUrl("http://coolpage.com");
 		item.setHTMLContent("the content");
 		item.setDate(NOW);
 		return item;

@@ -11,8 +11,9 @@ public class HttpRequestIntegrationTest {
 	@org.junit.Ignore
 	@Test
 	public void simpleGET() {
-		HttpRequest request = new HttpRequestImpl();
-		request.setURL("http://www.google.com/search?hl=pl");
+		String url = "http://www.google.com/search?hl=pl";
+		HttpRequestFactory requestFactory = new HttpRequestFactoryImpl();
+		HttpRequest request = requestFactory.createRequest(url);
 		String response = request.doGet();
 		assertTrue("Unexpected HTTP response.", isGooglePage(response));
 	}

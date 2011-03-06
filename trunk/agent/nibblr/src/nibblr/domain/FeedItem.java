@@ -21,7 +21,7 @@ public class FeedItem {
 		return url;
 	}
 
-	public void setURL(String url) {
+	public void setUrl(String url) {
 		this.url = url;
 	}
 
