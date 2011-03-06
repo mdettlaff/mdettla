@@ -10,7 +10,7 @@ import java.util.List;
 
 import nibblr.domain.FeedItem;
 import nibblr.domain.FeedItemsSource;
-import nibblr.http.FakeHttpRequest;
+import nibblr.http.FakeHttpRequestFactory;
 
 import org.junit.Test;
 
@@ -24,12 +24,12 @@ public class DeliciousTest {
 
 	@Test
 	public void downloadOneFeedItem() {
-		FeedItemsSource delicious = new Delicious(new FakeHttpRequest());
+		FeedItemsSource delicious = new Delicious(new FakeHttpRequestFactory());
 		List<FeedItem> items = delicious.downloadItems();
 		assertFalse("No feed items found.", items.isEmpty());
 		FeedItem actual = items.get(0);
 		FeedItem expected = new FeedItem();
-		expected.setURL("http://java.sun.com/developer/technicalArticles/Programming/Stacktrace/");
+		expected.setUrl("http://java.sun.com/developer/technicalArticles/Programming/Stacktrace/");
 		expected.setTitle("An Introduction to Java Stack Traces");
 		expected.setHTMLContent("Useful advice on debugging Java programs.");
 		expected.setDate(getExampleDate());

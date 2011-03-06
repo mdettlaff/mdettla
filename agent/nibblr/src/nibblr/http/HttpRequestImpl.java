@@ -9,12 +9,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public class HttpRequestImpl implements HttpRequest {
+class HttpRequestImpl implements HttpRequest {
 
-	private String url;
+	private final String url;
 
-	@Override
-	public void setURL(String url) {
+	public HttpRequestImpl(String url) {
 		this.url = url;
 	}
 

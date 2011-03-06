@@ -17,13 +17,14 @@ import javax.xml.stream.XMLStreamReader;
 import nibblr.domain.FeedItem;
 import nibblr.domain.FeedItemsSource;
 import nibblr.http.HttpRequest;
+import nibblr.http.HttpRequestFactory;
 
 public class Delicious implements FeedItemsSource {
 
-	private final HttpRequest request;
+	private final HttpRequestFactory requestFactory;
 
-	public Delicious(HttpRequest request) {
-		this.request = request;
+	public Delicious(HttpRequestFactory request) {
+		this.requestFactory = request;
 	}
 
 	@Override
@@ -41,7 +42,8 @@ public class Delicious implements FeedItemsSource {
 	}
 
 	private String getXMLResponse() {
-		request.setURL("https://api.del.icio.us/v1/posts/get");
+		String url = "https://api.del.icio.us/v1/posts/get";
+		HttpRequest request = requestFactory.createRequest(url);
 		String xmlResponse = request.doGet();
 		return xmlResponse;
 	}
@@ -67,7 +69,7 @@ public class Delicious implements FeedItemsSource {
 	private FeedItem parseDeliciousPost(XMLStreamReader xmlReader)
 	throws ParseException {
 		FeedItem item = new FeedItem();
-		item.setURL(xmlReader.getAttributeValue(null, "href"));
+		item.setUrl(xmlReader.getAttributeValue(null, "href"));
 		item.setTitle(xmlReader.getAttributeValue(null, "description"));
 		item.setHTMLContent(xmlReader.getAttributeValue(null, "extended"));
 		String date = xmlReader.getAttributeValue(null, "time");
