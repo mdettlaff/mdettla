@@ -12,15 +12,14 @@ USAGE = 'Użycie: cvs_blame ŹRÓDŁA...'
 
 def get_users_loc(args):
     users_loc = {} # loc = lines of code
-    for arg in args:
-        command = 'cvs annotate ' + arg + ' 2>/dev/null'
-        for line in os.popen(command).readlines():
-            match = re.match(r'\d+\.\d+\s+\((\w+)', line)
-            if match:
-                username = match.group(1)
-                if username not in users_loc:
-                    users_loc[username] = 0
-                users_loc[username] += 1
+    command = 'cvs annotate ' + ' '.join(args) + ' 2>/dev/null'
+    for line in os.popen(command).readlines():
+        match = re.match(r'\d+\.\d+\s+\((\w+)', line)
+        if match:
+            username = match.group(1)
+            if username not in users_loc:
+                users_loc[username] = 0
+            users_loc[username] += 1
     return users_loc
 
 
