@@ -2,25 +2,16 @@ package mdettla.test.di;
 
 import static org.junit.Assert.assertTrue;
 
-import javax.annotation.Resource;
-
-import mdettla.test.di.MissileLauncher;
-
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("testContext.xml")
-public class MissileLauncherTest {
+@ContextConfiguration
+public class MissileLauncherTest extends AbstractJUnit4SpringContextTests {
 
+	@Autowired
 	private MissileLauncher launcher;
-
-	@Resource
-	public void setLauncher(MissileLauncher launcher) {
-		this.launcher = launcher;
-	}
 
 	@Test(expected = SecurityException.class)
 	public void testUnsucccessfulLaunch() {
