@@ -6,8 +6,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
 
 	public static void main(String[] args) {
-		ApplicationContext context =
-			new ClassPathXmlApplicationContext("mdettla/test/di/appContext.xml");
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"classpath:/mdettla/test/di/Main-context.xml");
 		MissileLauncher launcher = context.getBean("launcher", MissileLauncher.class);
 
 		String password = args.length > 0 ? args[0] : "";
