@@ -10,7 +10,7 @@ import org.junit.Test;
 public class JavaDependTest {
 
 	@Test
-	public void getImmediateDependencies() {
+	public void getImmediateDependencies() throws JavaDependException {
 		JDClass A = JDClass.fromJavaSourceCode(
 				"package foo;\n" +
 				"import foo.bar.B\n" +
@@ -27,26 +27,7 @@ public class JavaDependTest {
 	}
 
 	@Test
-	public void cyclicDependencies() {
-		JDClass A = JDClass.fromJavaSourceCode(
-				"package foo;\n" +
-				"import foo.bar.B\n" +
-				"public class A {\n" +
-				"}"
-		);
-		JDClass B = JDClass.fromJavaSourceCode(
-				"package foo;\n" +
-				"import foo.bar.A\n" +
-				"public class B {\n" +
-				"}"
-		);
-		Collection<JDClass> allClasses = Arrays.asList(A, B);
-		Collection<JDClass> expected = Arrays.asList(B);
-		assertEquals(expected, JavaDepend.getAllDependencies(A, allClasses));
-	}
-
-	@Test
-	public void getAllDependenciesFromImports() {
+	public void getAllDependenciesFromImports() throws JavaDependException {
 		JDClass A = JDClass.fromJavaSourceCode(
 				"package foo;\n" +
 				"import foo.bar.B\n" +
@@ -88,7 +69,7 @@ public class JavaDependTest {
 	}
 
 	@Test
-	public void getAllDependenciesFromTheSamePackage() {
+	public void getAllDependenciesFromTheSamePackage() throws JavaDependException {
 		JDClass A = JDClass.fromJavaSourceCode(
 				"package foo.bar;\n" +
 				"public class A {\n" +
@@ -98,6 +79,7 @@ public class JavaDependTest {
 		JDClass B = JDClass.fromJavaSourceCode(
 				"package foo.bar;\n" +
 				"public class B {\n" +
+				"    private CX;\n" +
 				"}"
 		);
 		JDClass C = JDClass.fromJavaSourceCode(
@@ -114,5 +96,24 @@ public class JavaDependTest {
 		Collection<JDClass> actual = JavaDepend.getAllDependencies(A, allClasses);
 		Collection<JDClass> expected = Arrays.asList(B);
 		assertEquals(expected, actual);
+	}
+
+	@Test
+	public void cyclicDependencies() throws JavaDependException {
+		JDClass A = JDClass.fromJavaSourceCode(
+				"package foo;\n" +
+				"import foo.bar.B\n" +
+				"public class A {\n" +
+				"}"
+		);
+		JDClass B = JDClass.fromJavaSourceCode(
+				"package foo;\n" +
+				"import foo.bar.A\n" +
+				"public class B {\n" +
+				"}"
+		);
+		Collection<JDClass> allClasses = Arrays.asList(A, B);
+		Collection<JDClass> expected = Arrays.asList(B);
+		assertEquals(expected, JavaDepend.getAllDependencies(A, allClasses));
 	}
 }

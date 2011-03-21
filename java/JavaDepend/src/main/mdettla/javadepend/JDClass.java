@@ -11,7 +11,8 @@ public class JDClass {
 	private final String simpleClassName;
 	private final String sourceCode;
 
-	public static JDClass fromJavaSourceCode(String sourceCode) {
+	public static JDClass fromJavaSourceCode(String sourceCode)
+	throws JavaDependException {
 		String packageName = parsePackageName(sourceCode);
 		String simpleClassName = parseSimpleClassName(sourceCode);
 		return new JDClass(packageName, simpleClassName, sourceCode);
@@ -44,7 +45,10 @@ public class JDClass {
 		Collection<JDClass> dependencies = new ArrayList<JDClass>();
 		for (JDClass clazz : allClasses) {
 			boolean isPackageMatching = packageName.equals(clazz.packageName);
-			boolean hasReference = sourceCode.contains(clazz.simpleClassName);
+			// use regex only if necessary (optimization)
+			boolean hasReference = sourceCode.contains(clazz.simpleClassName)
+				&& Pattern.compile("\\b" + clazz.simpleClassName +
+						"\\b").matcher(sourceCode).find();
 			boolean isSelf = equals(clazz);
 			if (isPackageMatching && hasReference && !isSelf) {
 				dependencies.add(clazz);
@@ -69,7 +73,8 @@ public class JDClass {
 		return dependencies;
 	}
 
-	private static String parsePackageName(String sourceCode) {
+	private static String parsePackageName(String sourceCode)
+		throws JavaDependException {
 		Pattern packageNameRegex = Pattern.compile("package ([\\w.]+)");
 		for (String line : sourceCode.split("\n")) {
 			Matcher matcher = packageNameRegex.matcher(line);
@@ -77,20 +82,20 @@ public class JDClass {
 				return matcher.group(1);
 			}
 		}
-		throw new IllegalArgumentException(
-				"Package name not found in given source code:\n" + sourceCode);
+		throw new JavaDependException("Package name not found.");
 	}
 
-	private static String parseSimpleClassName(String sourceCode) {
-		Pattern classNameRegex = Pattern.compile("^(public )?class (\\w+)");
+	private static String parseSimpleClassName(String sourceCode)
+		throws JavaDependException {
+		Pattern classNameRegex = Pattern.compile(
+				"^(public |abstract |final )*(class|interface|enum) (\\w+)");
 		for (String line : sourceCode.split("\n")) {
 			Matcher matcher = classNameRegex.matcher(line);
 			if (matcher.find()) {
-				return matcher.group(2);
+				return matcher.group(3);
 			}
 		}
-		throw new IllegalArgumentException(
-				"Class name not found in given source code:\n" + sourceCode);
+		throw new JavaDependException("Class, interface or enum name not found.");
 	}
 
 	@Override
