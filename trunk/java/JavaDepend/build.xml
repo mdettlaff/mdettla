@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project default="compile">
+
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="lib.dir" value="lib" />
+	<property name="prod.src.dir" value="${src.dir}/main" />
+	<property name="prod.build.dir" value="${build.dir}/main" />
+	<property name="test.src.dir" value="${src.dir}/test" />
+	<property name="test.build.dir" value="${build.dir}/test" />
+
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}/main">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="test.compile.classpath">
+		<path refid="compile.classpath" />
+		<pathelement location="${prod.build.dir}" />
+		<fileset dir="${lib.dir}/test">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="test.run.classpath">
+		<path refid="test.compile.classpath" />
+		<pathelement location="${test.build.dir}" />
+	</path>
+
+
+	<target name="all" depends="clean, compile" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${prod.build.dir}" />
+		<javac srcdir="${prod.src.dir}" destdir="${prod.build.dir}" debug="on">
+			<classpath refid="compile.classpath" />
+		</javac>
+		<copy todir="${prod.build.dir}">
+			<fileset dir="${prod.src.dir}" includes="**/*.properties" />
+		</copy>
+	</target>
+
+	<target name="compile-test" depends="compile">
+		<mkdir dir="${test.build.dir}" />
+		<javac srcdir="${test.src.dir}" destdir="${test.build.dir}" debug="on">
+			<classpath refid="test.compile.classpath" />
+		</javac>
+		<copy todir="${test.build.dir}">
+			<fileset dir="${test.src.dir}" includes="**/*.properties" />
+		</copy>
+	</target>
+
+	<target name="test" depends="compile-test">
+		<junit haltonfailure="on">
+			<batchtest>
+				<fileset dir="${test.src.dir}" includes="**/*Test.java" />
+			</batchtest>
+			<formatter type="plain" usefile="false" />
+			<classpath refid="test.run.classpath" />
+		</junit>
+	</target>
+</project>
