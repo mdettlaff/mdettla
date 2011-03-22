@@ -18,39 +18,54 @@ public class JavaDepend {
 
 	public static void main(String[] args) throws IOException {
 		if (args.length == 0) {
-			System.err.println(
-					"Usage: java " + JavaDepend.class.getName() +
+			System.err.println("Usage: java " + JavaDepend.class.getName() +
 					" JAVA_FILES...");
 			System.exit(USER_ERROR_CODE);
 		}
-		Collection<JDClass> allClasses = new ArrayList<JDClass>();
 		Collection<File> allJavaFiles = getAllJavaFiles(args);
 		if (allJavaFiles.size() > 0) {
-			for (File javaFile : allJavaFiles) {
-				String javaSourceCode = FileUtils.readFileToString(javaFile);
-				try {
-					allClasses.add(JDClass.fromJavaSourceCode(javaSourceCode));
-				} catch (JavaDependException e) {
-					System.err.println(javaFile.getPath() + ": " + e.getMessage());
-				}
-			}
+			Collection<JDClass> allClasses = getAllClasses(allJavaFiles);
 			int allDependenciesCount = 0;
 			for (JDClass jdClass : allClasses) {
-				int dependenciesForClassCount =
-					getAllDependencies(jdClass, allClasses).size();
-				allDependenciesCount += dependenciesForClassCount;
+				Collection<JDClass> dependenciesForClass =
+					getAllDependencies(jdClass, allClasses);
+				allDependenciesCount += dependenciesForClass.size();
 				System.out.println(jdClass.getFullName() + ": " +
-						dependenciesForClassCount);
+						dependenciesForClass.size() + " dependencies");
+				for (JDClass dependency : dependenciesForClass) {
+					System.out.println("\tdepends on: " + dependency.getFullName());
+				}
 			}
-			double averageDependenciesPerClass =
-				((double)allDependenciesCount) / allJavaFiles.size();
-			System.out.print("Average number of dependencies per class: " +
-					averageDependenciesPerClass);
-			System.out.println(" (" +
-					(averageDependenciesPerClass / allJavaFiles.size() * 100) + "%)");
+			System.out.println();
+			printSummary(allJavaFiles, allDependenciesCount);
 		} else {
 			System.err.println("No classes found.");
 		}
+	}
+
+	private static Collection<JDClass> getAllClasses(
+			Collection<File> allJavaFiles) throws IOException {
+		Collection<JDClass> allClasses = new ArrayList<JDClass>();
+		for (File javaFile : allJavaFiles) {
+			String javaSourceCode = FileUtils.readFileToString(javaFile);
+			try {
+				allClasses.add(JDClass.fromJavaSourceCode(javaSourceCode));
+			} catch (JavaDependException e) {
+				System.err.println(javaFile.getPath() + ": " + e.getMessage());
+			}
+		}
+		return allClasses;
+	}
+
+	private static void printSummary(Collection<File> allJavaFiles,
+			int allDependenciesCount) {
+		int allClassesCount = allJavaFiles.size();
+		double averageDependenciesPerClass =
+			((double)allDependenciesCount) / allClassesCount;
+		double percentage = averageDependenciesPerClass / allClassesCount * 100;
+		System.out.println(String.format("Average number of " +
+				"dependencies per class: %.1f (%.1f%% of all classes)",
+				averageDependenciesPerClass, percentage));
 	}
 
 	private static Collection<File> getAllJavaFiles(String[] dirs) {
