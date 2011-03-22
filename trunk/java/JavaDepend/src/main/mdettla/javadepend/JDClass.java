@@ -10,6 +10,7 @@ public class JDClass {
 	private final String packageName;
 	private final String simpleClassName;
 	private final String sourceCode;
+	private Collection<JDClass> immediateDependenciesCache;
 
 	public static JDClass fromJavaSourceCode(String sourceCode)
 	throws JavaDependException {
@@ -34,10 +35,13 @@ public class JDClass {
 
 	public Collection<JDClass> getImmediateDependencies(
 			Collection<JDClass> allClasses) {
-		Collection<JDClass> dependencies = new ArrayList<JDClass>();
-		dependencies.addAll(getImmediateDependenciesFromImports(allClasses));
-		dependencies.addAll(getImmediateDependenciesFromTheSamePackage(allClasses));
-		return dependencies;
+		if (immediateDependenciesCache == null) {
+			Collection<JDClass> dependencies = new ArrayList<JDClass>();
+			dependencies.addAll(getImmediateDependenciesFromImports(allClasses));
+			dependencies.addAll(getImmediateDependenciesFromTheSamePackage(allClasses));
+			immediateDependenciesCache = dependencies;
+		}
+		return immediateDependenciesCache;
 	}
 
 	private Collection<JDClass> getImmediateDependenciesFromTheSamePackage(
