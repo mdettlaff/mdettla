@@ -1,0 +1,655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title></title>
+</head>
+  <body>
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+
+<script type="text/javascript" src="http://static.waybackmachine.org/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="http://static.waybackmachine.org/js/graph-calc.js" ></script>
+<script type="text/javascript" src="http://static.waybackmachine.org/jflot/jquery.min.js" ></script>
+<script type="text/javascript">
+//<![CDATA[
+var firstDate = 820454400000;
+var lastDate = 1325375999999;
+var wbPrefix = "http://replay.waybackmachine.org/";
+var wbCurrentUrl = "http://klausler.com/evolved.html";
+
+var curYear = -1;
+var curMonth = -1;
+var yearCount = 16;
+var firstYear = 1996;
+var imgWidth=400;
+var yearImgWidth = 25;
+var monthImgWidth = 2;
+var trackerVal = "none";
+var displayDay = "12";
+var displayMonth = "mar";
+var displayYear = "2009";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function showTrackers(val) {
+	if(val == trackerVal) {
+		return;
+	}
+	if(val == "inline") {
+		document.getElementById("displayYearEl").style.color = "#ec008c";
+		document.getElementById("displayMonthEl").style.color = "#ec008c";
+		document.getElementById("displayDayEl").style.color = "#ec008c";		
+	} else {
+		document.getElementById("displayYearEl").innerHTML = displayYear;
+		document.getElementById("displayYearEl").style.color = "#ff0";
+		document.getElementById("displayMonthEl").innerHTML = displayMonth;
+		document.getElementById("displayMonthEl").style.color = "#ff0";
+		document.getElementById("displayDayEl").innerHTML = displayDay;
+		document.getElementById("displayDayEl").style.color = "#ff0";
+	}
+   document.getElementById("wbMouseTrackYearImg").style.display = val;
+   document.getElementById("wbMouseTrackMonthImg").style.display = val;
+   trackerVal = val;
+}
+function getElementX2(obj) {
+	var thing = jQuery(obj);
+	if((thing == undefined) 
+			|| (typeof thing == "undefined") 
+			|| (typeof thing.offset == "undefined")) {
+		return getElementX(obj);
+	}
+	return Math.round(thing.offset().left);
+}
+function trackMouseMove(event,element) {
+
+   var eventX = getEventX(event);
+   var elementX = getElementX2(element);
+   var xOff = eventX - elementX;
+	if(xOff < 0) {
+		xOff = 0;
+	} else if(xOff > imgWidth) {
+		xOff = imgWidth;
+	}
+   var monthOff = xOff % yearImgWidth;
+
+   var year = Math.floor(xOff / yearImgWidth);
+	var yearStart = year * yearImgWidth;
+   var monthOfYear = Math.floor(monthOff / monthImgWidth);
+   if(monthOfYear > 11) {
+       monthOfYear = 11;
+   }
+   // 1 extra border pixel at the left edge of the year:
+   var month = (year * 12) + monthOfYear;
+   var day = 1;
+	if(monthOff % 2 == 1) {
+		day = 15;
+	}
+	var dateString = 
+		zeroPad(year + firstYear) + 
+		zeroPad(monthOfYear+1,2) +
+		zeroPad(day,2) + "000000";
+
+	var monthString = prettyMonths[monthOfYear];
+	document.getElementById("displayYearEl").innerHTML = year + 1996;
+	document.getElementById("displayMonthEl").innerHTML = monthString;
+	// looks too jarring when it changes..
+	//document.getElementById("displayDayEl").innerHTML = zeroPad(day,2);
+
+	var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+	document.getElementById('wm-graph-anchor').href = url;
+
+   //document.getElementById("wmtbURL").value="evX("+eventX+") elX("+elementX+") xO("+xOff+") y("+year+") m("+month+") monthOff("+monthOff+") DS("+dateString+") Moy("+monthOfYear+") ms("+monthString+")";
+   if(curYear != year) {
+       var yrOff = year * yearImgWidth;
+       document.getElementById("wbMouseTrackYearImg").style.left = yrOff + "px";
+       curYear = year;
+   }
+   if(curMonth != month) {
+       var mtOff = year + (month * monthImgWidth) + 1;
+       document.getElementById("wbMouseTrackMonthImg").style.left = mtOff + "px";
+       curMonth = month;
+   }
+}
+//]]>
+</script>
+
+<style type="text/css">body{margin-top:0!important;padding-top:0!important;min-width:800px!important;}#wm-ipp a:hover{text-decoration:underline!important;}</style>
+<div id="wm-ipp" style="display:none; position:relative;padding:0 5px;min-height:70px;min-width:800px; z-index:9000;">
+<div id="wm-ipp-inside" style="position:fixed;padding:0!important;margin:0!important;width:97%;min-width:780px;border:5px solid #000;border-top:none;background-image:url(http://static.waybackmachine.org/images/toolbar/wm_tb_bk_trns.png);text-align:center;-moz-box-shadow:1px 1px 3px #333;-webkit-box-shadow:1px 1px 3px #333;box-shadow:1px 1px 3px #333;font-size:11px!important;font-family:'Lucida Grande','Arial',sans-serif!important;">
+   <table style="border-collapse:collapse;margin:0;padding:0;width:100%;"><tbody><tr>
+   <td style="padding:10px;vertical-align:top;min-width:110px;">
+   <a href="http://waybackmachine.org/" title="Wayback Machine home page" style="background-color:transparent;border:none;"><img src="http://static.waybackmachine.org/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0"/></a>
+   </td>
+   <td style="padding:0!important;text-align:center;vertical-align:top;width:100%;">
+
+       <table style="border-collapse:collapse;margin:0 auto;padding:0;width:570px;"><tbody><tr>
+       <td style="padding:3px 0;" colspan="2">
+       <form target="_top" method="get" action="http://waybackmachine.org/form-submit.jsp" name="wmtb" id="wmtb" style="margin:0!important;padding:0!important;"><input type="text" name="url" id="wmtbURL" value="http://klausler.com/evolved.html" style="width:400px;font-size:11px;font-family:'Lucida Grande','Arial',sans-serif;" onfocus="javascript:this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20090312100451" /><input type="submit" value="Go" style="font-size:11px;font-family:'Lucida Grande','Arial',sans-serif;margin-left:5px;" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td style="vertical-align:bottom;padding:5px 0 0 0!important;" rowspan="2">
+           <table style="border-collapse:collapse;width:110px;color:#99a;font-family:'Helvetica','Lucida Grande','Arial',sans-serif;"><tbody>
+			
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr style="width:110px;height:16px;font-size:10px!important;">
+           	<td style="padding-right:9px;font-size:11px!important;font-weight:bold;text-transform:uppercase;text-align:right;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+		                <a href="http://replay.waybackmachine.org/20090204032124/http://klausler.com/evolved.html" style="text-decoration:none;color:#33f;font-weight:bold;background-color:transparent;border:none;" title="4 lut 2009"><strong>LUT</strong></a>
+		                
+               </td>
+               <td id="displayMonthEl" style="background:#000;color:#ff0;font-size:11px!important;font-weight:bold;text-transform:uppercase;width:34px;height:15px;padding-top:1px;text-align:center;" title="You are here: 10:04:51 mar 12, 2009">MAR</td>
+				<td style="padding-left:9px;font-size:11px!important;font-weight:bold;text-transform:uppercase;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+                       kwi
+                       
+               </td>
+           </tr>
+
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr>
+               <td style="padding-right:9px;white-space:nowrap;overflow:visible;text-align:right!important;vertical-align:middle!important;" nowrap="nowrap">
+               
+		                <a href="http://replay.waybackmachine.org/20090218231648/http://klausler.com/evolved.html" title="23:16:48 lut 18, 2009" style="background-color:transparent;border:none;"><img src="http://static.waybackmachine.org/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a>
+		                
+               </td>
+               <td id="displayDayEl" style="background:#000;color:#ff0;width:34px;height:24px;padding:2px 0 0 0;text-align:center;font-size:24px;font-weight: bold;" title="You are here: 10:04:51 mar 12, 2009">12</td>
+				<td style="padding-left:9px;white-space:nowrap;overflow:visible;text-align:left!important;vertical-align:middle!important;" nowrap="nowrap">
+               
+                       <img src="http://static.waybackmachine.org/images/toolbar/wm_tb_nxt_off.png" alt="Next capture" width="14" height="16" border="0"/>
+                       
+			    </td>
+           </tr>
+
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr style="width:110px;height:13px;font-size:9px!important;">
+				<td style="padding-right:9px;font-size:11px!important;font-weight: bold;text-align:right;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+		                <a href="http://replay.waybackmachine.org/20080224135951/http://klausler.com/evolved.html" style="text-decoration:none;color:#33f;font-weight:bold;background-color:transparent;border:none;" title="24 lut 2008"><strong>2008</strong></a>
+		                
+               </td>
+               <td id="displayYearEl" style="background:#000;color:#ff0;font-size:11px!important;font-weight: bold;padding-top:1px;width:34px;height:13px;text-align:center;" title="You are here: 10:04:51 mar 12, 2009">2009</td>
+				<td style="padding-left:9px;font-size:11px!important;font-weight: bold;white-space:nowrap;overflow:visible;" nowrap="nowrap">
+               
+                       2010
+                       
+				</td>
+           </tr>
+           </tbody></table>
+       </td>
+
+       </tr>
+       <tr>
+       <td style="vertical-align:middle;padding:0!important;">
+           <a href="http://waybackmachine.org/20090312100451*/http://klausler.com/evolved.html" style="color:#33f;font-size:11px;font-weight:bold;background-color:transparent;border:none;" title="See a list of every capture for this URL"><strong>30 captures</strong></a>
+           <div style="margin:0!important;padding:0!important;color:#666;font-size:9px;padding-top:2px!important;white-space:nowrap;" title="Timespan for captures of this URL">16 kwi 03 - 12 mar 09</div>
+       </td>
+       <td style="padding:0!important;">
+       <a style="position:relative; white-space:nowrap; width:400px;height:27px;" href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" style="position:relative; white-space:nowrap; width:400px;height:27px;background-color:#fff;cursor:pointer;border-right:1px solid #ccc;" title="Explore captures for this URL">
+			<img id="sparklineImgId" style="position:absolute; z-index:9012; top:0px; left:0px;"
+				onmouseover="showTrackers('inline');" 
+				onmouseout="showTrackers('none');"
+				onmousemove="trackMouseMove(event,this)"
+				alt="sparklines"
+				width="400"
+				height="27"
+				border="0"
+				src="http://waybackmachine.org/jsp/graph.jsp?graphdata=400_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000101010100_2004:-1:010101010101_2005:-1:010000000000_2006:-1:001000000000_2007:-1:511100001000_2008:-1:110000001001_2009:2:131000000000_2010:-1:000000000000_2011:-1:000000000000"></img>
+			<img id="wbMouseTrackYearImg" 
+				style="display:none; position:absolute; z-index:9010;"
+				width="25" 
+				height="27"
+				border="0"
+				src="http://static.waybackmachine.org/images/toolbar/transp-yellow-pixel.png"></img>
+			<img id="wbMouseTrackMonthImg"
+				style="display:none; position:absolute; z-index:9011; " 
+				width="2"
+				height="27" 
+				border="0"
+				src="http://static.waybackmachine.org/images/toolbar/transp-red-pixel.png"></img>
+       </div>
+		</a>
+
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td style="text-align:right;padding:5px;width:65px;font-size:11px!important;">
+       <a href="javascript:;" onclick="document.getElementById('wm-ipp').style.display='none';" style="display:block;padding-right:18px;background:url(http://static.waybackmachine.org/images/toolbar/wm_tb_close.png) no-repeat 100% 0;color:#33f;font-family:'Lucida Grande','Arial',sans-serif;margin-bottom:23px;background-color:transparent;border:none;" title="Close the toolbar">Close</a>
+       <a href="http://faq.waybackmachine.org/" style="display:block;padding-right:18px;background:url(http://static.waybackmachine.org/images/toolbar/wm_tb_help.png) no-repeat 100% 0;color:#33f;font-family:'Lucida Grande','Arial',sans-serif;background-color:transparent;border:none;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+
+</div>
+</div>
+<script type="text/javascript">
+ var wmDisclaimBanner = document.getElementById("wm-ipp");
+ if(wmDisclaimBanner != null) {
+   disclaimElement(wmDisclaimBanner);
+ }
+</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+           
+<h2><font face="Helvetica, Arial, sans-serif">Introduction</font></h2>
+      <br>
+      <font face="Helvetica, Arial, sans-serif">In the United States,  the
+   most   common keyboard layout for computer keyboards remains the one 
+designed     by  Christopher Sholes for the original Remington "Type Writer"
+ in 1876.     This  layout is commonly called QWERTY after the order of the
+first  few    letters    on its top row.   </font>              
+<p><font face="Helvetica, Arial, sans-serif">Other layouts for a standard 
+ 3-row keyboard exist (as well as some <a
+ href="http://replay.waybackmachine.org/20090312100451/http://www.bbspot.com/News/2001/08/keyboard.html">interesting</a> nonstandard
+arrangements). I have been using the <a
+ href="http://replay.waybackmachine.org/20090312100451/http://www.mwbrooks.com/dvorak">Dvorak keyboard layout</a>      for 
+ about a year now. I like it a lot for my daily work, which involves    a 
+ lot of typing.  I used to feel a numbness of the backs of my hands after 
+    a long day with QWERTY, but I don't with Dvorak. And <a
+ href="http://replay.waybackmachine.org/20090312100451/http://www.acm.vt.edu/%7Ejmaxwell/dvorak/compare.html">quantified
+measurements</a> bear out its efficiency relative to QWERTY. (I acknowledge
+the argument that learning Dvorak also got me to type with the right fingers
+on the right keys, but I don't think that that's the whole story.)  </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">But Dvorak designed his layout
+       in the 1930's without the aid of computers.  It contains a couple
+annoying        features that lead to common errors in my typing -- namely
+the placement  of Y and B).  Could a modern evolutionary      algorithm and
+a huge input  sample discover a better arrangement?  I had    to  give it
+a try. The results  surprised me!<br>
+   </font></p>
+     
+<p><font face="Helvetica, Arial, sans-serif">This note summarizes my experiments 
+ thus far.<br>
+      </font></p>
+           
+<h2><font face="Helvetica, Arial, sans-serif">The first experiment<br>
+          </font></h2>
+           
+<p><font face="Helvetica, Arial, sans-serif">I limited this experiment to
+       the 30 keys on the three main rows under the four fingers of the two 
+ hands. They include the  26   letters of the English alphabet and four punctuation 
+ symbols (comma,  period,   quote, and semicolon). (A QWERTY layout typically 
+ has the slash  in this region  instead of quote.) Other punctuation was ignored.
+   </font></p>
+                                              
+<p><font face="Helvetica, Arial, sans-serif">First, I needed a quantifiable
+       metric by which one keyboard layout could be compared to another.
+I  constructed      a complicated function that measures the amount of "work"
+ needed to touch-type a given      text with a given layout. This function
+ estimates total finger travel,   with   some extra penalties in some situations
+ and some bonuses in others.   &nbsp;Specifically,  I simulate the typing
+of a (single) word with these  rules:<br>
+            <br>
+            </font></p>
+                       
+<ul>
+              <li>All 8 fingers start on the home row.</li>
+              <li>An index finger stretch to the center costs 1 unit.</li>
+              <li>Fingers of the same hand can't be on both the top and bottom
+   row.   &nbsp;When a top-row or bottom-row key is to be hit, each finger
+ on  the bottom  or top row (respectively) moves to the home row, and that
+ costs  1 unit each.</li>
+              <li>After that, if a finger has to move up or down to hit the 
+ key,   it  costs 1 unit. &nbsp;An additional unit is charged to move to the
+ bottom    row  (except for the index finger in its natural column) or to
+move an index   finger  to the top row in its unnatural center column. &nbsp;Furthermore,
+    moving a pinky up or down costs an additional unit. &nbsp;I have weak
+pinkies.</li>
+              <li>Hitting two distinct keys in succession with the same finger
+   is  really  bad; 3 more units are charged.</li>
+              <li>An extra unit is assessed when nonadjacent fingers of the 
+ same   hand   are used in succession and they are not both on the home row.</li>
+              <li>But adjacent fingers are charged a unit to hit keys on
+distinct     rows,  and one more if there's adjacent movement between the
+top and bottom     rows.</li>
+              <li>When a shift key is used, the fingers of the shifting hand
+  move   to  the home row for free afterwards.<br>
+              </li>
+                           
+</ul>
+                             
+<p><font face="Helvetica, Arial, sans-serif">My work estimation function
+simulates the typing of words, not simply digraphs and longer sequences.
+So it captures the effects of fingers being left on whatever keys they are
+on after they type the letters.  </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">I also needed a corpus of sample
+       text.  I collected about 20 megabytes of English from <a
+ href="http://replay.waybackmachine.org/20090312100451/http://promo.net/pg/">Project Gutenberg</a>. I used the King James
+       Version of the Bible, the complete works of William Shakespeare and
+ (naturally!)      Charles Darwin,  the first volume of Gibbon's <i>Decline
+ and Fall</i>,   Boswell's   <i>Life of Johnson</i>, Melville's <i>Moby Dick</i>,
+ the <i>Education   of  Henry Adams</i>, and other works. To that I added
+a decade of sent e-mail     (bodies only) and about 100,000 lines of C code.
+ This corpus therefore  reflects   my own typing to some degree by intent
+and other people would surely observe    different results.<br>
+   <br>
+   Many people have commented that the presence of Elizabethan English in 
+this  corpus skews the results. &nbsp;I don't think so, because the only oddball
+ word that shows up with great frequency is <i>thou,</i> and that's just
+a  pair of common digraphs that I'm sure I type <i>thou</i>sands of times
+a week.<br>
+     </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">The total input size is 4293746
+       words in 3307922 bytes. There are 88732 distinct words that appear
+more     than  once, where a word is defined as a contiguous sequence of
+characters     that  can be typed with the thirty central keys. The most
+frequent words    are:  </font></p>
+                             
+<p><code>  240036	the<br>
+                 140994	of<br>
+                 140641	and<br>
+                  92363	to<br>
+                  69993	in<br>
+                  69255	a<br>
+                  51265	i<br>
+                  50069	that<br>
+                  37358	:<br>
+                  37291	is<br>
+                  36819	for<br>
+                  32300	with<br>
+                  30704	he<br>
+                  30079	his<br>
+                  29071	be<br>
+                  28690	as<br>
+                  27130	it<br>
+                  25650	not<br>
+                  22020	this<br>
+                  21603	have<br>
+                  21467	by<br>
+                  21402	but<br>
+                  21241	my<br>
+                  21001	on<br>
+                  20928	was<br>
+                  18867	you<br>
+                  18067	if<br>
+                  17949	from<br>
+                  17483	;<br>
+                  17330	are<br>
+                  17058	which<br>
+                  16973	all<br>
+                  16958	they<br>
+                  16587	or<br>
+                  14853	will<br>
+                  14809	at<br>
+                  14768	we<br>
+                  14362	shall<br>
+                  13701	their<br>
+                  12595	,<br>
+                  12416	so<br>
+                  11985	.<br>
+                  11518	had<br>
+                  11454	an<br>
+                  11307	thou<br>
+                  11037	your<br>
+                  10377	sv &nbsp; &nbsp; &nbsp;<font
+ face="Helvetica, Arial, sans-serif"><i>(The alphabetic part of the code-name
+  of my project at work)</i></font><br>
+                  10296	him<br>
+                  10257	when<br>
+                  10155	one<br>
+                </code>  </p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">Next, I constructed an evolutionary
+       framework. After trying several, I ended up with a scheme in which
+a  pool     of 4096 keyboard layouts compete with each other. The layouts
+in  the initial     pool are entirely random. In each generation, they all
+race  to "type" a  word  list, and their per-word times are multiplied by
+the word   frequencies   in the input sample. After the race, the fastest
+half are kept.  The pool  is then repopulated   by generating a single mutation
+  for each  survivor.  The mutations are made   by permuting keys in the
+layout,   with  a 50% chance  of swapping two keys,   a 25% chance of swapping
+three,  a 12.5%  chance of  four, and so on.  </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">The evolutionary framework itself
+       had to evolve. It was challenging to find a scheme with sufficient
+mutation       possibilities that would allow a medium-quality  layout enough
+time to   improve   itself with multiple mutations before getting eliminated.
+I also   learned  that it was important to track only distinct layouts, for
+ otherwise   a single  good one would rapidly fill the pool with identical
+ copies of itself.<br>
+   <br>
+   And yes, strictly speaking this is not a genetic algorithm, since the
+genotypes  are never combined. &nbsp;I just can't think of a way in which
+that could  be done, since a keyboard layout is a permutation of a list rather
+than a  selection from a multiset.<br>
+      </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">When no new best layout has
+risen to the top of the pool in some number of generations, the round stops.
+The best layouts are stored away and the pool repopulated with random keyboards.
+       This allows a fresh start after one layout has populated the pool
+with     itself   and its mutations.  </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">Last, there is an "all-star"
+       round in which the best survivors from all the rounds compete. The
+Dvorak       and QWERTY layouts get seeded into this round too for fun. 
+ </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">Enough detail on the experimental
+       framework! Once I was happy with the evaluation function and evolutionary
+       framework, I was fascinated to watch it run in real time and see the
+  intermediate     results. I kept a running display of the top five layouts
+  in each generation.     Usually, layouts with different home row orders
+will  battle it out until    one has proven itself superior. It would only
+take  a couple of generations    for a round to produce something better
+than QWERTY.  And it quickly became    clear that putting the vowels on the
+home row of  the left hand, which is   a cornerstone concept of the Dvorak
+layout, was  not seen by the algorithm   as optimal.  </font></p>
+                             
+<p><font face="Helvetica, Arial, sans-serif">What came out of the exercise,
+       after running it overnight?  Here is the winner,   which I used  
+to  type the first edition of this note, as well as the Dvorak and QWERTY
+ layouts  with their scores:</font>   </p>
+                             
+<p align="left"><code> ' , . p y  &nbsp;f g c r l      &nbsp;Dvorak layout<br>
+                a o e u i&nbsp;  d h t n s      &nbsp;12189785<br>
+                ; q j k x&nbsp;  b m w v z<br>
+                <br>
+                q w e r t  &nbsp;y u i o p      &nbsp;Sholes' layout, with
+ quote    replacing /<br>
+                a s d f g  &nbsp;h j k l ;      &nbsp;25390660<br>
+                z x c v b  &nbsp;n m , . '<br>
+                <br>
+                . u y p q  &nbsp;k l d c g      &nbsp;Best evolved layout<br>
+                e a i n w  &nbsp;r h t s o      &nbsp;9640479<br>
+                ' , ; f z  &nbsp;j m v b x<br>
+                </code>  </p>
+                             
+<h2><font face="Helvetica, Arial, sans-serif">The second experiment<br>
+      </font></h2>
+           
+<p><font face="Helvetica, Arial, sans-serif">The next step was to actually
+     try using the layout. &nbsp;I spent a couple days with it, and learned
+  that   my layout evaluation function was just too smart for its own good.
+  &nbsp;Too   many words required complicated patterns using the fingers
+of   the right hand.  The word <i>bottom</i> convinced me that Dvorak was
+on to  something when he designed  a keyboard that maximized alternation
+between   the hands.<br>
+   </font></p>
+     
+<p><font face="Helvetica, Arial, sans-serif">(The insight is that hand alternation 
+ increases parallelism. &nbsp;When the fingers of one hand are hitting keys, 
+ the fingers on the other are getting into position atop the next keys. &nbsp;This 
+ should have been obvious, but it wasn't until I started the third experiment 
+ and saw some empirical timing data that I realized how much faster things 
+ are with high rates of hand alternation.)<br>
+          </font></p>
+                   
+<p><font face="Helvetica, Arial, sans-serif">So I updated -- simplified,
+really -- my evaluation function. &nbsp;Now I charge points when too many
+keys are hit in succession by fingers of the same hand, with some credits
+for hitting adjacent keys. &nbsp;Specifically, the new simplified rules are:<br>
+          </font></p>
+                   
+<ul>
+            <li><font face="Helvetica, Arial, sans-serif">Every position
+has   an  assigned  cost that's looked up from a table. &nbsp;The OEU/HTN
+positions    of Dvorak  have no cost. &nbsp;A and S are 1 unit; I and D are
+two; &lt;&gt;P    and GCR  are three; Y and F are four; ", QJK, MWV, and
+L are five; : and   Z are six;  and X and B are seven.</font></li>
+            <li><font face="Helvetica, Arial, sans-serif">Using the same
+finger    twice  in succession on distinct letters costs 10 units.</font></li>
+            <li><font face="Helvetica, Arial, sans-serif">When two keys in
+ a  row   are  struck with the same hand, it costs two units if they're on
+ different    rows  or on the bottom row, and one unit if they're not adjacent.</font></li>
+            <li><font face="Helvetica, Arial, sans-serif">If three or more
+ keys   are  hit in succession by the same hand, one unit is charged for
+each  key   after  the second.</font></li>
+                   
+</ul>
+          <font face="Helvetica, Arial, sans-serif">Much simpler! &nbsp;So
+ I  </font><font face="Helvetica, Arial, sans-serif"> <a
+ href="http://replay.waybackmachine.org/20090312100451/http://klausler.com/evolved.output">ran</a> </font><font
+ face="Helvetica, Arial, sans-serif">the experiment again. &nbsp;What did 
+    I see?<br>
+          <br>
+          </font><code> ' , . p y&nbsp; f g c r l      &nbsp; Dvorak layout<br>
+                a o e u i&nbsp; d h t n s &nbsp; 32129548<br>
+                ; q j k x&nbsp; b m w v z<br>
+                <br>
+                q w e r t&nbsp; y u i o p      &nbsp; Sholes' layout, with
+ quote    replacing  /<br>
+                a s d f g  &nbsp;h j k l ; &nbsp; 59514344<br>
+                z x c v b  &nbsp;n m , . '</code><br>
+          <code><br>
+          k , u y p&nbsp; w l m f c &nbsp; Best evolved layout<br>
+          o a e i d &nbsp;r n t h s &nbsp; 28281895<br>
+          q . ' ; z &nbsp;x v g b j</code><font
+ face="Helvetica, Arial, sans-serif"><br>
+          <br>
+          That looks way more usable to me. &nbsp;But (perhaps not surprisingly), 
+    it sure looks a lot like Dvorak, too, and is not quantifiably all that 
+ much   better, and that advantage is probably less than the level of error 
+ in my work estimation function. &nbsp;Note that the simple goal of hand alternation
+ did bring the   vowels all over to the hand opposite the one with the T
+(which  my program    automatically places under the right hand). &nbsp;But
+it pulled  U out of   the home row so that R could live there.<br>
+          <br>
+          Other differences from Dvorak are not that profound, and seem to
+ correlate     pretty well with a simple letter frequency analysis. &nbsp;I
+ note that  H  was put where Dvorak has N, perhaps so that SH would be seen
+ as using adjacent   fingers. &nbsp;And P and Y swapped places.<br>
+          <br>
+          Now I'm going to try this second layout for a day or two and see
+ whether     it's sufficiently (subjectively) superior to Dvorak to be worth
+ the hassle     of switching to it...<br>
+      <br>
+      (At this point, this work was the subject of a front-page story on
+<a href="http://replay.waybackmachine.org/20090312100451/http://slashdot.org/">Slashdot</a> and I was deluged with mail.
+&nbsp;Thanks!)<br>
+      <br>
+      </font>      
+<h2><font face="Helvetica, Arial, sans-serif">The third experiment</font></h2>
+      <font face="Helvetica, Arial, sans-serif"><br>
+      Well, it's a usable layout. &nbsp;But I'm still not comfortable with
+ the   way that I assigned cost estimates to the various keyboard positions.<br>
+      <br>
+      So I've switched temporarily back to Dvorak (oh, it feels so good)
+and   have  written a program to monitor my keystrokes. &nbsp;I plan to collect
+  a couple  of weeks' worth of data. &nbsp;I'm tracking each single letter,
+  digraph, and trigraph with timing data and error rates. &nbsp;This will
+let  me construct  a map of the keyboard that has a real empirical cost for
+movement  between  most keys. Of course, it may well be biased by my use
+of the Dvorak  layout;  I have found some QWERTY users willing to collect
+similar tracking  data. The application to the evolutionary algorithm is
+obvious.<br>
+  <br>
+  Interesting patterns have already arisen. &nbsp;Suppose that you group
+the  30 keys on the three main rows into six groups (top, home and bottom
+rows  for each hand) as follows:<br>
+  </font><br>
+  <tt>&nbsp;&nbsp;&nbsp; left &nbsp;right<br>
+  &nbsp; &nbsp; 00000 11111 &nbsp;top row<br>
+  &nbsp;&nbsp;&nbsp; 22222 33333 &nbsp;home row<br>
+  &nbsp;&nbsp;&nbsp; 44444 55555 &nbsp;bottom row<br>
+  </tt><br>
+  <font face="Helvetica, Arial, sans-serif">Here are the average transition
+ times in milliseconds for my own typing between a keystroke in one group
+and a keystroke in another:<br>
+  <br>
+  </font><tt>mean ms:<br>
+  &nbsp;-&gt;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; &nbsp; 1&nbsp;&nbsp;&nbsp;
+ &nbsp; 2&nbsp;&nbsp;&nbsp; &nbsp; 3&nbsp;&nbsp;&nbsp; &nbsp; 4&nbsp;&nbsp;&nbsp;
+ &nbsp; 5<br>
+  0&nbsp;&nbsp;&nbsp; 403&nbsp;&nbsp;&nbsp; 198&nbsp;&nbsp;&nbsp; 311&nbsp;&nbsp;&nbsp;
+ 351&nbsp;&nbsp;&nbsp; 547&nbsp;&nbsp;&nbsp; 236<br>
+  1&nbsp;&nbsp;&nbsp; 271&nbsp;&nbsp;&nbsp; 193&nbsp;&nbsp;&nbsp; 157&nbsp;&nbsp;&nbsp;
+ 237&nbsp;&nbsp;&nbsp; 614&nbsp;&nbsp;&nbsp; 320<br>
+  2&nbsp;&nbsp;&nbsp; 287&nbsp;&nbsp;&nbsp; 119&nbsp;&nbsp;&nbsp; 159&nbsp;&nbsp;&nbsp;
+ 134&nbsp;&nbsp;&nbsp; 409&nbsp;&nbsp;&nbsp; 123<br>
+  3&nbsp;&nbsp;&nbsp; 263&nbsp;&nbsp;&nbsp; 415&nbsp;&nbsp;&nbsp; 140&nbsp;&nbsp;&nbsp;
+ 180&nbsp;&nbsp;&nbsp; 418&nbsp;&nbsp;&nbsp; 152<br>
+  4&nbsp;&nbsp;&nbsp; 499&nbsp;&nbsp;&nbsp; 524&nbsp;&nbsp;&nbsp; 334&nbsp;&nbsp;&nbsp;
+ 495&nbsp;&nbsp;&nbsp; 629&nbsp;&nbsp;&nbsp; 173<br>
+  5&nbsp;&nbsp;&nbsp; 159&nbsp;&nbsp;&nbsp; 245&nbsp;&nbsp;&nbsp; 168&nbsp;&nbsp;&nbsp;
+ 307&nbsp;&nbsp;&nbsp; 268&nbsp;&nbsp;&nbsp; 318</tt><br>
+  <br>
+  <font face="Helvetica, Arial, sans-serif">I see that the fastest transitions
+ are from the left hand home row (group 2) to anything under the right hand
+ (groups 1, 3, and 5) and vice versa. &nbsp;Note that the Dvorak layout that
+ I use has all the vowels on the left hand's home row (group 2).<br>
+     <br>
+     (News flash: Running the keyboard layout evolution program using the 
+inter-key   timing data collected from my own fingers has produced a result 
+so surprising   that I don't really trust it! &nbsp;Namely, the evolutionary 
+algorithm couldn't  produce a layout that could beat the Dvorak layout that 
+gets seeded into the final all-star round. &nbsp;I've enlisted a bunch of 
+QWERTY typists to collect their own keystroke data and see what the experiment 
+produces for them. &nbsp;Look for more results in a couple of weeks.)<br>
+<br>
+(Update: A couple of week have now passed, but I haven't received any QWERTY
+keystroke timing data yet that I can plug into the evolutionary model. &nbsp;Volunteers,
+if your $HOME/.kbwatch file is larger than a few hundred Kbytes, please "make
+kbstats_data.c" and<br>
+mail it in to me. &nbsp;Thanks!)<br>
+      <br>
+      </font>      
+<h2><font face="Helvetica, Arial, sans-serif">Links</font></h2>
+      <font face="Helvetica, Arial, sans-serif">    <br>
+          I used <i>xkbcomp</i>   to remap my keyboard; <a
+ href="http://replay.waybackmachine.org/20090312100451/http://klausler.com/evolved.xkb">here</a>    is the file if you are  crazy enough to want
+  to try it yourself.</font>           
+<p><font face="Helvetica, Arial, sans-serif">  </font>           </p>
+                 
+<p><font face="Helvetica, Arial, sans-serif">In all, this little program
+required about <a href="http://replay.waybackmachine.org/20090312100451/http://klausler.com/evolve.tar.bz2">1000 lines of C</a>. </font></p>
+                 
+<p><font face="Helvetica, Arial, sans-serif">A better picture of the second
+     layout is here in a <a href="http://replay.waybackmachine.org/20090312100451/http://klausler.com/evolved.pdf">PDF</a> file. &nbsp;Note that 
+   I have also swapped CAPS LOCK with the left CONTROL key and exchanged the
+   parentheses with the angled brackets (less than and greater than).</font><br>
+          </p>
+                   
+<p><font face="Helvetica, Arial, sans-serif"><br>
+          <br>
+            </font></p>
+               <font face="Helvetica, Arial, sans-serif"><br>
+              </font> <br>
+              <br>
+             <br>
+            <br>
+           <br>
+          <br>
+         <br>
+        <br>
+       <br>
+      <br>
+     <br>
+    <br>
+   <br>
+  <br>
+ <br>
+</body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 10:04:51 mar 12, 2009 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 5:56:09 mar 13, 2011.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
