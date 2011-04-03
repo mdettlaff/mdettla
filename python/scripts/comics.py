@@ -84,4 +84,16 @@ if __name__ == '__main__':
             r'.*<IMG ALT="Latest Strip".*? SRC="(.*?)"', dl_dir, 'uf')
     download_webcomic('http://comics.com/monty/',
             r'.*StripImage.*<img src="(.*?)"', dl_dir, 'monty')
+    download_webcomic('http://comics.com/the_meaning_of_lila/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'lila')
+    download_webcomic('http://comics.com/on_a_claire_day/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'claire')
+    download_webcomic('http://comics.com/daddys_home/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'daddy')
+    download_webcomic('http://comics.com/cafe_con_leche/',
+            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'cafe')
+    download_webcomic('http://cowbirdsinlove.com/',
+            r'<img src="(.*?)".*id="comic"', dl_dir, 'cowbirds')
+    download_webcomic('http://nodwick.humor.gamespy.com/ffn/',
+            r'.*<img src="(.*?strips.*?)"', dl_dir, 'ffn')
 
