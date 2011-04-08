@@ -1,0 +1,16 @@
+<project default="compile">
+
+	<import file="../build.xml" />
+
+	<target name="run" depends="compile">
+		<java classname="jade.Boot" fork="true">
+			<classpath refid="run.classpath" />
+			<arg value="-detect-main" />
+			<arg value="false" />
+			<arg line="${args}" />
+			<arg value="personal:PersonalAgent()" />
+			<arg value="weather:WeatherAgent()" />
+			<arg value="user:UserAgent()" />
+		</java>
+	</target>
+</project>
