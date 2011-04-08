@@ -1,0 +1,15 @@
+Dwóch agentów: personalny i pogodowy
+
+pogodowy co jakiś czas wysyła INFORM z pogodą
+
+personalny może dostać od usera (z GUI) REQUEST lub QUERY-IF
+jeżeli REQUEST, wysyła INFORM
+jeżeli QUERY-IF:
+  jeżeli zna, to odpowiada INFORM
+  jeżeli nie zna, przekazuje QUERY-IF do pogodowego:
+    pogodowy odpowiada INFORM
+
+
+następnie mobilność:
+Agent personalny przemieszcza się do kontenera gdzie jest pogodowy
+i tam wysyła do niego REQUEST.
