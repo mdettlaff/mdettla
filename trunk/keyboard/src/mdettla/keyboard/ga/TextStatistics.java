@@ -19,6 +19,7 @@ public class TextStatistics {
 			int b;
 			while ((b = corpus.read()) != -1) {
 				char c = (char)b;
+				c = Character.toLowerCase(c);
 				if (!charsFrequencies.containsKey(c)) {
 					charsFrequencies.put(c, 0);
 				}
