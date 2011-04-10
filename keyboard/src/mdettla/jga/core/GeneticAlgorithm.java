@@ -133,8 +133,9 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 			Specimen bestFromPopulation = Collections.max(population);
 			best = Collections.max(Arrays.asList(best, bestFromPopulation));
 
-			System.out.println((i + 1) + "\t" + bestFromPopulation + "\t" +
-					bestFromPopulation.getFitness());
+			System.out.println((i + 1) + "\n" +
+					bestFromPopulation.getPhenotype() +
+					"\t" + bestFromPopulation.getFitness());
 		}
 		return best;
 	}

@@ -12,7 +12,7 @@ public class TextStatisticsTest {
 
 	@Test
 	public void test() throws IOException {
-		String corpus = "foo bar baz";
+		String corpus = "foo bar Baz";
 		Reader corpusReader = new StringReader(corpus);
 		TextStatistics stats = new TextStatistics(corpusReader);
 		assertEquals(0, stats.getCharOccurences('x'));
