@@ -1,0 +1,90 @@
+import java.util.*;
+
+public class Perceptron {
+
+	private int[] perm;
+	private String filename;
+
+	public static void main(String[] args) {
+		Perceptron perceptron = new Perceptron(args[0]);
+		perceptron.run();
+	}
+
+	public Perceptron(String filename) {
+		this.filename = filename;
+	}
+
+	public void run() {
+		init();
+		findR();
+		randPerm();
+		int iter = 0;
+		do {
+			int t = oneStep();
+			iter++;
+		} while (t > 0);
+		// pisanie wyników
+	}
+
+	private int oneStep() {
+		double tmp;
+		tmp = b;
+		for (int i = 0; i < m; i++) {
+			for (j = 0; j < n; j++) {
+				tmp += x[perm[i]][j] * w[j];
+				if (y[perm[i][j]] * tmp <= 0) {
+					for (int j = 0; j < n; j++) {
+						w[j] += eta * y[perm[i]] * x[perm[i]][j];
+					}
+					b += eta * y[perm[i]] * R * R;
+				}
+			}
+		}
+	}
+
+	private void findR() {
+	}
+
+	private void init() {
+		ReadData rd = new ReadData(filename);
+		int m = rd.getCard();
+		int n = rd.getDim();
+		perm = new int[m];
+		double[][] x0 = new double[m][n];
+		x0 = rd.getX();
+		n -= 1;
+		double[][] x = new double[m][n];
+		double[] y = new double[m];
+
+		for (int i = 0; i < m; i++) {
+			for (int j = 0; j < n; j++) {
+				x[i][j] = x0[i][j];
+			}
+			y[i] = x0[i][n];
+		}
+
+		System.out.println(array2DToString(x));
+		System.out.println(Arrays.toString(y));
+	}
+
+	private static String array2DToString(double[][] array2D) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < array2D.length; i++) {
+			sb.append(Arrays.toString(array2D[i]) + "\n");
+		}
+		return sb.toString();
+	}
+
+	private void randPerm(int m) {
+		int rp, sw = 0;
+		for (int i = 0; i < m; i++) {
+			perm[i] = i;
+		}
+		for (int i = 0; i < m; i++) {
+			rp = (int)((m - i) * Math.random() + i);
+			sw = perm[i];
+			perm[i] = perm[rp];
+			perm[rp] = sw;
+		}
+	}
+}

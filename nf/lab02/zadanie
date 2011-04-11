@@ -1,0 +1,6 @@
+Zaimplementować perceptron.
+w1x + w2y + b = 0
+Zrobić obrazek: wykres y = -(w1 * x + b) / w2
+
+Zmodyfikowac algorytm perceptronu zeby uzyskac algorytm ADALINE.
+y = (w*x + b) * (1 + 0.01*(2*random() - 1))
