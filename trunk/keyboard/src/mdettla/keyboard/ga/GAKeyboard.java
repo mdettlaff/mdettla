@@ -1,8 +1,8 @@
 package mdettla.keyboard.ga;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import mdettla.jga.operators.mutation.SwapMutation;
 public class GAKeyboard {
 
 	private static final int INITIAL_POPULATION_SIZE = 100;
-	private static final int GENERATIONS_COUNT = 75;
+	private static final int GENERATIONS_COUNT = 50;
 
 	public static void main(String[] args) throws IOException {
 		TextStatistics stats = getTextStatistics();
@@ -25,13 +25,19 @@ public class GAKeyboard {
 		ga.setCrossoverOperator(new CycleCrossover());
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
 
-		System.out.println("Najlepiej przystosowany osobnik:\n" + best);
+		System.out.println("\nLosowy układ:\n" +
+				KeyboardLayout.createRandomInstance(stats));
+		System.out.println("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
+		System.out.println("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats));
+		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);
 	}
 
 	private static TextStatistics getTextStatistics() throws IOException {
-		String corpus = "foo bar baz bbb";
-		Reader corpusReader = new StringReader(corpus);
+		Reader corpusReader = new InputStreamReader(
+				GAKeyboard.class.getResourceAsStream("resources/otoos11.txt"));
 		TextStatistics stats = new TextStatistics(corpusReader);
+		System.out.println("Długość analizowanego tekstu: "
+				+ stats.getTextLength() + " znaków");
 		return stats;
 	}
 

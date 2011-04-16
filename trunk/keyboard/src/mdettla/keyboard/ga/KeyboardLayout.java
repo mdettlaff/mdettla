@@ -85,6 +85,28 @@ public class KeyboardLayout implements Specimen {
 		return penalty;
 	}
 
+	public static KeyboardLayout getQWERTYLayout(TextStatistics stats) {
+		final List<Character> QWERTY_CHARS = Arrays.asList(
+				'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
+				'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
+				'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'
+		);
+		KeyboardLayout qwerty = new KeyboardLayout(stats);
+		qwerty.keys = QWERTY_CHARS;
+		return qwerty;
+	}
+
+	public static KeyboardLayout getDvorakLayout(TextStatistics stats) {
+		final List<Character> DVORAK_CHARS = Arrays.asList(
+				'?', ',', '.', 'p', 'y', 'f', 'g', 'c', 'r', 'l',
+				'a', 'o', 'e', 'u', 'i', 'd', 'h', 't', 'n', 's',
+				';', 'q', 'j', 'k', 'x', 'b', 'm', 'w', 'v', 'z'
+		);
+		KeyboardLayout dvorak = new KeyboardLayout(stats);
+		dvorak.keys = DVORAK_CHARS;
+		return dvorak;
+	}
+
 	private int getPenaltyForLocation() {
 		int[] costs = {
 				5, 3, 3, 3, 4, 4, 3, 3, 3, 5,

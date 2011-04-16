@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class TextStatistics {
 
+	private final int textLength;
 	private Map<Character, Integer> charsFrequencies;
 	private Map<Diagraph, Integer> diagraphsFrequencies;
 
@@ -15,6 +16,7 @@ public class TextStatistics {
 		try {
 			charsFrequencies = new HashMap<Character, Integer>();
 			diagraphsFrequencies = new HashMap<Diagraph, Integer>();
+			int charsReadCount = 0;
 			Character prevChar = null;
 			int b;
 			while ((b = corpus.read()) != -1) {
@@ -34,7 +36,9 @@ public class TextStatistics {
 							diagraph, diagraphsFrequencies.get(diagraph) + 1);
 				}
 				prevChar = c;
+				charsReadCount++;
 			}
+			textLength = charsReadCount;
 		} finally {
 			corpus.close();
 		}
@@ -56,5 +60,9 @@ public class TextStatistics {
 			return diagraphsFrequencies.get(diagraph);
 		}
 		return 0;
+	}
+
+	public int getTextLength() {
+		return textLength;
 	}
 }
