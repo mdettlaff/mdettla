@@ -35,7 +35,7 @@ public class KeyboardLayoutTest {
 	public void setUp() throws IOException {
 		Reader corpusReader = new StringReader(CORPUS);
 		TextStatistics stats = new TextStatistics(corpusReader);
-		qwerty = new KeyboardLayout(stats);
+		qwerty = KeyboardLayout.getQWERTYLayout(stats);
 	}
 
 	@Test
