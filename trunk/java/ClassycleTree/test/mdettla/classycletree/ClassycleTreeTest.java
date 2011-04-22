@@ -25,7 +25,7 @@ public class ClassycleTreeTest {
 			"</classycle>";
 		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		Tree<String> barTree = new Tree<String>("foo.Bar");
+		Tree<String> barTree = new Tree<String>("foo.Bar (0)");
 		String expected = barTree.toString();
 		assertEquals(expected, actual);
 	}
@@ -45,9 +45,9 @@ public class ClassycleTreeTest {
 			"</classycle>";
 		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		Tree<String> barTree = new Tree<String>("foo.Bar");
-		barTree.addLeaf("baz.Qux");
-		Tree<String> quxTree = new Tree<String>("baz.Qux");
+		Tree<String> barTree = new Tree<String>("foo.Bar (1)");
+		barTree.addLeaf("baz.Qux (0)");
+		Tree<String> quxTree = new Tree<String>("baz.Qux (0)");
 		String expected = barTree + "\n\n" + quxTree;
 		assertEquals(expected, actual);
 	}
@@ -68,10 +68,10 @@ public class ClassycleTreeTest {
 			"</classycle>";
 		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		Tree<String> barTree = new Tree<String>("foo.Bar");
-		barTree.addLeaf("baz.Qux");
-		Tree<String> quxTree = new Tree<String>("baz.Qux");
-		quxTree.addLeaf("foo.Bar");
+		Tree<String> barTree = new Tree<String>("foo.Bar (1)");
+		barTree.addLeaf("baz.Qux (1)");
+		Tree<String> quxTree = new Tree<String>("baz.Qux (1)");
+		quxTree.addLeaf("foo.Bar (1)");
 		String expected = barTree + "\n\n" + quxTree;
 		assertEquals(expected, actual);
 	}
