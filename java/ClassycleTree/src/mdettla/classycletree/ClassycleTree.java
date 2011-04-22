@@ -72,14 +72,14 @@ public class ClassycleTree {
 		List<JavaClass> classes = new ArrayList<JavaClass>(classPool.values());
 		for (int i = 0; i < classes.size(); i++) {
 			JavaClass javaClass = classes.get(i);
-			Tree<String> dependencyTree = new Tree<String>(javaClass.getName());
+			Tree<JavaClass> dependencyTree = new Tree<JavaClass>(javaClass);
 			addDependenciesToTree(dependencyTree, javaClass);
 			printDependencyTree(dependencyTree, printer, i);
 		}
 	}
 
 	private void printDependencyTree(
-			Tree<String> dependencyTree, PrintStream printer, int i) {
+			Tree<JavaClass> dependencyTree, PrintStream printer, int i) {
 		if (i > 0) {
 			printer.print("\n\n");
 		}
@@ -87,11 +87,10 @@ public class ClassycleTree {
 	}
 
 	private void addDependenciesToTree(
-			Tree<String> dependencyTree, JavaClass javaClass) {
+			Tree<JavaClass> dependencyTree, JavaClass javaClass) {
 		for (JavaClass dependency : javaClass.getDirectDependencies()) {
-			String dependencyName = dependency.getName();
-			if (!dependencyTree.containsNode(dependencyName)) {
-				dependencyTree.addLeaf(javaClass.getName(), dependencyName);
+			if (!dependencyTree.containsNode(dependency)) {
+				dependencyTree.addLeaf(javaClass, dependency);
 				addDependenciesToTree(dependencyTree, dependency);
 			}
 		}
