@@ -31,7 +31,7 @@ public class ClassycleTree {
 	public ClassycleTree(Reader classycleXmlReport)
 	throws XMLStreamException, IOException {
 		try {
-			classPool = getClassPool(classycleXmlReport);
+			classPool = parseClassycleXmlReport(classycleXmlReport);
 		} finally {
 			classycleXmlReport.close();
 		}
@@ -39,33 +39,20 @@ public class ClassycleTree {
 
 	public static void main(String[] args)
 	throws XMLStreamException, IOException {
-		if (args.length < 1) {
-			System.err.println(
-					"Usage: java " + ClassycleTree.class.getName() +
-					" CLASS_FILES...");
-			System.exit(2);
+		GetOpt getOpt = new GetOpt(args);
+		List<String> classFiles = getOpt.getArguments();
+		if (classFiles.isEmpty()) {
+			showUsageAndExit(classFiles);
 		}
-		String[] classFiles = args;
-
 		String xmlReport = getClassycleXmlReport(classFiles);
 		Reader xmlReportReader = new StringReader(xmlReport);
 		ClassycleTree classycleTree = new ClassycleTree(xmlReportReader);
 		System.out.println();
-		classycleTree.printDependencyTree(System.out);
-	}
-
-	private static String getClassycleXmlReport(String[] classFiles)
-	throws IOException {
-		final boolean mergeInnerClasses = true;
-		Analyser analyser = new Analyser(
-				classFiles, new TrueStringPattern(), null, mergeInnerClasses);
-		final boolean packagesOnly = false;
-		analyser.readAndAnalyse(packagesOnly);
-		ByteArrayOutputStream xmlOut = new ByteArrayOutputStream();
-		String title = classFiles[0];
-		analyser.printXML(title, packagesOnly, new PrintWriter(xmlOut));
-		String xmlReport = xmlOut.toString();
-		return xmlReport;
+		if (getOpt.isOptionSet("summary")) {
+			classycleTree.printSummary();
+		} else {
+			classycleTree.printDependencyTree(System.out);
+		}
 	}
 
 	public void printDependencyTree(PrintStream printer) throws XMLStreamException {
@@ -78,12 +65,53 @@ public class ClassycleTree {
 		}
 	}
 
+	private static void showUsageAndExit(List<String> classFiles) {
+		System.err.println(
+				"Usage: java " + ClassycleTree.class.getName() +
+				" [--summary] CLASS_FILES...");
+		System.exit(2);
+	}
+
+	private static String getClassycleXmlReport(List<String> classFiles)
+	throws IOException {
+		final boolean mergeInnerClasses = true;
+		Analyser analyser = new Analyser(classFiles.toArray(new String[0]),
+				new TrueStringPattern(), null, mergeInnerClasses);
+		final boolean packagesOnly = false;
+		analyser.readAndAnalyse(packagesOnly);
+		ByteArrayOutputStream xmlOut = new ByteArrayOutputStream();
+		String title = classFiles.get(0);
+		analyser.printXML(title, packagesOnly, new PrintWriter(xmlOut));
+		String xmlReport = xmlOut.toString();
+		return xmlReport;
+	}
+
+	private void printSummary() {
+		int allClassesCount = classPool.size();
+		int allDependenciesCount = getAllDependenciesCount();
+		double averageDependenciesPerClass =
+			((double)allDependenciesCount) / allClassesCount;
+		double percentage = averageDependenciesPerClass / allClassesCount * 100;
+		System.out.println("classes: " + allClassesCount);
+		System.out.println(String.format(
+					"dependencies per class: %.1f (%.1f%% of all classes)",
+					averageDependenciesPerClass, percentage));
+	}
+
+	private int getAllDependenciesCount() {
+		int allDependenciesCount = 0;
+		for (JavaClass javaClass : classPool.values()) {
+			allDependenciesCount += javaClass.getDependenciesCount();
+		}
+		return allDependenciesCount;
+	}
+
 	private void printDependencyTree(
 			Tree<JavaClass> dependencyTree, PrintStream printer, int i) {
 		if (i > 0) {
-			printer.print("\n\n");
+			printer.println();
 		}
-		printer.print(dependencyTree.toString());
+		printer.println(dependencyTree.toString());
 	}
 
 	private void addDependenciesToTree(
@@ -96,7 +124,7 @@ public class ClassycleTree {
 		}
 	}
 
-	private Map<String, JavaClass> getClassPool(Reader reader)
+	private Map<String, JavaClass> parseClassycleXmlReport(Reader reader)
 	throws XMLStreamException {
 		Map<String, JavaClass> classPool = new LinkedHashMap<String, JavaClass>();
 		XMLInputFactory inputFactory = XMLInputFactory.newInstance();

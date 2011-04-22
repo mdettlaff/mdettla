@@ -26,7 +26,7 @@ public class ClassycleTreeTest {
 		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
 		Tree<String> barTree = new Tree<String>("foo.Bar (0)");
-		String expected = barTree.toString();
+		String expected = barTree.toString() + "\n";
 		assertEquals(expected, actual);
 	}
 
@@ -48,7 +48,7 @@ public class ClassycleTreeTest {
 		Tree<String> barTree = new Tree<String>("foo.Bar (1)");
 		barTree.addLeaf("baz.Qux (0)");
 		Tree<String> quxTree = new Tree<String>("baz.Qux (0)");
-		String expected = barTree + "\n\n" + quxTree;
+		String expected = barTree + "\n\n" + quxTree + "\n";
 		assertEquals(expected, actual);
 	}
 
@@ -72,7 +72,7 @@ public class ClassycleTreeTest {
 		barTree.addLeaf("baz.Qux (1)");
 		Tree<String> quxTree = new Tree<String>("baz.Qux (1)");
 		quxTree.addLeaf("foo.Bar (1)");
-		String expected = barTree + "\n\n" + quxTree;
+		String expected = barTree + "\n\n" + quxTree + "\n";
 		assertEquals(expected, actual);
 	}
 
@@ -80,10 +80,8 @@ public class ClassycleTreeTest {
 			throws XMLStreamException, IOException {
 		Reader reader = new StringReader(classycleXml);
 		ClassycleTree classycleTree = new ClassycleTree(reader);
-
 		ByteArrayOutputStream treeOut = new ByteArrayOutputStream();
 		classycleTree.printDependencyTree(new PrintStream(treeOut));
-		String actual = treeOut.toString();
-		return actual;
+		return treeOut.toString();
 	}
 }
