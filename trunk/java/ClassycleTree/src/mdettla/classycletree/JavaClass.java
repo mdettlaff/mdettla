@@ -6,30 +6,30 @@ import java.util.Set;
 public class JavaClass {
 
 	private final String name;
-	private Set<JavaClass> dependencies;
+	private Set<JavaClass> directDependencies;
 
 	public JavaClass(String name) {
 		this.name = name;
-		this.dependencies = new HashSet<JavaClass>();
+		this.directDependencies = new HashSet<JavaClass>();
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void addDependency(JavaClass dependency) {
-		dependencies.add(dependency);
+	public void addDirectDependency(JavaClass directDependency) {
+		directDependencies.add(directDependency);
 	}
 
-	public Set<JavaClass> getImmediateDependencies() {
-		return new HashSet<JavaClass>(dependencies);
+	public Set<JavaClass> getDirectDependencies() {
+		return new HashSet<JavaClass>(directDependencies);
 	}
 
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "[" +
 		"name=" + name + ", " +
-		"dependenciesCount=" + dependencies.size() +
+		"directDependenciesCount=" + directDependencies.size() +
 		"]";
 	}
 }
