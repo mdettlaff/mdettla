@@ -2,8 +2,13 @@ package mdettla.classycletree;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.StringReader;
+
+import javax.xml.stream.XMLStreamException;
 
 import org.junit.Test;
 
@@ -18,12 +23,11 @@ public class ClassycleTreeTest {
 			"\t\t<class name=\"foo.Bar\" />\n" +
 			"\t</classes>\n" +
 			"</classycle>";
-		Reader reader = new StringReader(CLASSYCLE_XML);
-		ClassycleTree classycleTree = new ClassycleTree(reader, "foo.Bar");
+		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		String actual = classycleTree.getDependencyTree();
-		Tree<String> expectedTree = new Tree<String>("foo.Bar");
-		assertEquals(expectedTree.toString(), actual);
+		Tree<String> barTree = new Tree<String>("foo.Bar");
+		String expected = barTree.toString();
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -39,13 +43,13 @@ public class ClassycleTreeTest {
 			"\t\t<class name=\"baz.Qux\" />\n" +
 			"\t</classes>\n" +
 			"</classycle>";
-		Reader reader = new StringReader(CLASSYCLE_XML);
-		ClassycleTree classycleTree = new ClassycleTree(reader, "foo.Bar");
+		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		String actual = classycleTree.getDependencyTree();
-		Tree<String> expectedTree = new Tree<String>("foo.Bar");
-		expectedTree.addLeaf("baz.Qux");
-		assertEquals(expectedTree.toString(), actual);
+		Tree<String> barTree = new Tree<String>("foo.Bar");
+		barTree.addLeaf("baz.Qux");
+		Tree<String> quxTree = new Tree<String>("baz.Qux");
+		String expected = barTree + "\n\n" + quxTree;
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -62,12 +66,24 @@ public class ClassycleTreeTest {
 			"\t\t</class>\n" +
 			"\t</classes>\n" +
 			"</classycle>";
-		Reader reader = new StringReader(CLASSYCLE_XML);
-		ClassycleTree classycleTree = new ClassycleTree(reader, "foo.Bar");
+		String actual = getTreeFromXmlReport(CLASSYCLE_XML);
 
-		String actual = classycleTree.getDependencyTree();
-		Tree<String> expectedTree = new Tree<String>("foo.Bar");
-		expectedTree.addLeaf("baz.Qux");
-		assertEquals(expectedTree.toString(), actual);
+		Tree<String> barTree = new Tree<String>("foo.Bar");
+		barTree.addLeaf("baz.Qux");
+		Tree<String> quxTree = new Tree<String>("baz.Qux");
+		quxTree.addLeaf("foo.Bar");
+		String expected = barTree + "\n\n" + quxTree;
+		assertEquals(expected, actual);
+	}
+
+	private String getTreeFromXmlReport(String classycleXml)
+			throws XMLStreamException, IOException {
+		Reader reader = new StringReader(classycleXml);
+		ClassycleTree classycleTree = new ClassycleTree(reader);
+
+		ByteArrayOutputStream treeOut = new ByteArrayOutputStream();
+		classycleTree.printDependencyTree(new PrintStream(treeOut));
+		String actual = treeOut.toString();
+		return actual;
 	}
 }
