@@ -41,7 +41,7 @@
 			<classpath refid="compile.classpath" />
 		</javac>
 		<copy todir="${prod.build.dir}">
-			<fileset dir="${prod.src.dir}" includes="**/*.properties" />
+			<fileset dir="${prod.src.dir}" includes="**/*.properties **/*.txt" />
 		</copy>
 	</target>
 
