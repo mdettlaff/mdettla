@@ -24,7 +24,7 @@ public class GeneticAlgorithmTest {
 		for (int i = 0; i < 100; i++) {
 			initialPopulation.add(Text.createRandomInstance());
 		}
-		ga = new GeneticAlgorithm(initialPopulation);
+		ga = new ConcurrentGeneticAlgorithm(initialPopulation);
 	}
 
 	/**

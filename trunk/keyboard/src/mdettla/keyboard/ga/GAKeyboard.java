@@ -6,6 +6,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
+import mdettla.jga.core.ConcurrentGeneticAlgorithm;
 import mdettla.jga.core.GeneticAlgorithm;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.operators.crossover.CycleCrossover;
@@ -13,14 +14,14 @@ import mdettla.jga.operators.mutation.SwapMutation;
 
 public class GAKeyboard {
 
-	private static final int INITIAL_POPULATION_SIZE = 100;
-	private static final int GENERATIONS_COUNT = 50;
+	private static final int INITIAL_POPULATION_SIZE = 50;
+	private static final int GENERATIONS_COUNT = 32;
 
 	public static void main(String[] args) throws IOException {
 		TextStatistics stats = getTextStatistics();
 		List<Specimen> initialPopulation = getInitialPopulation(stats);
 
-		GeneticAlgorithm ga = new GeneticAlgorithm(initialPopulation);
+		GeneticAlgorithm ga = new ConcurrentGeneticAlgorithm(initialPopulation);
 		ga.setMutationOperator(new SwapMutation());
 		ga.setCrossoverOperator(new CycleCrossover());
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
