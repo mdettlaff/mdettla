@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GeneticAlgorithmTest {
+public class GeneticAlgorithmIntegrationTest {
 
 	private static final int ITERATIONS = 100;
 
