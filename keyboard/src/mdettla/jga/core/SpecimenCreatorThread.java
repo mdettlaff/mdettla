@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Random;
 
 class SpecimenCreatorThread extends Thread {
-	private GeneticAlgorithm ga;
+
+	private ConcurrentGeneticAlgorithm ga;
 	private int specimensToCreate;
 	private List<Specimen> originalPopulation;
 	private List<Specimen> population;
 	Random random;
 
-	public SpecimenCreatorThread(GeneticAlgorithm ga, int specimens,
+	public SpecimenCreatorThread(ConcurrentGeneticAlgorithm ga, int specimens,
 			List<Specimen> population, List<Specimen> originalPopulation) {
 		super();
 		this.ga = ga;
