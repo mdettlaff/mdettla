@@ -1,13 +1,16 @@
 package parasoft.centrap.reports;
 
-public class RaportZakonczonychPromocji extends Report {
+import javax.inject.Named;
+
+@Named
+public class SalesReport extends Report {
 
 	@Override
 	protected String computeResults(ReportFilter filter) {
 		return
-			"Computing results for industry " +
+			"Sales computed for industry " +
 			filter.getIndustryName() + "\n" +
-			"Computing results for product: " +
+			"Sales computed for product " +
 			filter.getProductName();
 	}
 }
