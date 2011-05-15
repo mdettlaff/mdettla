@@ -4,17 +4,15 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 	<application>
 		<navigation-rule>
-			<from-view-id>/index.xhtml</from-view-id>
 			<navigation-case>
-				<from-outcome>success</from-outcome>
+				<from-outcome>report-success</from-outcome>
 				<to-view-id>/reportResults.xhtml</to-view-id>
 				<redirect />
 			</navigation-case>
 		</navigation-rule>
 		<navigation-rule>
-			<from-view-id>/reportResults.xhtml</from-view-id>
 			<navigation-case>
-				<from-outcome>back</from-outcome>
+				<from-outcome>menu</from-outcome>
 				<to-view-id>/index.xhtml</to-view-id>
 				<redirect />
 			</navigation-case>

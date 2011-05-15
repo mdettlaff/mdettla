@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.prime.com.tr/ui">
 <ui:composition template="/template.xhtml">
 	<ui:define name="body">
-		<p:panel id="reportFilter" header="Raport Zakończonych Promocji">
+		<p:panel id="reportFilter" header="Wyniki raportu">
 			<h:form>
 				<h:panelGrid cellpadding="10">
 					<h:outputText value="${reportController.htmlResults}"
@@ -17,7 +17,7 @@
 						<h:commandButton value="Pobierz TXT" action="#{reportController.downloadPlainTextReport()}" />
 						<h:commandButton value="Pobierz CSV" action="#{reportController.downloadCsvReport()}" />
 					</h:panelGrid>
-					<h:commandButton value="Wróć do formularza" action="back" />
+					<h:commandButton value="Powrót do menu" action="menu" />
 				</h:panelGrid>
 			</h:form>
 		</p:panel>

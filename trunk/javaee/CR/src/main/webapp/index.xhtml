@@ -7,20 +7,9 @@
 	xmlns:p="http://primefaces.prime.com.tr/ui">
 <ui:composition template="/template.xhtml">
 	<ui:define name="body">
-		<p:panel id="reportFilter" header="Raport Zakończonych Promocji">
-			<h:form>
-				<h:panelGrid columns="3" cellpadding="10">
-					<label>Branża towarowa</label>
-					<h:inputText label="Branża towarowa" id="industryName"
-						value="#{reportController.reportFilter.industryName}" required="true" />
-					<h:message for="industryName" class="errorMsg" />
-					<label>Nazwa towaru</label>
-					<h:inputText label="Nazwa towaru" id="productName"
-						value="#{reportController.reportFilter.productName}" required="true" />
-					<h:message for="productName" class="errorMsg" />
-					<h:commandButton value="Utwórz raport" action="#{reportController.startReport()}" />
-				</h:panelGrid>
-			</h:form>
+		<p:panel header="Menu">
+			<h:outputLink value="salesReport.xhtml">Raport sprzedaży</h:outputLink><br/>
+			<h:outputLink value="discountsReport.xhtml">Raport zakończonych promocji</h:outputLink>
 		</p:panel>
 	</ui:define>
 </ui:composition>
