@@ -21,7 +21,8 @@ public abstract class Report {
 
 	public String getHtmlResults() {
 		checkResultsNotNull();
-		return "Report in HTML format.<br>\n" + results.replace("\n", "<br>\n");
+		return "Report in HTML format.<br />\n" +
+			results.replace("\n", "<br />\n");
 	}
 
 	public String getPlainTextResults() {

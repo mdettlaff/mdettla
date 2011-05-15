@@ -2,7 +2,6 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.prime.com.tr/ui"
 	template="/template.xhtml">
@@ -14,8 +13,10 @@
 						escape="false" />
 					<hr />
 					<h:panelGrid columns="2">
-						<h:commandButton value="Pobierz TXT" action="#{reportController.downloadPlainTextReport()}" />
-						<h:commandButton value="Pobierz CSV" action="#{reportController.downloadCsvReport()}" />
+						<h:commandButton value="Pobierz TXT"
+							action="#{reportController.downloadPlainTextReport()}" />
+						<h:commandButton value="Pobierz CSV"
+							action="#{reportController.downloadCsvReport()}" />
 					</h:panelGrid>
 					<h:commandButton value="Powrót do menu" action="menu" />
 				</h:panelGrid>

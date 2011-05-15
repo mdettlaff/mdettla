@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:cc="http://java.sun.com/jsf/composite"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+
+	<cc:interface>
+		<cc:attribute name="title" />
+		<cc:attribute name="reportBean" />
+	</cc:interface>
+
+	<cc:implementation>
+		<h:outputScript name="ui.js" target="head" />
+		<p:panel header="${cc.attrs.title}">
+			<h:form id="reportFilterForm">
+				<cc:insertChildren />
+				<h:panelGrid columns="2" cellpadding="12">
+					<h:commandButton value="Utwórz raport"
+						action="#{reportController.startReport(cc.attrs.reportBean)}"
+						onclick="showWaitMessage('Proszę czekać...')" />
+					<h:outputText id="waitMessage" />
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+	</cc:implementation>
+</html>
