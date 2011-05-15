@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+<ui:composition template="/template.xhtml">
+	<ui:define name="body">
+		<p:panel id="reportFilter" header="Raport Zakończonych Promocji">
+			<h:form>
+				<h:panelGrid cellpadding="10">
+					<h:outputText value="${reportController.htmlResults}"
+						escape="false" />
+					<hr />
+					<h:panelGrid columns="2">
+						<h:commandButton value="Pobierz TXT" action="#{reportController.downloadPlainTextReport()}" />
+						<h:commandButton value="Pobierz CSV" action="#{reportController.downloadCsvReport()}" />
+					</h:panelGrid>
+					<h:commandButton value="Wróć do formularza" action="back" />
+				</h:panelGrid>
+			</h:form>
+		</p:panel>
+	</ui:define>
+</ui:composition>
+</html>
