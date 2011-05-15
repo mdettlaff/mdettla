@@ -8,7 +8,7 @@
 	xmlns:app="http://java.sun.com/jsf/composite/components"
 	template="/template.xhtml">
 	<ui:define name="body">
-		<p:panel id="reportFilter" header="Raport Sprzedaży">
+		<p:panel header="Raport Sprzedaży">
 			<h:form>
 				<app:productFilter />
 				<h:commandButton value="Utwórz raport" action="#{reportController.startReport(salesReport)}" />
