@@ -2,10 +2,24 @@ package parasoft.centrap.reports;
 
 public abstract class Report {
 
-	private String results;
-	private ReportFilter filter;
+	private static final String EMPTY_RESULTS = "Empty results.";
+	public static final Report EMPTY = new Report() {
+		{
+			results = EMPTY_RESULTS;
+		}
+		@Override
+		protected String computeResults() {
+			return EMPTY_RESULTS;
+		}
+	};
 
-	protected abstract String computeResults(ReportFilter filter);
+	protected ReportFilter filter;
+	protected String results;
+
+	/**
+	 * Potentially expensive operation.
+	 */
+	protected abstract String computeResults();
 
 	public void setFilter(ReportFilter filter) {
 		this.filter = filter;
@@ -16,7 +30,7 @@ public abstract class Report {
 			throw new IllegalStateException(
 					"Filter cannot be null after report is started.");
 		}
-		results = computeResults(filter);
+		results = computeResults();
 	}
 
 	public String getHtmlResults() {

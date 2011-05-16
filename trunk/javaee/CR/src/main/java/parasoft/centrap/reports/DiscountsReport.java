@@ -6,7 +6,7 @@ import javax.inject.Named;
 public class DiscountsReport extends Report {
 
 	@Override
-	protected String computeResults(ReportFilter filter) {
+	protected String computeResults() {
 		return
 			"Discounts computed for industry " +
 			filter.getIndustryName() + "\n" +
