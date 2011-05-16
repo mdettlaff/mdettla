@@ -15,8 +15,8 @@ import parasoft.centrap.web.util.FileDownloader;
 public class ReportController implements Serializable {
 
 	private ReportFilter reportFilter;
-	private Report report;
 	private FileDownloader fileDownloader;
+	private Report report = Report.EMPTY;
 
 	public ReportController() {
 		this.reportFilter = new ReportFilter();

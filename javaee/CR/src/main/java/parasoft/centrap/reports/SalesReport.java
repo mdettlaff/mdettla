@@ -6,7 +6,7 @@ import javax.inject.Named;
 public class SalesReport extends Report {
 
 	@Override
-	protected String computeResults(ReportFilter filter) {
+	protected String computeResults() {
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {
