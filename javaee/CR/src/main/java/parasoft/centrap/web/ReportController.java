@@ -1,31 +1,27 @@
 package parasoft.centrap.web;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 import parasoft.centrap.reports.Report;
 import parasoft.centrap.reports.ReportFilter;
-import parasoft.centrap.web.util.FileDownloader;
 
 @Named
 @SessionScoped
 public class ReportController implements Serializable {
 
 	private ReportFilter reportFilter;
-	private FileDownloader fileDownloader;
 	private Report report = Report.EMPTY;
 
 	public ReportController() {
 		this.reportFilter = new ReportFilter();
-	}
-
-	@Inject
-	public ReportController(FileDownloader fileDownloader) {
-		this();
-		this.fileDownloader = fileDownloader;
 	}
 
 	public ReportFilter getReportFilter() {
@@ -43,13 +39,20 @@ public class ReportController implements Serializable {
 		return report.getHtmlResults();
 	}
 
-	public void downloadPlainTextReport() {
-		fileDownloader.downloadFile(
+	public StreamedContent getPlainTextReport() {
+		return getStringAsTextContent(
 				report.getPlainTextResults(), "report.txt", "text/plain");
 	}
 
-	public void downloadCsvReport() {
-		fileDownloader.downloadFile(
+	public StreamedContent getCsvReport() {
+		return getStringAsTextContent(
 				report.getCsvResults(), "report.csv", "text/csv");
+	}
+
+	private StreamedContent getStringAsTextContent(
+			String content, String filename, String contentType) {
+		InputStream stream = new ByteArrayInputStream(content.getBytes());
+		return new DefaultStreamedContent(
+				stream, contentType + "; charset=UTF-8", filename);
 	}
 }
