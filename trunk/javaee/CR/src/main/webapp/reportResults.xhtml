@@ -13,12 +13,14 @@
 						escape="false" />
 					<hr />
 					<h:panelGrid columns="2">
-						<h:commandButton value="Pobierz TXT"
-							action="#{reportController.downloadPlainTextReport()}" />
-						<h:commandButton value="Pobierz CSV"
-							action="#{reportController.downloadCsvReport()}" />
+						<p:commandButton value="Pobierz TXT" ajax="false">
+							<p:fileDownload value="#{reportController.plainTextReport}" />
+						</p:commandButton>
+						<p:commandButton value="Pobierz CSV" ajax="false">
+							<p:fileDownload value="#{reportController.csvReport}" />
+						</p:commandButton>
 					</h:panelGrid>
-					<h:commandButton value="Powrót do menu" action="menu" />
+					<h:commandLink value="Powrót do menu" action="menu" />
 				</h:panelGrid>
 			</h:form>
 		</p:panel>
