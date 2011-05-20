@@ -1,5 +1,5 @@
 var showWaitMessage = function(message) {
 	var messageElement = document.getElementById(
-		"reportFilter:reportFilterForm:waitMessage");
+		"report:reportFilterForm:waitMessage");
 	messageElement.innerHTML = message;
 }

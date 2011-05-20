@@ -1,16 +1,18 @@
 package parasoft.centrap.reports;
 
-import javax.inject.Named;
+import javax.ejb.Stateful;
 
-@Named
+@Stateful
 public class DiscountsReport extends Report {
 
 	@Override
-	protected String computeResults() {
+	protected String computeResults(ReportFilter filter) {
 		return
 			"Discounts computed for industry " +
 			filter.getIndustryName() + "\n" +
 			"Discounts computed for product " +
-			filter.getProductName();
+			filter.getProductName() + "\n" +
+			"Discounts computed for discount " +
+			filter.getDiscount();
 	}
 }
