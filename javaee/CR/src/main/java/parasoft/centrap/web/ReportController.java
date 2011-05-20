@@ -6,6 +6,9 @@ import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -19,18 +22,20 @@ public class ReportController implements Serializable {
 
 	private Report report;
 	private ReportFilter reportFilter;
+	private final Context context;
 
-	public ReportController() {
+	public ReportController() throws NamingException {
 		report = Report.EMPTY;
 		reportFilter = new ReportFilter();
+		context = new InitialContext();
 	}
 
 	public ReportFilter getReportFilter() {
 		return reportFilter;
 	}
 
-	public String startReport(Report report) {
-		this.report = report;
+	public String startReport(String reportBeanName) throws NamingException {
+		report = (Report)context.lookup("java:module/" + reportBeanName);
 		report.start(reportFilter);
 		return "report-success";
 	}
