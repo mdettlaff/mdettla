@@ -5,9 +5,9 @@
 	xmlns:app="http://java.sun.com/jsf/composite/components"
 	template="/template.xhtml">
 	<ui:define name="body">
-		<app:reportFilter id="reportFilter" reportBean="#{salesReport}"
-				title="Raport sprzedaży">
+		<app:reportFilterForm title="Raport sprzedaży"
+				reportBean="#{reports.salesReport}" id="report">
 			<app:productFilter />
-		</app:reportFilter>
+		</app:reportFilterForm>
 	</ui:define>
 </ui:composition>

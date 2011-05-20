@@ -17,11 +17,12 @@ import parasoft.centrap.reports.ReportFilter;
 @SessionScoped
 public class ReportController implements Serializable {
 
+	private Report report;
 	private ReportFilter reportFilter;
-	private Report report = Report.EMPTY;
 
 	public ReportController() {
-		this.reportFilter = new ReportFilter();
+		report = Report.EMPTY;
+		reportFilter = new ReportFilter();
 	}
 
 	public ReportFilter getReportFilter() {
@@ -30,12 +31,11 @@ public class ReportController implements Serializable {
 
 	public String startReport(Report report) {
 		this.report = report;
-		report.setFilter(reportFilter);
-		report.start();
+		report.start(reportFilter);
 		return "report-success";
 	}
 
-	public String getHtmlResults() {
+	public String getHtmlReport() {
 		return report.getHtmlResults();
 	}
 

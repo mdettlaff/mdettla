@@ -1,12 +1,12 @@
 package parasoft.centrap.reports;
 
-import javax.inject.Named;
+import javax.ejb.Stateful;
 
-@Named
+@Stateful
 public class SalesReport extends Report {
 
 	@Override
-	protected String computeResults() {
+	protected String computeResults(ReportFilter filter) {
 		try {
 			Thread.sleep(4000);
 		} catch (InterruptedException e) {

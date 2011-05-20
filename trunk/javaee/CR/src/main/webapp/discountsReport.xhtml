@@ -5,9 +5,10 @@
 	xmlns:app="http://java.sun.com/jsf/composite/components"
 	template="/template.xhtml">
 	<ui:define name="body">
-		<app:reportFilter id="reportFilter" reportBean="#{discountsReport}"
-				title="Raport Zakończonych Promocji">
+		<app:reportFilterForm title="Raport Zakończonych Promocji"
+				reportBean="#{reports.discountsReport}" id="report">
 			<app:productFilter />
-		</app:reportFilter>
+			<app:discountFilter />
+		</app:reportFilterForm>
 	</ui:define>
 </ui:composition>
