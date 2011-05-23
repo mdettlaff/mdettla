@@ -17,9 +17,16 @@ public class FuzzyExperiments {
 	private Random random = new Random();
 
 	public static void main(String[] args) {
+		System.out.println("Fuzzy experiments");
 		FuzzyExperiments experiments = new FuzzyExperiments();
+		System.out.println();
+		System.out.println("Experiment 1");
 		experiments.experiment1();
+		System.out.println();
+		System.out.println("Experiment 2");
 		experiments.experiment2();
+		System.out.println();
+		System.out.println("Experiment 3");
 		experiments.experiment3();
 	}
 
@@ -32,16 +39,16 @@ public class FuzzyExperiments {
 	}
 
 	private void experiment3() {
+		Function function = Functions.f3;
 		Range range = new Range(-5, 5);
 		List<FuzzySet> fuzzySets =
 			FuzzySet.coverRangeWithFuzzySets(range, FUZZY_SETS_COUNT);
 		SimpleFuzzyRules fuzzyRules = new SimpleFuzzyRules(
 				generateRandom2DPoints(range, RANDOM_POINTS_COUNT),
-				Functions.f3, fuzzySets);
+				function, fuzzySets);
 		double[][] testPoints =
 			generateRandom2DPoints(range, RANDOM_POINTS_COUNT);
-		double error = fuzzyRules.getError(testPoints);
-		System.out.println(error);
+		printExperimentResults(function, fuzzyRules, testPoints);
 	}
 
 	private void testOneDimensionalFunction(Function function, Range range) {
@@ -50,10 +57,21 @@ public class FuzzyExperiments {
 		SimpleFuzzyRules fuzzyRules = new SimpleFuzzyRules(
 				to2DArray(generateRandomPoints(range, RANDOM_POINTS_COUNT)),
 				function, fuzzySets);
-		double[] testPoints =
-			generateRandomPoints(range, RANDOM_POINTS_COUNT);
-		double error = fuzzyRules.getError(to2DArray(testPoints));
-		System.out.println(error);
+		double[][] testPoints =
+			to2DArray(generateRandomPoints(range, RANDOM_POINTS_COUNT));
+		printExperimentResults(function, fuzzyRules, testPoints);
+	}
+
+	private void printExperimentResults(Function function,
+			SimpleFuzzyRules fuzzyRules, double[][] testPoints) {
+		for (double[] xs : testPoints) {
+			double output = fuzzyRules.getOutput(xs);
+			System.out.println(String.format(
+					"f(" + Arrays.toString(xs) + ") = %.2f, expected %.2f",
+					output, function.evaluate(xs)));
+		}
+		double error = fuzzyRules.getError(testPoints);
+		System.out.println("error = " + error);
 	}
 
 	double[][] to2DArray(double[] xs) {
