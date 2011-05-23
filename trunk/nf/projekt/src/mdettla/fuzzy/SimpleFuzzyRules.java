@@ -8,13 +8,13 @@ public class SimpleFuzzyRules {
 
 	private static final double ALPHA = 10;
 
-	private final double[] dataIn;
+	private final double[][] dataIn;
 	private final Function function;
 	private final double[] dataOut;
 	private final Map<FuzzySet, Double> rules;
 
 	public SimpleFuzzyRules(
-			double[] dataIn, Function function, List<FuzzySet> fuzzySets) {
+			double[][] dataIn, Function function, List<FuzzySet> fuzzySets) {
 		this.function = function;
 		this.dataIn = dataIn;
 		dataOut = getDataOutputs();
@@ -36,11 +36,14 @@ public class SimpleFuzzyRules {
 			sum = 0;
 			double b = 0;
 			for (int j = 0; j < dataIn.length; j++) {
-				double x = dataIn[j];
-				double y = dataOut[j];
-				double membership = fuzzySet.membership(x);
-				double w = Math.pow(membership, ALPHA);
+				double membershipMul = 1;
+				for (int k = 0; k < dataIn[j].length; k++) {
+					double membership = fuzzySet.membership(dataIn[j][k]);
+					membershipMul *= membership;
+				}
+				double w = Math.pow(membershipMul, ALPHA);
 				sum += w;
+				double y = dataOut[j];
 				b += w * y;
 			}
 			b /= sum;
@@ -49,22 +52,26 @@ public class SimpleFuzzyRules {
 		return rules;
 	}
 
-	public double getOutput(double x) {
+	public double getOutput(double[] x) {
 		double nominator = 0;
 		double denominator = 0;
 		for (Map.Entry<FuzzySet, Double> rule : rules.entrySet()) {
 			FuzzySet fuzzySet = rule.getKey();
 			double b = rule.getValue();
-			double membership = fuzzySet.membership(x);
-			nominator += membership * b;
-			denominator += membership;
+			double membershipMul = 1;
+			for (int i = 0; i < x.length; i++) {
+				double membership = fuzzySet.membership(x[i]);
+				membershipMul *= membership;
+			}
+			nominator += membershipMul * b;
+			denominator += membershipMul;
 		}
 		return nominator / denominator;
 	}
 
-	public double getError(double[] xs) {
+	public double getError(double[][] xs) {
 		double error = 0;
-		for (double x : xs) {
+		for (double[] x : xs) {
 			double expected = function.evaluate(x);
 			double actual = getOutput(x);
 			error += Math.pow(actual - expected, 2);
