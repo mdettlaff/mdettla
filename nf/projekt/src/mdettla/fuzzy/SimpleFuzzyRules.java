@@ -8,22 +8,36 @@ public class SimpleFuzzyRules {
 
 	private static final double ALPHA = 10;
 
+	private final double[] dataIn;
+	private final Function function;
+	private final double[] dataOut;
 	private final Map<FuzzySet, Double> rules;
 
-	public SimpleFuzzyRules(double[][] data, List<FuzzySet> fuzzySets) {
-		rules = generateRules(data, fuzzySets);
+	public SimpleFuzzyRules(
+			double[] dataIn, Function function, List<FuzzySet> fuzzySets) {
+		this.function = function;
+		this.dataIn = dataIn;
+		dataOut = getDataOutputs();
+		rules = generateRules(fuzzySets);
 	}
 
-	private Map<FuzzySet, Double> generateRules(
-			double[][] data, List<FuzzySet> fuzzySets) {
+	private double[] getDataOutputs() {
+		double[] dataOut = new double[dataIn.length];
+		for (int i = 0; i < dataIn.length; i++) {
+			dataOut[i] = function.evaluate(dataIn[i]);
+		}
+		return dataOut;
+	}
+
+	private Map<FuzzySet, Double> generateRules(List<FuzzySet> fuzzySets) {
 		Map<FuzzySet, Double> rules = new LinkedHashMap<FuzzySet, Double>();
 		double sum;
 		for (FuzzySet fuzzySet : fuzzySets) {
 			sum = 0;
 			double b = 0;
-			for (int j = 0; j < data.length; j++) {
-				double x = data[j][0];
-				double y = data[j][1];
+			for (int j = 0; j < dataIn.length; j++) {
+				double x = dataIn[j];
+				double y = dataOut[j];
 				double membership = fuzzySet.membership(x);
 				double w = Math.pow(membership, ALPHA);
 				sum += w;
@@ -48,10 +62,10 @@ public class SimpleFuzzyRules {
 		return nominator / denominator;
 	}
 
-	public double getError(Function f, double[] xs) {
+	public double getError(double[] xs) {
 		double error = 0;
 		for (double x : xs) {
-			double expected = f.evaluate(x);
+			double expected = function.evaluate(x);
 			double actual = getOutput(x);
 			error += Math.pow(actual - expected, 2);
 		}
