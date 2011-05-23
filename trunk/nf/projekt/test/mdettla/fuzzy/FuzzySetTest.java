@@ -2,6 +2,9 @@ package mdettla.fuzzy;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 public class FuzzySetTest {
@@ -38,5 +41,17 @@ public class FuzzySetTest {
 		assertEquals(0.5, fs.membership(0.5));
 		assertEquals(1, fs.membership(1));
 		assertEquals(1, fs.membership(Double.POSITIVE_INFINITY));
+	}
+
+	@Test
+	public void testCoverRangeWithFuzzySets() {
+		List<FuzzySet> actual = FuzzySet.coverRangeWithFuzzySets(0, 1, 5);
+		List<FuzzySet> expected = new ArrayList<FuzzySet>();
+		expected.add(new FuzzySet(Double.NEGATIVE_INFINITY, 0, 0.25));
+		expected.add(new FuzzySet(0, 0.25, 0.5));
+		expected.add(new FuzzySet(0.25, 0.5, 0.75));
+		expected.add(new FuzzySet(0.5, 0.75, 1));
+		expected.add(new FuzzySet(0.75, 1, Double.POSITIVE_INFINITY));
+		assertEquals(expected, actual);
 	}
 }

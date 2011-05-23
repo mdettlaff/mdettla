@@ -1,5 +1,8 @@
 package mdettla.fuzzy;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FuzzySet {
 
 	private final double a;
@@ -28,6 +31,26 @@ public class FuzzySet {
 		} else {
 			return 0;
 		}
+	}
+
+	public static List<FuzzySet> coverRangeWithFuzzySets(
+			double begin, double end, int fuzzySetsCount) {
+		if (begin > end) {
+			throw new IllegalArgumentException("Invalid range.");
+		}
+		double rangeWidth = end - begin;
+		double halfFuzzySetWidth = rangeWidth / (fuzzySetsCount - 1);
+		List<FuzzySet> fuzzySets = new ArrayList<FuzzySet>();
+		fuzzySets.add(new FuzzySet(
+				Double.NEGATIVE_INFINITY, begin, begin + halfFuzzySetWidth));
+		for (double a = begin; a + 2 * halfFuzzySetWidth <= end; a += halfFuzzySetWidth) {
+			double b = a + halfFuzzySetWidth;
+			double c = b + halfFuzzySetWidth;
+			fuzzySets.add(new FuzzySet(a, b, c));
+		}
+		fuzzySets.add(new FuzzySet(
+				end - halfFuzzySetWidth, end, Double.POSITIVE_INFINITY));
+		return fuzzySets;
 	}
 
 	@Override
