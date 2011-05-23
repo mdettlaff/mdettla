@@ -2,13 +2,16 @@ package mdettla.neuro;
 
 import mdettla.util.Function;
 
-class BackPropagation {
+public class BackPropagation {
 
-	int n = 2; //l-ba jednostek wejsciowych
-	int h = 4; //l-ba jednostek ukrytych
+	final int n; // liczba jednostek wejsciowych
+	final int h = 10; // liczba jednostek ukrytych
 
-	double[][] v = new double[n + 1][h];
-	double[][] Dv = new double[n + 1][h];
+	final double eta = 0.19;
+	final double targetErrorLevel = 0.05;
+
+	double[][] v;
+	double[][] Dv;
 	double[] w = new double[h + 1];
 	double[] Dw= new double[h + 1];
 
@@ -20,14 +23,14 @@ class BackPropagation {
 	double[] z_in = new double[h];
 	double y_in;
 
-	double eta = 0.19;
-	double eps = 0.05;
-
 	private final double[][] dataIn;
 	private final Function function;
 	private final double[] dataOut;
 
 	public BackPropagation(double[][] dataIn, Function function) {
+		n = dataIn[0].length;
+		v = new double[n + 1][h];
+		Dv = new double[n + 1][h];
 		this.dataIn = dataIn;
 		this.function = function;
 		dataOut = getDataOutputs();
@@ -68,9 +71,8 @@ class BackPropagation {
 		return error;
 	}
 
-	//bipolar sigmoid
 	double fY(double x) {
-		return 2.0/(1.0 + Math.exp(-x)) - 1;
+		return bipolarSigmoid(x);
 	}
 
 	double fYprim(double x) {
@@ -78,14 +80,17 @@ class BackPropagation {
 		return (1 - tmp*tmp)/2.;
 	}
 
-	//bipolar sigmoid
 	double fZ(double x) {
-		return 2.0/(1.0 + Math.exp(-x)) - 1;
+		return bipolarSigmoid(x);
 	}
 
 	double fZprim(double x) {
 		double tmp = fZ(x);
 		return (1 - tmp*tmp)/2.;
+	}
+
+	private double bipolarSigmoid(double x) {
+		return 2.0/(1.0 + Math.exp(-x)) - 1;
 	}
 
 	void init() {
@@ -158,8 +163,9 @@ class BackPropagation {
 				w[h] += Dw[h];
 
 			}
-			if (err<eps || iter>1500) done=true;
+			if (err<targetErrorLevel || iter>1500) done=true;
 			iter++;
 		}
+		System.out.println("done after " + iter + " iterations");
 	}
 }
