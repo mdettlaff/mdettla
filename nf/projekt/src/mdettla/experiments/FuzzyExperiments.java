@@ -1,14 +1,18 @@
-package mdettla.fuzzy;
+package mdettla.experiments;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import mdettla.fuzzy.FuzzySet;
+import mdettla.fuzzy.SimpleFuzzyRules;
+import mdettla.util.Function;
+import mdettla.util.Range;
+
 public class FuzzyExperiments {
 
 	private static final int RANDOM_POINTS_COUNT = 100;
 	private static final int FUZZY_SETS_COUNT = 5;
-	private static final double NOISE_LEVEL = 0.05;
 
 	private Random random = new Random();
 
@@ -20,47 +24,20 @@ public class FuzzyExperiments {
 	}
 
 	private void experiment1() {
-		Function function = new Function() {
-			@Override public double evaluate(double[] x) {
-				return Math.sin(x[0]) + noise();
-			}
-			private double noise() {
-				return random.nextDouble() * (2 * NOISE_LEVEL) - NOISE_LEVEL;
-			}
-		};
-		testOneDimensionalFunction(function, new Range(0, 2 * Math.PI));
+		testOneDimensionalFunction(Functions.f1, new Range(0, 2 * Math.PI));
 	}
 
 	private void experiment2() {
-		Function function = new Function() {
-			@Override public double evaluate(double[] x) {
-				double exp = Math.exp(
-						-2 * Math.log(2) * Math.pow(
-								(x[0] - 0.08) / 0.854,
-								2));
-				double sin = Math.pow(
-						Math.sin(5 * Math.PI * (Math.pow(x[0], 0.75) - 0.05)),
-						6);
-				return exp * sin;
-			}
-		};
-		testOneDimensionalFunction(function, new Range(0, 1));
+		testOneDimensionalFunction(Functions.f2, new Range(0, 1));
 	}
 
 	private void experiment3() {
-		Function function = new Function() {
-			@Override public double evaluate(double[] x) {
-				return 200
-				- Math.pow((Math.pow(x[0], 2) + x[1] - 11), 2)
-				- (x[0] + Math.pow(x[1], 2) - 7);
-			}
-		};
 		Range range = new Range(-5, 5);
 		List<FuzzySet> fuzzySets =
 			FuzzySet.coverRangeWithFuzzySets(range, FUZZY_SETS_COUNT);
 		SimpleFuzzyRules fuzzyRules = new SimpleFuzzyRules(
 				generateRandom2DPoints(range, RANDOM_POINTS_COUNT),
-				function, fuzzySets);
+				Functions.f3, fuzzySets);
 		double[][] testPoints =
 			generateRandom2DPoints(range, RANDOM_POINTS_COUNT);
 		double error = fuzzyRules.getError(testPoints);

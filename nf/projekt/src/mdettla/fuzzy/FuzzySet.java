@@ -3,6 +3,8 @@ package mdettla.fuzzy;
 import java.util.ArrayList;
 import java.util.List;
 
+import mdettla.util.Range;
+
 public class FuzzySet {
 
 	private final double a;
