@@ -45,7 +45,7 @@ public class FuzzySetTest {
 
 	@Test
 	public void testCoverRangeWithFuzzySets() {
-		List<FuzzySet> actual = FuzzySet.coverRangeWithFuzzySets(0, 1, 5);
+		List<FuzzySet> actual = FuzzySet.coverRangeWithFuzzySets(new Range(0, 1), 5);
 		List<FuzzySet> expected = new ArrayList<FuzzySet>();
 		expected.add(new FuzzySet(Double.NEGATIVE_INFINITY, 0, 0.25));
 		expected.add(new FuzzySet(0, 0.25, 0.5));
