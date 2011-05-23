@@ -34,22 +34,21 @@ public class FuzzySet {
 	}
 
 	public static List<FuzzySet> coverRangeWithFuzzySets(
-			double begin, double end, int fuzzySetsCount) {
-		if (begin > end) {
-			throw new IllegalArgumentException("Invalid range.");
-		}
-		double rangeWidth = end - begin;
-		double halfFuzzySetWidth = rangeWidth / (fuzzySetsCount - 1);
+			Range range, int fuzzySetsCount) {
+		double halfFuzzySetWidth = range.getWidth() / (fuzzySetsCount - 1);
 		List<FuzzySet> fuzzySets = new ArrayList<FuzzySet>();
 		fuzzySets.add(new FuzzySet(
-				Double.NEGATIVE_INFINITY, begin, begin + halfFuzzySetWidth));
-		for (double a = begin; a + 2 * halfFuzzySetWidth <= end; a += halfFuzzySetWidth) {
+				Double.NEGATIVE_INFINITY, range.getBegin(),
+				range.getBegin() + halfFuzzySetWidth));
+		for (double a = range.getBegin(); a + 2 * halfFuzzySetWidth <= range.getEnd();
+				a += halfFuzzySetWidth) {
 			double b = a + halfFuzzySetWidth;
 			double c = b + halfFuzzySetWidth;
 			fuzzySets.add(new FuzzySet(a, b, c));
 		}
 		fuzzySets.add(new FuzzySet(
-				end - halfFuzzySetWidth, end, Double.POSITIVE_INFINITY));
+				range.getEnd() - halfFuzzySetWidth, range.getEnd(),
+				Double.POSITIVE_INFINITY));
 		return fuzzySets;
 	}
 
