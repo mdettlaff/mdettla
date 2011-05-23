@@ -47,4 +47,14 @@ public class SimpleFuzzyRules {
 		}
 		return nominator / denominator;
 	}
+
+	public double getError(Function f, double[] xs) {
+		double error = 0;
+		for (double x : xs) {
+			double expected = f.evaluate(x);
+			double actual = getOutput(x);
+			error += Math.pow(actual - expected, 2);
+		}
+		return Math.sqrt(error);
+	}
 }

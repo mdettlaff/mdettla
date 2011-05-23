@@ -1,6 +1,7 @@
 package mdettla.fuzzy;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +14,16 @@ public class SimpleFuzzyRulesTest {
 	public void test() {
 		SimpleFuzzyRules fuzzyRules =
 			new SimpleFuzzyRules(getData(), getFuzzySets());
-		for (double x = 0; x <= 1; x += 0.1) {
+		double[] xs = {0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1};
+		for (double x : xs) {
 			assertEquals(testFunction(x), fuzzyRules.getOutput(x), 0.075);
 		}
+		double error = fuzzyRules.getError(new Function() {
+			@Override public double evaluate(double x) {
+				return testFunction(x);
+			}
+		}, xs);
+		assertTrue(error < 0.11);
 	}
 
 	private double testFunction(double x) {
