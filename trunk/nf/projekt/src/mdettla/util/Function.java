@@ -1,4 +1,4 @@
-package mdettla.fuzzy;
+package mdettla.util;
 
 public interface Function {
 

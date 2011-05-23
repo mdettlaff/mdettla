@@ -5,6 +5,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import mdettla.util.Function;
+import mdettla.util.Range;
+
 import org.junit.Test;
 
 public class SimpleFuzzyRulesTest {
