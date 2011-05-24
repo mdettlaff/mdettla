@@ -7,6 +7,7 @@ import mdettla.util.Function;
 public class Functions {
 
 	private static final double NOISE_LEVEL = 0.05;
+	private static final double NOISE_LEVEL2 = 0.1;
 	private static Random random = new Random();
 
 	public static final Function f1 = new Function() {
@@ -15,6 +16,15 @@ public class Functions {
 		}
 		private double noise() {
 			return random.nextDouble() * (2 * NOISE_LEVEL) - NOISE_LEVEL;
+		}
+	};
+
+	public static final Function f1b = new Function() {
+		@Override public double evaluate(double[] x) {
+			return Math.sin(x[0]) + noise();
+		}
+		private double noise() {
+			return random.nextDouble() * (2 * NOISE_LEVEL2) - NOISE_LEVEL2;
 		}
 	};
 
