@@ -4,18 +4,14 @@ import mdettla.util.Function;
 
 public class BackPropagation {
 
-	final int numInput; // liczba jednostek wejsciowych
-	final int numHidden = 9; // liczba jednostek ukrytych
+	final int numInput; // ilość jednostek wejściowych
+	final int numHidden = 9; // ilość jednostek ukrytych
 
 	final double eta = 0.039;
 	final double targetErrorLevel = 0.05;
 
 	double[][] weightsInputHidden;
-//tego nie potrzebujesz - jutro mogę Ci wytłumaczyć
-	double[][] deltaInputHidden;
 	double[] weightsHiddenOutput = new double[numHidden + 1];
-//tego nie potrzebujesz	
-	double[] deltaHiddenOutput= new double[numHidden + 1];
 
 	double outputErrorGradient;
 	double[] hiddenErrorGradients = new double[numHidden];
@@ -32,7 +28,6 @@ public class BackPropagation {
 	public BackPropagation(double[][] dataIn, Function function) {
 		numInput = dataIn[0].length;
 		weightsInputHidden = new double[numInput + 1][numHidden];
-		deltaInputHidden = new double[numInput + 1][numHidden];
 		this.dataIn = dataIn;
 		this.function = function;
 		target = getDataOutputs();
@@ -116,10 +111,10 @@ public class BackPropagation {
 		int iter=0;
 		while (!done) {
 			err = 0;
-			for (int x=0; x < dataIn.length; x++) {
+			for (int x = 0; x < dataIn.length; x++) {
 
-				//feedforward
-				for (int j=0; j<numHidden; j++) {
+				// propagacja wprzód
+				for (int j = 0; j < numHidden; j++) {
 					weightedSumInputHidden[j] = weightsInputHidden[numInput][j];
 					for (int i=0; i<numInput; i++) {
 						weightedSumInputHidden[j] += dataIn[x][i]*weightsInputHidden[i][j];
@@ -131,50 +126,34 @@ public class BackPropagation {
 					weightedSumHiddenOutput += HiddenNeurons[j]*weightsHiddenOutput[j];
 				}
 				output = secondActivation(weightedSumHiddenOutput);
-				
-//gdyby to zrobić jak poniżej to będziesz miał wyjście LINIOWE, wytłumaczę Ci jutro po co
-//możesz spróbować z nim wrzucając np.: 50k epok i mały learning rate
-//				output = weightedSumHiddenOutput;
 
+				// output = weightedSumHiddenOutput;
 
-				//obliczenie bledu
 				double a = target[x] - output;
 				err += a*a;
 
-				//Backpropagation
-				//jednostka WY do jednostek ukrytych
+				// propagacja wstecz
 
 				outputErrorGradient = a*secondActivationDerivation(weightedSumHiddenOutput);
-//				deltaHiddenOutput[numHidden] = eta*outputErrorGradient;
 				weightsHiddenOutput[numHidden] += eta*outputErrorGradient;
 				for (int j=0; j<numHidden; j++) {
-//					deltaHiddenOutput[j] = eta*outputErrorGradient*HiddenNeurons[j];
+					//					deltaHiddenOutput[j] = eta*outputErrorGradient*HiddenNeurons[j];
 					weightsHiddenOutput[j] += eta*outputErrorGradient*HiddenNeurons[j];
 				}
 
 				//jednostki ukryte do jednostek WE
 				for (int j=0; j<numHidden; j++) {
-					hiddenErrorGradients[j] = outputErrorGradient*weightsHiddenOutput[j]*secodActivationDerivation(weightedSumInputHidden[j]);
-//					deltaInputHidden[numInput][j] += eta*hiddenErrorGradients[j]; //eta*deltaY*w[j]*z[j]*(1-z[j]);
-					weightsInputHidden[numInput][j] += eta*hiddenErrorGradients[j]; //eta*deltaY*w[j]*z[j]*(1-z[j]);
+					hiddenErrorGradients[j] =
+						outputErrorGradient*weightsHiddenOutput[j]*secodActivationDerivation(weightedSumInputHidden[j]);
+					weightsInputHidden[numInput][j] += eta*hiddenErrorGradients[j];
 					for (int i=0; i<numInput; i++) {
-//						deltaInputHidden[i][j] = eta*hiddenErrorGradients[j]*dataIn[x][i];
 						weightsInputHidden[i][j] += eta*hiddenErrorGradients[j]*dataIn[x][i];
 					}
 				}
-
-				//batch learning? gdyby tak to w innym miejscu ;)
-				//synchroniczna aktualizacja wag
-/*				for (int j=0; j<numHidden; j++) {
-					for (int i=0; i<numInput+1; i++) {
-						weightsInputHidden[i][j] += deltaInputHidden[i][j];
-					}
-					weightsHiddenOutput[j] += deltaHiddenOutput[j];
-				}
-				weightsHiddenOutput[numHidden] += deltaHiddenOutput[numHidden];
-*/
 			}
-			if (err<targetErrorLevel || iter>10000) done=true;
+			if (err < targetErrorLevel || iter > 10000) {
+				done = true;
+			}
 			iter++;
 		}
 		System.out.println("done after " + iter + " iterations");

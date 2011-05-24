@@ -10,8 +10,8 @@
 \section{Wprowadzenie}
 
 \noindent
-Celem projektu jest aproksymacja funkcji za pomoc± algorytmu generuj±cego proste regu³y rozmyte
-oraz algorytmu propagacji wstecznej.
+Celem projektu jest porównanie algorytmu generuj±cego proste regu³y rozmyte
+oraz algorytmu propagacji wstecznej pod wzglêdem skuteczno¶ci w zagadnieniu aproksymacji funkcji.
 
 Aproksymowane s± nastêpuj±ce funkcje:
 
@@ -26,7 +26,17 @@ $ \epsilon $ jest szumem
 
 \section{Metodologia}
 \noindent
-Metodologia...
+Algorytm prostych regu³ rozmytych jest wariantem sterownika rozmytego, w którym konkluzje regu³ s± liczbami rzeczywistymi,
+a nie zbiorami rozmytymi. Powoduje to, ¿e w procesie wnioskowania nie zachodzi etap wyostrzania.
+\newline
+\newline
+Algorytm propagacji wstecznej dzia³a na sieci neuronowej posiadaj±cej jedn± warstwê ukryt±. Po przes³aniu sygna³u wprzód,
+wyj¶cie jest porównywane z wyj¶ciem zbioru ucz±cego, po czym obliczony b³±d przesy³any jest z powrotem do warstwy wej¶ciowej -
+jest to tak zwana propagacja wsteczna.
+\newline
+\newline
+Dla funkcji $ f_1 $ oraz $ f_2 $ wykorzystano jako zbiór ucz±cy 100 punktów z dziedziny. W algorytmie rozmytym dziedzina
+funkcji zosta³a podzielona na 10 trójk±tnych zbiorów rozmytych.
 
 
 \section{Wyniki}
@@ -45,6 +55,17 @@ Algorytm propagacji wstecznej
 \includegraphics[scale=0.5]{neuro_f1b}\newline
 \includegraphics[scale=0.5]{neuro_f2}\newline
 \end{center}
+
+Oba algorytmy dobrze radz± sobie z funkcj± $ sinus $. Dok³adno¶æ wyra¼nie spada dla bardziej nieregularnej funkcji $ f_2 $, gdzie lepiej jednak radzi sobie algorytm rozmyty. W przypadku algorytmu rozmytego, b³±d ¶redniokwadratowy wynosi 0.47 dla funkcji $ f_1 $ z szumem 0.05 oraz 0.76 dla tej funkcji z szumem 0.1 (co pokazuje ¿e zaszumienie negatywnie wp³ywa na dok³adno¶æ aproksymacji), natomiast dla funkcji $ f_2 $ jest równy 2.29. W przypadku algorytmu propagacji wstecznej b³êdy dla funkcji $ f_1 $ wynios³y odpowiednio 0.16 oraz 0.17, a dla funkcji $ f_2 $ - 6.75. Dodatkow± zalet± algorytmu rozmytego jest te¿ wyra¼nie krótszy czas obliczeñ.
+
+
+\section{Implementacja}
+
+W celu wygenerowania wyników dla algorytmu generuj±cego prosty zbiór regu³, nale¿y uruchomiæ
+metodê \textit{main} w klasie FuzzyExperiments.
+W celu wygenerowania wyników dla algorytmu propagacji wstecznej, nale¿y uruchomiæ
+metodê \textit{main} w klasie NeuroExperiments.
+Testowane funkcje znajduj± siê w klasie Functions.
 
 
 \end{document}
