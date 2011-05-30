@@ -26,6 +26,7 @@ Strona stowarzyszenia Interinfo Polska, nale¿±cego do ¶wiatowej organizacji Inte
 <br>
 Strona firmy Nahlik Soft, zajmuj±cej siê tworzeniem oprogramowania edukacyjnego. W jej ofercie znajduj± siê miêdzy innymi programy Mistrz Klawiatury i Mistrz Klawiatury II. Na stronie mo¿na uzyskaæ informacje na ich temat oraz skorzystaæ z pomocy technicznej.
 <br><br>
+<!--
 <a target="_blank" href="http://www.keyspeed.prv.pl/" class="menu">www.keyspeed.prv.pl</a>
 <br>
 Strona autora programu KeySpeed, s³u¿±cego do nauki szybkiego pisania na klawiaturze. Mo¿na na niej dowiedzieæ siê najistotniejszych rzeczy o programie i kupiæ go (kosztuje 9 z³).
@@ -34,18 +35,22 @@ Strona autora programu KeySpeed, s³u¿±cego do nauki szybkiego pisania na klawiat
 <br>
 Witryna Daniela Króla, programisty z Chorzowa. Po¶wiêcona jest programowi Kurs Szybkiego Pisania na Klawiaturze, równie¿ stworzonemu przez Daniela. Mo¿na na niej znale¼æ informacje na temat tego programu i ¶ci±gn±æ najnowsz± wersjê.
 <br><br>
+-->
 <a target="_blank" href="http://typingsoft.com/all_typing_tutors.htm" class="menu">http://typingsoft.com/all_typing_tutors.htm</a>
 <br>
 Darmowe programy do nauki bezwzrokowego pisania, kursy online i testy prêdko¶ci (po angielsku).
 <br><br>
+<!--
 <a target="_blank" href="http://web.syr.edu/~rcranger/blackburn.htm" class="menu">http://web.syr.edu/~rcranger/blackburn.htm</a>
 <br>
 Artyku³ na temat Barbary Blackburn - aktualnej posiadaczki rekordu Guinnessa w szybkim pisaniu na klawiaturze.
 <br><br>
+-->
 <a target="_blank" href="http://www.jgsoft.com/" class="menu">www.jgsoft.com</a>
 <br>
 Strona firmy JGSoft, gdzie mo¿na znale¼æ program EditPad. To ¶wietny edytor plików tekstowych i przyjaciel ka¿dego, kto du¿o pisze na klawiaturze.
 <br><br>
+<!--
 <a target="_blank" href="http://www.nnmag.net/" class="menu">www.nnmag.net</a>
 <br>
 Strona magazynu internetowego NoName. Ca³e mnóstwo rzeczy do czytania: artyku³y na ró¿ne tematy, recenzje, opowiadania, poezja i wiele innych. Je¶li lubisz pisaæ &quot;do szuflady&quot;, ten serwis mo¿e byæ idealnym miejscem, aby pokazaæ sw± twórczo¶æ ¶wiatu. Muszê tak¿e wspomnieæ, ¿e mo¿na stamt±d ¶ci±gn±æ za darmo program do nauki pisania na klawiaturze - Klawisz 2000.
@@ -57,6 +62,7 @@ Programy komputerowe ró¿nego rodzaju.
 <br>
 Wersja on-line wszechstronnego k±cika komputerowego. Jest on czê¶ci± magazynu Action Mag, dostêpnego w Internecie lub na p³ycie do³±czanej do czasopisma CD-Action. Na stronie znajduj± siê archiwalne numery k±cika i ksiêga go¶ci.
 <br><br>
+-->
 <a target="_blank" href="http://queencorner.ovh.org" class="menu">Queen Corner online</a>
 <br>
 Strona magazynu o zespole Queen. Recenzje, artyku³y, wywiady, teksty, t³umaczenia, tabulatury, zdjêcia i inne. Jestem tam webmasterem.
