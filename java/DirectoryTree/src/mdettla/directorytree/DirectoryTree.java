@@ -24,10 +24,16 @@ public class DirectoryTree {
 	private void buildTree(File parent) {
 		if (parent.isDirectory()) {
 			for (File file : parent.listFiles()) {
-				tree.addLeaf(new ShortNameFile(parent), new ShortNameFile(file));
-				buildTree(file);
+				if (!isIgnored(file)) {
+					tree.addLeaf(new ShortNameFile(parent), new ShortNameFile(file));
+					buildTree(file);
+				}
 			}
 		}
+	}
+
+	private boolean isIgnored(File file) {
+		return ".svn".equals(file.getName());
 	}
 
 	@Override
