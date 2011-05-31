@@ -14,13 +14,17 @@
 <p>
 &nbsp;<br>
 &nbsp;<br>
+<a target="_blank" href="http://www.mistrz-pisania.pl/" class="menu">www.mistrz-pisania.pl</a>
+<br>
+Strona oferuj±ca darmow± naukê bezwzrokowego pisania na klawiaturze online. Zawiera zestaw æwiczeñ oraz test szybko¶ci pisania (wymagany jest Flash Player 10).
+<br><br>
 <a target="_blank" href="http://www.klawiator.pl/" class="menu">www.klawiator.pl</a>
 <br>
 ¦wietna strona umo¿liwiaj±ca æwiczenie pisania na klawiaturze w formie zabawy. Przepisywanie tekstu ma postaæ wy¶cigu, a ranking najlepszych wyników pozwala na porównanie swoich umiejêtno¶ci z innymi uczestnikami. Mo¿na te¿ obejrzeæ swoje statystyki dotycz±ce prêdko¶ci i poprawno¶ci.
 <br><br>
 <a target="_blank" href="http://www.interinfopolska.free.ngo.pl/" class="menu">www.interinfopolska.free.ngo.pl</a>
 <br>
-Strona stowarzyszenia Interinfo Polska, nale¿±cego do ¶wiatowej organizacji Intersteno Group, które zajmuje siê propagowaniem efektywnego pisania na klawiaturze. Mo¿na tam znale¼æ informacje o II Mistrzostwach Polski w pisaniu na komputerze, które odbêd± siê 6 listopada 2010 r. w Tychach.
+Strona stowarzyszenia Interinfo Polska, nale¿±cego do ¶wiatowej organizacji Intersteno Group, które zajmuje siê propagowaniem efektywnego pisania na klawiaturze. Mo¿na tam znale¼æ informacje o Mistrzostwach Polski w pisaniu na komputerze.
 <br><br>
 <a target="_blank" href="http://www.nahliksoft.com.pl/" class="menu">www.nahliksoft.com.pl</a>
 <br>
