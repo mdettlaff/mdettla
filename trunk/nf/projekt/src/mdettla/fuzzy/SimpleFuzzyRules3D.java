@@ -48,7 +48,7 @@ public class SimpleFuzzyRules3D {
 					double y = dataOut[j];
 					b += w * y;
 				}
-				b /= sum;
+				b = sum == 0 ? 0 : b / sum;
 				rules.put(Arrays.asList(fuzzySet1, fuzzySet2), b);
 			}
 		}
