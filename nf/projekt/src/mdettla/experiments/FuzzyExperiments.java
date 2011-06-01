@@ -7,6 +7,7 @@ import java.util.Random;
 
 import mdettla.fuzzy.FuzzySet;
 import mdettla.fuzzy.SimpleFuzzyRules;
+import mdettla.fuzzy.SimpleFuzzyRules3D;
 import mdettla.util.FileUtils;
 import mdettla.util.Function;
 import mdettla.util.Range;
@@ -45,14 +46,32 @@ public class FuzzyExperiments {
 	private void experiment3() {
 		Function function = Functions.f3;
 		Range range = new Range(-5, 5);
+		int fuzzySetsCount = 10;
 		List<FuzzySet> fuzzySets =
-			FuzzySet.coverRangeWithFuzzySets(range, FUZZY_SETS_COUNT);
-		SimpleFuzzyRules fuzzyRules = new SimpleFuzzyRules(
+			FuzzySet.coverRangeWithFuzzySets(range, fuzzySetsCount);
+		SimpleFuzzyRules3D fuzzyRules = new SimpleFuzzyRules3D(
 				generateRandom2DPoints(range, RANDOM_POINTS_COUNT),
 				function, fuzzySets);
 		double[][] testPoints =
 			generateRandom2DPoints(range, RANDOM_POINTS_COUNT);
-		printExperimentResults(function, fuzzyRules, testPoints, "f3");
+
+		String filename = "f3";
+		StringBuilder expected = new StringBuilder();
+		StringBuilder result = new StringBuilder();
+		for (double[] xs : testPoints) {
+			double output = fuzzyRules.getOutput(xs);
+//			System.out.println(String.format(
+//					"f(" + Arrays.toString(xs) + ") = %.2f, expected %.2f",
+//					output, function.evaluate(xs)));
+			expected.append(StringUtils.join(xs, " ") + " " + output + "\n");
+			result.append(StringUtils.join(xs, " ") + " " + function.evaluate(xs) + "\n");
+		}
+		FileUtils.writeStringToFile(expected.toString(),
+				new File("doc/fuzzy_" + filename + "_expected.dat"));
+		FileUtils.writeStringToFile(result.toString(),
+				new File("doc/fuzzy_" + filename + "_result.dat"));
+		double error = fuzzyRules.getError(testPoints);
+		System.out.println("error = " + error);
 	}
 
 	private void testOneDimensionalFunction(Function function, Range range,
