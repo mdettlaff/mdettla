@@ -63,10 +63,6 @@ if __name__ == '__main__':
             r'.*<img src=(.*?comics/archive/phd.*?) ', dl_dir, 'phdcomics')
     download_webcomic('http://www.penny-arcade.com/comic/',
             r'\s+<img src="(.*?)"', dl_dir, 'penny_arcade')
-    download_webcomic('http://comics.com/pearls_before_swine/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'pearls')
-    download_webcomic('http://comics.com/scary_gary/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'scary_gary')
     download_webcomic('http://explosm.net/comics/',
             r'.*<img.*? src="(.*?net/db/files/Comics.*?)"', dl_dir, 'cyanide')
     download_webcomic('http://www.smbc-comics.com/',
@@ -77,23 +73,23 @@ if __name__ == '__main__':
             r'.*?<img.*? src="(.*?strips.*?)"', dl_dir, 'abstrusegoose')
     download_webcomic('http://qwantz.com/index.php',
             r'.*<img src="(.*?)" class="comic"', dl_dir, 'dinosaur')
-    download_webcomic('http://gocomics.com/garfield/',
-            r'\s+<link rel="image_src" href="(.*?)" />$', dl_dir, 'garfield',
-            'gif')
     download_webcomic('http://userfriendly.org/',
             r'.*<IMG ALT="Latest Strip".*? SRC="(.*?)"', dl_dir, 'uf')
-    download_webcomic('http://comics.com/monty/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'monty')
-    download_webcomic('http://comics.com/the_meaning_of_lila/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'lila')
-    download_webcomic('http://comics.com/on_a_claire_day/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'claire')
-    download_webcomic('http://comics.com/daddys_home/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'daddy')
-    download_webcomic('http://comics.com/cafe_con_leche/',
-            r'.*StripImage.*<img src="(.*?)"', dl_dir, 'cafe')
     download_webcomic('http://cowbirdsinlove.com/',
             r'<img src="(.*?)".*id="comic"', dl_dir, 'cowbirds')
     download_webcomic('http://nodwick.humor.gamespy.com/ffn/',
             r'.*<img src="(.*?strips.*?)"', dl_dir, 'ffn')
+
+    download_gocomics_webcomic = lambda name: \
+            download_webcomic('http://gocomics.com/' + name,
+                    r'\s+<link rel="image_src" href="(.*?)"\s?/>$',
+                    dl_dir, name, 'gif')
+    download_gocomics_webcomic('garfield')
+    download_gocomics_webcomic('monty')
+    download_gocomics_webcomic('pearlsbeforeswine')
+    download_gocomics_webcomic('scarygary')
+    download_gocomics_webcomic('meaningoflila')
+    download_gocomics_webcomic('onaclaireday')
+    download_gocomics_webcomic('daddyshome')
+    download_gocomics_webcomic('cafeconleche')
 
