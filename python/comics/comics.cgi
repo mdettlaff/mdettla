@@ -11,7 +11,9 @@ echo "    <body>"
 
 date >> $LOG
 echo "downloading comics on demand" >> $LOG
-$HOME/python/comics/comics.py $COMICS_DIR >> $LOG &
+rm $COMICS_DIR/*.???
+timeout 5m $HOME/python/comics/comics.py $COMICS_DIR >> $LOG
+chmod a+r $COMICS_DIR/*.???
 
 echo "        downloading comics started"
 echo "    </body>"
