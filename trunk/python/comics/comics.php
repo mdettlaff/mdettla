@@ -30,7 +30,20 @@
             <?=$numbering?>
             <a href="comics.php?comic=<?=$next?>">&gt;</a>
         </div>
-        <img src="<?=$comic?>">
+        <div>
+            <a href="comics.php?comic=<?=$next?>">
+                <img src="<?=$comic?>" border="0">
+            </a>
+        </div>
+        <div>
+<?php for ($i = 0; $i < count($comics); $i++) { ?>
+            <?=$i + 1?>
+            <a href="comics.php?comic=<?=$i + 1?>">
+                <?=basename($comics[$i])?>
+            </a>
+            <br>
+<?php } ?>
+        </div>
     </body>
 </html>
 
