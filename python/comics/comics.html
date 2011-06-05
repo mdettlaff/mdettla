@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <style>
+            a {
+                text-decoration: none;
+            }
+        </style>
+        <script>
+            var comics = [
+                "abstrusegoose.png", "cafeconleche.gif",
+                "calvinandhobbes.gif", "chainsawsuit.png", "cowbirds.png",
+                "cyanide.png", "daddyshome.gif", "dilbert.gif", "dinosaur.png",
+                "ffn.jpg", "freefall.png", "garfield.gif", "meaningoflila.gif",
+                "monty.gif", "nih.png", "onaclaireday.gif",
+                "pearlsbeforeswine.gif", "penny_arcade.jpg", "phdcomics.gif",
+                "qc.png", "scarygary.gif", "sinfest.gif", "smbc_bonus.gif",
+                "smbc.gif", "uf.gif", "xkcd.png"
+            ];
+            var comicIdx = 0;
+
+            function previous() {
+                showComic(comicIdx > 0 ? comicIdx-- : comicIdx);
+            }
+
+            function next() {
+                showComic(comicIdx < comics.length - 1 ? comicIdx++ : comicIdx);
+            }
+
+            function showComic() {
+                var comic = document.getElementById("comic");
+                comic.src = comics[comicIdx];
+                var numbering = document.getElementById("numbering");
+                numbering.innerHTML = (comicIdx + 1) + '/' + comics.length;
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <a href="#" onclick="previous()">&lt;</a>
+            <span id="numbering"></span>
+            <a href="#" onclick="next()">&gt;</a>
+        </div>
+        <img id="comic">
+        <script>
+            showComic();
+        </script>
+    </body>
+</html>

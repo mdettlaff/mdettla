@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Ściąga komiksy codziennie rano.
+
+set -u
+
+COMICS_DIR=$HOME/public_html/comics
+LOG=$COMICS_DIR/log
+
+trap "exit 0" SIGUSR1
+trap "" SIGHUP
+trap "" SIGTERM
+
+function download_comics {
+  date
+  rm $COMICS_DIR/*.???
+  timeout 5m $HOME/python/scripts/comics.py $COMICS_DIR
+  chmod a+r $COMICS_DIR/*.???
+}
+
+echo $0 started >> $LOG
+while true
+do
+  if [ `date '+%H'` -eq 10 ]
+  then
+    download_comics 2>&1 >> $LOG &
+  fi
+  sleep 1h
+done
