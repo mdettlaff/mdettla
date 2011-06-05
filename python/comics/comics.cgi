@@ -10,10 +10,10 @@ echo "<html>"
 echo "    <body>"
 
 date >> $LOG
-echo "pobieranie komiksów na żądanie" >> $LOG
-$HOME/python/scripts/comics.py $COMICS_DIR &
+echo "downloading comics on demand" >> $LOG
+$HOME/python/comics/comics.py $COMICS_DIR >> $LOG &
 
-echo "        rozpoczęto pobieranie komiksów<br>"
+echo "        downloading comics started"
 echo "    </body>"
 echo "</html>"
 exit 0
