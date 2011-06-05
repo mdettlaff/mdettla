@@ -2,6 +2,7 @@ package mdettla.directorytree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 public class DirectoryTree {
 
@@ -23,7 +24,9 @@ public class DirectoryTree {
 
 	private void buildTree(File parent) {
 		if (parent.isDirectory()) {
-			for (File file : parent.listFiles()) {
+			File[] sortedFiles = parent.listFiles();
+			Arrays.sort(sortedFiles);
+			for (File file : sortedFiles) {
 				if (!isIgnored(file)) {
 					tree.addLeaf(new ShortNameFile(parent), new ShortNameFile(file));
 					buildTree(file);
