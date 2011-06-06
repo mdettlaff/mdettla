@@ -1,7 +1,0 @@
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\bin\MvcMovie.dll
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\bin\MvcMovie.pdb
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\bin\EntityFramework.dll
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\bin\EntityFramework.xml
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\obj\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\obj\Debug\MvcMovie.dll
-C:\Documents and Settings\Jadzia\Moje dokumenty\Visual Studio 2010\Projects\MvcMovie\MvcMovie\obj\Debug\MvcMovie.pdb
