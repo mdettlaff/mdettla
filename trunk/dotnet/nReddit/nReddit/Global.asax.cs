@@ -31,6 +31,8 @@ namespace nReddit
 
         protected void Application_Start()
         {
+            System.Data.Entity.Database.SetInitializer(new nReddit.Models.SampleData());
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
