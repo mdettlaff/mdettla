@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Data.Entity;            // Database.SetInitialize
+using MvcMovie.Models;              // MovieInitializer
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,6 +33,8 @@ namespace MvcMovie
 
         protected void Application_Start()
         {
+            Database.SetInitializer<MovieDBContext>(new MovieInitializer());
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
