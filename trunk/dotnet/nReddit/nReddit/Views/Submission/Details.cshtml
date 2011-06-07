@@ -1,0 +1,40 @@
+﻿@model nReddit.Models.Submission
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Submission</legend>
+
+    <div class="display-label">Url</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Url)
+    </div>
+
+    <div class="display-label">Title</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">Text</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Text)
+    </div>
+
+    <div class="display-label">UpvoteCount</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.UpvoteCount)
+    </div>
+
+    <div class="display-label">DownvoteCount</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.DownvoteCount)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SubmissionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

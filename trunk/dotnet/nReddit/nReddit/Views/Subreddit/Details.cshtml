@@ -1,0 +1,31 @@
+﻿@model nReddit.Models.Subreddit
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>@Html.DisplayFor(model => model.Name)</legend>
+
+<div class="display-field">
+    <table>
+        @foreach (var submission in Model.Submissions)
+        {
+            <tr>
+                <td>
+                    <a href="@Html.DisplayFor(modelItem => submission.Url)" target="_blank">
+                        @Html.DisplayFor(modelItem => submission.Title)
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SubredditID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
