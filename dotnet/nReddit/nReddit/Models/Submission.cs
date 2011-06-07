@@ -13,5 +13,6 @@ namespace nReddit.Models
         public string Text { get; set; }
         public int UpvoteCount { get; set; }
         public int DownvoteCount { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

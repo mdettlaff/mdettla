@@ -1,0 +1,57 @@
+﻿@model IEnumerable<nReddit.Models.Submission>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Url
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Text
+        </th>
+        <th>
+            UpvoteCount
+        </th>
+        <th>
+            DownvoteCount
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Url)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Text)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpvoteCount)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DownvoteCount)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SubmissionID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SubmissionID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SubmissionID })
+        </td>
+    </tr>
+}
+
+</table>
