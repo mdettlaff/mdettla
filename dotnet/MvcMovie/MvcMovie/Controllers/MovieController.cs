@@ -24,9 +24,13 @@ namespace MvcMovie.Controllers
         //
         // GET: /Movie/Details/5
 
-        public ViewResult Details(int id)
+        public ActionResult Details(int id = 0)
         {
             Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
             return View(movie);
         }
 
@@ -82,22 +86,29 @@ namespace MvcMovie.Controllers
             return View(movie);
         }
 
-        //
-        // GET: /Movie/Delete/5
- 
-        public ActionResult Delete(int id)
+        // GET: /Movies/Delete/5
+
+        public ActionResult Delete(int id = 0)
         {
             Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
             return View(movie);
         }
 
         //
-        // POST: /Movie/Delete/5
+        // POST: /Movies/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
-        {            
+        public ActionResult DeleteConfirmed(int id = 0)
+        {
             Movie movie = db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
             db.Movies.Remove(movie);
             db.SaveChanges();
             return RedirectToAction("Index");
