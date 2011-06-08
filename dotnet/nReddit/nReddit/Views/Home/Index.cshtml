@@ -7,7 +7,7 @@
 <h2>@ViewBag.Title</h2>
 
     <table>
-        @foreach (var submission in Model.OrderByDescending(x => x.UpvoteCount))
+        @foreach (var submission in Model.OrderByDescending(x => x.Score))
         {
             <tr>
                 <td>

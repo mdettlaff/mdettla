@@ -15,7 +15,7 @@
 
 <div class="display-field">
     <table>
-        @foreach (var submission in Model.Submissions.OrderByDescending(x => x.UpvoteCount))
+        @foreach (var submission in Model.Submissions.OrderByDescending(x => x.Score))
         {
             <tr>
                 <td>

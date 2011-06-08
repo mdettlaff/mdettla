@@ -4,14 +4,33 @@
     ViewBag.Title = "Details";
 }
 
-<fieldset>
+<table width="100%">
+<tr style="font-size: x-large">
+<td width="20">
+    @using (Html.BeginForm("Upvote", "Submission", new { id = Model.SubmissionID})) {
+        <input type="submit" value="&#8679;" style="background: none; border-width: 0px; color: blue;" />
+    }
+</td>
+<td width="20">
+    @using (Html.BeginForm("Downvote", "Submission", new { id = Model.SubmissionID})) {
+        <input type="submit" value="&#8681;" style="background: none; border-width: 0px; color: blue;" />
+    }
+</td>
+<td>
     (@Html.DisplayFor(modelItem => Model.Score))
     <a href="@Html.DisplayFor(modelItem => Model.Url)" target="_blank">
         @Html.DisplayFor(modelItem => Model.Title)
-    </a><br />
+    </a>
+</td>
+</tr>
+<tr>
+<td colspan="2"></td>
+<td>
     @Html.DisplayFor(modelItem => Model.Text)
+</td>
+</tr>
+</table>
 
-</fieldset>
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.SubmissionID }) |
     @Html.ActionLink("Usuń", "Delete", new { id = Model.SubmissionID })
