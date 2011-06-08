@@ -4,37 +4,18 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
-
 <fieldset>
-    <legend>Submission</legend>
+    (@Html.DisplayFor(modelItem => Model.Score))
+    <a href="@Html.DisplayFor(modelItem => Model.Url)" target="_blank">
+        @Html.DisplayFor(modelItem => Model.Title)
+    </a><br />
+    @Html.DisplayFor(modelItem => Model.Text)
 
-    <div class="display-label">Url</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Url)
-    </div>
-
-    <div class="display-label">Title</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">Text</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Text)
-    </div>
-
-    <div class="display-label">UpvoteCount</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UpvoteCount)
-    </div>
-
-    <div class="display-label">DownvoteCount</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DownvoteCount)
-    </div>
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.SubmissionID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.SubmissionID }) |
+    @Html.ActionLink("Usuń", "Delete", new { id = Model.SubmissionID })
+</p>
+<p>
+    @Html.ActionLink("Powrót", "Details", "Subreddit", new { id = Model.SubredditID }, null)
 </p>

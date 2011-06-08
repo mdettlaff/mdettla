@@ -149,9 +149,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Submission\Index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Submission\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>

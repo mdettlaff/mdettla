@@ -26,7 +26,9 @@ namespace nReddit.Controllers
 
         public ViewResult Details(int id)
         {
-            Subreddit subreddit = db.Subreddits.Include("Submissions").Single(s => s.SubredditID == id);
+            Subreddit subreddit =
+                db.Subreddits.Include("Submissions").Single(s => s.SubredditID == id);
+            Session["SubredditID"] = subreddit.SubredditID;
             return View(subreddit);
         }
 
