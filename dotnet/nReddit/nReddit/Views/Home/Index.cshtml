@@ -6,18 +6,18 @@
 
 <h2>@ViewBag.Title</h2>
 
-    <table>
+    <table width="100%">
         @foreach (var submission in Model.OrderByDescending(x => x.Score))
         {
             <tr>
                 <td>
+                    <div style="font-size: large">
                     (@Html.DisplayFor(modelItem => submission.Score))
                     <a href="@Html.DisplayFor(modelItem => submission.Url)" target="_blank">
                         @Html.DisplayFor(modelItem => submission.Title)
                     </a>
-                </td>
-                <td>
-                    @Html.ActionLink("Szczegóły", "Details", "Submission", new {
+                    </div>
+                    @Html.ActionLink("więcej...", "Details", "Submission", new {
                         id = submission.SubmissionID
                     }, null)
                 </td>
