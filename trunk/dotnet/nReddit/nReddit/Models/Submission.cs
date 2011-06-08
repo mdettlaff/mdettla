@@ -9,6 +9,11 @@ namespace nReddit.Models
 {
     public class Submission
     {
+        public Submission()
+        {
+            UsernamesOfPeopleWhoVoted = "";
+        }
+
         public int SubmissionID { get; set; }
         [Required(ErrorMessage = "Musisz podać URL")]
         [RegularExpression(@"^http://.+\..+",
@@ -28,6 +33,8 @@ namespace nReddit.Models
         public int SubredditID { get; set; }
         public Subreddit Subreddit { get; set; }
         public string Username { get; set; }
+        [ScaffoldColumn(false)]
+        public string UsernamesOfPeopleWhoVoted { get; set; }
 
         [ScaffoldColumn(false)]
         public int Score
@@ -36,6 +43,17 @@ namespace nReddit.Models
             {
                 return UpvoteCount - DownvoteCount;
             }
+        }
+
+        public void RememberVoter(string username)
+        {
+            UsernamesOfPeopleWhoVoted = UsernamesOfPeopleWhoVoted.Equals("")
+                ? username : UsernamesOfPeopleWhoVoted + "," + username;
+        }
+
+        public bool UserAlreadyVoted(string username)
+        {
+            return UsernamesOfPeopleWhoVoted.Split(new char[] {','}).Contains(username);
         }
 
         public void Upvote()

@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "AlreadyVoted";
+}
+
+<h2>Nie można głosować drugi raz na ten sam link!</h2>
+
+<div>
+    @Html.ActionLink("Powrót", "Details", new { id = ViewBag.SubmissionID })
+</div>

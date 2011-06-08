@@ -64,24 +64,44 @@ namespace nReddit.Controllers
             return View(submission);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Upvote(int id)
         {
             Submission submission = db.Submissions.Find(id);
+            string username = User.Identity.Name;
+            if (submission.UserAlreadyVoted(username))
+            {
+                return RedirectToAction("AlreadyVoted", new { id = submission.SubmissionID });
+            }
+            submission.RememberVoter(username);
             submission.Upvote();
             db.Entry(submission).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Details", new { id = submission.SubmissionID });
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Downvote(int id)
         {
             Submission submission = db.Submissions.Find(id);
+            string username = User.Identity.Name;
+            if (submission.UserAlreadyVoted(username))
+            {
+                return RedirectToAction("AlreadyVoted", new { id = submission.SubmissionID });
+            }
+            submission.RememberVoter(username);
             submission.Downvote();
             db.Entry(submission).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Details", new { id = submission.SubmissionID });
+        }
+
+        public ActionResult AlreadyVoted(int id)
+        {
+            ViewBag.SubmissionID = id;
+            return View();
         }
 
         //
