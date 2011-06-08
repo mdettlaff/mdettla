@@ -13,7 +13,9 @@
             <div id="title">
                 <h1>nReddit - głos Internetu</h1>
             </div>
-            <div id="logindisplay">&nbsp;</div>
+            <div id="logindisplay">
+                @Html.Partial("_LogOnPartial")
+            </div>
             <nav>
                 <ul id="menu">
                     <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
