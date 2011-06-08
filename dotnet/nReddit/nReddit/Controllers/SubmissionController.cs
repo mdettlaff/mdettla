@@ -19,6 +19,8 @@ namespace nReddit.Controllers
         public ViewResult Details(int id)
         {
             Submission submission = db.Submissions.Find(id);
+            Subreddit subreddit = db.Subreddits.Find(submission.SubredditID);
+            submission.Subreddit = subreddit;
             return View(submission);
         }
 
@@ -72,7 +74,7 @@ namespace nReddit.Controllers
             string username = User.Identity.Name;
             if (submission.UserAlreadyVoted(username))
             {
-                return RedirectToAction("AlreadyVoted", new { id = submission.SubmissionID });
+                return redirectToVoteNotAllowed(submission);
             }
             submission.RememberVoter(username);
             submission.Upvote();
@@ -89,7 +91,7 @@ namespace nReddit.Controllers
             string username = User.Identity.Name;
             if (submission.UserAlreadyVoted(username))
             {
-                return RedirectToAction("AlreadyVoted", new { id = submission.SubmissionID });
+                return redirectToVoteNotAllowed(submission);
             }
             submission.RememberVoter(username);
             submission.Downvote();
@@ -98,9 +100,19 @@ namespace nReddit.Controllers
             return RedirectToAction("Details", new { id = submission.SubmissionID });
         }
 
-        public ActionResult AlreadyVoted(int id)
+        private ActionResult redirectToVoteNotAllowed(Submission submission)
+        {
+            return RedirectToAction("Error", new
+            {
+                id = submission.SubmissionID,
+                message = "Nie można głosować więcej niż raz na dany link"
+            });
+        }
+
+        public ActionResult Error(int id, string message)
         {
             ViewBag.SubmissionID = id;
+            ViewBag.Message = message;
             return View();
         }
 
@@ -122,19 +134,37 @@ namespace nReddit.Controllers
         //
         // GET: /Submission/Delete/5
  
+        [Authorize]
         public ActionResult Delete(int id)
         {
             Submission submission = db.Submissions.Find(id);
+            if (!User.Identity.Name.Equals(submission.Username))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submission.SubmissionID,
+                    message = "Można usuwać tylko własne linki"
+                });
+            }
             return View(submission);
         }
 
         //
         // POST: /Submission/Delete/5
 
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            
             Submission submission = db.Submissions.Find(id);
+            if (!User.Identity.Name.Equals(submission.Username))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submission.SubmissionID,
+                    message = "Można usuwać tylko własne linki"
+                });
+            }
             db.Submissions.Remove(submission);
             db.SaveChanges();
             return RedirectToAction("Details", "Subreddit", new { id = submission.SubredditID });

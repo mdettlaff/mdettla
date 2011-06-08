@@ -22,7 +22,8 @@
         @Html.DisplayFor(modelItem => Model.Title)
     </a>
     <br />
-    <span style="font-size: medium">Dodane przez: @Html.DisplayFor(modelItem => Model.Username)</span>
+    <span style="font-size: medium">Dodane przez: @Html.DisplayFor(modelItem => Model.Username)
+    Do: @Html.DisplayFor(modelItem => Model.Subreddit.Name)</span>
 </td>
 </tr>
 <tr>
