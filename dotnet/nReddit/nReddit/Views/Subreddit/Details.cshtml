@@ -1,17 +1,17 @@
 ﻿@model nReddit.Models.Subreddit
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Html.DisplayFor(model => model.Name);
 }
 
-<h2>Details</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
     @Html.ActionLink("Dodaj nowy link", "Create", "Submission")
 </p>
 
 <fieldset>
-    <legend>@Html.DisplayFor(model => model.Name)</legend>
+    <legend>Linki z tej kategorii</legend>
 
 <div class="display-field">
     <table>
@@ -26,7 +26,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Szczegóły", "Details", "Submission", new {
-                        id = submission.SubmissionID, subredditID = Model.SubredditID
+                        id = submission.SubmissionID
                     }, null)
                 </td>
             </tr>
@@ -40,5 +40,5 @@
     @Html.ActionLink("Usuń", "Delete", new { id = Model.SubredditID })
 </p>
 <p>
-    @Html.ActionLink("Powrót", "Index")
+    @Html.ActionLink("Powrót do listy kategorii", "Index")
 </p>

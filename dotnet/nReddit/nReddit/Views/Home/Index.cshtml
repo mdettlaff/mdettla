@@ -1,5 +1,26 @@
-﻿@{
-    ViewBag.Title = "nReddit";
+﻿@model IEnumerable<nReddit.Models.Submission>
+
+@{
+    ViewBag.Title = "Strona główna";
 }
 
-<h2>Witaj</h2>
+<h2>@ViewBag.Title</h2>
+
+    <table>
+        @foreach (var submission in Model.OrderByDescending(x => x.UpvoteCount))
+        {
+            <tr>
+                <td>
+                    (@Html.DisplayFor(modelItem => submission.Score))
+                    <a href="@Html.DisplayFor(modelItem => submission.Url)" target="_blank">
+                        @Html.DisplayFor(modelItem => submission.Title)
+                    </a>
+                </td>
+                <td>
+                    @Html.ActionLink("Szczegóły", "Details", "Submission", new {
+                        id = submission.SubmissionID
+                    }, null)
+                </td>
+            </tr>
+        }
+    </table>
