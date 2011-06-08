@@ -18,7 +18,9 @@ namespace nReddit.Controllers
 
         public ViewResult Details(int id)
         {
-            Submission submission = db.Submissions.Find(id);
+            Session["submissionID"] = id;
+            Submission submission = db.Submissions.Include(s => s.Comments).Where(
+                s => s.SubmissionID == id).Single();
             Subreddit subreddit = db.Subreddits.Find(submission.SubredditID);
             submission.Subreddit = subreddit;
             return View(submission);

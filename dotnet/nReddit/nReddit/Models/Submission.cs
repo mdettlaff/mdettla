@@ -11,6 +11,7 @@ namespace nReddit.Models
     {
         public Submission()
         {
+            Comments = new List<Comment>();
             UsernamesOfPeopleWhoVoted = "";
         }
 

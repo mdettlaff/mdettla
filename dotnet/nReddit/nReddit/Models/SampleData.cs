@@ -24,7 +24,17 @@ namespace nReddit.Models
                     Title = "Microsoft Developer Network",
                     Text = "Strona dla programistów",
                     UpvoteCount = 20, DownvoteCount = 18,
-                    Username = "Administrator", UsernamesOfPeopleWhoVoted = ""
+                    Username = "Administrator", UsernamesOfPeopleWhoVoted = "",
+                    Comments = new List<Comment> {
+                        new Comment {
+                            Content = "Podoba mi się ta strona. Dobre źródło informacji.",
+                            Username = "mdettla", UpvoteCount = 5, DownvoteCount = 1
+                        },
+                        new Comment {
+                            Content = "Lubię tam zaglądać od czasu do czasu.",
+                            Username = "Administrator", UpvoteCount = 0, DownvoteCount = 0
+                        }
+                    }
                 },
                 new Submission {
                     Url = "http://slashdot.org",
