@@ -54,11 +54,31 @@ namespace nReddit.Controllers
         
         //
         // GET: /Submission/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Submission submission = db.Submissions.Find(id);
             return View(submission);
+        }
+
+        [HttpPost]
+        public ActionResult Upvote(int id)
+        {
+            Submission submission = db.Submissions.Find(id);
+            submission.Upvote();
+            db.Entry(submission).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = submission.SubmissionID });
+        }
+
+        [HttpPost]
+        public ActionResult Downvote(int id)
+        {
+            Submission submission = db.Submissions.Find(id);
+            submission.Downvote();
+            db.Entry(submission).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", new { id = submission.SubmissionID });
         }
 
         //
