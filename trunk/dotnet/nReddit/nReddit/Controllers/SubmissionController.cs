@@ -138,7 +138,7 @@ namespace nReddit.Controllers
         public ActionResult Delete(int id)
         {
             Submission submission = db.Submissions.Find(id);
-            if (!User.Identity.Name.Equals(submission.Username))
+            if (!authorizeCreator(submission))
             {
                 return RedirectToAction("Error", new
                 {
@@ -157,7 +157,7 @@ namespace nReddit.Controllers
         public ActionResult DeleteConfirmed(int id)
         {            
             Submission submission = db.Submissions.Find(id);
-            if (!User.Identity.Name.Equals(submission.Username))
+            if (!authorizeCreator(submission))
             {
                 return RedirectToAction("Error", new
                 {
@@ -168,6 +168,31 @@ namespace nReddit.Controllers
             db.Submissions.Remove(submission);
             db.SaveChanges();
             return RedirectToAction("Details", "Subreddit", new { id = submission.SubredditID });
+        }
+
+        private bool authorizeCreator(Submission submission)
+        {
+            return User.Identity.Name.Equals(submission.Username) || User.IsInRole("Administrator");
+        }
+
+        public ActionResult SearchIndex(string searchString)
+        {
+            ViewBag.ShowMessage = false;
+            var submissions = from s in db.Submissions select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                submissions = submissions.Where(
+                    s => s.Title.Contains(searchString) || s.Text.Contains(searchString));
+                if (submissions.Count() == 0)
+                {
+                    ViewBag.ShowMessage = true;
+                }
+            }
+            else
+            {
+                submissions = submissions.Take(0);
+            }
+            return View(submissions);
         }
 
         protected override void Dispose(bool disposing)
