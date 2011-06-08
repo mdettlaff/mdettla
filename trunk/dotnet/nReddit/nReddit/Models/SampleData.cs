@@ -16,19 +16,22 @@ namespace nReddit.Models
                     Url = "http://www.stackoverflow.com",
                     Title = "Stack Overflow",
                     Text = "Odpowiedzi na programistyczne pytania",
-                    UpvoteCount = 55, DownvoteCount = 10
+                    UpvoteCount = 55, DownvoteCount = 10,
+                    Username = "mdettla", UsernamesOfPeopleWhoVoted = ""
                 },
                 new Submission {
                     Url = "http://www.msdn.microsoft.com",
                     Title = "Microsoft Developer Network",
                     Text = "Strona dla programistów",
-                    UpvoteCount = 20, DownvoteCount = 18
+                    UpvoteCount = 20, DownvoteCount = 18,
+                    Username = "Administrator", UsernamesOfPeopleWhoVoted = ""
                 },
                 new Submission {
                     Url = "http://slashdot.org",
                     Title = "Slashdot",
                     Text = "Wiadomości dla geeków",
-                    UpvoteCount = 80, DownvoteCount = 15
+                    UpvoteCount = 80, DownvoteCount = 15,
+                    Username = "mdettla", UsernamesOfPeopleWhoVoted = ""
                 }
             };
 
@@ -38,7 +41,8 @@ namespace nReddit.Models
                     Url = "http://joemonster.org",
                     Title = "Joe Monster",
                     Text = "Strona satyryczno-humorystyczna",
-                    UpvoteCount = 30, DownvoteCount = 11
+                    UpvoteCount = 30, DownvoteCount = 11,
+                    Username = "mdettla", UsernamesOfPeopleWhoVoted = ""
                 }
             };
 
