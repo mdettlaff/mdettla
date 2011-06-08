@@ -18,6 +18,8 @@
         @Html.HiddenFor(model => model.SubredditID)
         @Html.HiddenFor(model => model.DownvoteCount)
         @Html.HiddenFor(model => model.UpvoteCount)
+        @Html.HiddenFor(model => model.Username)
+        @Html.HiddenFor(model => model.UsernamesOfPeopleWhoVoted)
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Url)

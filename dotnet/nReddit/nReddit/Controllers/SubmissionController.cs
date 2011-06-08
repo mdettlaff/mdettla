@@ -124,6 +124,10 @@ namespace nReddit.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (submission.UsernamesOfPeopleWhoVoted == null)
+                {
+                    submission.UsernamesOfPeopleWhoVoted = "";
+                }
                 db.Entry(submission).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Details", new { id = submission.SubmissionID });

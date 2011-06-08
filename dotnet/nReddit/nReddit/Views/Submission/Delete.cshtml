@@ -29,6 +29,11 @@
     <div class="display-field">
         @Html.DisplayFor(model => model.Score)
     </div>
+
+    <div class="display-label">Autor</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Username)
+    </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
