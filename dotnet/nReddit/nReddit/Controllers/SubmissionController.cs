@@ -25,6 +25,7 @@ namespace nReddit.Controllers
         //
         // GET: /Submission/Create
 
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -34,12 +35,14 @@ namespace nReddit.Controllers
         // POST: /Submission/Create
 
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Submission submission)
         {
             if (ModelState.IsValid)
             {
                 int subredditID = (int)Session["subredditID"];
                 submission.SubredditID = subredditID;
+                submission.Username = User.Identity.Name;
                 Subreddit subreddit =
                     db.Subreddits.Include("Submissions").Single(s => s.SubredditID == subredditID);
                 submission.Subreddit = subreddit;
