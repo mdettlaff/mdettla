@@ -62,5 +62,14 @@ namespace nReddit.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Password security question")]
+        public string PasswordQuestion { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password security answer")]
+        public string PasswordAnswer { get; set; }
     }
 }

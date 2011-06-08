@@ -53,6 +53,22 @@
                 @Html.ValidationMessageFor(m => m.ConfirmPassword)
             </div>
 
+            <div class="editor-label">
+                @Html.LabelFor(m => m.PasswordQuestion)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.PasswordQuestion)
+                @Html.ValidationMessageFor(m => m.PasswordQuestion)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(m => m.PasswordAnswer)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(m => m.PasswordAnswer)
+                @Html.ValidationMessageFor(m => m.PasswordAnswer)
+            </div>
+
             <p>
                 <input type="submit" value="Register" />
             </p>
