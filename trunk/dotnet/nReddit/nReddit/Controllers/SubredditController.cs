@@ -18,7 +18,7 @@ namespace nReddit.Controllers
 
         public ViewResult Index()
         {
-            return View(db.Subreddits.Include("Submissions").OrderByDescending(
+            return View(db.Subreddits.Include(s => s.Submissions).OrderByDescending(
                 x => x.Submissions.Count).ToList());
         }
 
@@ -28,7 +28,7 @@ namespace nReddit.Controllers
         public ViewResult Details(int id)
         {
             Subreddit subreddit =
-                db.Subreddits.Include("Submissions").Single(s => s.SubredditID == id);
+                db.Subreddits.Include(s => s.Submissions).Single(s => s.SubredditID == id);
             Session["SubredditID"] = subreddit.SubredditID;
             return View(subreddit);
         }
