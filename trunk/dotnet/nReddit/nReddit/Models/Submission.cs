@@ -27,6 +27,7 @@ namespace nReddit.Models
         public ICollection<Comment> Comments { get; set; }
         public int SubredditID { get; set; }
         public Subreddit Subreddit { get; set; }
+        public string Username { get; set; }
 
         [ScaffoldColumn(false)]
         public int Score
