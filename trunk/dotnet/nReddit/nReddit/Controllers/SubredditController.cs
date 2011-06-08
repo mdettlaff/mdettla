@@ -18,7 +18,8 @@ namespace nReddit.Controllers
 
         public ViewResult Index()
         {
-            return View(db.Subreddits.ToList());
+            return View(db.Subreddits.Include("Submissions").OrderByDescending(
+                x => x.Submissions.Count).ToList());
         }
 
         //

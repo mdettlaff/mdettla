@@ -1,43 +1,38 @@
 ﻿@model nReddit.Models.Submission
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuwanie";
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Czy jesteś pewien że chcesz usunąć link?</h3>
 <fieldset>
-    <legend>Submission</legend>
+    <legend>Link</legend>
 
     <div class="display-label">Url</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Url)
     </div>
 
-    <div class="display-label">Title</div>
+    <div class="display-label">Tytuł</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Title)
     </div>
 
-    <div class="display-label">Text</div>
+    <div class="display-label">Opis</div>
     <div class="display-field">
         @Html.DisplayFor(model => model.Text)
     </div>
 
-    <div class="display-label">UpvoteCount</div>
+    <div class="display-label">Głosy</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.UpvoteCount)
-    </div>
-
-    <div class="display-label">DownvoteCount</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.DownvoteCount)
+        @Html.DisplayFor(model => model.Score)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Powrót", "Details")
+        <input type="submit" value="Usuń" /> |
+        @Html.ActionLink("Powrót", "Details", new { id = Model.SubmissionID })
     </p>
 }

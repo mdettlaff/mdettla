@@ -1,10 +1,10 @@
 ﻿@model nReddit.Models.Submission
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Dodaj link";
 }
 
-<h2>Create</h2>
+<h2>@ViewBag.Title</h2>
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
@@ -38,28 +38,12 @@
             @Html.ValidationMessageFor(model => model.Text)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UpvoteCount)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UpvoteCount)
-            @Html.ValidationMessageFor(model => model.UpvoteCount)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DownvoteCount)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DownvoteCount)
-            @Html.ValidationMessageFor(model => model.DownvoteCount)
-        </div>
-
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Dodaj" />
         </p>
     </fieldset>
 }
 
 <div>
-    @Html.ActionLink("Powrót", "Index", "Subreddit")
+    @Html.ActionLink("Powrót", "Details", "Subreddit", new {id = Session["SubredditID"]}, null)
 </div>

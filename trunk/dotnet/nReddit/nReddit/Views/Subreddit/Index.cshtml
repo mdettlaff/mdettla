@@ -12,5 +12,6 @@
 
 @foreach (var item in Model) {
     @Html.ActionLink(item.Name, "Details", new { id = item.SubredditID })
+    <span>(</span>@Html.DisplayFor(modelItem => item.SubmissionCount)<span>)</span>
     <br />
 }
