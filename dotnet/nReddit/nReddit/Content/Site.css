@@ -125,7 +125,7 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #adc9e6 solid;
+    border-bottom: 0px #adc9e6 solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0;
