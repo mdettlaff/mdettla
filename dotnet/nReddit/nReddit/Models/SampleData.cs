@@ -15,17 +15,20 @@ namespace nReddit.Models
                 new Submission {
                     Url = "http://www.stackoverflow.com",
                     Title = "Stack Overflow",
-                    Text = "Odpowiedzi na programistyczne pytania"
+                    Text = "Odpowiedzi na programistyczne pytania",
+                    UpvoteCount = 55, DownvoteCount = 10
                 },
                 new Submission {
                     Url = "http://www.msdn.microsoft.com",
                     Title = "Microsoft Developer Network",
-                    Text = "Strona dla programistów"
+                    Text = "Strona dla programistów",
+                    UpvoteCount = 20, DownvoteCount = 18
                 },
                 new Submission {
                     Url = "http://slashdot.org",
                     Title = "Slashdot",
-                    Text = "Wiadomości dla geeków"
+                    Text = "Wiadomości dla geeków",
+                    UpvoteCount = 80, DownvoteCount = 15
                 }
             };
 
@@ -34,7 +37,8 @@ namespace nReddit.Models
                 new Submission {
                     Url = "http://joemonster.org",
                     Title = "Joe Monster",
-                    Text = "Strona satyryczno-humorystyczna"
+                    Text = "Strona satyryczno-humorystyczna",
+                    UpvoteCount = 30, DownvoteCount = 11
                 }
             };
 

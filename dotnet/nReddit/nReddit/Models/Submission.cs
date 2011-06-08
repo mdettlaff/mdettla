@@ -14,5 +14,15 @@ namespace nReddit.Models
         public int UpvoteCount { get; set; }
         public int DownvoteCount { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public int SubredditID { get; set; }
+        public Subreddit Subreddit { get; set; }
+
+        public int Score
+        {
+            get
+            {
+                return UpvoteCount - DownvoteCount;
+            }
+        }
     }
 }

@@ -6,6 +6,10 @@
 
 <h2>Details</h2>
 
+<p>
+    @Html.ActionLink("Dodaj nowy link", "Create", "Submission")
+</p>
+
 <fieldset>
     <legend>@Html.DisplayFor(model => model.Name)</legend>
 
@@ -15,9 +19,15 @@
         {
             <tr>
                 <td>
+                    (@Html.DisplayFor(modelItem => submission.Score))
                     <a href="@Html.DisplayFor(modelItem => submission.Url)" target="_blank">
                         @Html.DisplayFor(modelItem => submission.Title)
                     </a>
+                </td>
+                <td>
+                    @Html.ActionLink("Szczegóły", "Details", "Submission", new {
+                        id = submission.SubmissionID, subredditID = Model.SubredditID
+                    }, null)
                 </td>
             </tr>
         }
@@ -26,6 +36,9 @@
 
 </fieldset>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id=Model.SubredditID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edytuj", "Edit", new { id = Model.SubredditID }) |
+    @Html.ActionLink("Usuń", "Delete", new { id = Model.SubredditID })
+</p>
+<p>
+    @Html.ActionLink("Powrót", "Index")
 </p>

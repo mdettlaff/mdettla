@@ -14,14 +14,6 @@ namespace nReddit.Controllers
         private NRedditEntities db = new NRedditEntities();
 
         //
-        // GET: /Submission/
-
-        public ViewResult Index()
-        {
-            return View(db.Submissions.ToList());
-        }
-
-        //
         // GET: /Submission/Details/5
 
         public ViewResult Details(int id)
@@ -46,11 +38,17 @@ namespace nReddit.Controllers
         {
             if (ModelState.IsValid)
             {
+                int subredditID = (int)Session["subredditID"];
+                submission.SubredditID = subredditID;
+                Subreddit subreddit =
+                    db.Subreddits.Include("Submissions").Single(s => s.SubredditID == subredditID);
+                submission.Subreddit = subreddit;
                 db.Submissions.Add(submission);
+                subreddit.Submissions.Add(submission);
+                db.Entry(subreddit).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");  
+                return RedirectToAction("Details", new { id = submission.SubmissionID });  
             }
-
             return View(submission);
         }
         
@@ -73,7 +71,7 @@ namespace nReddit.Controllers
             {
                 db.Entry(submission).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = submission.SubmissionID });
             }
             return View(submission);
         }
@@ -96,7 +94,7 @@ namespace nReddit.Controllers
             Submission submission = db.Submissions.Find(id);
             db.Submissions.Remove(submission);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Details", "Subreddit", new { id = submission.SubredditID });
         }
 
         protected override void Dispose(bool disposing)

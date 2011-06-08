@@ -1,33 +1,16 @@
 ﻿@model IEnumerable<nReddit.Models.Subreddit>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kategorie";
 }
 
-<h2>Index</h2>
+<h2>@ViewBag.Title</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Dodaj kategorię", "Create")
 </p>
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th></th>
-    </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SubredditID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SubredditID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SubredditID })
-        </td>
-    </tr>
+    @Html.ActionLink(item.Name, "Details", new { id = item.SubredditID })
+    <br />
 }
-
-</table>
