@@ -83,7 +83,8 @@ namespace nReddit.Controllers
 
         //
         // GET: /Subreddit/Delete/5
- 
+
+        [Authorize(Roles = "Administrator")]
         public ActionResult Delete(int id)
         {
             Subreddit subreddit = db.Subreddits.Find(id);
