@@ -34,6 +34,30 @@
 </tr>
 </table>
 
+@if (Model.Comments.Count == 0)
+{
+    <p>Brak komentarzy</p>
+}
+else
+{
+<span>&nbsp;</span><br />
+<table width="100%">
+    @foreach (var comment in Model.Comments)
+    {
+        <tr>
+            <td>
+                Użytkownik <b>@Html.DisplayFor(modelItem => comment.Username)</b> pisze:
+                <br />
+                @Html.DisplayFor(modelItem => comment.Content)
+            </td>
+        </tr>
+    }
+</table>
+}
+
+<p>
+    @Html.ActionLink("Dodaj komentarz", "Create", "Comment", new { id = Model.SubmissionID }, null)
+</p>
 <p>
     @Html.ActionLink("Edytuj", "Edit", new { id = Model.SubmissionID }) |
     @Html.ActionLink("Usuń", "Delete", new { id = Model.SubmissionID })
