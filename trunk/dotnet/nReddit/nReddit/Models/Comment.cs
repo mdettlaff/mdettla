@@ -20,6 +20,8 @@ namespace nReddit.Models
         public int DownvoteCount { get; set; }
         [ScaffoldColumn(false)]
         public string Username { get; set; }
+        public int SubmissionID { get; set; }
+        public Submission Submission { get; set; }
 
         [ScaffoldColumn(false)]
         public int Score
