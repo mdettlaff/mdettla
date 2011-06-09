@@ -179,8 +179,9 @@ namespace nReddit.Controllers
         [Authorize]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
-            Submission submission = db.Submissions.Find(id);
+        {
+            Submission submission =
+                db.Submissions.Include(s => s.Comments).Single(s => s.SubmissionID == id);
             if (!authorizeCreator(submission))
             {
                 return RedirectToAction("Error", new
