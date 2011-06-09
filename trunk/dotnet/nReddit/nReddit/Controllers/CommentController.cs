@@ -42,5 +42,59 @@ namespace nReddit.Controllers
             }
             return View(comment);
         }
+
+        //
+        // GET: /Comment/Delete/5
+
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            int submissionID = (int)Session["submissionID"];
+            ViewBag.SubmissionID = submissionID;
+            Comment comment = db.Comments.Find(id);
+            if (!authorizeCreator(comment))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submissionID,
+                    message = "Można usuwać tylko własne komentarze"
+                });
+            }
+            return View(comment);
+        }
+
+        //
+        // POST: /Comment/Delete/5
+
+        [Authorize]
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            int submissionID = (int)Session["submissionID"];
+            Comment comment = db.Comments.Find(id);
+            if (!authorizeCreator(comment))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submissionID,
+                    message = "Można usuwać tylko własne komentarze"
+                });
+            }
+            db.Comments.Remove(comment);
+            db.SaveChanges();
+            return RedirectToAction("Details", "Submission", new { id = submissionID });
+        }
+
+        public ActionResult Error(int id, string message)
+        {
+            ViewBag.SubmissionID = id;
+            ViewBag.Message = message;
+            return View();
+        }
+
+        private bool authorizeCreator(Comment comment)
+        {
+            return User.Identity.Name.Equals(comment.Username) || User.IsInRole("Administrator");
+        }
     }       
 }

@@ -50,6 +50,9 @@ else
                 <br />
                 @Html.DisplayFor(modelItem => comment.Content)
             </td>
+            <td>
+                @Html.ActionLink("Usuń", "Delete", "Comment", new { id = comment.CommentID }, null)
+            </td>
         </tr>
     }
 </table>
