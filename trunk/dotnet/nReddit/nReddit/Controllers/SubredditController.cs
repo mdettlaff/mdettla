@@ -36,6 +36,7 @@ namespace nReddit.Controllers
         //
         // GET: /Subreddit/Create
 
+        [Authorize(Roles = "Administrator")]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +45,7 @@ namespace nReddit.Controllers
         //
         // POST: /Subreddit/Create
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Create(Subreddit subreddit)
         {
@@ -59,7 +61,8 @@ namespace nReddit.Controllers
         
         //
         // GET: /Subreddit/Edit/5
- 
+
+        [Authorize(Roles = "Administrator")]
         public ActionResult Edit(int id)
         {
             Subreddit subreddit = db.Subreddits.Find(id);
@@ -69,6 +72,7 @@ namespace nReddit.Controllers
         //
         // POST: /Subreddit/Edit/5
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public ActionResult Edit(Subreddit subreddit)
         {
@@ -94,6 +98,7 @@ namespace nReddit.Controllers
         //
         // POST: /Subreddit/Delete/5
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {            
