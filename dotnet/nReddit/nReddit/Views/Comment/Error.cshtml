@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Błąd";
+}
+
+<h2>@ViewBag.Message</h2>
+
+<div>
+    @Html.ActionLink("Powrót", "Details", "Submission", new { id = ViewBag.SubmissionID }, null)
+</div>

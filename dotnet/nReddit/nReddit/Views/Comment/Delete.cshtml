@@ -1,0 +1,22 @@
+﻿@model nReddit.Models.Comment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Czy jesteś pewien że chcesz usunąć komentarz?</h3>
+<fieldset>
+    <legend>Treść komentarza</legend>
+
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Content)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Powrót", "Details", "Submission", new { id = ViewBag.SubmissionID }, null)
+    </p>
+}
