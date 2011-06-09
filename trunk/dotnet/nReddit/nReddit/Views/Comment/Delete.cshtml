@@ -1,10 +1,10 @@
 ﻿@model nReddit.Models.Comment
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Usuń komentarz";
 }
 
-<h2>Delete</h2>
+<h2>@ViewBag.Title</h2>
 
 <h3>Czy jesteś pewien że chcesz usunąć komentarz?</h3>
 <fieldset>
@@ -16,7 +16,7 @@
 </fieldset>
 @using (Html.BeginForm()) {
     <p>
-        <input type="submit" value="Delete" /> |
+        <input type="submit" value="Usuń" /> |
         @Html.ActionLink("Powrót", "Details", "Submission", new { id = ViewBag.SubmissionID }, null)
     </p>
 }

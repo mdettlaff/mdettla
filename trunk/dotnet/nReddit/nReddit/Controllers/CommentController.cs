@@ -85,6 +85,45 @@ namespace nReddit.Controllers
             return RedirectToAction("Details", "Submission", new { id = submissionID });
         }
 
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            int submissionID = (int)Session["submissionID"];
+            ViewBag.SubmissionID = submissionID;
+            Comment comment = db.Comments.Find(id);
+            if (!authorizeCreator(comment))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submissionID,
+                    message = "Można edytować tylko własne komentarze"
+                });
+            }
+            return View(comment);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Comment comment)
+        {
+            int submissionID = (int)Session["submissionID"];
+            ViewBag.SubmissionID = submissionID;
+            if (!authorizeCreator(comment))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submissionID,
+                    message = "Można edytować tylko własne komentarze"
+                });
+            }
+            if (ModelState.IsValid)
+            {
+                db.Entry(comment).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Details", "Submission", new { id = submissionID });
+            }
+            return View(comment);
+        }
+
         public ActionResult Error(int id, string message)
         {
             ViewBag.SubmissionID = id;
