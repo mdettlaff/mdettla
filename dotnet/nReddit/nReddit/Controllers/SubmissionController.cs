@@ -62,9 +62,18 @@ namespace nReddit.Controllers
         //
         // GET: /Submission/Edit/5
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Submission submission = db.Submissions.Find(id);
+            if (!authorizeCreator(submission))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submission.SubmissionID,
+                    message = "Można edytować tylko własne linki"
+                });
+            }
             return View(submission);
         }
 
@@ -74,7 +83,7 @@ namespace nReddit.Controllers
         {
             Submission submission = db.Submissions.Find(id);
             string username = User.Identity.Name;
-            if (submission.UserAlreadyVoted(username))
+            if (submission.UserAlreadyVoted(username) && !User.IsInRole("Administrator"))
             {
                 return redirectToVoteNotAllowed(submission);
             }
@@ -91,7 +100,7 @@ namespace nReddit.Controllers
         {
             Submission submission = db.Submissions.Find(id);
             string username = User.Identity.Name;
-            if (submission.UserAlreadyVoted(username))
+            if (submission.UserAlreadyVoted(username) && !User.IsInRole("Administrator"))
             {
                 return redirectToVoteNotAllowed(submission);
             }
@@ -121,9 +130,18 @@ namespace nReddit.Controllers
         //
         // POST: /Submission/Edit/5
 
+        [Authorize]
         [HttpPost]
         public ActionResult Edit(Submission submission)
         {
+            if (!authorizeCreator(submission))
+            {
+                return RedirectToAction("Error", new
+                {
+                    id = submission.SubmissionID,
+                    message = "Można edytować tylko własne linki"
+                });
+            }
             if (ModelState.IsValid)
             {
                 if (submission.UsernamesOfPeopleWhoVoted == null)
