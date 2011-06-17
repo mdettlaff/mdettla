@@ -1,0 +1,7 @@
+defscrollback 5000
+
+escape ^Kk
+bind k
+bind x lockscreen
+bind X remove
+
