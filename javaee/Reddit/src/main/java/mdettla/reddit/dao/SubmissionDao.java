@@ -19,7 +19,6 @@ public class SubmissionDao {
 	public void create(Submission submission) {
 		em.persist(submission);
 		em.flush();
-		em.clear();
 	}
 
 	public Submission findById(Long id) {

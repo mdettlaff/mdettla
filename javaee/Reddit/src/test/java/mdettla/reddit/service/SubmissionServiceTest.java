@@ -1,4 +1,4 @@
-package mdettla.reddit.dao;
+package mdettla.reddit.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -15,22 +15,20 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 @ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SubmissionDaoTest {
+public class SubmissionServiceTest {
 
 	@Autowired
-	private SubmissionDao dao;
+	private SubmissionService service;
 
 	@Test
-	@Transactional
 	public void testFindById() {
 		// prepare
 		Long id = 1L;
 		// test
-		Submission actual = dao.findById(id);
+		Submission actual = service.findById(id);
 		// verify
 		assertNotNull(actual);
 		assertEquals(id, actual.getId());
@@ -38,10 +36,9 @@ public class SubmissionDaoTest {
 	}
 
 	@Test
-	@Transactional
 	public void testFindAll() {
 		// test
-		Collection<Submission> actual = dao.findAll();
+		Collection<Submission> actual = service.findAll();
 		// verify
 		assertNotNull(actual);
 		assertEquals(2, actual.size());
@@ -51,7 +48,6 @@ public class SubmissionDaoTest {
 	}
 
 	@Test
-	@Transactional
 	public void testCreate() {
 		// prepare
 		Submission submission = new Submission();
@@ -62,11 +58,11 @@ public class SubmissionDaoTest {
 		comment.setContent("Cool dog");
 		submission.addComment(comment);
 		Long id = 3L;
-		assertNull(dao.findById(id));
+		assertNull(service.findById(id));
 		// test
-		dao.create(submission);
+		service.create(submission);
 		// verify
-		Submission actual = dao.findById(id);
+		Submission actual = service.findById(id);
 		assertNotNull(actual);
 		assertEquals(id, actual.getId());
 		assertSubmissionsEqual(submission, actual);
