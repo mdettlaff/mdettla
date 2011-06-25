@@ -2,6 +2,11 @@
 
 <project name="Reddit" default="compile">
 
+	<property name="app.name" value="reddit" />
+	<property name="server.home" value="/usr/local/tomcat" />
+	<property name="server.lib" value="${server.home}/lib" />
+	<property name="deploy.path" value="${server.home}/webapps" />
+
 	<property name="build.dir" value="build" />
 	<property name="prod.dir" value="src/main" />
 	<property name="prod.src.dir" value="${prod.dir}/java" />
@@ -11,7 +16,12 @@
 	<property name="test.src.dir" value="${test.dir}/java" />
 	<property name="test.res.dir" value="${test.dir}/resources" />
 	<property name="test.build.dir" value="${build.dir}/test-classes" />
+	<property name="web.dir" value="src/main/webapp" />
+	<property name="war.dir" value="${build.dir}/${app.name}" />
 
+	<property name="tomcat.manager.url" value="http://localhost:8080/manager/text" />
+	<property name="tomcat.manager.username" value="admin" />
+	<property name="tomcat.manager.password" value="s3cret" />
 
 	<path id="compile.classpath">
 		<fileset dir="lib">
@@ -45,7 +55,7 @@
 			<classpath refid="compile.classpath" />
 		</javac>
 		<copy todir="${prod.build.dir}">
-			<fileset dir="${prod.res.dir}" includes="**/*.*" />
+			<fileset dir="${prod.res.dir}" includes="**/*" />
 		</copy>
 	</target>
 
@@ -55,7 +65,7 @@
 			<classpath refid="test.compile.classpath" />
 		</javac>
 		<copy todir="${test.build.dir}">
-			<fileset dir="${test.res.dir}" includes="**/*.*" />
+			<fileset dir="${test.res.dir}" includes="**/*" />
 		</copy>
 	</target>
 
@@ -67,5 +77,96 @@
 			<formatter type="plain" usefile="false" />
 			<classpath refid="test.run.classpath" />
 		</junit>
+	</target>
+
+
+	<target name="war-dir" depends="compile">
+		<copy todir="${war.dir}">
+			<fileset dir="${web.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${war.dir}/WEB-INF/classes">
+			<fileset dir="${prod.build.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${war.dir}/WEB-INF/lib" flatten="true">
+			<fileset dir="lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="deploy" depends="war-dir">
+		<copy todir="${deploy.path}/${app.name}">
+			<fileset dir="${war.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="war" depends="test, war-dir">
+		<war destfile="${build.dir}/${app.name}.war"
+			webxml="${war.dir}/WEB-INF/web.xml">
+			<fileset dir="${war.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</war>
+	</target>
+
+	<target name="deploy-war" depends="war">
+		<copy file="${build.dir}/${app.name}.war" todir="${deploy.path}" />
+	</target>
+
+	<target name="undeploy">
+		<delete dir="${deploy.path}/${app.name}" />
+		<delete file="${deploy.path}/${app.name}.war" />
+	</target>
+
+
+	<path id="catalina-ant-classpath">
+		<fileset dir="${server.lib}">
+			<include name="catalina-ant.jar"/>
+		</fileset>
+	</path>
+
+	<target name="start" description="Start Tomcat application">
+		<taskdef name="start" classname="org.apache.catalina.ant.StartTask">
+			<classpath refid="catalina-ant-classpath" />
+		</taskdef>
+		<start url="${tomcat.manager.url}"
+			username="${tomcat.manager.username}"
+			password="${tomcat.manager.password}"
+			path="/${app.name}" />
+	</target>
+
+	<target name="stop" description="Stop Tomcat application">
+		<taskdef name="stop" classname="org.apache.catalina.ant.StopTask">
+			<classpath refid="catalina-ant-classpath" />
+		</taskdef>
+		<stop url="${tomcat.manager.url}"
+			username="${tomcat.manager.username}"
+			password="${tomcat.manager.password}"
+			path="/${app.name}" />
+	</target>
+
+	<target name="reload" description="Reload application in Tomcat">
+		<taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+			<classpath refid="catalina-ant-classpath" />
+		</taskdef>
+		<reload url="${tomcat.manager.url}"
+			username="${tomcat.manager.username}"
+			password="${tomcat.manager.password}"
+			path="/${app.name}" />
+	</target>
+
+	<target name="list" description="List Tomcat applications">
+		<taskdef name="list" classname="org.apache.catalina.ant.ListTask">
+			<classpath refid="catalina-ant-classpath" />
+		</taskdef>
+		<list url="${tomcat.manager.url}"
+			username="${tomcat.manager.username}"
+			password="${tomcat.manager.password}" />
 	</target>
 </project>
