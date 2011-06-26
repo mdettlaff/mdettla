@@ -1,8 +1,9 @@
-<%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-Submitted links:<br>
-<c:forEach var="submission" items="${submissions}">
-	<c:out value="${submission.title}" /><br>
-</c:forEach>
+<h2>Submitted links</h2>
 
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
+<ul>
+	<c:forEach var="submission" items="${submissions}">
+		<li><c:out value="${submission.title}" /></li>
+	</c:forEach>
+</ul>
