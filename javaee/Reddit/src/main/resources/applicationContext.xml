@@ -37,4 +37,10 @@
 	<tx:annotation-driven />
 
 	<mvc:annotation-driven />
+
+	<!--
+		This is a workaround for a problem with lazy class loading, see:
+		https://jira.springsource.org/browse/SPR-6241
+	-->
+	<bean class="org.hibernate.event.EventListeners" />
 </beans>
