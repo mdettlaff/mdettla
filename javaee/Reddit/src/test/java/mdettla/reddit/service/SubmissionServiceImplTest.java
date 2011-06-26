@@ -9,21 +9,22 @@ import java.util.Iterator;
 
 import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.test.AbstractTestContext;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-@ContextConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SubmissionServiceTest {
+public class SubmissionServiceImplTest extends AbstractTestContext {
 
 	@Autowired
 	private SubmissionService service;
 
 	@Test
+	@Transactional
 	public void testFindById() {
 		// prepare
 		Long id = 1L;
@@ -36,6 +37,7 @@ public class SubmissionServiceTest {
 	}
 
 	@Test
+	@Transactional
 	public void testFindAll() {
 		// test
 		Collection<Submission> actual = service.findAll();
@@ -48,6 +50,7 @@ public class SubmissionServiceTest {
 	}
 
 	@Test
+	@Transactional
 	public void testCreate() {
 		// prepare
 		Submission submission = new Submission();

@@ -2,31 +2,13 @@ package mdettla.reddit.service;
 
 import java.util.Collection;
 
-import mdettla.reddit.dao.SubmissionDao;
 import mdettla.reddit.domain.Submission;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+public interface SubmissionService {
 
-@Service
-public class SubmissionService {
+	abstract void create(Submission submission);
 
-	@Autowired
-	private SubmissionDao dao;
+	abstract Submission findById(Long id);
 
-	@Transactional
-	public void create(Submission submission) {
-		dao.create(submission);
-	}
-
-	@Transactional
-	public Submission findById(Long id) {
-		return dao.findById(id);
-	}
-
-	@Transactional
-	public Collection<Submission> findAll() {
-		return dao.findAll();
-	}
+	abstract Collection<Submission> findAll();
 }

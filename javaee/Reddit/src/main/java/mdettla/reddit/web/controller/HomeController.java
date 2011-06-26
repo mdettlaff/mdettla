@@ -1,7 +1,6 @@
 package mdettla.reddit.web.controller;
 
 import java.util.Collection;
-import java.util.Date;
 
 import mdettla.reddit.domain.Submission;
 import mdettla.reddit.service.SubmissionService;
@@ -14,15 +13,15 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
+	private final SubmissionService submissionService;
+
 	@Autowired
-	private SubmissionService submissionService;
+	public HomeController(SubmissionService submissionService) {
+		this.submissionService = submissionService;
+	}
 
 	@RequestMapping(value = "/")
 	public ModelAndView home() {
-		System.out.println("HomeController: home() begin");
-		Submission submission = new Submission();
-		submission.setTitle("News at " + new Date());
-		submissionService.create(submission);
 		Collection<Submission> submissions = submissionService.findAll();
 		return new ModelAndView("index", "submissions", submissions);
 	}
