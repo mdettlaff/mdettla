@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+	"-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="mainTemplate" template="/WEB-INF/view/templates/main.jsp" />
+
+	<definition name="index" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/view/index.jsp" />
+	</definition>
+	<definition name="addLinkForm" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/view/addLinkForm.jsp" />
+	</definition>
+</tiles-definitions>

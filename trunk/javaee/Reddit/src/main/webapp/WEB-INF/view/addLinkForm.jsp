@@ -1,11 +1,15 @@
-<%@ include file="/WEB-INF/view/layout/header.jsp" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-Add new link<br>
+<h2>Submit a new link</h2>
 
 <form:form modelAttribute="submission" method="POST">
-	Title: <form:input path="title" size="30" maxlength="80" />
-	<br>
-	<input type="submit" value="Submit"/>
+	<table>
+		<tr>
+			<td>Title:</td>
+			<td><form:input path="title" size="30" maxlength="80" /></td>
+		</tr>
+		<tr>
+			<td></td><td><input type="submit" value="Submit" /></td>
+		</tr>
+	</table>
 </form:form>
-
-<%@ include file="/WEB-INF/view/layout/footer.jsp" %>
