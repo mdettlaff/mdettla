@@ -15,7 +15,12 @@
 
 	<context:component-scan base-package="mdettla.reddit"/>
 
-    <jdbc:embedded-database id="dataSource" />
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+	<bean id="dataSource" destroy-method="close"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.url}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}" />
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
@@ -32,4 +37,7 @@
 	<tx:annotation-driven />
 
 	<mvc:annotation-driven />
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:prefix="/WEB-INF/view/" p:suffix=".jsp" />
 </beans>

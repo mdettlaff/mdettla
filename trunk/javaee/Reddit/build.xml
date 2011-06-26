@@ -92,7 +92,7 @@
 			</fileset>
 		</copy>
 		<copy todir="${war.dir}/WEB-INF/lib" flatten="true">
-			<fileset dir="lib">
+			<fileset dir="lib/main">
 				<include name="**/*.jar" />
 			</fileset>
 		</copy>
@@ -122,7 +122,11 @@
 	<target name="undeploy">
 		<delete dir="${deploy.path}/${app.name}" />
 		<delete file="${deploy.path}/${app.name}.war" />
+		<delete dir="${build.dir}/${app.name}" />
+		<delete file="${build.dir}/${app.name}.war" />
 	</target>
+
+	<target name="redeploy" depends="undeploy, deploy" />
 
 
 	<path id="catalina-ant-classpath">
