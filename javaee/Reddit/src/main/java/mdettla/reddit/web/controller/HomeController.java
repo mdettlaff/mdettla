@@ -24,6 +24,6 @@ public class HomeController {
 		submission.setTitle("News at " + new Date());
 		submissionService.create(submission);
 		Collection<Submission> submissions = submissionService.findAll();
-		return new ModelAndView("WEB-INF/view/index.jsp", "submissions", submissions);
+		return new ModelAndView("index", "submissions", submissions);
 	}
 }
