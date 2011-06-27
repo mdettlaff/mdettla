@@ -11,23 +11,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/submit_link")
-public class AddSubmissionController {
+@RequestMapping("/submissions")
+public class SubmissionController {
 
 	private final SubmissionService submissionService;
 
 	@Autowired
-	public AddSubmissionController(SubmissionService submissionService) {
+	public SubmissionController(SubmissionService submissionService) {
 		this.submissionService = submissionService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String setupForm(Model model) {
 		model.addAttribute(new Submission());
-		return "addLinkForm";
+		return "submissions/add";
 	}
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Submission submission) {
 		submissionService.create(submission);
 		return "redirect:/";

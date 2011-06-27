@@ -5,11 +5,11 @@
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-	<import resource="classpath:applicationContext.xml" />
+	<import resource="classpath:application-context.xml" />
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver"
 		p:viewClass="org.springframework.web.servlet.view.tiles2.TilesView" />
 
 	<bean class="org.springframework.web.servlet.view.tiles2.TilesConfigurer"
-		p:definitions="/WEB-INF/view/templates/tiles.xml" />
+		p:definitions="/WEB-INF/views/templates/tiles.xml" />
 </beans>
