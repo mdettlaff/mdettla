@@ -11,15 +11,15 @@ import org.junit.Test;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 
-public class AddSubmissionControllerTest {
+public class SubmissionControllerTest {
 
 	private SubmissionService submissionService;
-	private AddSubmissionController controller;
+	private SubmissionController controller;
 
 	@Before
 	public void setUp() {
 		submissionService = new InMemorySubmissionService();
-		controller = new AddSubmissionController(submissionService);
+		controller = new SubmissionController(submissionService);
 	}
 
 	@Test
@@ -31,7 +31,7 @@ public class AddSubmissionControllerTest {
 		// verify
 		Submission submission = (Submission)model.asMap().get("submission");
 		assertNotNull(submission);
-		assertEquals("addLinkForm", viewName);
+		assertEquals("submissions/add", viewName);
 	}
 
 	@Test

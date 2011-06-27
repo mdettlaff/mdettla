@@ -4,12 +4,12 @@
 	"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="mainTemplate" template="/WEB-INF/view/templates/main.jsp" />
+	<definition name="mainTemplate" template="/WEB-INF/views/templates/main.jsp" />
 
 	<definition name="index" extends="mainTemplate">
-		<put-attribute name="content" value="/WEB-INF/view/index.jsp" />
+		<put-attribute name="content" value="/WEB-INF/views/index.jsp" />
 	</definition>
-	<definition name="addLinkForm" extends="mainTemplate">
-		<put-attribute name="content" value="/WEB-INF/view/addLinkForm.jsp" />
+	<definition name="submissions/add" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/submissions/add.jsp" />
 	</definition>
 </tiles-definitions>
