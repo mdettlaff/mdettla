@@ -36,12 +36,12 @@ public class SubmissionControllerTest {
 	}
 
 	@Test
-	public void testProcessSubmitAdd() {
+	public void testSubmitAdd() {
 		// prepare
 		Submission submission = new Submission();
 		submission.setTitle("foo");
 		// test
-		String viewName = controller.processSubmitAdd(submission);
+		String viewName = controller.submitAdd(submission);
 		// verify
 		Submission expected = submissionService.findAll().iterator().next();
 		assertNotNull(expected);
@@ -57,7 +57,7 @@ public class SubmissionControllerTest {
 		submission.setTitle("foo");
 		submissionService.create(submission);
 		// test
-		ModelAndView modelAndView = controller.details(5L);
+		ModelAndView modelAndView = controller.details(submission.getId());
 		// verify
 		ModelMap model = modelAndView.getModelMap();
 		String view = modelAndView.getViewName();
@@ -66,5 +66,44 @@ public class SubmissionControllerTest {
 		assertNotNull(submissionInModel);
 		assertEquals(submissionInModel.getId(), submission.getId());
 		assertEquals(submissionInModel.getTitle(), submission.getTitle());
+	}
+
+	@Test
+	public void testSetupFormEdit() {
+		// prepare
+		Submission submission = new Submission();
+		submission.setId(5L);
+		submission.setTitle("foo");
+		submissionService.create(submission);
+		// test
+		ModelAndView modelAndView = controller.setupFormEdit(submission.getId());
+		// verify
+		ModelMap model = modelAndView.getModelMap();
+		String view = modelAndView.getViewName();
+		assertEquals("submissions/edit", view);
+		Submission submissionInModel = (Submission)model.get("submission");
+		assertNotNull(submissionInModel);
+		assertEquals(submissionInModel.getId(), submission.getId());
+		assertEquals(submissionInModel.getTitle(), submission.getTitle());
+	}
+
+	@Test
+	public void testSubmitEdit() {
+		// prepare
+		Submission originalSubmission = new Submission();
+		originalSubmission.setId(5L);
+		originalSubmission.setTitle("foo");
+		submissionService.create(originalSubmission);
+		Submission modifiedSubmission = new Submission();
+		modifiedSubmission.setId(originalSubmission.getId());
+		modifiedSubmission.setTitle("bar");
+		// test
+		String viewName = controller.submitEdit(modifiedSubmission);
+		// verify
+		assertEquals("redirect:/", viewName);
+		Submission editedSubmission = submissionService.findById(5L);
+		assertNotNull(editedSubmission);
+		assertEquals(editedSubmission.getId(), originalSubmission.getId());
+		assertEquals("bar", editedSubmission.getTitle());
 	}
 }

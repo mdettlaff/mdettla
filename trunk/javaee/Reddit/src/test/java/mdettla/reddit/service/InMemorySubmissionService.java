@@ -33,4 +33,10 @@ public class InMemorySubmissionService implements SubmissionService {
 	public Collection<Submission> findAll() {
 		return Collections.unmodifiableCollection(submissions);
 	}
+
+	@Override
+	public void update(Submission submission) {
+		Submission existing = findById(submission.getId());
+		existing.setTitle(submission.getTitle());
+	}
 }

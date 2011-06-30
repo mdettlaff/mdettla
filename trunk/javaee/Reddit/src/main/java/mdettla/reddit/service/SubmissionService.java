@@ -11,4 +11,6 @@ public interface SubmissionService {
 	abstract Submission findById(Long id);
 
 	abstract Collection<Submission> findAll();
+
+	abstract void update(Submission submission);
 }

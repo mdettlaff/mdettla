@@ -71,6 +71,26 @@ public class SubmissionServiceImplTest extends AbstractTestContext {
 		assertSubmissionsEqual(submission, actual);
 	}
 
+	@Test
+	@Transactional
+	public void testUpdate() {
+		// prepare
+		Submission submission = new Submission();
+		submission.setId(1L);
+		submission.setTitle("This is a picture of my kitty");
+		submission.setUpvoteCount(3);
+		submission.setDownvoteCount(1);
+		// test
+		service.update(submission);
+		// verify
+		Submission updated = service.findById(submission.getId());
+		assertNotNull(updated);
+		assertEquals(submission.getId(), updated.getId());
+		assertEquals(submission.getTitle(), updated.getTitle());
+		assertEquals(submission.getUpvoteCount(), updated.getUpvoteCount());
+		assertEquals(submission.getDownvoteCount(), updated.getDownvoteCount());
+	}
+
 	private Submission prepareSampleSubmission1() {
 		Submission submission = new Submission();
 		submission.setTitle("This is a picture of my cat");
