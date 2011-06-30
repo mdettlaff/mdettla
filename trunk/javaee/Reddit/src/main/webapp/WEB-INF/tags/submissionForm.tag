@@ -9,7 +9,8 @@
 			<td><form:input path="title" size="30" maxlength="80" /></td>
 		</tr>
 		<tr>
-			<td></td><td><input type="submit" value="${submitButtonLabel}" /></td>
+			<td></td>
+			<td><input type="submit" value="${submitButtonLabel}" /></td>
 		</tr>
 	</table>
 </form:form>

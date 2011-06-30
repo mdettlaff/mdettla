@@ -35,13 +35,13 @@ public class SubmissionController {
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ModelAndView details(@PathVariable long id) {
+	public ModelAndView details(@PathVariable Long id) {
 		Submission submission = submissionService.findById(id);
 		return new ModelAndView("submissions/details", "submission", submission);
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public ModelAndView setupFormEdit(@PathVariable long id) {
+	public ModelAndView setupFormEdit(@PathVariable Long id) {
 		Submission submission = submissionService.findById(id);
 		return new ModelAndView("submissions/edit", "submission", submission);
 	}
@@ -49,6 +49,12 @@ public class SubmissionController {
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
 	public String submitEdit(@ModelAttribute Submission submission) {
 		submissionService.update(submission);
+		return "redirect:/";
+	}
+
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.POST)
+	public String delete(@PathVariable Long id) {
+		submissionService.delete(id);
 		return "redirect:/";
 	}
 }

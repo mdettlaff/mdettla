@@ -91,6 +91,18 @@ public class SubmissionServiceImplTest extends AbstractTestContext {
 		assertEquals(submission.getDownvoteCount(), updated.getDownvoteCount());
 	}
 
+	@Test
+	@Transactional
+	public void testDelete() {
+		// prepare
+		Long id = 1L;
+		// test
+		service.delete(id);
+		// verify
+		Submission deleted = service.findById(id);
+		assertNull(deleted);
+	}
+
 	private Submission prepareSampleSubmission1() {
 		Submission submission = new Submission();
 		submission.setTitle("This is a picture of my cat");
