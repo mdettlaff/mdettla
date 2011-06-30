@@ -37,4 +37,11 @@ public class SubmissionServiceImpl implements SubmissionService {
 		Query query = entityManager.createQuery("SELECT s FROM Submission s");
 		return query.getResultList();
 	}
+
+	@Override
+	@Transactional
+	public void update(Submission submission) {
+		entityManager.merge(submission);
+		entityManager.flush();
+	}
 }

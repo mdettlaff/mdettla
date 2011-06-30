@@ -29,7 +29,7 @@ public class SubmissionController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String processSubmitAdd(@ModelAttribute Submission submission) {
+	public String submitAdd(@ModelAttribute Submission submission) {
 		submissionService.create(submission);
 		return "redirect:/";
 	}
@@ -38,5 +38,17 @@ public class SubmissionController {
 	public ModelAndView details(@PathVariable long id) {
 		Submission submission = submissionService.findById(id);
 		return new ModelAndView("submissions/details", "submission", submission);
+	}
+
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	public ModelAndView setupFormEdit(@PathVariable long id) {
+		Submission submission = submissionService.findById(id);
+		return new ModelAndView("submissions/edit", "submission", submission);
+	}
+
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
+	public String submitEdit(@ModelAttribute Submission submission) {
+		submissionService.update(submission);
+		return "redirect:/";
 	}
 }

@@ -15,4 +15,7 @@
 	<definition name="submissions/details" extends="mainTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/submissions/details.jsp" />
 	</definition>
+	<definition name="submissions/edit" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/submissions/edit.jsp" />
+	</definition>
 </tiles-definitions>
