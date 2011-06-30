@@ -4,6 +4,10 @@
 
 <ul>
 	<c:forEach var="submission" items="${submissions}">
-		<li><c:out value="${submission.title}" /></li>
+		<li>
+			<a href="<c:url value="/submissions/${submission.id}" />">
+				<c:out value="${submission.title}" />
+			</a>
+		</li>
 	</c:forEach>
 </ul>
