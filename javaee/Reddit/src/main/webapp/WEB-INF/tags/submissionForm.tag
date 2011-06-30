@@ -2,7 +2,7 @@
 
 <%@ attribute name="submitButtonLabel" type="java.lang.String" required="true"%>
 
-<form:form modelAttribute="submission" method="POST">
+<form:form modelAttribute="submission">
 	<table>
 		<tr>
 			<td>Title:</td>
