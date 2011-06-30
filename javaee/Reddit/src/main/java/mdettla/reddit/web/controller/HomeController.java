@@ -3,28 +3,38 @@ package mdettla.reddit.web.controller;
 import java.util.Collection;
 
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.service.RssService;
 import mdettla.reddit.service.SubmissionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.sun.syndication.feed.rss.Channel;
+
 @Controller
-@RequestMapping(value = "/")
 public class HomeController {
 
 	private final SubmissionService submissionService;
+	private final RssService rssService;
 
 	@Autowired
-	public HomeController(SubmissionService submissionService) {
+	public HomeController(SubmissionService submissionService, RssService rssService) {
 		this.submissionService = submissionService;
+		this.rssService = rssService;
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home() {
 		Collection<Submission> submissions = submissionService.findAll();
 		return new ModelAndView("index", "submissions", submissions);
+	}
+
+	@RequestMapping(value = "/rss", method = RequestMethod.GET)
+	public @ResponseBody Channel rss() {
+		return rssService.createRssChannel();
 	}
 }
