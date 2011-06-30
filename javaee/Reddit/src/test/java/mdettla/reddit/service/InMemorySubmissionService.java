@@ -39,4 +39,9 @@ public class InMemorySubmissionService implements SubmissionService {
 		Submission existing = findById(submission.getId());
 		existing.setTitle(submission.getTitle());
 	}
+
+	@Override
+	public void delete(Long id) {
+		submissions.remove(findById(id));
+	}
 }

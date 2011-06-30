@@ -44,4 +44,12 @@ public class SubmissionServiceImpl implements SubmissionService {
 		entityManager.merge(submission);
 		entityManager.flush();
 	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		Submission submission = findById(id);
+		entityManager.remove(submission);
+		entityManager.flush();
+	}
 }

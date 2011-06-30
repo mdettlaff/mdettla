@@ -2,6 +2,7 @@ package mdettla.reddit.web.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import mdettla.reddit.domain.Submission;
 import mdettla.reddit.service.InMemorySubmissionService;
 import mdettla.reddit.service.SubmissionService;
@@ -105,5 +106,19 @@ public class SubmissionControllerTest {
 		assertNotNull(editedSubmission);
 		assertEquals(editedSubmission.getId(), originalSubmission.getId());
 		assertEquals("bar", editedSubmission.getTitle());
+	}
+
+	@Test
+	public void testDelete() {
+		// prepare
+		Submission submission = new Submission();
+		submission.setId(5L);
+		submissionService.create(submission);
+		assertNotNull(submissionService.findById(submission.getId()));
+		// test
+		String viewName = controller.delete(submission.getId());
+		// verify
+		assertEquals("redirect:/", viewName);
+		assertNull(submissionService.findById(submission.getId()));
 	}
 }
