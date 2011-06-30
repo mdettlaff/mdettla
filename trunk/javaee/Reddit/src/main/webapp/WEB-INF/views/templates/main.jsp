@@ -12,6 +12,7 @@
 		<ul>
 			<li><a href="<c:url value="/" />">Home page</a></li>
 			<li><a href="<c:url value="/submissions/new" />">Submit link</a></li>
+			<li><a href="<c:url value="/rss" />">RSS feed</a></li>
 		</ul>
 
 		<tiles:insertAttribute name="content" />
