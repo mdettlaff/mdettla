@@ -21,13 +21,12 @@ public class SubmissionController {
 		this.submissionService = submissionService;
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String setupForm(Model model) {
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public void setupForm(Model model) {
 		model.addAttribute(new Submission());
-		return "submissions/add";
 	}
 
-	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String processSubmit(@ModelAttribute Submission submission) {
 		submissionService.create(submission);
 		return "redirect:/";

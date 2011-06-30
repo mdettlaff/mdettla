@@ -27,11 +27,10 @@ public class SubmissionControllerTest {
 		// prepare
 		Model model = new ExtendedModelMap();
 		// test
-		String viewName = controller.setupForm(model);
+		controller.setupForm(model);
 		// verify
 		Submission submission = (Submission)model.asMap().get("submission");
 		assertNotNull(submission);
-		assertEquals("submissions/add", viewName);
 	}
 
 	@Test
