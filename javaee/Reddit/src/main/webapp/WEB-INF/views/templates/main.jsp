@@ -13,8 +13,7 @@
 	<body>
 		<div class="page">
 			<div class="header">
-				<div id="title" style="background-image:
-						url('<c:url value="/resources/images/alien.png" />');">
+				<div id="title">
 					<h1>Reddit</h1>
 				</div>
 				<div id="login">
