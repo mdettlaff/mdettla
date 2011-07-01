@@ -21,14 +21,15 @@ public class RssService {
 		this.submissionService = submissionService;
 	}
 
-	public Channel createRssChannel() {
+	public Channel createRssChannel(String link) {
 		Channel channel = new Channel("rss_2.0");
 		channel.setTitle("Reddit");
+		channel.setLink(link);
 		channel.setDescription("Reddit - voice of the Internet");
-		channel.setLink("http://foo.com");
 		List<Item> items = new ArrayList<Item>();
 		for (Submission submission : submissionService.findAll()) {
 			Item item = new Item();
+			item.setLink(link + "submissions/" + submission.getId());
 			item.setTitle(submission.getTitle());
 			items.add(item);
 		}

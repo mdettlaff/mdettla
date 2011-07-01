@@ -2,6 +2,8 @@ package mdettla.reddit.web.controller;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import mdettla.reddit.domain.Submission;
 import mdettla.reddit.service.RssService;
 import mdettla.reddit.service.SubmissionService;
@@ -34,7 +36,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/rss", method = RequestMethod.GET)
-	public @ResponseBody Channel rss() {
-		return rssService.createRssChannel();
+	public @ResponseBody Channel rss(HttpServletRequest request) {
+		String url = request.getRequestURL().toString();
+		String link = url.substring(0, url.lastIndexOf('/') + 1);
+		return rssService.createRssChannel(link);
 	}
 }
