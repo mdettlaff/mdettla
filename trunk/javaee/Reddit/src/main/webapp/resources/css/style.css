@@ -92,6 +92,7 @@ h5, h6 {
 	display: block;
 	float: left;
 	text-align: left;
+	background-image: url(../images/alien.png);
 	background-repeat: no-repeat;
 	background-position: left top;
 	height: 120px;
