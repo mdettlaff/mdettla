@@ -2,7 +2,6 @@ package mdettla.reddit.service;
 
 import static org.junit.Assert.assertEquals;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.test.AbstractTestContext;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +10,7 @@ import com.sun.syndication.feed.rss.Channel;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.WireFeedOutput;
 
-public class RssServiceTest extends AbstractTestContext {
+public class RssServiceTest {
 
 	private SubmissionService submissionService;
 

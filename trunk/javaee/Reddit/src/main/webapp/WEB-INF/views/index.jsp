@@ -6,7 +6,7 @@
 	<c:forEach var="submission" items="${submissions}">
 		<li>
 			<a href="<c:url value="/submissions/${submission.id}" />">
-				<c:out value="${submission.title}" />
+				${submission.title}
 			</a>
 		</li>
 	</c:forEach>
