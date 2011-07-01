@@ -36,6 +36,8 @@
 
 	<mvc:annotation-driven />
 
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
 	<!--
 		This is a workaround for a problem with lazy class loading, see:
 		https://jira.springsource.org/browse/SPR-6241
