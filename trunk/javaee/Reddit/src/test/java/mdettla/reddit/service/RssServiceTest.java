@@ -18,9 +18,11 @@ public class RssServiceTest {
 	public void setUp() {
 		submissionService = new InMemorySubmissionService();
 		Submission submission1 = new Submission();
+		submission1.setId(1L);
 		submission1.setTitle("foo");
 		submissionService.create(submission1);
 		Submission submission2 = new Submission();
+		submission2.setId(2L);
 		submission2.setTitle("bar");
 		submissionService.create(submission2);
 	}
@@ -30,7 +32,7 @@ public class RssServiceTest {
 		// prepare
 		RssService rssService = new RssService(submissionService);
 		// test
-		Channel channel = rssService.createRssChannel();
+		Channel channel = rssService.createRssChannel("http://foo.com/");
 		// verify
 		WireFeedOutput feedOutput = new WireFeedOutput();
 		String actualContent = feedOutput.outputString(channel);
@@ -39,13 +41,15 @@ public class RssServiceTest {
 			"<rss version=\"2.0\">\r\n" +
 			"  <channel>\r\n" +
 			"    <title>Reddit</title>\r\n" +
-			"    <link>http://foo.com</link>\r\n" +
+			"    <link>http://foo.com/</link>\r\n" +
 			"    <description>Reddit - voice of the Internet</description>\r\n" +
 			"    <item>\r\n" +
 			"      <title>foo</title>\r\n" +
+			"      <link>http://foo.com/submissions/1</link>\r\n" +
 			"    </item>\r\n" +
 			"    <item>\r\n" +
 			"      <title>bar</title>\r\n" +
+			"      <link>http://foo.com/submissions/2</link>\r\n" +
 			"    </item>\r\n" +
 			"  </channel>\r\n" +
 			"</rss>\r\n\r\n";

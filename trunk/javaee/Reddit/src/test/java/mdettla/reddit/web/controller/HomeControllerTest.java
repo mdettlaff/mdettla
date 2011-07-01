@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import mdettla.reddit.domain.Submission;
 import mdettla.reddit.service.InMemorySubmissionService;
 import mdettla.reddit.service.RssService;
@@ -11,6 +13,7 @@ import mdettla.reddit.service.SubmissionService;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sun.syndication.feed.rss.Channel;
@@ -43,9 +46,11 @@ public class HomeControllerTest {
 
 	@Test
 	public void testRss() {
+		HttpServletRequest request = new MockHttpServletRequest("GET", "/reddit/rss");
 		// test
-		Channel channel = controller.rss();
+		Channel channel = controller.rss(request);
 		// verify
+		assertEquals("http://localhost:80/reddit/", channel.getLink());
 		assertEquals(3, channel.getItems().size());
 	}
 }
