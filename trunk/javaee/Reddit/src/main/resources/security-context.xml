@@ -10,7 +10,7 @@
 		<form-login login-page="/login" login-processing-url="/login/authenticate"
 				default-target-url="/" authentication-failure-url="/login?error=true" />
 		<logout logout-url="/logout" logout-success-url="/logout_success" />
-		<access-denied-handler error-page="/access_denied" />
+		<access-denied-handler error-page="/error/403" />
 	</http>
 
 	<authentication-manager>
