@@ -25,7 +25,11 @@
 	<definition name="logoutSuccess" extends="mainTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/account/logoutSuccess.jsp" />
 	</definition>
-	<definition name="accessDenied" extends="mainTemplate">
-		<put-attribute name="content" value="/WEB-INF/views/account/accessDenied.jsp" />
+
+	<definition name="error/403" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/error/403.jsp" />
+	</definition>
+	<definition name="error/404" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/error/404.jsp" />
 	</definition>
 </tiles-definitions>
