@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,30 +27,6 @@ public class SubmissionServiceSecurityTest {
 	}
 
 	@Test(expected = BadCredentialsException.class)
-	public void testDisallowUpdate() {
-		loginUser("mdettla", "bogus");
-		submissionService.update(new Submission());
-	}
-
-	@Test
-	public void testAllowUpdate() {
-		loginUser("mdettla", "secret");
-		submissionService.update(new Submission());
-	}
-
-	@Test(expected = BadCredentialsException.class)
-	public void testDisallowDelete() {
-		loginUser("mdettla", "bogus");
-		submissionService.delete(1L);
-	}
-
-	@Test
-	public void testAllowDelete() {
-		loginUser("mdettla", "secret");
-		submissionService.delete(1L);
-	}
-
-	@Test(expected = BadCredentialsException.class)
 	public void testDisallowCreate() {
 		loginUser("mdettla", "bogus");
 		submissionService.create(new Submission());
@@ -62,8 +39,56 @@ public class SubmissionServiceSecurityTest {
 	}
 
 	@Test
+	public void testAllowCreateAdmin() {
+		loginUser("admin", "secret1");
+		submissionService.create(new Submission());
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowUpdate() {
+		loginUser("mdettla", "bogus");
+		submissionService.update(new Submission());
+	}
+
+	@Test
+	public void testAllowUpdate() {
+		loginUser("mdettla", "secret");
+		submissionService.update(new Submission());
+	}
+
+	@Test
+	public void testAllowUpdateAdmin() {
+		loginUser("admin", "secret1");
+		submissionService.update(new Submission());
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowDelete() {
+		loginUser("mdettla", "bogus");
+		submissionService.delete(1L);
+	}
+
+	@Test(expected = AccessDeniedException.class)
+	public void testDisallowDeleteUser() {
+		loginUser("mdettla", "secret");
+		submissionService.delete(1L);
+	}
+
+	@Test
+	public void testAllowDelete() {
+		loginUser("admin", "secret1");
+		submissionService.delete(1L);
+	}
+
+	@Test
 	public void testAllowFindAll() {
 		loginUser("mdettla", "bogus");
+		submissionService.findAll();
+	}
+
+	@Test
+	public void testAllowFindAllAdmin() {
+		loginUser("admin", "secret1");
 		submissionService.findAll();
 	}
 

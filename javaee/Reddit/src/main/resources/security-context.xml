@@ -10,12 +10,14 @@
 		<form-login login-page="/login" login-processing-url="/login/authenticate"
 				default-target-url="/" authentication-failure-url="/login?error=true" />
 		<logout logout-url="/logout" logout-success-url="/logout_success" />
+		<access-denied-handler error-page="/access_denied" />
 	</http>
 
 	<authentication-manager>
 		<authentication-provider>
 			<user-service>
-				<user name="mdettla" password="secret" authorities="ROLE_USER" />
+				<user name="mdettla" password="secret" authorities="user" />
+				<user name="admin" password="secret1" authorities="admin, user" />
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
