@@ -8,6 +8,7 @@ import javax.persistence.Query;
 
 import mdettla.reddit.domain.Submission;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public void create(Submission submission) {
 		entityManager.persist(submission);
 		entityManager.flush();
@@ -40,6 +42,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public void update(Submission submission) {
 		entityManager.merge(submission);
 		entityManager.flush();
@@ -47,6 +50,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
+	@PreAuthorize("hasRole('ROLE_USER')")
 	public void delete(Long id) {
 		Submission submission = findById(id);
 		entityManager.remove(submission);

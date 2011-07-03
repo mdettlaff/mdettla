@@ -9,13 +9,13 @@ import java.util.Iterator;
 
 import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.test.AbstractTestContext;
+import mdettla.reddit.test.AbstractPersistenceTestContext;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-public class SubmissionServiceImplTest extends AbstractTestContext {
+public class SubmissionServiceTest extends AbstractPersistenceTestContext {
 
 	@Autowired
 	private SubmissionService service;
