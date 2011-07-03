@@ -18,4 +18,10 @@
 	<definition name="submissions/edit" extends="mainTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/submissions/edit.jsp" />
 	</definition>
+	<definition name="login" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/account/login.jsp" />
+	</definition>
+	<definition name="logoutSuccess" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/account/logoutSuccess.jsp" />
+	</definition>
 </tiles-definitions>

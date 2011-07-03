@@ -2,7 +2,13 @@
 
 <h2>${submission.title}</h2>
 
-<a href="${submission.id}/edit">Edit</a>
-<form:form action="${submission.id}/delete">
-	<input type="submit" value="Delete" />
-</form:form>
+<table>
+	<tr>
+		<td><a href="${submission.id}/edit">Edit</a></td>
+		<td>
+			<form:form action="${submission.id}/delete">
+				<input type="submit" value="Delete" />
+			</form:form>
+		</td>
+	</tr>
+</table>
