@@ -27,8 +27,14 @@ public class SubmissionServiceSecurityTest {
 	}
 
 	@Test(expected = BadCredentialsException.class)
-	public void testDisallowCreate() {
+	public void testDisallowCreateWrongPassword() {
 		loginUser("mdettla", "bogus");
+		submissionService.create(new Submission());
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowCreateUnknownUser() {
+		loginUser("nonexistent", "foo");
 		submissionService.create(new Submission());
 	}
 
@@ -89,6 +95,12 @@ public class SubmissionServiceSecurityTest {
 	@Test
 	public void testAllowFindAllAdmin() {
 		loginUser("admin", "secret1");
+		submissionService.findAll();
+	}
+
+	@Test
+	public void testAllowFindAllUnknownUser() {
+		loginUser("nonexistent", "bar");
 		submissionService.findAll();
 	}
 
