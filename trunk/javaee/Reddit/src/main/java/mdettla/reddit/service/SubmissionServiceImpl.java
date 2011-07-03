@@ -20,7 +20,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('user')")
 	public void create(Submission submission) {
 		entityManager.persist(submission);
 		entityManager.flush();
@@ -42,7 +42,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('user')")
 	public void update(Submission submission) {
 		entityManager.merge(submission);
 		entityManager.flush();
@@ -50,7 +50,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('ROLE_USER')")
+	@PreAuthorize("hasRole('admin')")
 	public void delete(Long id) {
 		Submission submission = findById(id);
 		entityManager.remove(submission);
