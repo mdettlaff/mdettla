@@ -62,7 +62,7 @@ def main():
     if len(sys.argv) < 2:
         print >> sys.stderr, 'Usage: shift_subtitles.py SECONDS'
         sys.exit(2)
-    delta_seconds = sys.argv[1]
+    delta_seconds = int(sys.argv[1])
     for line in sys.stdin.readlines():
         print parse_line(line.rstrip(), delta_seconds)
 
