@@ -9,4 +9,7 @@
 
 	<bean id="entityManagerFactory"
 		class="mdettla.reddit.test.mock.MockEntityManagerFactory" />
+
+	<bean id="accountService"
+		class="mdettla.reddit.service.InMemoryAccountService" />
 </beans>

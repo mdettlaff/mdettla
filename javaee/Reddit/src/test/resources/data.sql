@@ -24,3 +24,6 @@ INSERT INTO Submission_Comment
 	(Submission_id, comments_id)
 	VALUES
 	(1, 2);
+
+INSERT INTO User (id, name, password) VALUES (0, 'admin', 'secret1');
+INSERT INTO User(id, name, password) VALUES (1, 'mdettla', 'secret');
