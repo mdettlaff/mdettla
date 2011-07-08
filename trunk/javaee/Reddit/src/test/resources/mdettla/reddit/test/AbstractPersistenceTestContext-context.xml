@@ -9,7 +9,7 @@
 	<import resource="classpath:persistence-context.xml" />
 
 	<jdbc:embedded-database id="dataSource">
-		<jdbc:script location="classpath:schema.sql"/>
-		<jdbc:script location="classpath:data.sql"/>
+		<jdbc:script location="classpath:schema.sql" />
+		<jdbc:script location="classpath:data.sql" />
 	</jdbc:embedded-database>
 </beans>

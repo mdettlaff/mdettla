@@ -3,7 +3,7 @@
 <form action="<c:url value="/login/authenticate" />" method="post">
 	<c:if test="${not empty param.error}">
 		<span class="field-validation-error">
-			Incorrect login or password.
+			Incorrect username or password.
 		</span>
 	</c:if>
 	<table>
