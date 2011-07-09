@@ -7,9 +7,10 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.service.InMemorySubmissionService;
+import mdettla.reddit.repository.InMemorySubmissionDao;
 import mdettla.reddit.service.RssService;
 import mdettla.reddit.service.SubmissionService;
+import mdettla.reddit.service.SubmissionServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,8 @@ public class HomeControllerTest {
 
 	@Before
 	public void setUp() {
-		SubmissionService submissionService = new InMemorySubmissionService();
+		SubmissionService submissionService =
+			new SubmissionServiceImpl(new InMemorySubmissionDao());
 		submissionService.create(new Submission());
 		submissionService.create(new Submission());
 		submissionService.create(new Submission());

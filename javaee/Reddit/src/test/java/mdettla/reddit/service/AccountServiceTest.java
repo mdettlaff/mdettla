@@ -1,56 +1,30 @@
 package mdettla.reddit.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Collection;
-import java.util.Iterator;
-
-import mdettla.reddit.domain.User;
-import mdettla.reddit.test.AbstractPersistenceTestContext;
+import mdettla.reddit.test.AbstractServiceTestContext;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.AccessDeniedException;
 
-public class AccountServiceTest extends AbstractPersistenceTestContext {
+public class AccountServiceTest extends AbstractServiceTestContext {
 
 	@Autowired
-	private AccountService service;
+	private AccountService accountService;
 
-	@Test
-	@Transactional
-	public void testFindAllUsers() {
-		// test
-		Collection<User> allUsers = service.findAllUsers();
-		// verify
-		assertNotNull(allUsers);
-		assertEquals(2, allUsers.size());
-		Iterator<User> usersIter = allUsers.iterator();
-		User administrator = usersIter.next();
-		assertEquals("admin", administrator.getName());
-		assertEquals("secret1", administrator.getPassword());
-		assertTrue(administrator.isAdministrator());
-		User user = usersIter.next();
-		assertEquals("mdettla", user.getName());
-		assertEquals("secret", user.getPassword());
-		assertFalse(user.isAdministrator());
+	@Test(expected = AccessDeniedException.class)
+	public void testDisallowFindAllUsersByUser() {
+		loginUser();
+		accountService.findAllUsers();
 	}
 
 	@Test
-	@Transactional
-	public void testFindUserByName() {
-		User user = service.findUserByName("mdettla");
-		assertEquals("mdettla", user.getName());
-		assertEquals("secret", user.getPassword());
-		assertFalse(user.isAdministrator());
+	public void testAllowFindAllUsersByAdministrator() {
+		loginAdministrator();
+		accountService.findAllUsers();
 	}
 
 	@Test
-	@Transactional
-	public void testFindUserByNameWhenNotExists() {
-		assertEquals(null, service.findUserByName("nonexistent"));
+	public void testAllowFindUserByNameByGuest() {
+		accountService.findUserByName("foo");
 	}
 }

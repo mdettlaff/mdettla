@@ -2,6 +2,7 @@ package mdettla.reddit.service;
 
 import static org.junit.Assert.assertEquals;
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.repository.InMemorySubmissionDao;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +17,7 @@ public class RssServiceTest {
 
 	@Before
 	public void setUp() {
-		submissionService = new InMemorySubmissionService();
+		submissionService = new SubmissionServiceImpl(new InMemorySubmissionDao());
 		Submission submission1 = new Submission();
 		submission1.setId(1L);
 		submission1.setTitle("foo");

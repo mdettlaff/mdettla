@@ -4,8 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.service.InMemorySubmissionService;
+import mdettla.reddit.repository.InMemorySubmissionDao;
 import mdettla.reddit.service.SubmissionService;
+import mdettla.reddit.service.SubmissionServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,7 @@ public class SubmissionControllerTest {
 
 	@Before
 	public void setUp() {
-		submissionService = new InMemorySubmissionService();
+		submissionService = new SubmissionServiceImpl(new InMemorySubmissionDao());
 		controller = new SubmissionController(submissionService);
 	}
 

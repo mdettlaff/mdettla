@@ -1,137 +1,95 @@
 package mdettla.reddit.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import java.util.Collection;
-import java.util.Iterator;
-
-import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.test.AbstractPersistenceTestContext;
+import mdettla.reddit.test.AbstractServiceTestContext;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 
-public class SubmissionServiceTest extends AbstractPersistenceTestContext {
+public class SubmissionServiceTest extends AbstractServiceTestContext {
 
 	@Autowired
-	private SubmissionService service;
+	private SubmissionService submissionService;
 
-	@Test
-	@Transactional
-	public void testFindById() {
-		// prepare
-		Long id = 1L;
-		// test
-		Submission actual = service.findById(id);
-		// verify
-		assertNotNull(actual);
-		assertEquals(id, actual.getId());
-		assertSubmissionsEqual(prepareSampleSubmission1(), actual);
+	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	public void testDisallowCreateByGuest() {
+		submissionService.create(new Submission());
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowCreateByUserWithWrongPassword() {
+		attemptToLoginUserWithWrongPassword();
+		submissionService.create(new Submission());
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowCreateByUserWithWrongUsernameAndPassword() {
+		attemptToLoginUserWithWrongUsernameAndPassword();
+		submissionService.create(new Submission());
 	}
 
 	@Test
-	@Transactional
-	public void testFindAll() {
-		// test
-		Collection<Submission> actual = service.findAll();
-		// verify
-		assertNotNull(actual);
-		assertEquals(2, actual.size());
-		Iterator<Submission> submissions = actual.iterator();
-		assertSubmissionsEqual(prepareSampleSubmission1(), submissions.next());
-		assertSubmissionsEqual(prepareSampleSubmission2(), submissions.next());
+	public void testAllowCreateByUser() {
+		loginUser();
+		submissionService.create(new Submission());
 	}
 
 	@Test
-	@Transactional
-	public void testCreate() {
-		// prepare
-		Submission submission = new Submission();
-		submission.setTitle("This is a picture of my dog");
-		submission.setUpvoteCount(2);
-		submission.setDownvoteCount(0);
-		Comment comment = new Comment();
-		comment.setContent("Cool dog");
-		submission.addComment(comment);
-		Long id = 3L;
-		assertNull(service.findById(id));
-		// test
-		service.create(submission);
-		// verify
-		Submission actual = service.findById(id);
-		assertNotNull(actual);
-		assertEquals(id, actual.getId());
-		assertSubmissionsEqual(submission, actual);
+	public void testAllowCreateByAdmin() {
+		loginAdministrator();
+		submissionService.create(new Submission());
+	}
+
+	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	public void testDisallowUpdateByGuest() {
+		submissionService.update(new Submission());
 	}
 
 	@Test
-	@Transactional
-	public void testUpdate() {
-		// prepare
-		Submission submission = new Submission();
-		submission.setId(1L);
-		submission.setTitle("This is a picture of my kitty");
-		submission.setUpvoteCount(3);
-		submission.setDownvoteCount(1);
-		// test
-		service.update(submission);
-		// verify
-		Submission updated = service.findById(submission.getId());
-		assertNotNull(updated);
-		assertEquals(submission.getId(), updated.getId());
-		assertEquals(submission.getTitle(), updated.getTitle());
-		assertEquals(submission.getUpvoteCount(), updated.getUpvoteCount());
-		assertEquals(submission.getDownvoteCount(), updated.getDownvoteCount());
+	public void testAllowUpdateByUser() {
+		loginUser();
+		submissionService.update(new Submission());
+	}
+
+	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	public void testDisallowDeleteByGuest() {
+		submissionService.delete(1L);
+	}
+
+	@Test(expected = AccessDeniedException.class)
+	public void testDisallowDeleteByUser() {
+		loginUser();
+		submissionService.delete(1L);
+	}
+
+	@Test(expected = BadCredentialsException.class)
+	public void testDisallowDeleteByAdministratorWithWrongPassword() {
+		attemptToLoginAdministratorWithWrongPassword();
+		submissionService.delete(1L);
 	}
 
 	@Test
-	@Transactional
-	public void testDelete() {
-		// prepare
-		Long id = 1L;
-		// test
-		service.delete(id);
-		// verify
-		Submission deleted = service.findById(id);
-		assertNull(deleted);
+	public void testAllowDeleteByAdministrator() {
+		loginAdministrator();
+		submissionService.delete(1L);
 	}
 
-	private Submission prepareSampleSubmission1() {
-		Submission submission = new Submission();
-		submission.setTitle("This is a picture of my cat");
-		submission.setUpvoteCount(3);
-		submission.setDownvoteCount(1);
-		Comment comment1 = new Comment();
-		comment1.setContent("Cuteness overload");
-		submission.addComment(comment1);
-		Comment comment2 = new Comment();
-		comment2.setContent("You're a kitty!");
-		submission.addComment(comment2);
-		return submission;
+	@Test
+	public void testAllowFindAllByGuest() {
+		submissionService.findAll();
 	}
 
-	private Submission prepareSampleSubmission2() {
-		Submission submission = new Submission();
-		submission.setTitle("DAE breathe?");
-		submission.setUpvoteCount(1);
-		submission.setDownvoteCount(2);
-		return submission;
+	@Test
+	public void testAllowFindAllByAdministrator() {
+		loginAdministrator();
+		submissionService.findAll();
 	}
 
-	private void assertSubmissionsEqual(Submission expected, Submission actual) {
-		assertEquals(expected.getTitle(), actual.getTitle());
-		assertEquals(expected.getDownvoteCount(), actual.getDownvoteCount());
-		assertEquals(expected.getUpvoteCount(), actual.getUpvoteCount());
-		assertEquals(expected.getScore(), actual.getScore());
-		assertEquals(expected.getComments().size(), actual.getComments().size());
-		for (int i = 0; i < expected.getComments().size(); i++) {
-			Comment expectedComment = expected.getComments().get(i);
-			Comment actualComment = actual.getComments().get(i);
-			assertEquals(expectedComment.getContent(), actualComment.getContent());
-		}
+	@Test
+	public void testAllowFindByIdByGuest() {
+		submissionService.findById(1L);
 	}
 }
