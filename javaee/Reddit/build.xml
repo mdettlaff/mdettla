@@ -11,6 +11,7 @@
 	<property name="prod.dir" value="src/main" />
 	<property name="prod.src.dir" value="${prod.dir}/java" />
 	<property name="prod.res.dir" value="${prod.dir}/resources" />
+	<property name="prod.gen.src.dir" value="${prod.dir}/generated" />
 	<property name="prod.build.dir" value="${build.dir}/classes" />
 	<property name="test.dir" value="src/test" />
 	<property name="test.src.dir" value="${test.dir}/java" />
@@ -51,7 +52,8 @@
 
 	<target name="compile">
 		<mkdir dir="${prod.build.dir}" />
-		<javac srcdir="${prod.src.dir}" destdir="${prod.build.dir}" debug="on">
+		<javac srcdir="${prod.src.dir}:${prod.gen.src.dir}"
+			destdir="${prod.build.dir}" debug="on">
 			<classpath refid="compile.classpath" />
 		</javac>
 		<copy todir="${prod.build.dir}">
