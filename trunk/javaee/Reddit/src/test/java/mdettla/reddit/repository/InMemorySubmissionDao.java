@@ -1,4 +1,4 @@
-package mdettla.reddit.service;
+package mdettla.reddit.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,11 +6,11 @@ import java.util.Collections;
 
 import mdettla.reddit.domain.Submission;
 
-public class InMemorySubmissionService implements SubmissionService {
+public class InMemorySubmissionDao implements SubmissionDao {
 
 	private final Collection<Submission> submissions;
 
-	public InMemorySubmissionService() {
+	public InMemorySubmissionDao() {
 		submissions = new ArrayList<Submission>();
 	}
 
@@ -22,7 +22,7 @@ public class InMemorySubmissionService implements SubmissionService {
 	@Override
 	public Submission findById(Long id) {
 		for (Submission submission : submissions) {
-			if (id.equals(submission.getId())) {
+			if (id != null && id.equals(submission.getId())) {
 				return submission;
 			}
 		}
@@ -37,7 +37,9 @@ public class InMemorySubmissionService implements SubmissionService {
 	@Override
 	public void update(Submission submission) {
 		Submission existing = findById(submission.getId());
-		existing.setTitle(submission.getTitle());
+		if (existing != null) {
+			existing.setTitle(submission.getTitle());
+		}
 	}
 
 	@Override

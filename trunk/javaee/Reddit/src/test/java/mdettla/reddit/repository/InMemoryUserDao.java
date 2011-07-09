@@ -1,11 +1,11 @@
-package mdettla.reddit.service;
+package mdettla.reddit.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 import mdettla.reddit.domain.User;
 
-public class InMemoryAccountService implements AccountService {
+public class InMemoryUserDao implements UserDao {
 
 	@Override
 	public Collection<User> findAllUsers() {

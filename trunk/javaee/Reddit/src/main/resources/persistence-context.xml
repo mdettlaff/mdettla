@@ -11,7 +11,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd">
 
-	<context:component-scan base-package="mdettla.reddit" />
+	<context:component-scan base-package="mdettla.reddit.repository" />
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 

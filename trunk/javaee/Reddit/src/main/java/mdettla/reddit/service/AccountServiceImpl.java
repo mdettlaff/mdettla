@@ -2,40 +2,34 @@ package mdettla.reddit.service;
 
 import java.util.Collection;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-
 import mdettla.reddit.domain.User;
+import mdettla.reddit.repository.UserDao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	private final UserDao userDao;
 
-	@Override
-	@Transactional(readOnly = true)
-	@SuppressWarnings("unchecked")
-	public Collection<User> findAllUsers() {
-		Query query = entityManager.createQuery("SELECT u FROM User u");
-		return query.getResultList();
+	@Autowired
+	public AccountServiceImpl(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	@Override
+	@Transactional(readOnly = true)
+	@PreAuthorize("hasRole('admin')")
+	public Collection<User> findAllUsers() {
+		return userDao.findAllUsers();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
 	public User findUserByName(String username) {
-		Query query = entityManager.createQuery(
-				"SELECT u FROM User u WHERE name = :name");
-		query.setParameter("name", username);
-		@SuppressWarnings("unchecked")
-		Collection<User> results = query.getResultList();
-		if (results.isEmpty()) {
-			return null;
-		} else {
-			return results.iterator().next();
-		}
+		return userDao.findUserByName(username);
 	}
 }
