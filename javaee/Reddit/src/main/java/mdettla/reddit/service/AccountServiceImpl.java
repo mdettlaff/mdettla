@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@PreAuthorize("hasRole('admin')")
+	@PreAuthorize("hasRole('administrator')")
 	public Collection<User> findAllUsers() {
 		return userDao.findAllUsers();
 	}

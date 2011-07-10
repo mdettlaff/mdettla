@@ -10,7 +10,7 @@ public class InMemoryUserDao implements UserDao {
 	@Override
 	public Collection<User> findAllUsers() {
 		Collection<User> users = new ArrayList<User>();
-		users.add(new User("admin", "secret1"));
+		users.add(new User("administrator", "secret1"));
 		users.add(new User("mdettla", "secret"));
 		return users;
 	}

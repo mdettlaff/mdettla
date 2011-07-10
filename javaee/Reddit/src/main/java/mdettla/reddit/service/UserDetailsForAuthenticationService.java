@@ -37,7 +37,7 @@ public class UserDetailsForAuthenticationService implements UserDetailsService {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("user"));
 		if (user.isAdministrator()) {
-			authorities.add(new SimpleGrantedAuthority("admin"));
+			authorities.add(new SimpleGrantedAuthority("administrator"));
 		}
 		return authorities;
 	}

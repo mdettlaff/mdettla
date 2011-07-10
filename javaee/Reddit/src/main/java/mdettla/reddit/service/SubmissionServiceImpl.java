@@ -48,7 +48,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('admin')")
+	@PreAuthorize("hasRole('administrator')")
 	public void delete(Long id) {
 		submissionDao.delete(id);
 	}
