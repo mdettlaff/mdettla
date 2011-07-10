@@ -30,11 +30,11 @@ public abstract class AbstractServiceTestContext {
 	}
 
 	protected void loginAdministrator() {
-		loginUser("admin", "secret1");
+		loginUser("administrator", "secret1");
 	}
 
 	protected void attemptToLoginAdministratorWithWrongPassword() {
-		loginUser("admin", "bogusbogus");
+		loginUser("administrator", "bogusbogus");
 	}
 
 	private void loginUser(String username, String password) {

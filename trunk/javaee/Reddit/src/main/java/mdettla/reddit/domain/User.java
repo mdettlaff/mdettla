@@ -9,7 +9,7 @@ import javax.persistence.Transient;
 @Entity
 public class User {
 
-	private static final String ADMINISTRATOR_USERNAME = "admin";
+	private static final String ADMINISTRATOR_USERNAME = "administrator";
 
 	@Id
 	@GeneratedValue

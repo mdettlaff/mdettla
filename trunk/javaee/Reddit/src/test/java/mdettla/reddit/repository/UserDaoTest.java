@@ -30,7 +30,7 @@ public class UserDaoTest extends AbstractPersistenceTestContext {
 		assertEquals(2, allUsers.size());
 		Iterator<User> usersIter = allUsers.iterator();
 		User administrator = usersIter.next();
-		assertEquals("admin", administrator.getName());
+		assertEquals("administrator", administrator.getName());
 		assertEquals("secret1", administrator.getPassword());
 		assertTrue(administrator.isAdministrator());
 		User user = usersIter.next();
