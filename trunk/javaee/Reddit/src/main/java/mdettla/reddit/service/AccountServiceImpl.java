@@ -7,6 +7,7 @@ import mdettla.reddit.repository.UserDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +32,22 @@ public class AccountServiceImpl implements AccountService {
 	@Transactional(readOnly = true)
 	public User findUserByName(String username) {
 		return userDao.findUserByName(username);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	@PreAuthorize("hasRole('user')")
+	public User findCurrentUser() {
+		return userDao.findUserByName(getNameOfCurrentUser());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public void createUser(User user) {
+		userDao.create(user);
+	}
+
+	private String getNameOfCurrentUser() {
+		return SecurityContextHolder.getContext().getAuthentication().getName();
 	}
 }

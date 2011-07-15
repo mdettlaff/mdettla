@@ -6,7 +6,7 @@
 	<table>
 		<tr>
 			<td>Title:</td>
-			<td><form:input path="title" size="30" maxlength="80" /></td>
+			<td><form:input path="title" /></td>
 		</tr>
 		<tr>
 			<td></td>

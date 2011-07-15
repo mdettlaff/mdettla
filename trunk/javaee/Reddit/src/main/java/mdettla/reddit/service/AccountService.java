@@ -9,4 +9,8 @@ public interface AccountService {
 	Collection<User> findAllUsers();
 
 	User findUserByName(String username);
+
+	User findCurrentUser();
+
+	void createUser(User user);
 }

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -22,6 +23,8 @@ public class Submission {
 	private int downvoteCount;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Comment> comments;
+	@ManyToOne(fetch = FetchType.EAGER)
+	private User author;
 
 	public Long getId() {
 		return id;
@@ -83,11 +86,19 @@ public class Submission {
 		comments.add(comment);
 	}
 
+	public User getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(User author) {
+		this.author = author;
+	}
+
 	@Override
 	public String toString() {
-		return "Submission[" +
-			"title=" + title + ", upvoteCount=" + upvoteCount
-			+ ", downvoteCount=" + downvoteCount +
+		return "Submission[id=" + id +
+			", title=" + title + ", upvoteCount=" + upvoteCount +
+			", downvoteCount=" + downvoteCount +
 			", comments=" + comments +
 			"]";
 	}

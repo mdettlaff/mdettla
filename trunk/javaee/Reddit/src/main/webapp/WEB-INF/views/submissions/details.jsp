@@ -2,6 +2,8 @@
 
 <h2>${submission.title}</h2>
 
+author: ${submission.author.name}
+
 <table>
 	<tr>
 		<td><a href="${submission.id}/edit">Edit</a></td>

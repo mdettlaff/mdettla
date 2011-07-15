@@ -9,4 +9,6 @@ public interface UserDao {
 	Collection<User> findAllUsers();
 
 	User findUserByName(String username);
+
+	void create(User user);
 }

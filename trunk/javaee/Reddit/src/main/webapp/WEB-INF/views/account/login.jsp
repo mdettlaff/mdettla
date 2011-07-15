@@ -21,3 +21,5 @@
 		</tr>
 	</table>
 </form>
+
+<a href="<c:url value="/register" />">Register</a> if you don't have an account.

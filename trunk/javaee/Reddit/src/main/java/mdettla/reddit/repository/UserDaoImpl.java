@@ -39,4 +39,10 @@ public class UserDaoImpl implements UserDao {
 		Collection<T> results = query.getResultList();
 		return results.isEmpty() ? null : results.iterator().next();
 	}
+
+	@Override
+	public void create(User user) {
+		entityManager.persist(user);
+		entityManager.flush();
+	}
 }

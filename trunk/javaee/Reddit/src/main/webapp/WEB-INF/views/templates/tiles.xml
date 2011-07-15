@@ -19,6 +19,9 @@
 		<put-attribute name="content" value="/WEB-INF/views/submissions/edit.jsp" />
 	</definition>
 
+	<definition name="register" extends="mainTemplate">
+		<put-attribute name="content" value="/WEB-INF/views/account/register.jsp" />
+	</definition>
 	<definition name="login" extends="mainTemplate">
 		<put-attribute name="content" value="/WEB-INF/views/account/login.jsp" />
 	</definition>

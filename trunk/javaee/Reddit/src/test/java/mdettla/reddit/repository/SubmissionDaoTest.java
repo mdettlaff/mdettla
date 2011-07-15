@@ -9,7 +9,7 @@ import java.util.Iterator;
 
 import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.repository.SubmissionDao;
+import mdettla.reddit.domain.User;
 import mdettla.reddit.test.AbstractPersistenceTestContext;
 
 import org.junit.Test;
@@ -58,6 +58,9 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		Comment comment = new Comment();
 		comment.setContent("Cool dog");
 		submission.addComment(comment);
+		User author = new User("mdettla", "secret");
+		author.setId(1L);
+		submission.setAuthor(author);
 		Long id = 3L;
 		assertNull(dao.findById(id));
 		// test
@@ -78,6 +81,9 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		submission.setTitle("This is a picture of my kitty");
 		submission.setUpvoteCount(3);
 		submission.setDownvoteCount(1);
+		User author = new User("mdettla", "secret");
+		author.setId(1L);
+		submission.setAuthor(author);
 		// test
 		dao.update(submission);
 		// verify
@@ -112,6 +118,7 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		Comment comment2 = new Comment();
 		comment2.setContent("You're a kitty!");
 		submission.addComment(comment2);
+		submission.setAuthor(new User("mdettla", "secret"));
 		return submission;
 	}
 
@@ -120,6 +127,7 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		submission.setTitle("DAE breathe?");
 		submission.setUpvoteCount(1);
 		submission.setDownvoteCount(2);
+		submission.setAuthor(new User("administrator", "secret1"));
 		return submission;
 	}
 
@@ -134,5 +142,8 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 			Comment actualComment = actual.getComments().get(i);
 			assertEquals(expectedComment.getContent(), actualComment.getContent());
 		}
+		User author = actual.getAuthor();
+		assertNotNull(author);
+		assertEquals(expected.getAuthor().getName(), author.getName());
 	}
 }
