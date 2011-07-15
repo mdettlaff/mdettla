@@ -3,6 +3,7 @@ package mdettla.reddit.repository;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
@@ -52,5 +53,23 @@ public class UserDaoTest extends AbstractPersistenceTestContext {
 	@Transactional
 	public void testFindUserByNameWhenNotExists() {
 		assertEquals(null, dao.findUserByName("nonexistent"));
+	}
+
+	@Test
+	@Transactional
+	public void testCreate() {
+		// prepare
+		Long id = 2L;
+		User user = new User("johndoe", "foo");
+		assertNull(dao.findUserByName("johndoe"));
+		// test
+		dao.create(user);
+		// verify
+		User actual = dao.findUserByName("johndoe");
+		assertNotNull(actual);
+		assertEquals(id, actual.getId());
+		assertEquals("johndoe", actual.getName());
+		assertEquals("foo", actual.getPassword());
+		assertFalse(actual.isAdministrator());
 	}
 }

@@ -7,11 +7,16 @@ import mdettla.reddit.domain.User;
 
 public class InMemoryUserDao implements UserDao {
 
-	@Override
-	public Collection<User> findAllUsers() {
-		Collection<User> users = new ArrayList<User>();
+	private final Collection<User> users;
+
+	public InMemoryUserDao() {
+		users = new ArrayList<User>();
 		users.add(new User("administrator", "secret1"));
 		users.add(new User("mdettla", "secret"));
+	}
+
+	@Override
+	public Collection<User> findAllUsers() {
 		return users;
 	}
 
@@ -23,5 +28,10 @@ public class InMemoryUserDao implements UserDao {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void create(User user) {
+		users.add(user);
 	}
 }

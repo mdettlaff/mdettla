@@ -14,16 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class SubmissionServiceImpl implements SubmissionService {
 
 	private final SubmissionDao submissionDao;
+	private final AccountService accountService;
 
 	@Autowired
-	public SubmissionServiceImpl(SubmissionDao submissionDao) {
+	public SubmissionServiceImpl(SubmissionDao submissionDao, AccountService accountService) {
 		this.submissionDao = submissionDao;
+		this.accountService = accountService;
 	}
 
 	@Override
 	@Transactional
 	@PreAuthorize("hasRole('user')")
 	public void create(Submission submission) {
+		submission.setAuthor(accountService.findCurrentUser());
 		submissionDao.create(submission);
 	}
 

@@ -1,16 +1,17 @@
 package mdettla.reddit.web.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import javax.servlet.http.HttpServletRequest;
 
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.repository.InMemorySubmissionDao;
 import mdettla.reddit.service.RssService;
 import mdettla.reddit.service.SubmissionService;
-import mdettla.reddit.service.SubmissionServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,11 +26,9 @@ public class HomeControllerTest {
 
 	@Before
 	public void setUp() {
-		SubmissionService submissionService =
-			new SubmissionServiceImpl(new InMemorySubmissionDao());
-		submissionService.create(new Submission());
-		submissionService.create(new Submission());
-		submissionService.create(new Submission());
+		SubmissionService submissionService = mock(SubmissionService.class);
+		when(submissionService.findAll()).thenReturn(
+				Arrays.asList(new Submission(), new Submission(), new Submission()));
 		RssService rssService = new RssService(submissionService);
 		controller = new HomeController(submissionService, rssService);
 	}

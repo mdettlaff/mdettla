@@ -30,6 +30,6 @@ public class Comment {
 
 	@Override
 	public String toString() {
-		return "Comment[content=" + content + "]";
+		return "Comment[id=" + id + ", content=" + content + "]";
 	}
 }

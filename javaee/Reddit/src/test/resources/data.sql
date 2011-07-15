@@ -1,11 +1,11 @@
 INSERT INTO Submission
-	(id, title, upvoteCount, downvoteCount)
+	(id, title, upvoteCount, downvoteCount, author_id)
 	VALUES
-	(1, 'This is a picture of my cat', 3, 1);
+	(1, 'This is a picture of my cat', 3, 1, 1);
 INSERT INTO Submission
-	(id, title, upvoteCount, downvoteCount)
+	(id, title, upvoteCount, downvoteCount, author_id)
 	VALUES
-	(2, 'DAE breathe?', 1, 2);
+	(2, 'DAE breathe?', 1, 2, 0);
 
 INSERT INTO Comment
 	(id, content)

@@ -2,11 +2,12 @@ package mdettla.reddit.web.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import mdettla.reddit.domain.Submission;
-import mdettla.reddit.repository.InMemorySubmissionDao;
 import mdettla.reddit.service.SubmissionService;
-import mdettla.reddit.service.SubmissionServiceImpl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class SubmissionControllerTest {
 
 	@Before
 	public void setUp() {
-		submissionService = new SubmissionServiceImpl(new InMemorySubmissionDao());
+		submissionService = mock(SubmissionService.class);
 		controller = new SubmissionController(submissionService);
 	}
 
@@ -41,85 +42,67 @@ public class SubmissionControllerTest {
 	public void testSubmitAdd() {
 		// prepare
 		Submission submission = new Submission();
-		submission.setTitle("foo");
 		// test
 		String viewName = controller.submitAdd(submission);
 		// verify
-		Submission expected = submissionService.findAll().iterator().next();
-		assertNotNull(expected);
-		assertEquals("foo", expected.getTitle());
 		assertEquals("redirect:/", viewName);
+		verify(submissionService).create(submission);
 	}
 
 	@Test
 	public void testDetails() {
 		// prepare
+		long id = 5;
 		Submission submission = new Submission();
-		submission.setId(5L);
-		submission.setTitle("foo");
-		submissionService.create(submission);
+		submission.setId(id);
+		// mock
+		when(submissionService.findById(id)).thenReturn(submission);
 		// test
-		ModelAndView modelAndView = controller.details(submission.getId());
+		ModelAndView modelAndView = controller.details(id);
 		// verify
 		ModelMap model = modelAndView.getModelMap();
 		String view = modelAndView.getViewName();
 		assertEquals("submissions/details", view);
 		Submission submissionInModel = (Submission)model.get("submission");
-		assertNotNull(submissionInModel);
-		assertEquals(submissionInModel.getId(), submission.getId());
-		assertEquals(submissionInModel.getTitle(), submission.getTitle());
+		assertSame(submission, submissionInModel);
 	}
 
 	@Test
 	public void testSetupFormEdit() {
 		// prepare
+		long id = 5;
 		Submission submission = new Submission();
 		submission.setId(5L);
-		submission.setTitle("foo");
-		submissionService.create(submission);
+		// mock
+		when(submissionService.findById(id)).thenReturn(submission);
 		// test
-		ModelAndView modelAndView = controller.setupFormEdit(submission.getId());
+		ModelAndView modelAndView = controller.setupFormEdit(id);
 		// verify
 		ModelMap model = modelAndView.getModelMap();
 		String view = modelAndView.getViewName();
 		assertEquals("submissions/edit", view);
 		Submission submissionInModel = (Submission)model.get("submission");
-		assertNotNull(submissionInModel);
-		assertEquals(submissionInModel.getId(), submission.getId());
-		assertEquals(submissionInModel.getTitle(), submission.getTitle());
+		assertSame(submission, submissionInModel);
 	}
 
 	@Test
 	public void testSubmitEdit() {
 		// prepare
-		Submission originalSubmission = new Submission();
-		originalSubmission.setId(5L);
-		originalSubmission.setTitle("foo");
-		submissionService.create(originalSubmission);
-		Submission modifiedSubmission = new Submission();
-		modifiedSubmission.setId(originalSubmission.getId());
-		modifiedSubmission.setTitle("bar");
+		Submission submission = new Submission();
 		// test
-		String viewName = controller.submitEdit(modifiedSubmission);
+		String viewName = controller.submitEdit(submission);
 		// verify
 		assertEquals("redirect:/", viewName);
-		Submission editedSubmission = submissionService.findById(5L);
-		assertNotNull(editedSubmission);
-		assertEquals(editedSubmission.getId(), originalSubmission.getId());
-		assertEquals("bar", editedSubmission.getTitle());
+		verify(submissionService).update(submission);
 	}
 
 	@Test
 	public void testDelete() {
-		// prepare
-		Submission submission = new Submission();
-		submission.setId(5L);
-		submissionService.create(submission);
-		assertNotNull(submissionService.findById(submission.getId()));
+		long id = 5;
 		// test
-		String viewName = controller.delete(submission.getId());
+		String viewName = controller.delete(id);
 		// verify
 		assertEquals("redirect:/", viewName);
-		assertNull(submissionService.findById(submission.getId()));
+		verify(submissionService).delete(id);
 	}
 }

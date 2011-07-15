@@ -1,6 +1,5 @@
 package mdettla.reddit.domain;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,7 +13,6 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(unique = true)
 	private String name;
 	private String password;
 
@@ -53,5 +51,10 @@ public class User {
 	@Transient
 	public boolean isAdministrator() {
 		return ADMINISTRATOR_USERNAME.equals(name);
+	}
+
+	@Override
+	public String toString() {
+		return "User[id=" + id + ", name=" + name + "]";
 	}
 }
