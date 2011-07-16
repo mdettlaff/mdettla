@@ -26,4 +26,4 @@ INSERT INTO Submission_Comment
 	(1, 2);
 
 INSERT INTO User (id, name, password) VALUES (0, 'administrator', 'secret1');
-INSERT INTO User(id, name, password) VALUES (1, 'mdettla', 'secret');
+INSERT INTO User (id, name, password) VALUES (1, 'mdettla', 'secret');

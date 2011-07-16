@@ -1,8 +1,10 @@
 package mdettla.reddit.service;
 
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.domain.User;
 import mdettla.reddit.test.AbstractServiceTestContext;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,6 +15,14 @@ public class SubmissionServiceTest extends AbstractServiceTestContext {
 
 	@Autowired
 	private SubmissionService submissionService;
+	private Submission submission;
+
+	@Before
+	public void setUp() {
+		submission = new Submission();
+		submission.setAuthor(new User("mdettla", "secret"));
+		submission.setTitle("Example title");
+	}
 
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
 	public void testDisallowCreateByGuest() {
@@ -51,7 +61,19 @@ public class SubmissionServiceTest extends AbstractServiceTestContext {
 	@Test
 	public void testAllowUpdateByUser() {
 		loginUser();
-		submissionService.update(new Submission());
+		submissionService.update(submission);
+	}
+
+	@Test(expected = AccessDeniedException.class)
+	public void testDisallowUpdateByWrongUser() {
+		loginUserWithNoSubmissionsCreated();
+		submissionService.update(submission);
+	}
+
+	@Test
+	public void testAllowUpdateByAdministrator() {
+		loginAdministrator();
+		submissionService.update(submission);
 	}
 
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)

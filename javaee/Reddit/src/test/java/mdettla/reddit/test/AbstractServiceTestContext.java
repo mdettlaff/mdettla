@@ -21,6 +21,10 @@ public abstract class AbstractServiceTestContext {
 		loginUser("mdettla", "secret");
 	}
 
+	protected void loginUserWithNoSubmissionsCreated() {
+		loginUser("wundzun", "foobar");
+	}
+
 	protected void attemptToLoginUserWithWrongPassword() {
 		loginUser("mdettla", "bogus");
 	}

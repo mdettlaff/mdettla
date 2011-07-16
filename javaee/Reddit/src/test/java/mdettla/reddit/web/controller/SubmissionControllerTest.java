@@ -89,6 +89,9 @@ public class SubmissionControllerTest {
 	public void testSubmitEdit() {
 		// prepare
 		Submission submission = new Submission();
+		submission.setId(5L);
+		// mock
+		when(submissionService.findById(submission.getId())).thenReturn(submission);
 		// test
 		String viewName = controller.submitEdit(submission);
 		// verify
