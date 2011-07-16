@@ -27,9 +27,6 @@
 	</global-method-security>
 
 	<beans:bean id="expressionHandler"
-		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler">
-		<beans:property name="permissionEvaluator">
-			<beans:bean class="mdettla.reddit.service.PermissionEvaluatorService" />
-		</beans:property>
-	</beans:bean>
+		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler"
+		p:permissionEvaluator-ref="permissionEvaluatorService" />
 </beans:beans>
