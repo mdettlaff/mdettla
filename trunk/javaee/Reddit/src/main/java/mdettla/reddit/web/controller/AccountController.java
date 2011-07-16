@@ -2,6 +2,7 @@ package mdettla.reddit.web.controller;
 
 import javax.validation.Valid;
 
+import mdettla.reddit.domain.DuplicateUsernameException;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.service.AccountService;
 import mdettla.reddit.web.form.RegisterForm;
@@ -30,11 +31,16 @@ public class AccountController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String register(@Valid RegisterForm registerForm, BindingResult result) {
-		if (result.hasErrors()) {
+		try {
+			if (result.hasErrors()) {
+				return null;
+			}
+			User user = new User(registerForm.getName(), registerForm.getPassword());
+			accountService.createUser(user);
+			return "redirect:login";
+		} catch (DuplicateUsernameException e) {
+			result.rejectValue("name", "duplicate.username", "Username is already taken.");
 			return null;
 		}
-		User user = new User(registerForm.getName(), registerForm.getPassword());
-		accountService.createUser(user);
-		return "redirect:login";
 	}
 }

@@ -2,6 +2,7 @@ package mdettla.reddit.service;
 
 import java.util.Collection;
 
+import mdettla.reddit.domain.DuplicateUsernameException;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.repository.UserDao;
 
@@ -42,9 +43,16 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
-	public void createUser(User user) {
+	@Transactional
+	public void createUser(User user) throws DuplicateUsernameException {
+		if (isUsernameTaken(user.getName())) {
+			throw new DuplicateUsernameException();
+		}
 		userDao.create(user);
+	}
+
+	private boolean isUsernameTaken(String name) {
+		return findUserByName(name) != null;
 	}
 
 	private String getNameOfCurrentUser() {
