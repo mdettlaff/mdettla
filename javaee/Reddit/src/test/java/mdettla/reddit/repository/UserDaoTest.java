@@ -9,13 +9,12 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import java.util.Iterator;
 
-import javax.persistence.PersistenceException;
-
 import mdettla.reddit.domain.User;
 import mdettla.reddit.test.AbstractPersistenceTestContext;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 public class UserDaoTest extends AbstractPersistenceTestContext {
@@ -75,7 +74,7 @@ public class UserDaoTest extends AbstractPersistenceTestContext {
 		assertFalse(actual.isAdministrator());
 	}
 
-	@Test(expected = PersistenceException.class)
+	@Test(expected = DataIntegrityViolationException.class)
 	@Transactional
 	public void testCreateWithDuplicateUsername() {
 		// prepare

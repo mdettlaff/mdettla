@@ -2,6 +2,7 @@ package mdettla.reddit.service;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import mdettla.reddit.domain.DuplicateUsernameException;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.repository.UserDao;
 import mdettla.reddit.test.AbstractServiceTestContext;
@@ -35,7 +36,7 @@ public class AccountServiceTest extends AbstractServiceTestContext {
 	}
 
 	@Test
-	public void testAllowCreateUserByGuest() {
+	public void testAllowCreateUserByGuest() throws DuplicateUsernameException {
 		User user = new User("johndoe", "foo");
 		assertNull(userDao.findUserByName("johndoe"));
 		accountService.createUser(user);

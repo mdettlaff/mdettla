@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <form:form modelAttribute="registerForm">
+	<form:errors path="name" cssClass="field-validation-error" />
 	<form:errors path="password" cssClass="field-validation-error" />
 	<table>
 		<tr>

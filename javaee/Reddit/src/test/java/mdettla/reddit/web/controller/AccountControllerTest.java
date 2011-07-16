@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import mdettla.reddit.domain.DuplicateUsernameException;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.service.AccountService;
 import mdettla.reddit.web.form.RegisterForm;
@@ -37,7 +38,7 @@ public class AccountControllerTest {
 	}
 
 	@Test
-	public void testRegister() {
+	public void testRegister() throws DuplicateUsernameException {
 		// mock
 		BindingResult result = mock(BindingResult.class);
 		// prepare
