@@ -1,9 +1,11 @@
 package mdettla.reddit.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class User {
@@ -13,7 +15,10 @@ public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@NotNull
+	@Column(unique = true)
 	private String name;
+	@NotNull
 	private String password;
 
 	public User() {
@@ -51,6 +56,15 @@ public class User {
 	@Transient
 	public boolean isAdministrator() {
 		return ADMINISTRATOR_USERNAME.equals(name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof User)) {
+			return false;
+		}
+		User other = (User)obj;
+		return name.equals(other.name) && password.equals(other.password);
 	}
 
 	@Override
