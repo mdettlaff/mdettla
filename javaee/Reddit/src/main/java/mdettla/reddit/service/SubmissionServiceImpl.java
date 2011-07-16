@@ -24,7 +24,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('user')")
+	@PreAuthorize("isAuthenticated()")
 	public void create(Submission submission) {
 		submission.setAuthor(accountService.findCurrentUser());
 		submissionDao.create(submission);

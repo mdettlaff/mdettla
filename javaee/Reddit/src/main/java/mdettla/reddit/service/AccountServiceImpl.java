@@ -37,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	@Transactional(readOnly = true)
-	@PreAuthorize("hasRole('user')")
+	@PreAuthorize("isAuthenticated()")
 	public User findCurrentUser() {
 		return userDao.findUserByName(getNameOfCurrentUser());
 	}
