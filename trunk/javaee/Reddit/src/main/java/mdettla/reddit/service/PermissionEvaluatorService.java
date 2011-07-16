@@ -17,8 +17,6 @@ public class PermissionEvaluatorService implements PermissionEvaluator {
 			Object targetDomainObject, Object permission) {
 		if (isUserInRole(authentication, "administrator")) {
 			return true;
-		} else if (!isUserInRole(authentication, "user")) {
-			return false;
 		}
 		String username = authentication.getName();
 		if (targetDomainObject instanceof Submission) {

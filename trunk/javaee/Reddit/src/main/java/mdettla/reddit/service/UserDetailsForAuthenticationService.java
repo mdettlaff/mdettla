@@ -35,7 +35,6 @@ public class UserDetailsForAuthenticationService implements UserDetailsService {
 
 	private Collection<GrantedAuthority> createAuthorities(mdettla.reddit.domain.User user) {
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority("user"));
 		if (user.isAdministrator()) {
 			authorities.add(new SimpleGrantedAuthority("administrator"));
 		}
