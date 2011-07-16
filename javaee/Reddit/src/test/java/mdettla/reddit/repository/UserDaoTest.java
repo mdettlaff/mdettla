@@ -9,6 +9,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.persistence.PersistenceException;
+
 import mdettla.reddit.domain.User;
 import mdettla.reddit.test.AbstractPersistenceTestContext;
 
@@ -71,5 +73,15 @@ public class UserDaoTest extends AbstractPersistenceTestContext {
 		assertEquals("johndoe", actual.getName());
 		assertEquals("foo", actual.getPassword());
 		assertFalse(actual.isAdministrator());
+	}
+
+	@Test(expected = PersistenceException.class)
+	@Transactional
+	public void testCreateWithDuplicateUsername() {
+		// prepare
+		User user = new User("mdettla", "foo");
+		assertNotNull(dao.findUserByName("mdettla"));
+		// test
+		dao.create(user);
 	}
 }

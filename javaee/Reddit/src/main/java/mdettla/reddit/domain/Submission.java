@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Submission {
@@ -18,11 +19,15 @@ public class Submission {
 	@Id
 	@GeneratedValue
 	private Long id;
+	@NotNull
 	private String title;
+	@NotNull
 	private int upvoteCount;
+	@NotNull
 	private int downvoteCount;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Comment> comments;
+	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User author;
 

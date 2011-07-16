@@ -6,11 +6,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.service.AccountService;
+import mdettla.reddit.web.form.RegisterForm;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 public class AccountControllerTest {
 
@@ -30,18 +32,22 @@ public class AccountControllerTest {
 		// test
 		controller.setupFormRegister(model);
 		// verify
-		User user = (User)model.asMap().get("user");
-		assertNotNull(user);
+		RegisterForm form = (RegisterForm)model.asMap().get("registerForm");
+		assertNotNull(form);
 	}
 
 	@Test
 	public void testRegister() {
+		// mock
+		BindingResult result = mock(BindingResult.class);
 		// prepare
-		User user = new User();
+		RegisterForm form = new RegisterForm();
+		form.setName("johndoe");
+		form.setPassword("foo");
 		// test
-		String viewName = controller.register(user);
+		String viewName = controller.register(form, result);
 		// verify
 		assertEquals("redirect:login", viewName);
-		verify(accountService).createUser(user);
+		verify(accountService).createUser(new User("johndoe", "foo"));
 	}
 }
