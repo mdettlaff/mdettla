@@ -48,6 +48,7 @@ public class SubmissionController {
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
 	public String submitEdit(@ModelAttribute Submission submission) {
+		submission.setAuthor(submissionService.findById(submission.getId()).getAuthor());
 		submissionService.update(submission);
 		return "redirect:/";
 	}

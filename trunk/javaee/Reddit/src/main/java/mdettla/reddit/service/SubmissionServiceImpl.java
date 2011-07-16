@@ -44,7 +44,7 @@ public class SubmissionServiceImpl implements SubmissionService {
 
 	@Override
 	@Transactional
-	@PreAuthorize("hasRole('user')")
+	@PreAuthorize("hasPermission(#submission, 'update')")
 	public void update(Submission submission) {
 		submissionDao.update(submission);
 	}
