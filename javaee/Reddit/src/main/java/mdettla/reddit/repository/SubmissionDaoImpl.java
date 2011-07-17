@@ -6,8 +6,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
 
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.domain.Submission_;
 
 import org.springframework.stereotype.Repository;
 
@@ -25,7 +28,13 @@ public class SubmissionDaoImpl implements SubmissionDao {
 
 	@Override
 	public Submission findById(Long id) {
-		return entityManager.find(Submission.class, id);
+		CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Submission> query = criteriaBuilder.createQuery(Submission.class);
+		Root<Submission> from = query.from(Submission.class);
+		from.fetch(Submission_.voters, JoinType.LEFT);
+		CriteriaQuery<Submission> select = query.select(from);
+		select.where(criteriaBuilder.equal(from.get(Submission_.id), id));
+		return QueryUtils.findEntity(entityManager.createQuery(select));
 	}
 
 	@Override

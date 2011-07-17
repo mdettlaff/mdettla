@@ -3,6 +3,7 @@ package mdettla.reddit.service;
 import java.util.Collection;
 
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.domain.User;
 import mdettla.reddit.repository.SubmissionDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,14 @@ public class SubmissionServiceImpl implements SubmissionService {
 	@PreAuthorize("hasRole('administrator')")
 	public void delete(Long id) {
 		submissionDao.delete(id);
+	}
+
+	@Override
+	@Transactional
+	@PreAuthorize("hasPermission(#submission, 'vote')")
+	public void upvote(Submission submission) {
+		User user = accountService.findCurrentUser();
+		submission.upvote(user);
+		submissionDao.update(submission);
 	}
 }

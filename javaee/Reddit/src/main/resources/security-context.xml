@@ -9,7 +9,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<context:component-scan base-package="mdettla.reddit.service" />
+	<context:component-scan base-package="mdettla.reddit.security, mdettla.reddit.service" />
 
 	<http use-expressions="true">
 		<form-login login-page="/login" login-processing-url="/login/authenticate"
@@ -28,5 +28,5 @@
 
 	<beans:bean id="expressionHandler"
 		class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler"
-		p:permissionEvaluator-ref="permissionEvaluatorService" />
+		p:permissionEvaluator-ref="redditPermissionEvaluator" />
 </beans:beans>

@@ -11,8 +11,9 @@ public class SubmissionTest {
 	public void testUpvote() {
 		Submission submission = new Submission();
 		assertEquals(0, submission.getScore());
-		submission.upvote();
+		submission.upvote(new User());
 		assertEquals(1, submission.getScore());
+		assertEquals(1, submission.getVoters().size());
 	}
 
 	@Test
@@ -29,14 +30,15 @@ public class SubmissionTest {
 		assertEquals(0, submission.getScore());
 		submission.downvote();
 		assertEquals(-1, submission.getScore());
-		submission.upvote();
+		submission.upvote(new User());
 		assertEquals(0, submission.getScore());
-		submission.upvote();
+		submission.upvote(new User());
 		assertEquals(1, submission.getScore());
-		submission.upvote();
+		submission.upvote(new User());
 		assertEquals(2, submission.getScore());
 		submission.downvote();
 		assertEquals(1, submission.getScore());
+		assertEquals(3, submission.getVoters().size());
 	}
 
 	@Test

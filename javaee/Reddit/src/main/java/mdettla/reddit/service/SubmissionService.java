@@ -15,4 +15,6 @@ public interface SubmissionService {
 	void update(Submission submission);
 
 	void delete(Long id);
+
+	void upvote(Submission submission);
 }

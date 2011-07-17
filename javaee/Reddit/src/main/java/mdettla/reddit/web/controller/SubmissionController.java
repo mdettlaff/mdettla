@@ -62,4 +62,11 @@ public class SubmissionController {
 		submissionService.delete(id);
 		return "redirect:/";
 	}
+
+	@RequestMapping(value = "/{id}/upvote", method = RequestMethod.POST)
+	public String upvote(@PathVariable Long id) {
+		Submission submission = submissionService.findById(id);
+		submissionService.upvote(submission);
+		return "redirect:/submissions/" + id;
+	}
 }

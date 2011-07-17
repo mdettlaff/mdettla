@@ -1,5 +1,6 @@
 package mdettla.reddit.service;
 
+import static org.junit.Assert.assertEquals;
 import mdettla.reddit.domain.Submission;
 import mdettla.reddit.domain.User;
 import mdettla.reddit.test.AbstractServiceTestContext;
@@ -22,6 +23,7 @@ public class SubmissionServiceTest extends AbstractServiceTestContext {
 		submission = new Submission();
 		submission.setAuthor(new User("mdettla", "secret"));
 		submission.setTitle("Example title");
+		submission.upvote(new User("wundzun", "foobar"));
 	}
 
 	@Test(expected = AuthenticationCredentialsNotFoundException.class)
@@ -113,5 +115,25 @@ public class SubmissionServiceTest extends AbstractServiceTestContext {
 	@Test
 	public void testAllowFindByIdByGuest() {
 		submissionService.findById(1L);
+	}
+
+	@Test(expected = AuthenticationCredentialsNotFoundException.class)
+	public void testDisallowUpvoteByGuest() {
+		submissionService.upvote(submission);
+	}
+
+	@Test
+	public void testAllowUpvoteByUser() {
+		loginUser();
+		assertEquals(1, submission.getScore());
+		submissionService.upvote(submission);
+		assertEquals(2, submission.getScore());
+	}
+
+	@Test(expected = AccessDeniedException.class)
+	public void testDisallowUpvoteByUserWhoAlreadyVoted() {
+		loginUserWithNoSubmissionsCreated();
+		assertEquals(1, submission.getScore());
+		submissionService.upvote(submission);
 	}
 }

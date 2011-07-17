@@ -1,16 +1,17 @@
-package mdettla.reddit.service;
+package mdettla.reddit.security;
 
 import java.io.Serializable;
 
 import mdettla.reddit.domain.Submission;
+import mdettla.reddit.domain.User;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-public class PermissionEvaluatorService implements PermissionEvaluator {
+@Component
+public class RedditPermissionEvaluator implements PermissionEvaluator {
 
 	@Override
 	public boolean hasPermission(Authentication authentication,
@@ -22,7 +23,9 @@ public class PermissionEvaluatorService implements PermissionEvaluator {
 		if (targetDomainObject instanceof Submission) {
 			Submission submission = (Submission)targetDomainObject;
 			if ("update".equals(permission)) {
-				return isUpdaterOfSubmissionAlsoItsAuthor(username, submission);
+				return hasPermissionToUpdateSubmission(username, submission);
+			} else if ("vote".equals(permission)) {
+				return hasPermissionToVote(username, submission);
 			}
 			throw new IllegalArgumentException("Unknown permission: " + permission);
 		}
@@ -33,9 +36,22 @@ public class PermissionEvaluatorService implements PermissionEvaluator {
 		return authentication.getAuthorities().contains(new SimpleGrantedAuthority(role));
 	}
 
-	private boolean isUpdaterOfSubmissionAlsoItsAuthor(
+	private boolean hasPermissionToUpdateSubmission(
 			String username, Submission submission) {
 		return submission.getAuthor().getName().equals(username);
+	}
+
+	private boolean hasPermissionToVote(String username, Submission submission) {
+		return !hasUserAlreadyVoted(username, submission);
+	}
+
+	private boolean hasUserAlreadyVoted(String username, Submission submission) {
+		for (User voter : submission.getVoters()) {
+			if (username.equals(voter.getName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
