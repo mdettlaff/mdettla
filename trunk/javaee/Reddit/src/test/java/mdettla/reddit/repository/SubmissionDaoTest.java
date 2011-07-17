@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
@@ -22,7 +23,6 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 	private SubmissionDao dao;
 
 	@Test
-	@Transactional
 	public void testFindById() {
 		// prepare
 		Long id = 1L;
@@ -32,6 +32,17 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		assertNotNull(actual);
 		assertEquals(id, actual.getId());
 		assertSubmissionsEqual(prepareSampleSubmission1(), actual);
+		List<User> voters = actual.getVoters();
+		assertNotNull(voters);
+		assertEquals(2, voters.size());
+		assertEquals(new User("administrator", "secret1"), voters.get(0));
+		assertEquals(new User("mdettla", "secret"), voters.get(1));
+	}
+
+	@Test
+	@Transactional
+	public void testFindByIdIfNotExists() {
+		assertNull(dao.findById(55L));
 	}
 
 	@Test

@@ -50,10 +50,19 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<target name="compile">
+	<target name="jpamodelgen">
+		<javac srcdir="${prod.src.dir}/mdettla/reddit/domain"
+			destdir="${prod.gen.src.dir}" debug="on">
+			<compilerarg value="-proc:only" />
+			<classpath refid="compile.classpath" />
+		</javac>
+	</target>
+
+	<target name="compile" depends="jpamodelgen">
 		<mkdir dir="${prod.build.dir}" />
 		<javac srcdir="${prod.src.dir}:${prod.gen.src.dir}"
 			destdir="${prod.build.dir}" debug="on">
+			<compilerarg value="-proc:none" />
 			<classpath refid="compile.classpath" />
 		</javac>
 		<copy todir="${prod.build.dir}">

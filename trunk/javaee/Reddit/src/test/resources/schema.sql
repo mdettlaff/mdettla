@@ -13,7 +13,10 @@ CREATE TABLE Comment (
 
 CREATE TABLE Submission_Comment (
 	Submission_id BIGINT NOT NULL,
-	comments_id BIGINT NOT NULL
+	comments_id BIGINT NOT NULL,
+	UNIQUE(comments_id),
+	FOREIGN KEY(comments_id) REFERENCES Comment(id),
+	FOREIGN KEY(Submission_id) REFERENCES Submission(id)
 );
 
 CREATE TABLE User (
@@ -21,4 +24,10 @@ CREATE TABLE User (
 	name VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	UNIQUE(name)
+);
+
+CREATE TABLE Submission_User (
+	Submission_id BIGINT NOT NULL,
+	voters_id BIGINT NOT NULL,
+	FOREIGN KEY(Submission_id) REFERENCES Submission(id)
 );

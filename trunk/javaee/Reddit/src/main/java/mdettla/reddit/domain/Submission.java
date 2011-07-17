@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
@@ -30,6 +31,13 @@ public class Submission {
 	@NotNull
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User author;
+	@ManyToMany
+	private List<User> voters;
+
+	public Submission() {
+		comments = new ArrayList<Comment>();
+		voters = new ArrayList<User>();
+	}
 
 	public Long getId() {
 		return id;
@@ -37,10 +45,6 @@ public class Submission {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Submission() {
-		comments = new ArrayList<Comment>();
 	}
 
 	public String getTitle() {
@@ -51,8 +55,9 @@ public class Submission {
 		this.title = title;
 	}
 
-	public void upvote() {
+	public void upvote(User user) {
 		upvoteCount++;
+		voters.add(user);
 	}
 
 	public void downvote() {
@@ -97,6 +102,26 @@ public class Submission {
 
 	public void setAuthor(User author) {
 		this.author = author;
+	}
+
+	public List<User> getVoters() {
+		return Collections.unmodifiableList(voters);
+	}
+
+	public void setVoters(List<User> voters) {
+		this.voters = voters;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Submission)) {
+			return false;
+		}
+		Submission other = (Submission)obj;
+		return id.equals(other.id);
 	}
 
 	@Override

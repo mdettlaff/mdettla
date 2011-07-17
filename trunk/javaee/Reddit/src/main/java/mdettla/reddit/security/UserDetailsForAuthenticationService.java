@@ -1,7 +1,9 @@
-package mdettla.reddit.service;
+package mdettla.reddit.security;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import mdettla.reddit.service.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

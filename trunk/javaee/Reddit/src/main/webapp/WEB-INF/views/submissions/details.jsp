@@ -2,7 +2,12 @@
 
 <h2>${submission.title}</h2>
 
+score: ${submission.score}<br>
 author: ${submission.author.name}
+
+<form:form action="${submission.id}/upvote">
+	<input type="submit" value="&#8679;" style="background: none; border-width: 0px; color: blue;" />
+</form:form>
 
 <table>
 	<tr>

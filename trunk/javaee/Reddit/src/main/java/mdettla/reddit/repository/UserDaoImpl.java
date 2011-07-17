@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -32,14 +31,8 @@ public class UserDaoImpl implements UserDao {
 		CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
 		Root<User> from = query.from(User.class);
 		query.where(criteriaBuilder.equal(from.get(User_.name), username));
-		return findEntity(entityManager.createQuery(query.select(from)));
+		return QueryUtils.findEntity(entityManager.createQuery(query.select(from)));
 	}
-
-	private static <T> T findEntity(TypedQuery<T> query) {
-		Collection<T> results = query.getResultList();
-		return results.isEmpty() ? null : results.iterator().next();
-	}
-
 	@Override
 	public void create(User user) {
 		entityManager.persist(user);
