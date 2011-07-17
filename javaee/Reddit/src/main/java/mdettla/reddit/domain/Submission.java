@@ -2,7 +2,9 @@ package mdettla.reddit.domain;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -32,11 +34,11 @@ public class Submission {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private User author;
 	@ManyToMany
-	private List<User> voters;
+	private Set<User> voters;
 
 	public Submission() {
 		comments = new ArrayList<Comment>();
-		voters = new ArrayList<User>();
+		voters = new LinkedHashSet<User>();
 	}
 
 	public Long getId() {
@@ -104,11 +106,11 @@ public class Submission {
 		this.author = author;
 	}
 
-	public List<User> getVoters() {
-		return Collections.unmodifiableList(voters);
+	public Set<User> getVoters() {
+		return Collections.unmodifiableSet(voters);
 	}
 
-	public void setVoters(List<User> voters) {
+	public void setVoters(Set<User> voters) {
 		this.voters = voters;
 	}
 
