@@ -14,6 +14,7 @@ import org.junit.Test;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 public class SubmissionControllerTest {
@@ -87,13 +88,13 @@ public class SubmissionControllerTest {
 
 	@Test
 	public void testSubmitEdit() {
+		// mock
+		SessionStatus sessionStatus = mock(SessionStatus.class);
 		// prepare
 		Submission submission = new Submission();
 		submission.setId(5L);
-		// mock
-		when(submissionService.findById(submission.getId())).thenReturn(submission);
 		// test
-		String viewName = controller.submitEdit(submission);
+		String viewName = controller.submitEdit(submission, sessionStatus);
 		// verify
 		assertEquals("redirect:/", viewName);
 		verify(submissionService).update(submission);

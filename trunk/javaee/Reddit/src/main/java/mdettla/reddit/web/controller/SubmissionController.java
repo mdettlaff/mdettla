@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/submissions")
+@SessionAttributes("submission")
 public class SubmissionController {
 
 	private final SubmissionService submissionService;
@@ -47,9 +50,10 @@ public class SubmissionController {
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.POST)
-	public String submitEdit(@ModelAttribute Submission submission) {
-		submission.setAuthor(submissionService.findById(submission.getId()).getAuthor());
+	public String submitEdit(@ModelAttribute Submission submission,
+			SessionStatus sessionStatus) {
 		submissionService.update(submission);
+		sessionStatus.setComplete();
 		return "redirect:/";
 	}
 
