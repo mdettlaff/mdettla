@@ -11,6 +11,10 @@ import mdettla.jga.core.Specimen;
 
 public class KeyboardLayout implements Specimen {
 
+	private static final int WEIGHT_LOCATION = 1;
+	private static final int WEIGHT_HAND_ALTER = 1;
+	private static final int WEIGHT_FINGER_ALTER = 1;
+
 	private static final List<Character> KEYBOARD_CHARS = Arrays.asList(
 			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
 			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
@@ -80,8 +84,9 @@ public class KeyboardLayout implements Specimen {
 	public Integer getFitness() {
 		checkIntegrity();
 		int penalty = 0;
-		penalty += getPenaltyForLocation();
-		penalty += getPenaltyForLackOfHandAlternation();
+		penalty += WEIGHT_LOCATION * getPenaltyForLocation();
+		penalty += WEIGHT_HAND_ALTER * getPenaltyForLackOfHandAlternation();
+		penalty += WEIGHT_FINGER_ALTER * getPenaltyForLackOfFingerAlternation();
 		return penalty;
 	}
 
@@ -125,6 +130,16 @@ public class KeyboardLayout implements Specimen {
 		int penalty = 0;
 		for (Diagraph diagraph : stats.getDiagraphsFound()) {
 			if (!isHandAlternation(diagraph)) {
+				penalty += stats.getDiagraphOccurences(diagraph);
+			}
+		}
+		return penalty;
+	}
+
+	private int getPenaltyForLackOfFingerAlternation() {
+		int penalty = 0;
+		for (Diagraph diagraph : stats.getDiagraphsFound()) {
+			if (!isFingerAlternation(diagraph)) {
 				penalty += stats.getDiagraphOccurences(diagraph);
 			}
 		}
