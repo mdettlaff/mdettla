@@ -63,20 +63,38 @@ Operatory genetyczne.
 \chapter{Opis algorytmu}
 
 
+\section{Reprezentacja genotypu}
+
+Stosowana jest permutacyjna reprezentacja genotypu. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom {\tt ,}, {\tt .}, {\tt ?} oraz {\tt ;}. Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! = 2.7 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
+
+Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
+
+
 \section{Funkcja przystosowania}
 
 Naszym celem jest znalezienie układu klawiatury, który przyczyni się do zwiększenia prędkości pisania oraz zminimalizowania zmęczenia palców użytkownika. Inne pożądane cechy to minimalizowanie ilości błędów oraz łatwość nauki danego układu klawiatury. Dlatego też te cele będą brane pod uwagę podczas projektowania funkcji przystosowania algorytmu genetycznego.
 
 W kolejnych podrozdziałach zostaną opisane kryteria, które składają się na funkcję przystosowania. Ostateczna postać funkcji przystosowania jest sumą ważoną wyników z poszczególnych kryteriów.
 
-[monografy i diagrafy, statystyka tekstu zamiast analizy całego zbioru tekstów]
+Do obliczania oceny układu klawiatury wykorzystywane są zbiory tekstów, stanowiących możliwie reprezentatywną próbkę z danego języka. Wynikowy układ powinien być jak najlepiej przystosowany do przepisywania podanego tekstu, dlatego użyte zostaną osobne zbiory tekstów dla języka polskiego oraz angielskiego. Naiwnym sposobem na obliczenie przystosowania byłaby symulacja przepisywania tekstu, wymagająca analizy całości tekstu za każdym razem od nowa podczas obliczania funkcji przystosowania. Takie podejście jest jednak zbyt kosztowne obliczeniowo, ponieważ złożoność funkcji przystosowania wyniosłaby $ O(n) $, gdzie $ n $ stanowiące długość tekstu byłoby wartością rzędu $ 10^5 $ lub $ 10^6 $.
+
+Z tego powodu funkcja przystosowania nie będzie obliczana na podstawie oryginalnego tekstu, ale jego cech statystycznych, które będą obliczane tylko raz przed uruchomieniem algorytmu. W ten sposób czas obliczania funkcji przystosowania nie będzie zależny od długości tekstu (jego złożoność wyniesie $ O(1) $). Cechy statystyczne tekstu zostaną opisane za pomocą dwóch funkcji:
+$$ f_m : M \rightarrow \mathrm{R} $$
+$$ f_d : D \rightarrow \mathrm{R} $$
+
+Dziedzinę funkcji $ f_m $ będziemy określać jako zbiór monografów $ M $ (pojedynczych znaków wchodzących w skład genotypu), a dziedzinę funkcji $ f_d $ jako zbiór diagrafów $ D $ (wszystkich możliwych par znaków).
+$$ M = \{ a : a \in A \} $$
+$$ D = \{ ab : a \in A, b \in A \} $$
+
+$ f_m $ opisuje częstotliwości występowania monografów w zbiorze tekstów, a $ f_d $ częstotliwości występowania diagrafów. Przez częstotliwość występowania rozumiemy procentowy udział ilości wystąpień danego monografu (diagrafu) w sumie ilości wystąpień wszystkich monografów (diagrafów).
+
 
 \subsection{Użycie palców}
 
 Pierwszym czynnikiem branym pod uwagę będzie rozkład pracy na poszczególne palce. Chcemy, aby najczęściej używane były najsilniejsze i najdłuższe palce, a najmniej używane palce najsłabsze.
 
 W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać:
-$$ p_{finger} = \sum\limits_{monographs} (f_{opt} - f) $$
+$$ p_{finger} = \sum\limits_{M} (f_{opt} - f) $$
 
 [wykres]
 
@@ -86,7 +104,7 @@ $$ p_{finger} = \sum\limits_{monographs} (f_{opt} - f) $$
 Podczas pisania techniką bezwzrokową (touchtyping), pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. home row). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
 
 Biorąc powyższe kryteria pod uwagę, czynnik funkcji przystosowania dotyczący położenia znaku w danym rzędzie przyjmie następującą postać:
-$$ p_{row} = \sum\limits_{monographs} (f_{opt} - f) $$
+$$ p_{row} = \sum\limits_{M} (f_{opt} - f) $$
 
 Jako optymalny rozkład przyjmiemy: [...]
 
@@ -101,7 +119,7 @@ Czynnikiem sprzyjającym szybkiemu i komfortowemu pisaniu jest unikanie pisania 
 
 Liczbową reprezentacją tej zasady będzie następujące wyrażenie:
 
-$$ p_{hand_alter} = \sum\limits_{diagraphs} f_{sh} $$
+$$ p_{hand\_alter} = \sum\limits_{diagraphs} f_{sh} $$
 
 Gdzie $ f_{sh} $ oznacza częstotliwość występowania diagrafów pisanych tą samą ręką.
 
@@ -109,7 +127,7 @@ Gdzie $ f_{sh} $ oznacza częstotliwość występowania diagrafów pisanych tą 
 \subsection{Alternacja palców}
 
 Podobnie jak w poprzednim punkcie, nie jest korzystne pisanie kolejnych znaków tym samym palcem. Dodatkowe utrudnienie stanowi sytuacja, w której ten sam palec musi przebyć większą odległość. Dlatego też częstotliwość występowania diagrafów zostanie dodatkowo pomnożona przez współczynnik odległości dist.
-$$ p_{finger_alter} = \sum f_d dist(d) $$
+$$ p_{finger\_alter} = \sum f_d dist(d) $$
 
 Jako odległość dist zostanie przyjęta odległość Manhattan:
 $$ dist(d) = |c2 - c1| + |r2 - r1| $$
@@ -140,13 +158,6 @@ $$ p_{isf} = \sum f_d $$
 Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Przyjmiemy tutaj, że idealny rozkład powinien być równy 50\% dla każdej ręki. Czynnik ten wyniesie zatem:
 
 $$ p_{hand\_usage} = \sum (f - f_{opt}) $$
-
-
-\section{Reprezentacja genotypu}
-
-Stosowana jest permutacyjna reprezentacja genotypu. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom {\tt ,}, {\tt .}, {\tt ?} oraz {\tt ;}. Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! = 2.7 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny.
-
-Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
 
 
 \section{Operatory genetyczne}
