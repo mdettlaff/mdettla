@@ -1,0 +1,16 @@
+\begin{thebibliography}{1}
+
+\bibitem{AntColony:2002:ACO}
+Steffen~Kehl Jan~Eggers, Dominique~Feillet and Bernard Yannou.
+\newblock Optimization of the keyboard arrangement problem using an ant colony
+  algorithm.
+\newblock {\em European Journal of Operational Research}, 148(2):672--686,
+  October 2002.
+
+\bibitem{Operators:2000:TSP}
+R.H.~Murga P.~Larranaga, C.M.H.~Kuijpers.
+\newblock Genetic algorithms for the travelling salesman problem: A review of
+  reprezentations and operators.
+\newblock {\em University of the Basque}, 148(2):672--686, October 2002.
+
+\end{thebibliography}
