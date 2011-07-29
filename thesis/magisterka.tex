@@ -1,0 +1,202 @@
+\documentclass[brudnopis]{xmgr}
+
+%\defaultfontfeatures{Scale=MatchLowercase}
+%\setmainfont[Numbers=OldStyle,Ligatures=TeX]{Minion Pro}
+%\setsansfont[Numbers=OldStyle,Ligatures=TeX]{Myriad Pro}
+% for fontspec version < 2.0
+\setmainfont[Numbers=OldStyle,Mapping=tex-text]{Minion Pro}
+\setsansfont[Numbers=OldStyle,Mapping=tex-text]{Myriad Pro}
+%\setmonofont[Scale=0.75]{Monaco}
+
+% Opcjonalnie identyfikator dokumentu
+% drukowany tylko z włączoną opcją 'brudnopis':
+\wersja   {wersja wstępna [\ymdtoday]}
+
+\author   {Michał Dettlaff}
+\nralbumu {164\,622}
+\email    {walenty@szczesny.com.pl}
+
+\title    {Zastosowanie algorytmów genetycznych w projektowaniu optymalnego układu klawiatury}
+\date     {2011}
+\miejsce  {Gdańsk}
+
+\opiekun  {prof. zw. dr hab. inż. Sławomir Wierzchoń}
+
+% dodatkowe polecenia
+%\renewcommand{\filename}[1]{\texttt{#1}}
+
+\begin{document}
+
+\begin{abstract}
+  Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacyjny, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym genotyp stanowi układ klawiszy zakodowany jako permutacja, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W wyniku zostają utworzone układy klawiatury przystosowane do pisania w języku polskim oraz angielskim, które następnie są porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera.
+\end{abstract}
+\keywords{
+  algorytmy, genetyczne, Dvorak, QWERTY, optymalizacja
+}
+
+% tytuł i spis treści
+\maketitle
+%
+% wstęp
+\introduction
+
+Wstęp.
+
+Układ QWERTY został zaprojektowany w 1896 r. przez Christophera Sholes'a.
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/qwerty}
+\caption{Standardowy układ klawiatury QWERTY}
+\source{Opracowanie własne}
+\end{figure}
+
+
+\chapter{Algorytmy genetyczne}
+
+Algorytmy genetyczne.
+
+\section{Operatory genetyczne}
+
+Operatory genetyczne.
+
+\chapter{Opis algorytmu}
+
+
+\section{Funkcja przystosowania}
+
+Naszym celem jest znalezienie układu klawiatury, który przyczyni się do zwiększenia prędkości pisania oraz zminimalizowania zmęczenia palców użytkownika. Inne pożądane cechy to minimalizowanie ilości błędów oraz łatwość nauki danego układu klawiatury. Dlatego też te cele będą brane pod uwagę podczas projektowania funkcji przystosowania algorytmu genetycznego.
+
+W kolejnych podrozdziałach zostaną opisane kryteria, które składają się na funkcję przystosowania. Ostateczna postać funkcji przystosowania jest sumą ważoną wyników z poszczególnych kryteriów.
+
+[monografy i diagrafy, statystyka tekstu zamiast analizy całego zbioru tekstów]
+
+\subsection{Użycie palców}
+
+Pierwszym czynnikiem branym pod uwagę będzie rozkład pracy na poszczególne palce. Chcemy, aby najczęściej używane były najsilniejsze i najdłuższe palce, a najmniej używane palce najsłabsze.
+
+W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać:
+$$ p_{finger} = \sum\limits_{monographs} (f_{opt} - f) $$
+
+[wykres]
+
+
+\subsection{Użycie rzędów klawiszy}
+
+Podczas pisania techniką bezwzrokową (touchtyping), pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. home row). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
+
+Biorąc powyższe kryteria pod uwagę, czynnik funkcji przystosowania dotyczący położenia znaku w danym rzędzie przyjmie następującą postać:
+$$ p_{row} = \sum\limits_{monographs} (f_{opt} - f) $$
+
+Jako optymalny rozkład przyjmiemy: [...]
+
+[wykresy obrazujące rozkład na rzędy w różnych układach klawiatury]
+
+[obrazek pokazujący pozycję palców nad home row]
+
+
+\subsection{Alternacja rąk}
+
+Czynnikiem sprzyjającym szybkiemu i komfortowemu pisaniu jest unikanie pisania kolejnych znaków tą samą ręką. Jest to jedna z głównych zasad która została zastosowana przy projektowaniu klawiatury Dvoraka, gdzie w tym celu wszystkie samogłoski umieszczono z lewej strony klawiatury (ponieważ w języku angielskim samogłoski najczęściej nie występują obok siebie).
+
+Liczbową reprezentacją tej zasady będzie następujące wyrażenie:
+
+$$ p_{hand_alter} = \sum\limits_{diagraphs} f_{sh} $$
+
+Gdzie $ f_{sh} $ oznacza częstotliwość występowania diagrafów pisanych tą samą ręką.
+
+
+\subsection{Alternacja palców}
+
+Podobnie jak w poprzednim punkcie, nie jest korzystne pisanie kolejnych znaków tym samym palcem. Dodatkowe utrudnienie stanowi sytuacja, w której ten sam palec musi przebyć większą odległość. Dlatego też częstotliwość występowania diagrafów zostanie dodatkowo pomnożona przez współczynnik odległości dist.
+$$ p_{finger_alter} = \sum f_d dist(d) $$
+
+Jako odległość dist zostanie przyjęta odległość Manhattan:
+$$ dist(d) = |c2 - c1| + |r2 - r1| $$
+
+gdzie $c1$ oraz $r1$ stanowią współrzędne odpowiednio rzędu i kolumny pierwszego znaku z diagrafu d, a $c2$ oraz $r2$ współrzędne drugiego znaku diagrafu.
+
+
+\subsection{Duże ruchy palcami tej samej ręki}
+
+W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd. W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z tabelą.
+
+[tabela wag]
+
+Wzór przyjmie postać:
+$$ p_{step} = \sum K(d) f_d $$
+
+gdzie $K(d)$ oznacza współczynnik wagi przypisany zgodnie z tabelą.
+
+\subsection{Inboard stroke flow}
+
+Dla diagrafów wpisywanych z użyciem tej samej ręki, bardziej korzystny jest kierunek prowadzący do środka, czyli w kierunku od małego palca do wskazującego (tzw. inboard stroke flow). Czynnikowi temu będzie odpowiadał następujący wzór, w którym sumujemy częstotliwości występowania diagrafów prowadzących mniej korzystnym kierunku:
+
+$$ p_{isf} = \sum f_d $$
+
+
+\subsection{Użycie rąk}
+
+Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Przyjmiemy tutaj, że idealny rozkład powinien być równy 50\% dla każdej ręki. Czynnik ten wyniesie zatem:
+
+$$ p_{hand\_usage} = \sum (f - f_{opt}) $$
+
+
+\section{Reprezentacja genotypu}
+
+Stosowana jest permutacyjna reprezentacja genotypu. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom {\tt ,}, {\tt .}, {\tt ?} oraz {\tt ;}. Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! = 2.7 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny.
+
+Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
+
+
+\section{Operatory genetyczne}
+
+\subsection{Krzyżowanie - Cycle Crossover}
+
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w genotypie. Cechę tę posiada operator Cycle Crossover~\cite{Operators:2000:TSP}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
+
+W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w genotypie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że genotyp potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
+
+Jeżeli okazuje się, że danego genu z genotypu rodzica nie można umieścić w genotypie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
+
+[przykład]
+
+
+\subsection{Krzyżowanie - Partially mapped crossover}
+
+Podobnie jak Cycle Crossover, Partially mapped crossover zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment genotypu jednego z rodziców jest przepisywany na potomka, a pozostała część genotypu jest tworzona na podstawie mapowań.
+
+Sposób działania tego operatora jest następujący:
+
+[przykład]
+
+
+\section{Mutacja}
+
+Mutacja polega na zamianie dwóch klawiszy miejscami.
+
+
+
+% zakończenie
+\summary
+Zakończenie.
+
+% załączniki (opcjonalnie):
+\appendix
+\chapter{Tytuł załącznika}
+
+Treść załącznika.
+
+% literatura (obowiązkowo):
+\bibliographystyle{unsrt}
+\bibliography{xml}
+
+% spis tabel (jeżeli jest potrzebny):
+\listoftables
+
+% spis rysunków (jeżeli jest potrzebny):
+\listoffigures
+
+\oswiadczenie
+
+\end{document}
