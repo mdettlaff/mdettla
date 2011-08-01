@@ -84,8 +84,7 @@ if __name__ == '__main__':
 
     download_gocomics_webcomic = lambda name: \
             download_webcomic('http://gocomics.com/' + name,
-                    r'\s+<link rel="image_src" href="(.*?)"\s?/>$',
-                    dl_dir, name, 'gif')
+                    r'.*?class="strip".*?src="(.*?)"', dl_dir, name, 'gif')
     download_gocomics_webcomic('garfield')
     download_gocomics_webcomic('monty')
     download_gocomics_webcomic('pearlsbeforeswine')
