@@ -40,9 +40,7 @@
 % wstęp
 \introduction
 
-Wstęp.
-
-Układ QWERTY został zaprojektowany w 1896 r. przez Christophera Sholesa.
+Standardowy układ klawiatury (rys. 1), mimo swojej wszechobecności oraz pozostawania w użyciu od ponad 100 lat, jest pod wieloma względami nieoptymalny. Układ ten nazywany jest układem QWERTY (od pierwszych liter w górnym rzędzie w jego amerykańskiej wersji) lub układem Scholesa i został zaprojektowany w latach 70 XIX wieku przez Charles'a Lethama Sholesa. QWERTY zastąpił używany wcześniej układ alfabetyczny i miał na celu zapobieganie zacinaniu się mechanizmu maszyny do pisania, jeżeli użytkownik pisał zbyt szybko~\cite{Norman:1988:DOET}. Z tego względu, litery które często występowały obok siebie w języku angielskim, takie jak \emph{i} oraz \emph{e}, zostały umieszczone po przeciwnych stronach klawiatury. Dzięki temu, belki na których znajdowały się klawisze nie zderzały się ze sobą, co zmniejszało prawdopodobieństwo zacięcia się. Mimo że problem zacinania się maszyny został szybko wyeliminowany i to jeszcze na długo przed nadejściem klawiatury komputerowej, układ klawiatury QWERTY pozostaje w użyciu aż do dzisiaj.
 
 \begin{figure}[!tbh]
 \centering
@@ -50,6 +48,8 @@ Układ QWERTY został zaprojektowany w 1896 r. przez Christophera Sholesa.
 \caption{Standardowy układ klawiatury QWERTY}
 \source{Opracowanie własne}
 \end{figure}
+
+W latach 30. XX wieku, została podjęta próba stworzenia bardziej optymalnego układu klawiatury. Klawiatura Dvoraka jest łatwiejsza w nauce i pozwala na około 10\% szybsze pisanie~\cite{Norman:1988:DOET}.
 
 \begin{figure}[!tbh]
 \centering
@@ -59,13 +59,9 @@ Układ QWERTY został zaprojektowany w 1896 r. przez Christophera Sholesa.
 \end{figure}
 
 
-\chapter{Algorytmy genetyczne}
+\chapter{Metodologia}
 
 Algorytmy genetyczne.
-
-\section{Operatory genetyczne}
-
-Operatory genetyczne.
 
 \chapter{Opis algorytmu}
 
@@ -75,6 +71,9 @@ Operatory genetyczne.
 Stosowana jest permutacyjna reprezentacja genotypu. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom {\tt ,}, {\tt .}, {\tt ?} oraz {\tt ;}. Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! = 2.7 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
 
 Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
+
+Dla przykładu, układ klawiatury QWERTY jest reprezentowany przez następującą permutację:
+$$ qwertyuiopasdfghjkl;zxcvbnm,.? $$
 
 
 \section{Funkcja przystosowania}
