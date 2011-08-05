@@ -163,7 +163,16 @@ $$ p_{isf} = \sum f_d $$
 
 Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Przyjmiemy tutaj, że idealny rozkład powinien być równy 50\% dla każdej ręki. Czynnik ten wyniesie zatem:
 
-$$ p_{hand\_usage} = \sum (f - f_{opt}) $$
+$$ p_{hand\_usage} = \sum (f - f_{opt}) $$\newline
+
+
+\noindent Ostatecznie, funkcja przystosowania przyjmie postać:
+
+$$ p = p_{finger} w_{finger} + p_{row} w_{row} + p_{hand_alter} w_{hand_alter} + p_{finger\_alter} w_{finger\_alter} + $$
+$$ p_{step} w_{step} + p_{isf} w_{isf} + p_{hand\_usage} w_{hand\_usage} $$
+
+\noindent
+gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperymentalnie w ten sposób, aby poszczególne czynniki miały zbliżony wpływ na ostateczną wartość funkcji przystosowania.
 
 
 \section{Operatory genetyczne}
@@ -190,8 +199,33 @@ Sposób działania tego operatora jest następujący:
 
 \section{Mutacja}
 
-Mutacja polega na zamianie dwóch klawiszy miejscami.
+Mutacja polega na zamianie dwóch klawiszy miejscami, czyli zamianie miejscami dwóch elementów permutacji.
 
+
+\section{Algorytm}
+
+Zastosowany algorym można opisać za pomocą następującego pseudokodu:\newline
+
+\noindent
+\texttt{Oblicz cechy statystyczne zbioru tekstów\newline
+Zainicjuj początkową populację losowo utworzonymi osobnikami\newline
+Powtarzaj zadaną ilość pokoleń:\newline
+\indent Utwórz nową, pustą populację osobników\newline
+\indent Dopóki wielkość nowej populacji jest mniejsza od poprzedniej:\newline
+\indent\indent wybierz parę osobników za pomocą operatora selekcji\newline
+\indent\indent zastosuj z zadanym prawdopodobieństwem operację krzyżowania\newline
+\indent\indent wobec wybranych osobników\newline
+\indent\indent zastosuj z zadanym prawdopodobieństwem operację mutacji\newline
+\indent\indent wobec wybranych osobników\newline
+\indent\indent dodaj osobniki do nowej populacji\newline
+}
+
+W celu przyspieszenia obliczeń, funkcja przystosowania obliczania jest współbieżnie. Jest to możliwe ponieważ obliczanie funkcji przystosowania dla jednego osobnika jest operacją niezależną od obliczania jej dla pozostałych osobników. Dlatego też populacja dzielona jest na \emph{n} części, gdzie \emph{n} jest równa ilości rdzeni procesora, i funkcja przystosowania dla każdej części obliczana jest przez osobny wątek.
+
+
+\chapter{Wyniki i ich analiza}
+
+Omówienie wyników.
 
 
 % zakończenie
