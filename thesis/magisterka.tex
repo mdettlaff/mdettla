@@ -217,6 +217,27 @@ Sposób działania tego operatora jest następujący:
 Mutacja polega na zamianie dwóch klawiszy miejscami, czyli zamianie miejscami dwóch elementów permutacji.
 
 
+\section{Selekcja}
+
+Zastosowana zostanie tzw. selekcja turniejowa. Jest to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}.
+
+W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
+
+Pseudokod:\newline
+
+\noindent
+\texttt{WEJŚCIE: populacja, t - rozmiar turnieju\newline
+Best := wybierz bez zwracania osobnika z populacji\newline
+Powtarzaj t - 1 razy:\newline
+\indent Next := wybierz bez zwracania osobnika z populacji\newline
+\indent jeżeli Next ma korzystniejszą wartość przystosowania niż Best:\newline
+\indent\indent Best := Next\newline
+zwróć Best\newline
+}
+
+Najczęściej wybieraną wartością parametru $t$ w przypadku algorytmów genetycznych jest 2~\cite{Luke2009Metaheuristics}, dlatego też taka wartość zostanie zastosowana do problemu znajdowania optymalnego układu klawiatury.
+
+
 \section{Algorytm}
 
 Zastosowany algorym można opisać za pomocą następującego pseudokodu:\newline
