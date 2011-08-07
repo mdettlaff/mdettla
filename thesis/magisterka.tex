@@ -49,7 +49,7 @@ Standardowy układ klawiatury (rys. 1), mimo swojej wszechobecności oraz pozost
 \source{Opracowanie własne}
 \end{figure}
 
-W latach 30. XX wieku, została podjęta próba stworzenia bardziej optymalnego układu klawiatury. Klawiatura Dvoraka jest łatwiejsza w nauce i pozwala na około 10\% szybsze pisanie~\cite{Norman:1988:DOET}.
+Spośród układów alternatywnych wobec QWERTY największą popularnością cieszy się klawiatura Dvoraka (Dvorak Simplified Keyboard). Została ona zaprojektowana w 1936 r. przez dr Augusta Dvoraka. W przeciwieństwie do QWERTY, podczas jej projektowania nie były już brane pod uwagę ograniczenia mechaniczne maszyn do pisania, ze względu na postępy w ich produkcji. Głównym celem było natomiast umożliwienie efektywnego pisania oraz łatwość nauki. W tym celu zostały wzięte pod uwagę takie czynniki jak częstotliwości występowania liter oraz poziom wykorzystania najłatwiej dostępnego, środkowego rzędu klawiszy. Dla przykładu, za pomocą samego środkowego rzędu klawiatury Dvoraka można napisać około 400 słów w języku angielskim, natomiast układ QWERTY pozwala w analogiczny sposób napisać tylko około 100 słów~\cite{Call:2005:CME}. Klawiatura Dvoraka jest łatwiejsza w nauce i pozwala na około 10\% szybsze pisanie~\cite{Norman:1988:DOET}.
 
 \begin{figure}[!tbh]
 \centering
@@ -99,10 +99,16 @@ $ f_m $ opisuje częstotliwości występowania monografów w zbiorze tekstów, a
 
 Pierwszym czynnikiem branym pod uwagę będzie rozkład pracy na poszczególne palce. Chcemy, aby najczęściej używane były najsilniejsze i najdłuższe palce, a najmniej używane palce najsłabsze.
 
-W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać:
-$$ p_{finger} = \sum\limits_{M} (f_{opt} - f) $$
+W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. $f^{opt}_1$ do $f^{opt}_1$ oznaczają udział palców lewej ręki w przepisywaniu tekstu, od małego palca do wskazującego, natomiast $f^{opt}_5$ do $f^{opt}_1$ analogicznie udział palców prawej ręki, od wskazującego do małego.\newline
 
-[wykres]
+\begin{tabular}{ c | c | c | c }
+  $f^{opt}_1$ & $f^{opt}_2$ & $f^{opt}_3$ & $f^{opt}_4$ \\
+  \hline
+  3\% & 5\% & 8\% & 11\% \\
+\end{tabular}\newline
+
+Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać, odzwierciedlającą rozbieżność pomiędzy rozkładem otrzymanym a optymalnym:
+$$ p_{finger} = \sum\limits_{i = 1}^{8} (f_i^{opt} - f_i)^2 $$
 
 
 \subsection{Użycie rzędów klawiszy}
@@ -217,6 +223,7 @@ Powtarzaj zadaną ilość pokoleń:\newline
 \indent\indent wobec wybranych osobników\newline
 \indent\indent zastosuj z zadanym prawdopodobieństwem operację mutacji\newline
 \indent\indent wobec wybranych osobników\newline
+\indent\indent oblicz przystosowanie osobników\newline
 \indent\indent dodaj osobniki do nowej populacji\newline
 }
 
