@@ -101,10 +101,10 @@ Pierwszym czynnikiem branym pod uwagę będzie rozkład pracy na poszczególne p
 
 W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. $f^{opt}_1$ do $f^{opt}_4$ oznaczają udział palców lewej ręki w przepisywaniu tekstu, od małego palca do wskazującego, natomiast $f^{opt}_5$ do $f^{opt}_8$ analogicznie udział palców prawej ręki, od wskazującego do małego.\newline
 
-\begin{tabular}{ c | c | c | c }
-  $f^{opt}_1$ & $f^{opt}_2$ & $f^{opt}_3$ & $f^{opt}_4$ \\
+\begin{tabular}{ c | c | c | c | c | c | c | c }
+  $f^{opt}_1$ & $f^{opt}_2$ & $f^{opt}_3$ & $f^{opt}_4$ & $f^{opt}_5$ & $f^{opt}_6$ & $f^{opt}_7$ & $f^{opt}_8$ \\
   \hline
-  3\% & 5\% & 8\% & 11\% \\
+  4.4\% & 12.3\% & 15.8\% & 17.5\% & 17.5\% & 15.8\% & 12.3\% & 4.4\% \\
 \end{tabular}\newline
 
 Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać, odzwierciedlającą rozbieżność pomiędzy rozkładem otrzymanym a optymalnym:
@@ -115,14 +115,12 @@ $$ p_{finger} = \sum\limits_{i = 1}^{8} (f_i^{opt} - f_i)^2 $$
 
 Podczas pisania techniką bezwzrokową (touchtyping), pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. home row). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
 
+Górny, środkowy oraz dolny rząd klawiszy oznaczymy odpowiednio jako: $R_1$, $R_2$, $R_3$. Jako optymalny rozkład częstotliwości użycia poszczególnych rzędów przyjmiemy rozkład układu klawiatury, w którym 10 najczęściej używanych klawiszy należy do $R_1$, 10 kolejnych do $R_2$, a 10 najmniej używanych klawiszy do $R_3$. Częstotliwości użycia obliczane są na podstawie stosowanego zbioru tekstów.
+
+Przykładowe wartości: $f_{R_1} = 50\%$, $f_{R_2} = 35\%$, $f_{R_3} = 15\%$
+
 Biorąc powyższe kryteria pod uwagę, czynnik funkcji przystosowania dotyczący położenia znaku w danym rzędzie przyjmie następującą postać:
-$$ p_{row} = \sum\limits_{M} (f_{opt} - f) $$
-
-Jako optymalny rozkład przyjmiemy: [...]
-
-[wykresy obrazujące rozkład na rzędy w różnych układach klawiatury]
-
-[obrazek pokazujący pozycję palców nad home row]
+$$ p_{row} = \sum\limits_{i = 1}^{3} (f_{R_i}^{opt} - f_{R_i})^2 $$
 
 
 \subsection{Alternacja rąk}
