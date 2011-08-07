@@ -129,49 +129,60 @@ Czynnikiem sprzyjającym szybkiemu i komfortowemu pisaniu jest unikanie pisania 
 
 Liczbową reprezentacją tej zasady będzie następujące wyrażenie:
 
-$$ p_{hand\_alter} = \sum\limits_{diagraphs} f_{sh} $$
+$$ p_{hand\_alter} = \sum\limits_{f \in f_{sh}} f $$
 
-Gdzie $ f_{sh} $ oznacza częstotliwość występowania diagrafów pisanych tą samą ręką.
+Gdzie $ f_{sh} \in f_d $ oznacza zbiór częstotliwości występowania diagrafów pisanych tą samą ręką.
 
 
 \subsection{Alternacja palców}
 
-Podobnie jak w poprzednim punkcie, nie jest korzystne pisanie kolejnych znaków tym samym palcem. Dodatkowe utrudnienie stanowi sytuacja, w której ten sam palec musi przebyć większą odległość. Dlatego też częstotliwość występowania diagrafów zostanie dodatkowo pomnożona przez współczynnik odległości dist.
-$$ p_{finger\_alter} = \sum f_d dist(d) $$
+Podobnie jak w poprzednim punkcie, nie jest korzystne pisanie kolejnych znaków tym samym palcem. Dodatkowe utrudnienie stanowi sytuacja, w której ten sam palec musi przebyć większą odległość. Dlatego też częstotliwość występowania diagrafów zostanie dodatkowo pomnożona przez współczynnik odległości $dist$.
+$$ p_{finger\_alter} = \sum\limits_{d \in D'} f_d dist(d) $$
 
-Jako odległość dist zostanie przyjęta odległość Manhattan:
-$$ dist(d) = |c2 - c1| + |r2 - r1| $$
+\noindent
+gdzie zbiór $ D' \in D $ oznacza zbiór diagrafów które pisane są tym samym palcem, a $f_d$ oznacza częstotliwości występowania tych diagrafów.\newline
 
-gdzie $c1$ oraz $r1$ stanowią współrzędne odpowiednio rzędu i kolumny pierwszego znaku z diagrafu d, a $c2$ oraz $r2$ współrzędne drugiego znaku diagrafu.
+Jako odległość $dist$ zostanie przyjęta odległość Manhattan:
+$$ dist(d) = |c_2 - c_1| + |r_2 - r_1| $$
+
+gdzie $c_1$ oraz $r_1$ stanowią współrzędne odpowiednio rzędu i kolumny pierwszego znaku z diagrafu $d$, a $c_2$ oraz $r_2$ współrzędne drugiego znaku diagrafu $d$.
 
 
 \subsection{Duże ruchy palcami tej samej ręki}
 
-W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd. W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z tabelą.
+W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd (zbiór ten oznaczymy jako $ D' \in D $). W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z poniższą tabelą~\cite{AntColony:2002:ACO}.\newline
 
-[tabela wag]
+\begin{tabular}{ c | c | c | c | c | c }
+  & wskazujący & środkowy & serdeczny & mały \\
+  \hline
+  wskazujący & 0 & 5 & 8 & 6 \\
+  środkowy & 5 & 0 & 9 & 7 \\
+  serdeczny & 8 & 9 & 0 & 10 \\
+  mały & 6 & 7 & 10 & 0 \\
+\end{tabular}\newline\newline
 
 Wzór przyjmie postać:
-$$ p_{step} = \sum K(d) f_d $$
+$$ p_{step} = \sum\limits_{d \in D'} K(d) f_d $$
 
-gdzie $K(d)$ oznacza współczynnik wagi przypisany zgodnie z tabelą.
+gdzie $K(d)$ oznacza współczynnik wagowy przypisany zgodnie z tabelą.
+
 
 \subsection{Inboard stroke flow}
 
-Dla diagrafów wpisywanych z użyciem tej samej ręki, bardziej korzystny jest kierunek prowadzący do środka, czyli w kierunku od małego palca do wskazującego (tzw. inboard stroke flow). Czynnikowi temu będzie odpowiadał następujący wzór, w którym sumujemy częstotliwości występowania diagrafów prowadzących mniej korzystnym kierunku:
+Dla diagrafów wpisywanych z użyciem tej samej ręki, bardziej korzystny jest kierunek prowadzący do środka, czyli w kierunku od małego palca do wskazującego (tzw. inboard stroke flow). Czynnikowi temu będzie odpowiadał następujący wzór, w którym sumujemy częstotliwości występowania diagrafów prowadzących mniej korzystnym kierunku (zbiór takich diagrafów oznaczymy poniżej jako $ D' \in D $):
 
-$$ p_{isf} = \sum f_d $$
+$$ p_{isf} = \sum\limits_{d \in D'} f_d $$
 
 
 \subsection{Użycie rąk}
 
 Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Przyjmiemy tutaj, że idealny rozkład powinien być równy 50\% dla każdej ręki. Czynnik ten wyniesie zatem:
+$$ p_{hand\_usage} = (f_{left} - 50\%)^2 + (f_{right} - 50\%)^2 $$
 
-$$ p_{hand\_usage} = \sum (f - f_{opt}) $$\newline
+gdzie $f_{left}$ oznacza procentowy udział znaków wpisanych lewą ręką, a $f_{right}$ analogicznie prawą ręką.\newline\newline
 
 
 \noindent Ostatecznie, funkcja przystosowania przyjmie postać:
-
 $$ p = p_{finger} w_{finger} + p_{row} w_{row} + p_{hand_alter} w_{hand_alter} + p_{finger\_alter} w_{finger\_alter} + $$
 $$ p_{step} w_{step} + p_{isf} w_{isf} + p_{hand\_usage} w_{hand\_usage} $$
 
@@ -216,12 +227,12 @@ Zainicjuj początkową populację losowo utworzonymi osobnikami\newline
 Powtarzaj zadaną ilość pokoleń:\newline
 \indent Utwórz nową, pustą populację osobników\newline
 \indent Dopóki wielkość nowej populacji jest mniejsza od poprzedniej:\newline
+\indent\indent oblicz przystosowanie osobników istniejącej populacji\newline
 \indent\indent wybierz parę osobników za pomocą operatora selekcji\newline
 \indent\indent zastosuj z zadanym prawdopodobieństwem operację krzyżowania\newline
 \indent\indent wobec wybranych osobników\newline
 \indent\indent zastosuj z zadanym prawdopodobieństwem operację mutacji\newline
 \indent\indent wobec wybranych osobników\newline
-\indent\indent oblicz przystosowanie osobników\newline
 \indent\indent dodaj osobniki do nowej populacji\newline
 }
 
