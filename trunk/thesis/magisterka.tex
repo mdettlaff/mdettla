@@ -200,7 +200,21 @@ W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica 
 
 Jeżeli okazuje się, że danego genu z genotypu rodzica nie można umieścić w genotypie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
 
-[przykład]
+Rozważmy przykład. Niech dane będą następujące osobniki rodzicielskie:
+$$ (1 2 3 4 5 6 7 8) $$
+$$ (2 4 6 8 7 5 3 1) $$
+
+Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję genotypu potomka możemy teraz wybrać $1$ lub $2$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy.
+$$ (1 * * * * * * *) $$
+
+Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $1$ lub $8$, ale jeżeli wybierzemy $1$, wynikowy genotyp nie będzie już prawidłową permutacją. Dlatego wybieramy $8$.
+$$ (1 * * * * * * 8) $$
+
+Geny na czwartej oraz drugiej pozycji muszą również zostać wybrane z pierwszego rodzica, aby uniknąć wybrania po raz kolejny tych samych genów.
+$$ (1 2 * 4 * * * 8) $$
+
+Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, możemy powiedzieć że tworzą one cykl. Rozpatrzmy teraz geny na trzeciej pozycji. Możemy wybrać dowolny z nich ($3$ lub $6$). Jeżeli wybierzemy gen z drugiego rodzica ($6$), wtedy geny na piątej, szóstej i siódmej pozycji również mogą pochodzić z drugiego rodzica, tworząc drugi cykl. Ostatecznie, otrzymujemy następującego osobnika potomnego:
+$$ (1 2 6 4 7 5 3 8) $$
 
 
 \subsection{Krzyżowanie - Partially mapped crossover}
