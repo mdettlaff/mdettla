@@ -10,7 +10,7 @@ import xml.sax.saxutils
 
 SHOWS = [
     'Curb Your Enthusiasm', 'Futurama', 'Game of Thrones', 'Top Gear',
-    'Dexter', 'South Park'
+    'Dexter', 'South Park', 'IT Crowd, The'
 ]
 
 
