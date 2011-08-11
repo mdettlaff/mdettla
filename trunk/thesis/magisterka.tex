@@ -58,8 +58,21 @@ Spośród układów alternatywnych wobec QWERTY największą popularnością cie
 \source{Opracowanie własne}
 \end{figure}
 
+Wspomniane układy klawiatury zostały zaprojektowane ręcznie, bez udziału komputera. Podjęto też wiele prób rozwiązania problemu szukania optymalnego klawiatury (Keyboard Arrangement Problem - KAP) z użyciem algorytmów ewolucyjnych oraz innych metaheurystyk. Wagner \cite{AntColony:2002:ACO} wygenerował układy klawiatury dla języka angielskiego, niemieckiego oraz francuskiego, stosując algorytm mrówkowy (Ant Colony Optimization) oraz szereg kryteriów ergonomicznych. Yin oraz Su \cite{Swarm:2011:CSOGKAP} sformułowali problem ogólnie dla różnych typów klawiatur (General Keyboard Arrangement Problem - GKAP) oraz zastosowali do jego rozwiązania algorytm optymalizacji rojowej (Cyber Swarm Optimization). Deshwal oraz Deb \cite{Hindi} zaproponowali nowy projekt klawiatury dla języka Hindi, stosując algorytm genetyczny z reprezentacją układu klawiszy jako czterowymiarowej tablicy.
 
-\chapter{Metodologia}
+Podobne algorytmy stosowano również dla niestandardowych klawiatur, na przykład w telefonach komórkowych, na których pisze się z użyciem jednego lub dwóch palców~\cite{Li2006695}. Niniejsza praca dotyczy KAP rozumianego jako poszukiwanie optymalnego układu klawiszy dla standardowej klawiatury, zoptymalizowanego pod kątem techniki pisania bezwzrokowego (touchtyping). Pisanie bezwzrokowe zobrazowane jest na poniższej ilustracji.
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/touchtyping}
+\caption{Użycie palców w pisaniu bezwzrokowym}
+\source{Opracowanie własne}
+\end{figure}
+
+W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się powinny nad klawiszami $asdf$, a prawej nad $jkl;$. Po wciśnięciu któregoś z pozostałych klawiszy, palec powiniem powrócić na swoją standardową pozycję w środkowym rzędzie (tzw. home row). Kciuki zajmują się altem i spacją. Kolorami oznaczono, którymi palcami powinno się uderzać poszczególne klawisze, na przykład: lewy serdeczny wciska $x$, $s$, $w$ i $3$, a prawy wskazujący $n$, $m$, $h$, $j$, $y$ itd.
+
+
+\chapter{Algorytmy genetyczne}
 
 Algorytmy genetyczne.
 
