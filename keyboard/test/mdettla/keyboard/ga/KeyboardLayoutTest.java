@@ -28,7 +28,7 @@ public class KeyboardLayoutTest {
 		"jakiego pragnąłem. Nawet pobyt w Anglii nie uleczył mnie " +
 		"z zazdrości. Byłem w dalszym ciągu drobnostkowy i zazdrosny o byle " +
 		"co, a wszystkie moje najbardziej utajone pragnienia zostawały nie " +
-		"zaspokojone.";
+		"zaspokojone. Fala kajakowa.";
 	private KeyboardLayout qwerty;
 
 	@Before
@@ -45,6 +45,76 @@ public class KeyboardLayoutTest {
 			"a s d f g h j k l ;\n" +
 			"z x c v b n m , . ?";
 		assertEquals(expected, qwerty.getPhenotype());
+	}
+
+	@Test
+	public void testGetPenaltyForFingerUsage() {
+		assertEquals(0.021, qwerty.getPenaltyForFingerUsage(), 0.001);
+	}
+
+	@Test
+	public void testGetPenaltyForRowUsage() {
+		assertEquals(0.23, qwerty.getPenaltyForRowUsage(), 0.01);
+	}
+
+	@Test
+	public void testGetPenaltyForLackOfFingerAlternation() {
+		assertEquals(0.27, qwerty.getPenaltyForLackOfFingerAlternation(), 0.01);
+	}
+
+	@Test
+	public void testGetPenaltyForLackOfHandAlternation() {
+		assertEquals(1.24, qwerty.getPenaltyForLackOfHandAlternation(), 0.01);
+	}
+
+	@Test
+	public void testGetPenaltyForBigSteps() {
+		assertEquals(5.21, qwerty.getPenaltyForBigSteps(), 0.01);
+	}
+
+	@Test
+	public void testGetPenaltyForLackOfInboardStrokeFlow() {
+		assertEquals(2.16, qwerty.getPenaltyForLackOfInboardStrokeFlow(), 0.01);
+	}
+
+	@Test
+	public void testGetPenaltyForHandUsage() {
+		assertEquals(0.00043, qwerty.getPenaltyForHandUsage(), 0.00001);
+	}
+
+	@Test
+	public void testGetDist() {
+		assertEquals(0, qwerty.getDist(new Diagraph('a', 'a')));
+		assertEquals(1, qwerty.getDist(new Diagraph('q', 'w')));
+		assertEquals(1, qwerty.getDist(new Diagraph('q', 'a')));
+		assertEquals(1, qwerty.getDist(new Diagraph('i', 'k')));
+		assertEquals(1, qwerty.getDist(new Diagraph('v', 'b')));
+		assertEquals(2, qwerty.getDist(new Diagraph('q', 'e')));
+		assertEquals(2, qwerty.getDist(new Diagraph('u', 'm')));
+		assertEquals(3, qwerty.getDist(new Diagraph('w', 'c')));
+		assertEquals(4, qwerty.getDist(new Diagraph('y', 'l')));
+		assertEquals(8, qwerty.getDist(new Diagraph('x', 'i')));
+	}
+
+	@Test
+	public void testGetBigFingerStepWeight() {
+		assertEquals(5, qwerty.getBigFingerStepWeight(new Diagraph('e', 'f')));
+		assertEquals(5, qwerty.getBigFingerStepWeight(new Diagraph('j', 'i')));
+		assertEquals(5, qwerty.getBigFingerStepWeight(new Diagraph('j', 'i')));
+		assertEquals(9, qwerty.getBigFingerStepWeight(new Diagraph('x', 'e')));
+		assertEquals(6, qwerty.getBigFingerStepWeight(new Diagraph('n', 'p')));
+		assertEquals(6, qwerty.getBigFingerStepWeight(new Diagraph('a', 'r')));
+	}
+
+	@Test
+	public void testIsInboardStrokeFlow() {
+		assertFalse(qwerty.isInboardStrokeFlow(new Diagraph('a', 'a')));
+		assertTrue(qwerty.isInboardStrokeFlow(new Diagraph('a', 's')));
+		assertFalse(qwerty.isInboardStrokeFlow(new Diagraph('s', 'a')));
+		assertTrue(qwerty.isInboardStrokeFlow(new Diagraph('a', 'r')));
+		assertFalse(qwerty.isInboardStrokeFlow(new Diagraph('r', 'a')));
+		assertTrue(qwerty.isInboardStrokeFlow(new Diagraph('p', 'o')));
+		assertFalse(qwerty.isInboardStrokeFlow(new Diagraph('o', 'p')));
 	}
 
 	@Test
@@ -112,9 +182,9 @@ public class KeyboardLayoutTest {
 
 	@Test
 	public void testRowsPercentage() {
-		assertEquals(48.13, qwerty.getUsagePercentage(qwerty.getTopRow()), 0.01);
-		assertEquals(24.51, qwerty.getUsagePercentage(qwerty.getMiddleRow()), 0.01);
-		assertEquals(27.35, qwerty.getUsagePercentage(qwerty.getBottomRow()), 0.01);
+		assertEquals(46.24, qwerty.getUsagePercentage(qwerty.getTopRow()), 0.01);
+		assertEquals(27.61, qwerty.getUsagePercentage(qwerty.getMiddleRow()), 0.01);
+		assertEquals(26.14, qwerty.getUsagePercentage(qwerty.getBottomRow()), 0.01);
 	}
 
 	@Test
@@ -154,12 +224,12 @@ public class KeyboardLayoutTest {
 	public void testDescription() {
 		final String description = qwerty.getDescription();
 		final String expected =
-			"rzędy klawiszy: 48,1% 24,5% 27,4%\n" +
-			"palce lewej ręki: 15% 9% 15% 12%\n" +
-			"palce prawej ręki: 21% 13% 12% 3%\n" +
-			"użycie rąk: 51,0% 49,0%\n" +
-			"alternacja rąk: 50,5%\n" +
-			"zmiana palca: 89,6%";
+			"rzędy klawiszy: 46,2% 27,6% 26,1%\n" +
+			"palce lewej ręki: 16% 9% 15% 11%\n" +
+			"palce prawej ręki: 19% 13% 14% 3%\n" +
+			"użycie rąk: 51,5% 48,5%\n" +
+			"alternacja rąk: 52,7%\n" +
+			"zmiana palca: 89,5%";
 		assertEquals(expected, description);
 	}
 
