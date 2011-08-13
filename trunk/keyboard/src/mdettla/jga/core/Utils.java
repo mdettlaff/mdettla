@@ -36,4 +36,31 @@ public class Utils {
 		}
 		return range;
 	}
+
+	public static <T extends Number> double vectorDiff(List<T> v1, List<T> v2) {
+		if (v1.size() != v2.size()) {
+			throw new IllegalArgumentException(
+					"Vectors must be of equal sizes: v1 = " + v1 + ", v2 = " + v2);
+		}
+		double diff = 0;
+		for (int i = 0; i < v1.size(); i++) {
+			diff += Math.pow(v1.get(i).doubleValue() - v2.get(i).doubleValue(), 2);
+		}
+		return diff;
+	}
+
+	public static Character replacePolishChar(char c) {
+		String plChars = "ąęćłóśńżźĄĘĆŁÓŚŃŻŹ";
+		String latinChars = "aeclosnzzAECLOSNZZ";
+		int plCharsIndex = plChars.indexOf(c);
+		return plCharsIndex != -1 ? latinChars.charAt(plCharsIndex) : c;
+	}
+
+	static String replacePolishChars(String text) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < text.length(); i++) {
+			builder.append(replacePolishChar(text.charAt(i)));
+		}
+		return builder.toString();
+	}
 }

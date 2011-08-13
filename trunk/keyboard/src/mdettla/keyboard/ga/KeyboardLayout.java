@@ -8,14 +8,19 @@ import java.util.List;
 import java.util.Random;
 
 import mdettla.jga.core.Specimen;
+import mdettla.jga.core.Utils;
 
 public class KeyboardLayout implements Specimen {
 
-	private static final int WEIGHT_LOCATION = 1;
-	private static final int WEIGHT_HAND_ALTER = 1;
-	private static final int WEIGHT_FINGER_ALTER = 1;
+	private static final double WEIGHT_ROW_USAGE = 20;
+	private static final double WEIGHT_FINGER_USAGE = 1;
+	private static final double WEIGHT_HAND_ALTER = 1;
+	private static final double WEIGHT_FINGER_ALTER = 1;
+	private static final double WEIGHT_BIG_STEPS = 0.1;
+	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.1;
+	private static final double WEIGHT_HAND_USAGE = 1;
 
-	private static final List<Character> KEYBOARD_CHARS = Arrays.asList(
+	static final List<Character> KEYBOARD_CHARS = Arrays.asList(
 			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
 			'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
 			'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'
@@ -81,12 +86,16 @@ public class KeyboardLayout implements Specimen {
 	}
 
 	@Override
-	public Integer getFitness() {
+	public Double getFitness() {
 		checkIntegrity();
-		int penalty = 0;
-		penalty += WEIGHT_LOCATION * getPenaltyForLocation();
+		double penalty = 0;
+		penalty += WEIGHT_ROW_USAGE * getPenaltyForRowUsage();
+		penalty += WEIGHT_FINGER_USAGE * getPenaltyForFingerUsage();
 		penalty += WEIGHT_HAND_ALTER * getPenaltyForLackOfHandAlternation();
 		penalty += WEIGHT_FINGER_ALTER * getPenaltyForLackOfFingerAlternation();
+		penalty += WEIGHT_BIG_STEPS * getPenaltyForBigSteps();
+		penalty += WEIGHT_INBOARD_STROKE_FLOW * getPenaltyForLackOfInboardStrokeFlow();
+		penalty += WEIGHT_HAND_USAGE * getPenaltyForHandUsage();
 		return penalty;
 	}
 
@@ -112,38 +121,150 @@ public class KeyboardLayout implements Specimen {
 		return dvorak;
 	}
 
-	private int getPenaltyForLocation() {
-		int[] costs = {
-				5, 3, 3, 3, 4, 4, 3, 3, 3, 5,
-				1, 0, 0, 0, 2, 2, 0, 0, 0, 1,
-				6, 5, 5, 5, 7, 7, 5, 5, 5, 6
-		};
-		int penalty = 0;
-		for (int i = 0; i < KEYBOARD_CHARS.size(); i++) {
-			char c = keys.get(i);
-			penalty += costs[i] * stats.getCharOccurences(c);
+//	private int getPenaltyForLocation() {
+//		int[] costs = {
+//				5, 3, 3, 3, 4, 4, 3, 3, 3, 5,
+//				1, 0, 0, 0, 2, 2, 0, 0, 0, 1,
+//				6, 5, 5, 5, 7, 7, 5, 5, 5, 6
+//		};
+//		int penalty = 0;
+//		for (int i = 0; i < KEYBOARD_CHARS.size(); i++) {
+//			char c = keys.get(i);
+//			penalty += costs[i] * stats.getCharOccurences(c);
+//		}
+//		return penalty;
+//	}
+
+	double getPenaltyForRowUsage() {
+		List<Double> optimalDistribution = stats.getOptimalRowDistribution();
+		List<Double> actualDistribution = Arrays.asList(0.0, 0.0, 0.0);
+		for (char key : keys) {
+			int row = getRowForKey(key);
+			double charFreq = ((double)stats.getCharOccurences(key)) / stats.getTextLength();
+			actualDistribution.set(row, actualDistribution.get(row) + charFreq);
 		}
-		return penalty;
+		return Utils.vectorDiff(optimalDistribution, actualDistribution);
 	}
 
-	private int getPenaltyForLackOfHandAlternation() {
-		int penalty = 0;
+	double getPenaltyForFingerUsage() {
+		List<Double> optimalDistribution =
+			Arrays.asList(0.044, 0.123, 0.158, 0.175, 0.175, 0.158, 0.123, 0.044);
+		List<Double> actualDistribution =
+			Arrays.asList(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+		for (char key : keys) {
+			int finger = getFingerForKey(key);
+			double charFreq = ((double)stats.getCharOccurences(key)) / stats.getTextLength();
+			actualDistribution.set(finger, actualDistribution.get(finger) + charFreq);
+		}
+		return Utils.vectorDiff(optimalDistribution, actualDistribution);
+	}
+
+	double getPenaltyForLackOfHandAlternation() {
+		double penalty = 0;
 		for (Diagraph diagraph : stats.getDiagraphsFound()) {
 			if (!isHandAlternation(diagraph)) {
-				penalty += stats.getDiagraphOccurences(diagraph);
+				penalty += getDiagraphFreq(diagraph);
 			}
 		}
 		return penalty;
 	}
 
-	private int getPenaltyForLackOfFingerAlternation() {
-		int penalty = 0;
+	double getPenaltyForLackOfFingerAlternation() {
+		double penalty = 0;
 		for (Diagraph diagraph : stats.getDiagraphsFound()) {
 			if (!isFingerAlternation(diagraph)) {
-				penalty += stats.getDiagraphOccurences(diagraph);
+				penalty += getDiagraphFreq(diagraph);
 			}
 		}
 		return penalty;
+	}
+
+	double getPenaltyForBigSteps() {
+		double penalty = 0;
+		for (Diagraph diagraph : stats.getDiagraphsFound()) {
+			boolean sameHand = !isHandAlternation(diagraph);
+			boolean differentFinger = getFingerForKey(diagraph.getFirstLetter())
+					!= getFingerForKey(diagraph.getSecondLetter());
+			int verticalDist = Math.abs(getRowForKey(diagraph.getFirstLetter())
+					- getRowForKey(diagraph.getSecondLetter()));
+			if (sameHand && differentFinger && verticalDist > 0) {
+				penalty += getDiagraphFreq(diagraph) * getBigFingerStepWeight(diagraph);
+			}
+		}
+		return penalty;
+	}
+
+	double getPenaltyForLackOfInboardStrokeFlow() {
+		double penalty = 0;
+		for (Diagraph diagraph : stats.getDiagraphsFound()) {
+			if (!isInboardStrokeFlow(diagraph)) {
+				penalty += getDiagraphFreq(diagraph);
+			}
+		}
+		return penalty;
+	}
+
+	double getPenaltyForHandUsage() {
+		List<Double> optimalDistribution = Arrays.asList(0.50, 0.50);
+		List<Double> actualDistribution = Arrays.asList(0.0, 0.0);
+		for (char key : keys) {
+			double charFreq = ((double)stats.getCharOccurences(key)) / stats.getTextLength();
+			int hand = isLeftSide(key) ? 0 : 1;
+			actualDistribution.set(hand, actualDistribution.get(hand) + charFreq);
+		}
+		return Utils.vectorDiff(optimalDistribution, actualDistribution);
+	}
+
+	private double getDiagraphFreq(Diagraph diagraph) {
+		double diagraphOccurences = stats.getDiagraphOccurences(diagraph);
+		return diagraphOccurences / stats.getDiagraphsFound().size();
+	}
+
+	int getDist(Diagraph d) {
+		int c1 = keys.indexOf(d.getFirstLetter()) % KEYS_PER_ROW;
+		int c2 = keys.indexOf(d.getSecondLetter()) % KEYS_PER_ROW;
+		int r1 = keys.indexOf(d.getFirstLetter()) / KEYS_PER_ROW;
+		int r2 = keys.indexOf(d.getSecondLetter()) / KEYS_PER_ROW;
+		return Math.abs(c2 - c1) + Math.abs(r2 - r1);
+	}
+
+	int getBigFingerStepWeight(Diagraph diagraph) {
+		int[][] weights = {
+				{0, 10, 7, 6, 6, 7, 10, 0},
+				{10, 0, 9, 8, 8, 9, 0, 10},
+				{7, 9, 0, 5, 5, 0, 9, 7},
+				{6, 8, 5, 0, 0, 5, 8, 6},
+				{6, 8, 5, 0, 0, 5, 8, 6},
+				{7, 9, 0, 5, 5, 0, 9, 7},
+				{10, 0, 9, 8, 8, 9, 0, 10},
+				{0, 10, 7, 6, 6, 7, 10, 0}
+		};
+		int finger1 = getFingerForKey(diagraph.getFirstLetter());
+		int finger2 = getFingerForKey(diagraph.getSecondLetter());
+		return weights[finger1][finger2];
+	}
+
+	boolean isInboardStrokeFlow(Diagraph diagraph) {
+		int column1 = keys.indexOf(diagraph.getFirstLetter()) % KEYS_PER_ROW;
+		int column2 = keys.indexOf(diagraph.getSecondLetter()) % KEYS_PER_ROW;
+		if (isLeftSide(diagraph.getFirstLetter())
+				&& isLeftSide(diagraph.getSecondLetter())) {
+			return column1 < column2;
+		} else if (isRightSide(diagraph.getFirstLetter())
+				&& isRightSide(diagraph.getSecondLetter())) {
+			return column2 < column1;
+		}
+		return false;
+	}
+
+	private int getRowForKey(char key) {
+		if (isUpperRow(key)) {
+			return 0;
+		} else if (isMiddleRow(key)) {
+			return 1;
+		} else {
+			return 2;
+		}
 	}
 
 	private boolean isHandAlternation(Diagraph diagraph) {

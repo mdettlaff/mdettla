@@ -21,4 +21,16 @@ public class UtilsTest {
 		assertFalse(sample.get(0).equals(sample.get(2)));
 		assertFalse(sample.get(1).equals(sample.get(2)));
 	}
+
+	@Test
+	public void testVectorDiff() {
+		assertEquals(9, Utils.vectorDiff(Arrays.asList(1, 2), Arrays.asList(1, 5)));
+	}
+
+	@Test
+	public void testIgnorePolishChars() {
+		String textWithPlChars = "zażółć gęślą jaźń ZAŻÓŁĆ GĘŚLĄ JAŹŃ";
+		String textWithoutPlChars = "zazolc gesla jazn ZAZOLC GESLA JAZN";
+		assertEquals(textWithoutPlChars, Utils.replacePolishChars(textWithPlChars));
+	}
 }
