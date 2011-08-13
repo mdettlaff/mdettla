@@ -20,16 +20,24 @@ public class TextStatistics {
 	private static final Set<Character> ALL_KEYS = Collections.unmodifiableSet(
 			new HashSet<Character>(KeyboardLayout.KEYBOARD_CHARS));
 
-	private final int textLength;
+	private int textLength;
 	private Map<Character, Integer> charsFrequencies;
 	private Map<Diagraph, Integer> diagraphsFrequencies;
 
-	private final List<Double> optimalRowDistribution;
+	private List<Double> optimalRowDistribution;
 
-	public TextStatistics(Reader corpus) throws IOException {
+	public TextStatistics() {
+		charsFrequencies = new HashMap<Character, Integer>();
+		diagraphsFrequencies = new HashMap<Diagraph, Integer>();
+		for (Character key : ALL_KEYS) {
+			if (!charsFrequencies.containsKey(key)) {
+				charsFrequencies.put(key, 0);
+			}
+		}
+	}
+
+	public void read(Reader corpus) throws IOException {
 		try {
-			charsFrequencies = new HashMap<Character, Integer>();
-			diagraphsFrequencies = new HashMap<Diagraph, Integer>();
 			int charsReadCount = 0;
 			Character prevChar = null;
 			int b;
@@ -39,11 +47,7 @@ public class TextStatistics {
 				if (!ALL_KEYS.contains(c)) {
 					continue;
 				}
-				if (!charsFrequencies.containsKey(c)) {
-					charsFrequencies.put(c, 0);
-				}
 				charsFrequencies.put(c, charsFrequencies.get(c) + 1);
-
 				if (prevChar != null && !Character.isWhitespace(prevChar)) {
 					Diagraph diagraph = new Diagraph(prevChar, c);
 					if (!diagraphsFrequencies.containsKey(diagraph)) {
@@ -55,17 +59,12 @@ public class TextStatistics {
 				prevChar = c;
 				charsReadCount++;
 			}
-			for (Character key : ALL_KEYS) {
-				if (!charsFrequencies.containsKey(key)) {
-					charsFrequencies.put(key, 0);
-				}
-			}
-			textLength = charsReadCount;
+			textLength += charsReadCount;
+			optimalRowDistribution = computeOptimalRowDistribution();
 			if (charsFrequencies.size() != ALL_KEYS.size()) {
 				throw new IllegalStateException(
 						"Wrong size of monographs frequencies map: " + charsFrequencies);
 			}
-			optimalRowDistribution = computeOptimalRowDistribution();
 		} finally {
 			corpus.close();
 		}

@@ -5,7 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +32,8 @@ public class KeyboardLayoutTest {
 
 	@Before
 	public void setUp() throws IOException {
-		Reader corpusReader = new StringReader(CORPUS);
-		TextStatistics stats = new TextStatistics(corpusReader);
+		TextStatistics stats = new TextStatistics();
+		stats.read(new StringReader(CORPUS));
 		qwerty = KeyboardLayout.getQWERTYLayout(stats);
 	}
 
