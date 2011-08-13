@@ -12,13 +12,13 @@ import mdettla.jga.core.Utils;
 
 public class KeyboardLayout implements Specimen {
 
-	private static final double WEIGHT_ROW_USAGE = 20;
-	private static final double WEIGHT_FINGER_USAGE = 1;
-	private static final double WEIGHT_HAND_ALTER = 1;
-	private static final double WEIGHT_FINGER_ALTER = 1;
-	private static final double WEIGHT_BIG_STEPS = 0.1;
-	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.1;
-	private static final double WEIGHT_HAND_USAGE = 1;
+	private static final double WEIGHT_ROW_USAGE = 10;
+	private static final double WEIGHT_FINGER_USAGE = 10;
+	private static final double WEIGHT_HAND_ALTER = 0.0005;
+	private static final double WEIGHT_FINGER_ALTER = 0.001;
+	private static final double WEIGHT_BIG_STEPS = 0.0001;
+	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.0005;
+	private static final double WEIGHT_HAND_USAGE = 10;
 
 	static final List<Character> KEYBOARD_CHARS = Arrays.asList(
 			'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
@@ -291,9 +291,9 @@ public class KeyboardLayout implements Specimen {
 	 */
 	@Override
 	public int compareTo(Specimen other) {
-		if (getFitness().intValue() < other.getFitness().intValue()) {
+		if (getFitness().doubleValue() < other.getFitness().doubleValue()) {
 			return 1;
-		} else if (getFitness().intValue() > other.getFitness().intValue()) {
+		} else if (getFitness().doubleValue() > other.getFitness().doubleValue()) {
 			return -1;
 		} else {
 			return 0;
@@ -317,7 +317,26 @@ public class KeyboardLayout implements Specimen {
 	public String toString() {
 		return getPhenotype() + "\n" +
 		"przystosowanie: " + getFitness() + "\n" +
-		getDescription();
+		getDescription() + "\n"	+ getEvaluationFunctionComponents();
+	}
+
+	private String getEvaluationFunctionComponents() {
+		StringBuilder evaluationFunction = new StringBuilder();
+		evaluationFunction.append("row usage = " +
+				(getPenaltyForRowUsage() * WEIGHT_ROW_USAGE) + "\n");
+		evaluationFunction.append("finger usage = " +
+				(getPenaltyForFingerUsage() * WEIGHT_FINGER_USAGE) + "\n");
+		evaluationFunction.append("hand alternation = " +
+				(getPenaltyForLackOfHandAlternation() * WEIGHT_HAND_ALTER) + "\n");
+		evaluationFunction.append("finger alternation = " +
+				(getPenaltyForLackOfFingerAlternation() * WEIGHT_FINGER_ALTER) + "\n");
+		evaluationFunction.append("big steps = " +
+				(getPenaltyForBigSteps() * WEIGHT_BIG_STEPS) + "\n");
+		evaluationFunction.append("inboard stroke flow = " +
+				(getPenaltyForLackOfInboardStrokeFlow() * WEIGHT_INBOARD_STROKE_FLOW) + "\n");
+		evaluationFunction.append("hand usage = " +
+				(getPenaltyForHandUsage() * WEIGHT_HAND_USAGE));
+		return evaluationFunction.toString();
 	}
 
 	String getDescription() {
