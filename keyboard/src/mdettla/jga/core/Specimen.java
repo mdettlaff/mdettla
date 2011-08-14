@@ -30,6 +30,8 @@ public interface Specimen extends Comparable<Specimen> {
 	 */
 	void setOppositeGeneValueAt(int position);
 
+	void computeFitness();
+
 	/**
 	 * Wartość przystosowania tego osobnika.
 	 *

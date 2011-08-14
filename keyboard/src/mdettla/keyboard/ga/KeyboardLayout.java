@@ -14,10 +14,10 @@ public class KeyboardLayout implements Specimen {
 
 	private static final double WEIGHT_ROW_USAGE = 10;
 	private static final double WEIGHT_FINGER_USAGE = 10;
-	private static final double WEIGHT_HAND_ALTER = 0.0005;
+	private static final double WEIGHT_HAND_ALTER = 0.00001;
 	private static final double WEIGHT_FINGER_ALTER = 0.001;
-	private static final double WEIGHT_BIG_STEPS = 0.0001;
-	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.0005;
+	private static final double WEIGHT_BIG_STEPS = 0.00005;
+	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.00001;
 	private static final double WEIGHT_HAND_USAGE = 10;
 
 	static final List<Character> KEYBOARD_CHARS = Arrays.asList(
@@ -29,6 +29,7 @@ public class KeyboardLayout implements Specimen {
 
 	private List<Character> keys;
 	private final TextStatistics stats;
+	private Double fitness;
 
 	KeyboardLayout(TextStatistics stats) {
 		keys = new ArrayList<Character>(KEYBOARD_CHARS);
@@ -86,7 +87,10 @@ public class KeyboardLayout implements Specimen {
 	}
 
 	@Override
-	public Double getFitness() {
+	public void computeFitness() {
+		if (fitness != null) {
+			throw new IllegalStateException("Fitness was already computed.");
+		}
 		checkIntegrity();
 		double penalty = 0;
 		penalty += WEIGHT_ROW_USAGE * getPenaltyForRowUsage();
@@ -96,7 +100,15 @@ public class KeyboardLayout implements Specimen {
 		penalty += WEIGHT_BIG_STEPS * getPenaltyForBigSteps();
 		penalty += WEIGHT_INBOARD_STROKE_FLOW * getPenaltyForLackOfInboardStrokeFlow();
 		penalty += WEIGHT_HAND_USAGE * getPenaltyForHandUsage();
-		return penalty;
+		fitness = penalty;
+	}
+
+	@Override
+	public Double getFitness() {
+		if (fitness == null) {
+			throw new IllegalStateException("Must compute fitness first.");
+		}
+		return fitness;
 	}
 
 	public static KeyboardLayout getQWERTYLayout(TextStatistics stats) {
@@ -107,6 +119,7 @@ public class KeyboardLayout implements Specimen {
 		);
 		KeyboardLayout qwerty = new KeyboardLayout(stats);
 		qwerty.keys = QWERTY_CHARS;
+		qwerty.computeFitness();
 		return qwerty;
 	}
 
@@ -118,6 +131,7 @@ public class KeyboardLayout implements Specimen {
 		);
 		KeyboardLayout dvorak = new KeyboardLayout(stats);
 		dvorak.keys = DVORAK_CHARS;
+		dvorak.computeFitness();
 		return dvorak;
 	}
 

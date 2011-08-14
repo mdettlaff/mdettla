@@ -52,6 +52,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 	private double mutationProbability;
 	private SelectionFunction selectionFunction;
 	protected int populationSize;
+	private Random random;
 
 	public GeneticAlgorithm(List<Specimen> initialPopulation) {
 		this.initialPopulation = initialPopulation;
@@ -61,6 +62,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 		mutationOperator = new OnePointMutation();
 		mutationProbability = DEFAULT_MUTATION_PROBABILITY;
 		selectionFunction = new TournamentSelection(4);
+		random = new Random();
 	}
 
 	public void setCrossoverOperator(CrossoverOperator crossoverOperator) {
@@ -119,10 +121,12 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 	 */
 	public Specimen runEpoch(int generations) {
 		List<Specimen> population = initialPopulation;
+		computeFitness(population);
 		Specimen best = initialPopulation.iterator().next();
 
 		for (int i = 0; i < generations; i++) {
 			population = nextGeneration(population);
+			computeFitness(population);
 
 			Specimen bestFromPopulation = Collections.max(population);
 			best = Collections.max(Arrays.asList(best, bestFromPopulation));
@@ -168,11 +172,10 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 		};
 	}
 
-	protected List<Specimen> nextGeneration(List<Specimen> originalPopulation) {
+	private List<Specimen> nextGeneration(List<Specimen> originalPopulation) {
 		List<Specimen> newPopulation = new ArrayList<Specimen>(populationSize);
-		int specimensCreated = 0;
-		Random random = new Random();
 		int specimensToCreate = originalPopulation.size();
+		int specimensCreated = 0;
 		while (specimensCreated < specimensToCreate) {
 			SelectionFunction selectionFunction = getSelectionFunction();
 			Specimen parent1 = selectionFunction.select(originalPopulation);
@@ -195,5 +198,11 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 			}
 		}
 		return newPopulation;
+	}
+
+	protected void computeFitness(List<Specimen> population) {
+		for (Specimen specimen : population) {
+			specimen.computeFitness();
+		}
 	}
 }
