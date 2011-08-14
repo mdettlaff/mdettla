@@ -5,10 +5,10 @@ import java.util.Random;
 class Text implements Specimen {
 
 	public static final String TARGET = "methinks it is like a weasel";
-
 	public static final String AVAILABLE_CHARS = "abcdefghijklmnopqrstuvwxyz ";
 
 	private char[] text;
+	private Integer fitness;
 
 	public Text() {
 		text = new char[getGenotypeLength()];
@@ -63,14 +63,25 @@ class Text implements Specimen {
 	}
 
 	@Override
-	public Integer getFitness() {
+	public void computeFitness() {
+		if (fitness != null) {
+			throw new IllegalStateException("Fitness was already computed.");
+		}
 		Integer matchingChars = 0;
 		for (int i = 0; i < TARGET.length(); i++) {
 			if (text[i] == TARGET.charAt(i)) {
 				matchingChars++;
 			}
 		}
-		return matchingChars;
+		fitness = matchingChars;
+	}
+
+	@Override
+	public Integer getFitness() {
+		if (fitness == null) {
+			throw new IllegalStateException("Must compute fitness first.");
+		}
+		return fitness;
 	}
 
 	@Override

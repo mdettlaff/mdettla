@@ -23,6 +23,10 @@ public class Sequence implements Specimen {
 	}
 
 	@Override
+	public void computeFitness() {
+	}
+
+	@Override
 	public Number getFitness() {
 		return 0;
 	}

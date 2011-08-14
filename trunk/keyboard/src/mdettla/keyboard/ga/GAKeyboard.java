@@ -14,8 +14,8 @@ import mdettla.jga.operators.mutation.SwapMutation;
 
 public class GAKeyboard {
 
-	private static final int INITIAL_POPULATION_SIZE = 50;
-	private static final int GENERATIONS_COUNT = 32;
+	private static final int INITIAL_POPULATION_SIZE = 100;
+	private static final int GENERATIONS_COUNT = 100;
 
 	public static void main(String[] args) throws IOException {
 		TextStatistics stats = getTextStatistics(args);
@@ -26,8 +26,9 @@ public class GAKeyboard {
 		ga.setCrossoverOperator(new CycleCrossover());
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
 
-		System.out.println("\nLosowy układ:\n" +
-				KeyboardLayout.createRandomInstance(stats));
+		Specimen random = KeyboardLayout.createRandomInstance(stats);
+		random.computeFitness();
+		System.out.println("\nLosowy układ:\n" + random);
 		System.out.println("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
 		System.out.println("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats));
 		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);

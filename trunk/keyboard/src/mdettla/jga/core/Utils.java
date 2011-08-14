@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Utils {
 
-	public synchronized static <T> List<T> randomSample(List<T> population, int k) {
+	public static <T> List<T> randomSample(List<T> population, int k) {
 		Random random = new Random();
 		List<Integer> indexes = new ArrayList<Integer>(population.size());
 		for (int i = 0; i < population.size(); i++) {
@@ -21,7 +21,7 @@ public class Utils {
 		return sample;
 	}
 
-	public synchronized static List<Integer> range(int n) {
+	public static List<Integer> range(int n) {
 		List<Integer> range = new ArrayList<Integer>(n);
 		for (int i = 0; i < n; i++) {
 			range.add(i);
@@ -29,7 +29,7 @@ public class Utils {
 		return range;
 	}
 
-	public synchronized static List<Integer> range(int a, int b) {
+	public static List<Integer> range(int a, int b) {
 		List<Integer> range = new ArrayList<Integer>(b - a);
 		for (int i = a; i < b; i++) {
 			range.add(i);
@@ -62,5 +62,17 @@ public class Utils {
 			builder.append(replacePolishChar(text.charAt(i)));
 		}
 		return builder.toString();
+	}
+
+	public static <T> List<List<T>> partition(List<T> list, int partitionsCount) {
+		int partitionSize = list.size() / partitionsCount;
+		List<List<T>> partitions = new ArrayList<List<T>>(partitionsCount);
+		for (int i = 0; i < partitionsCount - 1; i++) {
+			int start = i * partitionSize;
+			partitions.add(list.subList(start, start + partitionSize));
+		}
+		int start = (partitionsCount - 1) * partitionSize;
+		partitions.add(list.subList(start, list.size()));
+		return partitions;
 	}
 }
