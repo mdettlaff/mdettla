@@ -311,13 +311,13 @@ Do obliczania oceny układów klawiatury został użyty zbiór tekstów powstał
 
 Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:
 
-\begin{tabular}{ c | c | c | c | c | c | c | c }
-  układ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
+\begin{tabular}{ c | c | c | c | c | c | c | c | c }
+  układ & $p$ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
   \hline
-  losowy       & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  QWERTY       & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
-  Dvorak       & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
-  wygenerowany & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+  losowy       & 2.44 & 0.39 & 1.5 & 0.005 & 0.16 & 0.07 & 0.009 & 0.29 \\
+  QWERTY       & 3.00 & 0.11 & 2.52 & 0.005 & 0.11 & 0.09 & 0.008 & 0.14 \\
+  Dvorak       & 0.30 & 0.09 & 0.029 & 0.003 & 0.06 & 0.04 & 0.008 & 0.06 \\
+  wygenerowany & 0.16 & 0.01 & 0.005 & 0.004 & 0.07 & 0.05 & 0.007 & 0.002 \\
 \end{tabular}\newline
 
 
@@ -339,13 +339,13 @@ Do obliczania oceny układów klawiatury został użyty zbiór tekstów powstał
 
 Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:
 
-\begin{tabular}{ c | c | c | c | c | c | c | c }
-  układ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
+\begin{tabular}{ c | c | c | c | c | c | c | c | c }
+  układ & $p$ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
   \hline
-  losowy       & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-  QWERTY       & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
-  Dvorak       & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
-  wygenerowany & 0 & 0 & 0 & 0 & 0 & 0 & 0  \\
+  losowy       & 2.20 & 0.31 & 1.81 & 0.001 & 0.02 & 0.01 & 0.0017 & 0.02 \\
+  QWERTY       & 1.87 & 0.16 & 1.64 & 0.001 & 0.02 & 0.02 & 0.0017 & 0.01  \\
+  Dvorak       & 0.52 & 0.22 & 0.26 & 0.0007 & 0.015 & 0.014 & 0.0019 & 0.003  \\
+  wygenerowany & 0.04 & 0.002 & 0.009 & 0.0001 & 0.015 & 0.001 & 0.0016 & 0.0001  \\
 \end{tabular}\newline
 
 Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dlatego należy się spodziewać że wynik dla języka polskiego nie będzie optymalny. Rzeczywiście, układ Dvoraka jest nadal lepszy od losowo wygenerowanego lub QWERTY, ale bardzo daleki od optimum. Układ klawiszy wygenerowany przez algorytm jest natomiast wyraźnie lepszy od wszystkich pozostałych.
