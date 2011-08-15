@@ -309,8 +309,7 @@ Do obliczania oceny układów klawiatury został użyty zbiór tekstów powstał
 \caption{Najlepszy układ klawiszy dla języka angielskiego znaleziony przez algorytm}
 \end{figure}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:
-
+Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline
 \begin{tabular}{ c | c | c | c | c | c | c | c | c }
   układ & $p$ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
   \hline
@@ -319,6 +318,8 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerow
   Dvorak       & 0.30 & 0.09 & 0.029 & 0.003 & 0.06 & 0.04 & 0.008 & 0.06 \\
   wygenerowany & 0.16 & 0.01 & 0.005 & 0.004 & 0.07 & 0.05 & 0.007 & 0.002 \\
 \end{tabular}\newline
+
+Ponieważ podczas projektowania układu QWERTY nie były uwzględniane kryteria ergonomiczne, należy spodziewać się że nie będzie on znacząco lepszy od losowo wygenerowanego układu klawiszy. Rzeczywiście, funkcja oceny nie różni się istotnie w tych przypadkach. Wyraźnie lepsze wyniki osiągnął układ Dvoraka, co nie jest zaskoczeniem biorąc pod uwagę że kryteria stosowane przy jego projektowaniu w dużym stopniu pokrywają się z tymi użytymi w funkcji przystosowania. Najlepszy wynik znaleziony przez algorytm genetyczny posiada ocenę o $46\%$ korzystniejszą od najlepiej ocenionego układu wśród pozostałych, jakim jest klawiatura Dvoraka.
 
 
 \section{Wyniki dla języka polskiego}
@@ -337,8 +338,7 @@ Do obliczania oceny układów klawiatury został użyty zbiór tekstów powstał
 \caption{Najlepszy układ klawiszy dla języka polskiego znaleziony przez algorytm}
 \end{figure}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:
-
+Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerowanego układu klawiatury, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline
 \begin{tabular}{ c | c | c | c | c | c | c | c | c }
   układ & $p$ & $p_{finger}$ & $p_{row}$ & $p_{hand\_alter}$ & $p_{finger\_alter}$ & $p_{step}$ & $p_{isf}$ & $p_{hand\_usage}$ \\
   \hline
@@ -346,14 +346,14 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerow
   QWERTY       & 1.87 & 0.16 & 1.64 & 0.001 & 0.02 & 0.02 & 0.0017 & 0.01  \\
   Dvorak       & 0.52 & 0.22 & 0.26 & 0.0007 & 0.015 & 0.014 & 0.0019 & 0.003  \\
   wygenerowany & 0.04 & 0.002 & 0.009 & 0.0001 & 0.015 & 0.001 & 0.0016 & 0.0001  \\
-\end{tabular}\newline
+\end{tabular}\newline\newline
 
-Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dlatego należy się spodziewać że wynik dla języka polskiego nie będzie optymalny. Rzeczywiście, układ Dvoraka jest nadal lepszy od losowo wygenerowanego lub QWERTY, ale bardzo daleki od optimum. Układ klawiszy wygenerowany przez algorytm jest natomiast wyraźnie lepszy od wszystkich pozostałych.
+Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dlatego należy się spodziewać że wynik dla języka polskiego nie będzie optymalny. Rzeczywiście, układ Dvoraka jest nadal lepszy od losowo wygenerowanego lub QWERTY, ale bardzo daleki od optimum. Układ klawiszy wygenerowany przez algorytm jest natomiast wyraźnie lepszy od wszystkich pozostałych, co daje znaczącą przewagę w porównaniu z wynikami dla języka angielskiego.
 
 
 % zakończenie
 \summary
-Zakończenie.
+Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że istnieją układy lepsze od tych pozostających w powszechnym użyciu i można poszukiwać ich za pomocą algorytmów genetycznych.
 
 % załączniki (opcjonalnie):
 \appendix
