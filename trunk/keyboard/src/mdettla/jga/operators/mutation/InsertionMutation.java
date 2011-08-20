@@ -13,6 +13,11 @@ public class InsertionMutation implements MutationOperator {
 	public void mutate(Specimen specimen) {
 		int position1 = random.nextInt(specimen.getGenotypeLength());
 		int position2 = random.nextInt(specimen.getGenotypeLength());
+		if (!(position1 <= position2)) {
+			int tmp = position1;
+			position1 = position2;
+			position2 = tmp;
+		}
 		mutate(specimen, position1, position2);
 	}
 
