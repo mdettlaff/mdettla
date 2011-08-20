@@ -74,14 +74,50 @@ W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się 
 
 \chapter{Algorytmy genetyczne}
 
-Algorytmy genetyczne.
+Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedzczenia oraz doboru naturalnego.
+
+Algorytmy genetyczne należą do metod populacyjnych, w których operujemy na pewnym zmieniającym się zbiorze (populacji) rozwiązań. Daje to znaczącą przewagę nad prostszymi algorytmami wspinaczkowymi, w których zachowujemy tylko jedno rozwiązanie w danym momencie. Zachowywanie populacji rozwiązań zmniejsza prawdopodobieństwo przedwczesnej zbieżności w lokalnym optimum, zwiększając możliwości eksploracyjne algorytmu. Inne skrajne podejście, w którym przeszukujemy jednocześnie całą przestrzeń rozwiązań, jest również mało skuteczne ze względu na zbyt duży rozmiar tej przestrzeni dla większości interesujących problemów. Algorytm genetyczny unika tego problemu poprzez dobranie rozmiaru populacji znacznie mniejszego od rozmiaru całej przestrzeni poszukiwań.
+
+Schemat algorytmu genetycznego można przedstawić za pomocą następującego pseudokodu:
+
+\noindent
+\texttt{i := 0\newline
+Zainicjuj populację początkową P(i)\newline
+Oceń osobniki z populacji początkowej\newline
+Powtarzaj dopóki nie jest spełniony warunek zakończenia:\newline
+\indent i := i + 1\newline
+\indent Wybierz osobniki z P(i-1) i utwórz nową populację P(i)\newline
+\indent Zmień osobniki z P(i)\newline
+\indent Oceń osobniki z P(i)\newline
+}
+
+Warunkiem zakończenia może być upłynięcie określonej ilości iteracji, lub znalezienie rozwiązania które jest wystarczająco bliskie optimum.
+
+Algorytm genetyczny operuje na osobnikach w zakodowanej postaci, którą najczęściej nazywa się chromosomem. Każdy chromosom reprezentuje potencjalne rozwiązanie zadania. W klasycznych algorytmach genetycznych, chromosom ma postać ciągu bitów o stałej długości.
+
+Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna się ona cechować możliwie dużą różnorodnością, dlatego najczęściej stosowaną metodą jej tworzenia jest generowanie chromosomów w sposób losowy. Czasem w populacji początkowej umieszcza się też specjalnie przygotowane osobniki, o których spodziewamy się że leżą w pobliżu optimum.
+
+Wybór osobników do nowo tworzonych populacji jest procesem analogicznym do doboru naturalnego. W ujęciu Karola Darwina, największe szanse przetrwania mają osobniki najlepiej przystosowane do środowiska. Wpływ środowiska jest w algorytmach genetycznych modelowany przez funkcję oceny lub funkcję przystosowania. Ponieważ problemy optymalizacji zwykle definiuje się w kategoriach poszukiwania minimum, przyjmiemy konwencję zgodnie z którą mniejsza wartość funkcji oceny oznacza lepsze przystosowanie. Dlatego też w operacji wyboru (selekcji) osobników do nowej populacji powinny być faworyzowane osobniki o niższej wartości funkcji przystosowania.
+
+Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwej proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takie jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
+
+Sam operator selekcji nie jest wystarczającym warunkiem do tego, aby wartość funkcji oceny poprawiała się w kolejnych populacjach. Potrzebny jest operator wprowadzający zmienność oraz innowacje do populacji. W klasycznych algorytmach genetycznych, służą do tego operacje mutacji oraz krzyżowania.
+
+Operacja mutacji powinna powodować jedynie niewielką zmianę w położeniu rozwiązania w pejzażu dostosowań. To znaczy, niewielka modyfikacja chromosomu powinna wpływać w niewielkim stopniu na wartość funkcji przystosowania. W klasycznym algorytmie genetycznym, mutacja polega na losowej zmianie elementu chromosomu z jednakowym (niewielkim) prawdopodobieństwem na wartość przeciwną (z jedynki na zero i na odwrót) \cite{Goldberg:1998:AGZ}.
+
+Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
+
+Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
+
 
 \chapter{Opis algorytmu}
 
 
 \section{Reprezentacja genotypu}
 
-Stosowana jest permutacyjna reprezentacja genotypu. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom ",", ".", "?" oraz ";". Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! \simeq 2.65 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
+Układ klawiatury można zakodować jako ciąg binarny, opisując każdy klawisz za pomocą określonej ilości bitów. Niestety, stosowanie klasycznych operatorów genetycznych spowoduje, że zdecydowana większość powstałych w ten sposób rozwiązań będzie nieprawidłowych. Przykładowo, jeżeli użyjemy trzech bitów do opisania każdego klawisza klawiatury o 40 klawiszach, tylko jedna z każdych 1016 dowolnie wybranych struktur 120-bitowych jest strukturą o właściwej konfiguracji klawiszy~\cite{GloverKey}.
+
+W związku z powyższym, zastosowana zostanie permutacyjna reprezentacja genotypu oraz specjalnie dla niej dostosowane operatory mutacji oraz krzyżowania. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom ",", ".", "?" oraz ";". Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! \simeq 2.65 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
 
 Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
 
@@ -357,9 +393,9 @@ Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że is
 
 % załączniki (opcjonalnie):
 \appendix
-\chapter{Tytuł załącznika}
+\chapter{Część programowa}
 
-Treść załącznika.
+Do pracy dołączono program w języku Java, stanowiący implementację opisanego w niej algorytmu.
 
 % literatura (obowiązkowo):
 \bibliographystyle{unsrt}
