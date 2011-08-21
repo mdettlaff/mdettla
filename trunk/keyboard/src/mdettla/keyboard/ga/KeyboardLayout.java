@@ -14,7 +14,7 @@ public class KeyboardLayout implements Specimen {
 
 	private static final double WEIGHT_ROW_USAGE = 10;
 	private static final double WEIGHT_FINGER_USAGE = 10;
-	private static final double WEIGHT_HAND_ALTER = 0.00001;
+	private static final double WEIGHT_HAND_ALTER = 0.0001;
 	private static final double WEIGHT_FINGER_ALTER = 0.001;
 	private static final double WEIGHT_BIG_STEPS = 0.00005;
 	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.00001;
@@ -26,6 +26,106 @@ public class KeyboardLayout implements Specimen {
 			'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'
 	);
 	final int KEYS_PER_ROW = 10;
+	public final Objective[] OBJECTIVES = {
+			new Objective() {
+				@Override
+				public String getName() {
+					return "row usage";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForRowUsage();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_ROW_USAGE;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "finger usage";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForFingerUsage();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_FINGER_USAGE;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "hand alternation";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForLackOfHandAlternation();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_HAND_ALTER;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "finger alternation";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForLackOfFingerAlternation();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_FINGER_ALTER;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "big steps";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForBigSteps();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_BIG_STEPS;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "inboard stroke flow";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForLackOfInboardStrokeFlow();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_INBOARD_STROKE_FLOW;
+				}
+			},
+			new Objective() {
+				@Override
+				public String getName() {
+					return "hand usage";
+				}
+				@Override
+				public double computeValue() {
+					return getPenaltyForHandUsage();
+				}
+				@Override
+				public double getWeight() {
+					return WEIGHT_HAND_USAGE;
+				}
+			}
+	};
 
 	private List<Character> keys;
 	private final TextStatistics stats;
@@ -93,13 +193,9 @@ public class KeyboardLayout implements Specimen {
 		}
 		checkIntegrity();
 		double penalty = 0;
-		penalty += WEIGHT_ROW_USAGE * getPenaltyForRowUsage();
-		penalty += WEIGHT_FINGER_USAGE * getPenaltyForFingerUsage();
-		penalty += WEIGHT_HAND_ALTER * getPenaltyForLackOfHandAlternation();
-		penalty += WEIGHT_FINGER_ALTER * getPenaltyForLackOfFingerAlternation();
-		penalty += WEIGHT_BIG_STEPS * getPenaltyForBigSteps();
-		penalty += WEIGHT_INBOARD_STROKE_FLOW * getPenaltyForLackOfInboardStrokeFlow();
-		penalty += WEIGHT_HAND_USAGE * getPenaltyForHandUsage();
+		for (Objective objective : OBJECTIVES) {
+			penalty += objective.getValue() * objective.getWeight();
+		}
 		fitness = penalty;
 	}
 
@@ -336,21 +432,11 @@ public class KeyboardLayout implements Specimen {
 
 	private String getEvaluationFunctionComponents() {
 		StringBuilder evaluationFunction = new StringBuilder();
-		evaluationFunction.append("row usage = " +
-				(getPenaltyForRowUsage() * WEIGHT_ROW_USAGE) + "\n");
-		evaluationFunction.append("finger usage = " +
-				(getPenaltyForFingerUsage() * WEIGHT_FINGER_USAGE) + "\n");
-		evaluationFunction.append("hand alternation = " +
-				(getPenaltyForLackOfHandAlternation() * WEIGHT_HAND_ALTER) + "\n");
-		evaluationFunction.append("finger alternation = " +
-				(getPenaltyForLackOfFingerAlternation() * WEIGHT_FINGER_ALTER) + "\n");
-		evaluationFunction.append("big steps = " +
-				(getPenaltyForBigSteps() * WEIGHT_BIG_STEPS) + "\n");
-		evaluationFunction.append("inboard stroke flow = " +
-				(getPenaltyForLackOfInboardStrokeFlow() * WEIGHT_INBOARD_STROKE_FLOW) + "\n");
-		evaluationFunction.append("hand usage = " +
-				(getPenaltyForHandUsage() * WEIGHT_HAND_USAGE));
-		return evaluationFunction.toString();
+		for (Objective objective : OBJECTIVES) {
+			evaluationFunction.append(objective.getName() + " = " +
+					(objective.getValue() * objective.getWeight()) + "\n");
+		}
+		return evaluationFunction.toString().trim();
 	}
 
 	String getDescription() {

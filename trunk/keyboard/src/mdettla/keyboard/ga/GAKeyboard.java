@@ -11,7 +11,7 @@ import mdettla.jga.core.GeneticAlgorithm;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.operators.crossover.CycleCrossover;
 import mdettla.jga.operators.mutation.SwapMutation;
-import mdettla.jga.operators.selection.TournamentSelection;
+import mdettla.jga.operators.selection.MultiobjectiveMajorityTournamentSelection;
 
 public class GAKeyboard {
 
@@ -31,7 +31,7 @@ public class GAKeyboard {
 		ga.setMutationProbability(MUTATION_PROBABILITY);
 		ga.setCrossoverOperator(new CycleCrossover());
 		ga.setCrossoverProbability(CROSSOVER_PROBABILITY);
-		ga.setSelectionFunction(new TournamentSelection(TOURNAMENT_SIZE));
+		ga.setSelectionFunction(new MultiobjectiveMajorityTournamentSelection(TOURNAMENT_SIZE));
 		ga.setEliteSize(ELITE_SIZE);
 
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
@@ -42,6 +42,7 @@ public class GAKeyboard {
 		System.out.println("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
 		System.out.println("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats));
 		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);
+		compareObjectives((KeyboardLayout) best, KeyboardLayout.getDvorakLayout(stats));
 	}
 
 	private static TextStatistics getTextStatistics(String[] texts) throws IOException {
@@ -63,5 +64,13 @@ public class GAKeyboard {
 			initialPopulation.add(KeyboardLayout.createRandomInstance(stats));
 		}
 		return initialPopulation;
+	}
+
+	private static void compareObjectives(KeyboardLayout layout, KeyboardLayout other) {
+		for (int i = 0; i < layout.OBJECTIVES.length; i++) {
+			System.out.println(String.format("%s: %s (%.3f%%)", layout.OBJECTIVES[i].getName(),
+					layout.OBJECTIVES[i].getValue() < other.OBJECTIVES[i].getValue(),
+					(1 - layout.OBJECTIVES[i].getValue() / other.OBJECTIVES[i].getValue()) * 100));
+		}
 	}
 }
