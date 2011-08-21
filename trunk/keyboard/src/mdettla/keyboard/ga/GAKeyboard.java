@@ -19,8 +19,8 @@ public class GAKeyboard {
 	private static final int GENERATIONS_COUNT = 100;
 	private static final int ELITE_SIZE = 2;
 	private static final int TOURNAMENT_SIZE = 4;
-	private static final double CROSSOVER_PROBABILITY = .7;
 	private static final double MUTATION_PROBABILITY = .7;
+	private static final double CROSSOVER_PROBABILITY = .7;
 
 	public static void main(String[] args) throws IOException {
 		TextStatistics stats = getTextStatistics(args);
@@ -33,6 +33,7 @@ public class GAKeyboard {
 		ga.setCrossoverProbability(CROSSOVER_PROBABILITY);
 		ga.setSelectionFunction(new MultiobjectiveMajorityTournamentSelection(TOURNAMENT_SIZE));
 		ga.setEliteSize(ELITE_SIZE);
+		System.out.println(getInitialParameters(ga) + "\n");
 
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
 
@@ -53,7 +54,7 @@ public class GAKeyboard {
 		for (String text : texts) {
 			stats.read(new InputStreamReader(new FileInputStream(text)));
 		}
-		System.out.println("Długość analizowanego tekstu: "
+		System.out.println("długość analizowanego tekstu: "
 				+ stats.getTextLength() + " znaków");
 		return stats;
 	}
@@ -64,6 +65,23 @@ public class GAKeyboard {
 			initialPopulation.add(KeyboardLayout.createRandomInstance(stats));
 		}
 		return initialPopulation;
+	}
+
+	private static String getInitialParameters(GeneticAlgorithm ga) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("rozmiar populacji: " + POPULATION_SIZE + "\n");
+		sb.append("ilość iteracji: " + GENERATIONS_COUNT + "\n");
+		sb.append("rozmiar elity: " + ga.getEliteSize() + "\n");
+		sb.append("rozmiar turnieju: " + TOURNAMENT_SIZE + "\n");
+		sb.append("prawdopodobieństwo mutacji: " + ga.getMutationProbability() + "\n");
+		sb.append("prawdopodobieństwo krzyżowania: " + ga.getCrossoverProbability() + "\n");
+		sb.append("operator mutacji: " +
+				ga.getMutationOperator().getClass().getSimpleName() + "\n");
+		sb.append("operator krzyżowania: " +
+				ga.getCrossoverOperator().getClass().getSimpleName() + "\n");
+		sb.append("operator selekcji: " +
+				ga.getSelectionFunction().getClass().getSimpleName());
+		return sb.toString();
 	}
 
 	private static void compareObjectives(KeyboardLayout layout, KeyboardLayout other) {
