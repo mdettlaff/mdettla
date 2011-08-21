@@ -42,9 +42,6 @@ import mdettla.jga.operators.selection.TournamentSelection;
  */
 public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 
-	public static final double DEFAULT_CROSSOVER_PROBABILITY = .7;
-	public static final double DEFAULT_MUTATION_PROBABILITY = .7;
-
 	private List<Specimen> initialPopulation;
 	private CrossoverOperator crossoverOperator;
 	private double crossoverProbability;
@@ -52,16 +49,18 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 	private double mutationProbability;
 	private SelectionFunction selectionFunction;
 	protected int populationSize;
-	private Random random;
+	private int eliteSize;
+	private final Random random;
 
 	public GeneticAlgorithm(List<Specimen> initialPopulation) {
 		this.initialPopulation = initialPopulation;
 		populationSize = initialPopulation.size();
 		crossoverOperator = new CutPointCrossover(1);
-		crossoverProbability = DEFAULT_CROSSOVER_PROBABILITY;
+		crossoverProbability = .7;
 		mutationOperator = new OnePointMutation();
-		mutationProbability = DEFAULT_MUTATION_PROBABILITY;
+		mutationProbability = .7;
 		selectionFunction = new TournamentSelection(4);
+		eliteSize = 0;
 		random = new Random();
 	}
 
@@ -111,6 +110,14 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 
 	public SelectionFunction getSelectionFunction() {
 		return selectionFunction;
+	}
+
+	public void setEliteSize(int eliteSize) {
+		this.eliteSize = eliteSize;
+	}
+
+	public int getEliteSize() {
+		return eliteSize;
 	}
 
 	/**
@@ -173,9 +180,8 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 
 	private List<Specimen> nextGeneration(List<Specimen> originalPopulation) {
 		List<Specimen> newPopulation = new ArrayList<Specimen>(populationSize);
-		int specimensToCreate = originalPopulation.size();
-		int specimensCreated = 0;
-		while (specimensCreated < specimensToCreate) {
+		newPopulation.addAll(getElite(originalPopulation));
+		while (newPopulation.size() < originalPopulation.size()) {
 			SelectionFunction selectionFunction = getSelectionFunction();
 			Specimen parent1 = selectionFunction.select(originalPopulation);
 			Specimen parent2 = selectionFunction.select(originalPopulation);
@@ -190,13 +196,24 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 					getMutationOperator().mutate(specimen);
 				}
 				newPopulation.add(specimen);
-				specimensCreated++;
-				if (specimensCreated == specimensToCreate) {
+				if (newPopulation.size() == originalPopulation.size()) {
 					break;
 				}
 			}
 		}
 		return newPopulation;
+	}
+
+	private List<Specimen> getElite(List<Specimen> originalPopulation) {
+		List<Specimen> elite = new ArrayList<Specimen>(eliteSize);
+		if (eliteSize > 0) {
+			List<Specimen> sorted = new ArrayList<Specimen>(originalPopulation);
+			Collections.sort(sorted, Collections.reverseOrder());
+			for (Specimen specimen : sorted.subList(0, eliteSize)) {
+				elite.add(specimen.createCopy());
+			}
+		}
+		return elite;
 	}
 
 	protected void computeFitness(List<Specimen> population) {
