@@ -11,11 +11,16 @@ import mdettla.jga.core.GeneticAlgorithm;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.operators.crossover.CycleCrossover;
 import mdettla.jga.operators.mutation.SwapMutation;
+import mdettla.jga.operators.selection.TournamentSelection;
 
 public class GAKeyboard {
 
-	private static final int INITIAL_POPULATION_SIZE = 100;
+	private static final int POPULATION_SIZE = 100;
 	private static final int GENERATIONS_COUNT = 100;
+	private static final int ELITE_SIZE = 2;
+	private static final int TOURNAMENT_SIZE = 4;
+	private static final double CROSSOVER_PROBABILITY = .7;
+	private static final double MUTATION_PROBABILITY = .7;
 
 	public static void main(String[] args) throws IOException {
 		TextStatistics stats = getTextStatistics(args);
@@ -23,7 +28,12 @@ public class GAKeyboard {
 
 		GeneticAlgorithm ga = new ConcurrentGeneticAlgorithm(initialPopulation);
 		ga.setMutationOperator(new SwapMutation());
+		ga.setMutationProbability(MUTATION_PROBABILITY);
 		ga.setCrossoverOperator(new CycleCrossover());
+		ga.setCrossoverProbability(CROSSOVER_PROBABILITY);
+		ga.setSelectionFunction(new TournamentSelection(TOURNAMENT_SIZE));
+		ga.setEliteSize(ELITE_SIZE);
+
 		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
 
 		Specimen random = KeyboardLayout.createRandomInstance(stats);
@@ -49,7 +59,7 @@ public class GAKeyboard {
 
 	private static List<Specimen> getInitialPopulation(TextStatistics stats) {
 		List<Specimen> initialPopulation = new ArrayList<Specimen>();
-		for (int i = 0; i < INITIAL_POPULATION_SIZE; i++) {
+		for (int i = 0; i < POPULATION_SIZE; i++) {
 			initialPopulation.add(KeyboardLayout.createRandomInstance(stats));
 		}
 		return initialPopulation;
