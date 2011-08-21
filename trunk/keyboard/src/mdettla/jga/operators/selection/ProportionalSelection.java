@@ -24,12 +24,12 @@ public class ProportionalSelection implements SelectionFunction {
 	public Specimen select(List<Specimen> population) {
 		double totalFitness = 0;
 		for (Specimen s : population) {
-			totalFitness += s.getFitness().doubleValue();
+			totalFitness += 1 / s.getFitness().doubleValue();
 		}
 		double r = random.nextDouble() * totalFitness;
 		double sumFitness = 0;
 		for (Specimen specimen : population) {
-			sumFitness += specimen.getFitness().doubleValue();
+			sumFitness += 1 / specimen.getFitness().doubleValue();
 			if (sumFitness > r) {
 				return specimen;
 			}
