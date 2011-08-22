@@ -239,9 +239,9 @@ $$ p_{step} w_{step} + p_{isf} w_{isf} + p_{hand\_usage} w_{hand\_usage} $$
 gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperymentalnie w ten sposób, aby poszczególne czynniki miały zbliżony wpływ na ostateczną wartość funkcji przystosowania.
 
 
-\section{Operatory genetyczne}
+\section{Operatory krzyżowania}
 
-\subsection{Krzyżowanie - Cycle Crossover}
+\subsection{Cycle Crossover (CX)}
 
 Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w genotypie. Cechę tę posiada operator Cycle Crossover~\cite{Operators:2000:TSP}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
 
@@ -266,7 +266,7 @@ Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, mo
 $$ (1 2 6 4 7 5 3 8) $$
 
 
-\subsection{Krzyżowanie - Partially mapped crossover}
+\subsection{Partially mapped crossover (PMX)}
 
 Podobnie jak Cycle Crossover, Partially mapped crossover zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment genotypu jednego z rodziców jest przepisywany na potomka, a pozostała część genotypu jest tworzona na podstawie mapowań.
 
@@ -275,9 +275,20 @@ Sposób działania tego operatora jest następujący:
 [przykład]
 
 
-\section{Mutacja}
+\section{Operatory mutacji}
 
-Mutacja polega na zamianie dwóch klawiszy miejscami, czyli zamianie miejscami dwóch elementów permutacji.
+\subsection{Exchange Mutation (EM)}
+
+W operatorze Exchange Mutation wybieramy losowo dwa elementy permutacji, po czym zamieniamy je miejscami. Metoda ta znana jest też jako Swap Mutation lub Reciprocal Exchange Mutation. Na przykład, jeżeli w permutacji $ (a b c d e f g h) $ wybierzemy element drugi i piąty, otrzymamy w efekcie:
+$$ (a \textit{\textbf{e}} c d \textit{\textbf{b}} f g h) $$
+
+\subsection{Displacement Mutation (DM)}
+
+Pierwszym krokiem w metodzie Displacement Mutation jest wybranie losowego odcinka permutacji. Załóżmy, że zaczęliśmy od permutacji $ (a b c d e f g h) $ i wybraliśmy odcinek $ (d e f g) $. Następnie, należy usunąć wybrany odcinek z permutacji i umieścić go w niej ponownie na losowo wybranej pozycji. W naszym przykładzie, po jego usunięciu permutacja przyjmie postać:
+$$ (a b c h) $$
+
+Załóżmy, że w tak powstałej permutacji wylosowano pozycję pomiędzy elementami $a$ oraz $b$. W takim wypadku, ostateczny wynik mutacji przyjmie następującą postać:
+$$ (a \textit{\textbf{defg}} b c h) $$
 
 
 \section{Selekcja}
