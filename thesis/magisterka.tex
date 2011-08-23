@@ -107,6 +107,14 @@ Operacja mutacji powinna powodować jedynie niewielką zmianę w położeniu roz
 
 Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
 
+Jednym z prostszych operatorów krzyżowania dla binarnej reprezentacji chromosomu jest krzyżowanie punktowe. W krzyżowaniu punktowym, wybieramy na chromosomie losowo punkt przecięcia. Aby utworzyć pierwszego potomka, kopiujemy geny leżące na lewo od punktu przecięcia z jednego rodzica, a geny leżące na prawo z drugiego rodzica. Drugi potomek powstaje analogicznie poprzez skopiowanie najpierw prawej, a następnie lewej strony. Przykładowo, w wyniku zastosowania krzyżowania punktowego z punktem przecięcia między drugą i trzecią pozycją do pary rodziców:
+$$(a_1 a_2 a_3 a_4 a_5), (b_1 b_2 b_3 b_4 b_5)$$
+
+otrzymamy następujące osobniki potomne:
+$$(a_1 a_2 b_3 b_4 b_5), (b_1 b_2 a_3 a_4 a_5)$$
+
+Wadą krzyżowania punktowego jest fakt, że geny leżące na sąsiadujących pozycjach będą rozdzielane z większym prawdopodobieństwem od genów leżących na bardziej odległych pozycjach. Jednym ze sposobów na zniwelowanie tego problemu jest zwiększenie liczby punktów przecięcia, w wyniku czego otrzymamy krzyżowanie wielopunktowe.
+
 Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
 
 
@@ -122,7 +130,7 @@ W związku z powyższym, zastosowana zostanie permutacyjna reprezentacja genotyp
 Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
 
 Dla przykładu, układ klawiatury QWERTY jest reprezentowany przez następującą permutację:
-$$ qwertyuiopasdfghjkl;zxcvbnm,.? $$
+$$ (qwertyuiopasdfghjkl;zxcvbnm,.?) $$
 
 
 \section{Funkcja przystosowania}
