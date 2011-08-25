@@ -74,7 +74,7 @@ W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się 
 
 \chapter{Algorytmy genetyczne}
 
-Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedzczenia oraz doboru naturalnego.
+Algorytmy genetyczne to rodzaj algorytmów heurystycznych pozwalających na efektywne przeszukiwanie przestrzeni rozwiązań w poszukiwaniu optymalnego rozwiązania. Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedzczenia oraz doboru naturalnego. Wykorzystują one biologicznie inspirowane operatory, do których należą rozrodczość, selekcja, mutacja oraz krzyżowanie.
 
 Algorytmy genetyczne należą do metod populacyjnych, w których operujemy na pewnym zmieniającym się zbiorze (populacji) rozwiązań. Daje to znaczącą przewagę nad prostszymi algorytmami wspinaczkowymi, w których zachowujemy tylko jedno rozwiązanie w danym momencie. Zachowywanie populacji rozwiązań zmniejsza prawdopodobieństwo przedwczesnej zbieżności w lokalnym optimum, zwiększając możliwości eksploracyjne algorytmu. Inne skrajne podejście, w którym przeszukujemy jednocześnie całą przestrzeń rozwiązań, jest również mało skuteczne ze względu na zbyt duży rozmiar tej przestrzeni dla większości interesujących problemów. Algorytm genetyczny unika tego problemu poprzez dobranie rozmiaru populacji znacznie mniejszego od rozmiaru całej przestrzeni poszukiwań.
 
@@ -97,15 +97,39 @@ Algorytm genetyczny operuje na osobnikach w zakodowanej postaci, którą najczę
 
 Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna się ona cechować możliwie dużą różnorodnością, dlatego najczęściej stosowaną metodą jej tworzenia jest generowanie chromosomów w sposób losowy. Czasem w populacji początkowej umieszcza się też specjalnie przygotowane osobniki, o których spodziewamy się że leżą w pobliżu optimum.
 
+Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
+
+\section{Selekcja}
+
 Wybór osobników do nowo tworzonych populacji jest procesem analogicznym do doboru naturalnego. W ujęciu Karola Darwina, największe szanse przetrwania mają osobniki najlepiej przystosowane do środowiska. Wpływ środowiska jest w algorytmach genetycznych modelowany przez funkcję oceny lub funkcję przystosowania. Ponieważ problemy optymalizacji zwykle definiuje się w kategoriach poszukiwania minimum, przyjmiemy konwencję zgodnie z którą mniejsza wartość funkcji oceny oznacza lepsze przystosowanie. Dlatego też w operacji wyboru (selekcji) osobników do nowej populacji powinny być faworyzowane osobniki o niższej wartości funkcji przystosowania.
 
 Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwej proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takie jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
 
+Selekcja turniejowa to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}. W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
+
+Pseudokod:\newline
+
+\noindent
+\texttt{WEJŚCIE: populacja, t - rozmiar turnieju\newline
+Best := wybierz bez zwracania osobnika z populacji\newline
+Powtarzaj t - 1 razy:\newline
+\indent Next := wybierz bez zwracania osobnika z populacji\newline
+\indent jeżeli Next ma korzystniejszą wartość przystosowania niż Best:\newline
+\indent\indent Best := Next\newline
+zwróć Best\newline
+}
+
+Najczęściej wybieraną wartością parametru $t$ w przypadku algorytmów genetycznych jest 2~\cite{Luke2009Metaheuristics}.
+
 Sam operator selekcji nie jest wystarczającym warunkiem do tego, aby wartość funkcji oceny poprawiała się w kolejnych populacjach. Potrzebny jest operator wprowadzający zmienność oraz innowacje do populacji. W klasycznych algorytmach genetycznych, służą do tego operacje mutacji oraz krzyżowania.
+
+\section{Mutacja}
 
 Operacja mutacji powinna powodować jedynie niewielką zmianę w położeniu rozwiązania w pejzażu dostosowań. To znaczy, niewielka modyfikacja chromosomu powinna wpływać w niewielkim stopniu na wartość funkcji przystosowania. W klasycznym algorytmie genetycznym, mutacja polega na losowej zmianie elementu chromosomu z jednakowym (niewielkim) prawdopodobieństwem na wartość przeciwną (z jedynki na zero i na odwrót) \cite{Goldberg:1998:AGZ}.
 
 Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
+
+\section{Krzyżowanie}
 
 Jednym z prostszych operatorów krzyżowania dla binarnej reprezentacji chromosomu jest krzyżowanie punktowe. W krzyżowaniu punktowym, wybieramy na chromosomie losowo punkt przecięcia. Aby utworzyć pierwszego potomka, kopiujemy geny leżące na lewo od punktu przecięcia z jednego rodzica, a geny leżące na prawo z drugiego rodzica. Drugi potomek powstaje analogicznie poprzez skopiowanie najpierw prawej, a następnie lewej strony. Przykładowo, w wyniku zastosowania krzyżowania punktowego z punktem przecięcia między drugą i trzecią pozycją do pary rodziców:
 $$(a_1 a_2 a_3 a_4 a_5), (b_1 b_2 b_3 b_4 b_5)$$
@@ -115,13 +139,11 @@ $$(a_1 a_2 b_3 b_4 b_5), (b_1 b_2 a_3 a_4 a_5)$$
 
 Wadą krzyżowania punktowego jest fakt, że geny leżące na sąsiadujących pozycjach będą rozdzielane z większym prawdopodobieństwem od genów leżących na bardziej odległych pozycjach. Jednym ze sposobów na zniwelowanie tego problemu jest zwiększenie liczby punktów przecięcia, w wyniku czego otrzymamy krzyżowanie wielopunktowe.
 
-Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
-
 
 \chapter{Opis algorytmu}
 
 
-\section{Reprezentacja genotypu}
+\section{Reprezentacja chromosomu}
 
 Układ klawiatury można zakodować jako ciąg binarny, opisując każdy klawisz za pomocą określonej ilości bitów. Niestety, stosowanie klasycznych operatorów genetycznych spowoduje, że zdecydowana większość powstałych w ten sposób rozwiązań będzie nieprawidłowych. Przykładowo, jeżeli użyjemy trzech bitów do opisania każdego klawisza klawiatury o 40 klawiszach, tylko jedna z każdych 1016 dowolnie wybranych struktur 120-bitowych jest strukturą o właściwej konfiguracji klawiszy~\cite{GloverKey}.
 
@@ -301,23 +323,33 @@ $$ (a \textit{\textbf{defg}} b c h) $$
 
 \section{Selekcja}
 
-Zastosowana zostanie tzw. selekcja turniejowa. Jest to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}.
+W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozwiązywany problem należy do klasy problemów optymalizacji wielokryterialnej. Najbardziej pożądaną sytuacją jest znalezienie rozwiązania nie tylko z najkorzystniejszą wartością funkcji przystosowania, ale też takiego, które będzie optymalne pod względem każdego ze stosowanych kryteriów. Trudno jest osiągnąć ten cel poprzez samo dobieranie wag ($w_1 ... w_7$), ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać. Dlatego zastosowany zostanie operator selekcji uwzględniający nie tylko wartość funkcji przystosowania, ale również wartości poszczególnych kryteriów.
 
-W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
+\subsection{Multiobjective Majority Tournament Selection}
 
-Pseudokod:\newline
+Multiobjective Majority Tournament Selection~\cite{Luke2009Metaheuristics} jest to rodzaj selekcji turniejowej, w której faworyzowane są osobniki posiadające jak największą ilość kryteriów, których wartość jest bardziej korzystna niż w pozostałych osobnikach.
+
+Selekcję tą można przedstawić za pomocą następującego pseudokodu:\newline
 
 \noindent
-\texttt{WEJŚCIE: populacja, t - rozmiar turnieju\newline
+\texttt{WEJŚCIE: populacja, t - rozmiar turnieju, n - ilość kryteriów\newline
 Best := wybierz bez zwracania osobnika z populacji\newline
 Powtarzaj t - 1 razy:\newline
 \indent Next := wybierz bez zwracania osobnika z populacji\newline
-\indent jeżeli Next ma korzystniejszą wartość przystosowania niż Best:\newline
+\indent c := 0\newline
+\indent dla i := 1 do n powtarzaj:\newline
+\indent\indent jeżeli $p_i$ dla Next < $p_i$ dla Best:\newline
+\indent\indent\indent c := c + 1\newline
+\indent\indent jeżeli $p_i$ dla Next > $p_i$ dla Best:\newline
+\indent\indent\indent c := c - 1\newline
+\indent jeżeli c > 0:\newline
+\indent\indent Best := Next\newline
+\indent jeżeli c = 0 $\wedge$ $p$ dla Next < $p$ dla Best:\newline
 \indent\indent Best := Next\newline
 zwróć Best\newline
 }
 
-Najczęściej wybieraną wartością parametru $t$ w przypadku algorytmów genetycznych jest 2~\cite{Luke2009Metaheuristics}, dlatego też taka wartość zostanie zastosowana do problemu znajdowania optymalnego układu klawiatury.
+Wartość parametru $n$ będzie równa 7, ponieważ tyle kryteriów uwzględniono w funkcji przystosowania. $c$ oznacza ilość kryteriów, dla których dany osobnik jest lepszy od aktualnie najlepszego znalezionego osobnika. W algorytmie tym została wprowadzona jedna modyfikacja w porównaniu do standardowej wersji. Mianowicie, jeżeli żaden osobnik nie uzyska przewagi pod względem $c$, brana jest pod uwagę ogólna wartość przystosowania $p$.
 
 
 \section{Algorytm}
@@ -327,8 +359,10 @@ Zastosowany algorym można opisać za pomocą następującego pseudokodu:\newlin
 \noindent
 \texttt{Oblicz cechy statystyczne zbioru tekstów\newline
 Zainicjuj początkową populację losowo utworzonymi osobnikami\newline
+Oblicz przystosowanie osobników\newline
 Powtarzaj zadaną ilość pokoleń:\newline
 \indent Utwórz nową, pustą populację osobników\newline
+\indent Dodaj najlepiej przystosowanego osobnika do nowej populacji\newline
 \indent Dopóki wielkość nowej populacji jest mniejsza od poprzedniej:\newline
 \indent\indent oblicz przystosowanie osobników istniejącej populacji\newline
 \indent\indent wybierz parę osobników za pomocą operatora selekcji\newline
@@ -340,6 +374,8 @@ Powtarzaj zadaną ilość pokoleń:\newline
 }
 
 W celu przyspieszenia obliczeń, funkcja przystosowania obliczania jest współbieżnie. Jest to możliwe ponieważ obliczanie funkcji przystosowania dla jednego osobnika jest operacją niezależną od obliczania jej dla pozostałych osobników. Dlatego też populacja dzielona jest na \emph{n} części, gdzie \emph{n} jest równa ilości rdzeni procesora, i funkcja przystosowania dla każdej części obliczana jest przez osobny wątek.
+
+Algorytm różni się od standardowego algorytmu opisanego wcześniej poprzez stosowanie strategii elitarnej. Elitarność polega na inicjowaniu nowo tworzonej populacji określoną ilością najlepiej przystosowanych osobników z poprzedniej populacji. Dzięki temu wartość przystosowania najlepszego osobnika z populacji nie będzie zmniejszać się w kolejnych iteracjach algorytmu. Elitarność może przyczyniać się do przedwczesnej zbieżności algorytmu~\cite{Luke2009Metaheuristics}, dlatego aby temu zapobiec, wielkość elity będzie ograniczona do jednego osobnika.
 
 
 \chapter{Wyniki i ich analiza}
