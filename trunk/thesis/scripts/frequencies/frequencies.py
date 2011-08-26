@@ -34,15 +34,14 @@ chars_pl_freqs, chars_pl_by_freq = get_chars_freqs(text_pl)
 pairs_en_freqs, pairs_en_by_freq = get_chars_pairs_freqs(text_en)
 pairs_pl_freqs, pairs_pl_by_freq = get_chars_pairs_freqs(text_pl)
 
-format = '%s\t%.2f%%\t%.2f%%'
-print 'en pl'
-for c in chars_en_by_freq[:5]:
-    print format % (c, chars_en_freqs[c] * 100, chars_pl_freqs[c] * 100)
-for c in pairs_en_by_freq[:5]:
-    print format % (c, pairs_en_freqs[c] * 100, pairs_pl_freqs[c] * 100)
-print 'pl en'
-for c in chars_pl_by_freq[:5]:
+format = '%s %.2f %.2f'
+print 'chars'
+for c in chars_pl_by_freq:
     print format % (c, chars_pl_freqs[c] * 100, chars_en_freqs[c] * 100)
+format = '%s\t%.2f%%\t%.2f%%'
+print 'pairs'
 for c in pairs_pl_by_freq[:5]:
     print format % (c, pairs_pl_freqs[c] * 100, pairs_en_freqs[c] * 100)
+for c in pairs_en_by_freq[:5]:
+    print format % (c, pairs_en_freqs[c] * 100, pairs_pl_freqs[c] * 100)
 
