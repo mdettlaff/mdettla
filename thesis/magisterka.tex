@@ -384,6 +384,8 @@ Algorytm różni się od standardowego algorytmu opisanego wcześniej poprzez st
 
 Algorytm został uruchomiony na serwerze z 8-rdzeniowym procesorem Intel Xeon 3.00 Ghz oraz 32 GB pamięci RAM.
 
+Uruchomienie 100 iteracji algorytmu dla populacji o wielkości 100 osobników zajmuje 20 sekund i pozwala na ocenę co najwyżej 10000 osobników. Ilość ta stanowi zaledwie $ 3.77 \cdot 10^{-27} \% $ całej przestrzeni poszukiwań. Ocena wszystkich możliwych rozwiązań metodą brute force zajęłaby około $ 10^{26} $ lat.
+
 \section{Dobór parametrów oraz operatorów}
 
 Rozmiar populacji został ustalony na $100$. Algorytm został uruchomiony dla $100$ iteracji.
@@ -490,6 +492,11 @@ Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że is
 \section{Plany dalszych badań}
 
 Użyty algorytm był stworzony z myślą o technice pisania bezwzrokowego. Interesującym problemem byłoby przystosowanie go do techniki pisania jednym palcem, która znajduje zastosowanie między innymi podczas pisania na urządzeniach posiadających ekran dotykowy. W tym celu można by zmodyfikować funkcję oceny w taki sposób, żeby algorytm minimalizował długość ścieżki jaką musi przebyć palec (lub rysik albo podobne urządzenie) podczas przepisywania zadanego tekstu. Tego typu zadanie można sprowadzić do zagadnienia Quadratic Assignment Problem (QAP), będącego jednym z klasycznych problemów optymalizacji kombinatorycznej~\cite{Ji_asolution}. Algorytmy genetyczne były już wykorzystywane z pewnymi sukcesami do rozwiązywania QAP~\cite{Misevicius200465}.
+
+Podczas projektowania funkcji oceny ograniczono się do kryteriów ergonomicznych mających na celu ułatwienie pisania zwykłego tekstu. Możliwe byłoby wprowadzenie dodatkowych kryteriów mających znaczenie dla klawiatury komputerowej. Na przykład, układ klawiatury Colemak został stworzony z myślą o łatwym dostępie do standardowych skrótów klawiszowych stosowanych w oprogramowaniu, takich jak Ctrl-C, Ctrl-X i Ctrl-V.
+
+Warto byłoby również zbadać wpływ rodzaju zbioru tekstów na wynikowe układy klawiatury. W tym przypadku wykorzystano teksty literackie w dwóch językach. Innym przykładem byłoby zastosowanie kodu źródłowego w różnych językach programowania, w celu stworzenia układu klawiatury przystosowanego specjalnie dla programisty.
+
 
 % załączniki (opcjonalnie):
 \appendix
