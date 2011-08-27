@@ -50,46 +50,45 @@ public class GAKeyboard {
 
 	public static void main(String[] args) throws Exception {
 		GAKeyboard algorithm = new GAKeyboard();
-		initializeFromArgs(algorithm, args);
+		algorithm.initializeFromArgs(args);
 		algorithm.run();
 	}
 
-	private static void initializeFromArgs(GAKeyboard algorithm, String[] args)
+	private void initializeFromArgs(String[] args)
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, FileNotFoundException {
 		GetOpt getOpt = new GetOpt(args);
 		if (getOpt.isOptionSet("populationSize")) {
-			algorithm.populationSize = getOpt.getIntValue("populationSize");
+			populationSize = getOpt.getIntValue("populationSize");
 		}
 		if (getOpt.isOptionSet("generationsCount")) {
-			algorithm.generationsCount = getOpt.getIntValue("generationsCount");
+			generationsCount = getOpt.getIntValue("generationsCount");
 		}
 		if (getOpt.isOptionSet("eliteSize")) {
-			algorithm.eliteSize = getOpt.getIntValue("eliteSize");
+			eliteSize = getOpt.getIntValue("eliteSize");
 		}
 		if (getOpt.isOptionSet("tournamentSize")) {
-			algorithm.tournamentSize = getOpt.getIntValue("tournamentSize");
+			tournamentSize = getOpt.getIntValue("tournamentSize");
 		}
 		if (getOpt.isOptionSet("mutationProbability")) {
-			algorithm.mutationProbability = getOpt.getDoubleValue("mutationProbability");
+			mutationProbability = getOpt.getDoubleValue("mutationProbability");
 		}
 		if (getOpt.isOptionSet("mutationOperator")) {
-			algorithm.mutationOperator = (MutationOperator) Class.forName(
+			mutationOperator = (MutationOperator) Class.forName(
 					getOpt.getValue("mutationOperator")).newInstance();
 		}
 		if (getOpt.isOptionSet("crossoverProbability")) {
-			algorithm.crossoverProbability = getOpt.getDoubleValue("crossoverProbability");
+			crossoverProbability = getOpt.getDoubleValue("crossoverProbability");
 		}
 		if (getOpt.isOptionSet("crossoverOperator")) {
-			algorithm.crossoverOperator = (CrossoverOperator) Class.forName(
+			crossoverOperator = (CrossoverOperator) Class.forName(
 					getOpt.getValue("crossoverOperator")).newInstance();
 		}
 		if (getOpt.isOptionSet("selectionFunction")) {
-			algorithm.selectionFunction = (SelectionFunction) Class.forName(
+			selectionFunction = (SelectionFunction) Class.forName(
 					getOpt.getValue("selectionFunction")).newInstance();
-			if (algorithm.selectionFunction instanceof AbstractTournamentSelection) {
-				((AbstractTournamentSelection)algorithm.selectionFunction)
-					.setTournamentSize(algorithm.tournamentSize);
+			if (selectionFunction instanceof AbstractTournamentSelection) {
+				((AbstractTournamentSelection)selectionFunction).setTournamentSize(tournamentSize);
 			}
 		}
 		for (String arg : getOpt.getArguments()) {
@@ -97,10 +96,10 @@ public class GAKeyboard {
 			if (!file.exists()) {
 				throw new FileNotFoundException(arg);
 			}
-			algorithm.textFiles.add(file);
+			textFiles.add(file);
 		}
 		if (getOpt.isOptionSet("quiet")) {
-			algorithm.quiet = getOpt.getBooleanValue("quiet");
+			quiet = getOpt.getBooleanValue("quiet");
 		}
 	}
 
