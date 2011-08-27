@@ -3,7 +3,6 @@ package mdettla.jga.operators.selection;
 import java.util.Collections;
 import java.util.List;
 
-import mdettla.jga.core.SelectionFunction;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 
@@ -12,12 +11,13 @@ import mdettla.jga.core.Utils;
  * się najpierw grupę złożoną z {@code k} osobników, a następnie z grupy
  * tej wybiera się najlepiej dostosowanego osobnika.
  */
-public class TournamentSelection implements SelectionFunction {
+public class TournamentSelection extends AbstractTournamentSelection {
 
-	private int tournamentSize;
+	public TournamentSelection() {
+	}
 
 	public TournamentSelection(int tournamentSize) {
-		this.tournamentSize = tournamentSize;
+		super(tournamentSize);
 	}
 
 	@Override
