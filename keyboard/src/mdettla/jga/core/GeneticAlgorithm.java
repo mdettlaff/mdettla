@@ -50,6 +50,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 	private SelectionFunction selectionFunction;
 	protected int populationSize;
 	private int eliteSize;
+	private boolean quiet;
 	private final Random random;
 
 	public GeneticAlgorithm(List<Specimen> initialPopulation) {
@@ -120,6 +121,14 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 		return eliteSize;
 	}
 
+	public boolean isQuiet() {
+		return quiet;
+	}
+
+	public void setQuiet(boolean quiet) {
+		this.quiet = quiet;
+	}
+
 	/**
 	 * Jeden przebieg algorytmu genetycznego.
 	 *
@@ -138,8 +147,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 			Specimen bestFromPopulation = Collections.max(population);
 			best = Collections.max(Arrays.asList(best, bestFromPopulation));
 
-			System.out.println((i + 1) + " " + bestFromPopulation.getFitness() +
-					"\n" + bestFromPopulation.getPhenotype());
+			print(i, bestFromPopulation);
 		}
 		return best;
 	}
@@ -219,6 +227,13 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 	protected void computeFitness(List<Specimen> population) {
 		for (Specimen specimen : population) {
 			specimen.computeFitness();
+		}
+	}
+
+	private void print(int i, Specimen bestFromPopulation) {
+		if (!quiet) {
+			System.out.println((i + 1) + " " + bestFromPopulation.getFitness() +
+					"\n" + bestFromPopulation.getPhenotype());
 		}
 	}
 }

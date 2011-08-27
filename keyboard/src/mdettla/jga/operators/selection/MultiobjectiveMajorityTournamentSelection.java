@@ -2,17 +2,17 @@ package mdettla.jga.operators.selection;
 
 import java.util.List;
 
-import mdettla.jga.core.SelectionFunction;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.core.Utils;
 import mdettla.keyboard.ga.KeyboardLayout;
 
-public class MultiobjectiveMajorityTournamentSelection implements SelectionFunction {
+public class MultiobjectiveMajorityTournamentSelection extends AbstractTournamentSelection {
 
-	private int tournamentSize;
+	public MultiobjectiveMajorityTournamentSelection() {
+	}
 
 	public MultiobjectiveMajorityTournamentSelection(int tournamentSize) {
-		this.tournamentSize = tournamentSize;
+		super(tournamentSize);
 	}
 
 	@Override

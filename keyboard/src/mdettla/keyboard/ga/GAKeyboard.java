@@ -1,78 +1,161 @@
 package mdettla.keyboard.ga;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import mdettla.jga.core.ConcurrentGeneticAlgorithm;
+import mdettla.jga.core.CrossoverOperator;
 import mdettla.jga.core.GeneticAlgorithm;
+import mdettla.jga.core.MutationOperator;
+import mdettla.jga.core.SelectionFunction;
 import mdettla.jga.core.Specimen;
 import mdettla.jga.operators.crossover.CycleCrossover;
 import mdettla.jga.operators.mutation.SwapMutation;
+import mdettla.jga.operators.selection.AbstractTournamentSelection;
 import mdettla.jga.operators.selection.MultiobjectiveMajorityTournamentSelection;
 
 public class GAKeyboard {
 
-	private static final int POPULATION_SIZE = 100;
-	private static final int GENERATIONS_COUNT = 100;
-	private static final int ELITE_SIZE = 2;
-	private static final int TOURNAMENT_SIZE = 4;
-	private static final double MUTATION_PROBABILITY = .7;
-	private static final double CROSSOVER_PROBABILITY = .7;
+	private int populationSize;
+	private int generationsCount;
+	private int eliteSize;
+	private int tournamentSize;
+	private double mutationProbability;
+	private MutationOperator mutationOperator;
+	private double crossoverProbability;
+	private CrossoverOperator crossoverOperator;
+	private SelectionFunction selectionFunction;
+	private List<File> textFiles;
+	private boolean quiet;
 
-	public static void main(String[] args) throws IOException {
-		TextStatistics stats = getTextStatistics(args);
+	public GAKeyboard() {
+		populationSize = 100;
+		generationsCount = 100;
+		eliteSize = 2;
+		tournamentSize = 4;
+		mutationProbability = .7;
+		mutationOperator = new SwapMutation();
+		crossoverProbability = .7;
+		crossoverOperator = new CycleCrossover();
+		selectionFunction = new MultiobjectiveMajorityTournamentSelection(tournamentSize);
+		textFiles = new ArrayList<File>();
+		quiet = false;
+	}
+
+	public static void main(String[] args) throws Exception {
+		GAKeyboard algorithm = new GAKeyboard();
+		initializeFromArgs(algorithm, args);
+		algorithm.run();
+	}
+
+	private static void initializeFromArgs(GAKeyboard algorithm, String[] args)
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, FileNotFoundException {
+		GetOpt getOpt = new GetOpt(args);
+		if (getOpt.isOptionSet("populationSize")) {
+			algorithm.populationSize = getOpt.getIntValue("populationSize");
+		}
+		if (getOpt.isOptionSet("generationsCount")) {
+			algorithm.generationsCount = getOpt.getIntValue("generationsCount");
+		}
+		if (getOpt.isOptionSet("eliteSize")) {
+			algorithm.eliteSize = getOpt.getIntValue("eliteSize");
+		}
+		if (getOpt.isOptionSet("tournamentSize")) {
+			algorithm.tournamentSize = getOpt.getIntValue("tournamentSize");
+		}
+		if (getOpt.isOptionSet("mutationProbability")) {
+			algorithm.mutationProbability = getOpt.getDoubleValue("mutationProbability");
+		}
+		if (getOpt.isOptionSet("mutationOperator")) {
+			algorithm.mutationOperator = (MutationOperator) Class.forName(
+					getOpt.getValue("mutationOperator")).newInstance();
+		}
+		if (getOpt.isOptionSet("crossoverProbability")) {
+			algorithm.crossoverProbability = getOpt.getDoubleValue("crossoverProbability");
+		}
+		if (getOpt.isOptionSet("crossoverOperator")) {
+			algorithm.crossoverOperator = (CrossoverOperator) Class.forName(
+					getOpt.getValue("crossoverOperator")).newInstance();
+		}
+		if (getOpt.isOptionSet("selectionFunction")) {
+			algorithm.selectionFunction = (SelectionFunction) Class.forName(
+					getOpt.getValue("selectionFunction")).newInstance();
+			if (algorithm.selectionFunction instanceof AbstractTournamentSelection) {
+				((AbstractTournamentSelection)algorithm.selectionFunction)
+					.setTournamentSize(algorithm.tournamentSize);
+			}
+		}
+		for (String arg : getOpt.getArguments()) {
+			File file = new File(arg);
+			if (!file.exists()) {
+				throw new FileNotFoundException(arg);
+			}
+			algorithm.textFiles.add(file);
+		}
+		if (getOpt.isOptionSet("quiet")) {
+			algorithm.quiet = getOpt.getBooleanValue("quiet");
+		}
+	}
+
+	public void run() throws IOException {
+		TextStatistics stats = getTextStatistics(textFiles);
 		List<Specimen> initialPopulation = getInitialPopulation(stats);
 
 		GeneticAlgorithm ga = new ConcurrentGeneticAlgorithm(initialPopulation);
-		ga.setMutationOperator(new SwapMutation());
-		ga.setMutationProbability(MUTATION_PROBABILITY);
-		ga.setCrossoverOperator(new CycleCrossover());
-		ga.setCrossoverProbability(CROSSOVER_PROBABILITY);
-		ga.setSelectionFunction(new MultiobjectiveMajorityTournamentSelection(TOURNAMENT_SIZE));
-		ga.setEliteSize(ELITE_SIZE);
+		ga.setMutationOperator(mutationOperator);
+		ga.setMutationProbability(mutationProbability);
+		ga.setCrossoverOperator(crossoverOperator);
+		ga.setCrossoverProbability(crossoverProbability);
+		ga.setSelectionFunction(selectionFunction);
+		ga.setEliteSize(eliteSize);
+		ga.setQuiet(quiet);
 		System.out.println(getInitialParameters(ga) + "\n");
 
-		Specimen best = ga.runEpoch(GENERATIONS_COUNT);
+		Specimen best = ga.runEpoch(generationsCount);
 
 		Specimen random = KeyboardLayout.createRandomInstance(stats);
 		random.computeFitness();
-		System.out.println("\nLosowy układ:\n" + random);
-		System.out.println("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
-		System.out.println("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats));
-		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);
+		print("\nLosowy układ:\n" + random);
+		print("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
+		print("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats) + "\n");
+		System.out.println("Najlepiej przystosowany osobnik:\n" + best);
 		compareObjectives((KeyboardLayout) best, KeyboardLayout.getDvorakLayout(stats));
 	}
 
-	private static TextStatistics getTextStatistics(String[] texts) throws IOException {
-		if (texts.length == 0) {
-			texts = new String[] {"src/mdettla/keyboard/ga/resources/en/otoos11.txt"};
+	private TextStatistics getTextStatistics(List<File> corpus) throws IOException {
+		if (corpus.isEmpty()) {
+			corpus = Arrays.asList(new File(
+					"src/mdettla/keyboard/ga/resources/en/otoos11.txt"));
 		}
 		TextStatistics stats = new TextStatistics();
-		for (String text : texts) {
-			stats.read(new InputStreamReader(new FileInputStream(text)));
+		for (File textFile : corpus) {
+			stats.read(new InputStreamReader(new FileInputStream(textFile)));
 		}
-		System.out.println("długość analizowanego tekstu: "
-				+ stats.getTextLength() + " znaków");
+		print("długość analizowanego tekstu: " + stats.getTextLength() + " znaków");
 		return stats;
 	}
 
-	private static List<Specimen> getInitialPopulation(TextStatistics stats) {
+	private List<Specimen> getInitialPopulation(TextStatistics stats) {
 		List<Specimen> initialPopulation = new ArrayList<Specimen>();
-		for (int i = 0; i < POPULATION_SIZE; i++) {
+		for (int i = 0; i < populationSize; i++) {
 			initialPopulation.add(KeyboardLayout.createRandomInstance(stats));
 		}
 		return initialPopulation;
 	}
 
-	private static String getInitialParameters(GeneticAlgorithm ga) {
+	private String getInitialParameters(GeneticAlgorithm ga) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("rozmiar populacji: " + POPULATION_SIZE + "\n");
-		sb.append("ilość iteracji: " + GENERATIONS_COUNT + "\n");
+		sb.append("rozmiar populacji: " + populationSize + "\n");
+		sb.append("ilość iteracji: " + generationsCount + "\n");
 		sb.append("rozmiar elity: " + ga.getEliteSize() + "\n");
-		sb.append("rozmiar turnieju: " + TOURNAMENT_SIZE + "\n");
+		sb.append("rozmiar turnieju: " + tournamentSize + "\n");
 		sb.append("prawdopodobieństwo mutacji: " + ga.getMutationProbability() + "\n");
 		sb.append("prawdopodobieństwo krzyżowania: " + ga.getCrossoverProbability() + "\n");
 		sb.append("operator mutacji: " +
@@ -84,11 +167,17 @@ public class GAKeyboard {
 		return sb.toString();
 	}
 
-	private static void compareObjectives(KeyboardLayout layout, KeyboardLayout other) {
+	private void compareObjectives(KeyboardLayout layout, KeyboardLayout other) {
 		for (int i = 0; i < layout.OBJECTIVES.length; i++) {
-			System.out.println(String.format("%s: %s (%.3f%%)", layout.OBJECTIVES[i].getName(),
+			print(String.format("%s: %s (%.3f%%)", layout.OBJECTIVES[i].getName(),
 					layout.OBJECTIVES[i].getValue() < other.OBJECTIVES[i].getValue(),
 					(1 - layout.OBJECTIVES[i].getValue() / other.OBJECTIVES[i].getValue()) * 100));
+		}
+	}
+
+	private void print(String s) {
+		if (!quiet) {
+			System.out.println(s);
 		}
 	}
 }
