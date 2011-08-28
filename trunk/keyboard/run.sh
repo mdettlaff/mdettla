@@ -7,13 +7,24 @@ RESULTS_FILE="results/results.txt"
 EN_CORPUS="src/mdettla/keyboard/ga/resources/en/*.txt"
 
 function epochs {
-  for i in `seq 4`
+  count=5
+  sum=0
+  for i in `seq $count`
   do
     echo $@
-    $GA $@ $EN_CORPUS | grep 'przystosowanie:'
+    fitness=`$GA $@ $EN_CORPUS | grep 'przystosowanie:' | sed 's/przystosowanie: //'`
+    echo $fitness
+    sum=$(echo "scale=3; $sum + $fitness" | bc)
   done
+  echo średnia: $(echo "scale=3; $sum / $count" | bc)
   echo
 }
+
+#epochs crossoverProbability=0
+#epochs mutationProbability=0
+
+epochs crossoverOperator=mdettla.jga.operators.crossover.CycleCrossover
+epochs crossoverOperator=mdettla.jga.operators.crossover.PartiallyMappedCrossover
 
 epochs mutationOperator=mdettla.jga.operators.mutation.SwapMutation
 epochs mutationOperator=mdettla.jga.operators.mutation.MultipleSwapMutation
