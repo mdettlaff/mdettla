@@ -25,6 +25,8 @@ function epochs {
 
 epochs crossoverOperator=mdettla.jga.operators.crossover.CycleCrossover
 epochs crossoverOperator=mdettla.jga.operators.crossover.PartiallyMappedCrossover
+epochs crossoverOperator=mdettla.jga.operators.crossover.PositionBasedCrossover
+epochs crossoverOperator=mdettla.jga.operators.crossover.AlternatingPositionCrossover
 
 epochs mutationOperator=mdettla.jga.operators.mutation.SwapMutation
 epochs mutationOperator=mdettla.jga.operators.mutation.MultipleSwapMutation
