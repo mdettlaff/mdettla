@@ -109,6 +109,8 @@ Algorytm genetyczny operuje na osobnikach w zakodowanej postaci, którą najczę
 
 Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna się ona cechować możliwie dużą różnorodnością, dlatego najczęściej stosowaną metodą jej tworzenia jest generowanie chromosomów w sposób losowy. Czasem w populacji początkowej umieszcza się też specjalnie przygotowane osobniki, o których spodziewamy się że leżą w pobliżu optimum.
 
+Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
+
 Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
 
 \section{Selekcja}
@@ -138,8 +140,6 @@ Sam operator selekcji nie jest wystarczającym warunkiem do tego, aby wartość 
 \section{Mutacja}
 
 Operacja mutacji powinna powodować jedynie niewielką zmianę w położeniu rozwiązania w pejzażu dostosowań. To znaczy, niewielka modyfikacja chromosomu powinna wpływać w niewielkim stopniu na wartość funkcji przystosowania. W klasycznym algorytmie genetycznym, mutacja polega na losowej zmianie elementu chromosomu z jednakowym (niewielkim) prawdopodobieństwem na wartość przeciwną (z jedynki na zero i na odwrót) \cite{Goldberg:1998:AGZ}.
-
-Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
 
 \section{Krzyżowanie}
 
