@@ -66,7 +66,7 @@ Jedną z głównych różnic pomiędzy układem QWERTY a klawiaturą Dvoraka jes
 \source{Opracowanie własne}
 \end{figure}
 
-Wspomniane układy klawiatury zostały zaprojektowane ręcznie, bez udziału komputera. Podjęto też wiele prób rozwiązania problemu szukania optymalnego klawiatury (Keyboard Arrangement Problem - KAP) z użyciem algorytmów ewolucyjnych oraz innych metaheurystyk. Wagner \cite{AntColony:2002:ACO} wygenerował układy klawiatury dla języka angielskiego, niemieckiego oraz francuskiego, stosując algorytm mrówkowy (Ant Colony Optimization) oraz szereg kryteriów ergonomicznych. Yin oraz Su \cite{Swarm:2011:CSOGKAP} sformułowali problem ogólnie dla różnych typów klawiatur (General Keyboard Arrangement Problem - GKAP) oraz zastosowali do jego rozwiązania algorytm optymalizacji rojowej (Cyber Swarm Optimization). Deshwal oraz Deb \cite{Hindi} zaproponowali nowy projekt klawiatury dla języka Hindi, stosując algorytm genetyczny z reprezentacją układu klawiszy jako czterowymiarowej tablicy.
+Wspomniane układy klawiatury zostały zaprojektowane ręcznie, bez udziału komputera. Podjęto też wiele prób rozwiązania problemu szukania optymalnego klawiatury (Keyboard Arrangement Problem - KAP) z użyciem algorytmów ewolucyjnych oraz innych metaheurystyk. Wagner \cite{Eggers2003672} wygenerował układy klawiatury dla języka angielskiego, niemieckiego oraz francuskiego, stosując algorytm mrówkowy (Ant Colony Optimization) oraz szereg kryteriów ergonomicznych. Yin oraz Su \cite{Yin201143} sformułowali problem ogólnie dla różnych typów klawiatur (General Keyboard Arrangement Problem - GKAP) oraz zastosowali do jego rozwiązania algorytm optymalizacji rojowej (Cyber Swarm Optimization). Deshwal oraz Deb \cite{Hindi} zaproponowali nowy projekt klawiatury dla języka Hindi, stosując algorytm genetyczny z reprezentacją układu klawiszy jako czterowymiarowej tablicy.
 
 Podobne algorytmy stosowano również dla niestandardowych klawiatur, na przykład w telefonach komórkowych, na których pisze się z użyciem jednego lub dwóch palców~\cite{Li2006695}. Niniejsza praca dotyczy KAP rozumianego jako poszukiwanie optymalnego układu klawiszy dla standardowej klawiatury, zoptymalizowanego pod kątem techniki pisania bezwzrokowego (touchtyping). Pisanie bezwzrokowe zobrazowane jest na poniższej ilustracji.
 
@@ -188,7 +188,7 @@ $ f_m $ opisuje częstotliwości występowania monografów w zbiorze tekstów, a
 
 Pierwszym czynnikiem branym pod uwagę będzie rozkład pracy na poszczególne palce. Chcemy, aby najczęściej używane były najsilniejsze i najdłuższe palce, a najmniej używane palce najsłabsze.
 
-W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{AntColony:2002:ACO}. $f^{opt}_1$ do $f^{opt}_4$ oznaczają udział palców lewej ręki w przepisywaniu tekstu, od małego palca do wskazującego, natomiast $f^{opt}_5$ do $f^{opt}_8$ analogicznie udział palców prawej ręki, od wskazującego do małego.\newline
+W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~\cite{Eggers2003672}. $f^{opt}_1$ do $f^{opt}_4$ oznaczają udział palców lewej ręki w przepisywaniu tekstu, od małego palca do wskazującego, natomiast $f^{opt}_5$ do $f^{opt}_8$ analogicznie udział palców prawej ręki, od wskazującego do małego.\newline
 
 \begin{tabular}{ c | c | c | c | c | c | c | c }
   $f^{opt}_1$ & $f^{opt}_2$ & $f^{opt}_3$ & $f^{opt}_4$ & $f^{opt}_5$ & $f^{opt}_6$ & $f^{opt}_7$ & $f^{opt}_8$ \\
@@ -239,7 +239,7 @@ gdzie $c_1$ oraz $r_1$ stanowią współrzędne odpowiednio rzędu i kolumny pie
 
 \subsection{Duże ruchy palcami tej samej ręki}
 
-W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd (zbiór ten oznaczymy jako $ D' \in D $). W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z poniższą tabelą~\cite{AntColony:2002:ACO}.\newline
+W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd (zbiór ten oznaczymy jako $ D' \in D $). W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z poniższą tabelą~\cite{Eggers2003672}.\newline
 
 \begin{tabular}{ c | c | c | c | c | c }
   & wskazujący & środkowy & serdeczny & mały \\
@@ -283,7 +283,7 @@ gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperym
 
 \subsection{Cycle Crossover (CX)}
 
-Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w genotypie. Cechę tę posiada operator Cycle Crossover~\cite{Operators:2000:TSP}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w genotypie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
 
 W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w genotypie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że genotyp potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
 
