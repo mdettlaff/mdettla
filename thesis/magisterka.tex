@@ -308,13 +308,28 @@ Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, mo
 $$ (1 2 6 4 7 5 3 8) $$
 
 
-\subsection{Partially mapped crossover (PMX)}
+\subsection{Partially Mapped Crossover (PMX)}
 
-Podobnie jak Cycle Crossover, Partially mapped crossover zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
+Podobnie jak Cycle Crossover, Partially Mapped Crossover~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
 
-Sposób działania tego operatora jest następujący:
+Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją mapującą}. Sekcja mapująca drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja mapująca pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie mapowania określonego przez sekcje mapujące.
 
-[przykład - do zrobienia]
+Dla przykładu, niech dane będą następujące osobniki rodzicielskie:
+$$ (1 2 3 4 5 6 7 8), (3 7 5 1 6 8 2 4) $$
+
+Załóżmy, że wylosowano punkty pomiędzy trzecim i czwartym, oraz szóstym i siódmym elementem chromosomu, co daje sekcję mapującą od czwartego do szóstego elementu. Po przepisaniu sekcji mapujących, osobniki potomne mają następującą postać (kropką zaznaczono pozycje jeszcze nieprzypisane):
+$$ (* * * 1 6 8 * *), (* * * 4 5 6 * *) $$
+
+Sekcje mapujące $ (1 6 8) $ oraz $ (4 5 6) $ definiują mapowania: $ 1 \leftrightarrow 4 $, $ 6 \leftrightarrow 5 $ oraz $ 8 \leftrightarrow 6 $. Przypiszmy teraz brakujące elementy pierwszego potomka. Pierwszym elementem pierwszego rodzica jest $1$. Nie możemy jednak przepisać go na pierwszą pozycję potomka, ponieważ element ten występuje już w permutacji. Możemy jednak przypisać $4$, ponieważ zgodnie z mapowaniami $1$ jest mapowany na $4$.
+$$ (4 * * 1 6 8 * *) $$
+
+Elementy na drugiej, trzeciej oraz siódmej pozycji można przepisać bezpośrednio, ponieważ nie powodują one powstawania nieprawidłowej permutacji.
+$$ (4 2 3 1 6 8 7 *) $$
+
+Aby uzupełnić ostanią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $8$, więc najpierw stosujemy mapowanie $8 \rightarrow 6$. $6$ także występuje już w permutacji, dlatego mapujemy $6 \rightarrow 5$.
+$$ (4 2 3 1 6 8 7 5) $$
+
+Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
 
 
 \section{Operatory mutacji}
@@ -412,7 +427,7 @@ Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najleps
   ISM &	0.306 \\
 \end{tabular}\newline
 
-Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially-Mapped Crossover (PMX), Position-Based Crossover (POS) oraz Alternating-Position Crossover (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
+Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Crossover (PMX), Position-Based Crossover (POS) oraz Alternating-Position Crossover (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
 
 \begin{tabular}{ c | c }
   operator krzyżowania & najlepsza znaleziona wartość $p$ \\
