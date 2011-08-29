@@ -28,7 +28,7 @@
 \begin{document}
 
 \begin{abstract}
-  Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacyjny, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym genotyp stanowi układ klawiszy zakodowany jako permutacja, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W wyniku zostają utworzone układy klawiatury przystosowane do pisania w języku polskim oraz angielskim, które następnie są porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera.
+  Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacyjny, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym chromosomem jest układ klawiszy zakodowany jako permutacja, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W wyniku zostają utworzone układy klawiatury przystosowane do pisania w języku polskim oraz angielskim, które następnie są porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera.
 \end{abstract}
 \keywords{
   algorytmy, genetyczne, Dvorak, QWERTY, optymalizacja
@@ -159,7 +159,7 @@ Wadą krzyżowania punktowego jest fakt, że geny leżące na sąsiadujących po
 
 Układ klawiatury można zakodować jako ciąg binarny, opisując każdy klawisz za pomocą określonej ilości bitów. Niestety, stosowanie klasycznych operatorów genetycznych spowoduje, że zdecydowana większość powstałych w ten sposób rozwiązań będzie nieprawidłowych. Przykładowo, jeżeli użyjemy trzech bitów do opisania każdego klawisza klawiatury o 40 klawiszach, tylko jedna z każdych 1016 dowolnie wybranych struktur 120-bitowych jest strukturą o właściwej konfiguracji klawiszy~\cite{GloverKey}.
 
-W związku z powyższym, zastosowana zostanie permutacyjna reprezentacja genotypu oraz specjalnie dla niej dostosowane operatory mutacji oraz krzyżowania. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom ",", ".", "?" oraz ";". Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! \simeq 2.65 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
+W związku z powyższym, zastosowana zostanie permutacyjna reprezentacja chromosomu oraz specjalnie dla niej dostosowane operatory mutacji oraz krzyżowania. Układ klawiatury reprezentowany jest przez permutację 30 klawiszy. 26 klawiszy oznaczanych jest literami alfabetu łacińskiego A-Z, a pozostałe odpowiadają znakom ",", ".", "?" oraz ";". Wynika z tego, że liczba wszystkich możliwych układów klawiatury wynosi $$ 30! \simeq 2.65 * 10^{32} $$ co stanowi rozmiar przestrzeni poszukiwań na której będzie działał algorytm genetyczny. Zbiór wszystkich znaków wchodzących w skład permutacji oznaczymy jako $ A $.
 
 Klawisze podzielone są na trzy grupy, gdzie pierwsze 10 oznacza klawisze górnego rzędu klawiatury, następne 10 klawisze rzędu środkowego, a ostatnie 10 - dolnego rzędu.
 
@@ -179,7 +179,7 @@ Z tego powodu funkcja przystosowania nie będzie obliczana na podstawie oryginal
 $$ f_m : M \rightarrow \mathrm{R} $$
 $$ f_d : D \rightarrow \mathrm{R} $$
 
-Dziedzinę funkcji $ f_m $ będziemy określać jako zbiór monografów $ M $ (pojedynczych znaków wchodzących w skład genotypu), a dziedzinę funkcji $ f_d $ jako zbiór diagrafów $ D $ (wszystkich możliwych par znaków).
+Dziedzinę funkcji $ f_m $ będziemy określać jako zbiór monografów $ M $ (pojedynczych znaków wchodzących w skład chromosomu), a dziedzinę funkcji $ f_d $ jako zbiór diagrafów $ D $ (wszystkich możliwych par znaków).
 $$ M = \{ a : a \in A \} $$
 $$ D = \{ ab : a \in A, b \in A \} $$
 
@@ -285,20 +285,20 @@ gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperym
 
 \subsection{Cycle Crossover (CX)}
 
-Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w genotypie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w chromosomie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
 
-W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w genotypie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że genotyp potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
+W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
 
-Jeżeli okazuje się, że danego genu z genotypu rodzica nie można umieścić w genotypie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
+Jeżeli okazuje się, że danego genu z chromosomu rodzica nie można umieścić w chromosomie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
 
 Rozważmy przykład. Niech dane będą następujące osobniki rodzicielskie:
 $$ (1 2 3 4 5 6 7 8) $$
 $$ (2 4 6 8 7 5 3 1) $$
 
-Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję genotypu potomka możemy teraz wybrać $1$ lub $2$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy.
+Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję chromosomu potomka możemy teraz wybrać $1$ lub $2$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy.
 $$ (1 * * * * * * *) $$
 
-Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $1$ lub $8$, ale jeżeli wybierzemy $1$, wynikowy genotyp nie będzie już prawidłową permutacją. Dlatego wybieramy $8$.
+Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $1$ lub $8$, ale jeżeli wybierzemy $1$, wynikowy chromosom nie będzie już prawidłową permutacją. Dlatego wybieramy $8$.
 $$ (1 * * * * * * 8) $$
 
 Geny na czwartej oraz drugiej pozycji muszą również zostać wybrane z pierwszego rodzica, aby uniknąć wybrania po raz kolejny tych samych genów.
@@ -310,11 +310,11 @@ $$ (1 2 6 4 7 5 3 8) $$
 
 \subsection{Partially mapped crossover (PMX)}
 
-Podobnie jak Cycle Crossover, Partially mapped crossover zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment genotypu jednego z rodziców jest przepisywany na potomka, a pozostała część genotypu jest tworzona na podstawie mapowań.
+Podobnie jak Cycle Crossover, Partially mapped crossover zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
 
 Sposób działania tego operatora jest następujący:
 
-[przykład]
+[przykład - do zrobienia]
 
 
 \section{Operatory mutacji}
