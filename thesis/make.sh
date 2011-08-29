@@ -1,11 +1,9 @@
 SIGMA_DIR=seminarium/thesis
 
-if [ "$1" == "" ]
+scp *.tex *.bib sigma:$SIGMA_DIR
+if [ "$1" == "all" ]
 then
-  scp magisterka.tex *.bib sigma:$SIGMA_DIR
   scp fig/*.* sigma:$SIGMA_DIR/fig
-  ssh sigma "cd $SIGMA_DIR && make"
-  scp sigma:$SIGMA_DIR/magisterka.pdf /tmp
-else
-  echo unknown arguments
 fi
+ssh sigma "cd $SIGMA_DIR && make"
+scp sigma:$SIGMA_DIR/magisterka.pdf /tmp
