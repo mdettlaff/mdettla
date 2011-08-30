@@ -419,12 +419,12 @@ Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najleps
 \begin{tabular}{ c | c }
   operator mutacji & najlepsza znaleziona wartość $p$ \\
   \hline
-  EM &	0.187 \\
-  SM &	0.225 \\
-  SIM &	0.244 \\
-  DM &	0.278 \\
-  IVM &	0.280 \\
-  ISM &	0.306 \\
+  EM &	0,187 \\
+  SM &	0,225 \\
+  SIM &	0,244 \\
+  DM &	0,278 \\
+  IVM &	0,280 \\
+  ISM &	0,306 \\
 \end{tabular}\newline
 
 Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Crossover (PMX), Position-Based Crossover (POS) oraz Alternating-Position Crossover (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
@@ -432,10 +432,10 @@ Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Cross
 \begin{tabular}{ c | c }
   operator krzyżowania & najlepsza znaleziona wartość $p$ \\
   \hline
-  CX &	0.184 \\
-  PMX &	0.201 \\
-  POS &	0.206 \\
-  AP &	0.259 \\
+  CX &	0,184 \\
+  PMX &	0,201 \\
+  POS &	0,206 \\
+  AP &	0,259 \\
 \end{tabular}\newline
 
 Istotne jest stosowanie zarówno operatora mutacji, jak i krzyżowania. Stosowanie samego operatora mutacji bez krzyżowania prowadzi do otrzymywania rozwiązań około 10\% gorszych, natomiast samego krzyżowania bez mutacji, około 65\% gorszych.
@@ -460,20 +460,20 @@ Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku lit
 \begin{tabular}{ c | c | c }
   diagraf & język polski & język angielski \\
   \hline
-  ie &	3.44\% &	0.72\% \\
-  ni &	2.23\% &	0.28\% \\
-  ch &	1.98\% &	0.60\% \\
-  na &	1.40\% &	0.35\% \\
-  rz &	1.37\% &	0.00\% \\
+  ie &	3,44\% &	0,72\% \\
+  ni &	2,23\% &	0,28\% \\
+  ch &	1,98\% &	0,60\% \\
+  na &	1,40\% &	0,35\% \\
+  rz &	1,37\% &	0,00\% \\
 \end{tabular}
 \begin{tabular}{ c | c | c }
   diagraf & język angielski & język polski \\
   \hline
-  th &	3.56\% &	0.22\% \\
-  he &	2.75\% &	0.23\% \\
-  in &	2.40\% &	0.44\% \\
-  er &	2.21\% &	0.81\% \\
-  an &	2.15\% &	1.05\% \\
+  th &	3,56\% &	0,22\% \\
+  he &	2,75\% &	0,23\% \\
+  in &	2,40\% &	0,44\% \\
+  er &	2,21\% &	0,81\% \\
+  an &	2,15\% &	1,05\% \\
 \end{tabular}\newline
 
 Ze względu na opisane wyżej różnice, wyniki algorytmu dla języka polskiego oraz angielskiego zostaną opisane osobno.
@@ -497,14 +497,15 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerow
 \begin{tabular}{ c | c | c | c | c}
   kryterium & losowy & QWERTY & Dvorak & wygenerowany \\
   \hline
-  $p$			&  2.44 &  3.00 &  0.30 &  0.16 \\
-  $p_{finger}$          &  0.39 &  0.11 &  0.09 &  0.01 \\
-  $p_{row}$             &   1.5 &  2.52 & 0.029 & 0.005 \\
-  $p_{hand\_alter}$     & 0.005 & 0.005 & 0.003 & 0.004 \\
-  $p_{finger\_alter}$   &  0.16 &  0.11 &  0.06 &  0.07 \\
-  $p_{step}$            &  0.07 &  0.09 &  0.04 &  0.05 \\
-  $p_{isf}$             & 0.009 & 0.008 & 0.008 & 0.007 \\
-  $p_{hand\_usage}$     &  0.29 &  0.14 &  0.06 & 0.002 \\
+  $p$			&  11,96 & 13,36 & 3,92 & 3,44 \\
+  \hline
+  $p_{finger}$          &   1,12 &  0,38 & 0,31 & 0,12 \\
+  $p_{row}$             &    5,9 &  7,28 & 0,06 & 0,02 \\
+  $p_{hand\_alter}$     &    1,1 &  1,11 & 0,81 & 0,79 \\
+  $p_{finger\_alter}$   &   1,34 &  0,93 & 0,62 & 0,62 \\
+  $p_{step}$            &   1,41 &  1,65 & 0,91 & 0,78 \\
+  $p_{isf}$             &   1,09 &  1,06 &  1,1 &  1,1 \\
+  $p_{hand\_usage}$     & 0,0004 &  0,93 &  0,1 & 0,01 \\
 \end{tabular}\newline\newline
 
 Ponieważ podczas projektowania układu QWERTY nie były uwzględniane kryteria ergonomiczne, należy spodziewać się że nie będzie on znacząco lepszy od losowo wygenerowanego układu klawiszy. Rzeczywiście, funkcja oceny nie różni się istotnie w tych przypadkach. Wyraźnie lepsze wyniki osiągnął układ Dvoraka, co nie jest zaskoczeniem biorąc pod uwagę fakt, że był on tworzony z myślą o języku angielskim, a kryteria stosowane przy jego projektowaniu w dużym stopniu pokrywają się z tymi użytymi w funkcji przystosowania. Najlepszy wynik znaleziony przez algorytm genetyczny posiada ocenę o $46\%$ korzystniejszą od najlepiej ocenionego układu wśród pozostałych, jakim jest klawiatura Dvoraka.
