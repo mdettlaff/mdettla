@@ -523,7 +523,7 @@ Większość układów klawiatury znalezionych przez algorytm przejawia wyraźn�
 
 \begin{figure}[!tbh]
 \centering
-\includegraphics[width=.8\hsize]{fig/best_en}
+\includegraphics[width=.8\hsize]{fig/best_pl}
 \caption{Najlepszy układ klawiszy dla języka polskiego znaleziony przez algorytm}
 \end{figure}
 
@@ -531,14 +531,15 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla wygenerow
 \begin{tabular}{ c | c | c | c | c}
   kryterium & losowy & QWERTY & Dvorak & wygenerowany \\
   \hline
-  $p$			&   2.20 &   1.87 &   0.16 &   0.04 \\
-  $p_{finger}$          &   0.31 &   0.16 &   0.22 &  0.002 \\
-  $p_{row}$             &   1.81 &   1.64 &   0.26 &  0.009 \\
-  $p_{hand\_alter}$     &  0.001 &  0.001 & 0.0007 & 0.0001 \\
-  $p_{finger\_alter}$   &   0.02 &   0.02 &   0.15 &   0.15 \\
-  $p_{step}$            &   0.01 &   0.02 &   0.14 &  0.001 \\
-  $p_{isf}$             & 0.0017 & 0.0017 & 0.0019 & 0.0016 \\
-  $p_{hand\_usage}$     &   0.02 &   0.01 &  0.003 & 0.0001 \\
+  $p$			& 7,25 & 8,44 & 3,64 & 1,06 \\
+  \hline
+  $p_{finger}$          & 0,72 & 0,77 & 0,94 & 0,05 \\
+  $p_{row}$             & 4,66 & 5,64 & 1,07 & 0,03 \\
+  $p_{hand\_alter}$     & 0,35 & 0,37 & 0,28 & 0,23 \\
+  $p_{finger\_alter}$   & 0,35 & 0,31 & 0,22 & 0,14 \\
+  $p_{step}$            & 0,52 & 0,62 & 0,46 & 0,23 \\
+  $p_{isf}$             & 0,36 & 0,36 & 0,38 & 0,37 \\
+  $p_{hand\_usage}$     & 0,30 & 0,37 & 0,28 & 0,002 \\
 \end{tabular}\newline\newline
 
 Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dlatego należy się spodziewać że wynik dla języka polskiego nie będzie optymalny. Rzeczywiście, układ Dvoraka jest nadal lepszy od losowo wygenerowanego lub QWERTY, ale bardzo daleki od optimum. Układ klawiszy wygenerowany przez algorytm jest natomiast wyraźnie lepszy od wszystkich pozostałych, co daje znaczącą przewagę w porównaniu z wynikami dla języka angielskiego.
