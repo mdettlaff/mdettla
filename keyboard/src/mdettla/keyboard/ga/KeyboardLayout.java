@@ -14,10 +14,10 @@ public class KeyboardLayout implements Specimen {
 
 	private static final double WEIGHT_ROW_USAGE = 3.33 * 10;
 	private static final double WEIGHT_FINGER_USAGE = 37.17;
-	private static final double WEIGHT_HAND_ALTER = 0.00471 * 0.5;
-	private static final double WEIGHT_FINGER_ALTER = 0.00892;
-	private static final double WEIGHT_BIG_STEPS = 0.00101;
-	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.0135 * 0.1;
+	private static final double WEIGHT_HAND_ALTER = 0.0008949 * 0.5;
+	private static final double WEIGHT_FINGER_ALTER = 0.00169;
+	private static final double WEIGHT_BIG_STEPS = 0.0001919;
+	private static final double WEIGHT_INBOARD_STROKE_FLOW = 0.002565 * 0.1;
 	private static final double WEIGHT_HAND_USAGE = 71.42;
 
 	static final List<Character> KEYBOARD_CHARS = Arrays.asList(
