@@ -7,11 +7,11 @@ RESULTS_FILE="results/results.txt"
 EN_CORPUS="src/mdettla/keyboard/ga/resources/en/*.txt"
 
 function epochs {
-  count=5
+  echo $@
+  count=10
   sum=0
   for i in `seq $count`
   do
-    echo $@
     fitness=`$GA $@ $EN_CORPUS | grep 'przystosowanie:' | sed 's/przystosowanie: //'`
     echo $fitness
     sum=$(echo "scale=3; $sum + $fitness" | bc)
@@ -20,6 +20,7 @@ function epochs {
   echo
 }
 
+#epochs
 #epochs crossoverProbability=0
 #epochs mutationProbability=0
 

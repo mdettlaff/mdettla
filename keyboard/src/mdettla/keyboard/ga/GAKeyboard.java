@@ -35,8 +35,8 @@ public class GAKeyboard {
 	private boolean quiet;
 
 	public GAKeyboard() {
-		populationSize = 100;
-		generationsCount = 100;
+		populationSize = 50;
+		generationsCount = 400;
 		eliteSize = 2;
 		tournamentSize = 4;
 		mutationProbability = .7;
