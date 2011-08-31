@@ -512,6 +512,17 @@ Większość układów klawiatury znalezionych przez algorytm przejawia wyraźn�
 \caption{Ewolucja maksymalnego przystosowania w populacji}
 \end{figure}
 
+Różnice między poszczególnymi układami są szczególnie widoczne w przypadku wykorzystania rzędów klawiszy. Szczegółowe różnice przedstawiono w poniższej tabeli:\newline\newline
+\begin{tabular}{ c | c | c | c | c}
+  rząd klawiszy   & losowy & QWERTY & Dvorak & znaleziony \\
+  \hline
+  górny           & 40,5\% & 49,1\% & 22,9\% & 22,0\% \\
+  środkowy        & 36,5\% & 33,5\% & 68,3\% & 70,9\% \\
+  dolny           &   23\% & 17,4\% &  8,8\% &  7,1\% \\
+\end{tabular}\newline
+
+W przypadku układu QWERTY zdecydowanie zbyt duży nacisk położony jest na górny rząd klawiszy, podczas gdy najkorzystniejszy środkowy rząd jest wykorzystany w zaledwie jednej trzeciej. Jest to jedna z największych wad tego układu; nietrudno jest wygenerować losowo układ z lepszym rozkładem. Dobrze widoczne są zalety klawiatury Dvoraka, która posiada rozkład zbliżony do optymalnego, wykorzystując w bardzo dużym stopniu rząd środkowy. Mimo to, układ klawiatury znaleziony przez algorytm poprawił ten wynik jeszcze bardziej.
+
 
 \section{Wyniki dla języka polskiego}
 
@@ -537,6 +548,17 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla układu k
 \end{figure}
 
 Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dlatego należy się spodziewać że wynik dla języka polskiego nie będzie optymalny. Rzeczywiście, układ Dvoraka jest nadal lepszy od losowo wygenerowanego lub QWERTY, ale bardzo daleki od optimum. Układ klawiszy wygenerowany przez algorytm jest natomiast wyraźnie lepszy od wszystkich pozostałych, co daje znaczącą przewagę w porównaniu z wynikami dla języka angielskiego.
+
+Różnice między poszczególnymi układami ze względu na wykorzystanie rzędów klawiszy przedstawiono w poniższej tabeli:\newline\newline
+\begin{tabular}{ c | c | c | c | c}
+  rząd klawiszy   & losowy & QWERTY & Dvorak & znaleziony \\
+  \hline
+  górny           & 33,8\% & 44,7\% & 25,0\% & 29,0\% \\
+  środkowy        & 35,5\% & 30,3\% & 54,0\% & 61,9\% \\
+  dolny           & 30,7\% & 25,0\% & 21,0\% &  9,1\% \\
+\end{tabular}\newline
+
+W przypadku układu QWERTY, sytuacja wygląda jeszcze gorzej niż dla języka angielskiego: udział bardzo niekorzystnego rzędu dolnego wzrósł, a rzędu środkowego spadł do mniej niż jednej trzeciej. Wynik klawiatury Dvoraka również się pogorszył, co nie jest zaskakujące, ale nadal jest lepszy od losowo wygenerowanego rozwiązania. Przewaga rozwiązania znalezionego przez algorytm, niewielka w przypadku języka angielskiego, tym razem jest bardziej wyraźna.
 
 \begin{figure}[!tbh]
 \centering
