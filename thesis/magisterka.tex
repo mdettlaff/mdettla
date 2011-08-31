@@ -407,13 +407,18 @@ Algorytm różni się od standardowego algorytmu opisanego wcześniej poprzez st
 
 \chapter{Wyniki i ich analiza}
 
-Algorytm został uruchomiony na serwerze z 8-rdzeniowym procesorem Intel Xeon 3.00 Ghz oraz 32 GB pamięci RAM.
+Algorytm został uruchomiony na serwerze z 8-rdzeniowym procesorem Intel Xeon 3.00 Ghz oraz 32 GB pamięci RAM. Ponieważ algorytm genetyczny zdecydowaną większość czasu spędza na ocenie rozwiązań, zastosowanie współbieżnego ich oceniania za pomocą 8 wątków spowodowało 5-krotne zmniejszenie czasu obliczeń.
 
 Uruchomienie 100 iteracji algorytmu dla populacji o wielkości 100 osobników zajmuje 3,4 sekundy i pozwala na ocenę co najwyżej 10000 osobników. Ilość ta stanowi zaledwie $ 3.77 \cdot 10^{-26} \% $ całej przestrzeni poszukiwań. Ocena wszystkich możliwych rozwiązań metodą brute force zajęłaby około $ 10^{25} $ lat.
 
 \section{Dobór parametrów oraz operatorów}
 
-Rozmiar populacji został ustalony na $100$. Algorytm został uruchomiony dla $400$ iteracji.
+Algorytm został uruchomiony dla $400$ iteracji. Rozmiar populacji został ustalony na 50, ponieważ dalsze jego zwiększanie nie ma wyraźnego wpływu na jakość rozwiązania, co przedstawiono na wykresie poniżej.
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/population_size}
+\caption{Wpływ wielkości populacji na jakość rozwiązania}
+\end{figure}
 
 Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: Exchange Mutation (EM), Displacement Mutation (DM), Insertion Mutation (ISM), Simple Inversion Mutation (SIM), Inversion Mutation (IVM) oraz Scramble Mutation (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
