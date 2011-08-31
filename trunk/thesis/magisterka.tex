@@ -413,18 +413,18 @@ Uruchomienie 100 iteracji algorytmu dla populacji o wielkości 100 osobników za
 
 \section{Dobór parametrów oraz operatorów}
 
-Rozmiar populacji został ustalony na $100$. Algorytm został uruchomiony dla $100$ iteracji.
+Rozmiar populacji został ustalony na $100$. Algorytm został uruchomiony dla $400$ iteracji.
 
 Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: Exchange Mutation (EM), Displacement Mutation (DM), Insertion Mutation (ISM), Simple Inversion Mutation (SIM), Inversion Mutation (IVM) oraz Scramble Mutation (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
   operator mutacji & najlepsza znaleziona wartość $p$ \\
   \hline
-  EM &	0,187 \\
-  SM &	0,225 \\
-  SIM &	0,244 \\
-  DM &	0,278 \\
-  IVM &	0,280 \\
-  ISM &	0,306 \\
+  EM  & 3,553 \\
+  DM  & 3,73 \\
+  SIM & 3,746 \\
+  SM  & 3,876 \\
+  IVM & 3,882 \\
+  ISM & 4,301 \\
 \end{tabular}\newline
 
 Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Crossover (PMX), Position-Based Crossover (POS) oraz Alternating-Position Crossover (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
@@ -432,10 +432,10 @@ Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Cross
 \begin{tabular}{ c | c }
   operator krzyżowania & najlepsza znaleziona wartość $p$ \\
   \hline
-  CX &	0,184 \\
-  PMX &	0,201 \\
-  POS &	0,206 \\
-  AP &	0,259 \\
+  PMX & 3,449 \\
+  CX  & 3,509 \\
+  POS & 3,543 \\
+  AP  & 3,582 \\
 \end{tabular}\newline
 
 Istotne jest stosowanie zarówno operatora mutacji, jak i krzyżowania. Stosowanie samego operatora mutacji bez krzyżowania prowadzi do otrzymywania rozwiązań około 10\% gorszych, natomiast samego krzyżowania bez mutacji, około 65\% gorszych.
