@@ -495,19 +495,20 @@ Ze względu na opisane wyżej różnice, wyniki algorytmu dla języka polskiego 
 
 \section{Wyniki dla języka angielskiego}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline\newline
-\begin{tabular}{ c | c | c | c | c}
-  kryterium            & losowy & QWERTY & Dvorak & znaleziony \\
+Porównanie wartości funkcji przystosowania oraz jej składników dla różnych układów klawiatury przedstawiono w tabeli poniżej. Układ znaleziony przez algorytm genetyczny opisany w tej pracy oznaczono jako AG. SW to najlepsze rozwiązanie znalezione przez algorytm symulowanego wyżarzania \cite{Anderson:SimulatedAnnealing}, a AG2 - przez inny algorytm genetyczny opisany w artykule \cite{Call:2005:CME}.
+\newline
+\begin{tabular}{ c | c | c | c | c | c | c }
+  kryterium            & losowy & QWERTY & Dvorak & AG & SW   & AG2 \\
   \hline
-  $p$			&  11,96 & 13,36 & 3,92 & 3,44 \\
+  $p$			&  11,96 & 13,36 & 3,92 & 3,44 & 9,76 & 5,1 \\
   \hline
-  $p_{finger}$          &   1,12 &  0,38 & 0,31 & 0,12 \\
-  $p_{row}$             &    5,9 &  7,28 & 0,06 & 0,02 \\
-  $p_{hand\_alter}$     &    1,1 &  1,11 & 0,81 & 0,79 \\
-  $p_{finger\_alter}$   &   1,34 &  0,93 & 0,62 & 0,62 \\
-  $p_{step}$            &   1,41 &  1,65 & 0,91 & 0,78 \\
-  $p_{isf}$             &   1,09 &  1,06 &  1,1 &  1,1 \\
-  $p_{hand\_usage}$     & 0,0004 &  0,93 &  0,1 & 0,01 \\
+  $p_{finger} w_{finger}$                &   1,12 &  0,38 & 0,31 & 0,12 &  1,4 & 0,49 \\
+  $p_{row} w_{row}$                      &    5,9 &  7,28 & 0,06 & 0,02 &  4,3 & 0,97 \\
+  $p_{hand\_alter} w_{hand\_alter}$      &    1,1 &  1,11 & 0,81 & 0,79 & 0,78 & 0,81 \\
+  $p_{finger\_alter} w_{finger\_alter}$  &   1,34 &  0,93 & 0,62 & 0,62 & 0,94 & 0,64 \\
+  $p_{step} w_{step}$                    &   1,41 &  1,65 & 0,91 & 0,78 & 1,15 & 0,93 \\
+  $p_{isf} w_{isf}$                      &   1,09 &  1,06 &  1,1 &  1,1 & 1,15 & 1,16 \\
+  $p_{hand\_usage} w_{hand\_usage}$      & 0,0004 &  0,93 &  0,1 & 0,01 & 0,02 & 0,09 \\
 \end{tabular}\newline\newline
 
 \begin{figure}[!tbh]
@@ -527,25 +528,27 @@ Większość układów klawiatury znalezionych przez algorytm przejawia wyraźn�
 \end{figure}
 
 Różnice między poszczególnymi układami są szczególnie widoczne w przypadku wykorzystania rzędów klawiszy. Szczegółowe różnice przedstawiono w poniższej tabeli:\newline\newline
-\begin{tabular}{ c | c | c | c | c}
-  rząd klawiszy   & losowy & QWERTY & Dvorak & znaleziony \\
+\begin{tabular}{ c | c | c | c | c | c | c }
+  rząd klawiszy   & losowy & QWERTY & Dvorak & AG &     SW   & AG2 \\
   \hline
-  górny           & 40,5\% & 49,1\% & 22,9\% & 22,0\% \\
-  środkowy        & 36,5\% & 33,5\% & 68,3\% & 70,9\% \\
-  dolny           &   23\% & 17,4\% &  8,8\% &  7,1\% \\
+  górny           & 40,5\% & 49,1\% & 22,9\% & 22,0\% & 35,9\% & 18,6\% \\
+  środkowy        & 36,5\% & 33,5\% & 68,3\% & 70,9\% & 41,7\% & 62,1\% \\
+  dolny           &   23\% & 17,4\% &  8,8\% &  7,1\% & 22,4\% & 19,3\% \\
 \end{tabular}\newline
 
 W przypadku układu QWERTY zdecydowanie zbyt duży nacisk położony jest na górny rząd klawiszy, podczas gdy najkorzystniejszy środkowy rząd jest wykorzystany w zaledwie jednej trzeciej. Jest to jedna z największych wad tego układu; nietrudno jest wygenerować losowo układ z lepszym rozkładem. Dobrze widoczne są zalety klawiatury Dvoraka, która posiada rozkład zbliżony do optymalnego, wykorzystując w bardzo dużym stopniu rząd środkowy. Mimo to, układ klawiatury znaleziony przez algorytm poprawił ten wynik jeszcze bardziej.
 
 Poniższa tabela przedstawia różnice w stopniu użycia poszczególnych palców pomiędzy testowanymi układami klawiszy:\newline\newline
-\begin{tabular}{ c | c | c | c | c | c | c | c | c}
-                & lewy & lewy      & lewy     & lewy       & prawy      & prawy    & prawy     & prawy \\
+\begin{tabular}{ c | c | c | c | c | c | c | c | c }
+                & lewy & lewy  & lewy & lewy & prawy & prawy & prawy & prawy \\
   układ         & mały & serd. & śr. & wsk. & wsk. & śr. & serd. & mały \\
   \hline
   losowy        & 14\% & 2\% & 10\% & 21\% & 16\% & 24\% & 9\%  & 4\% \\
   QWERTY        &  8\% & 9\% & 18\% & 21\% & 20\% & 9\%  & 13\% & 2\% \\
   Dvorak        &  8\% & 9\% & 13\% & 14\% & 18\% & 13\% & 13\% & 10\% \\
-  znaleziony    &  6\% & 9\% & 15\% & 19\% & 18\% & 15\% & 10\% & 8\% \\
+  AG            &  6\% & 9\% & 15\% & 19\% & 18\% & 15\% & 10\% & 8\% \\
+  SW            &  8\% & 4\% & 10\% & 24\% & 31\% & 10\% & 12\% & 0\% \\
+  AG2           &  8\% & 9\% & 12\% & 22\% & 23\% & 11\% &  9\% & 8\% \\
 \end{tabular}\newline
 
 Tym razem układ QWERTY sprawdza się lepiej od losowo wygenerowanego. Rozkłady dla klawiatury Dvoraka oraz układu znalezionego przez algorytm są jednak bardziej równomierne.
@@ -553,19 +556,19 @@ Tym razem układ QWERTY sprawdza się lepiej od losowo wygenerowanego. Rozkłady
 
 \section{Wyniki dla języka polskiego}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline\newline
-\begin{tabular}{ c | c | c | c | c}
-  kryterium         & losowy & QWERTY & Dvorak & znaleziony \\
+Porównanie wartości funkcji przystosowania oraz jej składników dla różnych układów klawiatury:\newline\newline
+\begin{tabular}{ c | c | c | c | c }
+  kryterium         & losowy & QWERTY & Dvorak & AG \\
   \hline
   $p$			& 7,25 & 8,44 & 3,64 & 1,06 \\
   \hline
-  $p_{finger}$          & 0,72 & 0,77 & 0,94 & 0,05 \\
-  $p_{row}$             & 4,66 & 5,64 & 1,07 & 0,03 \\
-  $p_{hand\_alter}$     & 0,35 & 0,37 & 0,28 & 0,23 \\
-  $p_{finger\_alter}$   & 0,35 & 0,31 & 0,22 & 0,14 \\
-  $p_{step}$            & 0,52 & 0,62 & 0,46 & 0,23 \\
-  $p_{isf}$             & 0,36 & 0,36 & 0,38 & 0,37 \\
-  $p_{hand\_usage}$     & 0,30 & 0,37 & 0,28 & 0,002 \\
+  $p_{finger} w_{finger}$                & 0,72 & 0,77 & 0,94 & 0,05 \\
+  $p_{row} w_{row}$                      & 4,66 & 5,64 & 1,07 & 0,03 \\
+  $p_{hand\_alter} w_{hand\_alter}$      & 0,35 & 0,37 & 0,28 & 0,23 \\
+  $p_{finger\_alter} w_{finger\_alter}$  & 0,35 & 0,31 & 0,22 & 0,14 \\
+  $p_{step} w_{step}$                    & 0,52 & 0,62 & 0,46 & 0,23 \\
+  $p_{isf} w_{isf}$                      & 0,36 & 0,36 & 0,38 & 0,37 \\
+  $p_{hand\_usage} w_{hand\_usage}$      & 0,30 & 0,37 & 0,28 & 0,002 \\
 \end{tabular}\newline\newline
 
 \begin{figure}[!tbh]
@@ -578,7 +581,7 @@ Układ klawiatury Dvoraka był zaprojektowany z myślą o języku angielskim, dl
 
 Różnice między poszczególnymi układami ze względu na wykorzystanie rzędów klawiszy przedstawiono w poniższej tabeli:\newline\newline
 \begin{tabular}{ c | c | c | c | c}
-  rząd klawiszy   & losowy & QWERTY & Dvorak & znaleziony \\
+  rząd klawiszy   & losowy & QWERTY & Dvorak & AG \\
   \hline
   górny           & 33,8\% & 44,7\% & 25,0\% & 29,0\% \\
   środkowy        & 35,5\% & 30,3\% & 54,0\% & 61,9\% \\
@@ -595,7 +598,7 @@ Poniższa tabela przedstawia różnice w stopniu użycia poszczególnych palców
   losowy        &  10\% & 6\% & 8\% & 20\% &   19\% & 13\% & 17\% & 9\% \\
   QWERTY        &  16\% & 9\% & 16\% & 11\% &  17\% & 13\% & 14\% & 3\% \\
   Dvorak        &  10\% & 10\% & 12\% & 20\% & 11\% & 12\% & 9\% & 16\% \\
-  znaleziony    &  5\% & 11\% & 14\% & 18\% &  19\% & 15\% & 12\% & 6\% \\
+  AG            &  5\% & 11\% & 14\% & 18\% &  19\% & 15\% & 12\% & 6\% \\
 \end{tabular}\newline\newline
 
 Ze względu na różnice w częstotliwości występowania liter, wyniki dla układów QWERTY oraz Dvorak są znacznie gorsze niż w przypadku języka angielskiego. QWERTY kładzie zbyt duży nacisk na lewy mały palec, który służy do wpisywania popularnych w języku polskim liter \emph{a} oraz \emph{z}. Z kolei klawiatura Dvoraka przeciąża prawy mały palec, obsługujący litery \emph{l}, \emph{s} oraz \emph{z}, w zbyt małym stopniu natomiast wykorzystując prawy palec wskazujący. Problemy te nie dotyczą układu wygenerowanego przez algorytm.
