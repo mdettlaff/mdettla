@@ -420,6 +420,15 @@ Algorytm został uruchomiony dla $400$ iteracji. Rozmiar populacji został ustal
 \caption{Wpływ wielkości populacji na jakość rozwiązania}
 \end{figure}
 
+Wartości wag poszczególnych kryteriów zostały dobrane eksperymentalnie, tak aby ich wpływ na końcowe rozwiązanie był jak najbardziej zrównoważony. Niektóre kryteria stanowią odchylenie od wartości optymalnej, inne natomiast to sumy częstotliwości, dlatego wartości niektórych wag znacznie się różnią. Przyjęte zostały następujące wartości:
+\newline
+\begin{tabular}{ l l }
+  \indent $ w_{finger} = 37,2 $ & \indent $ w_{row} = 33,3 $ \\
+  \indent $ w_{hand\_alter} = 4,5 \cdot 10^{-4} $ & \indent $ w_{finger\_alter} = 1,6 \cdot 10^{-3} $ \\
+  \indent $ w_{step} = 1,9 \cdot 10^{-4} $ & \indent $ w_{isf} = 2,5 \cdot 10^{-4} $ \\
+  \indent $ w_{hand\_usage} = 71,4 $ & \\
+\end{tabular}\newline
+
 Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: Exchange Mutation (EM), Displacement Mutation (DM), Insertion Mutation (ISM), Simple Inversion Mutation (SIM), Inversion Mutation (IVM) oraz Scramble Mutation (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
   operator mutacji & najlepsza znaleziona wartość $p$ \\
@@ -460,7 +469,7 @@ Cechy statystyczne tekstów uwzględniane w funkcji przystosowania, czyli częst
 \caption{Porównanie częstotliwości występowania liter w języku polskim i angielskim}
 \end{figure}
 
-Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku litery \emph{e}. Jeszcze większe różnice widoczne są w przypadku diagrafów. Dla przykładu, najpopularniejsze pary znaków w języku angielskim, czyli \emph{th} oraz \emph{he}, w języku polskim występują ponad 10 razy radziej. Natomiast często spotykana w języku polskim para \emph{rz} w języku angielskim nie występuje praktycznie wcale. Warto zwrócić uwgę, że para \emph{th} jest bardzo łatwa do wpisania na klawiaturze Dvoraka. Porównanie częstotliwości występowania najczęstszych diagrafów w języku polskim i angielskim przedstawiono w tabeli poniżej.
+Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku litery \emph{e}. Jeszcze większe różnice widoczne są w przypadku diagrafów. Dla przykładu, najpopularniejsze pary znaków w języku angielskim, czyli \emph{th} oraz \emph{he}, w języku polskim występują ponad 10 razy radziej. Natomiast często spotykana w języku polskim para \emph{rz} w języku angielskim nie występuje praktycznie wcale. Warto zwrócić uwgę, że para \emph{th} jest bardzo łatwa do wpisania na klawiaturze Dvoraka. Porównanie częstotliwości występowania najczęstszych diagrafów w języku polskim i angielskim przedstawiono w tabeli poniżej.\newline
 
 \begin{tabular}{ c | c | c }
   diagraf & język polski & język angielski \\
@@ -479,14 +488,14 @@ Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku lit
   in &	2,40\% &	0,44\% \\
   er &	2,21\% &	0,81\% \\
   an &	2,15\% &	1,05\% \\
-\end{tabular}\newline
+\end{tabular}\newline\newline
 
 Ze względu na opisane wyżej różnice, wyniki algorytmu dla języka polskiego oraz angielskiego zostaną opisane osobno.
 
 
 \section{Wyniki dla języka angielskiego}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline
+Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline\newline
 \begin{tabular}{ c | c | c | c | c}
   kryterium            & losowy & QWERTY & Dvorak & znaleziony \\
   \hline
@@ -544,7 +553,7 @@ Tym razem układ QWERTY sprawdza się lepiej od losowo wygenerowanego. Rozkłady
 
 \section{Wyniki dla języka polskiego}
 
-Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline
+Porównanie wartości funkcji przystosowania oraz jej składników dla układu klawiatury znalezionego przez algorytm, oraz układów Dvorak, QWERTY oraz losowo wygenerowanego:\newline\newline
 \begin{tabular}{ c | c | c | c | c}
   kryterium         & losowy & QWERTY & Dvorak & znaleziony \\
   \hline
@@ -587,7 +596,7 @@ Poniższa tabela przedstawia różnice w stopniu użycia poszczególnych palców
   QWERTY        &  16\% & 9\% & 16\% & 11\% &  17\% & 13\% & 14\% & 3\% \\
   Dvorak        &  10\% & 10\% & 12\% & 20\% & 11\% & 12\% & 9\% & 16\% \\
   znaleziony    &  5\% & 11\% & 14\% & 18\% &  19\% & 15\% & 12\% & 6\% \\
-\end{tabular}\newline
+\end{tabular}\newline\newline
 
 Ze względu na różnice w częstotliwości występowania liter, wyniki dla układów QWERTY oraz Dvorak są znacznie gorsze niż w przypadku języka angielskiego. QWERTY kładzie zbyt duży nacisk na lewy mały palec, który służy do wpisywania popularnych w języku polskim liter \emph{a} oraz \emph{z}. Z kolei klawiatura Dvoraka przeciąża prawy mały palec, obsługujący litery \emph{l}, \emph{s} oraz \emph{z}, w zbyt małym stopniu natomiast wykorzystując prawy palec wskazujący. Problemy te nie dotyczą układu wygenerowanego przez algorytm.
 
