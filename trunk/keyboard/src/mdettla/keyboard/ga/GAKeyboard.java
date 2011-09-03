@@ -123,15 +123,17 @@ public class GAKeyboard {
 		random.computeFitness();
 		print("\nLosowy układ:\n" + random);
 		print("\nQWERTY:\n" + KeyboardLayout.getQWERTYLayout(stats));
-		print("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats) + "\n");
-		System.out.println("Najlepiej przystosowany osobnik:\n" + best);
+		print("\nDvorak:\n" + KeyboardLayout.getDvorakLayout(stats));
+		print("\nCall Me E-Mail:\n" + KeyboardLayout.getCallMeEmailLayout(stats));
+		print("\nSimulated Annealing:\n" + KeyboardLayout.getSimulatedAnnealingLayout(stats));
+		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);
 		compareObjectives((KeyboardLayout) best, KeyboardLayout.getDvorakLayout(stats));
 	}
 
 	private TextStatistics getTextStatistics(List<File> corpus) throws IOException {
 		if (corpus.isEmpty()) {
 			corpus = Arrays.asList(new File(
-					"src/mdettla/keyboard/ga/resources/en/otoos11.txt"));
+					"src/mdettla/keyboard/ga/resources/en/pg4300.txt"));
 		}
 		TextStatistics stats = new TextStatistics();
 		for (File textFile : corpus) {
