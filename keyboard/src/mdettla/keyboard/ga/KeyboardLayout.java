@@ -208,27 +208,51 @@ public class KeyboardLayout implements Specimen {
 	}
 
 	public static KeyboardLayout getQWERTYLayout(TextStatistics stats) {
-		final List<Character> QWERTY_CHARS = Arrays.asList(
-				'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p',
-				'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';',
-				'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '?'
-		);
-		KeyboardLayout qwerty = new KeyboardLayout(stats);
-		qwerty.keys = QWERTY_CHARS;
-		qwerty.computeFitness();
-		return qwerty;
+		return createLayout(
+				"q w e r t  y u i o p" +
+				"a s d f g  h j k l ;" +
+				"z x c v b  n m , . ?",
+				stats);
 	}
 
 	public static KeyboardLayout getDvorakLayout(TextStatistics stats) {
-		final List<Character> DVORAK_CHARS = Arrays.asList(
-				'?', ',', '.', 'p', 'y', 'f', 'g', 'c', 'r', 'l',
-				'a', 'o', 'e', 'u', 'i', 'd', 'h', 't', 'n', 's',
-				';', 'q', 'j', 'k', 'x', 'b', 'm', 'w', 'v', 'z'
-		);
-		KeyboardLayout dvorak = new KeyboardLayout(stats);
-		dvorak.keys = DVORAK_CHARS;
-		dvorak.computeFitness();
-		return dvorak;
+		return createLayout(
+				"? , . p y  f g c r l" +
+				"a o e u i  d h t n s" +
+				"; q j k x  b m w v z",
+				stats);
+	}
+
+	public static KeyboardLayout getSimulatedAnnealingLayout(TextStatistics stats) {
+		return createLayout(
+				"q p r s h  z k i t x" +
+				"l f m c n  e a y g ;" +
+				"d j w v b  u o , . ?",
+				stats);
+	}
+
+	public static KeyboardLayout getCallMeEmailLayout(TextStatistics stats) {
+		return createLayout(
+				"v f l w c  ? ; u y p" +
+				"s n h t m  , e a i d" +
+				"k z b r j  o . x q g",
+				stats);
+	}
+
+	private static KeyboardLayout createLayout(String chars, TextStatistics stats) {
+		KeyboardLayout layout = new KeyboardLayout(stats);
+		layout.keys = stringToListOfChars(chars);
+		layout.computeFitness();
+		return layout;
+	}
+
+	private static List<Character> stringToListOfChars(String s) {
+		s = s.replaceAll("\\s", "");
+		List<Character> chars = new ArrayList<Character>(s.length());
+		for (int i = 0; i < s.length(); i++) {
+			chars.add(s.charAt(i));
+		}
+		return chars;
 	}
 
 //	private int getPenaltyForLocation() {
