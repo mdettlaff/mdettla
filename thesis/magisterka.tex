@@ -615,12 +615,13 @@ Ze względu na różnice w częstotliwości występowania liter, wyniki dla ukł
 
 \section{Konkluzje}
 
-Projektowanie optymalnego układu klawiatury jest złożonym problemem, który wymaga uwzględnienia wielu czynników. Rozwiązywanie go bez pomocy komputera jest zajęciem bardzo czasochłonnym. Co więcej, dla każdego języka naturalnego musi on być podejmowany od nowa, ze względu na różnice w częstotliwości występowania liter oraz ich par pomiędzy językami. Jak pokazują wyniki, dobór tekstów do których pisania ma być przystosowany dany układ klawiszy ma bardzo duży wpływ na jego ocenę.
+Projektowanie optymalnego układu klawiatury (KAP - Keyboard Arrangement Problem) jest złożonym problemem, który wymaga uwzględnienia wielu czynników wpływających na ergonomię pisania. Rozwiązywanie go bez pomocy komputera jest zajęciem bardzo czasochłonnym i nie gwarantuje znalezienia optymalnego rozwiązania. Co więcej, dla każdego języka naturalnego problem musi być podejmowany od nowa, ze względu na różnice w częstotliwości występowania liter oraz ich par pomiędzy językami. Jak pokazują wyniki, dobór tekstów do których pisania ma być przystosowany dany układ klawiszy ma bardzo duży wpływ na jego ocenę.
 
-Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że istnieją układy lepsze od tych pozostających w powszechnym użyciu i można poszukiwać ich za pomocą algorytmów genetycznych. Pewnym zaskoczeniem są słabe wyniki osiągnięte przez inne algorytmy (SW, AG2), szczególnie w porównaniu do klawiatury Dvoraka. Może to wynikać z zastosowania niewielkich rozmiarów zbiorów tekstów przez ich autorów.
-\newline
+Ogromna ilość potencjalnych rozwiązań oraz trudność w optymalizowaniu wielu czynników jednocześnie sprawiają, że KAP jest dobrym kandydatem na zastosowanie algorytmu genetycznego. Naturalnym sposobem reprezentacji chromosomu jest permutacja, co pozwala na stosowanie operatorów genetycznych wypróbowanych na innych zagadnieniach optymalizacji kombinatorycznej, takich jak problem komiwojażera.
 
-[TODO do uzupełnienia]
+Uzyskane wyniki pokazują jasno, że istnieją układy klawiszy lepsze od tych pozostających w powszechnym użyciu i algorytmy genetyczne potrafią znajdywać je stosunkowo szybko. Pewnym zaskoczeniem są słabe wyniki osiągnięte przez inne algorytmy (SW, AG2), szczególnie w porównaniu do klawiatury Dvoraka. Może to wynikać z zastosowania niewielkich rozmiarów zbiorów tekstów oraz prostszych kryteriów oceny rozwiązań przez ich autorów.
+
+Istnieje niewiele badań empirycznych na temat czynników wpływających na ergonomię pisania, a te istniejące najczęściej przeprowadzane były na niewielką skalę. Dlatego też kryteria przyjęte podczas oceny rozwiązań przedstawionego algorytmu z pewnością nie stanowią ostaniego słowa w tej dziedzinie. Stanowią one jednak pewien punkt wyjścia i można je w łatwy sposób zmodyfikować w miarę pojawiania się kolejnych danych w dziedzinie ergonomii.
 
 \section{Plany dalszych badań}
 
