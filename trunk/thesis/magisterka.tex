@@ -79,14 +79,14 @@ Podobne algorytmy stosowano również dla niestandardowych klawiatur, na przykł
 \source{Opracowanie własne}
 \end{figure}
 
-W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się powinny nad klawiszami $asdf$, a prawej nad $jkl;$. Po wciśnięciu któregoś z pozostałych klawiszy, palec powiniem powrócić na swoją standardową pozycję w środkowym rzędzie (tzw. home row). Kciuki zajmują się altem i spacją. Kolorami oznaczono, którymi palcami powinno się uderzać poszczególne klawisze, na przykład: lewy serdeczny wciska $x$, $s$, $w$ i $3$, a prawy wskazujący $n$, $m$, $h$, $j$, $y$ itd.
+W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się powinny nad klawiszami $asdf$, a prawej nad $jkl;$. Po wciśnięciu któregoś z pozostałych klawiszy, palec powinien powrócić na swoją standardową pozycję w środkowym rzędzie (tzw. home row). Kciuki zajmują się altem i spacją. Kolorami oznaczono, którymi palcami powinno się uderzać poszczególne klawisze, na przykład: lewy serdeczny wciska $x$, $s$, $w$ i $3$, a prawy wskazujący $n$, $m$, $h$, $j$, $y$ itd.
 
 Kolejny rozdział poświęcony jest ogólnemu wprowadzeniu do tematyki algorytmów genetycznych, z opisem schematu algorytmu oraz podstawowych operatorów genetycznych. Następnie, zostanie opisany algorytm genetyczny przystosowany do problemu KAP, z odpowiednio dobraną funkcją przystosowania oraz operatorami mutacji, selekcji i krzyżowania. W kolejnym rozdziale zostaną omówione wyniki działania tego algorytmu dla tekstów w języku polskim oraz angielskim. Uzyskane wyniki porównane są z tymi uzyskanymi przez znane układy klawiatury zaprojektowane ręcznie, oraz układy wygenerowane za pomocą innych algorytmów. Układy wygenerowane przez algorytm uzyskują wyraźną przewagę, zwłaszcza w przypadku wyników dla języka polskiego. W zakończeniu pracy przedstawione zostaną uzyskane konkluzje oraz plany dalszych badań.
 
 
 \chapter{Algorytmy genetyczne}
 
-Algorytmy genetyczne to rodzaj algorytmów heurystycznych pozwalających na efektywne przeszukiwanie przestrzeni rozwiązań w poszukiwaniu optymalnego rozwiązania. Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedzczenia oraz doboru naturalnego. Wykorzystują one biologicznie inspirowane operatory, do których należą rozrodczość, selekcja, mutacja oraz krzyżowanie.
+Algorytmy genetyczne to rodzaj algorytmów heurystycznych pozwalających na efektywne przeszukiwanie przestrzeni rozwiązań w poszukiwaniu optymalnego rozwiązania. Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedziczenia oraz doboru naturalnego. Wykorzystują one biologicznie inspirowane operatory, do których należą rozrodczość, selekcja, mutacja oraz krzyżowanie.
 
 Algorytmy genetyczne należą do metod populacyjnych, w których operujemy na pewnym zmieniającym się zbiorze (populacji) rozwiązań. Daje to znaczącą przewagę nad prostszymi algorytmami wspinaczkowymi, w których zachowujemy tylko jedno rozwiązanie w danym momencie. Zachowywanie populacji rozwiązań zmniejsza prawdopodobieństwo przedwczesnej zbieżności w lokalnym optimum, zwiększając możliwości eksploracyjne algorytmu. Inne skrajne podejście, w którym przeszukujemy jednocześnie całą przestrzeń rozwiązań, jest również mało skuteczne ze względu na zbyt duży rozmiar tej przestrzeni dla większości interesujących problemów. Algorytm genetyczny unika tego problemu poprzez dobranie rozmiaru populacji znacznie mniejszego od rozmiaru całej przestrzeni poszukiwań.
 
@@ -117,7 +117,7 @@ Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania 
 
 Wybór osobników do nowo tworzonych populacji jest procesem analogicznym do doboru naturalnego. W ujęciu Karola Darwina, największe szanse przetrwania mają osobniki najlepiej przystosowane do środowiska. Wpływ środowiska jest w algorytmach genetycznych modelowany przez funkcję oceny lub funkcję przystosowania. Ponieważ problemy optymalizacji zwykle definiuje się w kategoriach poszukiwania minimum, przyjmiemy konwencję zgodnie z którą mniejsza wartość funkcji oceny oznacza lepsze przystosowanie. Dlatego też w operacji wyboru (selekcji) osobników do nowej populacji powinny być faworyzowane osobniki o niższej wartości funkcji przystosowania.
 
-Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwej proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takie jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
+Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwem proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takie jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
 
 Selekcja turniejowa to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}. W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
 
@@ -198,7 +198,7 @@ W tym celu zdefiniujemy optymalny rozkład użycia, który podajemy w oparciu o~
   4.4\% & 12.3\% & 15.8\% & 17.5\% & 17.5\% & 15.8\% & 12.3\% & 4.4\% \\
 \end{tabular}\newline
 
-Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmnie następującą postać, odzwierciedlającą rozbieżność pomiędzy rozkładem otrzymanym a optymalnym:
+Czynnik funkcji przystosowania odpowiadający użyciu palców przyjmie następującą postać, odzwierciedlającą rozbieżność pomiędzy rozkładem otrzymanym a optymalnym:
 $$ p_{finger} = \sum\limits_{i = 1}^{8} (f_i^{opt} - f_i)^2 $$
 
 
@@ -326,7 +326,7 @@ $$ (4 * * 1 6 8 * *) $$
 Elementy na drugiej, trzeciej oraz siódmej pozycji można przepisać bezpośrednio, ponieważ nie powodują one powstawania nieprawidłowej permutacji.
 $$ (4 2 3 1 6 8 7 *) $$
 
-Aby uzupełnić ostanią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $8$, więc najpierw stosujemy mapowanie $8 \rightarrow 6$. $6$ także występuje już w permutacji, dlatego mapujemy $6 \rightarrow 5$.
+Aby uzupełnić ostatnią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $8$, więc najpierw stosujemy mapowanie $8 \rightarrow 6$. $6$ także występuje już w permutacji, dlatego mapujemy $6 \rightarrow 5$.
 $$ (4 2 3 1 6 8 7 5) $$
 
 Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
@@ -381,7 +381,7 @@ Wartość parametru $n$ będzie równa 7, ponieważ tyle kryteriów uwzględnion
 
 \section{Algorytm}
 
-Zastosowany algorym można opisać za pomocą następującego pseudokodu:\newline
+Zastosowany algorytm można opisać za pomocą następującego pseudokodu:\newline
 
 \noindent
 \texttt{Oblicz cechy statystyczne zbioru tekstów\newline
@@ -469,7 +469,7 @@ Cechy statystyczne tekstów uwzględniane w funkcji przystosowania, czyli częst
 \caption{Porównanie częstotliwości występowania liter w języku polskim i angielskim}
 \end{figure}
 
-Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku litery \emph{e}. Jeszcze większe różnice widoczne są w przypadku diagrafów. Dla przykładu, najpopularniejsze pary znaków w języku angielskim, czyli \emph{th} oraz \emph{he}, w języku polskim występują ponad 10 razy radziej. Natomiast często spotykana w języku polskim para \emph{rz} w języku angielskim nie występuje praktycznie wcale. Warto zwrócić uwgę, że para \emph{th} jest bardzo łatwa do wpisania na klawiaturze Dvoraka. Porównanie częstotliwości występowania najczęstszych diagrafów w języku polskim i angielskim przedstawiono w tabeli poniżej.\newline
+Pomimo pewnego podobieństwa, różnice są wyraźne, zwłaszcza w przypadku litery \emph{e}. Jeszcze większe różnice widoczne są w przypadku diagrafów. Dla przykładu, najpopularniejsze pary znaków w języku angielskim, czyli \emph{th} oraz \emph{he}, w języku polskim występują ponad 10 razy rzadziej. Natomiast często spotykana w języku polskim para \emph{rz} w języku angielskim nie występuje praktycznie wcale. Warto zwrócić uwgę, że para \emph{th} jest bardzo łatwa do wpisania na klawiaturze Dvoraka. Porównanie częstotliwości występowania najczęstszych diagrafów w języku polskim i angielskim przedstawiono w tabeli poniżej.\newline
 
 \begin{tabular}{ c | c | c }
   diagraf & język polski & język angielski \\
@@ -614,6 +614,8 @@ Ze względu na różnice w częstotliwości występowania liter, wyniki dla ukł
 \summary
 
 \section{Konkluzje}
+
+Projektowanie optymalnego układu klawiatury jest złożonym problemem, który wymaga uwzględnienia wielu czynników. Rozwiązywanie go bez pomocy komputera jest zajęciem bardzo czasochłonnym. Co więcej, dla każdego języka naturalnego musi on być podejmowany od nowa, ze względu na różnice w częstotliwości występowania liter oraz ich par pomiędzy językami. Jak pokazują wyniki, dobór tekstów do których pisania ma być przystosowany dany układ klawiszy ma bardzo duży wpływ na jego ocenę.
 
 Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że istnieją układy lepsze od tych pozostających w powszechnym użyciu i można poszukiwać ich za pomocą algorytmów genetycznych.
 \newline
