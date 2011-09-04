@@ -179,11 +179,11 @@ Z tego powodu funkcja przystosowania nie będzie obliczana na podstawie oryginal
 $$ f_m : M \rightarrow \mathrm{R} $$
 $$ f_d : D \rightarrow \mathrm{R} $$
 
-Dziedzinę funkcji $ f_m $ będziemy określać jako zbiór monografów $ M $ (pojedynczych znaków wchodzących w skład chromosomu), a dziedzinę funkcji $ f_d $ jako zbiór diagrafów $ D $ (wszystkich możliwych par znaków).
+Do opisania tych funkcji przydatne będą dwie definicje. Jako \emph{monograf} będziemy rozumieć rodzaj zdarzenia polegającego na naciśnięciu klawisza któremu odpowiada element chromosomu. Wpływ pozostałych klawiszy zostanie pominięty~-~przykładowo, zakładamy że podczas wpisywania wielkich liter klawisz SHIFT zostaje uderzony przeciwną ręką do tej, która uderza klawisz z literą. \emph{Diagraf} natomiast definiujemy jako parę monografów następujących zaraz po sobie. Przykładowo, w tekście o treści \emph{barbaz} możemy wyróżnić 4 monografy: \emph{b}, \emph{a}, \emph{r} oraz \emph{z}, oraz 4 diagrafy: \emph{ba}, \emph{ar}, \emph{rb}, oraz \emph{az}. Dziedzinę funkcji $ f_m $ będziemy określać jako zbiór wszystkich monografów $ M $, a dziedzinę funkcji $ f_d $ jako zbiór wszystkich możliwych diagrafów $ D $.
 $$ M = \{ a : a \in A \} $$
 $$ D = \{ ab : a \in A, b \in A \} $$
 
-$ f_m $ opisuje częstotliwości występowania monografów w zbiorze tekstów, a $ f_d $ częstotliwości występowania diagrafów. Przez częstotliwość występowania rozumiemy procentowy udział ilości wystąpień danego monografu (diagrafu) w sumie ilości wystąpień wszystkich monografów (diagrafów).
+$ f_m $ opisuje częstotliwości występowania monografów w zbiorze tekstów, a $ f_d $ częstotliwości występowania diagrafów. Przez częstotliwość występowania rozumiemy procentowy udział ilości wystąpień danego monografu (diagrafu) w sumie ilości wystąpień wszystkich monografów (diagrafów). Przykładowo, dla tekstu \emph{barbaz} $ f_m(z) = \frac{1}{6} $, a $ f_d(ba) = \frac{2}{5} $.
 
 
 \subsection{Użycie palców}
@@ -617,7 +617,7 @@ Ze względu na różnice w częstotliwości występowania liter, wyniki dla ukł
 
 Projektowanie optymalnego układu klawiatury jest złożonym problemem, który wymaga uwzględnienia wielu czynników. Rozwiązywanie go bez pomocy komputera jest zajęciem bardzo czasochłonnym. Co więcej, dla każdego języka naturalnego musi on być podejmowany od nowa, ze względu na różnice w częstotliwości występowania liter oraz ich par pomiędzy językami. Jak pokazują wyniki, dobór tekstów do których pisania ma być przystosowany dany układ klawiszy ma bardzo duży wpływ na jego ocenę.
 
-Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że istnieją układy lepsze od tych pozostających w powszechnym użyciu i można poszukiwać ich za pomocą algorytmów genetycznych.
+Wyniki osiągnięte przez poszczególne układy klawiszy pokazują jasno, że istnieją układy lepsze od tych pozostających w powszechnym użyciu i można poszukiwać ich za pomocą algorytmów genetycznych. Pewnym zaskoczeniem są słabe wyniki osiągnięte przez inne algorytmy (SW, AG2), szczególnie w porównaniu do klawiatury Dvoraka. Może to wynikać z zastosowania niewielkich rozmiarów zbiorów tekstów przez ich autorów.
 \newline
 
 [TODO do uzupełnienia]
