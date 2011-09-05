@@ -429,6 +429,15 @@ Wartości wag poszczególnych kryteriów zostały dobrane eksperymentalnie, tak 
   \indent $ w_{hand\_usage} = 71,4 $ & \\
 \end{tabular}\newline
 
+Zastosowanie strategii elitarnej przyspiesza zbieżność algorytmu, co obrazuje poniższy wykres. Rozmiar elity nie ma dużego wpływu na jakość rozwiązania końcowego, dopóki jest on niewielki. Dla rozmiaru elity większego niż kilka osobników, jakość rozwiązania pogarsza się.
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.8\hsize]{fig/elite}
+\caption{Wpływ zastosowania strategii elitarnej}
+\end{figure}
+
+Celem zastosowania operatora selekcji Multiobjective Majority Tournament Selection (MMTS) jest zrównoważenie wpływu poszczególnych składowych funkcji oceny, aby móc osiągnąć lepszy wynik dla wszystkich składowych w stosunku do innych rozwiązań, takich jak klawiatura Dvoraka. Dla standardowej selekcji turniejowej, po 100 uruchomieniach algorytmu przewaga w stosunku do klawiatury Dvoraka została osiągnięta średnio w 4,55 kryteriach na 7. Dla selekcji MMTS, współczynnik ten wyniósł 4,76 kryteriów na 7.
+
 Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: Exchange Mutation (EM), Displacement Mutation (DM), Insertion Mutation (ISM), Simple Inversion Mutation (SIM), Inversion Mutation (IVM) oraz Scramble Mutation (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
   operator mutacji & najlepsza znaleziona wartość $p$ \\
