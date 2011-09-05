@@ -1,0 +1,1732 @@
+długość analizowanego tekstu: 4379230 znaków
+rozmiar populacji: 50
+ilość iteracji: 400
+rozmiar elity: 0
+rozmiar turnieju: 4
+prawdopodobieństwo mutacji: 0.7
+prawdopodobieństwo krzyżowania: 0.7
+operator mutacji: SwapMutation
+operator krzyżowania: CycleCrossover
+operator selekcji: MultiobjectiveMajorityTournamentSelection
+
+1 9.227135918723997
+v , m g w b r d l a
+f z t e ; i h ? s u
+k q o p c x y n . j
+2 7.479704729567757
+v u m l f q r d g ?
+w z t e ; i a , s o
+k b n p c x y . h j
+3 7.479704729567757
+v u m l f q r d g ?
+w z t e ; i a , s o
+k b n p c x y . h j
+4 7.29427490237746
+w , m a x b ? n l h
+d o t e ; i p r s z
+k q y f c v g . j u
+5 6.796581336983465
+w , m b x g r n l a
+h o t e k i y p s u
+j q v ; f d z ? . c
+6 6.595038556757186
+v , m l y x ? d g r
+w z t e ; i a h s o
+k b n p c . f u q j
+7 5.619438770524571
+w , m k x g r n f ?
+h o t e l i a p s u
+j q v ; c z y . d b
+8 5.482085908225054
+v u m j f q r d l ?
+n z t e k i a h s o
+, b w p c x y . g ;
+9 5.484124433093187
+v u m j f q r d l ?
+n z t e k i o h s a
+, b w p c x y . g ;
+10 5.484124433093187
+v u m j f q r d l ?
+n z t e k i o h s a
+, b w p c x y . g ;
+11 5.378437925099579
+v u m j f q r z l ?
+n d t e k i o h s a
+, b w p c x y . g ;
+12 5.379262247144333
+v u m j f q r z l ?
+n d t e k i o h s a
+b , w p c x y . g ;
+13 5.21831426564679
+v u m j f c r z l ?
+n d t e k i o h s a
+, b w y q x p . g ;
+14 5.129732458946616
+v u c j f q z i l ?
+n d t e k r o h s a
+, b w p m x y . g ;
+15 4.8900458371164035
+v u c j f q , i l ?
+n d t e k r o h s a
+z b w p m x y . g ;
+16 4.8900458371164035
+v u c j f q , i l ?
+n d t e k r o h s a
+z b w p m x y . g ;
+17 5.01315763418783
+v u c j f q , i l ?
+n d t h k r o e s a
+z b w p m x y . g ;
+18 5.001898475232854
+v u c j f q x i l ?
+n d t e . r o h s a
+z b w y m , p k g ;
+19 4.886104016354759
+v u c j f q , i l ?
+n d t e k r o h s a
+z b w y m x p . g ;
+20 4.697684310220281
+j u c v f l , i q ?
+n d t h k r o e s a
+y b w p m x z . g ;
+21 4.697684310220281
+j u c v f l , i q ?
+n d t h k r o e s a
+y b w p m x z . g ;
+22 4.5880177565233335
+j u c v f l , i q ?
+n d t h w r o e s a
+y b k p m x z . g ;
+23 4.543348747357117
+j u c v f l , i q ?
+d n t h p o r e s a
+y b w k m x z . g ;
+24 4.551526526311669
+j u c b f l , i q ?
+n d t h w o r e s a
+y v k p m x z . g ;
+25 4.5512757552329015
+j u c v f l m k y ?
+n d t h i o r e s a
+q b w p , x z . g ;
+26 4.589929790305351
+. u c v f l , i y ?
+n d t h p o r e s a
+q b k w m x z j g ;
+27 4.539104230541596
+m u c v f l j k y ?
+n d t h i r o e s a
+q b w p , x z . g ;
+28 4.4664886813112465
+v u c l f p ? i q ,
+d n t h k o r e s a
+y m w j b x z . g ;
+29 4.502851656027388
+v u c w f k , i q ?
+d n t h p o r e s a
+y b j l m x z . g ;
+30 4.414156067464722
+v u c w f b , i q ?
+d n t h k o r e a s
+y m p l j x z . g ;
+31 4.371164791133513
+v u c w k b , i ; ?
+d n t h f o r e a s
+y m p l j x z . g q
+32 4.424194824379737
+v u c w f p b o j ?
+d n t h k i r e a s
+y m ; l , x z . g q
+33 4.282341020639669
+v u c w f y , i . ?
+d n t h k o r e s a
+b m p l j x z q g ;
+34 4.282341020639669
+v u c w f y , i . ?
+d n t h k o r e s a
+b m p l j x z q g ;
+35 4.282341020639669
+v u c w f y , i . ?
+d n t h k o r e s a
+b m p l j x z q g ;
+36 4.252811287690356
+v b c w f k u o j ?
+d n t h p i r e a s
+, m l q y x z . g ;
+37 4.209215916041025
+v b c w f k u o ? q
+d n t h p i r e a s
+x m l . y , z j g ;
+38 4.2651458403785965
+v u c w f k y o q ?
+d n t h p i r e a s
+, m b l j x z . g ;
+39 4.315530512722566
+v u c w f k , o q ?
+d n t h p i r e a s
+y m b l j x z . g ;
+40 4.254983148106608
+v k c w f b , o q ?
+d n t h u i r e a s
+y m p l j g z . x ;
+41 4.134924888432761
+v u c w k b , o g ?
+d n t h f i r e a s
+y m p l j x z . q ;
+42 4.134924888432761
+v u c w k b , o g ?
+d n t h f i r e a s
+y m p l j x z . q ;
+43 4.165083593242383
+v u c w f b , o g ?
+k n t h d i r e a s
+y p m l j x z . q ;
+44 4.165055651205502
+k u c w f b , o g ?
+v n t h d i r e a s
+y p m l j x z . q ;
+45 4.166004423025445
+v u c w k y , o . ?
+d n t h p i r e a s
+f m b l j g z q x ;
+46 4.140540794801617
+v u c w f y , o q ?
+d n t h m i r e a s
+b p k l j x z . g ;
+47 4.090725997876472
+v u c w f b , o . ?
+d n t h m i r e a s
+y p k l j g z q x ;
+48 4.090306394741015
+v u w c f b , o . ?
+d n t h m i r e a s
+y p k l j g z q x ;
+49 4.034046478487961
+v u c w l b , o . ?
+d n t h m i r e a s
+y p k f j g z q x ;
+50 4.060440810852469
+y u c w f b , o . ?
+d n t h m i r e a s
+v p k l j g z q x ;
+51 4.060440810852469
+y u c w f b , o . ?
+d n t h m i r e a s
+v p k l j g z q x ;
+52 3.9480674616229336
+v k c w l b , o g ?
+d n t h u i r e a s
+y p m f j . z x ; q
+53 3.9654342934144253
+v u f w l y , o . ?
+d n t h m i r e a s
+k p b c j g z q x ;
+54 3.9654342934144253
+v u f w l y , o . ?
+d n t h m i r e a s
+k p b c j g z q x ;
+55 3.954607879225395
+v u f w l y , o . ?
+d n t h c i r e a s
+k p b m j g z q x ;
+56 3.939595172580593
+v f c w l y , o . ?
+d n t h m i r e a s
+b p u k j g z x ; q
+57 3.9401535076362677
+v u c w l y , o . ?
+d n t h m i r e a s
+k p b f j g z q ; x
+58 3.9401535076362677
+v u c w l y , o . ?
+d n t h m i r e a s
+k p b f j g z q ; x
+59 3.948180486309703
+v u c w l b , o . ?
+d n t h m i r a e s
+y p k j f g z x q ;
+60 3.967227860782997
+j p c m l b , o g ?
+d n t s u i r a e h
+y w k f v x z q ; .
+61 3.946085930245014
+v u c w f y , o g ?
+d n t h m r s a e i
+b p k l j x z q ; .
+62 3.9209025647397358
+v u c m l y , o g ?
+d n t s f i r a e h
+b w k p j x z q ; .
+63 3.915158509531924
+v u c m l g , o y ?
+d n t s f i r a e h
+b w k p j x z q ; .
+64 3.91426365614182
+v u c m l g , o y z
+d n t s f i r a e h
+b w k p j x ? q ; .
+65 3.91426365614182
+v u c m l g , o y z
+d n t s f i r a e h
+b w k p j x ? q ; .
+66 3.904831687580448
+v u c l w g , o y ?
+d n t s f i r a e h
+b p k m j x z q ; .
+67 3.869020445501768
+v c u l w g , o y ?
+d n t s f i r a e h
+b p k m j x z q ; .
+68 3.894451157760927
+v u c m l g y o , z
+d n t s f i r a e h
+b w k p j x ? q ; .
+69 3.8646144963426967
+v u l m c b , o g ?
+w n t s d i r a e h
+y p k f j x z . ; q
+70 3.8016792646847732
+v u l m c g y o , z
+w n t s d i r a e h
+b p k f j x ? q ; .
+71 3.8473660973698647
+v b c m l g , o u z
+d n t s f i r a e h
+y w k j p x ? q ; .
+72 3.8473660973698647
+v b c m l g , o u z
+d n t s f i r a e h
+y w k j p x ? q ; .
+73 3.8431313417451016
+p u l m c b , o g ?
+w n t s d i r a e h
+y f k v j x z . ; q
+74 3.6504030642414405
+f b l m c u , o j ?
+w n t s d i r a e h
+y p k v g x z . ; q
+75 3.6504030642414405
+f b l m c u , o j ?
+w n t s d i r a e h
+y p k v g x z . ; q
+76 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+77 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+78 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+79 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+80 3.6214236006397287
+f b l m c u , o j y
+g n t s d i r a e h
+? p k v w x z . ; q
+81 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+82 3.630273364773972
+c y l m f u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+83 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+84 3.615662665373814
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g x z . ; q
+85 3.6156132563369527
+f y l m c u , o j ?
+w n t s d i r a e h
+b p k v g z x . ; q
+86 3.597848999028658
+f b l m c u , o j y
+w n t s r i d a e h
+q p k v g x z . ; ?
+87 3.645737536848595
+f b l m c u , o j y
+w n t s d i r a e h
+q p k v g x z . ; ?
+88 3.6446168067932403
+f b l m c u , o j y
+w n t s d i r a e h
+x p k v g q z . ; ?
+89 3.6446168067932403
+f b l m c u , o j y
+w n t s d i r a e h
+x p k v g q z . ; ?
+90 3.6446168067932403
+f b l m c u , o j y
+w n t s d i r a e h
+x p k v g q z . ; ?
+91 3.645954809368163
+f b l m c u , o j q
+w n t s d i r a e h
+y p k v g x z . ; ?
+92 3.645954809368163
+f b l m c u , o j q
+w n t s d i r a e h
+y p k v g x z . ; ?
+93 3.6459054003313023
+f b l m c u , o j q
+w n t s d i r a e h
+y p k v g z x . ; ?
+94 3.6459054003313023
+f b l m c u , o j q
+w n t s d i r a e h
+y p k v g z x . ; ?
+95 3.6459054003313023
+f b l m c u , o j q
+w n t s d i r a e h
+y p k v g z x . ; ?
+96 3.6498490000801453
+f b l m c u , o j ?
+w n t s d i r a e h
+y p g v k x z . ; q
+97 3.6503536552045794
+f b l m c u , o j ?
+w n t s d i r a e h
+y p k v g z x . ; q
+98 3.6503536552045794
+f b l m c u , o j ?
+w n t s d i r a e h
+y p k v g z x . ; q
+99 3.6504030642414405
+f b l m c u , o j ?
+w n t s d i r a e h
+y p k v g x z . ; q
+100 3.652837262298459
+f b l m c u , o j x
+w n t s d i r a e h
+y p k v g z ? . ; q
+101 3.6635508502690235
+f b l m c u x o , j
+w n t s d i r a e h
+k p y v g z ? . ; q
+102 3.6635508502690235
+f b l m c u x o , j
+w n t s d i r a e h
+k p y v g z ? . ; q
+103 3.627923716109754
+f b l m c u , o x j
+w n t s d i r a e h
+k p y v g z ? . ; q
+104 3.627923716109754
+f b l m c u , o x j
+w n t s d i r a e h
+k p y v g z ? . ; q
+105 3.627923716109754
+f b l m c u , o x j
+w n t s d i r a e h
+k p y v g z ? . ; q
+106 3.620764020482404
+b f l m c u , o x j
+w n t s d i r a e h
+k p y v g z ? . ; q
+107 3.632955461841556
+f b l m c u , o x ;
+w n t s d i r a e h
+k p y v g z j . ? q
+108 3.627112453243946
+f b l m c u , o j ?
+w n t s d i r a e h
+k p y v g z . x ; q
+109 3.627112453243946
+f b l m c u , o j ?
+w n t s d i r a e h
+k p y v g z . x ; q
+110 3.632955461841556
+f b l m c u , o x ;
+w n t s d i r a e h
+k p y v g z j . ? q
+111 3.6264685109461956
+f b l m c u , o j ?
+w n t s d i r a e h
+k p y v g z x . ; q
+112 3.610401689420287
+f b l y c u , o x ;
+w n t s d i r a e h
+k p g v m z j . ? q
+113 3.6277768542917914
+f b l g c u , o x ;
+w n t s d i r a e h
+k p y v m z j . ? q
+114 3.6277768542917914
+f b l g c u , o x ;
+w n t s d i r a e h
+k p y v m z j . ? q
+115 3.6216439980932096
+f b l g c u , o . ;
+w n t s d i r a e h
+k p y v m z x ? j q
+116 3.6197903013985138
+f b l g c u , o ; j
+w n t s d i r a e h
+k p y v m z x . ? q
+117 3.6197903013985138
+f b l g c u , o ; j
+w n t s d i r a e h
+k p y v m z x . ? q
+118 3.6121329243977622
+f b l m y u , o ; j
+w n t s d i r a e h
+k p c v g z x ? . q
+119 3.6209389324998607
+f b l g c u , o . ;
+w n t s d i r a e h
+k p y v m z x ? q j
+120 3.6216439980932096
+f b l g c u , o . ;
+w n t s d i r a e h
+k p y v m z x ? j q
+121 3.6210523451549945
+f b l g c u , o . ;
+w n t s d i r a e h
+k p y v m z j ? x q
+122 3.6046116137940616
+f b l y c u , o . ;
+w n t s d i r a e h
+k p g v m z x ? j q
+123 3.6046116137940616
+f b l y c u , o . ;
+w n t s d i r a e h
+k p g v m z x ? j q
+124 3.603906548200712
+f b l y c u , o . ;
+w n t s d i r a e h
+k p g v m z x ? q j
+125 3.5717537415452134
+f w l y c u , o . j
+g n t s d i r a e h
+k p b v m z x ? ; q
+126 3.554793847801983
+f w l y c u , o . j
+g n t s d i r a e h
+k p m v b z x ? ; q
+127 3.599543933988458
+f w l y c u ? o . j
+g n t s d i r a e h
+k p m v b z x , ; q
+128 3.5643872397969716
+f w l y c u , o . ;
+g n t s d i r a e h
+k p m v b z x ? j q
+129 3.5643872397969716
+f w l y c u , o . ;
+g n t s d i r a e h
+k p m v b z x ? j q
+130 3.5643872397969716
+f w l y c u , o . ;
+g n t s d i r a e h
+k p m v b z x ? j q
+131 3.5620008452683267
+f w l y c u , o . ;
+g n t s d i r a e h
+k p m v b j x ? z q
+132 3.5553586200051512
+f w l y b u , o . ;
+g n t s d i r a e h
+k p m v c z x ? j q
+133 3.5620008452683267
+f w l y c u , o . ;
+g n t s d i r a e h
+k p m v b j x ? z q
+134 3.566026357215215
+p m l y c u , o . ;
+g n t s d i r a e h
+k w f v b z x ? j q
+135 3.5594420011448347
+p m l y c u , o . ;
+g n t s d i r a e h
+k f w v b z x ? j q
+136 3.57243277325471
+p m l b c u , o . ;
+g n t s d i r a e h
+k f w v y j x ? z q
+137 3.6156005441999404
+p m l b c u , o . ;
+g n t s d i r a e h
+k f w v x j y ? z q
+138 3.619769452489946
+f b l g c u , o . ;
+w n t s d i r a e h
+p m y v k z x q j ?
+139 3.6218785726364726
+f b l y c u , o . ;
+w n t s d i r a e h
+m p g v k j x ? z q
+140 3.632949939794196
+f b l g c u , o . k
+w n t s d i r a e h
+x p y v m j ; ? z q
+141 3.6236664859545296
+m b l c w u , o . k
+g n t s d i r a e h
+x p y v f j ; ? z q
+142 3.598985310735502
+m b l c y u , o . k
+g n t s d i r a e h
+; p w v f j x ? z q
+143 3.598985310735502
+m b l c y u , o . k
+g n t s d i r a e h
+; p w v f j x ? z q
+144 3.63340556026177
+b f l y c u , o . k
+w n t s d i r a e h
+; p g v m z x ? j q
+145 3.6106814264254767
+f b l y c u , o . k
+w n t d s i r a e h
+; p m v g z x ? j q
+146 3.6106814264254767
+f b l y c u , o . k
+w n t d s i r a e h
+; p m v g z x ? j q
+147 3.6106814264254767
+f b l y c u , o . k
+w n t d s i r a e h
+; p m v g z x ? j q
+148 3.6064081685686515
+f b l y c u , o . ;
+g n t d s i r a e h
+m p w v z j k ? x q
+149 3.6106814264254767
+f b l y c u , o . k
+w n t d s i r a e h
+; p m v g z x ? j q
+150 3.5963172294916794
+f b l y c u , o . k
+w n t s d i r a e h
+z p m v g ; x ? j q
+151 3.5922675650591858
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g z j ? ; q
+152 3.586401620083994
+b f l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? z q
+153 3.5828802688110732
+f b l y c , u o . ;
+w n t s d i r a e h
+k p m v g z x ? j q
+154 3.5828802688110732
+f b l y c , u o . ;
+w n t s d i r a e h
+k p m v g z x ? j q
+155 3.57908126286577
+f b l y c u , o . ;
+w n t d s i r a e h
+k p m v g z x ? j q
+156 3.589910761762519
+f b l y c , u o . k
+w n t d s i r a e h
+x p m v g ; j ? z q
+157 3.5898349191070436
+f b l y c , u o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+158 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+159 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+160 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+161 3.589323965186488
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; ? j q z
+162 3.5898349191070436
+f b l y c , u o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+163 3.5874201990574397
+f b l y c , u o j k
+w n t d s i r a e h
+z p m v g ; . ? q x
+164 3.5874201990574397
+f b l y c , u o j k
+w n t d s i r a e h
+z p m v g ; . ? q x
+165 3.5874201990574397
+f b l y c , u o j k
+w n t d s i r a e h
+z p m v g ; . ? q x
+166 3.5874201990574397
+f b l y c , u o j k
+w n t d s i r a e h
+z p m v g ; . ? q x
+167 3.5898349191070436
+f b l y c , u o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+168 3.5904131037644125
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ? j ; q z
+169 3.5904131037644125
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ? j ; q z
+170 3.5782395374612075
+f b l y c u , o . x
+w n t d s i r a e h
+k p m v g ? j ; q z
+171 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+172 3.5904131037644125
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ? j ; q z
+173 3.5904131037644125
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ? j ; q z
+174 3.5904131037644125
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ? j ; q z
+175 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+176 3.588179716372204
+f b l y c u , o . k
+w n t d s i r a e h
+x p m g v ; j ? q z
+177 3.588179716372204
+f b l y c u , o . k
+w n t d s i r a e h
+x p m g v ; j ? q z
+178 3.588244880118165
+f b l y c , u o k z
+w n t d s i r a e h
+x p m v g ? j . q ;
+179 3.560526799758298
+f b l y c u , o . k
+g n t d s i r a e h
+x p m v w ; j ? q z
+180 3.560526799758298
+f b l y c u , o . k
+g n t d s i r a e h
+x p m v w ; j ? q z
+181 3.560526799758298
+f b l y c u , o . k
+g n t d s i r a e h
+x p m v w ; j ? q z
+182 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+183 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+184 3.5785752203142596
+f b l y c u , o . x
+w n t d s i r a e h
+k p m v g ; z ? q j
+185 3.5782395374612075
+f b l y c u , o . x
+w n t d s i r a e h
+k p m v g ? j ; q z
+186 3.5772522970837994
+f b l y c u , o q k
+g n t d s r i a e h
+j p m v w ? x ; . z
+187 3.58884765335199
+f b l y c u , o . k
+w n t d s i r a e h
+x p m v g ; j ? q z
+188 3.5889753681818166
+f b l y c u , o . k
+w n t d s i r a e h
+v p m g j ; x ? q z
+189 3.587007967034466
+f b l y c u , o ; k
+w n t d s i r a e h
+x p m v g ? j . q z
+190 3.5853242913202332
+f b l y c u , o ; k
+w n t d s i r a e h
+j p m v g ? x . q z
+191 3.5853326970709953
+f b l y c u , o k ;
+w n t d s i r a e h
+x p m v g ? j . q z
+192 3.5853326970709953
+f b l y c u , o k ;
+w n t d s i r a e h
+x p m v g ? j . q z
+193 3.5926437367516613
+c b l y f u , o k ;
+w n t d s i r a e h
+j p m v g z x . q ?
+194 3.5942551651769925
+c b l y f u , o . k
+w n t d s i r a e h
+j p m v g ? x ; q z
+195 3.5942551651769925
+c b l y f u , o . k
+w n t d s i r a e h
+j p m v g ? x ; q z
+196 3.5927370896581063
+c b l y f u , o . k
+w n t d s i r a e h
+j p m v g x ; ? q z
+197 3.5942551651769925
+c b l y f u , o . k
+w n t d s i r a e h
+j p m v g ? x ; q z
+198 3.5942551651769925
+c b l y f u , o . k
+w n t d s i r a e h
+j p m v g ? x ; q z
+199 3.612265858881126
+f g l y c u , o . ;
+w n t d s i r a e h
+j p m v b x k ? q z
+200 3.612265858881126
+f g l y c u , o . ;
+w n t d s i r a e h
+j p m v b x k ? q z
+201 3.610662085532552
+f g l y c u , o . ;
+w n t d s i r a e h
+j p m v b x k q ? z
+202 3.610662085532552
+f g l y c u , o . ;
+w n t d s i r a e h
+j p m v b x k q ? z
+203 3.6032588291619714
+f g l y c u , o k ;
+w n t d s i r a e h
+j p m v b x . ? q z
+204 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+205 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+206 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+207 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+208 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+209 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+210 3.6057353883608307
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b x k ? ; z
+211 3.612248779214063
+f g l y c , u o . ;
+w n t d s i r a e h
+j p m v b x k ? q z
+212 3.606789363218463
+f g l y c u , o . q
+w n t d s i r a e h
+j p m v b ? k x ; z
+213 3.5931958185609307
+f g l b y u , o k ;
+w n t r s i d a e h
+j p m v c x . ? q z
+214 3.611827934863683
+f b l y c u , o . ;
+w n t d s i r a e h
+j p g v m x k ? q z
+215 3.611827934863683
+f b l y c u , o . ;
+w n t d s i r a e h
+j p g v m x k ? q z
+216 3.6094838521602264
+, g l f c u y o . ;
+w n t r s i d a e h
+j p m v b x q ? k z
+217 3.611827934863683
+f b l y c u , o . ;
+w n t d s i r a e h
+j p g v m x k ? q z
+218 3.5990466917565143
+f g l y c u , o . ;
+w n t r s i d a e h
+j p m v b ? k x q z
+219 3.613836171592936
+f g l y c u . o , q
+w n t d s i r a e h
+j p m v b ? k x ; z
+220 3.624394831261582
+f y l v c u , o . ;
+w n t d s i r a e h
+j p m g b ? k x q z
+221 3.6148317011725672
+f m g y c u , o . ;
+l n t d s i r a e h
+j p w v b x k z q ?
+222 3.625792049403397
+f l c y g u , o . ;
+w n t d s i r a e h
+j p m v b x k ? z q
+223 3.6266907631244965
+f l c y g u , o . ;
+w n t d s i r a e h
+j p m v b x k z ? q
+224 3.6233207824328164
+b l g y c u , o . ;
+w n t d s i r a e h
+j p m v f x k ? q z
+225 3.6171802020826043
+y l c b g u , o . q
+w n t d s i r a e h
+j p m v f x k ? ; z
+226 3.6171802020826043
+y l c b g u , o . q
+w n t d s i r a e h
+j p m v f x k ? ; z
+227 3.6120582283578835
+y l g b c u , o . q
+w n t d s i r a e h
+k p m v f x j z ; ?
+228 3.615582726095682
+f m g y c u , o . q
+w n t d s i r a e h
+k p l v b x j z ; ?
+229 3.609374167812504
+y l c b g u , o . q
+w n t d s i r a e h
+k p m v f x j z ; ?
+230 3.6146614556135224
+y l g b c u , o ? q
+w n t d s i r a e h
+k v m p f x j . ; z
+231 3.604837096918359
+f m l y g u , o . q
+w n t d s i r a e h
+j p c v b x k ? ; z
+232 3.603433313723421
+f w g y c u , o . k
+l n t d s i r a e h
+j p m v b x q ? ; z
+233 3.603433313723421
+f w g y c u , o . k
+l n t d s i r a e h
+j p m v b x q ? ; z
+234 3.5994719696485484
+b m g y c u , o . q
+l n t d s i r a e h
+j p w v f x k ? ; z
+235 3.5991825514166744
+b w g y c u , o . k
+l n t d s i r a e h
+j p m v f x q ? ; z
+236 3.588299727680957
+b w c y g u , o . k
+l n t d s i r a e h
+j p m v f x q ? ; z
+237 3.6032017061756885
+b m l y c u , o . x
+w n t d s i r a e h
+j p f v g q k z ; ?
+238 3.6032017061756885
+b m l y c u , o . x
+w n t d s i r a e h
+j p f v g q k z ; ?
+239 3.6011432120055713
+b m l y c u , o . x
+w n t d s i r a e h
+j p f v g q k ? ; z
+240 3.589884820070339
+b m l y c u , o . q
+w n t d s i r a e h
+j p f v g x k ? ; z
+241 3.589884820070339
+b m l y c u , o . q
+w n t d s i r a e h
+j p f v g x k ? ; z
+242 3.576606495031784
+b m l y c u , o . x
+g n t d s i r a e h
+j p f v w q k z ; ?
+243 3.576606495031784
+b m l y c u , o . x
+g n t d s i r a e h
+j p f v w q k z ; ?
+244 3.60038597045409
+f m l y c u , o . q
+w n t d s i r a e h
+j p b v g x k ? ; z
+245 3.5712755505211775
+f w l y c u , o . x
+g n t d s i r a e h
+j p m v b ; k ? q z
+246 3.5730466925426874
+f m l y c u , o . q
+g n t d s i r a e h
+j p b v w x k ? ; z
+247 3.5730466925426874
+f m l y c u , o . q
+g n t d s i r a e h
+j p b v w x k ? ; z
+248 3.5730296128756245
+f m l y c , u o . q
+g n t d s i r a e h
+j p b v w x k ? ; z
+249 3.6189574618260623
+f g w y c u , o . x
+l n t d s i r a e h
+j m p v b ; k q ? z
+250 3.609431184274592
+f g w y c u , o . x
+l n t d s i r a e h
+j p m v b ; k q ? z
+251 3.616381755348351
+f g w y c u . o , x
+l n t d s i r a e h
+j p m v b ; k q ? z
+252 3.6104736539535454
+f g w y c u , o . x
+l n t d s i r a e h
+j p m v b k ; q ? z
+253 3.617019313343205
+f g l y c u , o . x
+w n t d s i r a e h
+j p m v b q k ? ; z
+254 3.617019313343205
+f g l y c u , o . x
+w n t d s i r a e h
+j p m v b q k ? ; z
+255 3.6307999266634554
+f g l y c u , o . x
+w n t d s i r a e h
+j p b m v ; k ? q z
+256 3.6303866597193415
+f g l y c u , o . x
+w n t d s i r a e h
+j p b v m ; k ? q z
+257 3.626631672071442
+b g l y c u , o k x
+m n t d s i r a e h
+j p f v w ? . ; z q
+258 3.6135335841794087
+b f l y c u , o . x
+m n t d s i r a e h
+j p g v w ; k ? q z
+259 3.6231025968153534
+b g l y c u , o k x
+w n t d s i r a e h
+j p f v m ? . ; z q
+260 3.6231025968153534
+b g l y c u , o k x
+w n t d s i r a e h
+j p f v m ? . ; z q
+261 3.625590932317253
+b g l y c u , o k x
+m n t d s i r a e h
+j p f v w ; . q z ?
+262 3.631615825520601
+b g l y w u , o . x
+m n t d s i r a e h
+j p f v c ; k q ? z
+263 3.63451205112952
+f g l y c u , o . q
+m n t d s i r a e h
+j p b v w z k ? x ;
+264 3.6385091975716235
+f g l y c u , o . x
+m n t d s i r a e h
+j p b v w ; k ? q z
+265 3.635790134531739
+f g l b c u , o . x
+m n t d s i r a e h
+k p y v w ; j ? q z
+266 3.6376442989875275
+f g l y w u , o . z
+m n t d s i r a e h
+j p b v c x k q ? ;
+267 3.637011739138864
+f g l y c u , o . z
+m n t d s i r a e h
+j p b v w ; k x q ?
+268 3.639946463890984
+f g l y w u , o . x
+m n t d s i r a e h
+j p b v c ; k ? q z
+269 3.639946463890984
+f g l y w u , o . x
+m n t d s i r a e h
+j p b v c ; k ? q z
+270 3.639222059732059
+f g l y w u , o . z
+m n t d s i r a e h
+j p b v c x k ? q ;
+271 3.639222059732059
+f g l y w u , o . z
+m n t d s i r a e h
+j p b v c x k ? q ;
+272 3.6389014487434963
+f g l y w u k o . x
+m n t d s i r a e h
+j p b v c ; , ? q z
+273 3.6398420635601734
+f g l y w u , o . z
+m n t d s i r a e h
+j p b v c ; k ? q x
+274 3.6452905234473225
+f g l y w u . o , x
+m n t d s i r a e h
+j p b v c ; k q ? z
+275 3.6431151804289272
+f g l y c u . o , z
+m n t d s i r a e h
+j p b v w x k q ? ;
+276 3.6299269198904347
+f g l y c u . o k z
+m n t d s i r a e h
+j p b v w x , q ? ;
+277 3.6299269198904347
+f g l y c u . o k z
+m n t d s i r a e h
+j p b v w x , q ? ;
+278 3.6446457454400267
+f g l y w u . o , z
+m n t d s i r a e h
+j p b v c x k q ? ;
+279 3.6446457454400267
+f g l y w u . o , z
+m n t d s i r a e h
+j p b v c x k q ? ;
+280 3.625433366848436
+f b l y w u . o , z
+m n t d s i r a e h
+j p g v c x k ; ? q
+281 3.621789039792327
+f b l y c u . o , x
+m n t d s i r a e h
+j p g v w ; k q ? z
+282 3.621789039792327
+f b l y c u . o , x
+m n t d s i r a e h
+j p g v w ; k q ? z
+283 3.6166413426334705
+f w l y m u . o ? x
+g n t d s i r a e h
+j b p v c ; , q k z
+284 3.6166413426334705
+f w l y m u . o ? x
+g n t d s i r a e h
+j b p v c ; , q k z
+285 3.610278182548109
+f c l y m u . o ? x
+g n t d s i r a e h
+j b p v w ; , q k z
+286 3.610278182548109
+f c l y m u . o ? x
+g n t d s i r a e h
+j b p v w ; , q k z
+287 3.610278182548109
+f c l y m u . o ? x
+g n t d s i r a e h
+j b p v w ; , q k z
+288 3.6107381599918473
+f c l y m u . o ? z
+g n t d s i r a e h
+j b p v w ; , q k x
+289 3.6054464692222354
+y w l f m u . o , q
+g n t d s r i a e h
+j p b v c ; k z ? x
+290 3.5677343461473545
+f c l y w u . o , q
+g n t d s i r a e h
+j p m v b x k ; ? z
+291 3.5602423481316166
+y p l f m u . o , q
+g n t d s r i a e h
+k c b v w ; j x ? z
+292 3.546554527601742
+y p l f m u . o , q
+g n t d s i r a e h
+k c w v b x j ; ? z
+293 3.5695124662812545
+f p l y w u . o , q
+g n t d s i r a e h
+k c b v m x j ; ? z
+294 3.5617479750175716
+f c l y w u . o , q
+g n t d s i r a e h
+k p m v b x j ; ? z
+295 3.5473546783875753
+f c l y w . u o , z
+g n t r s i d a e h
+j p m v b x k ; ? q
+296 3.5473546783875753
+f c l y w . u o , z
+g n t r s i d a e h
+j p m v b x k ; ? q
+297 3.5589636835313763
+f c l y b u . o , q
+g n t d s i r a e h
+k p m v w x j ; ? z
+298 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+299 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+300 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+301 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+302 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+303 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+304 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+305 3.548578204095308
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x z ; ? j
+306 3.54682815488916
+f m l y p u . o , q
+g n t d s i r a e h
+k w b v c x j ; ? z
+307 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+308 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+309 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+310 3.548507398435509
+f m l y p u . o , q
+g n t d s i r a e h
+k v c w b x j ; ? z
+311 3.551886945807141
+f m l y b u . o , q
+g n t d s i r a e h
+k v c w p x j ; ? z
+312 3.551886945807141
+f m l y b u . o , q
+g n t d s i r a e h
+k v c w p x j ; ? z
+313 3.579713796289764
+f m l y p u . o , q
+g n s d t i r a e h
+k w c v b x j ; ? z
+314 3.5496892843507735
+y m l f p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+315 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+316 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+317 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+318 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+319 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+320 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+321 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+322 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+323 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+324 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+325 3.5502131461684567
+f m l y p u . o , q
+g n t d s i r a e h
+v w c k b x j ; ? z
+326 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+327 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+328 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+329 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+330 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+331 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+332 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+333 3.5337586034761865
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+334 3.5380685410764583
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f z j ; ? x
+335 3.558130596405594
+y m l b f u . o q ,
+g n t d s i r a e h
+k w c v p x j ; ? z
+336 3.5524767676784212
+y m l b p u . o q ,
+g n t d s i r a e h
+k w c v f x j ? ; z
+337 3.551554971281926
+f m l p y u . o j q
+g n t d s i r a e h
+k w c v b x , ; ? z
+338 3.5450850552833164
+m b l y p u . o , q
+g n t d s i r a e h
+k w c v f x z ; ? j
+339 3.543335006077168
+m b l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+340 3.543335006077168
+m b l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+341 3.543335006077168
+m b l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+342 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+343 3.552694254062651
+f m l y p u . o , q
+g n t d s i r a e h
+k w c v b x j ; ? z
+344 3.579590476055371
+v m l y p u . o , q
+g n t d s i r a e h
+k w c f b x j ; ? z
+345 3.580746482303017
+b l m y p u . o q ,
+g n t d s i r a e h
+k w c v f z j ; ? x
+346 3.562978622396289
+m b l y f u . o ; ,
+g n t d s i r a e h
+k w c v p x j q ? z
+347 3.5613775956512583
+m b l y f u . o q ,
+g n t d s i r a e h
+k w c v p ; j z ? x
+348 3.561899150525843
+m b l y f u . o ; ,
+g n t d s i r a e h
+k w p v c x j q ? z
+349 3.561899150525843
+m b l y f u . o ; ,
+g n t d s i r a e h
+k w p v c x j q ? z
+350 3.5783030581334203
+f b l y m u . o ; ,
+g n t d s i r a e h
+k w c v p x j q ? z
+351 3.5783030581334203
+f b l y m u . o ; ,
+g n t d s i r a e h
+k w c v p x j q ? z
+352 3.620569011283521
+m l f y p u . o ; ,
+g n t d s i r a e h
+k w c v b x j q ? z
+353 3.60151269255697
+f l m y p u . o ; ,
+g n t d s i r a e h
+k w c v b x j q ? z
+354 3.6727291619279834
+b l m y p u . o ; ,
+n d t g s i r a e h
+k w c v f z j q ? x
+355 3.6727291619279834
+b l m y p u . o ; ,
+n d t g s i r a e h
+k w c v f z j q ? x
+356 3.6675112952326314
+b l m y p u . o ; ,
+n r t g s i d a e h
+k w c v f z j q ? x
+357 3.6675112952326314
+b l m y p u . o ; ,
+n r t g s i d a e h
+k w c v f z j q ? x
+358 3.6727291619279834
+b l m y p u . o ; ,
+n d t g s i r a e h
+k w c v f z j q ? x
+359 3.671944076101992
+b l m y p u . o ; ,
+n d t g s i r a e h
+k w c v f z j q x ?
+360 3.648418926600128
+f l m y p u . o ; ,
+g d t n s i r a e h
+k w c v b z j q ? x
+361 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+362 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+363 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+364 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+365 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+366 3.675746953202195
+b l m y f u . o ; ,
+n d t g s i r a e h
+k w c v p z x q ? j
+367 3.674705465104266
+v l y c w u . o ; ,
+n d t g s i r a e h
+k f m b p z x q ? j
+368 3.67494130314943
+b l m y f u . o ; ,
+n d t g s i r a e h
+k c w v p z j q ? x
+369 3.6681338388713476
+b l m y w u . o z ;
+n d t g s i r a e h
+k f c v p , j q ? x
+370 3.6678851007272635
+b l m y w u . o j ,
+n d t g s i r a e h
+k f c v p z ; q ? x
+371 3.6678851007272635
+b l m y w u . o j ,
+n d t g s i r a e h
+k f c v p z ; q ? x
+372 3.6631881799733286
+b l m y w u . o q ;
+n d t g s i r a e h
+k f c v p , j z ? x
+373 3.6607559123111177
+b l m y w u , o j .
+n d t g s i r a e h
+k f c v p z ; q ? x
+374 3.666738933069714
+b l m y w u . o j ,
+n d t s g i r a e h
+k f c v p ; z q ? x
+375 3.6577409497487237
+b l m y w u . o j ;
+n d t g s i r a e h
+k f c v p z , q x ?
+376 3.657447103773587
+b l m y w u . o j ;
+n d t s g i r a e h
+k f c v p z , q ? x
+377 3.6550457174907502
+b l m y w u , o ? q
+n d t s g i r a e h
+k f c v p ; j . z x
+378 3.6550457174907502
+b l m y w u , o ? q
+n d t s g i r a e h
+k f c v p ; j . z x
+379 3.6550457174907502
+b l m y w u , o ? q
+n d t s g i r a e h
+k f c v p ; j . z x
+380 3.649260577244639
+b l m y w u , o j q
+n d t s g i r a e h
+k f c v p ; ? . z x
+381 3.6507277492110473
+b l m y w u , o j q
+n d t s g i r a e h
+k f c v p ; . z ? x
+382 3.654889256523555
+b l m y w u . o j q
+n d t s g i r a e h
+k f c v p z , ? ; x
+383 3.649260577244639
+b l m y w u , o j q
+n d t s g i r a e h
+k f c v p ; ? . z x
+384 3.645321360604068
+b l m y w u , o j .
+g d t s n i r a e h
+k f c v p z ? q ; x
+385 3.649260577244639
+b l m y w u , o j q
+n d t s g i r a e h
+k f c v p ; ? . z x
+386 3.649260577244639
+b l m y w u , o j q
+n d t s g i r a e h
+k f c v p ; ? . z x
+387 3.6492527277049893
+b l m y w u , o q j
+n d t s g i r a e h
+k f c v p ; z . ? x
+388 3.658600472963706
+b l m y w u , o j q
+n d t s g i r a e h
+k f v c p ; ? . z x
+389 3.658600472963706
+b l m y w u , o j q
+n d t s g i r a e h
+k f v c p ; ? . z x
+390 3.6693857848890734
+b l m w y u , o j q
+n d t g s i r a e h
+x f c v p ; z . ? k
+391 3.6771516186239985
+b l m y w u , o j .
+n d t g s i r a e h
+x f c v p ; ? q k z
+392 3.6703650126228946
+b l m w y u , o j .
+n d t s g i r a e h
+x f c v p ; z k ? q
+393 3.6703650126228946
+b l m w y u , o j .
+n d t s g i r a e h
+x f c v p ; z k ? q
+394 3.6629939031136223
+b g m w y u , o k .
+n r t s l i d a e h
+x f c v p ? j q ; z
+395 3.6629939031136223
+b g m w y u , o k .
+n r t s l i d a e h
+x f c v p ? j q ; z
+396 3.66537801163089
+b l m y w u , o j .
+n d t s g i r a e h
+x f p v c ; z k ? q
+397 3.664651828609315
+b l m y w u , o j .
+n d t s g i r a e h
+x f p v c ; ? k q z
+398 3.611925036911761
+b g m w y u , o k .
+r n t s l i d a e h
+x f c v p ; z q j ?
+399 3.567132320961032
+b l m y p u , o k .
+r n t s g i d a e h
+x f c v w ; ? q j z
+400 3.611925036911761
+b g m w y u , o k .
+r n t s l i d a e h
+x f c v p ; z q j ?
+
+Losowy układ:
+u i r ? c , h m a s
+b w g y t l d p ; j
+. n q e x k o z v f
+przystosowanie: 16.60992903225628
+rzędy klawiszy: 41,6% 26,8% 31,6%
+palce lewej ręki: 6% 16% 8% 25%
+palce prawej ręki: 24% 4% 9% 8%
+użycie rąk: 54,3% 45,7%
+alternacja rąk: 53,5%
+zmiana palca: 86,0%
+row usage = 9.828448323749658
+finger usage = 1.2814990130475405
+hand alternation = 1.0823943190844227
+finger alternation = 1.2291444351961958
+big steps = 1.4423229099881103
+inboard stroke flow = 1.0818291617122457
+hand usage = 0.6642908694781058
+
+QWERTY:
+q w e r t y u i o p
+a s d f g h j k l ;
+z x c v b n m , . ?
+przystosowanie: 13.360798280366442
+rzędy klawiszy: 49,1% 33,5% 17,4%
+palce lewej ręki: 8% 9% 18% 21%
+palce prawej ręki: 20% 9% 13% 2%
+użycie rąk: 55,6% 44,4%
+alternacja rąk: 52,4%
+zmiana palca: 89,4%
+row usage = 7.28813388237905
+finger usage = 0.38139973260088583
+hand alternation = 1.1101298345422108
+finger alternation = 0.9341238882282998
+big steps = 1.6567988839476815
+inboard stroke flow = 1.061047476813317
+hand usage = 0.9291645818549975
+
+Dvorak:
+? , . p y f g c r l
+a o e u i d h t n s
+; q j k x b m w v z
+przystosowanie: 3.9191151698156177
+rzędy klawiszy: 22,9% 68,3% 8,8%
+palce lewej ręki: 8% 9% 13% 14%
+palce prawej ręki: 18% 13% 13% 10%
+użycie rąk: 44,8% 55,2%
+alternacja rąk: 65,2%
+zmiana palca: 92,9%
+row usage = 0.05986150860178765
+finger usage = 0.3074372666674829
+hand alternation = 0.8099345122473237
+finger alternation = 0.6219843043995246
+big steps = 0.9149148530321051
+inboard stroke flow = 1.103441040428061
+hand usage = 0.10154168443933276
+
+Call Me E-Mail:
+v f l w c ? ; u y p
+s n h t m , e a i d
+k z b r j o . x q g
+przystosowanie: 5.106075936856365
+rzędy klawiszy: 18,6% 62,1% 19,3%
+palce lewej ręki: 8% 9% 12% 22%
+palce prawej ręki: 23% 11% 9% 8%
+użycie rąk: 50,0% 50,0%
+alternacja rąk: 65,1%
+zmiana palca: 92,7%
+row usage = 0.9732596489783908
+finger usage = 0.4945630942741216
+hand alternation = 0.8140903171819257
+finger alternation = 0.638478382877527
+big steps = 0.932604108323425
+inboard stroke flow = 1.1605304375743166
+hand usage = 0.09254994764665837
+
+Simulated Annealing:
+q p r s h z k i t x
+l f m c n e a y g ;
+d j w v b u o , . ?
+przystosowanie: 9.76022705926274
+rzędy klawiszy: 35,9% 41,7% 22,4%
+palce lewej ręki: 8% 4% 10% 24%
+palce prawej ręki: 31% 10% 12% 0%
+użycie rąk: 46,3% 53,7%
+alternacja rąk: 66,5%
+zmiana palca: 89,2%
+row usage = 4.30369813001472
+finger usage = 1.4040327190608881
+hand alternation = 0.7810322217003559
+finger alternation = 0.9477966111771704
+big steps = 1.1540247630202143
+inboard stroke flow = 1.1491678840665867
+hand usage = 0.020474730222803796
+
+Najlepiej przystosowany osobnik:
+b m l y p u . o , q
+g n t d s i r a e h
+k w c v f x j ; ? z
+przystosowanie: 3.5337586034761865
+rzędy klawiszy: 25,3% 65,5% 9,2%
+palce lewej ręki: 4% 12% 15% 17%
+palce prawej ręki: 17% 15% 14% 6%
+użycie rąk: 48,1% 51,9%
+alternacja rąk: 61,5%
+zmiana palca: 92,0%
+row usage = 0.15313377325233657
+finger usage = 0.026004923628704175
+hand alternation = 0.8979773493460159
+finger alternation = 0.7079331629013083
+big steps = 0.6906031483947681
+inboard stroke flow = 1.0524469494649222
+hand usage = 0.005659296488131232
+row usage: false (-155,813%)
+finger usage: true (91,541%)
+hand alternation: false (-10,870%)
+finger alternation: false (-13,818%)
+big steps: true (24,517%)
+inboard stroke flow: true (4,621%)
+hand usage: true (94,427%)
