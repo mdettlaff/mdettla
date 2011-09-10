@@ -406,9 +406,9 @@ Warto zwrócić uwagę, że jeśli wybrane punkty będą znajdowały się na odl
 
 W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozwiązywany problem należy do klasy problemów optymalizacji wielokryterialnej. Najbardziej pożądaną sytuacją jest znalezienie rozwiązania nie tylko z najkorzystniejszą wartością funkcji przystosowania, ale też takiego, które będzie optymalne pod względem każdego ze stosowanych kryteriów. Trudno jest osiągnąć ten cel poprzez samo dobieranie wag ($w_1 ... w_7$), ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać. Dlatego zastosowany zostanie operator selekcji uwzględniający nie tylko wartość funkcji przystosowania, ale również wartości poszczególnych kryteriów.
 
-\subsection{Multiobjective Majority Tournament Selection}
+\subsection{Wielokryterialna większościowa selekcja turniejowa}
 
-Multiobjective Majority Tournament Selection~\cite{Luke2009Metaheuristics} jest to rodzaj selekcji turniejowej, w której faworyzowane są osobniki posiadające jak największą ilość kryteriów, których wartość jest bardziej korzystna niż w pozostałych osobnikach.
+Wielokryterialna większościowa selekcja turniejowa (Multiobjective majority tournament selection - MMTS~\cite{Luke2009Metaheuristics}) jest to rodzaj selekcji turniejowej, w której faworyzowane są osobniki posiadające jak największą ilość kryteriów, których wartość jest bardziej korzystna niż w pozostałych osobnikach.
 
 Selekcję tą można przedstawić za pomocą następującego pseudokodu:\newline
 
@@ -490,7 +490,7 @@ Zastosowanie strategii elitarnej przyspiesza zbieżność algorytmu, co obrazuje
 \caption{Wpływ zastosowania strategii elitarnej}
 \end{figure}
 
-Celem zastosowania operatora selekcji Multiobjective Majority Tournament Selection (MMTS) jest zrównoważenie wpływu poszczególnych składowych funkcji oceny, aby móc osiągnąć lepszy wynik dla wszystkich składowych w stosunku do innych rozwiązań, takich jak klawiatura Dvoraka. Dla standardowej selekcji turniejowej, po 100 uruchomieniach algorytmu przewaga w stosunku do klawiatury Dvoraka została osiągnięta średnio w 4,55 kryteriach na 7. Dla selekcji MMTS, współczynnik ten wyniósł 4,76 kryteriów na 7.
+Celem zastosowania operatora selekcji MMTS jest zrównoważenie wpływu poszczególnych składowych funkcji oceny, aby móc osiągnąć lepszy wynik dla wszystkich składowych w stosunku do innych rozwiązań, takich jak klawiatura Dvoraka. Dla standardowej selekcji turniejowej, po 100 uruchomieniach algorytmu przewaga w stosunku do klawiatury Dvoraka została osiągnięta średnio w 4,55 kryteriach na 7. Dla selekcji MMTS, współczynnik ten wyniósł 4,76 kryteriów na 7.
 
 Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: zamiany (EM), zamiany z przemieszczeniem (DM), mutacji ze wstawianiem (ISM), prostej inwersji (SIM), inwersji (IVM) oraz z mieszaniem podlist (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
