@@ -364,6 +364,13 @@ $$ (a b c d) $$
 W takim wypadku istnieje sześć możliwych rezultatów, do których należą:
 $$(\textit{\textbf{abc}} d), (\textit{\textbf{acb}} d), (\textit{\textbf{bac}} d), (\textit{\textbf{bca}} d), (\textit{\textbf{cab}} d), (\textit{\textbf{cba}} d) $$
 
+\subsection{Inversion Mutation (IVM)}
+
+Operator ten działa podobnie jak DM, z tą różnicą, że dodatkowo odwracana jest kolejność elementów w wybranym fragmencie chromosomu. Niech dany będzie chromosom $ (a b c d e f g h) $. Załóżmy, że podobnie jak w przypadku operatora DM wybraliśmy odcinek $ (d e f g) $, a na jego nową pozycję wybrany został punkt pomiędzy elementami $a$ oraz $b$. Przed ponownym umieszczeniem odcinka w chromosomie, najpierw zostanie odwrócona kolejność jego elementów:
+$$ (d e f g) \rightarrow (g f e d) $$
+Spowoduje to powstanie następującego wyniku końcowego:
+$$ (a b c \textit{\textbf{gfed}} h) $$
+
 
 \section{Selekcja}
 
@@ -396,7 +403,7 @@ zwróć Best\newline
 Wartość parametru $n$ będzie równa 7, ponieważ tyle kryteriów uwzględniono w funkcji przystosowania. $c$ oznacza ilość kryteriów, dla których dany osobnik jest lepszy od aktualnie najlepszego znalezionego osobnika. W algorytmie tym została wprowadzona jedna modyfikacja w porównaniu do standardowej wersji. Mianowicie, jeżeli żaden osobnik nie uzyska przewagi pod względem $c$, brana jest pod uwagę ogólna wartość przystosowania $p$.
 
 
-\section{Algorytm}
+\section{Ostateczna postać zastosowanego algorytmu}
 
 Zastosowany algorytm można opisać za pomocą następującego pseudokodu:\newline
 
