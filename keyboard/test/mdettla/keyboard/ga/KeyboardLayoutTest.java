@@ -78,7 +78,7 @@ public class KeyboardLayoutTest {
 
 	@Test
 	public void testGetPenaltyForHandUsage() {
-		assertEquals(0.00043, qwerty.getPenaltyForHandUsage(), 0.00001);
+		assertEquals(0.00315, qwerty.getPenaltyForHandUsage(), 0.0001);
 	}
 
 	@Test
