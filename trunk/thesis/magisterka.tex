@@ -284,11 +284,11 @@ gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperym
 
 \section{Operatory krzyżowania}
 
-\subsection{Cycle Crossover (CX)}
+\subsection{Krzyżowanie cykliczne (CX)}
 
-Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji elementów w chromosomie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji elementów z obu rodziców zostaje w nim zachowana.
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji elementów w chromosomie. Cechę tę posiada operator krzyżowania cyklicznego~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji elementów z obu rodziców zostaje w nim zachowana.
 
-W krzyżowaniu Cycle Crossover, wybieramy losowy element z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
+W krzyżowaniu cyklicznym, wybieramy losowy element z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
 
 Jeżeli okazuje się, że danego elementu z chromosomu rodzica nie można umieścić w chromosomie potomnym, zostaje wybrany element drugiego rodzica. Jeżeli ten element również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych elementów, które są dozwolone. Kolejne elementy wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
 
@@ -308,31 +308,31 @@ Ponieważ wszystkie do tej pory wybrane elementy należą do tego samego rodzica
 $$ (a b f d g e c h) $$
 
 
-\subsection{Partially Mapped Crossover (PMX)}
+\subsection{Krzyżowanie z częściowym odwzorowaniem (PMX)}
 
-Podobnie jak Cycle Crossover, Partially Mapped Crossover~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje elementów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
+Podobnie jak krzyżowanie cykliczne, krzyżowanie z częściowym odwzorowaniem~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje elementów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie odwzorowań.
 
-Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją mapującą}. Sekcja mapująca drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja mapująca pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie mapowania określonego przez sekcje mapujące.
+Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją odwzorowania}. Sekcja odwzorowania drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja odwzorowania pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie odwzorowania określonego przez sekcje odwzorowania.
 
 Dla przykładu, niech dane będą następujące osobniki rodzicielskie:
 $$ (a b c d e f g h), (c g e a f h b d) $$
 
-Załóżmy, że wylosowano punkty pomiędzy trzecim i czwartym, oraz szóstym i siódmym elementem chromosomu, co daje sekcję mapującą od czwartego do szóstego elementu. Po przepisaniu sekcji mapujących, osobniki potomne mają następującą postać:
+Załóżmy, że wylosowano punkty pomiędzy trzecim i czwartym, oraz szóstym i siódmym elementem chromosomu, co daje sekcję odwzorowania od czwartego do szóstego elementu. Po przepisaniu sekcji odwzorowania, osobniki potomne mają następującą postać:
 $$ (* * * a f h * *), (* * * d e f * *) $$
 
-Sekcje mapujące $ (a f h) $ oraz $ (d e f) $ definiują mapowania: $ a \leftrightarrow d $, $ f \leftrightarrow e $ oraz $ h \leftrightarrow f $. Przypiszmy teraz brakujące elementy pierwszego potomka. Pierwszym elementem pierwszego rodzica jest $a$. Nie możemy jednak przepisać go na pierwszą pozycję potomka, ponieważ element ten występuje już w permutacji. Możemy jednak przypisać $d$, ponieważ zgodnie z mapowaniami $a$ jest mapowany na $d$.
+Sekcje odwzorowania $ (a f h) $ oraz $ (d e f) $ definiują odwzorowania: $ a \leftrightarrow d $, $ f \leftrightarrow e $ oraz $ h \leftrightarrow f $. Przypiszmy teraz brakujące elementy pierwszego potomka. Pierwszym elementem pierwszego rodzica jest $a$. Nie możemy jednak przepisać go na pierwszą pozycję potomka, ponieważ element ten występuje już w permutacji. Możemy jednak przypisać $d$, ponieważ zgodnie z odwzorowaniami $a$ jest odwzorowany na $d$.
 $$ (d * * a f h * *) $$
 
 Elementy na drugiej, trzeciej oraz siódmej pozycji można przepisać bezpośrednio, ponieważ nie powodują one powstawania nieprawidłowej permutacji.
 $$ (d b c a f h g *) $$
 
-Aby uzupełnić ostatnią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $h$, więc najpierw stosujemy mapowanie $h \rightarrow f$. $f$ także występuje już w permutacji, dlatego mapujemy $f \rightarrow e$.
+Aby uzupełnić ostatnią pozycję, trzeba zastosować odwzorowanie dwukrotnie. Nie możemy przepisać $h$, więc najpierw stosujemy odwzorowanie $h \rightarrow f$. $f$ także występuje już w permutacji, dlatego odwzorowujemy $f \rightarrow e$.
 $$ (d b c a f h g e) $$
 
 Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
 
 
-\subsection{Position Based Crossover (POS)}
+\subsection{Krzyżowanie bazujące na porządku (POS)}
 
 Operator ten również należy do kategorii operatorów, które mają na celu zachowanie tych samych pozycji dla jak największej ilości elementów chromosomów rodzicielskich. Na początku wybierany jest losowo zbiór pozycji na chromosomie. Elementy na tych pozycjach są przepisywane na te same pozycje z drugiego rodzica do pierwszego potomka i odwrotnie. Niech dane będą pozycje trzecia, czwarta i piąta, oraz osobniki rodzicielskie:
 $$ (a b c d e f), (e d b f a c) $$
@@ -344,7 +344,7 @@ Pozostałe pozycje pierwszego potomka wypełniane są kolejnymi elementami pierw
 $$ (a d b f e c), (e b c d a f) $$
 
 
-\subsection{Alternating-Position Crossover (AP)}
+\subsection{Krzyżowanie naprzemienne (AP)}
 
 Ten typ krzyżowania polega na wybieraniu elementów na przemian z pierwszego i drugiego rodzica. Jeżeli dany element znajduje się już w chromosomie osobnika potomnego, jest on zwyczajnie pomijany. Przykładowo, niech będą dane osobniki rodzicielskie $(a b c d e f g h)$ oraz $(d c h b e f g a)$. Zaczynając od pierwszej pozycji, dobieramy najpierw element z pierwszej pozycji pierwszego rodzica, a następnie z pierwszej pozycji drugiego rodzica. Czynność tę powtarzamy dla drugiej pozycji, otrzymując:
 $$ (a d b c * * * *) $$
@@ -504,7 +504,7 @@ Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najleps
   ISM & 4,301 \\
 \end{tabular}\newline
 
-Wyniki dla operatorów krzyżowania Cycle Crossover (CX), Partially Mapped Crossover (PMX), Position-Based Crossover (POS) oraz Alternating-Position Crossover (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
+Wyniki dla operatorów krzyżowania: cyklicznego (CX), z częściowym odwzorowaniem (PMX), bazującego na porządku (POS) oraz naprzemiennego (AP) przedstawiono poniżej, również uśrednione dla 10 uruchomień algorytmu.
 
 \begin{tabular}{ c | c }
   operator krzyżowania & najlepsza znaleziona wartość $p$ \\
