@@ -371,6 +371,13 @@ $$ (d e f g) \rightarrow (g f e d) $$
 Spowoduje to powstanie następującego wyniku końcowego:
 $$ (a b c \textit{\textbf{gfed}} h) $$
 
+\subsection{Insertion Mutation (ISM)}
+
+Ten rodzaj mutacji polega na wybraniu losowego elementu chromosomu, usunięciu go, a następnie wstawieniu ponownie na innej pozycji. Na przykład, po wybraniu elementu szóstego z chromosomu $(a b c d e f g h)$, usunięciu go, a następnie wstawieniu ponownie na pozycji drugiej otrzymamy następujący wynik:
+$$ (a \textit{\textbf{f}} b c d e g h) $$
+
+Warto zwrócić uwagę, że jeśli wybrane punkty będą znajdowały się na odległych pozycjach, zmienią się absolutne pozycje wszystkich elementów znajdujących się pomiędzy nimi. Może mieć to bardzo negatywny wpływ na jakość rozwiązania, zwłaszcza ze względu na czynnik stopnia użycia poszczególnych palców.
+
 
 \section{Selekcja}
 
