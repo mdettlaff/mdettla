@@ -293,20 +293,20 @@ W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica 
 Jeżeli okazuje się, że danego genu z chromosomu rodzica nie można umieścić w chromosomie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
 
 Rozważmy przykład. Niech dane będą następujące osobniki rodzicielskie:
-$$ (1 2 3 4 5 6 7 8) $$
-$$ (2 4 6 8 7 5 3 1) $$
+$$ (a b c d e f g h) $$
+$$ (b d f h g e c a) $$
 
-Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję chromosomu potomka możemy teraz wybrać $1$ lub $2$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy.
-$$ (1 * * * * * * *) $$
+Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję chromosomu potomka możemy teraz wybrać $a$ lub $b$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy. Chromosom osobnika potomnego wyglądać będzie następująco (gwiazdką zaznaczono pozycje jeszcze nieprzypisane):
+$$ (a * * * * * * *) $$
 
-Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $1$ lub $8$, ale jeżeli wybierzemy $1$, wynikowy chromosom nie będzie już prawidłową permutacją. Dlatego wybieramy $8$.
-$$ (1 * * * * * * 8) $$
+Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $a$ lub $h$, ale jeżeli wybierzemy $a$, wynikowy chromosom nie będzie już prawidłową permutacją. Dlatego wybieramy $h$.
+$$ (a * * * * * * h) $$
 
 Geny na czwartej oraz drugiej pozycji muszą również zostać wybrane z pierwszego rodzica, aby uniknąć wybrania po raz kolejny tych samych genów.
-$$ (1 2 * 4 * * * 8) $$
+$$ (a b * d * * * h) $$
 
-Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, możemy powiedzieć że tworzą one cykl. Rozpatrzmy teraz geny na trzeciej pozycji. Możemy wybrać dowolny z nich ($3$ lub $6$). Jeżeli wybierzemy gen z drugiego rodzica ($6$), wtedy geny na piątej, szóstej i siódmej pozycji również mogą pochodzić z drugiego rodzica, tworząc drugi cykl. Ostatecznie, otrzymujemy następującego osobnika potomnego:
-$$ (1 2 6 4 7 5 3 8) $$
+Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, możemy powiedzieć że tworzą one cykl. Rozpatrzmy teraz geny na trzeciej pozycji. Możemy wybrać dowolny z nich ($c$ lub $f$). Jeżeli wybierzemy gen z drugiego rodzica ($f$), wtedy geny na piątej, szóstej i siódmej pozycji również mogą pochodzić z drugiego rodzica, tworząc drugi cykl. Ostatecznie, otrzymujemy następującego osobnika potomnego:
+$$ (a b f d g e c h) $$
 
 
 \subsection{Partially Mapped Crossover (PMX)}
@@ -316,19 +316,19 @@ Podobnie jak Cycle Crossover, Partially Mapped Crossover~\cite{Larranaga99geneti
 Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją mapującą}. Sekcja mapująca drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja mapująca pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie mapowania określonego przez sekcje mapujące.
 
 Dla przykładu, niech dane będą następujące osobniki rodzicielskie:
-$$ (1 2 3 4 5 6 7 8), (3 7 5 1 6 8 2 4) $$
+$$ (a b c d e f g h), (c g e a f h b d) $$
 
-Załóżmy, że wylosowano punkty pomiędzy trzecim i czwartym, oraz szóstym i siódmym elementem chromosomu, co daje sekcję mapującą od czwartego do szóstego elementu. Po przepisaniu sekcji mapujących, osobniki potomne mają następującą postać (kropką zaznaczono pozycje jeszcze nieprzypisane):
-$$ (* * * 1 6 8 * *), (* * * 4 5 6 * *) $$
+Załóżmy, że wylosowano punkty pomiędzy trzecim i czwartym, oraz szóstym i siódmym elementem chromosomu, co daje sekcję mapującą od czwartego do szóstego elementu. Po przepisaniu sekcji mapujących, osobniki potomne mają następującą postać:
+$$ (* * * a f h * *), (* * * d e f * *) $$
 
-Sekcje mapujące $ (1 6 8) $ oraz $ (4 5 6) $ definiują mapowania: $ 1 \leftrightarrow 4 $, $ 6 \leftrightarrow 5 $ oraz $ 8 \leftrightarrow 6 $. Przypiszmy teraz brakujące elementy pierwszego potomka. Pierwszym elementem pierwszego rodzica jest $1$. Nie możemy jednak przepisać go na pierwszą pozycję potomka, ponieważ element ten występuje już w permutacji. Możemy jednak przypisać $4$, ponieważ zgodnie z mapowaniami $1$ jest mapowany na $4$.
-$$ (4 * * 1 6 8 * *) $$
+Sekcje mapujące $ (a f h) $ oraz $ (d e f) $ definiują mapowania: $ a \leftrightarrow d $, $ f \leftrightarrow e $ oraz $ h \leftrightarrow f $. Przypiszmy teraz brakujące elementy pierwszego potomka. Pierwszym elementem pierwszego rodzica jest $a$. Nie możemy jednak przepisać go na pierwszą pozycję potomka, ponieważ element ten występuje już w permutacji. Możemy jednak przypisać $d$, ponieważ zgodnie z mapowaniami $a$ jest mapowany na $d$.
+$$ (d * * a f h * *) $$
 
 Elementy na drugiej, trzeciej oraz siódmej pozycji można przepisać bezpośrednio, ponieważ nie powodują one powstawania nieprawidłowej permutacji.
-$$ (4 2 3 1 6 8 7 *) $$
+$$ (d b c a f h g *) $$
 
-Aby uzupełnić ostatnią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $8$, więc najpierw stosujemy mapowanie $8 \rightarrow 6$. $6$ także występuje już w permutacji, dlatego mapujemy $6 \rightarrow 5$.
-$$ (4 2 3 1 6 8 7 5) $$
+Aby uzupełnić ostatnią pozycję, trzeba zastosować mapowanie dwukrotnie. Nie możemy przepisać $h$, więc najpierw stosujemy mapowanie $h \rightarrow f$. $f$ także występuje już w permutacji, dlatego mapujemy $f \rightarrow e$.
+$$ (d b c a f h g e) $$
 
 Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
 
