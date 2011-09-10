@@ -358,20 +358,20 @@ $$ (d a c b h e f g) $$
 
 \section{Operatory mutacji}
 
-\subsection{Exchange Mutation (EM)}
+\subsection{Operator zamiany (EM)}
 
-W operatorze Exchange Mutation wybieramy losowo dwa elementy permutacji, po czym zamieniamy je miejscami. Metoda ta znana jest też jako Swap Mutation lub Reciprocal Exchange Mutation. Na przykład, jeżeli w permutacji $ (a b c d e f g h) $ wybierzemy element drugi i piąty, otrzymamy w efekcie:
+Operator zamiany polega na wybraniu losowo dwóch elementów permutacji, a następnie zamienieniu ich miejscami. Na przykład, jeżeli w permutacji $ (a b c d e f g h) $ wybierzemy element drugi i piąty, otrzymamy w efekcie:
 $$ (a \textit{\textbf{e}} c d \textit{\textbf{b}} f g h) $$
 
-\subsection{Displacement Mutation (DM)}
+\subsection{Zamiana z przemieszczeniem (DM)}
 
-Pierwszym krokiem w metodzie Displacement Mutation jest wybranie losowego odcinka permutacji. Załóżmy, że zaczęliśmy od permutacji $ (a b c d e f g h) $ i wybraliśmy odcinek $ (d e f g) $. Następnie, należy usunąć wybrany odcinek z permutacji i umieścić go w niej ponownie na losowo wybranej pozycji. W naszym przykładzie, po jego usunięciu permutacja przyjmie postać:
+Pierwszym krokiem w metodzie zamiany z przemieszczeniem jest wybranie losowego odcinka permutacji. Załóżmy, że zaczęliśmy od permutacji $ (a b c d e f g h) $ i wybraliśmy odcinek $ (d e f g) $. Następnie, należy usunąć wybrany odcinek z permutacji i umieścić go w niej ponownie na losowo wybranej pozycji. W naszym przykładzie, po jego usunięciu permutacja przyjmie postać:
 $$ (a b c h) $$
 
 Załóżmy, że w tak powstałej permutacji wylosowano pozycję pomiędzy elementami $a$ oraz $b$. W takim wypadku, ostateczny wynik mutacji przyjmie następującą postać:
 $$ (a \textit{\textbf{defg}} b c h) $$
 
-\subsection{Simple Inversion Mutation (SIM)}
+\subsection{Prosta inwersja (SIM)}
 
 Operator ten polega na odwróceniu kolejności elementów w wybranym fragmencie chromosomu. Przykładowo, niech dany będzie chromosom:
 $$ (a b c d e f g h) $$
@@ -379,7 +379,7 @@ $$ (a b c d e f g h) $$
 Najpierw należy wybrać dwa punkty cięcia - niech będą to punkty pomiędzy elementami $a$ i $b$, oraz $e$ i $f$. Następnie fragment chromosomu pomiędzy punktami cięcia zostaje odwrócony, dając w efekcie następujący wynik:
 $$ (a \textit{\textbf{edcb}} f g h) $$
 
-\subsection{Scramble Mutation (SM)}
+\subsection{Mutacja z mieszaniem podlist (SM)}
 
 Podobnie jak w poprzednim przypadku, ten rodzaj mutacji również rozpoczyna od wyboru dwóch punktów cięcia definiujących fragment chromosomu. Następnie, dokonywana jest losowa permutacja elementów na wybranym fragmencie. Załóżmy, że wybrany został fragment $(b c d)$ z poniższego chromosomu:
 $$ (a b c d) $$
@@ -387,14 +387,14 @@ $$ (a b c d) $$
 W takim wypadku istnieje sześć możliwych rezultatów, do których należą:
 $$(\textit{\textbf{abc}} d), (\textit{\textbf{acb}} d), (\textit{\textbf{bac}} d), (\textit{\textbf{bca}} d), (\textit{\textbf{cab}} d), (\textit{\textbf{cba}} d) $$
 
-\subsection{Inversion Mutation (IVM)}
+\subsection{Inwersja (IVM)}
 
 Operator ten działa podobnie jak DM, z tą różnicą, że dodatkowo odwracana jest kolejność elementów w wybranym fragmencie chromosomu. Niech dany będzie chromosom $ (a b c d e f g h) $. Załóżmy, że podobnie jak w przypadku operatora DM wybraliśmy odcinek $ (d e f g) $, a na jego nową pozycję wybrany został punkt pomiędzy elementami $a$ oraz $b$. Przed ponownym umieszczeniem odcinka w chromosomie, najpierw zostanie odwrócona kolejność jego elementów:
 $$ (d e f g) \rightarrow (g f e d) $$
 Spowoduje to powstanie następującego wyniku końcowego:
 $$ (a b c \textit{\textbf{gfed}} h) $$
 
-\subsection{Insertion Mutation (ISM)}
+\subsection{Mutacja ze wstawianiem (ISM)}
 
 Ten rodzaj mutacji polega na wybraniu losowego elementu chromosomu, usunięciu go, a następnie wstawieniu ponownie na innej pozycji. Na przykład, po wybraniu elementu szóstego z chromosomu $(a b c d e f g h)$, usunięciu go, a następnie wstawieniu ponownie na pozycji drugiej otrzymamy następujący wynik:
 $$ (a \textit{\textbf{f}} b c d e g h) $$
@@ -492,7 +492,7 @@ Zastosowanie strategii elitarnej przyspiesza zbieżność algorytmu, co obrazuje
 
 Celem zastosowania operatora selekcji Multiobjective Majority Tournament Selection (MMTS) jest zrównoważenie wpływu poszczególnych składowych funkcji oceny, aby móc osiągnąć lepszy wynik dla wszystkich składowych w stosunku do innych rozwiązań, takich jak klawiatura Dvoraka. Dla standardowej selekcji turniejowej, po 100 uruchomieniach algorytmu przewaga w stosunku do klawiatury Dvoraka została osiągnięta średnio w 4,55 kryteriach na 7. Dla selekcji MMTS, współczynnik ten wyniósł 4,76 kryteriów na 7.
 
-Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: Exchange Mutation (EM), Displacement Mutation (DM), Insertion Mutation (ISM), Simple Inversion Mutation (SIM), Inversion Mutation (IVM) oraz Scramble Mutation (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
+Zbadany został wpływ operatorów mutacji oraz krzyżowania na jakość najlepszego rozwiązania (wartość funkcji przystosowania $p$) znalezionego w wyniku uruchomienia algorytmu. Wyniki dla operatorów mutacji: zamiany (EM), zamiany z przemieszczeniem (DM), mutacji ze wstawianiem (ISM), prostej inwersji (SIM), inwersji (IVM) oraz z mieszaniem podlist (SM) przedstawiono w poniższej tabeli. Wyniki zostały uśrednione dla 10 uruchomień algorytmu.\newline\newline
 \begin{tabular}{ c | c }
   operator mutacji & najlepsza znaleziona wartość $p$ \\
   \hline
