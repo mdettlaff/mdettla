@@ -15,7 +15,7 @@ echo 'set xlabel "Rozmiar populacji"' >> $gp_file
 echo 'set ylabel "Przystosowanie (p)"' >> $gp_file
 echo 'set xrange [10:150]' >> $gp_file
 echo 'set yrange [3:4]' >> $gp_file
-echo 'plot "/tmp/population_size.dat" using 1:2 with lines' >> $gp_file
+echo 'plot "/tmp/population_size.dat" using 1:2 with lines ti "p"' >> $gp_file
 
 gnuplot $gp_file
 convert /tmp/population_size.png $DIR/../fig/population_size.jpg
