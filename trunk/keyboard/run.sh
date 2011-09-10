@@ -3,7 +3,6 @@
 set -e -u
 
 GA="java -cp build/classes mdettla.keyboard.ga.GAKeyboard quiet=true"
-RESULTS_FILE="results/results.txt"
 EN_CORPUS="src/mdettla/keyboard/ga/resources/en/*.txt"
 
 function epochs {

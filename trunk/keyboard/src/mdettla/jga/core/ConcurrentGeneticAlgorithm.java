@@ -23,7 +23,7 @@ public class ConcurrentGeneticAlgorithm extends GeneticAlgorithm {
 	}
 
 	@Override
-	protected void computeFitness(List<Specimen> population) {
+	public void computeFitness(List<Specimen> population) {
 		try {
 			List<Thread> threadPool = new ArrayList<Thread>();
 			List<List<Specimen>> subPopulations =
