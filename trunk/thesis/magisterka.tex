@@ -348,6 +348,14 @@ $$ (a b c h) $$
 Załóżmy, że w tak powstałej permutacji wylosowano pozycję pomiędzy elementami $a$ oraz $b$. W takim wypadku, ostateczny wynik mutacji przyjmie następującą postać:
 $$ (a \textit{\textbf{defg}} b c h) $$
 
+\subsection{Simple Inversion Mutation (SIM)}
+
+Operator ten polega na odwróceniu kolejności elementów w wybranym fragmencie chromosomu. Przykładowo, niech dany będzie chromosom:
+$$ (a b c d e f g) $$
+
+Najpierw należy wybrać dwa punkty cięcia - niech będą to punkty pomiędzy elementami $a$ i $b$, oraz $e$ i $f$. Następnie fragment chromosomu pomiędzy punktami cięcia zostaje odwrócony, dając w efekcie następujący wynik:
+$$ (a \textit{\textbf{edcb}} f g) $$
+
 
 \section{Selekcja}
 
