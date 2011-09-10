@@ -505,7 +505,7 @@ Ze względu na opisane wyżej różnice, wyniki algorytmu dla języka polskiego 
 \section{Wyniki dla języka angielskiego}
 
 Porównanie wartości funkcji przystosowania oraz jej składników dla różnych układów klawiatury przedstawiono w tabeli poniżej. Układ znaleziony przez algorytm genetyczny opisany w tej pracy oznaczono jako AG. SW to najlepsze rozwiązanie znalezione przez algorytm symulowanego wyżarzania \cite{Anderson:SimulatedAnnealing}, a AG2 - przez inny algorytm genetyczny opisany w artykule \cite{Call:2005:CME}.
-\newline
+\newline\newline
 \begin{tabular}{ c | c | c | c | c | c | c }
   kryterium            & losowy & QWERTY & Dvorak & AG & SW   & AG2 \\
   \hline
@@ -524,6 +524,16 @@ Porównanie wartości funkcji przystosowania oraz jej składników dla różnych
 \centering
 \includegraphics[width=.8\hsize]{fig/best_en}
 \caption{Najlepszy układ klawiszy dla języka angielskiego znaleziony przez algorytm}
+\end{figure}
+
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.7\hsize]{fig/sw_en}
+\end{figure}
+\begin{figure}[!tbh]
+\centering
+\includegraphics[width=.7\hsize]{fig/ag2_en}
+\caption{Najlepsze rozwiązania algorytmów SW (na górze) oraz AG2 (na dole)}
 \end{figure}
 
 Ponieważ podczas projektowania układu QWERTY nie były uwzględniane kryteria ergonomiczne, należy spodziewać się że nie będzie on znacząco lepszy od losowo wygenerowanego układu klawiszy. Rzeczywiście, funkcja oceny nie różni się istotnie w tych przypadkach. Wyraźnie lepsze wyniki osiągnął układ Dvoraka, co nie jest zaskoczeniem biorąc pod uwagę fakt, że był on tworzony z myślą o języku angielskim, a kryteria stosowane przy jego projektowaniu w dużym stopniu pokrywają się z tymi użytymi w funkcji przystosowania. Najlepszy wynik znaleziony przez algorytm genetyczny posiada ocenę o $12\%$ korzystniejszą od najlepiej ocenionego układu wśród pozostałych, jakim jest klawiatura Dvoraka.
