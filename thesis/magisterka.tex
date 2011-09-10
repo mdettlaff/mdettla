@@ -657,6 +657,31 @@ Warto byłoby również zbadać wpływ rodzaju zbioru tekstów na wynikowe ukła
 
 Do pracy dołączono program w języku Java, stanowiący implementację opisanego w niej algorytmu.
 
+Sposób uruchomienia programu:\newline
+\texttt{java -cp build/classes mdettla.keyboard.ga.GAKeyboard [parametry] PLIK...}
+
+Jako argument \texttt{PLIK...} należy podać ścieżki do plików tekstowych, na podstawie których zostaną obliczone statystyki używane w funkcji oceny. Teksty dla języka angielskiego znajdują się w katalogu \emph{src/mdettla/keyboard/ga/resources/en}, a dla języka polskiego w katalogu \emph{src/mdettla/keyboard/ga/resources/pl}.
+
+Dostępne są następujące parametry pozwalające wpływać na działanie algorytmu:
+\begin{itemize}
+  \item \texttt{populationSize} - rozmiar populacji
+  \item \texttt{generationsCount} - ilość iteracji
+  \item \texttt{eliteSize} - rozmiar elity
+  \item \texttt{tournamentSize} - rozmiar turnieju
+  \item \texttt{mutationProbability} - prawdopodobieństwo zajścia mutacji
+  \item \texttt{mutationOperator} - operator mutacji (należy podać nazwę jednej z klas znajdujących się w katalogu \emph{src/mdettla/jga/operators/mutation})
+  \item \texttt{crossoverProbability} - prawdopodobieństwo zajścia krzyżowania
+  \item \texttt{crossoverOperator} - operator krzyżowania (należy podać nazwę jednej z klas znajdujących się w katalogu \emph{src/mdettla/jga/operators/crossover})
+  \item \texttt{selectionFunction} - funkcja selekcji (należy podać nazwę jednej z klas znajdujących się w katalogu \emph{src/mdettla/jga/operators/selection})
+\end{itemize}
+
+Przykład uruchomienia programu:\newline
+\texttt{java -cp build/classes mdettla.keyboard.ga.GAKeyboard \textbackslash \newline
+\indent populationSize=100 mutationProbability=0.5 \textbackslash \newline
+\indent mutationOperator=mdettla.jga.operators.mutation.SwapMutation \textbackslash \newline
+\indent src/mdettla/keyboard/ga/resources/pl/*}
+
+
 % literatura (obowiązkowo):
 \bibliographystyle{unsrt}
 \bibliography{bib}
