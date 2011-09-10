@@ -333,6 +333,18 @@ $$ (4 2 3 1 6 8 7 5) $$
 Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
 
 
+\subsection{Alternating-Position Crossover (AP)}
+
+Ten typ krzyżowania polega na wybieraniu elementów na przemian z pierwszego i drugiego rodzica. Jeżeli dany element znajduje się już w chromosomie osobnika potomnego, jest on zwyczajnie pomijany. Przykładowo, niech będą dane osobniki rodzicielskie $(a b c d e f g h)$ oraz $(d c h b e f g a)$. Zaczynając od pierwszej pozycji, dobieramy najpierw element z pierwszej pozycji pierwszego rodzica, a następnie z pierwszej pozycji drugiego rodzica. Czynność tę powtarzamy dla drugiej pozycji, otrzymując:
+$$ (a d b c * * * *) $$
+
+Następny w kolejności element $c$ z pierwszego rodzica występuje już w osobniku potomnym, dlatego pomijamy go i wstawiamy następny element, jakim jest $h$ z drugiego rodzica. Ostatecznie, otrzymamy następującego osobnika potomnego:
+$$ (a d b c h e f g) $$
+
+Drugi osobnik potomny powstaje przez przeprowadzenie analogicznej procedury z odwróconą kolejnością osobników rodzicielskich:
+$$ (d a c b h e f g) $$
+
+
 \section{Operatory mutacji}
 
 \subsection{Exchange Mutation (EM)}
