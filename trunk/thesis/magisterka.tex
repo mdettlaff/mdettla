@@ -333,6 +333,18 @@ $$ (4 2 3 1 6 8 7 5) $$
 Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachowane. Drugi potomek powstaje analogicznie, przez stosowanie tych samych reguł.
 
 
+\subsection{Position Based Crossover (POS)}
+
+Operator ten również należy do kategorii operatorów, które mają na celu zachowanie tych samych pozycji dla jak największej ilości elementów chromosomów rodzicielskich. Na początku wybierany jest losowo zbiór pozycji na chromosomie. Elementy na tych pozycjach są przepisywane na te same pozycje z drugiego rodzica do pierwszego potomka i odwrotnie. Niech dane będą pozycje trzecia, czwarta i piąta, oraz osobniki rodzicielskie:
+$$ (a b c d e f), (e d b f a c) $$
+
+Po przepisaniu elementów na danych pozycjach, otrzymujemy osobniki potomne:
+$$ (* * b f * c), (* * c d * f) $$
+
+Pozostałe pozycje pierwszego potomka wypełniane są kolejnymi elementami pierwszego rodzica, przy czym elementy powtarzające się są pomijane. Element $a$ zostaje przepisany na tą samą, pierwszą pozycję, $b$ i $c$ są pomijane, $d$ zostaje przepisany na kolejną wolną pozycję (drugą), a $e$ na pozycję piątą. Stosując analogiczną procedurę dla drugiego potomka, otrzymujemy w wyniku:
+$$ (a d b f e c), (e b c d a f) $$
+
+
 \subsection{Alternating-Position Crossover (AP)}
 
 Ten typ krzyżowania polega na wybieraniu elementów na przemian z pierwszego i drugiego rodzica. Jeżeli dany element znajduje się już w chromosomie osobnika potomnego, jest on zwyczajnie pomijany. Przykładowo, niech będą dane osobniki rodzicielskie $(a b c d e f g h)$ oraz $(d c h b e f g a)$. Zaczynając od pierwszej pozycji, dobieramy najpierw element z pierwszej pozycji pierwszego rodzica, a następnie z pierwszej pozycji drugiego rodzica. Czynność tę powtarzamy dla drugiej pozycji, otrzymując:
