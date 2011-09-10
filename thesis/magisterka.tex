@@ -286,32 +286,31 @@ gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperym
 
 \subsection{Cycle Crossover (CX)}
 
-Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji genów w chromosomie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji genów z obu rodziców zostaje w nim zachowana.
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji elementów w chromosomie. Cechę tę posiada operator Cycle Crossover~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji elementów z obu rodziców zostaje w nim zachowana.
 
-W krzyżowaniu Cycle Crossover, wybieramy losowy gen z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
+W krzyżowaniu Cycle Crossover, wybieramy losowy element z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
 
-Jeżeli okazuje się, że danego genu z chromosomu rodzica nie można umieścić w chromosomie potomnym, zostaje wybrany gen drugiego rodzica. Jeżeli ten gen również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych genów, które są dozwolone. Kolejne geny wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
+Jeżeli okazuje się, że danego elementu z chromosomu rodzica nie można umieścić w chromosomie potomnym, zostaje wybrany element drugiego rodzica. Jeżeli ten element również nie może zostać wybrany, zostaje wybrany losowo jeden z pozostałych elementów, które są dozwolone. Kolejne elementy wybrane z jednego rodzica tworzą jeden cykl, stąd nazwa algorytmu.
 
 Rozważmy przykład. Niech dane będą następujące osobniki rodzicielskie:
-$$ (a b c d e f g h) $$
-$$ (b d f h g e c a) $$
+$$ (a b c d e f g h), (b d f h g e c a) $$
 
-Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy gen. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję chromosomu potomka możemy teraz wybrać $a$ lub $b$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy. Chromosom osobnika potomnego wyglądać będzie następująco (gwiazdką zaznaczono pozycje jeszcze nieprzypisane):
+Na początku musimy wybrać pozycję, z której będzie pochodził pierwszy element. Załóżmy, że będzie to pierwsza. Na pierwszą pozycję chromosomu potomka możemy teraz wybrać $a$ lub $b$, w zależności od tego który rodzic zostanie wybrany. Niech będzie to rodzic pierwszy. Chromosom osobnika potomnego wyglądać będzie następująco (gwiazdką zaznaczono pozycje jeszcze nieprzypisane):
 $$ (a * * * * * * *) $$
 
-Rozpatrzmy teraz gen na ostatniej pozycji. Możemy wybrać $a$ lub $h$, ale jeżeli wybierzemy $a$, wynikowy chromosom nie będzie już prawidłową permutacją. Dlatego wybieramy $h$.
+Rozpatrzmy teraz element na ostatniej pozycji. Możemy wybrać $a$ lub $h$, ale jeżeli wybierzemy $a$, wynikowy chromosom nie będzie już prawidłową permutacją. Dlatego wybieramy $h$.
 $$ (a * * * * * * h) $$
 
-Geny na czwartej oraz drugiej pozycji muszą również zostać wybrane z pierwszego rodzica, aby uniknąć wybrania po raz kolejny tych samych genów.
+Geny na czwartej oraz drugiej pozycji muszą również zostać wybrane z pierwszego rodzica, aby uniknąć wybrania po raz kolejny tych samych elementów.
 $$ (a b * d * * * h) $$
 
-Ponieważ wszystkie do tej pory wybrane geny należą do tego samego rodzica, możemy powiedzieć że tworzą one cykl. Rozpatrzmy teraz geny na trzeciej pozycji. Możemy wybrać dowolny z nich ($c$ lub $f$). Jeżeli wybierzemy gen z drugiego rodzica ($f$), wtedy geny na piątej, szóstej i siódmej pozycji również mogą pochodzić z drugiego rodzica, tworząc drugi cykl. Ostatecznie, otrzymujemy następującego osobnika potomnego:
+Ponieważ wszystkie do tej pory wybrane elementy należą do tego samego rodzica, możemy powiedzieć że tworzą one cykl. Rozpatrzmy teraz elementy na trzeciej pozycji. Możemy wybrać dowolny z nich ($c$ lub $f$). Jeżeli wybierzemy element z drugiego rodzica ($f$), wtedy elementy na piątej, szóstej i siódmej pozycji również mogą pochodzić z drugiego rodzica, tworząc drugi cykl. Ostatecznie, otrzymujemy następującego osobnika potomnego:
 $$ (a b f d g e c h) $$
 
 
 \subsection{Partially Mapped Crossover (PMX)}
 
-Podobnie jak Cycle Crossover, Partially Mapped Crossover~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje genów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
+Podobnie jak Cycle Crossover, Partially Mapped Crossover~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje elementów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie mapowań.
 
 Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją mapującą}. Sekcja mapująca drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja mapująca pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie mapowania określonego przez sekcje mapujące.
 
