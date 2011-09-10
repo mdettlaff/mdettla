@@ -3,7 +3,6 @@ package mdettla.jga.core;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -35,12 +34,10 @@ import mdettla.jga.operators.selection.TournamentSelection;
  *     Uruchomić algorytm za pomocą metody {@link #runEpoch(int) runEpoch}.
  *     Metoda ta zwróci najlepiej przystosowanego osobnika znalezionego przez
  *     algorytm.
- *     Zamiast niej można też użyć {@link #iterator() iteratora}, jeśli chcemy
- *     znać stan populacji po każdej iteracji algorytmu.
  *   </li>
  * </ol>
  */
-public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
+public class GeneticAlgorithm {
 
 	private List<Specimen> initialPopulation;
 	private CrossoverOperator crossoverOperator;
@@ -152,41 +149,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 		return best;
 	}
 
-	/**
-	 * Iterator z którego można pobierać kolejne pokolenia osobników
-	 * w algorytmie genetycznym. Pozwala on na wykonanie algorytmu na zasadzie
-	 * leniwej ewaluacji. Uwaga: metoda {@link Iterator#hasNext() hasNext()}
-	 * tego iteratora zawsze zwraca {@code true}, więc programista sam musi
-	 * zadbać o warunek zakończenia algorytmu (np. przez ograniczenie ilości
-	 * powtórzeń).
-	 *
-	 * @see java.lang.Iterable#iterator()
-	 */
-	@Override
-	public Iterator<List<Specimen>> iterator() {
-		return new Iterator<List<Specimen>>() {
-
-			private List<Specimen> population = initialPopulation;
-
-			@Override
-			public boolean hasNext() {
-				return true;
-			}
-
-			@Override
-			public List<Specimen> next() {
-				population = nextGeneration(population);
-				return population;
-			}
-			
-			@Override
-			public void remove() {
-				throw new UnsupportedOperationException();
-			}
-		};
-	}
-
-	private List<Specimen> nextGeneration(List<Specimen> originalPopulation) {
+	public List<Specimen> nextGeneration(List<Specimen> originalPopulation) {
 		List<Specimen> newPopulation = new ArrayList<Specimen>(populationSize);
 		newPopulation.addAll(getElite(originalPopulation));
 		while (newPopulation.size() < originalPopulation.size()) {
@@ -224,7 +187,7 @@ public class GeneticAlgorithm  implements Iterable<List<Specimen>> {
 		return elite;
 	}
 
-	protected void computeFitness(List<Specimen> population) {
+	public void computeFitness(List<Specimen> population) {
 		for (Specimen specimen : population) {
 			specimen.computeFitness();
 		}

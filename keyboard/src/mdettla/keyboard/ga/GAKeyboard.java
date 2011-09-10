@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import mdettla.jga.core.ConcurrentGeneticAlgorithm;
@@ -33,6 +34,7 @@ public class GAKeyboard {
 	private SelectionFunction selectionFunction;
 	private List<File> textFiles;
 	private boolean quiet;
+	private int epochsCount;
 
 	public GAKeyboard() {
 		populationSize = 50;
@@ -51,7 +53,11 @@ public class GAKeyboard {
 	public static void main(String[] args) throws Exception {
 		GAKeyboard algorithm = new GAKeyboard();
 		algorithm.initializeFromArgs(args);
-		algorithm.run();
+		if (algorithm.epochsCount == 0) {
+			algorithm.run();
+		} else {
+			algorithm.runManyEpochsAverage();
+		}
 	}
 
 	private void initializeFromArgs(String[] args)
@@ -101,6 +107,9 @@ public class GAKeyboard {
 		if (getOpt.isOptionSet("quiet")) {
 			quiet = getOpt.getBooleanValue("quiet");
 		}
+		if (getOpt.isOptionSet("epochsCount")) {
+			epochsCount = getOpt.getIntValue("epochsCount");
+		}
 	}
 
 	public void run() throws IOException {
@@ -108,14 +117,7 @@ public class GAKeyboard {
 		List<Specimen> initialPopulation = getInitialPopulation(stats);
 
 		GeneticAlgorithm ga = new ConcurrentGeneticAlgorithm(initialPopulation);
-		ga.setMutationOperator(mutationOperator);
-		ga.setMutationProbability(mutationProbability);
-		ga.setCrossoverOperator(crossoverOperator);
-		ga.setCrossoverProbability(crossoverProbability);
-		ga.setSelectionFunction(selectionFunction);
-		ga.setEliteSize(eliteSize);
-		ga.setQuiet(quiet);
-		System.out.println(getInitialParameters(ga) + "\n");
+		initializeFromParameters(ga);
 
 		Specimen best = ga.runEpoch(generationsCount);
 
@@ -128,6 +130,59 @@ public class GAKeyboard {
 		print("\nSimulated Annealing:\n" + KeyboardLayout.getSimulatedAnnealingLayout(stats));
 		System.out.println("\nNajlepiej przystosowany osobnik:\n" + best);
 		compareObjectives((KeyboardLayout) best, KeyboardLayout.getDvorakLayout(stats));
+	}
+
+	private void initializeFromParameters(GeneticAlgorithm ga) {
+		ga.setMutationOperator(mutationOperator);
+		ga.setMutationProbability(mutationProbability);
+		ga.setCrossoverOperator(crossoverOperator);
+		ga.setCrossoverProbability(crossoverProbability);
+		ga.setSelectionFunction(selectionFunction);
+		ga.setEliteSize(eliteSize);
+		ga.setQuiet(quiet);
+		System.out.println(getInitialParameters(ga) + "\n");
+	}
+
+	private void runManyEpochsAverage() throws IOException {
+		TextStatistics stats = getTextStatistics(textFiles);
+		List<Specimen> initialPopulation = getInitialPopulation(stats);
+		GeneticAlgorithm ga = new ConcurrentGeneticAlgorithm(initialPopulation);
+		initializeFromParameters(ga);
+		System.out.println("epochsCount = " + epochsCount + "\n");
+		List<List<Double>> results = new ArrayList<List<Double>>();
+		ga.computeFitness(initialPopulation);
+		for (int epoch = 0; epoch < epochsCount; epoch++) {
+			System.err.println("epoch " + (epoch + 1));
+			int iteration = 0;
+			List<Specimen> population = new ArrayList<Specimen>(initialPopulation);
+			for (int i = 0; i < generationsCount; i++) {
+				population = ga.nextGeneration(population);
+				ga.computeFitness(population);
+				Specimen best = Collections.max(population);
+				if (iteration >= results.size()) {
+					results.add(new ArrayList<Double>());
+				}
+				results.get(iteration).add(best.getFitness().doubleValue());
+				iteration++;
+				if (iteration == generationsCount) {
+					break;
+				}
+			}
+		}
+		for (int iter = 0; iter < results.size(); iter++) {
+			double sum = 0;
+			for (int j = 0; j < results.get(iter).size(); j++) {
+				sum += results.get(iter).get(j);
+			}
+			double average = sum / epochsCount;
+			double squareDiffsSum = 0;
+			for (int j = 0; j < results.get(iter).size(); j++) {
+				squareDiffsSum += Math.pow(results.get(iter).get(j) - average, 2);
+			}
+			double stdDev = Math.sqrt(squareDiffsSum / epochsCount);
+			System.out.println("average: " + (iter + 1) + " " + average);
+			System.out.println("std dev: " + (iter + 1) + " " + stdDev);
+		}
 	}
 
 	private TextStatistics getTextStatistics(List<File> corpus) throws IOException {
