@@ -91,7 +91,7 @@ Kolejny rozdział poświęcony jest ogólnemu wprowadzeniu do tematyki algorytm�
 
 \chapter{Algorytmy genetyczne}
 
-Algorytmy genetyczne to rodzaj algorytmów heurystycznych pozwalających na efektywne przeszukiwanie przestrzeni rozwiązań w poszukiwaniu optymalnego rozwiązania. Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedziczenia oraz doboru naturalnego. Wykorzystują one biologicznie inspirowane operatory, do których należą rozrodczość, selekcja, mutacja oraz krzyżowanie.
+Algorytmy genetyczne to rodzaj algorytmów heurystycznych pozwalających na efektywne przeszukiwanie przestrzeni rozwiązań w poszukiwaniu optymalnego rozwiązania. Inspiracją dla algorytmów genetycznych jest ewolucja naturalna, w szczególności mechanizmy dziedziczenia oraz doboru naturalnego. Wykorzystują one biologicznie inspirowane operatory, do których należą rozrodczość, selekcja, mutacja oraz krzyżowanie. Autorem pierwszej publikacji o algorytmach genetycznych która uzyskała szerokie uznanie jest John Holland~\cite{Holland1975}.
 
 Algorytmy genetyczne należą do metod populacyjnych, w których operujemy na pewnym zmieniającym się zbiorze (populacji) rozwiązań. Daje to znaczącą przewagę nad prostszymi algorytmami wspinaczkowymi, w których zachowujemy tylko jedno rozwiązanie w danym momencie. Zachowywanie populacji rozwiązań zmniejsza prawdopodobieństwo przedwczesnej zbieżności w lokalnym optimum, zwiększając możliwości eksploracyjne algorytmu. Inne skrajne podejście, w którym przeszukujemy jednocześnie całą przestrzeń rozwiązań, jest również mało skuteczne ze względu na zbyt duży rozmiar tej przestrzeni dla większości interesujących problemów. Algorytm genetyczny unika tego problemu poprzez dobranie rozmiaru populacji znacznie mniejszego od rozmiaru całej przestrzeni poszukiwań.
 
@@ -294,7 +294,7 @@ gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperym
 
 \subsection{Krzyżowanie cykliczne (CX)}
 
-Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji elementów w chromosomie. Cechę tę posiada operator krzyżowania cyklicznego~\cite{Larranaga99geneticalgorithms}. Średnio połowa absolutnych pozycji elementów z obu rodziców zostaje w nim zachowana.
+Istotną cechą jaką powinien posiadać algorytm krzyżowania do naszych zastosowań, jest zachowywanie absolutnych pozycji elementów w chromosomie. Cechę tę posiada operator krzyżowania cyklicznego~\cite{Oliver}. Średnio połowa absolutnych pozycji elementów z obu rodziców zostaje w nim zachowana.
 
 W krzyżowaniu cyklicznym, wybieramy losowy element z losowo wybranego rodzica i umieszczamy go na tej samej pozycji w chromosomie potomnym. Procedura ta musi być odpowiednio zmodyfikowana, aby zapewnić że chromosom potomny stanowi prawidłową permutację (a zatem prawidłowy układ klawiatury).
 
@@ -318,7 +318,7 @@ $$ (a b f d g e c h) $$
 
 \subsection{Krzyżowanie z częściowym odwzorowaniem (PMX)}
 
-Podobnie jak krzyżowanie cykliczne, krzyżowanie z częściowym odwzorowaniem~\cite{Larranaga99geneticalgorithms} zachowuje częściowo absolutne pozycje elementów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie odwzorowań.
+Podobnie jak krzyżowanie cykliczne, krzyżowanie z częściowym odwzorowaniem~\cite{GoldbergLingle} zachowuje częściowo absolutne pozycje elementów rodzicielskich. Fragment chromosomu jednego z rodziców jest przepisywany na potomka, a pozostała część chromosomu jest tworzona na podstawie odwzorowań.
 
 Na początku, wybierane są losowo dwa punkty w chromosomie. Fragment znajdujący się pomiędzy nimi nazywać będziemy \emph{sekcją odwzorowania}. Sekcja odwzorowania drugiego rodzica przepisywana jest na te same pozycje do pierwszego potomka, a sekcja odwzorowania pierwszego rodzica - do drugiego potomka. Następnie, pozostałe pozycje potomka przepisywane są z odpowiadającego mu rodzica, chyba że przepisywany element już istnieje w chromosomie potomka - w takim wypadku brany jest inny element, na podstawie odwzorowania określonego przez sekcje odwzorowania.
 
@@ -342,7 +342,7 @@ Warto zwrócić uwagę, że pozycje sześciu z ośmiu elementów zostały zachow
 
 \subsection{Krzyżowanie bazujące na porządku (POS)}
 
-Operator ten również należy do kategorii operatorów, które mają na celu zachowanie tych samych pozycji dla jak największej ilości elementów chromosomów rodzicielskich. Na początku wybierany jest losowo zbiór pozycji na chromosomie. Elementy na tych pozycjach są przepisywane na te same pozycje z drugiego rodzica do pierwszego potomka i odwrotnie. Niech dane będą pozycje trzecia, czwarta i piąta, oraz osobniki rodzicielskie:
+Operator POS~\cite{Syswerda} również należy do kategorii operatorów, które mają na celu zachowanie tych samych pozycji dla jak największej ilości elementów chromosomów rodzicielskich. Na początku wybierany jest losowo zbiór pozycji na chromosomie. Elementy na tych pozycjach są przepisywane na te same pozycje z drugiego rodzica do pierwszego potomka i odwrotnie. Niech dane będą pozycje trzecia, czwarta i piąta, oraz osobniki rodzicielskie:
 $$ (a b c d e f), (e d b f a c) $$
 
 Po przepisaniu elementów na danych pozycjach, otrzymujemy osobniki potomne:
@@ -354,7 +354,7 @@ $$ (a d b f e c), (e b c d a f) $$
 
 \subsection{Krzyżowanie naprzemienne (AP)}
 
-Ten typ krzyżowania polega na wybieraniu elementów na przemian z pierwszego i drugiego rodzica. Jeżeli dany element znajduje się już w chromosomie osobnika potomnego, jest on zwyczajnie pomijany. Przykładowo, niech będą dane osobniki rodzicielskie $(a b c d e f g h)$ oraz $(d c h b e f g a)$. Zaczynając od pierwszej pozycji, dobieramy najpierw element z pierwszej pozycji pierwszego rodzica, a następnie z pierwszej pozycji drugiego rodzica. Czynność tę powtarzamy dla drugiej pozycji, otrzymując:
+Ten typ krzyżowania polega na wybieraniu elementów na przemian z pierwszego i drugiego rodzica~\cite{Larranaga99geneticalgorithms}. Jeżeli dany element znajduje się już w chromosomie osobnika potomnego, jest on zwyczajnie pomijany. Przykładowo, niech będą dane osobniki rodzicielskie $(a b c d e f g h)$ oraz $(d c h b e f g a)$. Zaczynając od pierwszej pozycji, dobieramy najpierw element z pierwszej pozycji pierwszego rodzica, a następnie z pierwszej pozycji drugiego rodzica. Czynność tę powtarzamy dla drugiej pozycji, otrzymując:
 $$ (a d b c * * * *) $$
 
 Następny w kolejności element $c$ z pierwszego rodzica występuje już w osobniku potomnym, dlatego pomijamy go i wstawiamy następny element, jakim jest $h$ z drugiego rodzica. Ostatecznie, otrzymamy następującego osobnika potomnego:
@@ -368,12 +368,12 @@ $$ (d a c b h e f g) $$
 
 \subsection{Operator zamiany (EM)}
 
-Operator zamiany polega na wybraniu losowo dwóch elementów permutacji, a następnie zamienieniu ich miejscami. Na przykład, jeżeli w permutacji $ (a b c d e f g h) $ wybierzemy element drugi i piąty, otrzymamy w efekcie:
+Operator zamiany~\cite{Larranaga99geneticalgorithms} polega na wybraniu losowo dwóch elementów permutacji, a następnie zamienieniu ich miejscami. Na przykład, jeżeli w permutacji $ (a b c d e f g h) $ wybierzemy element drugi i piąty, otrzymamy w efekcie:
 $$ (a \textit{\textbf{e}} c d \textit{\textbf{b}} f g h) $$
 
 \subsection{Zamiana z przemieszczeniem (DM)}
 
-Pierwszym krokiem w metodzie zamiany z przemieszczeniem jest wybranie losowego odcinka permutacji. Załóżmy, że zaczęliśmy od permutacji $ (a b c d e f g h) $ i wybraliśmy odcinek $ (d e f g) $. Następnie, należy usunąć wybrany odcinek z permutacji i umieścić go w niej ponownie na losowo wybranej pozycji. W naszym przykładzie, po jego usunięciu permutacja przyjmie postać:
+Pierwszym krokiem w metodzie zamiany z przemieszczeniem~\cite{Michalewicz:2003:AGSDPE} jest wybranie losowego odcinka permutacji. Załóżmy, że zaczęliśmy od permutacji $ (a b c d e f g h) $ i wybraliśmy odcinek $ (d e f g) $. Następnie, należy usunąć wybrany odcinek z permutacji i umieścić go w niej ponownie na losowo wybranej pozycji. W naszym przykładzie, po jego usunięciu permutacja przyjmie postać:
 $$ (a b c h) $$
 
 Załóżmy, że w tak powstałej permutacji wylosowano pozycję pomiędzy elementami $a$ oraz $b$. W takim wypadku, ostateczny wynik mutacji przyjmie następującą postać:
@@ -381,7 +381,7 @@ $$ (a \textit{\textbf{defg}} b c h) $$
 
 \subsection{Prosta inwersja (SIM)}
 
-Operator ten polega na odwróceniu kolejności elementów w wybranym fragmencie chromosomu. Przykładowo, niech dany będzie chromosom:
+Operator prostej inwersji~\cite{Holland1975} polega na odwróceniu kolejności elementów w wybranym fragmencie chromosomu. Przykładowo, niech dany będzie chromosom:
 $$ (a b c d e f g h) $$
 
 Najpierw należy wybrać dwa punkty cięcia - niech będą to punkty pomiędzy elementami $a$ i $b$, oraz $e$ i $f$. Następnie fragment chromosomu pomiędzy punktami cięcia zostaje odwrócony, dając w efekcie następujący wynik:
@@ -389,7 +389,7 @@ $$ (a \textit{\textbf{edcb}} f g h) $$
 
 \subsection{Mutacja z mieszaniem podlist (SM)}
 
-Podobnie jak w poprzednim przypadku, ten rodzaj mutacji również rozpoczyna od wyboru dwóch punktów cięcia definiujących fragment chromosomu. Następnie, dokonywana jest losowa permutacja elementów na wybranym fragmencie. Załóżmy, że wybrany został fragment $(b c d)$ z poniższego chromosomu:
+Podobnie jak w poprzednim przypadku, ten rodzaj mutacji również rozpoczyna od wyboru dwóch punktów cięcia definiujących fragment chromosomu~\cite{Syswerda}. Następnie, dokonywana jest losowa permutacja elementów na wybranym fragmencie. Załóżmy, że wybrany został fragment $(b c d)$ z poniższego chromosomu:
 $$ (a b c d) $$
 
 W takim wypadku istnieje sześć możliwych rezultatów, do których należą:
@@ -397,14 +397,14 @@ $$(\textit{\textbf{abc}} d), (\textit{\textbf{acb}} d), (\textit{\textbf{bac}} d
 
 \subsection{Inwersja (IVM)}
 
-Operator ten działa podobnie jak DM, z tą różnicą, że dodatkowo odwracana jest kolejność elementów w wybranym fragmencie chromosomu. Niech dany będzie chromosom $ (a b c d e f g h) $. Załóżmy, że podobnie jak w przypadku operatora DM wybraliśmy odcinek $ (d e f g) $, a na jego nową pozycję wybrany został punkt pomiędzy elementami $a$ oraz $b$. Przed ponownym umieszczeniem odcinka w chromosomie, najpierw zostanie odwrócona kolejność jego elementów:
+Operator IVM~\cite{Fogel1993} działa podobnie jak DM, z tą różnicą, że dodatkowo odwracana jest kolejność elementów w wybranym fragmencie chromosomu. Niech dany będzie chromosom $ (a b c d e f g h) $. Załóżmy, że podobnie jak w przypadku operatora DM wybraliśmy odcinek $ (d e f g) $, a na jego nową pozycję wybrany został punkt pomiędzy elementami $a$ oraz $b$. Przed ponownym umieszczeniem odcinka w chromosomie, najpierw zostanie odwrócona kolejność jego elementów:
 $$ (d e f g) \rightarrow (g f e d) $$
 Spowoduje to powstanie następującego wyniku końcowego:
 $$ (a b c \textit{\textbf{gfed}} h) $$
 
 \subsection{Mutacja ze wstawianiem (ISM)}
 
-Ten rodzaj mutacji polega na wybraniu losowego elementu chromosomu, usunięciu go, a następnie wstawieniu ponownie na innej pozycji. Na przykład, po wybraniu elementu szóstego z chromosomu $(a b c d e f g h)$, usunięciu go, a następnie wstawieniu ponownie na pozycji drugiej otrzymamy następujący wynik:
+Ten rodzaj mutacji~\cite{Michalewicz:2003:AGSDPE} polega na wybraniu losowego elementu chromosomu, usunięciu go, a następnie wstawieniu ponownie na innej pozycji. Na przykład, po wybraniu elementu szóstego z chromosomu $(a b c d e f g h)$, usunięciu go, a następnie wstawieniu ponownie na pozycji drugiej otrzymamy następujący wynik:
 $$ (a \textit{\textbf{f}} b c d e g h) $$
 
 Warto zwrócić uwagę, że jeśli wybrane punkty będą znajdowały się na odległych pozycjach, zmienią się absolutne pozycje wszystkich elementów znajdujących się pomiędzy nimi. Może mieć to bardzo negatywny wpływ na jakość rozwiązania, zwłaszcza ze względu na czynnik stopnia użycia poszczególnych palców.
