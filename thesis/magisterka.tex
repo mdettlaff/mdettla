@@ -498,7 +498,7 @@ Algorytm został uruchomiony dla $400$ iteracji. Rozmiar populacji został ustal
 \caption{Wpływ wielkości populacji na jakość rozwiązania}
 \end{figure}
 
-Wartości wag poszczególnych kryteriów zostały dobrane eksperymentalnie, tak aby ich wpływ na końcowe rozwiązanie był jak najbardziej zrównoważony. Niektóre kryteria stanowią odchylenie od wartości optymalnej, inne natomiast to sumy częstotliwości, dlatego wartości niektórych wag znacznie się różnią. Przyjęte zostały następujące wartości:
+Wartości wag kryteriów zostały dobrane eksperymentalnie, tak aby wpływ poszczególnych kryteriów na końcowe rozwiązanie był jak najbardziej zrównoważony. Niektóre kryteria stanowią odchylenie od wartości optymalnej i ich wartości są stosunkowo niewielkie, w idealnym przypadku równe zeru. Inne natomiast to sumy częstotliwości, które przyjmują wartości o około 4 rzędy wielkości większe. Dlatego też wartości dla tych ostatnich zostały odpowiednio przeskalowane, poprzez dobranie dla nich wag o wartościach rzędu $10^{-4}$. Przyjęte zostały następujące wartości wag:
 \newline
 \begin{tabular}{ l l }
   \indent $ w_{finger} = 37,2 $ & \indent $ w_{row} = 33,3 $ \\
