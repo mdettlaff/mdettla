@@ -94,6 +94,7 @@ Algorytmy genetyczne należą do metod populacyjnych, w których operujemy na pe
 Schemat algorytmu genetycznego można przedstawić za pomocą następującego pseudokodu:
 
 \noindent
+\rule{360pt}{0.5pt}\newline
 \texttt{i := 0\newline
 Zainicjuj populację początkową P(i)\newline
 Oceń osobniki z populacji początkowej\newline
@@ -103,6 +104,7 @@ Powtarzaj dopóki nie jest spełniony warunek zakończenia:\newline
 \indent Zmień osobniki z P(i)\newline
 \indent Oceń osobniki z P(i)\newline
 }
+\rule{360pt}{0.5pt}
 
 Warunkiem zakończenia może być upłynięcie określonej ilości iteracji, lub znalezienie rozwiązania które jest wystarczająco bliskie optimum. Rolę operacji \texttt{Zmień osobniki} w algorytmach genetycznych pełnią mutacja oraz krzyżowanie.
 
@@ -122,9 +124,10 @@ Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjona
 
 Selekcja turniejowa to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}. W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
 
-Pseudokod:\newline
+Pseudokod:
 
 \noindent
+\rule{380pt}{0.5pt}\newline
 \texttt{WEJŚCIE: populacja, t - rozmiar turnieju\newline
 Best := wybierz bez zwracania osobnika z populacji\newline
 Powtarzaj t - 1 razy:\newline
@@ -133,6 +136,7 @@ Powtarzaj t - 1 razy:\newline
 \indent\indent Best := Next\newline
 zwróć Best\newline
 }
+\rule{380pt}{0.5pt}\newline
 
 Najczęściej wybieraną wartością parametru $t$ w przypadku algorytmów genetycznych jest 2~\cite{Luke2009Metaheuristics}.
 
@@ -410,9 +414,10 @@ W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozw
 
 Wielokryterialna większościowa selekcja turniejowa (Multiobjective majority tournament selection - MMTS~\cite{Luke2009Metaheuristics}) jest to rodzaj selekcji turniejowej, w której faworyzowane są osobniki posiadające jak największą ilość kryteriów, których wartość jest bardziej korzystna niż w pozostałych osobnikach.
 
-Selekcję tą można przedstawić za pomocą następującego pseudokodu:\newline
+Selekcję tą można przedstawić za pomocą następującego pseudokodu:
 
 \noindent
+\rule{380pt}{0.5pt}\newline
 \texttt{WEJŚCIE: populacja, t - rozmiar turnieju, n - ilość kryteriów\newline
 Best := wybierz bez zwracania osobnika z populacji\newline
 Powtarzaj t - 1 razy:\newline
@@ -429,15 +434,17 @@ Powtarzaj t - 1 razy:\newline
 \indent\indent Best := Next\newline
 zwróć Best\newline
 }
+\rule{380pt}{0.5pt}\newline
 
 Wartość parametru $n$ będzie równa 7, ponieważ tyle kryteriów uwzględniono w funkcji przystosowania. $c$ oznacza ilość kryteriów, dla których dany osobnik jest lepszy od aktualnie najlepszego znalezionego osobnika. W algorytmie tym została wprowadzona jedna modyfikacja w porównaniu do standardowej wersji. Mianowicie, jeżeli żaden osobnik nie uzyska przewagi pod względem $c$, brana jest pod uwagę ogólna wartość przystosowania $p$.
 
 
 \section{Ostateczna postać zastosowanego algorytmu}
 
-Zastosowany algorytm można opisać za pomocą następującego pseudokodu:\newline
+Zastosowany algorytm można opisać za pomocą następującego pseudokodu:
 
 \noindent
+\rule{380pt}{0.5pt}\newline
 \texttt{Oblicz cechy statystyczne zbioru tekstów\newline
 Zainicjuj początkową populację losowo utworzonymi osobnikami\newline
 Oblicz przystosowanie osobników\newline
@@ -453,6 +460,7 @@ Powtarzaj zadaną ilość pokoleń:\newline
 \indent\indent wobec wybranych osobników\newline
 \indent\indent dodaj osobniki do nowej populacji\newline
 }
+\rule{380pt}{0.5pt}\newline
 
 W celu przyspieszenia obliczeń, funkcja przystosowania obliczania jest współbieżnie. Jest to możliwe ponieważ obliczanie funkcji przystosowania dla jednego osobnika jest operacją niezależną od obliczania jej dla pozostałych osobników. Dlatego też populacja dzielona jest na \emph{n} części, gdzie \emph{n} jest równa ilości rdzeni procesora, i funkcja przystosowania dla każdej części obliczana jest przez osobny wątek.
 
