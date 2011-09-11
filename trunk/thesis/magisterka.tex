@@ -104,7 +104,7 @@ Powtarzaj dopóki nie jest spełniony warunek zakończenia:\newline
 \indent Oceń osobniki z P(i)\newline
 }
 
-Warunkiem zakończenia może być upłynięcie określonej ilości iteracji, lub znalezienie rozwiązania które jest wystarczająco bliskie optimum.
+Warunkiem zakończenia może być upłynięcie określonej ilości iteracji, lub znalezienie rozwiązania które jest wystarczająco bliskie optimum. Rolę operacji \texttt{Zmień osobniki} w algorytmach genetycznych pełnią mutacja oraz krzyżowanie.
 
 Algorytm genetyczny operuje na osobnikach w zakodowanej postaci, którą najczęściej nazywa się chromosomem. Każdy chromosom reprezentuje potencjalne rozwiązanie zadania. W klasycznych algorytmach genetycznych, chromosom ma postać ciągu bitów o stałej długości.
 
@@ -112,7 +112,7 @@ Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna s
 
 Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
 
-Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne, optymalizacja obsługi zapytań w bazach danych itp.\cite{Michalewicz:2003:AGSDPE}
+Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne oraz optymalizacja obsługi zapytań w bazach danych.\cite{Michalewicz:2003:AGSDPE}
 
 \section{Selekcja}
 
