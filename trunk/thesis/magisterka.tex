@@ -480,7 +480,7 @@ Powtarzaj zadaną ilość pokoleń:\newline
 
 W celu przyspieszenia obliczeń, funkcja przystosowania obliczania jest współbieżnie. Jest to możliwe ponieważ obliczanie funkcji przystosowania dla jednego osobnika jest operacją niezależną od obliczania jej dla pozostałych osobników. Dlatego też populacja dzielona jest na \emph{n} części, gdzie \emph{n} jest równa ilości rdzeni procesora, i funkcja przystosowania dla każdej części obliczana jest przez osobny wątek.
 
-Algorytm różni się od standardowego algorytmu opisanego wcześniej poprzez stosowanie strategii elitarnej. Elitarność polega na inicjowaniu nowo tworzonej populacji określoną ilością najlepiej przystosowanych osobników z poprzedniej populacji. Dzięki temu wartość przystosowania najlepszego osobnika z populacji nie będzie zmniejszać się w kolejnych iteracjach algorytmu. Elitarność może przyczyniać się do przedwczesnej zbieżności algorytmu~\cite{Luke2009Metaheuristics}, dlatego aby temu zapobiec, wielkość elity będzie ograniczona do jednego osobnika.
+Kolejną różnicą pomiędzy powyższym algorytmem a standardowym algorytmem genetycznym opisanym wcześniej jest stosowanie modelu elitarnego. Elitarność polega na inicjowaniu nowo tworzonej populacji określoną ilością najlepiej przystosowanych osobników z poprzedniej populacji. Dzięki temu wartość przystosowania najlepszego osobnika z populacji nie będzie zmniejszać się w kolejnych iteracjach algorytmu. Elitarność może przyczyniać się do przedwczesnej zbieżności algorytmu~\cite{Luke2009Metaheuristics}, dlatego aby temu zapobiec, wielkość elity będzie ograniczona do kilku osobników.
 
 
 \chapter{Wyniki i ich analiza}
