@@ -118,7 +118,7 @@ Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna s
 
 Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
 
-Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne oraz optymalizacja obsługi zapytań w bazach danych.\cite{Michalewicz:2003:AGSDPE}
+Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne oraz optymalizacja obsługi zapytań w bazach danych~\cite{Michalewicz:2003:AGSDPE}.
 
 \section{Selekcja}
 
@@ -213,7 +213,7 @@ $$ p_{finger} = \sum\limits_{i = 1}^{8} (f_i^{opt} - f_i)^2 $$
 
 \subsection{Użycie rzędów klawiszy}
 
-Podczas pisania techniką bezwzrokową (touchtyping), pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. home row). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
+Podczas pisania techniką bezwzrokową, pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. \emph{home row}). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
 
 Górny, środkowy oraz dolny rząd klawiszy oznaczymy odpowiednio jako: $R_1$, $R_2$, $R_3$. Jako optymalny rozkład częstotliwości użycia poszczególnych rzędów przyjmiemy rozkład układu klawiatury, w którym 10 najczęściej używanych klawiszy należy do $R_1$, 10 kolejnych do $R_2$, a 10 najmniej używanych klawiszy do $R_3$. Częstotliwości użycia obliczane są na podstawie stosowanego zbioru tekstów.
 
