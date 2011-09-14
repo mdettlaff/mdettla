@@ -239,18 +239,19 @@ Czynnikiem sprzyjającym szybkiemu i komfortowemu pisaniu jest unikanie pisania 
 
 Liczbową reprezentacją tej zasady będzie następujące wyrażenie:
 
-$$ p_{hand\_alter} = \sum\limits_{f \in f_{sh}} f $$
+$$ p_{hand\_alter} = \sum\limits_{d \in D_{sh}} f_d(d) $$
 
-Gdzie $ f_{sh} \in f_d $ oznacza zbiór częstotliwości występowania diagrafów pisanych tą samą ręką.
+Gdzie $ D_{sh} \in D $ oznacza zbiór diagrafów pisanych tą samą ręką w danym układzie klawiszy.
 
 
 \subsection{Alternacja palców}
 
 Podobnie jak w poprzednim punkcie, nie jest korzystne pisanie kolejnych znaków tym samym palcem. Dodatkowe utrudnienie stanowi sytuacja, w której ten sam palec musi przebyć większą odległość. Dlatego też częstotliwość występowania diagrafów zostanie dodatkowo pomnożona przez współczynnik odległości $dist$.
-$$ p_{finger\_alter} = \sum\limits_{d \in D'} f_d dist(d) $$
+$$ p_{finger\_alter} = \sum\limits_{d \in D_{sf}} f_d(d) dist(d) $$
 
 \noindent
-gdzie zbiór $ D' \in D $ oznacza zbiór diagrafów które pisane są tym samym palcem, a $f_d$ oznacza częstotliwości występowania tych diagrafów.\newline
+gdzie zbiór $ D_{sf} \in D $ oznacza zbiór diagrafów które pisane są tym samym palcem.
+\newline
 
 Jako odległość $dist$ zostanie przyjęta odległość Manhattan:
 $$ dist(d) = |c_2 - c_1| + |r_2 - r_1| $$
