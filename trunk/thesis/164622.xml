@@ -18,50 +18,50 @@
 	<pracarodzaj>dyplomowa - magisterska</pracarodzaj>
 	<pracadatazlozenia>15-9-2011</pracadatazlozenia>
 	
-	<pracastreszczenie>Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacji kombinatorycznej, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym chromosomem jest układ klawiszy zakodowany jako permutacja, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W wyniku zostają utworzone układy klawiatury przystosowane do pisania w języku polskim oraz angielskim. Następnie są one porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera, oraz rozwiązaniami znalezionymi przez inne algorytmy.</pracastreszczenie>
+	<pracastreszczenie>Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacji kombinatorycznej, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym poszczególne osobniki utożsamiane są z konkretnymi układami klawiszy, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W definicji funkcji przystosowania został uwzględniony szereg czynników, które mają wpływ na szybkość oraz ergonomię pisania na danym układzie klawiatury. Zakodowanie osobników algorytmu genetycznego w postaci permutacji pozwoliło na zastosowanie operatorów krzyżowania oraz mutacji opracowanych dla problemów stosujących podobną reprezentację chromosomu, takich jak problem komiwojażera. Wpływ zastosowania poszczególnych operatorów na jakość końcowego rozwiązania został zbadany eksperymentalnie, po czym w ostatecznym algorytmie zostały zastosowane najlepsze z nich. Jako dane testowe algorytmu zostały wykorzystane zbiory tekstów w języku polskim i angielskim. Ze względu na różnice statystyczne pomiędzy tymi zbiorami, algorytm został uruchomiony osobno dla każdego z nich. W wyniku działania algorytmu zostają utworzone osobne układy klawiatury zoptymalizowane pod kątem języka polskiego oraz angielskiego. Następnie są one porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera, oraz rozwiązaniami znalezionymi przez inne algorytmy metaheurystyczne. Układy klawiszy znalezione przez zastosowany algorytm genetyczny uzyskują wyraźnie lepsze oceny od dotychczas istniejących, zwłaszcza w przypadku wyników dla języka polskiego.</pracastreszczenie>
 	<pracaslowakluczowe>algorytmy genetyczne, optymalizacja kombinatoryczna, optymalizacja wielokryterialna, klawiatura, Dvorak, QWERTY</pracaslowakluczowe>
-	<pracaspistresci>Wprowadzenie
-Algorytmy genetyczne
-. Selekcja
-. Mutacja
-. Krzyżowanie
-Opis algorytmu
-. Reprezentacja chromosomu
-. Funkcja przystosowania
-. .  Użycie palców
-. .  Użycie rzędów klawiszy
-. .  Alternacja rąk
-. .  Alternacja palców
-. .  Duże ruchy palcami tej samej ręki
-. .  Inboard stroke flow
-. .  Użycie rąk
-. Operatory krzyżowania
-. .  Krzyżowanie cykliczne (CX)
-. .  Krzyżowanie z częściowym odwzorowaniem (PMX)
-. .  Krzyżowanie bazujące na porządku (POS)
-. .  Krzyżowanie naprzemienne (AP)
-. Operatory mutacji
-. .  Operator zamiany (EM)
-. .  Zamiana z przemieszczeniem (DM)
-. .  Prosta inwersja (SIM)
-. .  Mutacja z mieszaniem podlist (SM)
-. .  Inwersja (IVM)
-. .  Mutacja ze wstawianiem (ISM)
-. Optymalizacja dla wielu kryteriów
-. Selekcja
-. .  Wielokryterialna większościowa selekcja turniejowa
-. Ostateczna postać zastosowanego algorytmu
-Wyniki i ich analiza
-. Dobór parametrów oraz operatorów
-. Dane testowe
-. Wyniki dla języka angielskiego
-. Wyniki dla języka polskiego
-Zakończenie
-. Konkluzje
-. Plany dalszych badań
-A. Część programowa
-Bibliografia
-Spis rysunków
-Oświadczenie</pracaspistresci>
+	<pracaspistresci>Wprowadzenie  . . . . . . . . . . . . . . . . . . . . . . . 5
+Algorytmy genetyczne  . . . . . . . . . . . . . . . . . . . 12
+. Selekcja  . . . . . . . . . . . . . . . . . . . . . . . . 14
+. Mutacja . . . . . . . . . . . . . . . . . . . . . . . . . 15
+. Krzyżowanie . . . . . . . . . . . . . . . . . . . . . . . 15
+Opis algorytmu  . . . . . . . . . . . . . . . . . . . . . . 17
+. Reprezentacja chromosomu  . . . . . . . . . . . . . . . . 17
+. Funkcja przystosowania  . . . . . . . . . . . . . . . . . 18
+. .  Użycie palców  . . . . . . . . . . . . . . . . . . . . 19
+. .  Użycie rzędów klawiszy . . . . . . . . . . . . . . . . 20
+. .  Alternacja rąk . . . . . . . . . . . . . . . . . . . . 20
+. .  Alternacja palców  . . . . . . . . . . . . . . . . . . 21
+. .  Duże ruchy palcami tej samej ręki  . . . . . . . . . . 21
+. .  Inboard stroke flow  . . . . . . . . . . . . . . . . . 22
+. .  Użycie rąk . . . . . . . . . . . . . . . . . . . . . . 22
+. Operatory krzyżowania . . . . . . . . . . . . . . . . . . 23
+. .  Krzyżowanie cykliczne (CX) . . . . . . . . . . . . . . 23
+. .  Krzyżowanie z częściowym odwzorowaniem (PMX) . . . . . 24
+. .  Krzyżowanie bazujące na porządku (POS) . . . . . . . . 25
+. .  Krzyżowanie naprzemienne (AP)  . . . . . . . . . . . . 26
+. Operatory mutacji . . . . . . . . . . . . . . . . . . . . 27
+. .  Operator zamiany (EM)  . . . . . . . . . . . . . . . . 27
+. .  Zamiana z przemieszczeniem (DM)  . . . . . . . . . . . 27
+. .  Prosta inwersja (SIM)  . . . . . . . . . . . . . . . . 27
+. .  Mutacja z mieszaniem podlist (SM)  . . . . . . . . . . 28
+. .  Inwersja (IVM) . . . . . . . . . . . . . . . . . . . . 28
+. .  Mutacja ze wstawianiem (ISM) . . . . . . . . . . . . . 28
+. Optymalizacja dla wielu kryteriów . . . . . . . . . . . . 29
+. Selekcja  . . . . . . . . . . . . . . . . . . . . . . . . 31
+. .  Wielokryterialna większościowa selekcja turniejowa . . 31
+. Ostateczna postać zastosowanego algorytmu . . . . . . . . 33
+Wyniki i ich analiza  . . . . . . . . . . . . . . . . . . . 35
+. Dobór parametrów oraz operatorów  . . . . . . . . . . . . 35
+. Dane testowe  . . . . . . . . . . . . . . . . . . . . . . 38
+. Wyniki dla języka angielskiego  . . . . . . . . . . . . . 39
+. Wyniki dla języka polskiego . . . . . . . . . . . . . . . 42
+Zakończenie . . . . . . . . . . . . . . . . . . . . . . . . 46
+. Konkluzje . . . . . . . . . . . . . . . . . . . . . . . . 46
+. Plany dalszych badań  . . . . . . . . . . . . . . . . . . 47
+A. Część programowa . . . . . . . . . . . . . . . . . . . . 49
+Bibliografia  . . . . . . . . . . . . . . . . . . . . . . . 51
+Spis rysunków . . . . . . . . . . . . . . . . . . . . . . . 54
+Oświadczenie  . . . . . . . . . . . . . . . . . . . . . . . 55</pracaspistresci>
 	<pracazgodanaudostepnienie>tak</pracazgodanaudostepnienie>
 </danepracy>
