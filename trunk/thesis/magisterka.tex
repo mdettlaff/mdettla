@@ -400,7 +400,7 @@ $$ (a \textit{\textbf{edcb}} f g h) $$
 
 \subsection{Mutacja z mieszaniem podlist (SM)}
 
-Podobnie jak w poprzednim przypadku, ten rodzaj mutacji również rozpoczyna od wyboru dwóch punktów cięcia definiujących fragment chromosomu~\cite{Syswerda}. Następnie, dokonywana jest losowa permutacja elementów na wybranym fragmencie. Załóżmy, że wybrany został fragment $(b c d)$ z poniższego chromosomu:
+Podobnie jak w poprzednim przypadku, ten rodzaj mutacji również rozpoczyna od wyboru dwóch punktów cięcia definiujących fragment chromosomu~\cite{Syswerda}. Następnie, dokonywana jest losowa permutacja elementów na wybranym fragmencie. Załóżmy, że wybrany został fragment $(a b c)$ z poniższego chromosomu:
 $$ (a b c d) $$
 
 W takim wypadku istnieje sześć możliwych rezultatów, do których należą:
@@ -426,7 +426,7 @@ Warto zwrócić uwagę, że jeśli wybrane punkty będą znajdowały się na odl
 W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozwiązywany problem należy do klasy problemów optymalizacji wielokryterialnej. W tego rodzaju zagadnieniach nie chcemy optymalizować pojedynczej funkcji, ale poszukujemy rozwiązania, które będzie optymalne pod względem wartości funkcji celu (oceny) dla każdego ze stosowanych kryteriów. Jednym ze sposobów podejścia do tego problemu jest połączenie wielu funkcji celu $f_i$ w jedną funkcję celu $F$. Pozwala na to metoda ważonych celów:
 $$ F(x) = \sum_{i=1}^{k} w_i f_i (x) $$
 
-gdzie $w_i$ są wagami poszczególnych kryteriów. Trudność polega tutaj na doborze wag, ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać.
+gdzie $w_i$ są wagami poszczególnych kryteriów, a $k$ to ilość celów. Trudność polega tutaj na doborze wag, ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać.
 
 Kolejnym sposobem, który nie wymaga podania wartości wag, jest użycie jednego z wielokryterialnych operatorów selekcji~\cite{Luke2009Metaheuristics}. Możemy uporządkować kryteria pod względem ważności, a następnie zastosować \emph{wielokryterialną leksykograficzną selekcję turniejową}. W tego rodzaju selekcji, porównujemy osobniki ze względu na kolejne kryteria zaczynając od tego mającego najwyższy priorytet, a kończąc na tym mającym najniższy priorytet. Jeżeli jeden z osobników przeważa nad innym pod względem danego kryterium, jest on preferowany i porównywanie zostaje zakończone. Innym sposobem jest porównywanie osobników ze względu na kryterium wybrane za każdym razem w sposób losowy (\emph{wielokryterialna proporcjonalna selekcja turniejowa}).
 
@@ -476,7 +476,7 @@ zwróć Best\newline
 }
 \rule{380pt}{0.5pt}\newline
 
-Wartość parametru $n$ będzie w końcowym algorytmie równa 7, ponieważ tyle kryteriów uwzględniono w funkcji przystosowania. $c$ oznacza ilość kryteriów, dla których dany osobnik jest lepszy od aktualnie najlepszego znalezionego osobnika. W algorytmie tym została wprowadzona jedna modyfikacja w porównaniu do standardowej wersji. Mianowicie, jeżeli żaden osobnik nie uzyska przewagi pod względem $c$, brana jest pod uwagę ogólna wartość przystosowania $p$.
+Wartość parametru $n$ będzie w końcowym algorytmie równa 7, ponieważ tyle kryteriów uwzględniono w funkcji przystosowania. $c$ oznacza ilość kryteriów, dla których dany osobnik jest lepszy od aktualnie najlepszego znalezionego osobnika. W algorytmie tym została wprowadzona jedna modyfikacja w porównaniu do standardowej wersji. Mianowicie, jeżeli żaden osobnik nie uzyska przewagi pod względem $c$, brana jest pod uwagę wartość przystosowania $p$ obliczana z użyciem wag.
 
 Rozważmy dla przykładu dwa osobniki A i B, dla których są określone cztery funkcje celu $f_i, 1 \le i \le 4$. Niech wartości funkcji celu dla A będą równe $f_1 = 1; f_2 = 1; f_3 = 1; f_4 = 1$, a dla osobnika B: $f_1 = 0,9; f_2 = 0,9; f_3 = 0,9; f_4 = 1,5$. Stosując standardową selekcję turniejową, preferowany będzie osobnik B, dla którego suma wszystkich funkcji celu jest większa, ale wpływ składnika $f_4$ jest nieproporcjonalnie duży. Natomiast zgodnie z selekcją MMTS, zostanie wybrany osobnik A, w którym trzy z czterech kryteriów mają korzystniejsze wartości, oraz wpływ poszczególnych kryteriów jest bardziej zrównoważony. Żaden z osobników A i B nie dominuje nad pozostałym w sensie Pareto, ale zauważmy że w osobniku A wystarczy poprawić wynik tylko jednej funkcji celu, aby był on dominujący.
 
@@ -492,21 +492,21 @@ Zainicjuj początkową populację losowo utworzonymi osobnikami\newline
 Oblicz przystosowanie osobników\newline
 Powtarzaj zadaną ilość pokoleń:\newline
 \indent Utwórz nową, pustą populację osobników\newline
-\indent Dodaj najlepiej przystosowanego osobnika do nowej populacji\newline
+\indent Dodaj osobniki elitarne do nowej populacji\newline
 \indent Dopóki wielkość nowej populacji jest mniejsza od poprzedniej:\newline
-\indent\indent oblicz przystosowanie osobników istniejącej populacji\newline
-\indent\indent wybierz parę osobników za pomocą operatora selekcji\newline
-\indent\indent zastosuj z zadanym prawdopodobieństwem operację krzyżowania\newline
+\indent\indent Oblicz przystosowanie osobników istniejącej populacji\newline
+\indent\indent Wybierz parę osobników za pomocą operatora selekcji\newline
+\indent\indent Zastosuj z zadanym prawdopodobieństwem operację krzyżowania\newline
 \indent\indent wobec wybranych osobników\newline
-\indent\indent zastosuj z zadanym prawdopodobieństwem operację mutacji\newline
+\indent\indent Zastosuj z zadanym prawdopodobieństwem operację mutacji\newline
 \indent\indent wobec wybranych osobników\newline
-\indent\indent dodaj osobniki do nowej populacji\newline
+\indent\indent Dodaj osobniki do nowej populacji\newline
 }
 \rule{380pt}{0.5pt}\newline
 
 W celu przyspieszenia obliczeń, funkcja przystosowania obliczania jest współbieżnie. Jest to możliwe ponieważ obliczanie funkcji przystosowania dla jednego osobnika jest operacją niezależną od obliczania jej dla pozostałych osobników. Dlatego też populacja dzielona jest na \emph{n} części, gdzie \emph{n} jest równa ilości rdzeni procesora, i funkcja przystosowania dla każdej części obliczana jest przez osobny wątek.
 
-Kolejną różnicą pomiędzy powyższym algorytmem a standardowym algorytmem genetycznym opisanym wcześniej jest stosowanie modelu elitarnego. Elitarność polega na inicjowaniu nowo tworzonej populacji określoną ilością najlepiej przystosowanych osobników z poprzedniej populacji. Dzięki temu wartość przystosowania najlepszego osobnika z populacji nie będzie zmniejszać się w kolejnych iteracjach algorytmu. Elitarność może przyczyniać się do przedwczesnej zbieżności algorytmu~\cite{Luke2009Metaheuristics}, dlatego aby temu zapobiec, wielkość elity będzie ograniczona do kilku osobników.
+Kolejną różnicą pomiędzy powyższym algorytmem a standardowym algorytmem genetycznym opisanym wcześniej jest stosowanie modelu elitarnego. Elitarność polega na inicjowaniu nowo tworzonej populacji określoną ilością najlepiej przystosowanych osobników z poprzedniej populacji. Dzięki temu wartość przystosowania najlepszego osobnika z populacji nie będzie pogarszać się w kolejnych iteracjach algorytmu. Elitarność może przyczyniać się do przedwczesnej zbieżności algorytmu~\cite{Luke2009Metaheuristics}, dlatego aby temu zapobiec, wielkość elity będzie ograniczona do kilku osobników.
 
 
 \chapter{Wyniki i ich analiza}
