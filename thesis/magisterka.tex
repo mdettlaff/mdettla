@@ -54,7 +54,7 @@ Spośród układów alternatywnych wobec QWERTY największą popularnością cie
 \begin{itemize}
 \item Uwzględniać statystyczną analizę najczęściej występujących par liter.
 \item Zmniejszać prawdopodobieństwo popełniania błędów poprzez uczynienie pisania bardziej "naturalnym" i wygodnym, poprzez zminimalizowanie ruchów palców pomiędzy rzędami klawiszy.
-\item Zwiększyć użycie środkowego rzędu (home row) oraz uderzeń pozwalających na jak najszybsze pisanie (takich które wykorzystują pisanie obiema rękami na zmianę, zamiast tą samą ręką przez dłuższy czas).
+\item Zwiększyć użycie środkowego rzędu (tzw. \emph{home row}) oraz uderzeń pozwalających na jak najszybsze pisanie (takich które wykorzystują pisanie obiema rękami na zmianę, zamiast tą samą ręką przez dłuższy czas).
 \item W większym stopniu wykorzystywać prawą rękę, która jest silniejsza w przypadku większości użytkowników.
 \item Być łatwiejsza w nauce, przyczyniać się do popełniania mniejszej ilości błędów, oraz minimalizować wysiłek związany z pisaniem.
 \end{itemize}
@@ -80,7 +80,7 @@ Podobne algorytmy stosowano również dla niestandardowych klawiatur, na przykł
 \source{Opracowanie własne}
 \end{figure}
 
-W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się powinny nad klawiszami $asdf$, a prawej nad $jkl;$. Po wciśnięciu któregoś z pozostałych klawiszy, palec powinien powrócić na swoją standardową pozycję w środkowym rzędzie (tzw. home row). Kciuki zajmują się altem i spacją. Kolorami oznaczono, którymi palcami powinno się uderzać poszczególne klawisze, na przykład: lewy serdeczny wciska $x$, $s$, $w$ i $3$, a prawy wskazujący $n$, $m$, $h$, $j$, $y$ itd.
+W technice bezwzrokowej, w domyślnej pozycji palce lewej ręki znajdować się powinny nad klawiszami $asdf$, a prawej nad $jkl;$. Po wciśnięciu któregoś z pozostałych klawiszy, palec powinien powrócić na swoją standardową pozycję w środkowym rzędzie (\emph{home row}). Kciuki zajmują się altem i spacją. Kolorami oznaczono, którymi palcami powinno się uderzać poszczególne klawisze, na przykład: lewy serdeczny wciska $x$, $s$, $w$ i $3$, a prawy wskazujący $n$, $m$, $h$, $j$, $y$ itd.
 
 W problemie KAP, naszym zadaniem jest optymalizacja funkcji oceny danego układu klawiatury. Istnieje wiele klasycznych metod optymalizacji, które zazwyczaj dzieli się na analityczne, przeglądowe oraz losowe. Wśród metod analitycznych wyróżniamy metody bezpośrednie oraz pośrednie. W metodach pośrednich poszukujemy lokalnych ekstremów funkcji rozwiązując układ równań. Lokalny charakter tych metod oraz konieczność obliczania pochodnych sprawiają, że nie nadają się one do rozwiązywania problemów takich jak KAP, gdzie optymalizowana funkcja jest nieciągła i nieregularna.
 
@@ -126,7 +126,7 @@ Algorytm genetyczny operuje na osobnikach w zakodowanej postaci, którą najczę
 
 Pierwszym krokiem algorytmu jest wygenerowanie populacji początkowej. Powinna się ona cechować możliwie dużą różnorodnością, dlatego najczęściej stosowaną metodą jej tworzenia jest generowanie chromosomów w sposób losowy. Czasem w populacji początkowej umieszcza się też specjalnie przygotowane osobniki, o których spodziewamy się że leżą w pobliżu optimum.
 
-Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyne co trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązanie nieprawidłowe, które muszą zostać odrzucone.
+Zaletą klasycznych algorytmów genetycznych jest fakt, że uniwersalna reprezentacja chromosomów jako ciągów bitów pozwala na ponowne wykorzystanie tych samych operatorów mutacji oraz krzyżowania. Jedyną rzeczą jaką trzeba zrobić aby zastosować algorytm genetyczny do nowego problemu, jest zaimplementowanie funkcji oceny oraz zakodowanie potencjalnych rozwiązań w postaci ciągu bitów. Takie podejście jest jednak problematyczne dla wielu zastosowań. Mutacja oraz krzyżowanie mogą prowadzić do powstawania osobników które stanowią rozwiązania nieprawidłowe, które muszą zostać odrzucone.
 
 Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania oraz optymalizacji. Należą do nich między innymi: wytyczanie trasy połączeń kablowych, harmonogramowanie, sterowanie adaptacyjne, rozgrywanie gier, modelowanie poznawcze, zadania transportowe, zadanie komiwojażera, sterowanie optymalne oraz optymalizacja obsługi zapytań w bazach danych~\cite{Michalewicz:2003:AGSDPE}.
 
@@ -134,7 +134,7 @@ Algorytmy genetyczne znajdują szerokie zastosowania w zadaniach przeszukiwania 
 
 Wybór osobników do nowo tworzonych populacji jest procesem analogicznym do doboru naturalnego. W ujęciu Karola Darwina, największe szanse przetrwania mają osobniki najlepiej przystosowane do środowiska. Wpływ środowiska jest w algorytmach genetycznych modelowany przez funkcję oceny lub funkcję przystosowania. Ponieważ problemy optymalizacji zwykle definiuje się w kategoriach poszukiwania minimum, przyjmiemy konwencję zgodnie z którą mniejsza wartość funkcji oceny oznacza lepsze przystosowanie. Dlatego też w operacji wyboru (selekcji) osobników do nowej populacji powinny być faworyzowane osobniki o niższej wartości funkcji przystosowania.
 
-Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwem proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takie jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
+Jedną z najprostszych implementacji operacji selekcji jest selekcja proporcjonalna, w której osobniki wybierane są z prawdopodobieństwem proporcjonalnym do wartości funkcji przystosowania. Wadą selekcji proporcjonalnej jest tendencja do zbyt szybkiego zdominowania populacji przez najbardziej przystosowane osobniki. Dlatego zaproponowano wiele alternatywnych implementacji operatora selekcji, takich jak selekcja rangowa, turniejowa, lub podwójna turniejowa.
 
 Selekcja turniejowa to bardzo prosty algorytm selekcji, będący jednocześnie jednym z najpopularniejszych~\cite{Luke2009Metaheuristics}. W selekcji turniejowej, wybieramy najlepiej przystosowanego osobnika spośród losowo wybranego podzbioru populacji, bez powtórzeń. Algorytm można dostosować poprzez zmianę parametru $t$, czyli rozmiaru wybieranego podzbioru. Innymi zaletami algorytmu są jego prostota oraz niezależność od szczegółów implementacji funkcji przynależności.
 
@@ -223,7 +223,7 @@ $$ p_{finger} = \sum\limits_{i = 1}^{8} (f_i^{opt} - f_i)^2 $$
 
 \subsection{Użycie rzędów klawiszy}
 
-Podczas pisania techniką bezwzrokową, pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (tzw. \emph{home row}). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
+Podczas pisania techniką bezwzrokową, pozycją domyślną jest utrzymywanie palców nad klawiszami w środkowym rzędzie (\emph{home row}). Z tego powodu optymalny układ klawiatury powinien zawierać najczęściej używane znaki w środkowym rzędzie. Znaki z górnego oraz dolnego rzędu wymagają ruchu palca z domyślnego rzędu środkowego, a następnie powrotu na pozycję domyślną, co jest mniej optymalne. Klawisze z górnego rzędu są przy tym nieco łatwiej dostępne od tych z dolnego.
 
 Górny, środkowy oraz dolny rząd klawiszy oznaczymy odpowiednio jako: $R_1$, $R_2$, $R_3$. Jako optymalny rozkład częstotliwości użycia poszczególnych rzędów przyjmiemy rozkład układu klawiatury, w którym 10 najczęściej używanych klawiszy należy do $R_1$, 10 kolejnych do $R_2$, a 10 najmniej używanych klawiszy do $R_3$. Częstotliwości użycia obliczane są na podstawie stosowanego zbioru tekstów.
 
