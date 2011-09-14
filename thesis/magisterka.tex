@@ -261,7 +261,7 @@ gdzie $c_1$ oraz $r_1$ stanowią współrzędne odpowiednio rzędu i kolumny pie
 
 \subsection{Duże ruchy palcami tej samej ręki}
 
-W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd (zbiór ten oznaczymy jako $ D' \in D $). W zależność od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z poniższą tabelą~\cite{Eggers2003672}.\newline
+W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, należy unikać sytuacji w której klawisze te znajdują się daleko od siebie. Dlatego też podczas obliczania tego współczynnika będą brane pod uwagę diagrafy wpisywane tą samą ręką, ale przy użyciu różnych palców, gdzie pionowa odległość jest większa niż jeden rząd (zbiór ten oznaczymy jako $ D_{step} \in D $). W zależności od tego które palce zostaną użyte, zostaną przypisane odpowiednie wagi zgodnie z poniższą tabelą~\cite{Eggers2003672}.\newline
 
 \begin{tabular}{ c | c | c | c | c }
   & wskazujący & środkowy & serdeczny & mały \\
@@ -273,21 +273,21 @@ W wypadku użycia tej samej ręki do naciśnięcia kolejno dwóch klawiszy, nale
 \end{tabular}\newline\newline
 
 Wzór przyjmie postać:
-$$ p_{step} = \sum\limits_{d \in D'} K(d) f_d $$
+$$ p_{step} = \sum\limits_{d \in D_{step}} K(d) f_d(d) $$
 
 gdzie $K(d)$ oznacza współczynnik wagowy przypisany zgodnie z tabelą.
 
 
 \subsection{Inboard stroke flow}
 
-Dla diagrafów wpisywanych z użyciem tej samej ręki, bardziej korzystny jest kierunek prowadzący do środka, czyli w kierunku od małego palca do wskazującego (tzw. \emph{inboard stroke flow}). Czynnikowi temu będzie odpowiadał następujący wzór, w którym sumujemy częstotliwości występowania diagrafów prowadzących mniej korzystnym kierunku (zbiór takich diagrafów oznaczymy poniżej jako $ D' \in D $):
+Dla diagrafów pisanych z użyciem tej samej ręki, bardziej naturalny jest kierunek ich wpisywania prowadzący do środka, czyli w kierunku od małego palca do wskazującego (tzw. \emph{inboard stroke flow}). Czynnikowi temu będzie odpowiadał następujący wzór, w którym sumujemy częstotliwości występowania diagrafów prowadzących w mniej korzystnym kierunku (zbiór takich diagrafów oznaczymy poniżej jako $ D_{isf} \in D $):
 
-$$ p_{isf} = \sum\limits_{d \in D'} f_d $$
+$$ p_{isf} = \sum\limits_{d \in D_{isf}} f_d(d) $$
 
 
 \subsection{Użycie rąk}
 
-Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Dvorak~\cite{cassingham1986dvorak} oraz część innych autorów~\cite{Call:2005:CME} sugeruje, aby faworyzować w niewielkim stopniu prawą, silniejszą rękę. Przyjmiemy tutaj, że w idealnym przypadku prawa ręka powinna wykonywać 52,5\% pracy związanej z pisaniem. Czynnik ten wyniesie zatem:
+Wysiłek związany z pisaniem powinien być rozłożony proporcjonalnie na obie ręce. Dvorak~\cite{cassingham1986dvorak} oraz część innych autorów~\cite{Call:2005:CME} sugeruje, aby faworyzować w niewielkim stopniu prawą, silniejszą rękę. Przyjmiemy tutaj, że w idealnym przypadku prawa ręka powinna wykonywać 52,5\% pracy związanej z pisaniem, karząc osobniki które odbiegają od tego rozkładu. Czynnik ten wyniesie zatem:
 $$ p_{hand\_usage} = (f_{left} - 47,5\%)^2 + (f_{right} - 52,5\%)^2 $$
 
 gdzie $f_{left}$ oznacza procentowy udział znaków wpisanych lewą ręką, a $f_{right}$ analogicznie prawą ręką.\newline\newline
@@ -298,7 +298,7 @@ $$ p = p_{finger} w_{finger} + p_{row} w_{row} + p_{hand\_alter} w_{hand\_alter}
 $$ p_{step} w_{step} + p_{isf} w_{isf} + p_{hand\_usage} w_{hand\_usage} $$
 
 \noindent
-gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperymentalnie w ten sposób, aby poszczególne czynniki miały zbliżony wpływ na ostateczną wartość funkcji przystosowania.
+gdzie \emph{w} są wagami poszczególnych składowych. Wagi dobrane są eksperymentalnie w ten sposób, aby poszczególne kryteria miały zbliżony wpływ na ostateczną wartość funkcji przystosowania.
 
 
 \section{Operatory krzyżowania}
