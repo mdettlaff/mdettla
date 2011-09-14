@@ -20,50 +20,48 @@
 	
 	<pracastreszczenie>Projektowanie optymalnego, ergonomicznego układu klawiatury można potraktować jako problem optymalizacji kombinatorycznej, do rozwiązania którego można zastosować znane metaheurystyki. W poniższej pracy wykorzystany jest do tego celu algorytm genetyczny, w którym chromosomem jest układ klawiszy zakodowany jako permutacja, a funkcja przystosowania odzwierciedla ilość pracy potrzebną do przepisania tekstu za pomocą danego układu. W wyniku zostają utworzone układy klawiatury przystosowane do pisania w języku polskim oraz angielskim. Następnie są one porównane ze standardowymi układami klawiatury (QWERTY, Dvorak), zaprojektowanymi bez udziału komputera, oraz rozwiązaniami znalezionymi przez inne algorytmy.</pracastreszczenie>
 	<pracaslowakluczowe>algorytmy genetyczne, optymalizacja kombinatoryczna, optymalizacja wielokryterialna, klawiatura, Dvorak, QWERTY</pracaslowakluczowe>
-	<pracaspistresci>Wprowadzenie . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    
-. Algorytmy genetyczne . . . . . . . . . . . . . . . . . . . . . . . . . . .    
-   .. Selekcja . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
-   .. Mutacja . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  
-   .. Krzyżowanie . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    
-. Opis algorytmu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    
-   .. Reprezentacja chromosomu . . . . . . . . . . . . . . . . . . . . .       
-   .. Funkcja przystosowania . . . . . . . . . . . . . . . . . . . . . . .     
-        ...  Użycie palców . . . . . . . . . . . . . . . . . . . . . . . .    
-        ...  Użycie rzędów klawiszy . . . . . . . . . . . . . . . . . . .     
-        ...  Alternacja rąk . . . . . . . . . . . . . . . . . . . . . . . .   
-        ...  Alternacja palców . . . . . . . . . . . . . . . . . . . . . .    
-        ...  Duże ruchy palcami tej samej ręki . . . . . . . . . . . . .      
-        ...  Inboard stroke ow . . . . . . . . . . . . . . . . . . . . .      
-        ...  Użycie rąk . . . . . . . . . . . . . . . . . . . . . . . . . .   
-   .. Operatory krzyżowania . . . . . . . . . . . . . . . . . . . . . . .      
-        ...  Krzyżowanie cykliczne (CX) . . . . . . . . . . . . . . . .       
-        ...  Krzyżowanie z częściowym odwzorowaniem (PMX) . . .               
-        ...  Krzyżowanie bazujące na porządku (POS) . . . . . . . . .         
-        ...  Krzyżowanie naprzemienne (AP) . . . . . . . . . . . . . .        
-   .. Operatory mutacji . . . . . . . . . . . . . . . . . . . . . . . . . .    
-        ...  Operator zamiany (EM) . . . . . . . . . . . . . . . . . . .      
-        ...  Zamiana z przemieszczeniem (DM) . . . . . . . . . . . .          
-        ...  Prosta inwersja (SIM) . . . . . . . . . . . . . . . . . . . .    
-        ...  Mutacja z mieszaniem podlist (SM) . . . . . . . . . . . .        
-        ...  Inwersja (IVM) . . . . . . . . . . . . . . . . . . . . . . .     
-        ...  Mutacja ze wstawianiem (ISM) . . . . . . . . . . . . . . .       
-                                        
-                                                                           Spis treści
-    .. Optymalizacja dla wielu kryteriów . . . . . . . . . . . . . . . . .        
-    .. Selekcja . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   
-         ...  Wielokryterialna większościowa selekcja turniejowa . . .           
-    .. Ostateczna postać zastosowanego algorytmu . . . . . . . . . . . .          
-. Wyniki i ich analiza . . . . . . . . . . . . . . . . . . . . . . . . . . . .     
-    .. Dobór parametrów oraz operatorów . . . . . . . . . . . . . . . .           
-    .. Dane testowe . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     
-    .. Wyniki dla języka angielskiego . . . . . . . . . . . . . . . . . . .       
-    .. Wyniki dla języka polskiego . . . . . . . . . . . . . . . . . . . . .      
-Zakończenie . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .     
-    .. Konkluzje . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    
-    .. Plany dalszych badań . . . . . . . . . . . . . . . . . . . . . . . . .     
-A. Część programowa . . . . . . . . . . . . . . . . . . . . . . . . . . . . .       
-Bibliogra a . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   
-Spis rysunków . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   
-Oświadczenie . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .    </pracaspistresci>
+	<pracaspistresci>Wprowadzenie
+Algorytmy genetyczne
+. Selekcja
+. Mutacja
+. Krzyżowanie
+Opis algorytmu
+. Reprezentacja chromosomu
+. Funkcja przystosowania
+. .  Użycie palców
+. .  Użycie rzędów klawiszy
+. .  Alternacja rąk
+. .  Alternacja palców
+. .  Duże ruchy palcami tej samej ręki
+. .  Inboard stroke flow
+. .  Użycie rąk
+. Operatory krzyżowania
+. .  Krzyżowanie cykliczne (CX)
+. .  Krzyżowanie z częściowym odwzorowaniem (PMX)
+. .  Krzyżowanie bazujące na porządku (POS)
+. .  Krzyżowanie naprzemienne (AP)
+. Operatory mutacji
+. .  Operator zamiany (EM)
+. .  Zamiana z przemieszczeniem (DM)
+. .  Prosta inwersja (SIM)
+. .  Mutacja z mieszaniem podlist (SM)
+. .  Inwersja (IVM)
+. .  Mutacja ze wstawianiem (ISM)
+. Optymalizacja dla wielu kryteriów
+. Selekcja
+. .  Wielokryterialna większościowa selekcja turniejowa
+. Ostateczna postać zastosowanego algorytmu
+Wyniki i ich analiza
+. Dobór parametrów oraz operatorów
+. Dane testowe
+. Wyniki dla języka angielskiego
+. Wyniki dla języka polskiego
+Zakończenie
+. Konkluzje
+. Plany dalszych badań
+A. Część programowa
+Bibliografia
+Spis rysunków
+Oświadczenie</pracaspistresci>
 	<pracazgodanaudostepnienie>tak</pracazgodanaudostepnienie>
 </danepracy>
