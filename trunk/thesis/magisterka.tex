@@ -414,9 +414,14 @@ Warto zwrócić uwagę, że jeśli wybrane punkty będą znajdowały się na odl
 
 \section{Optymalizacja dla wielu kryteriów}
 
-W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozwiązywany problem należy do klasy problemów optymalizacji wielokryterialnej. Najbardziej pożądaną sytuacją jest znalezienie rozwiązania nie tylko z najkorzystniejszą wartością funkcji przystosowania, ale też takiego, które będzie optymalne pod względem każdego ze stosowanych kryteriów. Trudno jest osiągnąć ten cel poprzez samo dobieranie wag ($w_1 ... w_7$), ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać. Dlatego zastosowany zostanie operator selekcji uwzględniający nie tylko wartość funkcji przystosowania, ale również wartości poszczególnych kryteriów.
+W funkcji oceny uwzględnianych jest 7 różnych kryteriów, co sprawia że rozwiązywany problem należy do klasy problemów optymalizacji wielokryterialnej. W tego rodzaju zagadnieniach nie chcemy optymalizować pojedynczej funkcji, ale poszukujemy rozwiązania, które będzie optymalne pod względem wartości funkcji celu (oceny) dla każdego ze stosowanych kryteriów. Jednym ze sposobów podejścia do tego problemu jest połączenie wielu funkcji celu $f_i$ w jedną funkcję celu $F$. Pozwala na to metoda ważonych celów:
+$$ F(x) = \sum_{i=1}^{k} w_i f_i (x) $$
 
-W optymalizacji wielokryterialnej często stosuje się pojęcie \emph{dominacji Pareto}. Jeżeli za funkcję celu $f$ przyjmiemy wartość przyjmowaną przez dane kryterium (lub cel), mówimy że rozwiązanie A dominuje w sensie Pareto nad rozwiązaniem B jeżeli $f(A)$ jest co najmniej tak dobre jak $f(B)$ dla wszystkich celów, i lepsze dla co najmniej jednego celu ($k$ to ilość celów):
+gdzie $w_i$ są wagami poszczególnych kryteriów. Trudność polega tutaj na doborze wag, ponieważ często poszczególnych kryteriów nie daje się w łatwych sposób porównać.
+
+Kolejnym sposobem, który nie wymaga podania wartości wag, jest użycie jednego z wielokryterialnych operatorów selekcji~\cite{Luke2009Metaheuristics}. Możemy uporządkować kryteria pod względem ważności, a następnie zastosować \emph{wielokryterialną leksykograficzną selekcję turniejową}. W tego rodzaju selekcji, porównujemy osobniki ze względu na kolejne kryteria zaczynając od tego mającego najwyższy priorytet, a kończąc na tym mającym najniższy priorytet. Jeżeli jeden z osobników przeważa nad innym pod względem danego kryterium, jest on preferowany i porównywanie zostaje zakończone. Innym sposobem jest porównywanie osobników ze względu na kryterium wybrane w sposób losowy (\emph{wielokryterialna proporcjonalna selekcja turniejowa}).
+
+Innym podejściem niewymagającym łączenia poszczególnych funkcji celów w jedną funkcję jest stosowanie pojęcia \emph{dominacji Pareto}. Mówimy że rozwiązanie A dominuje w sensie Pareto nad rozwiązaniem B jeżeli $f(A)$ jest co najmniej tak dobre jak $f(B)$ dla wszystkich celów, i lepsze dla co najmniej jednego celu ($k$ to ilość celów):
 $$ \left( \forall i \right) \left( f_i(A) \le f_i(B) \right) \wedge \left( \exists i \right) \left( f_i(A) \textless f_i(B) \right), \hspace{8pt} 1 \le i \le k $$
 
 Przez rozwiązanie \emph{zdominowane} rozumiemy takie, dla którego istnieje inne rozwiązanie które dominuje nad nim. Rozwiązanie \emph{niezdominowane} to takie, dla którego nie istnieje inne rozwiązanie nad nim dominujące.
@@ -425,7 +430,7 @@ Istnieją algorytmy genetyczne wykorzystujące pojęcie dominacji Pareto. Jednym
 
 Innym przykładem algorytmu genetycznego stworzonego z myślą o optymalizacji wielokryterialnej jest VEGA~\cite{Shaffer1984} (Vector Evaluated Genetic Algorithm). Główny pomysł polega w nim na podzieleniu populacji na podpopulacje o jednakowej wielkości, gdzie w każdej z nich odbywa się selekcja ze względu na osobne kryterium. Krzyżowanie natomiast może przekraczać granice podpopulacji, aby umożliwić wymianę informacji pomiędzy nimi. Zaletą algorytmu VEGA jest łatwość implementacji, ale wadą jest tendencja do odrzucania osobników pośrednich, które osiągają dobre wyniki ze względu na wszystkie kryteria, ale nie osiągają bardzo wysokiego rezultatu dla żadnego z nich.
 
-W tej pracy zastosowane zostanie prostsze podejście, polegające na zastosowaniu funkcji przystosowania będącej sumą ważoną funkcji celu w połączeniu ze wspomnianym wcześniej operatorem selekcji. Zostanie on opisany w kolejnej sekcji \emph{Selekcja}.
+W tej pracy zastosowane zostanie prostsze podejście, polegające na zastosowaniu funkcji przystosowania będącej sumą ważoną funkcji celu w połączeniu z jednym z wielokryterialnych operatorów selekcji. Zostanie on opisany szczegółowo w kolejnej sekcji \emph{Selekcja}.
 
 
 \section{Selekcja}
