@@ -16,6 +16,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 @Entity
 public class Submission {
 
@@ -62,8 +66,9 @@ public class Submission {
 		voters.add(user);
 	}
 
-	public void downvote() {
+	public void downvote(User user) {
 		downvoteCount++;
+		voters.add(user);
 	}
 
 	public int getScore() {
@@ -116,22 +121,26 @@ public class Submission {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
 		if (!(obj instanceof Submission)) {
 			return false;
 		}
 		Submission other = (Submission)obj;
-		return id.equals(other.id);
+		return new EqualsBuilder().append(id, other.id).build();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(id).build();
 	}
 
 	@Override
 	public String toString() {
-		return "Submission[id=" + id +
-			", title=" + title + ", upvoteCount=" + upvoteCount +
-			", downvoteCount=" + downvoteCount +
-			", comments=" + comments +
-			"]";
+		ToStringBuilder toStringBuilder = new ToStringBuilder(this);
+		toStringBuilder.append(id);
+		toStringBuilder.append(title);
+		toStringBuilder.append(upvoteCount);
+		toStringBuilder.append(downvoteCount);
+		toStringBuilder.append(comments);
+		return toStringBuilder.build();
 	}
 }

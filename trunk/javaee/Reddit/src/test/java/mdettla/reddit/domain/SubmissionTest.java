@@ -20,25 +20,26 @@ public class SubmissionTest {
 	public void testDownvote() {
 		Submission submission = new Submission();
 		assertEquals(0, submission.getScore());
-		submission.downvote();
+		submission.downvote(new User());
 		assertEquals(-1, submission.getScore());
+		assertEquals(1, submission.getVoters().size());
 	}
 
 	@Test
 	public void testUpvoteAndDownvote() {
 		Submission submission = new Submission();
 		assertEquals(0, submission.getScore());
-		submission.downvote();
+		submission.downvote(new User("a", "b"));
 		assertEquals(-1, submission.getScore());
-		submission.upvote(new User());
+		submission.upvote(new User("c", "d"));
 		assertEquals(0, submission.getScore());
-		submission.upvote(new User());
+		submission.upvote(new User("e", "f"));
 		assertEquals(1, submission.getScore());
-		submission.upvote(new User());
+		submission.upvote(new User("g", "h"));
 		assertEquals(2, submission.getScore());
-		submission.downvote();
+		submission.downvote(new User("i", "j"));
 		assertEquals(1, submission.getScore());
-		assertEquals(3, submission.getVoters().size());
+		assertEquals(5, submission.getVoters().size());
 	}
 
 	@Test

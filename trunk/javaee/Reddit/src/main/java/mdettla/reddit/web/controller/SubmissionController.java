@@ -69,4 +69,11 @@ public class SubmissionController {
 		submissionService.upvote(submission);
 		return "redirect:/submissions/" + id;
 	}
+
+	@RequestMapping(value = "/{id}/downvote", method = RequestMethod.POST)
+	public String downvote(@PathVariable Long id) {
+		Submission submission = submissionService.findById(id);
+		submissionService.downvote(submission);
+		return "redirect:/submissions/" + id;
+	}
 }
