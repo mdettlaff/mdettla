@@ -17,4 +17,6 @@ public interface SubmissionService {
 	void delete(Long id);
 
 	void upvote(Submission submission);
+
+	void downvote(Submission submission);
 }

@@ -65,4 +65,13 @@ public class SubmissionServiceImpl implements SubmissionService {
 		submission.upvote(user);
 		submissionDao.update(submission);
 	}
+
+	@Override
+	@Transactional
+	@PreAuthorize("hasPermission(#submission, 'vote')")
+	public void downvote(Submission submission) {
+		User user = accountService.findCurrentUser();
+		submission.downvote(user);
+		submissionDao.update(submission);
+	}
 }

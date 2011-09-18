@@ -7,6 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 @Entity
 public class User {
 
@@ -64,11 +68,20 @@ public class User {
 			return false;
 		}
 		User other = (User)obj;
-		return name.equals(other.name) && password.equals(other.password);
+		EqualsBuilder equalsBuilder = new EqualsBuilder();
+		equalsBuilder.append(name, other.name);
+		equalsBuilder.append(password, other.password);
+		return equalsBuilder.build();
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(name).append(password).build();
 	}
 
 	@Override
 	public String toString() {
-		return "User[id=" + id + ", name=" + name + "]";
+		ToStringBuilder toStringBuilder = new ToStringBuilder(this);
+		return toStringBuilder.append(id).append(name).append(password).build();
 	}
 }

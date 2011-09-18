@@ -124,4 +124,19 @@ public class SubmissionControllerTest {
 		assertEquals("redirect:/submissions/" + id, viewName);
 		verify(submissionService).upvote(submission);
 	}
+
+	@Test
+	public void testDownvote() {
+		// prepare
+		long id = 5;
+		Submission submission = new Submission();
+		submission.setId(id);
+		// mock
+		when(submissionService.findById(id)).thenReturn(submission);
+		// test
+		String viewName = controller.downvote(id);
+		// verify
+		assertEquals("redirect:/submissions/" + id, viewName);
+		verify(submissionService).downvote(submission);
+	}
 }

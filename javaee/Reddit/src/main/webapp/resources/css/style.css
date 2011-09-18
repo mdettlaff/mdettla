@@ -264,7 +264,7 @@ table th {
 }
 
 .error {
-	color: Red;
+	color: red;
 }
 
 
@@ -313,4 +313,13 @@ table th {
 
 .tri-state {
 	width: 6em;
+}
+
+
+/* application specific */
+
+.vote-arrow {
+	background: none;
+	border-width: 0px;
+	color: blue;
 }

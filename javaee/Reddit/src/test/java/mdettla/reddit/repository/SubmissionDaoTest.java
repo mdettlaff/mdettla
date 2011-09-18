@@ -5,7 +5,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import mdettla.reddit.domain.Comment;
 import mdettla.reddit.domain.Submission;
@@ -31,12 +33,10 @@ public class SubmissionDaoTest extends AbstractPersistenceTestContext {
 		assertNotNull(actual);
 		assertEquals(id, actual.getId());
 		assertSubmissionsEqual(prepareSampleSubmission1(), actual);
-		Collection<User> voters = actual.getVoters();
-		assertNotNull(voters);
-		assertEquals(2, voters.size());
-		Iterator<User> votersIter = voters.iterator();
-		assertEquals(new User("administrator", "secret1"), votersIter.next());
-		assertEquals(new User("mdettla", "secret"), votersIter.next());
+		Set<User> expectedVoters = new HashSet<User>();
+		expectedVoters.add(new User("mdettla", "secret"));
+		expectedVoters.add(new User("administrator", "secret1"));
+		assertEquals(expectedVoters, actual.getVoters());
 	}
 
 	@Test
