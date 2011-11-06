@@ -1,0 +1,23 @@
+/*
+ * Bla bla.
+ */
+
+package hackage;
+
+import parasoft.centrap.reports.ReportsContext;
+import java.util.List;
+import java.util.ArrayList;
+
+import org.mockito.Mockito;
+import parasoft.centrap.reports.ChartCreator;
+import parasoft.centrap.reports.ReportsException;
+
+import javax.swing.table.DefaultTableModel;
+
+class Test {
+
+	public static void main(String[] args) {
+		System.out.println("Hello");
+		Mockito.verify(foo).bar();
+	}
+}
