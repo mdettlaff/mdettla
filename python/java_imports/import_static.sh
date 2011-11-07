@@ -25,9 +25,12 @@ unset files[0]
 
 for file in ${files[@]}
 do
-  sed -i "s/import $non_static_import;//" $file
-  sed -i "s/$class_and_method/$method/" $file
-  add_import "static $1" $file
-  $SCRIPT_DIR/organize_imports.py $file
+  if grep -q $class_and_method $file
+  then
+    sed -i "s/import $non_static_import;//" $file
+    sed -i "s/$class_and_method/$method/" $file
+    add_import "static $1" $file
+    $SCRIPT_DIR/organize_imports.py $file
+  fi
 done
 
