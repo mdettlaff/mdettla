@@ -36,7 +36,7 @@ def organize_imports(java_file):
             return with_empty_lines
 
         remove_empty_lines = lambda lines: filter(lambda l: l.strip(), lines)
-        sorted_imports_lines = remove_empty_lines(import_lines)
+        sorted_imports_lines = list(set(remove_empty_lines(import_lines)))
         sorted_imports_lines.sort(cmp = compare_import_lines)
         return add_empty_lines(sorted_imports_lines)
 
