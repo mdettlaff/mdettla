@@ -11,9 +11,11 @@ import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 
-import parasoft.centrap.reports.ChartCreator;
-import parasoft.centrap.reports.ReportsContext;
-import parasoft.centrap.reports.ReportsException;
+import pl.centrap.reports.ChartCreator;
+import pl.centrap.reports.ReportsContext;
+import pl.centrap.reports.ReportsException;
+
+import com.google.base.Preconditions;
 
 class Test {
 

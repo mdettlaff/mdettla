@@ -4,14 +4,15 @@
 
 package hackage;
 
-import parasoft.centrap.reports.ReportsContext;
+import pl.centrap.reports.ReportsContext;
 import java.util.List;
+import com.google.base.Preconditions;
 import java.util.List;
 import java.util.ArrayList;
 
 import org.mockito.Mockito;
-import parasoft.centrap.reports.ChartCreator;
-import parasoft.centrap.reports.ReportsException;
+import pl.centrap.reports.ChartCreator;
+import pl.centrap.reports.ReportsException;
 
 import javax.swing.table.DefaultTableModel;
 
