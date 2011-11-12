@@ -9,27 +9,40 @@ import sys
 USAGE = 'Użycie: ' + sys.argv[0] + ' PLIKI_JAVA...'
 
 
+def chain_cmp(cmps, left, right):
+    first_cmp_result = cmps[0](left, right)
+    if len(cmps) == 1 or first_cmp_result:
+        return first_cmp_result
+    else:
+        return chain_cmp(cmps[1:], left, right)
+
+
 def organize_imports(java_file):
 
     def sort_imports(import_lines):
 
-        def get_top_package(import_line):
+        def top_package(import_line):
             return re.search(import_regex, import_line).group(1)
 
-        def compare_import_lines(left, right):
-            if 'static' in left and 'static' not in right:
-                return -1
-            elif 'static' not in left and 'static' in right:
-                return 1
-            else:
-                return -1 if left < right else (1 if right < left else 0)
+        def cmp_static(left, right):
+            left_static = 'static' in left and 'static' not in right
+            right_static = 'static' not in left and 'static' in right
+            return -1 if left_static else (1 if right_static else 0)
+
+        def cmp_predefined(left, right):
+            predef = ['java', 'javax', 'org', 'pl', 'com']
+            try:
+                return cmp(predef.index(top_package(left)), \
+                        predef.index(top_package(right)))
+            except ValueError:
+                return 0
 
         def add_empty_lines(sorted_import_lines):
             with_empty_lines = []
             prev_line = None
             for line in sorted_imports_lines:
                 if prev_line is not None and \
-                        get_top_package(prev_line) != get_top_package(line):
+                        top_package(prev_line) != top_package(line):
                     with_empty_lines.append('\n')
                 with_empty_lines.append(line)
                 prev_line = line
@@ -37,7 +50,8 @@ def organize_imports(java_file):
 
         remove_empty_lines = lambda lines: filter(lambda l: l.strip(), lines)
         sorted_imports_lines = list(set(remove_empty_lines(import_lines)))
-        sorted_imports_lines.sort(cmp = compare_import_lines)
+        sorted_imports_lines.sort(cmp = lambda left, right: \
+                chain_cmp([cmp_static, cmp_predefined, cmp], left, right))
         return add_empty_lines(sorted_imports_lines)
 
     import_regex = r'^import (.*?)\.(.*?)$'
