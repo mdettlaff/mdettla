@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="JQSL" default="compile">
+	<property name="build.dir" value="bin" />
+	<property name="dist.dir" value="dist" />
+	<property name="jar.file" value="${dist.dir}/jqsl.jar" />
+
+	<path id="run.classpath">
+		<pathelement location="${build.dir}" />
+	</path>
+	<path id="test.classpath">
+	</path>
+
+	<target name="all" depends="clean, compile" />
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="src" destdir="${build.dir}" debug="on" optimize="off" deprecation="off" />
+		<copy todir="${build.dir}">
+			<fileset dir="src" includes="**/*.properties" />
+		</copy>
+	</target>
+
+	<target name="compile-test" depends="compile">
+		<mkdir dir="${build.dir}" />
+		<javac srcdir="test" destdir="${build.dir}" debug="on" optimize="off" deprecation="off">
+			<classpath refid="run.classpath" />
+			<classpath refid="test.classpath" />
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="src" includes="**/*.properties" />
+		</copy>
+	</target>
+
+	<target name="test" depends="compile-test" description="Uruchamia testy jednostkowe.">
+		<!--
+		Uruchomienie pojedynczego testu:
+		ant junit -Dtest.class=NazwaKlasyZTestami
+		-->
+		<junit haltonfailure="on">
+			<batchtest unless="test.class">
+				<fileset dir="test" includes="**/*Test*.java" />
+			</batchtest>
+			<batchtest if="test.class">
+				<fileset dir="test" includes="**/${test.class}.java" />
+			</batchtest>
+			<formatter type="plain" usefile="false" />
+			<classpath refid="run.classpath" />
+			<classpath refid="test.classpath" />
+		</junit>
+	</target>
+
+	<target name="run" depends="compile-test">
+		<java classname="mdettla.jqsl.Main" classpathref="run.classpath" />
+	</target>
+
+	<target name="jar" depends="all, test">
+		<mkdir dir="${dist.dir}" />
+		<manifestclasspath property="manifest.classpath" jarfile="${jar.file}">
+			<classpath refid="run.classpath" />
+		</manifestclasspath>
+		<jar jarfile="${jar.file}">
+			<fileset dir="${build.dir}" includes="**/*.class **/*.properties" excludes="**/*Test.class" />
+			<manifest>
+				<attribute name="Title" value="JQSL" />
+				<attribute name="Main-Class" value="mdettla.jqsl.Main" />
+				<attribute name="Class-Path" value="${manifest.classpath}" />
+			</manifest>
+		</jar>
+	</target>
+</project>
