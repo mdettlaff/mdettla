@@ -28,6 +28,8 @@ def number_to_words(number):
     dwadzieścia pięć tysięcy
     >>> print f(32187)
     trzydzieści dwa tysiące sto osiemdziesiąt siedem
+    >>> print f(112000)
+    sto dwanaście tysięcy
     >>> print f(43064101)
     czterdzieści trzy miliony sześćdziesiąt cztery tysiące sto jeden
     >>> print f(1000000000)
@@ -56,7 +58,7 @@ def number_to_words(number):
             return None
         elif number == 1:
             return multiplier[0]
-        elif 2 <= number % 10 < 5 and not 12 <= number < 15:
+        elif 2 <= number % 10 < 5 and not 12 <= number % 100 < 15:
             return multiplier[1]
         else:
             return multiplier[2]
