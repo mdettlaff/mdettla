@@ -2,6 +2,7 @@
 # -*- encoding: UTF-8 -*-
 
 import doctest
+import sys
 
 
 def number_to_words(number):
@@ -79,6 +80,8 @@ def number_to_words(number):
     return ' '.join(filter(lambda x: x is not None, words))
 
 
-if __name__ == '__main__':
-    doctest.testmod()
+doctest.testmod()
+
+if __name__ == '__main__' and len(sys.argv) > 1:
+    print number_to_words(int(sys.argv[1]))
 
