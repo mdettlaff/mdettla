@@ -30,6 +30,10 @@ def number_to_words(number):
     trzydzieści dwa tysiące sto osiemdziesiąt siedem
     >>> print f(112000)
     sto dwanaście tysięcy
+    >>> print f(1401203)
+    jeden milion czterysta jeden tysięcy dwieście trzy
+    >>> print f(16451309)
+    szesnaście milionów czterysta pięćdziesiąt jeden tysięcy trzysta dziewięć
     >>> print f(43064101)
     czterdzieści trzy miliony sześćdziesiąt cztery tysiące sto jeden
     >>> print f(1000000000)
@@ -66,7 +70,7 @@ def number_to_words(number):
             ['trylion', 'tryliony', 'trylionów']]
 
     def times1000_form(number):
-        is_1st_form = number % 10 == 1
+        is_1st_form = number % 1000 == 1
         is_2nd_form = 2 <= number % 10 < 5 and not 12 <= number % 100 < 15
         return 0 if is_1st_form else (1 if is_2nd_form else 2)
 
