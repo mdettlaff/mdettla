@@ -38,33 +38,37 @@ def number_to_words(number):
     jeden miliard jeden tysiąc
     >>> print f(125000000000)
     sto dwadzieścia pięć miliardów
+    >>> print f(1000000000000000000)
+    jeden trylion
+    >>> print f(5000000000000000000)
+    pięć trylionów
+    >>> print f(999000000000000000000)
+    dziewięćset dziewięćdziesiąt dziewięć trylionów
+    >>> print f(1000000000000000000000)
+    jeden tysiąc trylionów
     >>> print f(12345000000000002000103)
-    12345 trylionów dwa miliony sto trzy
+    dwanaście tysięcy trzysta czterdzieści pięć trylionów dwa miliony sto trzy
+    >>> print f(1000000000000000000000000)
+    jeden milion trylionów
     """
 
-    singles = [None, 'jeden', 'dwa', 'trzy', 'cztery', 'pięć', 'sześć', 'siedem', 'osiem', 'dziewięć']
-    teens = ['jedenaście', 'dwanaście', 'trzynaście', 'czternaście', 'piętnaście', 'szesnaście', 'siedemnaście', 'osiemnaście', 'dziewiętnaście']
-    tenths = [None, 'dziesięć', 'dwadzieścia', 'trzydzieści', 'czterdzieści', 'pięćdziesiąt', 'sześćdziesiąt', 'siedemdziesiąt', 'osiemdziesiąt', 'dziewięćdziesiąt']
-    hundreds = [None, 'sto', 'dwieście', 'trzysta', 'czterysta', 'pięćset', 'sześćset', 'siedemset', 'osiemset', 'dziewięćset']
-    thousandfold_multiplier = [
+    times1s = [None] + 'jeden dwa trzy cztery pięć sześć siedem osiem dziewięć'.split(' ')
+    teens = 'jedenaście dwanaście trzynaście czternaście piętnaście szesnaście siedemnaście osiemnaście dziewiętnaście'.split(' ')
+    times10s = [None] + 'dziesięć dwadzieścia trzydzieści czterdzieści pięćdziesiąt sześćdziesiąt siedemdziesiąt osiemdziesiąt dziewięćdziesiąt'.split(' ')
+    times100s = [None] + 'sto dwieście trzysta czterysta pięćset sześćset siedemset osiemset dziewięćset'.split(' ')
+    times1000s = [
             [None, None, None],
             ['tysiąc', 'tysiące', 'tysięcy'],
             ['milion', 'miliony', 'milionów'],
             ['miliard', 'miliardy', 'miliardów'],
             ['bilion', 'biliony', 'bilionów'],
             ['biliard', 'biliardy', 'biliardów'],
-            ['trylion', 'tryliony', 'trylionów'],
-            [None, None, None]]
+            ['trylion', 'tryliony', 'trylionów']]
 
-    def multiplier_form(multiplier, number):
-        if number == 0:
-            return None
-        elif number == 1:
-            return multiplier[0]
-        elif 2 <= number % 10 < 5 and not 12 <= number % 100 < 15:
-            return multiplier[1]
-        else:
-            return multiplier[2]
+    def times1000_form(number):
+        is_1st_form = number % 10 == 1
+        is_2nd_form = 2 <= number % 10 < 5 and not 12 <= number % 100 < 15
+        return 0 if is_1st_form else (1 if is_2nd_form else 2)
 
     if number == 0:
         return 'zero'
@@ -72,17 +76,18 @@ def number_to_words(number):
     i = 0
     while number > 0:
         teen = teens[number % 100 - 11] if 11 <= number % 100 < 20 else None
-        hundredth = hundreds[(number / 100) % 10]
-        tenth = tenths[(number / 10) % 10] if not teen else teen
-        single = singles[number % 10] if not teen else None
-        multiplier = multiplier_form(thousandfold_multiplier[i], number % 1000)
-        if i + 2 >= len(thousandfold_multiplier) and number > 1000:
-            words = [str(number), multiplier] + words
+        times100 = times100s[(number / 100) % 10]
+        times10 = times10s[(number / 10) % 10] if not teen else teen
+        times1 = times1s[number % 10] if not teen else None
+        times1000 = times1000s[i][times1000_form(number)]
+        if i >= len(times1000s) - 1:
+            words = [number_to_words(number), times1000] + words
             break
-        words = [hundredth, tenth, single, multiplier] + words
+        times1000 = None if number % 1000 == 0 else times1000
+        words = [times100, times10, times1, times1000] + words
         number /= 1000
         i += 1
-    return ' '.join(filter(lambda x: x is not None, words))
+    return ' '.join(filter(lambda word: word is not None, words))
 
 
 doctest.testmod()
