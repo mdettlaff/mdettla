@@ -38,8 +38,8 @@ def number_to_words(number):
     jeden miliard jeden tysiąc
     >>> print f(125000000000)
     sto dwadzieścia pięć miliardów
-    >>> print f(12345002000103)
-    12345 miliardów dwa miliony sto trzy
+    >>> print f(12345000000000002000103)
+    12345 trylionów dwa miliony sto trzy
     """
 
     singles = [None, 'jeden', 'dwa', 'trzy', 'cztery', 'pięć', 'sześć', 'siedem', 'osiem', 'dziewięć']
@@ -51,6 +51,9 @@ def number_to_words(number):
             ['tysiąc', 'tysiące', 'tysięcy'],
             ['milion', 'miliony', 'milionów'],
             ['miliard', 'miliardy', 'miliardów'],
+            ['bilion', 'biliony', 'bilionów'],
+            ['biliard', 'biliardy', 'biliardów'],
+            ['trylion', 'tryliony', 'trylionów'],
             [None, None, None]]
 
     def multiplier_form(multiplier, number):
