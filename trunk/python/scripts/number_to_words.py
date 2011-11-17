@@ -35,6 +35,8 @@ def number_to_words(number):
     jeden miliard jeden tysiąc
     >>> print f(125000000000)
     sto dwadzieścia pięć miliardów
+    >>> print f(12345002000103)
+    12345 miliardów dwa miliony sto trzy
     """
 
     singles = [None, 'jeden', 'dwa', 'trzy', 'cztery', 'pięć', 'sześć', 'siedem', 'osiem', 'dziewięć']
@@ -45,7 +47,8 @@ def number_to_words(number):
             [None, None, None],
             ['tysiąc', 'tysiące', 'tysięcy'],
             ['milion', 'miliony', 'milionów'],
-            ['miliard', 'miliardy', 'miliardów']]
+            ['miliard', 'miliardy', 'miliardów'],
+            [None, None, None]]
 
     def multiplier_form(multiplier, number):
         if number == 0:
@@ -67,6 +70,9 @@ def number_to_words(number):
         tenth = tenths[(number / 10) % 10] if not teen else teen
         single = singles[number % 10] if not teen else None
         multiplier = multiplier_form(thousandfold_multiplier[i], number % 1000)
+        if i + 2 >= len(thousandfold_multiplier) and number > 1000:
+            words = [str(number), multiplier] + words
+            break
         words = [hundredth, tenth, single, multiplier] + words
         number /= 1000
         i += 1
