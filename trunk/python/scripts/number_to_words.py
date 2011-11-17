@@ -5,7 +5,7 @@ import doctest
 import sys
 
 
-def number_to_words(number):
+def number_to_words(n):
     """
     >>> f = number_to_words
     >>> print f(0), f(1), f(3), f(7), f(9)
@@ -22,6 +22,8 @@ def number_to_words(number):
     sto osiemdziesiąt siedem
     >>> print f(1000)
     jeden tysiąc
+    >>> print f(-2800)
+    minus dwa tysiące osiemset
     >>> print f(13000)
     trzynaście tysięcy
     >>> print f(25000)
@@ -50,6 +52,8 @@ def number_to_words(number):
     dziewięćset dziewięćdziesiąt dziewięć trylionów
     >>> print f(1000000000000000000000)
     jeden tysiąc trylionów
+    >>> print f(1001000000000000000000)
+    jeden tysiąc jeden trylionów
     >>> print f(12345000000000002000103)
     dwanaście tysięcy trzysta czterdzieści pięć trylionów dwa miliony sto trzy
     >>> print f(1000000000000000000000000)
@@ -69,27 +73,27 @@ def number_to_words(number):
             ['biliard', 'biliardy', 'biliardów'],
             ['trylion', 'tryliony', 'trylionów']]
 
-    def times1000_form(number):
-        is_1st_form = number % 1000 == 1
-        is_2nd_form = 2 <= number % 10 < 5 and not 12 <= number % 100 < 15
-        return 0 if is_1st_form else (1 if is_2nd_form else 2)
+    def get_times1000(n, i):
+        is_2nd_form = 2 <= n % 10 < 5 and not 12 <= n % 100 < 15
+        return times1000s[i][0 if n == 1 else (1 if is_2nd_form else 2)]
 
-    if number == 0:
+    if n == 0:
         return 'zero'
+    elif n < 0:
+        return 'minus ' + number_to_words(abs(n))
     words = []
     i = 0
-    while number > 0:
-        teen = teens[number % 100 - 11] if 11 <= number % 100 < 20 else None
-        times100 = times100s[(number / 100) % 10]
-        times10 = times10s[(number / 10) % 10] if not teen else teen
-        times1 = times1s[number % 10] if not teen else None
-        times1000 = times1000s[i][times1000_form(number)]
+    while n > 0:
+        teen = teens[n % 100 - 11] if 11 <= n % 100 < 20 else None
+        times100 = times100s[(n / 100) % 10]
+        times10 = times10s[(n / 10) % 10] if not teen else teen
+        times1 = times1s[n % 10] if not teen else None
         if i >= len(times1000s) - 1:
-            words = [number_to_words(number), times1000] + words
+            words = [number_to_words(n), get_times1000(n, i)] + words
             break
-        times1000 = None if number % 1000 == 0 else times1000
+        times1000 = None if n % 1000 == 0 else get_times1000(n % 1000, i)
         words = [times100, times10, times1, times1000] + words
-        number /= 1000
+        n /= 1000
         i += 1
     return ' '.join(filter(lambda word: word is not None, words))
 
