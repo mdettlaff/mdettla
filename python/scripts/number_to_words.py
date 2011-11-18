@@ -58,6 +58,8 @@ def number_to_words(n):
     dwanaście tysięcy trzysta czterdzieści pięć trylionów dwa miliony sto trzy
     >>> print f(1000000000000000000000000)
     jeden milion trylionów
+    >>> print f(1000000000000000000000000000000000000000000000000000000)
+    jeden trylion trylionów trylionów
     """
 
     times1s = [None] + 'jeden dwa trzy cztery pięć sześć siedem osiem dziewięć'.split(' ')
