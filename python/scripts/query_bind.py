@@ -17,9 +17,9 @@ def bind_parameters(query, query_parameters):
     """
     return query.replace('?', '%s') % tuple(query_parameters)
 
-def parse_bind(bind_line):
+def get_parameters(bind_line):
     """
-    >>> parse_bind('        bind => [2011-11-28, 1970-01-01 00:00:00.0, true, 2, 3.50, BASE]')
+    >>> get_parameters('        bind => [2011-11-28, 1970-01-01 00:00:00.0, true, 2, 3.50, BASE]')
     ["'2011-11-28'", "'1970-01-01 00:00:00.0'", "'true'", '2', '3.50', "'BASE'"]
     """
     is_number = lambda s: re.match(r'^\d+(\.\d+)?$', s)
@@ -32,21 +32,24 @@ def parse_input(input_lines):
     'select * from foo'
     >>> parse_input(['select * from a\\n', 'where b = ? and c < ?\\n', '        bind => [d, 2]\\n'])
     "select * from a\\nwhere b = 'd' and c < 2"
+    >>> parse_input(['select a = ?\\n', '        bind => [5]\\n', 'select b = ?\\n', '        bind => [7]\\n'])
+    'select a = 5\\nselect b = 7'
     """
     query = ''
-    bind_line = None
     for line in input_lines:
         if re.match(BIND_REGEX, line):
             bind_line = line.rstrip()
+            query = bind_parameters(query, get_parameters(bind_line))
         else:
             query += line
-    query_parameters = parse_bind(bind_line) if bind_line else []
-    return bind_parameters(query, query_parameters).rstrip()
+    return query.rstrip()
 
 def main():
     print parse_input(sys.stdin.readlines())
 
+
+doctest.testmod()
+
 if __name__ == '__main__':
-    doctest.testmod()
     main()
 
