@@ -19,10 +19,11 @@ def bind_parameters(query, query_parameters):
 
 def parse_bind(bind_line):
     """
-    >>> parse_bind('        bind => [2011-11-28, 1970-01-01 00:00:00.0, true, 2, BASE]')
-    ["'2011-11-28'", "'1970-01-01 00:00:00.0'", "'true'", '2', "'BASE'"]
+    >>> parse_bind('        bind => [2011-11-28, 1970-01-01 00:00:00.0, true, 2, 3.50, BASE]')
+    ["'2011-11-28'", "'1970-01-01 00:00:00.0'", "'true'", '2', '3.50', "'BASE'"]
     """
-    parse_param = lambda p: p if p.isdigit() else "'" + p + "'"
+    is_number = lambda s: re.match(r'^\d+(\.\d+)?$', s)
+    parse_param = lambda p: p if is_number(p) else "'" + p + "'"
     return [parse_param(p) for p in re.sub(BIND_REGEX, '\\1', bind_line).split(', ')]
 
 def parse_input(input_lines):
