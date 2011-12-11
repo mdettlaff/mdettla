@@ -111,18 +111,17 @@ class Parser:
         """
         self.tokens = self.tokenize()
         self.valid = True
-        self.next_token()
+        self.read_token()
         self.condition()
         return self.valid
 
-    def next_token(self):
-        self.current_token = self.tokens[0] if self.tokens else None
-        self.tokens = self.tokens[1:]
+    def read_token(self):
+        self.next_token = self.tokens.pop(0) if self.tokens else None
 
     def accept(self, token):
-        other = token is self.OTHER and self.current_token not in self.LEXEMES
-        if self.current_token == token or other:
-            self.next_token()
+        other = token is self.OTHER and self.next_token not in self.LEXEMES
+        if self.next_token == token or other:
+            self.read_token()
             return True
         return False
 
@@ -131,11 +130,13 @@ class Parser:
             self.valid = False
 
     def condition(self):
+        """condition = factor {('OR' | 'AND') factor}"""
         self.factor()
         while self.accept('OR') or self.accept('AND'):
             self.factor()
 
     def factor(self):
+        """factor := atom | '(' condition ')'"""
         if self.accept(self.OTHER):
             pass
         elif self.accept('('):
