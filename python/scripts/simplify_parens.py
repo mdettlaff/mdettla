@@ -58,6 +58,8 @@ class Parser:
         True
         >>> Parser('a OR b OR c').validate()
         True
+        >>> Parser('a AND b AND c AND d').validate()
+        True
         >>> Parser('a OR b OR c AND d OR e').validate()
         True
         >>> Parser('(a)').validate()
@@ -68,6 +70,8 @@ class Parser:
         True
         >>> Parser('(a AND b) AND c').validate()
         True
+        >>> Parser('a AND (b AND c)').validate()
+        True
         >>> Parser('(a AND b) AND (c OR d)').validate()
         True
         >>> Parser('(a AND (b OR c))').validate()
@@ -77,6 +81,12 @@ class Parser:
         >>> Parser('(a AND (b OR c)) AND d').validate()
         True
         >>> Parser('(a AND ((b1 AND b2 OR b3) OR c)) AND d').validate()
+        True
+        >>> Parser('(a AND b) AND (b AND c)').validate()
+        True
+        >>> Parser('((a AND b) AND c) AND d').validate()
+        True
+        >>> Parser('(a AND b AND c) AND d').validate()
         True
         >>> Parser('(').validate()
         False
@@ -90,11 +100,15 @@ class Parser:
         False
         >>> Parser('a AND ()').validate()
         False
+        >>> Parser('(OR)').validate()
+        False
+        >>> Parser('(a AND b').validate()
+        False
         """
         self.tokens = self.tokenize()
         self.valid = True
         self.next_token()
-        self.expression()
+        self.condition()
         return self.valid
 
     def next_token(self):
@@ -102,9 +116,8 @@ class Parser:
         self.tokens = self.tokens[1:]
 
     def accept(self, token):
-        matches = token is not self.OTHER and self.current_token == token
         other = token is self.OTHER and self.current_token not in self.LEXEMES
-        if matches or other:
+        if self.current_token == token or other:
             self.next_token()
             return True
         return False
@@ -113,12 +126,16 @@ class Parser:
         if not self.accept(token):
             self.valid = False
 
-    def expression(self):
+    def condition(self):
+        self.factor()
+        while self.accept('OR') or self.accept('AND'):
+            self.factor()
+
+    def factor(self):
         if self.accept(self.OTHER):
-            if self.accept('AND') or self.accept('OR'):
-                self.expression()
+            pass
         elif self.accept('('):
-            self.expression()
+            self.condition()
             self.expect(')')
         else:
             self.valid = False
