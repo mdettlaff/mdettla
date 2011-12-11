@@ -100,9 +100,13 @@ class Parser:
         False
         >>> Parser('a AND ()').validate()
         False
+        >>> Parser('AND').validate()
+        False
         >>> Parser('(OR)').validate()
         False
         >>> Parser('(a AND b').validate()
+        False
+        >>> Parser('a AND AND').validate()
         False
         """
         self.tokens = self.tokenize()
