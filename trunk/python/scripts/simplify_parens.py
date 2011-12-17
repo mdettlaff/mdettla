@@ -136,7 +136,7 @@ class Parser:
             self.factor()
 
     def factor(self):
-        """factor := atom | '(' condition ')'"""
+        """factor = atom | '(' condition ')'"""
         if self.accept(self.OTHER):
             pass
         elif self.accept('('):
