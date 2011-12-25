@@ -21,7 +21,7 @@ def fold(text, width):
     >>> fold('foo bar', 4)
     'foo\\nbar'
     >>> fold('foo  bar', 4)
-    'foo \\nbar'
+    'foo\\n bar'
     >>> fold('fo  b', 4)
     'fo \\nb'
     >>> fold('foo bar', 5)
@@ -46,6 +46,10 @@ def fold(text, width):
     'foo\\n'
     >>> fold('foo\\n\\n\\nbar b qux', 5)
     'foo\\n\\n\\nbar b\\nqux'
+    >>> fold('foo       ba', 4)
+    'foo\\n   \\n  ba'
+    >>> fold('fo barbazquux', 4)
+    'fo\\nbarb\\nazqu\\nux'
     """
     LINESPACE = '[ \t]+'
     islinespace = lambda s: re.match(LINESPACE + '$', s)
@@ -58,13 +62,14 @@ def fold(text, width):
             line_len = 0
         else:
             line_len += len(token)
-            next_token_len = len(tokens[i + 1]) if i + 1 < len(tokens) else 0
-            if len(token) > width:
-                tokens[i:i + 1] = [token[:width], '\n', token[width:]]
-            elif islinespace(token) and line_len + next_token_len > width:
-                tokens[i:i + 1] = [token[:-1], '\n']
+            if line_len > width:
+                if len(token) == line_len or islinespace(token) and token != ' ':
+                    cut = len(token) - (line_len - width)
+                    tokens[i:i + 1] = [token[:cut], '\n', token[cut:]]
+                elif not islinespace(token):
+                    tokens[i:i + 1] = ['', '\n', token]
         i += 1
-    return ''.join(tokens)
+    return ''.join(tokens).replace(' \n', '\n')
 
 
 doctest.testmod()
