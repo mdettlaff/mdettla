@@ -3,6 +3,7 @@
 
 """Replacement for "fold -w" that can handle UTF-8 correctly."""
 
+import codecs
 import doctest
 import re
 import sys
@@ -79,6 +80,6 @@ doctest.testmod()
 
 if __name__ == '__main__':
     width = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_WIDTH
-    input_lines = ''.join(sys.stdin.readlines())
+    input_lines = codecs.decode(''.join(sys.stdin.readlines()), 'UTF-8')
     print fold(input_lines, width),
 
