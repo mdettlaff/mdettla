@@ -97,7 +97,7 @@ def number_to_words(n):
         words = [times100, times10, times1, times1000] + words
         n /= 1000
         i += 1
-    return ' '.join(filter(lambda word: word is not None, words))
+    return ' '.join(filter(None, words))
 
 
 doctest.testmod()
