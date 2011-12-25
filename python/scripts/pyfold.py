@@ -9,6 +9,7 @@ import re
 import sys
 
 DEFAULT_WIDTH = 80
+ENCODING = 'UTF-8'
 
 
 def fold(text, width):
@@ -54,6 +55,7 @@ def fold(text, width):
     >>> fold('fo barbazquux', 4)
     'fo\\nbarb\\nazqu\\nux'
     """
+    assert width > 0, 'width must be a positive number'
     islinespace = lambda s: re.match(' +$', s)
     line_len = 0
     tokens = filter(None, re.split('( +|\n)', text))
@@ -80,6 +82,6 @@ doctest.testmod()
 
 if __name__ == '__main__':
     width = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_WIDTH
-    input_lines = codecs.decode(''.join(sys.stdin.readlines()), 'UTF-8')
-    print fold(input_lines, width),
+    input_lines = codecs.decode(''.join(sys.stdin.readlines()), ENCODING)
+    print codecs.encode(fold(input_lines, width), ENCODING),
 
