@@ -5,7 +5,7 @@ include '../include/utils.php';
 
 header('Content-Type: text/xml; charset=utf-8');
 
-$MAX_HIGHSCORE_SIZE = 200;
+$MAX_HIGHSCORE_SIZE = 500;
 
 $from_place = $_GET['from_place'];
 if (!is_numeric($from_place)) {
