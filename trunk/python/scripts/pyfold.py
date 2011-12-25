@@ -7,6 +7,8 @@ import doctest
 import re
 import sys
 
+DEFAULT_WIDTH = 80
+
 
 def fold(text, width):
     """
@@ -21,7 +23,7 @@ def fold(text, width):
     >>> fold('foo bar', 4)
     'foo\\nbar'
     >>> fold('foo  bar', 4)
-    'foo\\n bar'
+    'foo \\nbar'
     >>> fold('fo  b', 4)
     'fo \\nb'
     >>> fold('foo bar', 5)
@@ -46,15 +48,14 @@ def fold(text, width):
     'foo\\n'
     >>> fold('foo\\n\\n\\nbar b qux', 5)
     'foo\\n\\n\\nbar b\\nqux'
-    >>> fold('foo       ba', 4)
-    'foo\\n   \\n  ba'
+    >>> fold('foo        ba', 4)
+    'foo \\n    \\n ba'
     >>> fold('fo barbazquux', 4)
     'fo\\nbarb\\nazqu\\nux'
     """
-    LINESPACE = '[ \t]+'
-    islinespace = lambda s: re.match(LINESPACE + '$', s)
+    islinespace = lambda s: re.match(' +$', s)
     line_len = 0
-    tokens = filter(None, re.split('(' + LINESPACE + '|\n)', text))
+    tokens = filter(None, re.split('( +|\n)', text))
     i = 0
     while i < len(tokens):
         token = tokens[i]
@@ -63,10 +64,12 @@ def fold(text, width):
         else:
             line_len += len(token)
             if line_len > width:
-                if len(token) == line_len or islinespace(token) and token != ' ':
-                    cut = len(token) - (line_len - width)
+                cut = len(token) - (line_len - width)
+                if len(token) == line_len or islinespace(token):
+                    if islinespace(token):
+                        cut += 1
                     tokens[i:i + 1] = [token[:cut], '\n', token[cut:]]
-                elif not islinespace(token):
+                else:
                     tokens[i:i + 1] = ['', '\n', token]
         i += 1
     return ''.join(tokens).replace(' \n', '\n')
@@ -75,7 +78,7 @@ def fold(text, width):
 doctest.testmod()
 
 if __name__ == '__main__':
-    width = int(sys.argv[1]) if len(sys.argv) > 1 else 80
+    width = int(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_WIDTH
     input_lines = ''.join(sys.stdin.readlines())
     print fold(input_lines, width),
 
