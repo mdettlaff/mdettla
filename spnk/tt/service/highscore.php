@@ -83,7 +83,7 @@ function query_required_speed($min_required_speed, $max_highscore_size) {
 }
 
 $H_KEY = 'secret2';
-$MAX_HIGHSCORE_SIZE = 200;
+$MAX_HIGHSCORE_SIZE = 500;
 $MIN_REQUIRED_SPEED = 120;
 
 mysql_connect();
