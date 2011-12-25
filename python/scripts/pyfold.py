@@ -58,14 +58,11 @@ def fold(text, width):
             line_len = 0
         else:
             line_len += len(token)
+            next_token_len = len(tokens[i + 1]) if i + 1 < len(tokens) else 0
             if len(token) > width:
-                tokens[i] = token[:width]
-                tokens.insert(i + 1, '\n')
-                tokens.insert(i + 2, token[width:])
-            elif i + 1 < len(tokens) and line_len + len(tokens[i + 1]) > width:
-                if islinespace(token):
-                    tokens[i] = token[:-1]
-                    tokens.insert(i + 1, '\n')
+                tokens[i:i + 1] = [token[:width], '\n', token[width:]]
+            elif islinespace(token) and line_len + next_token_len > width:
+                tokens[i:i + 1] = [token[:-1], '\n']
         i += 1
     return ''.join(tokens)
 
@@ -74,6 +71,6 @@ doctest.testmod()
 
 if __name__ == '__main__':
     width = int(sys.argv[1]) if len(sys.argv) > 1 else 80
-    #input_lines = ''.join(sys.stdin.readlines())
-    #print fold(input_lines, width),
+    input_lines = ''.join(sys.stdin.readlines())
+    print fold(input_lines, width),
 
