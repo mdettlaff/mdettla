@@ -21,9 +21,9 @@ def fold(text, width):
     >>> fold('foo bar', 4)
     'foo\\nbar'
     >>> fold('foo  bar', 4)
-    'foo\\n  bar'
+    'foo \\nbar'
     >>> fold('fo  b', 4)
-    'fo\\n  b'
+    'fo \\nb'
     >>> fold('foo bar', 5)
     'foo\\nbar'
     >>> fold('foo bar', 6)
@@ -47,23 +47,25 @@ def fold(text, width):
     >>> fold('foo\\n\\n\\nbar b qux', 5)
     'foo\\n\\n\\nbar b\\nqux'
     """
-    LINEWHITESPACE = '[ \t]+'
-    islinewhitespace = lambda x: re.match(s, LINEWHITESPACE)
+    LINESPACE = '[ \t]+'
+    islinespace = lambda s: re.match(LINESPACE + '$', s)
     line_len = 0
-    tokens = re.split('(' + LINEWHITESPACE + '|\n)', text)
+    tokens = filter(None, re.split('(' + LINESPACE + '|\n)', text))
     i = 0
     while i < len(tokens):
-        if '\n' == tokens[i]:
+        token = tokens[i]
+        if token == '\n':
             line_len = 0
         else:
-            line_len += len(tokens[i])
-        if ' ' in tokens[i] and line_len + len(tokens[i + 1]) > width:
-            tokens[i] = '\n' if tokens[i] == ' ' else '\n' + tokens[i]
-            line_len = 0
-        elif not tokens[i].isspace() and len(tokens[i]) > width:
-            tokens.insert(i, tokens[i][:width] + '\n')
-            tokens[i + 1] = tokens[i + 1][width:]
-            line_len = 0
+            line_len += len(token)
+            if len(token) > width:
+                tokens[i] = token[:width]
+                tokens.insert(i + 1, '\n')
+                tokens.insert(i + 2, token[width:])
+            elif i + 1 < len(tokens) and line_len + len(tokens[i + 1]) > width:
+                if islinespace(token):
+                    tokens[i] = token[:-1]
+                    tokens.insert(i + 1, '\n')
         i += 1
     return ''.join(tokens)
 
