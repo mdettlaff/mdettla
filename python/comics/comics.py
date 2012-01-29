@@ -80,7 +80,7 @@ if __name__ == '__main__':
     download_webcomic('http://nodwick.humor.gamespy.com/ffn/',
             r'.*<img src="(.*?strips.*?)"', dl_dir, 'ffn')
     download_webcomic('http://www.chainsawsuit.com',
-            r'.*<div id="comic">\s*<img src="(.*?)"', dl_dir, 'chainsawsuit')
+            r'.*<div id="comic.*?<img src="(.*?)"', dl_dir, 'chainsawsuit')
 
     download_gocomics_webcomic = lambda name: \
             download_webcomic('http://gocomics.com/' + name,
