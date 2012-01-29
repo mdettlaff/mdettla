@@ -60,7 +60,7 @@ public class ParserTest {
 	}
 
 	@Test(expected = ParseException.class)
-	public void testParensError() {
+	public void testMissingParen() {
 		parser.parse("a(aa");
 	}
 
