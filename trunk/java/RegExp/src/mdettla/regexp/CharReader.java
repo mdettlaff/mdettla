@@ -18,7 +18,7 @@ class CharReader {
 		position++;
 	}
 
-	public int getPosition() {
+	int getPosition() {
 		return position;
 	}
 }
