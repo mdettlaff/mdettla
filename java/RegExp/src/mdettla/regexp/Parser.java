@@ -6,11 +6,18 @@ class Parser {
 
 	public Expression parse(String regExp) {
 		this.regExp = new CharReader(regExp);
-		return regExp();
+		Expression expression = expression();
+		checkIfParsingComplete();
+		return expression;
 	}
 
-	// http://www.users.pjwstk.edu.pl/~jms/qnx/help/watcom/wd/regexp.html#RegularExpressionBNF
-	private Expression regExp() {
+	private void checkIfParsingComplete() {
+		if (this.regExp.getCurrent() != null) {
+			throw new ParseException("superfluous characters at the end of expression");
+		}
+	}
+
+	private Expression expression() {
 		return alternative();
 	}
 
@@ -24,21 +31,27 @@ class Parser {
 	}
 
 	private Expression sequence() {
-		Expression left = atom();
-		while (isRegularChar(regExp.getCurrent())) {
-			Expression right = atom();
+		Expression left = repetition();
+		while (regExp.getCurrent() != null && !isSpecial(regExp.getCurrent())) {
+			Expression right = repetition();
 			left = new Sequence(left, right);
 		}
 		return left;
 	}
 
-	private boolean isRegularChar(Character c) {
-		return c != null && !c.equals('|') && !c.equals(')');
+	private Expression repetition() {
+		Expression expression = atom();
+		if (accept('*')) {
+			expression = new Star(expression);
+		} else if (accept('+')) {
+			expression = new Plus(expression);
+		}
+		return expression;
 	}
 
 	private Expression atom() {
 		if (accept('(')) {
-			Expression inParens = regExp();
+			Expression inParens = expression();
 			expect(')');
 			return inParens;
 		}
@@ -46,7 +59,7 @@ class Parser {
 		if (accept(current)) {
 			return symbol(current);
 		}
-		return regExp();
+		return expression();
 	}
 
 	private Symbol symbol(Character c) {
@@ -63,7 +76,11 @@ class Parser {
 
 	private void expect(char c) {
 		if (!accept(c)) {
-			throw new ParseException();
+			throw new ParseException("missing '" + c + "'");
 		}
+	}
+
+	private boolean isSpecial(char c) {
+		return "|)*+".indexOf(c) != -1;
 	}
 }
