@@ -9,6 +9,7 @@ class Parser {
 		return regExp();
 	}
 
+	// http://www.users.pjwstk.edu.pl/~jms/qnx/help/watcom/wd/regexp.html#RegularExpressionBNF
 	private Expression regExp() {
 		return alternative();
 	}
@@ -24,12 +25,15 @@ class Parser {
 
 	private Expression sequence() {
 		Expression left = atom();
-		while (Character.valueOf('a').equals(regExp.getCurrent())
-				|| Character.valueOf('(').equals(regExp.getCurrent())) {
+		while (isRegularChar(regExp.getCurrent())) {
 			Expression right = atom();
 			left = new Sequence(left, right);
 		}
 		return left;
+	}
+
+	private boolean isRegularChar(Character c) {
+		return c != null && !c.equals('|') && !c.equals(')');
 	}
 
 	private Expression atom() {
@@ -37,14 +41,16 @@ class Parser {
 			Expression inParens = regExp();
 			expect(')');
 			return inParens;
-		} else if (accept('a')) {
-			return symbol();
+		}
+		Character current = regExp.getCurrent();
+		if (accept(current)) {
+			return symbol(current);
 		}
 		return regExp();
 	}
 
-	private Symbol symbol() {
-		return new Symbol('a');
+	private Symbol symbol(Character c) {
+		return new Symbol(c);
 	}
 
 	private boolean accept(Character c) {

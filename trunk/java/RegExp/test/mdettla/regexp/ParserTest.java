@@ -17,6 +17,7 @@ public class ParserTest {
 	@Test
 	public void testSymbol() {
 		assertEquals(new Symbol('a'), parser.parse("a"));
+		assertEquals(new Symbol('b'), parser.parse("b"));
 	}
 
 	@Test
@@ -29,6 +30,7 @@ public class ParserTest {
 	public void testSequence() {
 		assertEquals(new Sequence(new Symbol('a'), new Symbol('a')), parser.parse("aa"));
 		assertEquals(new Sequence(new Sequence(new Symbol('a'), new Symbol('a')), new Symbol('a')), parser.parse("aaa"));
+		assertEquals(new Sequence(new Sequence(new Symbol('a'), new Symbol('b')), new Symbol('a')), parser.parse("aba"));
 	}
 
 	@Test
@@ -43,6 +45,7 @@ public class ParserTest {
 		assertEquals(new Sequence(new Symbol('a'), new Sequence(new Symbol('a'), new Symbol('a'))), parser.parse("a(aa)"));
 		assertEquals(new Sequence(new Alternative(new Symbol('a'), new Symbol('a')), new Symbol('a')), parser.parse("(a|a)a"));
 		assertEquals(new Alternative(new Sequence(new Symbol('a'), new Symbol('a')), new Symbol('a')), parser.parse("(aa)|a"));
+		assertEquals(new Alternative(new Sequence(new Sequence(new Symbol('a'), new Symbol('b')), new Symbol('c')), new Sequence(new Symbol('d'), new Symbol('e'))), parser.parse("(abc)|(de)"));
 	}
 
 	@Test(expected = ParseException.class)
