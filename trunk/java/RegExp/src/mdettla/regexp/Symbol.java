@@ -16,4 +16,21 @@ class Symbol implements Expression {
 		}
 		return false;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || getClass() != obj.getClass()) {
+			return false;
+		}
+		Symbol other = (Symbol) obj;
+		return symbol.equals(other.symbol);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
+		return result;
+	}
 }
