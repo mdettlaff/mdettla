@@ -2,12 +2,10 @@ package mdettla.regexp;
 
 class Parser {
 
-	private StringBuilder regExp;
-	private Character next;
+	private CharReader regExp;
 
 	public Expression parse(String regExp) {
-		this.regExp = new StringBuilder(regExp);
-		read();
+		this.regExp = new CharReader(regExp);
 		return regExp();
 	}
 
@@ -26,7 +24,8 @@ class Parser {
 
 	private Expression sequence() {
 		Expression left = atom();
-		while (Character.valueOf('a').equals(next) || Character.valueOf('(').equals(next)) {
+		while (Character.valueOf('a').equals(regExp.getCurrent())
+				|| Character.valueOf('(').equals(regExp.getCurrent())) {
 			Expression right = atom();
 			left = new Sequence(left, right);
 		}
@@ -48,18 +47,9 @@ class Parser {
 		return new Symbol('a');
 	}
 
-	private void read() {
-		if (regExp.length() == 0) {
-			next = null;
-		} else {
-			next = regExp.charAt(0);
-			regExp.deleteCharAt(0);
-		}
-	}
-
 	private boolean accept(Character c) {
-		if (c.equals(next)) {
-			read();
+		if (c.equals(regExp.getCurrent())) {
+			regExp.next();
 			return true;
 		}
 		return false;
