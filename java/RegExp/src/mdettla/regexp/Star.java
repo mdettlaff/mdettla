@@ -31,4 +31,9 @@ class Star implements Expression {
 		result = prime * result + ((expression == null) ? 0 : expression.hashCode());
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "(" + expression + ")*";
+	}
 }
