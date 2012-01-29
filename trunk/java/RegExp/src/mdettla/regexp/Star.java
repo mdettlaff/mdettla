@@ -9,7 +9,7 @@ class Star implements Expression {
 	}
 
 	@Override
-	public boolean match(CharReader chars) {
+	public boolean match(CharIterator chars) {
 		while (expression.match(chars)) {
 		}
 		return true;

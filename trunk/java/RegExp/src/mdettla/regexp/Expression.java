@@ -2,5 +2,5 @@ package mdettla.regexp;
 
 interface Expression {
 
-	boolean match(CharReader chars);
+	boolean match(CharIterator chars);
 }

@@ -11,7 +11,7 @@ class Sequence implements Expression {
 	}
 
 	@Override
-	public boolean match(CharReader chars) {
+	public boolean match(CharIterator chars) {
 		return left.match(chars) && right.match(chars);
 	}
 
