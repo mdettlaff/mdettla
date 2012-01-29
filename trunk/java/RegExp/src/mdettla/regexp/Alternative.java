@@ -21,7 +21,7 @@ class Alternative implements Expression {
 			return false;
 		}
 		Alternative other = (Alternative) obj;
-		return left.equals(other.right) && right.equals(other.right);
+		return left.equals(other.left) && right.equals(other.right);
 	}
 
 	@Override
