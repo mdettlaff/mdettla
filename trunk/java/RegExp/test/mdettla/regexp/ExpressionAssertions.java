@@ -2,13 +2,13 @@ package mdettla.regexp;
 
 import static org.junit.Assert.assertEquals;
 
-public class ExpressionAssertions {
+class ExpressionAssertions {
 
-	static void assertMatch(Expression expression, String string, int expectedEndPosition) {
+	public static void assertMatch(Expression expression, String string, int expectedEndPosition) {
 		assertMatch(expression, string, expectedEndPosition, true);
 	}
 
-	static void assertNoMatch(Expression expression, String string, int expectedEndPosition) {
+	public static void assertNoMatch(Expression expression, String string, int expectedEndPosition) {
 		assertMatch(expression, string, expectedEndPosition, false);
 	}
 
