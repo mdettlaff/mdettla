@@ -21,7 +21,7 @@ class Sequence implements Expression {
 			return false;
 		}
 		Sequence other = (Sequence) obj;
-		return left.equals(other.right) && right.equals(other.right);
+		return left.equals(other.left) && right.equals(other.right);
 	}
 
 	@Override
