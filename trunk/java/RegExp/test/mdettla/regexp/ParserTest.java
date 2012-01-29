@@ -48,8 +48,24 @@ public class ParserTest {
 		assertEquals(new Alternative(new Sequence(new Sequence(new Symbol('a'), new Symbol('b')), new Symbol('c')), new Sequence(new Symbol('d'), new Symbol('e'))), parser.parse("(abc)|(de)"));
 	}
 
+	@Test
+	public void testStar() {
+		assertEquals(new Star(new Symbol('a')), parser.parse("a*"));
+		assertEquals(new Star(new Star(new Symbol('a'))), parser.parse("(a*)*"));
+	}
+
+	@Test
+	public void testPlus() {
+		assertEquals(new Plus(new Symbol('a')), parser.parse("a+"));
+	}
+
 	@Test(expected = ParseException.class)
 	public void testParensError() {
 		parser.parse("a(aa");
+	}
+
+	@Test(expected = ParseException.class)
+	public void testSuperfluousCharacters() {
+		assertEquals(new Star(new Star(new Symbol('a'))), parser.parse("(a*)**"));
 	}
 }
