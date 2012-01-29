@@ -2,17 +2,17 @@ package mdettla.regexp;
 
 class Parser {
 
-	private CharReader regExp;
+	private CharIterator regExp;
 
 	public Expression parse(String regExp) {
-		this.regExp = new CharReader(regExp);
+		this.regExp = new CharIterator(regExp);
 		Expression expression = expression();
 		checkIfParsingComplete();
 		return expression;
 	}
 
 	private void checkIfParsingComplete() {
-		if (this.regExp.getCurrent() != null) {
+		if (!this.regExp.isCompleted()) {
 			throw new ParseException("superfluous characters at the end of expression");
 		}
 	}
@@ -32,7 +32,7 @@ class Parser {
 
 	private Expression sequence() {
 		Expression left = repetition();
-		while (regExp.getCurrent() != null && !isSpecial(regExp.getCurrent())) {
+		while (!regExp.isCompleted() && !isSpecial(regExp.peek())) {
 			Expression right = repetition();
 			left = new Sequence(left, right);
 		}
@@ -55,7 +55,7 @@ class Parser {
 			expect(')');
 			return inParens;
 		}
-		Character current = regExp.getCurrent();
+		Character current = regExp.peek();
 		if (accept(current)) {
 			return symbol(current);
 		}
@@ -67,7 +67,7 @@ class Parser {
 	}
 
 	private boolean accept(Character c) {
-		if (c.equals(regExp.getCurrent())) {
+		if (!regExp.isCompleted() && c.equals(regExp.peek())) {
 			regExp.next();
 			return true;
 		}

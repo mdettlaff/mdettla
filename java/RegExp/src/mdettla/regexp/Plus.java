@@ -9,7 +9,7 @@ class Plus implements Expression {
 	}
 
 	@Override
-	public boolean match(CharReader chars) {
+	public boolean match(CharIterator chars) {
 		if (!expression.match(chars)) {
 			return false;
 		}

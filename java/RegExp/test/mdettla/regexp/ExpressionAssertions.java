@@ -13,7 +13,7 @@ public class ExpressionAssertions {
 	}
 
 	private static void assertMatch(Expression expression, String string, int expectedEndPosition, boolean isMatch) {
-		CharReader chars = new CharReader(string);
+		CharIterator chars = new CharIterator(string);
 		String message = "\"" + string + "\" should " + (isMatch ? "" : "not") + " match";
 		assertEquals(message, isMatch, expression.match(chars));
 		assertEquals(expectedEndPosition, chars.getPosition());

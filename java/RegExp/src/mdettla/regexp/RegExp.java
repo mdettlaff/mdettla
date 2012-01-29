@@ -10,6 +10,6 @@ public class RegExp {
 	}
 
 	public boolean match(String string) {
-		return expression.match(new CharReader(string));
+		return expression.match(new CharIterator(string));
 	}
 }

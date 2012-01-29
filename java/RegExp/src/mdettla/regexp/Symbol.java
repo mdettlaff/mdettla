@@ -9,8 +9,8 @@ class Symbol implements Expression {
 	}
 
 	@Override
-	public boolean match(CharReader chars) {
-		if (symbol.equals(chars.getCurrent())) {
+	public boolean match(CharIterator chars) {
+		if (!chars.isCompleted() && symbol.equals(chars.peek())) {
 			chars.next();
 			return true;
 		}

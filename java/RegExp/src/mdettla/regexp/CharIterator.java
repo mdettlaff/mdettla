@@ -1,21 +1,24 @@
 package mdettla.regexp;
 
-class CharReader {
+class CharIterator {
 
 	private final String string;
 	private int position;
 
-	public CharReader(String string) {
+	public CharIterator(String string) {
 		this.string = string;
-		position = 0;
 	}
 
-	public Character getCurrent() {
-		return position < string.length() ? string.charAt(position) : null;
+	public char peek() {
+		return string.charAt(position);
 	}
 
 	public void next() {
 		position++;
+	}
+
+	public boolean isCompleted() {
+		return position >= string.length();
 	}
 
 	int getPosition() {
