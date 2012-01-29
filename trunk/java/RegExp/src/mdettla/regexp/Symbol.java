@@ -33,4 +33,9 @@ class Symbol implements Expression {
 		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(symbol);
+	}
 }

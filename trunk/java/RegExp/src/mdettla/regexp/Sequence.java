@@ -32,4 +32,9 @@ class Sequence implements Expression {
 		result = prime * result + ((right == null) ? 0 : right.hashCode());
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(left) + right;
+	}
 }
