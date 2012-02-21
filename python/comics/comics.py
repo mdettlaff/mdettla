@@ -62,7 +62,7 @@ if __name__ == '__main__':
     download_webcomic('http://phdcomics.com/comics.php',
             r'.*<img src=(.*?comics/archive/phd.*?) ', dl_dir, 'phdcomics')
     download_webcomic('http://www.penny-arcade.com/comic/',
-            r'\s+<img src="(.*?)"', dl_dir, 'penny_arcade')
+            r'\s+<img src="(http://art.*?)"', dl_dir, 'penny_arcade')
     download_webcomic('http://explosm.net/comics/',
             r'.*<img.*? src="(.*?net/db/files/Comics.*?)"', dl_dir, 'cyanide')
     download_webcomic('http://www.smbc-comics.com/',
