@@ -1,0 +1,26 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				template="/template.xhtml">
+
+	<ui:define name="body">
+		<h:form>
+			<h:panelGrid columns="2">
+				<h:outputText value="Price:" />
+				<p:inputText id="price" value="#{testBean.price}">
+					<p:ajax listener="#{testBean.updateAmount()}" update="amount" />
+				</p:inputText>
+				<h:outputText value="Quantity:" />
+				<h:outputText value="2" />
+				<h:outputText value="Amount:" />
+				<p:inputText id="amount" value="#{testBean.amount}">
+					<p:ajax listener="#{testBean.updatePrice()}" update="price" />
+				</p:inputText>
+			</h:panelGrid>
+			<p:commandButton value="Save" action="#{testBean.save()}" update="@form" />
+		</h:form>
+	</ui:define>
+</ui:composition>
