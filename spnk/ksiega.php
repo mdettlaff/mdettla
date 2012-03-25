@@ -1,6 +1,6 @@
 <?php
 session_start();
-setcookie('PHPSESSID', session_id(), 0, '/', '.szybkiepisanie.webpark.pl');
+setcookie('PHPSESSID', session_id(), 0, '/', '.hosting8686472.az.pl');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html>
@@ -65,7 +65,8 @@ function validate($name, $email, $content) {
     return true;
 }
 
-mysql_connect();
+mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_select_db('a06062ak_spnk');
 
 if (!empty($_POST['submit'])) {
     // dodaj nowy wpis

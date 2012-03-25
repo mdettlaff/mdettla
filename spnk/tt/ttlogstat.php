@@ -1,5 +1,8 @@
 <?php
 
+mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_select_db('a06062ak_spnk');
+
 include 'include/log.php';
 
 function compute_correctness($chars, $mistakes, $corrections) {
@@ -23,8 +26,6 @@ function td_cut($content, $maxlen) {
     $result .= '</td>';
     return $result;
 }
-
-mysql_connect();
 
 $username = 'admin';
 $password = 'tschipp';
