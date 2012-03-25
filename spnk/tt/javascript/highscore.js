@@ -21,14 +21,22 @@ function updateHighscoreTable(page) {
             var hsPaging = "";
 
             if (currentPage === 1) {
-                hsPaging += "&larr; ";
+                hsPaging += "&lt;&lt; &lt; ";
             } else {
+                hsPaging += "<a href=\"#\" onClick=" +
+                        "\"updateHighscoreTable(1); " +
+                        "return false;\">" +
+                        "&lt;&lt; </a>";
                 hsPaging += "<a href=\"#\" onClick=" +
                         "\"updateHighscoreTable(" + (currentPage - 1) + "); " +
                         "return false;\">" +
-                        "&larr; </a>";
+                        "&lt; </a>";
             }
-            for (i = 1; i <= pageCount; i++) {
+            var visiblePagesCount = Math.min(pageCount, 20);
+            var minPage = Math.max(1, currentPage - visiblePagesCount / 2);
+            minPage = Math.min(minPage, pageCount - visiblePagesCount + 1);
+            var maxPage = Math.min(pageCount, minPage + visiblePagesCount - 1);
+            for (i = minPage; i <= maxPage; i++) {
                 if (i === currentPage) {
                     hsPaging += "<span id=\"currentPage\">" + i + "</span> ";
                 } else {
@@ -39,12 +47,16 @@ function updateHighscoreTable(page) {
                 }
             }
             if (currentPage === pageCount) {
-                hsPaging += "&rarr; ";
+                hsPaging += "&gt; &gt;&gt;";
             } else {
                 hsPaging += "<a href=\"#\" onClick=" +
                         "\"updateHighscoreTable(" + (currentPage + 1) + "); " +
                         "return false;\">" +
-                        "&rarr; </a>";
+                        "&gt; </a>";
+                hsPaging += "<a href=\"#\" onClick=" +
+                        "\"updateHighscoreTable(" + pageCount + "); " +
+                        "return false;\">" +
+                        "&gt;&gt; </a>";
             }
             return hsPaging;
         }
