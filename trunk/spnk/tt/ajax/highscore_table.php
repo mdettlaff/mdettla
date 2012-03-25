@@ -1,5 +1,8 @@
 <?php
 
+mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_select_db('a06062ak_spnk');
+
 include '../include/log.php';
 include '../include/utils.php';
 
@@ -18,8 +21,6 @@ if (!is_numeric($to_place)) {
 if ($from_place > $to_place) {
     $to_place = $from_place;
 }
-
-mysql_connect();
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
 echo "<highscore>\n";

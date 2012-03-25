@@ -1,13 +1,16 @@
 <?php
 
 session_start();
-setcookie('PHPSESSID', session_id(), 0, '/', '.szybkiepisanie.webpark.pl');
+setcookie('PHPSESSID', session_id(), 0, '/', '.hosting8686472.az.pl');
 
 if (isset($_POST['username'])) {
     $MONTH = 3600 * 24 * 30;
     setcookie('username', trim($_POST['username']), time() + 3 * $MONTH,
-        '/', '.szybkiepisanie.webpark.pl');
+        '/', '.hosting8686472.az.pl');
 }
+
+mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_select_db('a06062ak_spnk');
 
 include '../include/log.php';
 include '../include/utils.php';
@@ -82,11 +85,22 @@ function query_required_speed($min_required_speed, $max_highscore_size) {
     return $required_speed;
 }
 
+function starts_with($haystack, $needle) {
+    return strcmp(substr($haystack, 0, strlen($needle)), $needle) === 0;
+}
+
+function is_antispam_filter_passed($ip) {
+    if ($_POST['correctChars'] == 640 && starts_with($ip, '83.11.')) {
+        log_write('entry not added to highscore, user is banned; '
+            . 'POST parameters: ' . print_r($_POST, true));
+        return false;
+    }
+    return true;
+}
+
 $H_KEY = 'secret2';
 $MAX_HIGHSCORE_SIZE = 1500;
 $MIN_REQUIRED_SPEED = 120;
-
-mysql_connect();
 
 $required_speed = query_required_speed(
         $MIN_REQUIRED_SPEED, $MAX_HIGHSCORE_SIZE);
@@ -117,6 +131,11 @@ if ($_GET['q'] == 'get_threshold') {
 
     $MAX_MISTAKES = 0;
 
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
     $current_time = time();
     if (!validate($username, $speed, $mistakes, $corrections,
             $pl, $chars, $minutes, $seconds, $time_verifier)) {
@@ -143,15 +162,10 @@ if ($_GET['q'] == 'get_threshold') {
         log_write('entry not added to highscore, test result not accepted; '
             . "speed=$speed, required_speed=$required_speed; "
             . 'POST parameters: ' . print_r($_POST, true));
-    } else {
+    } else if (is_antispam_filter_passed($ip)) {
         // konwersja polskiego u³amka dziesiêtnego (przecinek)
         // na amerykañski (kropka)
         $speed = str_replace(',', '.', $speed);
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
         $username = mysql_real_escape_string($username);
         $speed = mysql_real_escape_string($speed);
         $mistakes = mysql_real_escape_string($mistakes);

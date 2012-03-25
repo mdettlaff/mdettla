@@ -1,7 +1,10 @@
 <?php
 
 session_start();
-setcookie('PHPSESSID', session_id(), 0, '/', '.szybkiepisanie.webpark.pl');
+setcookie('PHPSESSID', session_id(), 0, '/', '.hosting8686472.az.pl');
+
+mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_select_db('a06062ak_spnk');
 
 include '../include/log.php';
 include '../include/utils.php';
@@ -33,8 +36,6 @@ $time_verifier = $_POST['timeVerifier'];
 $H_KEY = 'secret1';
 $MAX_MISTAKES = 25;
 
-mysql_connect();
-
 $current_time = time();
 if (!validate($speed, $mistakes, $corrections, $pl, $chars,
         $minutes, $seconds, $time_verifier)) {
@@ -50,6 +51,7 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
 } else if (!verify_typing_time($minutes, $seconds, $time_verifier)) {
     log_write('entry not added to ttlog, suspicious typing time; '
         . 'POST parameters: ' . print_r($_POST, true));
+/* wy³±czamy sprawdzanie HMAC, bo ttlog_h_data nie zawsze siê zapisuje
 } else if (!is_hmac_valid($h, $_SESSION['ttlog_h_data'] . ':'
         . $speed . ':' . $mistakes . ':' . $corrections . ':' . $pl . ':'
         . $minutes . ':' . $seconds . ':' . $time_verifier, $H_KEY)) {
@@ -57,6 +59,7 @@ if (!validate($speed, $mistakes, $corrections, $pl, $chars,
         . 'ttlog_h_data=' . $_SESSION['ttlog_h_data'] . '; '
         . 'POST parameters: ' . print_r($_POST, true) . '; '
         . 'user agent: ' . $_SERVER['HTTP_USER_AGENT']);
+*/
 } else if ($mistakes <= $MAX_MISTAKES) {
     // konwersja polskiego u³amka dziesiêtnego (przecinek)
     // na amerykañski (kropka)
