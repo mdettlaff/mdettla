@@ -99,7 +99,7 @@ function is_antispam_filter_passed($ip) {
 }
 
 $H_KEY = 'secret2';
-$MAX_HIGHSCORE_SIZE = 1500;
+$MAX_HIGHSCORE_SIZE = 10000;
 $MIN_REQUIRED_SPEED = 120;
 
 $required_speed = query_required_speed(
