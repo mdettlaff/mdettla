@@ -3,7 +3,7 @@
 mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
 mysql_select_db('a06062ak_spnk');
 
-include 'include/log.php';
+include '../include/log.php';
 
 function compute_correctness($chars, $mistakes, $corrections) {
     if (isset($corrections)) {
