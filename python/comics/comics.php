@@ -36,13 +36,21 @@
             </a>
         </div>
         <div>
+            <table>
 <?php for ($i = 0; $i < count($comics); $i++) { ?>
-            <?=$i + 1?>
-            <a href="comics.php?comic=<?=$i + 1?>">
-                <?=basename($comics[$i])?>
-            </a>
-            <br>
+                <tr>
+                    <td>
+                        <?=$i + 1?>
+                        <a href="comics.php?comic=<?=$i + 1?>">
+                            <?=basename($comics[$i])?>
+                        </a>
+                    </td>
+                    <td>
+                        <?=date('d.m.Y H:i:s', filemtime($comics[$i]))?>
+                    </td>
+                </tr>
 <?php } ?>
+            </table>
         </div>
     </body>
 </html>
