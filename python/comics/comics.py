@@ -50,7 +50,7 @@ if __name__ == '__main__':
     download_webcomic('http://www.dilbert.com/fast/',
             r'<img src="(.*?)" />', dl_dir, 'dilbert')
     download_webcomic('http://xkcd.com/',
-            r'.*embedding\): (.*?)</h3>$', dl_dir, 'xkcd')
+            r'.*embedding\): (.*?)$', dl_dir, 'xkcd')
     download_webcomic('http://notinventedhe.re/',
             r'.*<img alt="Not Invented Here.*? src="(.*?)"', dl_dir, 'nih')
     download_webcomic('http://sinfest.net/',
