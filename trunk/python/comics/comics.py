@@ -60,7 +60,7 @@ if __name__ == '__main__':
     download_webcomic('http://questionablecontent.net/',
             r'<img id="strip" src="(.*?)">$', dl_dir, 'qc')
     download_webcomic('http://phdcomics.com/comics.php',
-            r'.*<img src=(.*?comics/archive/phd.*?) ', dl_dir, 'phdcomics')
+            r'.*<img.*?src=(.*?comics/archive/phd.*?) ', dl_dir, 'phdcomics')
     download_webcomic('http://www.penny-arcade.com/comic/',
             r'\s+<img src="(http://art.*?)"', dl_dir, 'penny_arcade')
     download_webcomic('http://explosm.net/comics/',
