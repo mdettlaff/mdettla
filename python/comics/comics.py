@@ -85,6 +85,8 @@ if __name__ == '__main__':
             r'.*<img src="(.*?nedroid.com/comics.*?)"', dl_dir, 'nedroid')
     download_webcomic('http://www.forlackofabettercomic.com',
             r'.*<img src="(.*?img/comic.*?)"', dl_dir, 'floabc')
+    download_webcomic('http://www.collectedcurios.com/sequentialart.php',
+            r'.*<img id="strip" src="(.*?)"', dl_dir, 'sequential_art')
 
     download_gocomics_webcomic = lambda name: \
             download_webcomic('http://gocomics.com/' + name,
