@@ -77,8 +77,6 @@ if __name__ == '__main__':
             r'.*<IMG ALT="Latest Strip".*? SRC="(.*?)"', dl_dir, 'uf')
     download_webcomic('http://cowbirdsinlove.com/',
             r'<img src="(.*?)".*id="comic"', dl_dir, 'cowbirds')
-    download_webcomic('http://nodwick.humor.gamespy.com/ffn/',
-            r'.*<img src="(.*?strips.*?)"', dl_dir, 'ffn')
     download_webcomic('http://www.chainsawsuit.com',
             r'.*<div id="comic.*?<img src="(.*?)"', dl_dir, 'chainsawsuit')
     download_webcomic('http://www.nedroid.com',
