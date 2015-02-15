@@ -1,0 +1,208 @@
+Too Much Love Will Kill You
+
+Words and music by Brian May, Frank Musker, Elizabeth Lamers
+
+(Nicked from Dec 92 Guitarist magazine, without permission)
+
+I've not marked the phrasing (slides, hammers etc), but you should be able to work this out for yourself (close enough, anyway). I've notated bends by 15^(17) meaning fifteenth fret bent up by a tone (equivalent note to 17th fret).
+
+As always with tab, timing is only shown very roughly - again, use the record (sorry - CD) to work it out properly.
+
+e-----7--8--10--|--------------------|---------------------|
+B---------------|--8--------5--7--8--|---------------------|
+G---------------|--------------------|--7---------9-7-5-4--|
+D---------------|--------------------|---------------------|
+A---------------|--------------------|---------------------|
+E---------------|--------------------|---------------------|
+
+e-------------------7-8^(10)-8-|-7----------------------------|
+B-----------------8------------|----10-10--X-8-8--7-7---5-7-5-|
+G--5----------7-7--------------|------------------------------|
+D------7-5-7-------------------|------------------------------|
+A------------------------------|------------------------------|
+E------------------------------|------------------------------|
+
+e---------------------------|--------------------|--------10^(12)-10-8-7-|
+B-------------8-10^(12)--10-|-8-------8-7----7-8-|-----------------------|
+G-7---------7---------------|-------9------------|-9---------------------|
+D---------9-----------------|-----9--------9-----|-----------------------|
+A---------------------------|--------------------|-----------------------|
+E---------------------------|--------------------|-----------------------|
+
+e------7-----------15^(17)-(17)-|
+B-10-----10-8-7-----------------|
+G---------------9---------------|
+D-------------------------------|
+A-------------------------------|
+E-------------------------------|
+
+e-17-17^(19)-17-15--14-15--------------------------|
+B-------------------------17--10^(12)-10^(12)-10-8-|
+G--------------------------------------------------|
+D--------------------------------------------------|
+A--------------------------------------------------|
+E--------------------------------------------------|
+
+e------------10-14-10-------12-8-------|-10-8------------------------------|---
+B-10-------10---------10---------10----|------8-10-8-7---------------------|---
+G--------11--------------11---------11-|---------------7-7-9-7---7-9-7-----|---
+D------12------------------------------|-----------------------9-------9-7-|-9-
+A--------------------------------------|-----------------------------------|---
+E--------------------------------------|-----------------------------------|---
+
+
+
+This is how I play the solo on TMLWKY. I think is mostly correct, but the G major run and another bit I just kind of improvised, but even then I tried to match whatever Brian played as best as I can. Using a chorus on this song really helps. (An AC30 and a BHM guitar would help too :) Comments, corrections are welcomed.
+
+This TAB transcription was created using TAB MASTER version 1.0
+
+e:--------------------------------17b(19)--17--15-|
+B:---18b(20)----18b(20)-18b(20)-------------------|
+G:------------------------------------------------|
+D:------------------------------------------------|
+A:------------------------------------------------|
+E:------------------------------------------------|
+
+e:--14----14-15-17-17b(19)---(19)--b(17)-----|
+B:-----17--------------------------------17--|
+G:-------------------------------------------|
+D:-------------------------------------------|
+A:-------------------------------------------|
+E:-------------------------------------------|
+
+e:--19b(20)-b(19)-17---\15--17-15-17/19-|
+B:--------------------------------------|
+G:--------------------------------------|
+D:--------------------------------------|
+A:--------------------------------------|
+E:--------------------------------------|
+
+                 Play one or the other, they're the same notes
+e:-------------------------------------------------|
+B:-13-12-10----------------------------------------|
+G:------------12-11-9-7b(9)---7b(9)-----5---7b(9)--|
+D:--------------------12b(14)--12b(14)-10-12b(14)--|
+A:-------------------------------------------------|
+E:-------------------------------------------------|
+
+e:-----------------------------|
+B:-----------------------------|
+G:-7b(9)---b(7)---5--4--7------|
+D:-12b(14)-b(12)-10--9--12--5--|
+A:--------------------------10-|
+E:-----------------------------|
+
+The power chords for the last chorus are: G C G D. Listen for
+the rhythm.
+
+
+
+Too Much Love Will Kill You
+Words and music by Brian May, Frank Musker, Elizabeth Lamers
+Transcribed by Damien Foster
+
+[intro]  G/B    C     G/D    Em6/C#
+         Oooh   oooh  oooh   oooh
+
+         (piano)  G  D/G C/G G C/E Dsus4
+                     ^^^^^^
+                    these are quick changes!
+
+[verse]            G             C             G
+      I'm just the pieces of the man I used to be
+      G    D/F# Em               Bm/D            C
+      Too many  bitter tears are raining down on me
+          Am            Em                  Am           Em
+      I'm far away from home, and I've been facing this alone for much too 
+      Dsus4  D   C/D
+      long 
+
+[w/ verse prog.]
+      I feel like no one ever told the truth to me
+      About growing up and what a struggle it would be
+      In my tangled state of mind, I've been looking back to find where I went
+      wrong.
+
+[chorus]
+      G                  C                Em                 D
+      Too much love will kill you, if you can't make up your mind
+      G                C              Em               D
+      Torn between the lover, and the love you leave behind
+             G/B          C                G/D            Em6/C#
+      You're headed for disaster, 'cos you never read the signs
+      G/D                C/D             G
+      Too much love will kill you, every time.
+
+[play intro chords again]
+
+[w/verse prog.]
+      I'm just the shadow of the man I used to be
+      And it seems like there's no way out of this for me
+      I used to bring you sunshine, now all I ever do is bring you down
+[and again]
+      HOw would it be if you were standing in my shoes
+      Can't you see that it's impossible to choose
+      No there's no making sense of it, every way I go I have to
+      lose.
+
+[w/ chorus prog.]
+      Too much love will kill you, just as sure as none at all
+      It'll drain the power that's in you, make you plead and scream and crawl
+      And the pain will make you crazy. you're the victim of your crimes
+      Too much love, will kill you, every time.
+
+[guitar solo]
+      G   D/G  C/G  G C  G/D  G  C
+          ^^^^^^^
+          quick change!
+
+      G  D/F#  Em  Bm/D C  Am  Em  Am Em  Dsus4 D  C/D
+                                                   yeeeeaaaahhh!!
+
+[w/ chorus prog.]
+      Too much love will kill you, it'll make your life a lie
+      Yeah too much love will kill you, and you won't understand why
+      You'd give your life, you'd sell your soul, but here it comes again
+      G/D                           Cmadd9
+      Too much love will kill you
+
+             Eb    F9/Eb  Eb  F9/Eb       G
+      in the end                   in the end.
+
+ ----------------------------------------------------------------------------
+
+  I guess I've got to explain some of the chords now...
+
+      G/B    C    G/D  Em6/C#  G    D/F#  Em   Bm/D   Am   Dsus4   D    C/D
+
+E -----3-----0-----3-----0-----3-----2-----0-----2-----0-----3-----2-----0-----
+B -----0-----1-----3-----0-----0-----3-----0-----3-----1-----3-----3-----1-----
+G -----0-----0-----4-----0-----0-----2-----0-----4-----2-----2-----2-----0-----
+D -----0-----2-----5-----x-----0-----0-----2-----0-----2-----0-----0-----0-----
+A -----2-----3-----5-----4-----2-----x-----2-----x-----0-----x-----x-----x-----
+E -----x-----x-----x-----x-----3-----2-----0-----x-----x-----x-----x-----x-----
+
+
+      D/G   C/G  Cmadd9 Eb    F9/Eb 
+
+E -----2-----0-----3-----6-----5-----
+B -----3-----1-----4-----8-----6-----
+G -----2-----0-----0-----8-----5-----
+D -----0-----2-----0-----8-----5-----
+A -----x-----x-----3-----6-----6-----
+E -----3-----3-----x-----x-----x-----
+
+  Quick lesson in music theory:
+
+     9th chord =  1 ,3 ,5 ,b7, 9.
+
+    Thus, F9  = F ,A ,C ,Eb ,G.
+
+    The Cmadd9 chord is actually a down scale, all the notes of which add up
+    to make a Cmadd9 chord (C Eb G D)
+
+    I think the F9/Eb chord is right. Then again, the whole damn thing may
+    be wrong. Play it through and listen to the song and see what you think.
+
+
+

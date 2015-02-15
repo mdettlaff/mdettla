@@ -1,0 +1,59 @@
+body{
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 9pt;
+ line-height: 11pt
+}
+td{
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 9pt;
+ line-height: 11pt
+}
+p{
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 9pt;
+ line-height: 11pt;
+ text-align: justify
+}
+code{
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 7pt;
+ line-height: 8pt;
+ color: #050505
+}
+small{
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 7pt;
+ line-height: 8pt;
+ color: #ffffff
+}
+a{
+ text-decoration: none;
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 9pt;
+ line-height: 11pt;
+ font-weight: normal
+}
+a.sm{
+ text-decoration: none;
+ font-family: Tahoma, Arial, Verdana;
+ font-size: 7pt;
+ line-height: 8pt
+}
+a.menu{
+ text-decoration: none;
+ font-family: Verdana, Tahoma, Arial;
+ font-size: 8pt;
+ line-height: 10pt;
+ font-weight: bold;
+ color: #ffffff
+}
+a.menusm{
+ text-decoration: none;
+ font-family: Tahoma, Arial, Verdana;
+ font-size: 7pt;
+ line-height: 8pt;
+ color: #ffffff
+}
+a:hover{
+ text-decoration: underline;
+}
