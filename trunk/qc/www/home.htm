@@ -1,0 +1,143 @@
+<?
+// zapisujemy odnosniki z ktorych ludzie trafili na strone
+$odnosniki=fopen("data/referers.dat", "a");
+flock($odnosniki, 2);
+fputs($odnosniki, date("Y.m.d")."|".date("H:i")."|".$_SERVER['HTTP_REFERER']."\n");
+flock($odnosniki, 3);
+fclose($odnosniki);
+
+$referers=file("data/referers.dat"); // kolejne linie pliku ida do tablicy referers
+// jesli nazbieralo sie za duzo refererow, skasuj nadmiarowe
+$maxreferers=500;
+if (count($referers) > $maxreferers){
+	$reffile=fopen("data/referers.dat", "w");
+	flock($reffile, 2);
+	for($q=count($referers)-$maxreferers; $q < count($referers); $q++)
+		fwrite($reffile, $referers[$q]);
+	flock($reffile, 3);
+	fclose($reffile);
+}
+?>
+
+<p>
+&nbsp;<br>
+Witajcie Queenmaniacy!
+<br><br>
+Znajdujecie siê na stronie magazynu Queen Corner, który po¶wiêcony jest oczywi¶cie kultowemu zespo³owi Queen (Freddie Mercury, Brian May, Roger Taylor &amp; John Deacon). Queen Corner przez d³ugi czas ukazywa³ siê w Action Magu - dodatku do CD-Action. Tu na stronie znajdziecie wszystko, co ukaza³o siê w tych wydaniach i wiele wiêcej.
+<br><br>
+Prosimy o wpisy w ksiêdze go¶ci, wype³nianie ankiety oraz wysy³anie maili z opiniami - aby¶my wiedzieli, czego od nas oczekujecie i co mogliby¶my w QC ulepszyæ albo dodaæ. Chêtnie zamie¶cimy te¿ na stronie Wasze teksty (t³umaczenia piosenek, artyku³y itp.) i inne materia³y. Nasz adres: <a href="mailto:qcorner@poczta.onet.pl">qcorner@poczta.onet.pl</a>. Queen Corner jest tworzony przez fanów dla fanów!
+</p><p>
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+&nbsp;<br>
+7 lipca na Stadionie Miejskim we Wroc³awiu wyst±pi zespó³ Queen z Adamem Lambertem w roli wokalisty. Koncert odbêdzie siê w ramach Rock In Wroclaw Festival. Nie trzeba pisaæ, ¿e wreszcie nadesz³a d³ugo oczekiwana przez fanów chwila, i Queen nareszcie zagra w Polsce. Jako ich support wyst±pi± zespo³y IRA oraz MONA, okre¶lana jako nadzieja amerykañskiego Indie rocka. Bilety mo¿na kupiæ na <a href="http://www.rockinwroclaw.pl/queen">www.rockinwroclaw.pl/queen</a>
+<br>&nbsp;
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+<b>12 wrze¶nia 2010</b>
+<br><br>
+Nowy <a href="index.php?go=wywiad31">wywiad z Brianem May'em</a> z The Observer.
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+<b>20 pa¼dziernika 2009</b>
+<br><br>
+Nowy artyku³ <a href="index.php?go=teksty_42">We Will Rock You</a> napisany przez Sugar.
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+<b>27 wrze¶nia 2009</b>
+<br><br>
+T³umaczenia piosenek <a href="index.php?go=pio&p=polnev">Nevermore</a> oraz <a href="index.php?go=pio&p=pollotv">Lily of the Valley</a> przez Anetê Romañsk±.
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+<a href="index.php?go=aktarch">Historia aktualizacji</a>...
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+<a href="http://queencorner.ovh.org/rss.xml">
+<img src="rss_icon.gif" width=14 height=14 border=0 hspace=5>Subskrybuj nasz kana³ RSS</a>
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+
+<?
+// statystyka odwiedzin
+
+if($_COOKIE[gosc] != "1")
+{
+
+$dzisiaj=date("d.m.Y");
+$stat=file("data/statystyka.dat");
+$ostatnidzien=count($stat)-1; // indeks ostatniego dnia w tablicy stat
+$dzien=explode("|","$stat[$ostatnidzien]"); // ostatni dzien z pliku
+$statfile=fopen("data/statystyka.dat", "w");
+flock($statfile, 2);
+for($q=0; $q < $ostatnidzien; $q++)
+	fwrite($statfile, $stat[$q]);
+if ($dzien[0] != $dzisiaj)
+	{
+	$dzien[1]=$dzien[1]+0; // ilosc odwiedzin, konwersja na integer
+	fwrite($statfile, $dzien[0]."|".$dzien[1]."\n");
+	fwrite($statfile, $dzisiaj."|1\n");
+	}
+	else
+	{
+	$dzien[1]=$dzien[1]+1; // ilosc odwiedzin
+	fwrite($statfile, $dzien[0]."|".$dzien[1]."\n");
+	}
+flock($statfile, 3);
+fclose($statfile);
+
+
+// licznik odwiedzin na stronie glownej
+
+$file=fopen("data/licznik.txt", "r");
+flock($file, 1);
+$liczba=fgets($file, 100);
+flock($file, 3);
+fclose($file);
+$liczba++;
+
+$file=fopen("data/licznik.txt", "w");
+flock($file, 2);
+fwrite($file, $liczba);
+flock($file, 3);
+fclose($file);
+echo"$liczba";
+
+}
+else
+{
+
+$file=fopen("data/licznik.txt", "r");
+flock($file, 1);
+$liczba=fgets($file, 100);
+flock($file, 3);
+fclose($file);
+echo"$liczba";
+
+}
+
+?>
+&nbsp;odwiedzin strony od 4 marca 2004 r.
+
+<hr width="100%" size=1 color=#222222 align=center>
+</p><p>
+
+Wspó³pracujemy z wydawnictwem Agora, które wydaje <a href="http://kulturalnysklep.pl/QUEEN/prcl/queen---kolekcja-24-albumow.html" target="_blank">Kolekcjê Queen</a>.<br>
+Tom pierwszy to <a href="index.php?go=kolekcja">A Kind of Magic</a>.
+</p><p>
+
+<a href="http://www.queen1991.blog.pl" target="_blank">
+<img src="bannerqblog.gif" width=400 height=50 border=0 vspace=2 alt="Absolutnie Queen 1991 - blog Dagi"></a><br>
+<a href="http://www.queenrare.prv.pl" target="_blank">
+<img src="bannerqr.gif" width=400 height=55 border=0 vspace=2 alt="Queen Rare - wymiana bootlegów"></a><br>
+<a href="http://www.queenrare.prv.pl" target="_blank">
+<b>Szukasz filmów, wywiadów czy koncertów Queen?</b></a>
+
+<br>&nbsp;
+<br>&nbsp;
+</p>
+

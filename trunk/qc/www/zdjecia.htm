@@ -1,0 +1,174 @@
+<p>
+
+<center>
+&nbsp;<br>
+<b>PRACE CZYTELNIKÓW</b><br>
+<i>autorka: Anka</i>
+<br><br>
+
+<?
+
+for($a=1;$a<=7;$a++)
+{
+$rys[$a]="img/rys".$a.".jpg";
+$ryss[$a]="tn/rys".$a."s.jpg";
+$size=getimagesize($rys[$a]);
+$w_rys[$a]=$size[0];
+$h_rys[$a]=$size[1];
+}
+
+for($a=1;$a<=6;$a++)
+{
+echo "
+<img src=\"$ryss[$a]\" width=120 height=140 border=0 hspace=8 vspace=7 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$rys[$a]&kom=$kom[$a]','podglad','width=$w_rys[$a],height=$h_rys[$a],left=0,top=0')\" />";
+}
+
+echo "
+<img src=\"$ryss[7]\" width=180 height=140 border=0 hspace=8 vspace=7 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$rys[7]&kom=$kom[$a]','podglad','width=$w_rys[7],height=$h_rys[7],left=0,top=0')\" />";
+
+?>
+
+<br><br><br>
+<b>TAPETY</b>
+<br><br>
+
+<?
+
+for($a=1;$a<=12;$a++)
+{
+$tap[$a]="img/tap".$a.".jpg";
+$taps[$a]="tn/tap".$a."s.jpg";
+$size=getimagesize($tap[$a]);
+$w_tap[$a]=$size[0];
+$h_tap[$a]=$size[1];
+}
+
+for($a=1;$a<=12;$a++)
+{
+echo "
+<img src=\"$taps[$a]\" width=120 height=90 border=0 hspace=7 vspace=8 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$tap[$a]&kom=$kom[$a]','podglad','width=$w_tap[$a],height=$h_tap[$a],left=0,top=0')\" />";
+}
+
+?>
+
+<br><br><br>
+<b>ZDJÊCIA</b>
+<br><br>
+
+<?
+
+$kom[118]="Freddie Mercury, &quot;Crazy Little Thing Called Love&quot;";
+$kom[115]="John niszczy gitarê!";
+$kom[113]="Teledysk &quot;I Want It All&quot;";
+$kom[112]="Roger Taylor i Freddie Mercury, &quot;I`m Going Slightly Mad&quot;";
+$kom[108]="Queen w 1979 r.";
+$kom[107]="Queen w 1981 r.";
+$kom[103]="Montserrat Caballe i Freddie Mercury";
+$kom[100]="John Deacon i Roger Taylor, &quot;I`m Going Slightly Mad&quot;";
+$kom[99]="&quot;I`m Going Slightly Mad&quot;";
+$kom[98]="Freddie Mercury na planie teledysku<br>&nbsp; &quot;I`m Going Slightly Mad&quot;";
+$kom[97]="Freddie Mercury i John Deacon w Budapeszcie, 1986 r.";
+$kom[92]="&quot;The Invisible Man&quot;";
+$kom[83]="David Bowie i Freddie Mercury, koncert Live Aid, 1985 r.";
+$kom[82]="Queen w Budapeszcie, 1986 r.";
+$kom[78]="Queen na rozdaniu nagród Brit Awards, 1991 r.";
+$kom[72]="Zdjêcie z teledysku &quot;I Want To Break Free&quot;";
+$kom[70]="Teledysk &quot;One Vision&quot;";
+$kom[67]="&quot;Headlong&quot;, 1991 r.";
+$kom[57]="&quot;The Miracle&quot;";
+$kom[50]="Madison Square Garden, 1975 r.";
+$kom[49]="Koncert na Wembley, 1986 r.";
+$kom[47]="Freddie Mercury i Mary Austin";
+$kom[45]="Freddie Mercury i Annie Lennox";
+$kom[39]="Freddie Mercury";
+$kom[38]="Queen w Japonii";
+$kom[37]="Brian May i Freddie Mercury, &quot;Crazy Little Thing Called Love&quot;";
+$kom[35]="Wideoklip &quot;I Want It All&quot;";
+$kom[32]="Freddie Mercury i John Deacon (w tle)";
+$kom[30]="Freddie Mercury, trasa &quot;The Works&quot;";
+$kom[28]="Na planie wideoklipu &quot;Breakthru&quot;";
+$kom[27]="Brian May, Newcastle, 1979 r.";
+$kom[26]="Roger Taylor i Brian May";
+$kom[22]="Ok³adka singla &quot;Bohemian Rhapsody&quot;";
+$kom[20]="&quot;Love of my life&quot;, Rio, 1985 r.";
+$kom[19]="Queen w Budapeszcie, 1986 r.";
+$kom[18]="Plan wideoklipu &quot;Princes Of The Universe&quot;";
+$kom[16]="Koncert na Wembley, 1986 r.";
+$kom[14]="Singiel &quot;Don`t Stop Me Now&quot;";
+$kom[7]="Freddie Mercury, koncert Live Aid";
+
+for($a=1;$a<=120;$a++)
+{
+$fot[$a]="img/fot".$a.".jpg";
+$fots[$a]="tn/fot".$a."s.jpg";
+$size=getimagesize($fot[$a]);
+$w_fot[$a]=$size[0];
+$h_fot[$a]=$size[1];
+$hp_fot[$a]=$size[1]+48;
+}
+
+for($a=120;$a>=1;$a--)
+{
+
+if ($kom[$a]!="")
+{
+echo "
+<img src=\"$fots[$a]\" width=90 height=70 border=0 hspace=3 vspace=8 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$fot[$a]&kom=$kom[$a]','podglad','width=$w_fot[$a],height=$hp_fot[$a],left=0,top=0')\" />";
+}
+
+else
+{
+echo "
+<img src=\"$fots[$a]\" width=90 height=70 border=0 hspace=3 vspace=8 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$fot[$a]&kom=$kom[$a]','podglad','width=$w_fot[$a],height=$h_fot[$a],left=0,top=0')\" />";
+}
+
+}
+
+?>
+
+<br><br><br>
+<b>INNE</b>
+<br><br>
+
+<?
+
+for($a=1;$a<=4;$a++)
+{
+$sm[$a]="img/sm".$a.".jpg";
+$sms[$a]="tn/sm".$a."s.jpg";
+$size=getimagesize($sm[$a]);
+$w_sm[$a]=$size[0];
+$h_sm[$a]=$size[1];
+}
+
+for($a=1;$a<=4;$a++)
+{
+echo "
+<img src=\"$sms[$a]\" width=90 height=70 border=0 hspace=3 vspace=8 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$sm[$a]&kom=$kom[$a]','podglad','width=$w_sm[$a],height=$h_sm[$a],left=0,top=0')\" />";
+}
+
+echo "<br>";
+
+for($a=1;$a<=2;$a++)
+{
+$in[$a]="img/in".$a.".jpg";
+$ins[$a]="tn/in".$a."s.jpg";
+$size=getimagesize($in[$a]);
+$w_in[$a]=$size[0];
+$h_in[$a]=$size[1];
+}
+
+for($a=1;$a<=2;$a++)
+{
+echo "
+<img src=\"$ins[$a]\" width=90 height=70 border=0 hspace=3 vspace=8 title=\"Powiêksz\" alt=\"Powiêksz\" style=\"cursor: pointer;\" onclick=\"window.open('galeria.php?fot=$in[$a]&kom=$kom[$a]','podglad','width=$w_in[$a],height=$h_in[$a],left=0,top=0')\" />";
+}
+
+?>
+
+<br>&nbsp;
+<br>&nbsp;
+
+</center>
+</p>
+

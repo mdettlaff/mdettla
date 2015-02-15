@@ -1,0 +1,296 @@
+<p>
+
+&nbsp;<br>
+<b>OSTATNIE ODWO£ANIA (PODSUMOWANIE)</b>
+<br><br>
+
+<!-- wykres kolowy -->
+<img src="piechart.php" border=0 align=center>
+
+<table width=505>
+<tr><td>Poz.</td width=45><td width=50>Ilo¶æ:</td><td>Odno¶nik:</td></tr>
+
+<?
+
+$odnosniki=file("data/referers.dat"); // kolejne linie pliku ida do tablicy
+for ($q=0; $q < count($odnosniki); $q++){
+	$wpis=explode("|", "$odnosniki[$q]");
+
+	// zapamietujemy slowa kluczowe jesli url pochodzi z wyszukiwarki
+	if (eregi("www\.google",$wpis[2]) && eregi("search",$wpis[2])){
+		$slowakluczowe=trim(strtolower_pl(getkeywords($wpis[2])));
+		$wpis[2]="http://www.google.pl/search";
+		for ($i=0; $i < count($googlekeywords) && $slowakluczowe != $googlekeywords[$i]['keywords']; $i++)
+			; // szukamy danego zestawu slow kluczowych
+		if ($slowakluczowe == $googlekeywords[$i]['keywords'])
+			$googlekeywords[$i]['ilosc']--;
+		else{
+			$googlekeywords[$i]['ilosc']=-1;
+			$googlekeywords[$i]['keywords']=$slowakluczowe;
+		}
+	}
+	if (eregi("onet\.pl",$wpis[2]) && eregi("szukaj",$wpis[2])){
+		$slowakluczowe=trim(strtolower_pl(getkeywords($wpis[2])));
+		$wpis[2]="http://szukaj.onet.pl/query.html";
+		for ($i=0; $i < count($onetkeywords) && $slowakluczowe != $onetkeywords[$i]['keywords']; $i++)
+			; // szukamy danego zestawu slow kluczowych
+		if ($slowakluczowe == $onetkeywords[$i]['keywords'])
+			$onetkeywords[$i]['ilosc']--;
+		else{
+			$onetkeywords[$i]['ilosc']=-1;
+			$onetkeywords[$i]['keywords']=$slowakluczowe;
+		}
+	}
+	if (eregi("wp.\pl",$wpis[2]) && eregi("szukaj",$wpis[2])){
+		$slowakluczowe=trim(strtolower_pl(getkeywords($wpis[2])));
+		$wpis[2]="http://szukaj.wp.pl/szukaj";
+		for ($i=0; $i < count($wpkeywords) && $slowakluczowe != $wpkeywords[$i]['keywords']; $i++)
+			; // szukamy danego zestawu slow kluczowych
+		if ($slowakluczowe == $wpkeywords[$i]['keywords'])
+			$wpkeywords[$i]['ilosc']--;
+		else{
+			$wpkeywords[$i]['ilosc']=-1;
+			$wpkeywords[$i]['keywords']=$slowakluczowe;
+		}
+	}
+	if (eregi("queencorner.ovh.org",$wpis[2])){
+		$slowakluczowe=trim(strtolower_pl(getsubpage($wpis[2])));
+		$wpis[2]="http://queencorner.ovh.org";
+		for ($i=0; $i < count($subpages) && $slowakluczowe != $subpages[$i]['keywords']; $i++)
+			; // szukamy danego zestawu slow kluczowych
+		if ($slowakluczowe == $subpages[$i]['keywords'])
+			$subpages[$i]['ilosc']--;
+		else{
+			$subpages[$i]['ilosc']=-1;
+			$subpages[$i]['keywords']=$slowakluczowe;
+		}
+	}
+	if (eregi("queencorner.fm.interia.pl",$wpis[2]))
+		$wpis[2]="http://queencorner.fm.interia.pl";
+
+	//dodajemy aktualny adres do tablicy $najczestsze zliczajacej, ile razy wystapil dany adres
+	for ($i=0; $i < count($najczestsze) && $najczestsze[$i]['adres'] != $wpis[2]; $i++)
+		; // szukamy adresu w tablicy $najczestsze
+	if ($najczestsze[$i]['adres'] == $wpis[2])
+		$najczestsze[$i]['ilosc']--;
+	elseif ($najczestsze[0] != null){
+		$najczestsze[$i+1]['ilosc']=-1;
+		$najczestsze[$i+1]['adres']=$wpis[2];
+	}
+	else{ // przypadek skrajny, jesli tablica $najczestsze jest pusta
+		$najczestsze[0]['ilosc']=-1;
+		$najczestsze[0]['adres']=$wpis[2];
+	}
+}
+
+sort($najczestsze); // sortowanie Quicksort
+if ($googlekeywords!= null)
+	sort($googlekeywords); // sortowanie Quicksort
+if ($onetkeywords != null)
+	sort($onetkeywords); // sortowanie Quicksort
+if ($wpkeywords != null)
+	sort($wpkeywords); // sortowanie Quicksort
+if ($subpages != null)
+	sort($subpages); // sortowanie Quicksort
+
+for ($q=0; $q < count($najczestsze); $q++){
+	$najczestsze[$q]['ilosc']=$najczestsze[$q]['ilosc']*(-1);
+	$m=$q+1;
+	echo("<tr bgcolor=#ebebeb><td valign=top width=45>$m)</td><td valign=top width=50><b>{$najczestsze[$q]['ilosc']}</b></td><td>\n");
+	$najczestsze[$q]['adres']=rtrim($najczestsze[$q]['adres']);
+	if ($najczestsze[$q]['adres'] == "")
+		echo("<<i>nieokre¶lony</i>>");
+	elseif ($najczestsze[$q]['adres'] == "http://www.google.pl/search"){
+		echo("<a target=\"_blank\" href=\"".$najczestsze[$q]['adres']."\">".$najczestsze[$q]['adres']."</a><br>\n");
+		echo("szukane frazy:<br>\n");
+		for ($i=0; $i < count($googlekeywords); $i++){
+			$googlekeywords[$i]['ilosc']*=-1; // wczesniej zrobilismy ilosci ujemne, wiec trzeba je odwrocic
+			echo("<b>&nbsp; &nbsp; {$googlekeywords[$i]['keywords']}</b> - {$googlekeywords[$i]['ilosc']}<br>\n");
+		}
+	}
+	elseif ($najczestsze[$q]['adres'] == "http://szukaj.onet.pl/query.html"){
+		echo("<a target=\"_blank\" href=\"".$najczestsze[$q]['adres']."\">".$najczestsze[$q]['adres']."</a><br>\n");
+		echo("szukane frazy:<br>\n");
+		for ($i=0; $i < count($onetkeywords); $i++){
+			$onetkeywords[$i]['ilosc']*=-1; // wczesniej zrobilismy ilosci ujemne, wiec trzeba je odwrocic
+			echo("<b>&nbsp; &nbsp; {$onetkeywords[$i]['keywords']}</b> - {$onetkeywords[$i]['ilosc']}<br>\n");
+		}
+	}
+	elseif ($najczestsze[$q]['adres'] == "http://szukaj.wp.pl/szukaj"){
+		echo("<a target=\"_blank\" href=\"".$najczestsze[$q]['adres']."\">".$najczestsze[$q]['adres']."</a><br>\n");
+		echo("szukane frazy:<br>\n");
+		for ($i=0; $i < count($wpkeywords); $i++){
+			$wpkeywords[$i]['ilosc']*=-1; // wczesniej zrobilismy ilosci ujemne, wiec trzeba je odwrocic
+			echo("<b>&nbsp; &nbsp; {$wpkeywords[$i]['keywords']}</b> - {$wpkeywords[$i]['ilosc']}<br>\n");
+		}
+	}
+	elseif ($najczestsze[$q]['adres'] == "http://queencorner.ovh.org"){
+		echo("<a target=\"_blank\" href=\"".$najczestsze[$q]['adres']."\">".$najczestsze[$q]['adres']."</a><br>\n");
+		echo("z podstron:<br>\n");
+		for ($i=0; $i < count($subpages); $i++){
+			$subpages[$i]['ilosc']*=-1; // wczesniej zrobilismy ilosci ujemne, wiec trzeba je odwrocic
+			echo("<b>&nbsp; &nbsp; {$subpages[$i]['keywords']}</b> - {$subpages[$i]['ilosc']}<br>\n");
+		}
+	}
+	else // "normalne" adresy (linki z innych stron)
+		echo("<a target=\"_blank\" href=\"".$najczestsze[$q]['adres']."\">".cutstring(rtrim($najczestsze[$q]['adres'], "/"), 52, "...")."</a>");
+	echo("</td></tr>\n\n");
+}
+
+// strtolower dzialajacy z polskimi znakami
+function strtolower_pl($str){
+	$str=strtolower($str);
+	$str=str_replace("¡", "±", $str);
+	$str=str_replace("Æ", "æ", $str);
+	$str=str_replace("Ê", "ê", $str);
+	$str=str_replace("£", "³", $str);
+	$str=str_replace("Ñ", "ñ", $str);
+	$str=str_replace("Ó", "ó", $str);
+	$str=str_replace("¦", "¶", $str);
+	$str=str_replace("¬", "¼", $str);
+	$str=str_replace("¯", "¿", $str);
+	return $str;
+}
+
+?>
+
+</table>
+
+<br><br><br>
+
+<b>STATYSTYKA ODWIEDZIN</b>
+<br><br>
+
+<table width=500>
+<tr><td width=85>Data:</td><td>Odwiedzin:</td><td width=320></td></tr>
+
+<?
+$suma=0;
+$dane=file("data/statystyka.dat");
+$dane=array_reverse($dane);
+for($q=0; $q < count($dane); $q++){
+	$info=explode("|", "$dane[$q]");
+	$suma=$suma+$info[1];
+	$wykres=$info[1]*2;
+	if ($wykres > 300)
+		$wykres=300;
+	echo("<tr bgcolor=#ebebeb><td>$info[0]</td><td><b>$info[1]</b></td><td><img src=\"1cz.gif\" width=$wykres height=10></td></tr>\n\n");
+}
+$dni=count($dane);
+$biezacydzien=explode("|", "$dane[0]");
+if ($dni != 0)
+	$srednia=round(($suma-$biezacydzien[1])/($dni-1)); // nie bierzemy pod uwage biezacego dnia
+echo "</table>
+<br><br>
+W sumie odwiedzin: <b>$suma</b>
+<br><br>
+¦rednio dziennie: <b>$srednia</b>
+";
+?>
+
+<br><br><br><br><br>
+
+<b>OSTATNIE ODWO£ANIA</b>
+<br><br>
+
+<table width=505>
+<tr><td>Data:</td><td width=450>Odno¶nik:</td></tr>
+
+<?
+$referers=file("data/referers.dat"); // kolejne linie pliku ida do tablicy referers
+
+// wypisujemy referery
+$referers=array_reverse($referers);
+for($q=0; $q<count($referers); $q++)
+{
+	$info=explode("|", "$referers[$q]");
+	$url=rtrim($info[2]);
+	echo("<tr bgcolor=#ebebeb><td valign=top>$info[0]&nbsp;$info[1]&nbsp;</td><td>\n");
+	if ($url == "")
+		echo("<<i>nieokre¶lony</i>>");
+	else
+		echo("<a target=\"_blank\" href=\"".$url."\">".cutstring($url, 48, "...")."</a>");
+
+	$keywords=getkeywords($url);
+	if ($keywords)
+		echo("<br>\nfraza: <b>$keywords</b>");
+
+	echo("</td></tr>\n\n");
+}
+
+// wyciaga szukana fraze z odnosnika jesli pochodzi on z wyszukiwarki
+function getkeywords($url){
+	$keywords="";
+	if (eregi("www\.google",$url) && eregi("search",$url)) {
+		if (preg_match('![\?&]q=(.*?)(&|$)!', $url, $matches))
+			$keywords=urldecode(polish_conv($matches[1]));
+	}
+	if (eregi("onet\.pl",$url) && eregi("szukaj",$url)) {
+		if (preg_match('![\?&]qt=(.*?)(&|$)!', $url, $matches))
+			$keywords=urldecode(polish_conv($matches[1]));
+	}
+	if (eregi("wp\.pl",$url) && eregi("szukaj",$url)) {
+		if (preg_match('![\?&]szukaj=(.*?)(&|$)!', $url, $matches))
+			$keywords=urldecode(polish_conv($matches[1]));
+	}
+	return $keywords;
+}
+
+function getsubpage($url){ // wyciaga podstrone queencorner.ovh.org z urla
+	$keywords="";
+	if (eregi("go=home",$url))
+		$keywords="strona g³ówna";
+	elseif (eregi("index.php",$url) && eregi("go=",$url)) {
+		if (eregi("go=pio",$url))
+			$keywords="piosenki";
+		elseif (preg_match('![\?&]go=(.*?)(&|$)!', $url, $matches))
+			$keywords=urldecode(polish_conv($matches[1]));
+	}
+	elseif (eregi("ksiega.php",$url))
+		$keywords="ksiêga go¶ci";
+	elseif (eregi("sonda",$url))
+		$keywords="sonda";
+	else
+		$keywords="strona g³ówna";
+	return $keywords;
+}
+
+// konwersja krzakow z urla na polskie znaki
+function polish_conv($url){
+	$url=str_ireplace("%C4%85", "±", $url);
+	$url=str_ireplace("%C4%87", "æ", $url);
+	$url=str_ireplace("%C4%99", "ê", $url);
+	$url=str_ireplace("%C5%82", "³", $url);
+	$url=str_ireplace("%C5%84", "ñ", $url);
+	$url=str_ireplace("%C3%B3", "ó", $url);
+	$url=str_ireplace("%C5%9B", "¶", $url);
+	$url=str_ireplace("%C5%BA", "¼", $url);
+	$url=str_ireplace("%C5%BC", "¿", $url);
+	$url=str_ireplace("%C4%84", "¡", $url);
+	$url=str_ireplace("%C4%86", "Æ", $url);
+	$url=str_ireplace("%C4%98", "Ê", $url);
+	$url=str_ireplace("%C5%81", "£", $url);
+	$url=str_ireplace("%C5%83", "Ñ", $url);
+	$url=str_ireplace("%C3%93", "Ó", $url);
+	$url=str_ireplace("%C5%9A", "¦", $url);
+	$url=str_ireplace("%C5%B9", "¬", $url);
+	$url=str_ireplace("%C5%BB", "¯", $url);
+	return $url;
+}
+
+function cutstring($text, $limit, $msg){ // ucina napis do zadanej dlugosci
+    if (strlen($text) > $limit){
+        $txt1=wordwrap($text, $limit, '[cut]', 1);
+        $txt2=explode('[cut]', $txt1);
+        return $txt2[0].$msg;
+    }else
+        return $text;
+}
+?>
+
+</table>
+
+<br>&nbsp;
+<br>&nbsp;
+</p>
+
