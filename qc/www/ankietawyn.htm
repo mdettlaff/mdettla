@@ -1,0 +1,121 @@
+&nbsp;<br>
+<center>
+<a href="index.php?go=ankieta"><b>WYPE£NIJ ANKIETÊ</b></a> / 
+<b>ZOBACZ WYNIKI</b>
+</center>
+<br>
+<center>
+&nbsp;<br>
+<b>PIOSENKI:</b><br><br>
+<table width="95%">
+<tr height=0>
+<td width="65%"></td><td width="7%"></td><td width="28%"></td>
+</tr>
+
+<?
+$dane=file("ankieta.txt");
+$iloscpio=count($dane);
+for($q=0; $q<$iloscpio; $q++) {
+	$info=explode("|", "$dane[$q]");
+	// glosy przerobimy na ujemne, zeby sie dalo posortowac wg glosow na nastepnie wg tytulow
+	$piosenki[$q]['glosy']=intval($info[1])*(-1);
+	$piosenki[$q]['tytul']=$info[0];
+	$suma=$suma+$piosenki[$q]['glosy'];
+}
+
+sort($piosenki);	// sortowanie Quicksort
+
+for($q=0; $q<$iloscpio; $q++) {
+	$proc=round(($piosenki[$q]['glosy']/$suma)*100);
+	$wykres=ceil(($piosenki[$q]['glosy']/$suma)*300);
+	$piosenki[$q]['glosy']*=(-1);	// przerabiamy glosy z powrotem na dodatnie
+	$m=$q+1;
+	echo("
+		<tr bgcolor=#ebebeb><td>$m) {$piosenki[$q]['tytul']} ({$piosenki[$q]['glosy']}) </td><td> $proc% </td><td><img src=\"1cz.gif\" width=$wykres height=10></td></tr>
+	");
+}
+?>
+
+</table>
+
+<br><br><br>
+<b>ALBUMY:</b>
+<br><br>
+
+
+<table width="80%">
+<tr height=0>
+<td width="51%"></td><td width="9%"></td><td width="40%"></td>
+</tr>
+
+<?
+$suma=0;
+$dane=file("ankietaal.txt");
+$iloscal=count($dane);
+for($q=0; $q<$iloscal; $q++) {
+	$info=explode("|", "$dane[$q]");
+	// glosy przerobimy na ujemne, zeby sie dalo posortowac wg glosow na nastepnie wg tytulow
+	$albumy[$q]['glosy']=intval($info[1])*(-1);
+	$albumy[$q]['tytul']=$info[0];
+	$suma=$suma+$albumy[$q]['glosy'];
+}
+
+sort($albumy);	// sortowanie Quicksort
+
+for($q=0; $q<$iloscal; $q++) {
+	$proc=round(($albumy[$q]['glosy']/$suma)*100);
+	$wykres=ceil(($albumy[$q]['glosy']/$suma)*200);
+	$albumy[$q]['glosy']*=(-1);	// przerabiamy glosy z powrotem na dodatnie
+	$m=$q+1;
+	echo("
+		<tr bgcolor=#ebebeb><td>$m) {$albumy[$q]['tytul']} ({$albumy[$q]['glosy']}) </td><td> $proc% </td><td><img src=\"1cz.gif\" width=$wykres height=10></td></tr>
+	");
+}
+?>
+
+</table>
+
+
+<br><br><br>
+<b>Wasze zdanie o Queen Corner:</b>
+<br><br>
+
+<table width="70%">
+<tr height=0>
+<td width="41%"></td><td width="9%"></td><td width="50%"></td>
+</tr>
+
+<?
+$suma=0;
+$dane=file("ankietaqc.txt");
+for($q=0; $q<count($dane); $q++) {
+$info=explode("|", "$dane[$q]");
+$suma=$suma+$info[1];
+}
+
+$dane=file("ankietaqc.txt");
+for($q=0; $q<count($dane); $q++) {
+$info=explode("|", "$dane[$q]");
+$glosy=intval($info[1]);
+$proc=round(($glosy/$suma)*100);
+$wykres=ceil(($glosy/$suma)*175);
+echo("
+<tr bgcolor=#ebebeb><td>$info[0] ($glosy) </td><td> $proc% </td><td><img src=\"1cz.gif\" width=$wykres height=10></td></tr>
+");
+}
+?>
+
+</table>
+
+
+</center>
+<p>
+<br><br><br>
+Wielkie dziêki dla wszystkich, którzy wype³nili ankietê!!! A nale¿± do nich:<br>
+Mi¶ Eryk, Chrapek, Mumin, Pewien Go¶æ, Sunday, Tawananna, Don Kamillo, Pawe³ M., Easy, nabuchodonoZorka, Inka, Mactare, Ziemolini, Icha_iron, KSPSS, Tedi, Winix, Trotu, Doorshlaq, Merle, Arek K., Walec, kaReL, Wund¿un, Rafa³ek, Abudhabi, Strefa, Glorfindel, Twarogp, Andzia, Popu¶, Micha³, Kacper, Maciej Bogusz, Marcin Miros, Dominik Kosmala, Jowiak, Ma³gorzata Cebula, Kamila Tarabura, Ledniowski, Marek Koszczyñski, Ula Jaworska, Andrewt, Graham Harrison, Norek, Barbara Krupiñska, Brown Jenkin, Viper, Nutka, Krzpac, Slaytanic, Ola &amp; Maciej Adamscy, Marta Nowosielska, Asoreth, Monika Weso³owska, Lesotho, Spooky, Kiliank, Woleczek vel Tommy, Ala, Mateusz, Janusz Michalski, Krzysztof Pytlik, Queen_f, Nonew, Tomek Rokosa, Anusia von Lassaczek, Sadek, szymek_dymek, Sal, Adam Biechoñski, Urimourn, Anzza, Zed, Kazik, Hansi, Ulalalala, Andrew, Bohi, £osiu, Operator, Asia i Karina Helios, Grucha, Edzio Trabanciarz, Szprotka, Krzysiek, Jajo, Kadra, £ukasz, Freddienne_Mercuria, Or³o¶, Wito, Mateo, Pablo, Mateusz Kociuba, Goblin, s2nto, Ania, Ryful, Andzia, Shimano, Jawkowicz, aGaciak, malpa88, Marta, eMCe71.com, Bamber100, Krzysiek, Justyna, Ulenka i Lizoos.
+
+
+<br>&nbsp;
+<br>&nbsp;
+</p>
+
