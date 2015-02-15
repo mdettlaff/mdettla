@@ -1,0 +1,6 @@
+super|60
+dobry|22
+OK|10
+ujdzie|1
+dno|0
+dno i mu³|0

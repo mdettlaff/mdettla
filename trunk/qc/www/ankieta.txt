@@ -1,0 +1,98 @@
+'39|3
+A Kind Of Magic|9
+A Winter's Tale|4
+Another One Bites The Dust|7
+Bicycle Race|3
+Bijou|1
+Breakthru|9
+Brighton Rock|5
+Bohemian Rhapsody|58
+Crazy Little Thing Called Love|4
+Dead On Time|1
+Death On Two Legs|5
+Delilah|3
+Don't Lose Your Head|1
+Don't Stop Me Now|14
+Don't Try So Hard|2
+Dragon Attack|1
+Dreamer's Ball|1
+Flick Of The Wrist|1
+Forever|1
+Friends Will Be Friends|8
+Gimme The Prize|1
+Good Old-fashioned Lover Boy|2
+Great King Rat|1
+Hammer To Fall|7
+Headlong|5
+Heaven For Everyone|7
+Highlander Theme|1
+I Can't Live With You|1
+I Want It All|12
+I Want To Break Free|12
+I Was Born To Love You|10
+I'm Going Slightly Mad|5
+I'm With Love In My Car|2
+Impromptu|1
+In The Lap Of The Gods|2
+Innuendo|30
+It's A Beautiful Day|1
+It's A Hard Life|2
+Is This The World We Created|4
+Jelaousy|1
+Jesus|1
+Keep Yourself Alive|2
+Killer Queen|9
+Las Palabras de Amor (Words of Love)|1
+Let Me Live|3
+Living Home Ain't Easy|1
+Love Of My Life|15
+Made In Heaven|8
+Milionaire Waltz|1
+Modern Times Rock'n'Roll|1
+Mother Love|6
+Mustapha|5
+My Fairy King|3
+My Life Has Been Saved|2
+My Melancholy Blues|1
+Nevermore|1
+No-one But You|2
+Now I'm Here|1
+Ogre Battle|1
+One Vision|5
+One Year of Love|4
+Play The Game|1
+Princes of the Universe|4
+Radio Ga Ga|12
+Ride The Wild Wind|1
+Sail Away Sweet Sister|1
+Save Me|7
+Scandal|3
+Seven Seas of Rhye|2
+Sheer Heart Attack|4
+Somebody To Love|6
+Spread Your Wings|3
+Staying Power|1
+Stone Cold Crazy|4
+Teo Torriatte|4
+The Fairy Feller's Master-Stroke|1
+The Hitman|1
+The Invisible Man|3
+The March Of The Black Queen|2
+The Miracle|3
+The Night Comes Down|1
+The Prophet's Song|1
+The Show Must Go On|57
+These Are The Days Of Our Lives|14
+Tie Your Mother Down|2
+Too Much Love Will Kill You|18
+Under Pressure|12
+Was It All Worth It|4
+We Are The Champions|20
+We Will Rock You|13
+White Man|1
+White Queen|4
+Who Needs You|1
+Who Wants To Live Forever|14
+You And I|2
+You Don't Fool Me|4
+You Take My Breath Away|4

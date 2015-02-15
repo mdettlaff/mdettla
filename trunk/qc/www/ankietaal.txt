@@ -1,0 +1,17 @@
+A Day At The Races|1
+A Kind Of Magic|2
+A Night At The Opera|4
+At The Beeb |0
+Flash Gordon|0
+Hot Space|0
+Innuendo|7
+Jazz|1
+Made In Heaven|6
+News Of The World|0
+Queen I|2
+Queen II|3
+Queen Rocks|0
+Sheer Heart Attack|0
+The Game|0
+The Miracle|0
+The Works|1
