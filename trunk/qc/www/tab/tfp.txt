@@ -1,0 +1,170 @@
+The Fallen Priest
+Words by Tim Rice, music by Freddie Mercury and Mike Moran
+
+Each dash (-) or chord represents a crotchet (except for a couple of
+places where shorter rhythms are used, but you'll know what to do),
+and repeated dashes mean that the preceding chord is repeated.
+
+Sometimes I've represented the overall harmony rather than just
+the piano part, but it all sounds good to me.
+
+
+Intro
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+
+"Free me..."
+Cm - - - | Bb/C - - - | Cm - - - | Cm/Eb Cm Ab G
+
+Cm - - - | Bb/C - - - | Cm - - - | Bbm /Ab /F# /F
+
+Bbm - - - | - - - -
+
+
+"A life of sacrifice..."
+Bbm - - - | - - - - | Bbm/C - - - | C7 - - -
+
+Fm - - - | Db/F - - - | Ddim - - - | B/D# - - -
+
+Db/F - - - | Db/F - - - | Bbm - - - | F/B - Bbm -
+
+Ebm7 - - - | Ebm7b5 - - - | Db/Ab - - - | Ab - - -
+
+
+"Free me..."
+Bbm - - - | Bbm - - - | Bbm/C - - - | C7 - - -
+
+Fm - - - | Db/F - - - | Ddim - - - | B/D# - - -
+
+Db/F - - - | Db/F - - - | Bbm - - - | F/B - Bbm -
+
+Ebm7 - - - | Ebm7b5 - - - | Db/Ab - - - | Ab - - -
+
+Db - G/B Eb/Bb | A7 Fm/Ab D7 G
+
+
+"We are mortal..."
+Ebm7/Db - - Db | - - - - | Ebm7/D - - - | - - - -
+
+F#dim/Bb - - Bbm | - - - - | F#dim/Bb - - - | Bbm - - -
+
+F#m7 - - F#m6 | - - - - | Db/Ab - - - | - - - -
+
+F#/Ab - - Ab7 | - - - -
+
+
+"We are mortal..."
+Ebm7/Db - - Db | - - - - | Ebm7/D - - - | - - - -
+
+F#dim/Bb - - Bbm | - - - - | F#dim/Bb - - - | Bbm - - -
+
+Db/Ab - - - | Aaug5 - - - | Bbm - - - | Eb7/G - - -
+
+Ab - - - | Abmaj7 - Abdim - | Eb/G - G/B Eb/Bb | A7 Fm/Ab D7 G
+
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+Cm - - Fm6 | Cm - - Fm6 | Cm - G/B Eb/Bb | Fm/Ab G Fm Cm6/Eb
+
+
+"Serve...I should be..."
+G/D - - - | Cm/Eb - - - | G/D - - - | Eb7/Bb - - -
+
+Ab/Eb - - - | G/Eb - - - | Bbm - G/B Eb/Bb | Fm/Ab G Fm Cm6/Eb
+
+G/D - - - | Cm/Eb - - - | G/D - - - | Eb7/Bb - - -
+
+Ab/Eb - - - | G/Eb - - - | Bbm - - - | A7 Fm/Ab D7 G7
+
+(Single notes, not chords)
+
+C Bb F# F - | - - G Ab
+
+
+(Chords aga|n)
+
+"To yourself..."
+Bb7 - - - | Eb - Eb7aug5 - | Ab - - - | G7 - - -
+
+Cm - - - | Cminmaj7 - Cm7 - | Fm7 - Fm6 - | Db/F - - -
+
+Ab/F# - - - | G7b9 - G - | Bbm - - - | Bbm7 - - -
+
+Bbm6 - - - | - - - - | Bbm/C - - - | C - - - (rit.)
+
+Fm - G/B Eb/Bb | A7 Fm/Ab D7 G
+
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+
+"Free me..."
+Cm - - - | Bb/C - - - | Cm - - - | Cm - Ab G
+
+Cm - - - | Bb/C - - - | Cm - - - | Bbm /Ab /F# /F
+
+Bbm - - - | - - - -
+
+
+"Come a little closer..."
+Bbm - - - | - - - - | Bbm/C - - - | C7 - - -
+
+Fm - - - | Db/F - - - | Ddim - - - | B/D# - - -
+
+Db/F - - - | Db/F - - - | Bbm - - - | F/B - Bbm -
+
+Ebm7 - - - | Ebm7b5 - - - | Db/Ab - - - | Ab7 - - -
+
+Db - - - | - - - -
+
+
+"We are mortal..."
+Ebm7/Db - - Db | - - - - | Ebm7/D - - - | - - - -
+
+F#dim/Bb - - Bbm | - - - - | F#dim/Bb - - - | Bbm - - -
+
+F#m7 - - F#m6 | - - - - | Db/Ab - - - | - - - -
+
+F#/Ab - - Ab7 | - - - -
+
+
+"We are mortal..."
+Ebm7/Db - - Db | - - - - | Ebm7/D - - - | - - - -
+
+F#dim/Bb - - Bbm | - - - - | F#dim/Bb - - - | Bbm - - -
+
+Db/Ab - - - | - - - - | Ab7b9 - - - | - - - -
+
+Db - G/B Eb/Bb | A7 Fm/Ab D7 G
+
+(Backwards chords)
+
+Cm - - G | D7 Fm/Ab A7 Eb/Bb |Bbm - - - | - - - - |
+
+
+"Why do I belive..."
+G7 - - - | Ab/F# - - - | Db/F - - - | Fdim - Fm7b5 -
+
+Cm - - - | - - - - | G7 - - - | Ab - - -
+
+Ebaug5 - Eb - | Bb7/D - - - | Fm7 - - - | - - - -
+
+
+"We are locked in each..."
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+Cm - - - | Cm/Bb - - - | Abmaj7 - - - | A7 Fm/Ab D7 G
+
+Abmaj7 Cm G/B Eb/Bb | Fm/Ab G Fm Cm6/Eb
+
+G/D Cm G/B Eb/Bb | A7 Fm/Ab D7 G7
+
+Cm.......................
+
+Transcried by Steve Pickard, 2002
+
+
+
