@@ -65,8 +65,8 @@ function validate($name, $email, $content) {
     return true;
 }
 
-mysql_connect('mysql524int.cp.az.pl', 'a06062ak_spnk', 'secretdbpass');
-mysql_select_db('a06062ak_spnk');
+mysql_connect('mysql524int.cp.az.pl', 'u6001890_spnk', 'secretdbpass');
+mysql_select_db('db6001890_spnk');
 
 if (!empty($_POST['submit'])) {
     // dodaj nowy wpis

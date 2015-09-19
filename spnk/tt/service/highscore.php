@@ -9,8 +9,8 @@ if (isset($_POST['username'])) {
         '/', '.szybkiepisanienaklawiaturze.pl');
 }
 
-mysql_connect('mysql524int.cp.az.pl', 'a06062ak_spnk', 'secretdbpass');
-mysql_select_db('a06062ak_spnk');
+mysql_connect('mysql524int.cp.az.pl', 'u6001890_spnk', 'secretdbpass');
+mysql_select_db('db6001890_spnk');
 
 include '../include/log.php';
 include '../include/utils.php';
