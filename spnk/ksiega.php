@@ -67,6 +67,7 @@ function validate($name, $email, $content) {
 
 mysql_connect('mysql524int.cp.az.pl', 'u6001890_spnk', 'secretdbpass');
 mysql_select_db('db6001890_spnk');
+mysql_query("SET NAMES 'latin2'");
 
 if (!empty($_POST['submit'])) {
     // dodaj nowy wpis
@@ -136,6 +137,7 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
 
 <?php
     // poka¿ ksiêgê go¶ci
+    mysql_query("SET NAMES 'latin2'");
     $PAGE_SIZE = 20;
     if (is_numeric($_GET['page']) && $_GET['page'] > 0) {
         $current_page = $_GET['page'];
@@ -152,10 +154,10 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
         while ($row = mysql_fetch_assoc($result)) {
             if (!empty($row['email'])) {
                 echo "<a href=\"mailto:"
-                    . htmlspecialchars($row['email']) . "\"><b>";
-                echo htmlspecialchars($row['username']) . "</b></a>\n";
+                    . htmlspecialchars($row['email'], ENT_COMPAT|ENT_SUBSTITUTE, 'ISO-8859-1') . "\"><b>";
+                echo htmlspecialchars($row['username'], ENT_COMPAT|ENT_SUBSTITUTE, 'ISO-8859-1') . "</b></a>\n";
             } else {
-                echo '<b>' . htmlspecialchars($row['username']) . '</b> ';
+                echo '<b>' . htmlspecialchars($row['username'], ENT_COMPAT|ENT_SUBSTITUTE, 'ISO-8859-1') . '</b> ';
             }
             $date = date("d.m.Y", strtotime($row['date_added']));
             $time = date("H:i", strtotime($row['date_added']));
@@ -165,7 +167,7 @@ Je¶li chcesz wyraziæ swoj± opiniê o tej stronie lub na temat z ni± zwi±zany - wp
             }
             echo "<br><br>\n";
             echo str_replace("\n", "<br>\n",
-                htmlspecialchars(trim($row['content'])));
+                htmlspecialchars(trim($row['content']), ENT_COMPAT|ENT_SUBSTITUTE, 'ISO-8859-1'));
             echo "\n<br><br>\n<hr>\n\n";
         }
         // stronicowanie
