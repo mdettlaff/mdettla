@@ -1,6 +1,6 @@
 <?php
 
-mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_connect('mysql524int.cp.az.pl', 'a06062ak_spnk', 'secretdbpass');
 mysql_select_db('a06062ak_spnk');
 
 include '../include/log.php';
@@ -201,14 +201,14 @@ echo "<br>\n\n";
 // wszystkie wpisy w ttlog
 echo "<h2>Typing Test - Statystyka</h3>\n";
 $range = $_GET['range'];
-if ($range == 'all') {
-    $r = mysql_query('
-        SELECT id, date_added, speed, ip, mistakes, corrections,
-            pl, chars, minutes, seconds, username
-            FROM ttlog
-            ORDER BY id DESC
-    ');
-} else {
+//if ($range == 'all') {
+    //$r = mysql_query('
+        //SELECT id, date_added, speed, ip, mistakes, corrections,
+            //pl, chars, minutes, seconds, username
+            //FROM ttlog
+            //ORDER BY id DESC
+    //');
+//} else {
     $r = mysql_query('
         SELECT id, date_added, speed, ip, mistakes, corrections,
             pl, chars, minutes, seconds, username
@@ -216,7 +216,7 @@ if ($range == 'all') {
             ORDER BY id DESC
             LIMIT 1000
     ');
-}
+//}
 echo "<table class=\"large-table\">\n<tr>\n";
 echo "<th>nr</th><th>zakoñczenie pisania</th>\n";
 echo "<th>ip</th><th>prêdko¶æ<br>(zn./min)</th>\n";

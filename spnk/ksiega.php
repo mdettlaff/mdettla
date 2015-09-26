@@ -65,7 +65,7 @@ function validate($name, $email, $content) {
     return true;
 }
 
-mysql_connect('62.146.68.172', 'a06062ak_spnk', 'secretdbpass');
+mysql_connect('mysql524int.cp.az.pl', 'a06062ak_spnk', 'secretdbpass');
 mysql_select_db('a06062ak_spnk');
 
 if (!empty($_POST['submit'])) {
