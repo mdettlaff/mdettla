@@ -1,0 +1,23 @@
+[user]
+	email = mdettlaff87@gmail.com
+	name = Michał Dettlaff
+[alias]
+	st = status -s
+	dc = diff --cached --find-copies-harder
+	ca = commit --amend
+	ba = branch -a
+	h = log --graph --decorate --date-order
+	hs = log --graph --decorate --oneline --date-order
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue) <%an>%Creset' --abbrev-commit
+	d = diff --find-copies-harder
+	mig = "!f() { git filter-branch -f --prune-empty --index-filter \"git rm --cached -r -q -- .; git reset -q \\$GIT_COMMIT -- $1 $2 $3 $4 $5 $6 $7 $8 $9\"; }; f"
+[color]
+	ui = true
+[merge]
+	conflictstyle = diff3
+[core]
+	autocrlf = input
+[push]
+	default = current
+[rerere]
+	enabled = true
