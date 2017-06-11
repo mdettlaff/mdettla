@@ -4,6 +4,15 @@ function say_hello() {
 
 function tt_init() {
   var content = document.getElementById('typing_area');
-  content.innerHTML = 'text to type: ' + say_hello();
+  var model = new TypingTestModel('foo bar', true);
+  model.onPrintableChar('f')
+  //model.onPrintableChar('x')
+  model.onPrintableChar('o')
+  model.onPrintableChar('o')
+  model.onPrintableChar(' ')
+  model.onPrintableChar('b')
+  model.onPrintableChar('a')
+  model.onPrintableChar('r')
+  content.innerHTML = 'mistake: ' + model.isMistakeMade + ', is started: ' + model.isStarted + ', is finished: ' + model.isFinished;
 }
 
