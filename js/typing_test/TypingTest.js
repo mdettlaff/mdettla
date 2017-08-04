@@ -14,5 +14,10 @@ function tt_init() {
   model.onPrintableChar('a')
   model.onPrintableChar('r')
   content.innerHTML = 'mistake: ' + model.isMistakeMade + ', is started: ' + model.isStarted + ', is finished: ' + model.isFinished;
+  var utils = new Utils();
+  var lines = utils.breakLines('foo bar baz', 8);
+  var withoutPlChars = utils.shavePlChars('zażółć gęślą jaźń');
+  var containsPlChars = utils.containsPlChars('zażółć');
+  content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
 }
 
