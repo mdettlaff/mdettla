@@ -3,7 +3,7 @@ function say_hello() {
 }
 
 function tt_init() {
-  var content = document.getElementById('typing_area');
+  var content = document.getElementById('test_area');
   var model = new TypingTestModel('foo bar', true);
   model.onPrintableChar('f')
   //model.onPrintableChar('x')
@@ -19,5 +19,10 @@ function tt_init() {
   var withoutPlChars = utils.shavePlChars('zażółć gęślą jaźń');
   var containsPlChars = utils.containsPlChars('zażółć');
   content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
+
+  var c = document.getElementById("typing_area");
+  var ctx = c.getContext("2d");
+  ctx.font = "18px Arial";
+  ctx.fillText("Hello World", 10, 30);
 }
 
