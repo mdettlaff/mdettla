@@ -2,6 +2,10 @@ function say_hello() {
   return 'this is doge';
 }
 
+var context;
+var canvas;
+var typedText = '';
+
 function tt_init() {
   var content = document.getElementById('test_area');
   var model = new TypingTestModel('foo bar', true);
@@ -20,15 +24,30 @@ function tt_init() {
   var containsPlChars = utils.containsPlChars('zażółć');
   content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
 
-  var typingArea = document.getElementById("typing_area");
-  var ctx = typingArea.getContext("2d");
-  ctx.font = "18px Arial";
-  ctx.fillText("Hello World", 10, 30);
+  canvas = document.getElementById("typing_area");
+  context = canvas.getContext("2d");
 
-  typingArea.addEventListener('keyup', handleKeyPress);
+  canvas.addEventListener('keyup', handleKeyPress);
+  draw();
+}
+
+function draw() {
+  context.clearRect(0, 0, canvas.width, canvas.height)
+  drawText();
+}
+
+function drawText() {
+  context.font = "18px Arial";
+  context.fillStyle = 'black';
+  context.fillText("Hello World", 10, 30);
+  context.fillStyle = 'blue';
+  context.fillText(typedText, 10, 52);
 }
 
 function handleKeyPress(event) {
-  alert('key: ' + event.keyCode);
+  if (event.keyCode >= 32) { // not a control character
+    typedText += event.key;
+  }
+  draw();
 }
 
