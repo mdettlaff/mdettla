@@ -20,9 +20,15 @@ function tt_init() {
   var containsPlChars = utils.containsPlChars('zażółć');
   content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
 
-  var c = document.getElementById("typing_area");
-  var ctx = c.getContext("2d");
+  var typingArea = document.getElementById("typing_area");
+  var ctx = typingArea.getContext("2d");
   ctx.font = "18px Arial";
   ctx.fillText("Hello World", 10, 30);
+
+  typingArea.addEventListener('keyup', handleKeyPress);
+}
+
+function handleKeyPress(event) {
+  alert('key: ' + event.keyCode);
 }
 
