@@ -28,7 +28,12 @@ function tt_init() {
   context = canvas.getContext("2d");
 
   canvas.addEventListener('keyup', handleKeyPress);
+  initContext();
   draw();
+}
+
+function initContext() {
+  context.font = "18px Arial";
 }
 
 function draw() {
@@ -37,7 +42,6 @@ function draw() {
 }
 
 function drawText() {
-  context.font = "18px Arial";
   context.fillStyle = 'black';
   context.fillText("Hello World", 10, 30);
   context.fillStyle = 'blue';
@@ -47,7 +51,7 @@ function drawText() {
 function handleKeyPress(event) {
   if (event.keyCode >= 32) { // not a control character
     typedText += event.key;
+    draw();
   }
-  draw();
 }
 
