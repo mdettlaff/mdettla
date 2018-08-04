@@ -71,37 +71,37 @@
         }
 
         onEnter() {
-            stayedInTheSameLine = true;
-            const last = writtenLines.length - 1;
-            if (writtenLines[last].length >= textLines[last].length) {
+            this.stayedInTheSameLine = true;
+            const last = this.writtenLines.length - 1;
+            if (this.writtenLines[last].length >= textLines[last].length) {
                 return breakLine();
             }
             return false;
         }
 
         onBackspace() {
-            stayedInTheSameLine = true;
-            if (timeStarted == null || timeFinished != null) {
+            this.stayedInTheSameLine = true;
+            if (this.timeStarted == null || this.timeFinished != null) {
                 return;
             }
-            const last = writtenLines.length - 1;
-            if (writtenLines[last].length > 0) {
-                writtenLines[last] = writtenLines[last].substring(
-                        0, writtenLines[last].length - 1);
-                mistakes[last].pop();
-            } else if (writtenLines.length > 1) {
-                writtenLines.pop();
-                mistakes.pop();
-                stayedInTheSameLine = false;
+            const last = this.writtenLines.length - 1;
+            if (this.writtenLines[last].length > 0) {
+                this.writtenLines[last] = this.writtenLines[last].substring(
+                        0, this.writtenLines[last].length - 1);
+                this.mistakes[last].pop();
+            } else if (this.writtenLines.length > 1) {
+                this.writtenLines.pop();
+                this.mistakes.pop();
+                this.stayedInTheSameLine = false;
             }
         }
 
         get corrections() /* of Array of Boolean */ {
             var corrections /* of Array of Boolean */ = [];
-            for (var i = 0; i < writtenLines.length; i++) {
+            for (var i = 0; i < this.writtenLines.length; i++) {
                 var line /* of Boolean */ = [];
-                for (var j = 0; j < mistakes[i].length; j++) {
-                    line.push(mistakesShadow[i][j] && !mistakes[i][j]);
+                for (var j = 0; j < this.mistakes[i].length; j++) {
+                    line.push(mistakesShadow[i][j] && !this.mistakes[i][j]);
                 }
                 corrections.push(line);
             }
@@ -130,14 +130,14 @@
         }
 
         get typingTimeInMilliseconds() {
-            if (timeStarted == null) {
+            if (this.timeStarted == null) {
                 return -1;
             } else {
-                var timeElapsed = timeFinished;
-                if (timeFinished == null) {
+                var timeElapsed = this.timeFinished;
+                if (this.timeFinished == null) {
                     timeElapsed = new Date();
                 }
-                const interval = timeElapsed.time - timeStarted.time;
+                const interval = timeElapsed.time - this.timeStarted.time;
                 // subtract paused time
                 var pausedInterval = 0;
                 for (var i = 0; i < timesPaused.length; i++) {
@@ -163,17 +163,17 @@
         }
 
         breakLine() {
-            if (timeStarted == null || timeFinished != null) {
+            if (this.timeStarted == null || this.timeFinished != null) {
                 return false;
             }
-            const last = writtenLines.length - 1;
-            if (writtenLines.length < textLines.length) {
-                writtenLines.push("");
-                mistakes.push([]);
-                if (mistakes.length > mistakesShadow.length) {
+            const last = this.writtenLines.length - 1;
+            if (this.writtenLines.length < textLines.length) {
+                this.writtenLines.push("");
+                this.mistakes.push([]);
+                if (this.mistakes.length > mistakesShadow.length) {
                     mistakesShadow.push([]);
                 }
-                stayedInTheSameLine = false;
+                this.stayedInTheSameLine = false;
             }
             return true;
         }

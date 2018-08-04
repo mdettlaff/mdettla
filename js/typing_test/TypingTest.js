@@ -4,11 +4,11 @@ function say_hello() {
 
 var context;
 var canvas;
-var typedText = '';
+var model;
 
 function tt_init() {
   var content = document.getElementById('test_area');
-  var model = new TypingTestModel('foo bar', true);
+  model = new TypingTestModel('foo bar', true);
   model.onPrintableChar('f')
   //model.onPrintableChar('x')
   model.onPrintableChar('o')
@@ -23,9 +23,12 @@ function tt_init() {
   var withoutPlChars = utils.shavePlChars('zażółć gęślą jaźń');
   var containsPlChars = utils.containsPlChars('zażółć');
   content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
+  content.innerHTML += '<br>mistake: false, is started: true, is finished: true; lines: foo bar,baz, withoutPlChars: zazolc gesla jazn, containsPlChars: true'
 
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
+
+  model = new TypingTestModel('foo Hello World bar', true);
 
   canvas.addEventListener('keydown', handleKeyPress);
   initContext();
@@ -43,14 +46,17 @@ function draw() {
 
 function drawText() {
   context.fillStyle = 'black';
-  context.fillText("Hello World", 10, 30);
+  context.fillText(model.textLines[0], 10, 30);
   context.fillStyle = 'blue';
-  context.fillText(typedText, 10, 52);
+  context.fillText(model.writtenLines[0] + '_', 10, 52);
 }
 
 function handleKeyPress(event) {
-  if (event.keyCode >= 32) { // not a control character
-    typedText += event.key;
+  if (event.keyCode == 8 /* backspace */) {
+    model.onBackspace();
+    draw();
+  } else if (event.keyCode >= 32) { // not a control character
+    model.onPrintableChar(event.key);
     draw();
   }
 }
