@@ -27,7 +27,7 @@ function tt_init() {
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
 
-  canvas.addEventListener('keyup', handleKeyPress);
+  canvas.addEventListener('keydown', handleKeyPress);
   initContext();
   draw();
 }
