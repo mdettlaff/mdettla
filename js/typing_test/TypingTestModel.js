@@ -18,16 +18,14 @@
 
         constructor(text,
                 plCharsOn, isReady = true) {
-            this.MAX_LINE_LENGTH = 66;
+            //this.MAX_LINE_LENGTH = 66;
+            this.MAX_LINE_LENGTH = 40;
             this.isReady = isReady;
             this.stayedInTheSameLine = false;
             if (!plCharsOn) {
-                // TODO import Utils
-                //text = Utils.shavePlChars(text);
-                this.text = text;
+                text = new Utils().shavePlChars(text);
             }
-            //textLines = Utils.breakLines(text, MAX_LINE_LENGTH);
-            this.textLines = [text];
+            this.textLines = new Utils().breakLines(text, this.MAX_LINE_LENGTH);
             this.writtenLines = [""];
             this.mistakes = [[]];
             this.mistakesShadow = [[]];
@@ -48,7 +46,7 @@
             var last = this.writtenLines.length - 1;
             if (c == ' '
                     && this.writtenLines[last].length >= this.textLines[last].length) {
-                return breakLine();
+                return this.breakLine();
             }
             const isTypedCorrectly =
                 this.writtenLines[last].length < this.textLines[last].length
@@ -73,8 +71,8 @@
         onEnter() {
             this.stayedInTheSameLine = true;
             const last = this.writtenLines.length - 1;
-            if (this.writtenLines[last].length >= textLines[last].length) {
-                return breakLine();
+            if (this.writtenLines[last].length >= this.textLines[last].length) {
+                return this.breakLine();
             }
             return false;
         }
@@ -101,7 +99,7 @@
             for (var i = 0; i < this.writtenLines.length; i++) {
                 var line /* of Boolean */ = [];
                 for (var j = 0; j < this.mistakes[i].length; j++) {
-                    line.push(mistakesShadow[i][j] && !this.mistakes[i][j]);
+                    line.push(this.mistakesShadow[i][j] && !this.mistakes[i][j]);
                 }
                 corrections.push(line);
             }
@@ -167,11 +165,11 @@
                 return false;
             }
             const last = this.writtenLines.length - 1;
-            if (this.writtenLines.length < textLines.length) {
+            if (this.writtenLines.length < this.textLines.length) {
                 this.writtenLines.push("");
                 this.mistakes.push([]);
-                if (this.mistakes.length > mistakesShadow.length) {
-                    mistakesShadow.push([]);
+                if (this.mistakes.length > this.mistakesShadow.length) {
+                    this.mistakesShadow.push([]);
                 }
                 this.stayedInTheSameLine = false;
             }

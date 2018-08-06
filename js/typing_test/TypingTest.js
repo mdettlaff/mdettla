@@ -28,7 +28,7 @@ function tt_init() {
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
 
-  model = new TypingTestModel('foo Hello World bar', true);
+  model = new TypingTestModel('W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', true);
 
   canvas.addEventListener('keydown', handleKeyPress);
   initContext();
@@ -46,9 +46,14 @@ function draw() {
 
 function drawText() {
   context.fillStyle = 'black';
-  context.fillText(model.textLines[0], 10, 30);
+  var verticalOffset = 55;
+  for (var i = 0; i < model.textLines.length; i++) {
+    context.fillText(model.textLines[i], 10, 30 + i * verticalOffset);
+  }
   context.fillStyle = 'blue';
-  context.fillText(model.writtenLines[0] + '_', 10, 52);
+  for (var i = 0; i < model.writtenLines.length; i++) {
+    context.fillText(model.writtenLines[i] + '_', 10, 52 + i * verticalOffset);
+  }
 }
 
 function handleKeyPress(event) {
