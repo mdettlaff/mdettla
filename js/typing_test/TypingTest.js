@@ -52,8 +52,26 @@ function drawText() {
   }
   context.fillStyle = 'blue';
   for (var i = 0; i < model.writtenLines.length; i++) {
-    context.fillText(model.writtenLines[i] + '_', 10, 52 + i * verticalOffset);
+    var x = 10;
+    for (var j = 0; j < model.writtenLines[i].length; j++) {
+      var c = model.writtenLines[i][j];
+      drawWrittenCharacter(c, x, verticalOffset, i, j);
+      x += context.measureText(c).width;
+    }
+    context.fillStyle = model.isMistakeMade ? 'red' : 'blue';
+    context.fillText('_', x, 52 + i * verticalOffset);
   }
+}
+
+function drawWrittenCharacter(c, x, verticalOffset, i, j) {
+  if (model.mistakes[i][j]) {
+    context.fillStyle = 'red';
+  } else if (model.corrections[i][j]) {
+    context.fillStyle = 'purple';
+  } else {
+    context.fillStyle = 'blue';
+  }
+  context.fillText(c, x, 52 + i * verticalOffset);
 }
 
 function handleKeyPress(event) {
