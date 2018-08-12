@@ -78,7 +78,10 @@ function handleKeyPress(event) {
   if (event.keyCode == 8 /* backspace */) {
     model.onBackspace();
     draw();
-  } else if (event.keyCode >= 32) { // not a control character
+  } else if (event.keyCode == 13 /* enter */) {
+    model.onEnter();
+    draw();
+  } else if (event.keyCode >= 32 /* not a control character */) {
     model.onPrintableChar(event.key);
     draw();
   }
