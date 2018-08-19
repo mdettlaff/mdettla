@@ -107,13 +107,13 @@
         }
 
         pause() {
-            isPaused = true;
-            timesPaused.push(new Date());
+            this.isPaused = true;
+            this.timesPaused.push(new Date());
         }
 
         unpause() {
-            isPaused = false;
-            timesPaused.push(new Date());
+            this.isPaused = false;
+            this.timesPaused.push(new Date());
         }
 
         get isMistakeMade() {
@@ -135,18 +135,18 @@
                 if (this.timeFinished == null) {
                     timeElapsed = new Date();
                 }
-                const interval = timeElapsed.time - this.timeStarted.time;
+                const interval = timeElapsed.getTime() - this.timeStarted.getTime();
                 // subtract paused time
                 var pausedInterval = 0;
-                for (var i = 0; i < timesPaused.length; i++) {
+                for (var i = 0; i < this.timesPaused.length; i++) {
                     if (i % 2 == 0) {
-                        pausedInterval -= timesPaused[i].time;
+                        pausedInterval -= this.timesPaused[i].getTime();
                     } else {
-                        pausedInterval += timesPaused[i].time;
+                        pausedInterval += this.timesPaused[i].getTime();
                     }
                 }
-                if (isPaused) {
-                    pausedInterval += timesPaused[timesPaused.length - 1].time;
+                if (this.isPaused) {
+                    pausedInterval += this.timesPaused[this.timesPaused.length - 1].getTime();
                 }
                 return interval - pausedInterval;
             }

@@ -33,6 +33,8 @@ function tt_init() {
   canvas.addEventListener('keydown', handleKeyPress);
   initContext();
   draw();
+
+  updateInProgressResults();
 }
 
 function initContext() {
@@ -85,5 +87,14 @@ function handleKeyPress(event) {
     model.onPrintableChar(event.key);
     draw();
   }
+}
+
+function updateInProgressResults() {
+  var results = new TestResults(model);
+  var inProgressResults = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min, ';
+  inProgressResults += 'poprawność: ' + results.correctness.toFixed(1) + '%';
+  var inProgressResultsContent = document.getElementById('in_progress_results');
+  inProgressResultsContent.innerHTML = inProgressResults;
+  setTimeout(updateInProgressResults, 1000);
 }
 
