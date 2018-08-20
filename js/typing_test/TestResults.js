@@ -55,11 +55,11 @@ class TestResults {
     }
 
     toHTMLString() {
-        var html = "<font size=\"14\">prędkość: <b>"
+        var html = "<font size=\"5\">prędkość: <b>"
             + this.realSpeed.toFixed(1) + "</b> znaków/min "
             + "(" + this.realSpeedWPM.toFixed(1) + " słów/min)\n"
             + "poprawność: <b>" + this.correctness.toFixed(1) + "</b>%"
-            + "</font><font size = \"12\">\n\n"
+            + "</font><font size = \"4\">\n\n"
             + "Ilość błędów: " + (this.mistakesCount + this.correctionsCount);
         if (this.correctionsCount > 0 && this.mistakesCount == 0) {
             html += ", wszystkie poprawione.\n";
@@ -70,10 +70,10 @@ class TestResults {
         }
         html += "Przepisano "
             + (this.writtenCharsCount - this.mistakesCount) + " znaków w czasie ";
-        if (int(this.timeMinutes) > 0) {
-            html += int(this.timeMinutes) + " min ";
+        if (parseInt(this.timeMinutes) > 0) {
+            html += parseInt(this.timeMinutes) + " min ";
         }
-        html += (int(this.timeSeconds) % 60) + " s." + "</font>";
+        html += (parseInt(this.timeSeconds) % 60) + " s." + "</font>";
         return html;
     }
 

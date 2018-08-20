@@ -94,7 +94,7 @@ function updateInProgressResults() {
   var inProgressResults = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min, ';
   inProgressResults += 'poprawność: ' + results.correctness.toFixed(1) + '%';
   var inProgressResultsContent = document.getElementById('in_progress_results');
-  inProgressResultsContent.innerHTML = inProgressResults;
+  inProgressResultsContent.innerHTML = inProgressResults + '<br><br>' + results.toHTMLString();
   setTimeout(updateInProgressResults, 1000);
 }
 
