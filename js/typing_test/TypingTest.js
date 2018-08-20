@@ -5,6 +5,7 @@ function say_hello() {
 var context;
 var canvas;
 var model;
+var typingArea;
 
 function tt_init() {
   var content = document.getElementById('test_area');
@@ -29,6 +30,7 @@ function tt_init() {
   context = canvas.getContext("2d");
 
   model = new TypingTestModel('W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', true);
+  typingArea = new TypingArea(context, canvas.width, canvas.height);
 
   canvas.addEventListener('keydown', handleKeyPress);
   initContext();
@@ -38,42 +40,12 @@ function tt_init() {
 }
 
 function initContext() {
-  context.font = "18px Arial";
+  context.font = "15px Verdana";
 }
 
 function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height)
-  drawText();
-}
-
-function drawText() {
-  context.fillStyle = 'black';
-  var verticalOffset = 55;
-  for (var i = 0; i < model.textLines.length; i++) {
-    context.fillText(model.textLines[i], 10, 30 + i * verticalOffset);
-  }
-  context.fillStyle = 'blue';
-  for (var i = 0; i < model.writtenLines.length; i++) {
-    var x = 10;
-    for (var j = 0; j < model.writtenLines[i].length; j++) {
-      var c = model.writtenLines[i][j];
-      drawWrittenCharacter(c, x, verticalOffset, i, j);
-      x += context.measureText(c).width;
-    }
-    context.fillStyle = model.isMistakeMade ? 'red' : 'blue';
-    context.fillText('_', x, 52 + i * verticalOffset);
-  }
-}
-
-function drawWrittenCharacter(c, x, verticalOffset, i, j) {
-  if (model.mistakes[i][j]) {
-    context.fillStyle = 'red';
-  } else if (model.corrections[i][j]) {
-    context.fillStyle = 'purple';
-  } else {
-    context.fillStyle = 'blue';
-  }
-  context.fillText(c, x, 52 + i * verticalOffset);
+  typingArea.draw(model);
 }
 
 function handleKeyPress(event) {
