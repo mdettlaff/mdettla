@@ -16,8 +16,7 @@ class TestResults {
             }
         }
         this.typingTimeInMilliseconds = typingTestModel.typingTimeInMilliseconds;
-        // TODO replace "some" function
-        //this.plChars = typingTestModel.textLines.some(Utils.containsPlChars);
+        this.plChars = typingTestModel.textLines.some(new Utils().containsPlChars);
     }
 
     get speed() {
