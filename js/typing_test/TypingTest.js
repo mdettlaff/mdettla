@@ -6,6 +6,8 @@ var context;
 var canvas;
 var model;
 var typingArea;
+var textWithPlChars;
+var plCharsOn = true;
 
 function tt_init() {
   var content = document.getElementById('test_area');
@@ -29,14 +31,24 @@ function tt_init() {
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
 
-  model = new TypingTestModel('W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', true);
+  textWithPlChars = 'W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.';
+  model = new TypingTestModel(textWithPlChars, plCharsOn);
   typingArea = new TypingArea(context, canvas.width, canvas.height);
 
-  canvas.addEventListener('keydown', handleKeyPress);
   initContext();
   draw();
 
   updateInProgressResults();
+
+  canvas.addEventListener('keydown', handleKeyPress);
+  var plCharsCheckbox = document.querySelector("input[name=plCharsCheckbox]");
+  plCharsCheckbox.addEventListener('change', function() {
+    plCharsOn = this.checked;
+    if (model.isReady && !model.isStarted) {
+      model = new TypingTestModel(textWithPlChars, plCharsOn);
+      draw();
+    }
+  });
 }
 
 function initContext() {
@@ -66,7 +78,7 @@ function updateInProgressResults() {
   var inProgressResults = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min, ';
   inProgressResults += 'poprawność: ' + results.correctness.toFixed(1) + '%';
   var inProgressResultsContent = document.getElementById('in_progress_results');
-  inProgressResultsContent.innerHTML = inProgressResults + '<br><br>' + results.toHTMLString();
+  inProgressResultsContent.innerHTML = inProgressResults + '<br>' + results.toHTMLString();
   setTimeout(updateInProgressResults, 1000);
 }
 
