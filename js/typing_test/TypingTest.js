@@ -1,7 +1,3 @@
-function say_hello() {
-  return 'this is doge';
-}
-
 var context;
 var canvas;
 var model;
@@ -12,24 +8,6 @@ var mockTexts = ['W zeszły czwartek dwa rekiny ludojady pożarły osiemnastolet
 var mockTextIndex = -1;
 
 function tt_init() {
-  var content = document.getElementById('test_area');
-  model = new TypingTestModel('foo bar', true);
-  model.onPrintableChar('f')
-  //model.onPrintableChar('x')
-  model.onPrintableChar('o')
-  model.onPrintableChar('o')
-  model.onPrintableChar(' ')
-  model.onPrintableChar('b')
-  model.onPrintableChar('a')
-  model.onPrintableChar('r')
-  content.innerHTML = 'mistake: ' + model.isMistakeMade + ', is started: ' + model.isStarted + ', is finished: ' + model.isFinished;
-  var utils = new Utils();
-  var lines = utils.breakLines('foo bar baz', 8);
-  var withoutPlChars = utils.shavePlChars('zażółć gęślą jaźń');
-  var containsPlChars = utils.containsPlChars('zażółć');
-  content.innerHTML += '; lines: ' + lines + ', withoutPlChars: ' + withoutPlChars + ', containsPlChars: ' + containsPlChars;
-  content.innerHTML += '<br>mistake: false, is started: true, is finished: true; lines: foo bar,baz, withoutPlChars: zazolc gesla jazn, containsPlChars: true'
-
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
 
@@ -59,15 +37,17 @@ function draw() {
 }
 
 function handleKeyPress(event) {
-  if (event.keyCode == 8 /* backspace */) {
-    model.onBackspace();
-    draw();
-  } else if (event.keyCode == 13 /* enter */) {
-    model.onEnter();
-    draw();
-  } else if (event.keyCode >= 32 /* not a control character */) {
-    model.onPrintableChar(event.key);
-    draw();
+  if (model.isReady && !model.isFinished && !model.isPaused) {
+    if (event.keyCode == 8 /* backspace */) {
+      model.onBackspace();
+      draw();
+    } else if (event.keyCode == 13 /* enter */) {
+      model.onEnter();
+      draw();
+    } else if (event.keyCode >= 32 /* not a control character */) {
+      model.onPrintableChar(event.key);
+      draw();
+    }
   }
 }
 
