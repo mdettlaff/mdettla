@@ -8,6 +8,8 @@ var model;
 var typingArea;
 var textWithPlChars;
 var plCharsOn = true;
+var mockTexts = ['W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
+var mockTextIndex = -1;
 
 function tt_init() {
   var content = document.getElementById('test_area');
@@ -31,7 +33,7 @@ function tt_init() {
   canvas = document.getElementById("typing_area");
   context = canvas.getContext("2d");
 
-  textWithPlChars = 'W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.';
+  textWithPlChars = nextText();
   model = new TypingTestModel(textWithPlChars, plCharsOn);
   typingArea = new TypingArea(context, canvas.width, canvas.height);
 
@@ -41,14 +43,10 @@ function tt_init() {
   updateInProgressResults();
 
   canvas.addEventListener('keydown', handleKeyPress);
-  var plCharsCheckbox = document.querySelector("input[name=plCharsCheckbox]");
-  plCharsCheckbox.addEventListener('change', function() {
-    plCharsOn = this.checked;
-    if (model.isReady && !model.isStarted) {
-      model = new TypingTestModel(textWithPlChars, plCharsOn);
-      draw();
-    }
-  });
+  var plCharsCheckbox = document.getElementById('plCharsCheckbox');
+  plCharsCheckbox.addEventListener('change', handlePlCharsCheckboxChange);
+  var newTestButton = document.getElementById('newTestButton');
+  newTestButton.addEventListener('click', handleNewTestButtonClick);
 }
 
 function initContext() {
@@ -80,5 +78,25 @@ function updateInProgressResults() {
   var inProgressResultsContent = document.getElementById('in_progress_results');
   inProgressResultsContent.innerHTML = inProgressResults + '<br>' + results.toHTMLString();
   setTimeout(updateInProgressResults, 1000);
+}
+
+function handlePlCharsCheckboxChange() {
+  plCharsOn = this.checked;
+  if (model.isReady && !model.isStarted) {
+    model = new TypingTestModel(textWithPlChars, plCharsOn);
+    draw();
+  }
+}
+
+function handleNewTestButtonClick() {
+  textWithPlChars = nextText();
+  model = new TypingTestModel(textWithPlChars, plCharsOn);
+  draw();
+  canvas.focus();
+}
+
+function nextText() {
+  mockTextIndex = (mockTextIndex + 1) % mockTexts.length;
+  return mockTexts[mockTextIndex];
 }
 
