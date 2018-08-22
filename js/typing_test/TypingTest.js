@@ -32,7 +32,8 @@ function initContext() {
 }
 
 function draw() {
-  context.clearRect(0, 0, canvas.width, canvas.height)
+  context.fillStyle = 'white';
+  context.fillRect(0, 0, canvas.width, canvas.height)
   typingArea.draw(model);
 }
 
@@ -53,10 +54,13 @@ function handleKeyPress(event) {
 
 function updateInProgressResults() {
   var results = new TestResults(model);
-  var inProgressResults = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min, ';
-  inProgressResults += 'poprawność: ' + results.correctness.toFixed(1) + '%';
-  var inProgressResultsContent = document.getElementById('in_progress_results');
-  inProgressResultsContent.innerHTML = inProgressResults;
+  var inProgressResultsSpeed = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min';
+  var inProgressResultsCorrectness = 'poprawność: ' + results.correctness.toFixed(1) + '%';
+  var inProgressResultsSpeedContent = document.getElementById('in_progress_results_speed');
+  inProgressResultsSpeedContent.innerHTML = inProgressResultsSpeed;
+  var inProgressResultsCorrectnessContent = document.getElementById('in_progress_results_correctness');
+  inProgressResultsCorrectnessContent.innerHTML = inProgressResultsCorrectness;
+
   var debugInfo = document.getElementById('debug_info');
   debugInfo.innerHTML = results.toHTMLString();
   setTimeout(updateInProgressResults, 1000);
