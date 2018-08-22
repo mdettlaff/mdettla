@@ -56,7 +56,9 @@ function updateInProgressResults() {
   var inProgressResults = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min, ';
   inProgressResults += 'poprawność: ' + results.correctness.toFixed(1) + '%';
   var inProgressResultsContent = document.getElementById('in_progress_results');
-  inProgressResultsContent.innerHTML = inProgressResults + '<br>' + results.toHTMLString();
+  inProgressResultsContent.innerHTML = inProgressResults;
+  var debugInfo = document.getElementById('debug_info');
+  debugInfo.innerHTML = results.toHTMLString();
   setTimeout(updateInProgressResults, 1000);
 }
 
