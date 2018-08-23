@@ -4,6 +4,7 @@ var model;
 var typingArea;
 var textWithPlChars;
 var plCharsOn = true;
+var splashScreenVisible = true;
 var mockTexts = ['W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
 var mockTextIndex = -1;
 
@@ -25,6 +26,8 @@ function tt_init() {
   plCharsCheckbox.addEventListener('change', handlePlCharsCheckboxChange);
   var newTestButton = document.getElementById('newTestButton');
   newTestButton.addEventListener('click', handleNewTestButtonClick);
+  var splashScreen = document.getElementById('splash_screen');
+  splashScreen.addEventListener('click', hideSplashScreen);
 }
 
 function initContext() {
@@ -75,6 +78,10 @@ function handlePlCharsCheckboxChange() {
 }
 
 function handleNewTestButtonClick() {
+  if (splashScreenVisible) {
+    hideSplashScreen();
+    return;
+  }
   textWithPlChars = nextText();
   model = new TypingTestModel(textWithPlChars, plCharsOn);
   draw();
@@ -84,5 +91,12 @@ function handleNewTestButtonClick() {
 function nextText() {
   mockTextIndex = (mockTextIndex + 1) % mockTexts.length;
   return mockTexts[mockTextIndex];
+}
+
+function hideSplashScreen() {
+  splashScreenVisible = false;
+  var splashScreen = document.getElementById('splash_screen');
+  splashScreen.parentNode.removeChild(splashScreen);
+  canvas.focus();
 }
 
