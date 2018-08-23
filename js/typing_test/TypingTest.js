@@ -28,6 +28,8 @@ function tt_init() {
   newTestButton.addEventListener('click', handleNewTestButtonClick);
   var splashScreen = document.getElementById('splash_screen');
   splashScreen.addEventListener('click', hideSplashScreen);
+
+  hideSplashScreen(); // hide splash screen for now to make testing easier
 }
 
 function initContext() {
@@ -97,6 +99,6 @@ function hideSplashScreen() {
   splashScreenVisible = false;
   var splashScreen = document.getElementById('splash_screen');
   splashScreen.parentNode.removeChild(splashScreen);
-  canvas.focus();
+  //canvas.focus();
 }
 
