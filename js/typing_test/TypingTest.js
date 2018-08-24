@@ -28,6 +28,8 @@ function tt_init() {
   newTestButton.addEventListener('click', handleNewTestButtonClick);
   var splashScreen = document.getElementById('splash_screen');
   splashScreen.addEventListener('click', hideSplashScreen);
+  var okButton = document.getElementById('ok_button');
+  okButton.addEventListener('click', hideDialog);
 
   hideSplashScreen(); // hide splash screen for now to make testing easier
 }
@@ -53,6 +55,9 @@ function handleKeyPress(event) {
     } else if (event.keyCode >= 32 /* not a control character */) {
       model.onPrintableChar(event.key);
       draw();
+    }
+    if (model.isFinished) {
+      showDialog();
     }
   }
 }
@@ -100,5 +105,22 @@ function hideSplashScreen() {
   var splashScreen = document.getElementById('splash_screen');
   splashScreen.parentNode.removeChild(splashScreen);
   //canvas.focus();
+}
+
+function showDialog() {
+  var dialog = document.getElementById('dialog');
+  dialog.style.display = 'block';
+  var results = new TestResults(model);
+  var dialogText = document.getElementById('dialog_text');
+  dialogText.innerHTML = results.toHTMLString();
+  var typingTest = document.getElementById('typing_test');
+  typingTest.style.filter = 'blur(1px)';
+}
+
+function hideDialog() {
+  var dialog = document.getElementById('dialog');
+  dialog.style.display = 'none';
+  var typingTest = document.getElementById('typing_test');
+  typingTest.style.filter = 'none';
 }
 

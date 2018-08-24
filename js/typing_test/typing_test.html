@@ -14,7 +14,18 @@
       Typing test
     </p>
 
-    <div style="background-image: url('tt_background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
+    <div id="dialog" style="display: none; position: absolute; z-index: 1; width: 550px; height: 400px;">
+      <div style="background-color: #D0D0E0; margin-left: 125px; margin-top: 120px; width: 338px; height: 146px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
+        <span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
+        <div style="background-color: white; padding: 8px; margin-top: 6px; height: 106px;">
+          <div id="dialog_text"></div>
+          <div style="text-align: center;">
+            <button id="ok_button" type="button">OK</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="typing_test" style="background-image: url('tt_background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
       <div>
         <div id="splash_screen" style="position: absolute; background-color: white; margin-left: 1px; margin-top: 1px; width: 573px; height: 273px;">
           <div style="text-align: center; font-family: Verdana; font-size: 15px;">
