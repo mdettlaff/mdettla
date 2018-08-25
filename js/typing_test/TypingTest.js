@@ -109,9 +109,9 @@ function hideSplashScreen() {
 
 function showDialog() {
   var dialog = document.getElementById('dialog');
-  dialog.style.display = 'block';
+  dialog.style.display = 'table';
   var results = new TestResults(model);
-  var dialogText = document.getElementById('dialog_text');
+  var dialogText = document.getElementById('dialog_results_text');
   dialogText.innerHTML = results.toHTMLString();
   var typingTest = document.getElementById('typing_test');
   typingTest.style.filter = 'blur(1px)';
