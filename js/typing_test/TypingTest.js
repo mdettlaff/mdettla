@@ -31,6 +31,8 @@ function tt_init() {
   var okButton = document.getElementById('ok_button');
   okButton.addEventListener('click', hideDialog);
 
+  preventBackspaceNavigation();
+
   hideSplashScreen(); // hide splash screen for now to make testing easier
 }
 
@@ -147,5 +149,19 @@ function submitTestResults() {
 
 function h(hData, hKey) {
   return CryptoJS.HmacSHA1(hData, hKey);
+}
+
+function preventBackspaceNavigation() {
+  document.addEventListener('keydown', preventDefaultForBackspace);
+  document.addEventListener('keypress', preventDefaultForBackspace);
+}
+
+function preventDefaultForBackspace(e) {
+  var rx = /INPUT|SELECT|TEXTAREA/i;
+  if (e.which == 8) { // 8 == backspace
+    if (!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
+      e.preventDefault();
+    }
+  }
 }
 
