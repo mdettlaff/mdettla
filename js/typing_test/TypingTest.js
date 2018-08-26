@@ -48,7 +48,8 @@ function handleKeyPress(event) {
     } else if (event.keyCode == 13 /* enter */) {
       model.onEnter();
       draw();
-    } else if (event.keyCode >= 32 /* not a control character */) {
+    } else if (event.keyCode >= 32 /* not a control character */
+        && event.key != null && event.key.length == 1) {
       model.onPrintableChar(event.key);
       draw();
     }
