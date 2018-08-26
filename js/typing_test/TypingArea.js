@@ -3,7 +3,10 @@ const MAX_VISIBLE_WRITTEN_LINES = 3;
 const LINE_HEIGHT = 22;
 const TOP_MARGIN_TEXT = 22;
 const TOP_MARGIN_WRITTEN = 42;
-const WRITTEN_TEXT_COLOR = 0x0000C0;
+const TEXT_TO_TYPE_COLOR = '#000000';
+const WRITTEN_TEXT_COLOR = '#0000C0';
+const MISTAKE_TEXT_COLOR = '#F00000';
+const CORRECTED_TEXT_COLOR = '#C000D8';
 
 class TypingArea {
 
@@ -64,7 +67,7 @@ class TypingArea {
             visibleIndex += 1;
         }
 
-        context.fillStyle = 'black';
+        context.fillStyle = TEXT_TO_TYPE_COLOR;
         var yShift = TOP_MARGIN_TEXT;
         for (var i = 0; i < MAX_LINES; i++) {
             context.fillText(this.visibleTextLines[i], 10, yShift);
@@ -74,7 +77,7 @@ class TypingArea {
 
     drawWrittenLines(typingTestModel,
             startLine, endLine, drawOnlyCurrentLine) {
-        context.fillStyle = 'blue';
+        context.fillStyle = WRITTEN_TEXT_COLOR;
         var yShift = TOP_MARGIN_WRITTEN;
         var visibleIndex = 0;
         var x = 10;
@@ -92,17 +95,17 @@ class TypingArea {
         }
         yShift -= 2 * LINE_HEIGHT;
         const cursor = '_';
-        context.fillStyle = model.isMistakeMade ? 'red' : 'blue';
+        context.fillStyle = model.isMistakeMade ? MISTAKE_TEXT_COLOR : WRITTEN_TEXT_COLOR;
         context.fillText(cursor, x, yShift);
     }
 
     drawWrittenCharacter(c, x, yShift, i, j, model) {
         if (model.mistakes[i][j]) {
-            this.context.fillStyle = 'red';
+            this.context.fillStyle = MISTAKE_TEXT_COLOR;
         } else if (model.corrections[i][j]) {
-            this.context.fillStyle = 'purple';
+            this.context.fillStyle = CORRECTED_TEXT_COLOR;
         } else {
-            this.context.fillStyle = 'blue';
+            this.context.fillStyle = WRITTEN_TEXT_COLOR;
         }
         this.context.fillText(c, x, yShift);
     }
