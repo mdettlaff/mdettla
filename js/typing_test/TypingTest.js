@@ -5,6 +5,7 @@ var typingArea;
 var textWithPlChars;
 var plCharsOn = true;
 var splashScreenVisible = true;
+var hData = '';
 var mockTexts = ['W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
 var mockTextIndex = -1;
 
@@ -58,6 +59,7 @@ function handleKeyPress(event) {
     }
     if (model.isFinished) {
       showDialog();
+      submitTestResults();
     }
   }
 }
@@ -122,5 +124,32 @@ function hideDialog() {
   dialog.style.display = 'none';
   var typingTest = document.getElementById('typing_test');
   typingTest.style.filter = 'none';
+}
+
+function submitTestResults() {
+  var testResults = new TestResults(model);
+  var params = new Object();
+  params.speed = testResults.realSpeed.toFixed(1);
+  params.mistakes = testResults.mistakesCount;
+  params.corrections = testResults.correctionsCount;
+  params.plChars = testResults.plChars;
+  params.correctChars = testResults.writtenCharsCount - testResults.mistakesCount;
+  params.minutes = parseInt(testResults.timeMinutes);
+  params.seconds = parseInt(testResults.timeSeconds) % 60;
+  params.timeVerifier = testResults.timeSecondsVerifier;
+  params.h = h(hData + ':'
+      + params.speed + ':'
+      + params.mistakes + ':'
+      + params.corrections + ':'
+      + params.plChars + ':'
+      + params.minutes + ':'
+      + params.seconds + ':'
+      + params.timeVerifier,
+      "secret1");
+  console.log('h for ttlog: ' + params.h);
+}
+
+function h(hData, hKey) {
+  return CryptoJS.HmacSHA1(hData, hKey);
 }
 
