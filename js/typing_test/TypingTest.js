@@ -17,7 +17,6 @@ function tt_init() {
   model = new TypingTestModel(textWithPlChars, plCharsOn);
   typingArea = new TypingArea(context, canvas.width, canvas.height);
 
-  initContext();
   draw();
 
   updateInProgressResults();
@@ -33,10 +32,6 @@ function tt_init() {
   okButton.addEventListener('click', hideDialog);
 
   hideSplashScreen(); // hide splash screen for now to make testing easier
-}
-
-function initContext() {
-  context.font = "15px Verdana";
 }
 
 function draw() {

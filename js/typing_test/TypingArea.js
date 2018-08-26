@@ -7,6 +7,8 @@ const TEXT_TO_TYPE_COLOR = '#000000';
 const WRITTEN_TEXT_COLOR = '#0000C0';
 const MISTAKE_TEXT_COLOR = '#F00000';
 const CORRECTED_TEXT_COLOR = '#C000D8';
+const REGULAR_FONT = '15px Verdana';
+const BOLD_FONT = 'bold ' + REGULAR_FONT;
 
 class TypingArea {
 
@@ -29,6 +31,7 @@ class TypingArea {
                 startLine + MAX_VISIBLE_WRITTEN_LINES - 1,
                 typingTestModel.writtenLines.length - 1);
 
+        this.context.font = REGULAR_FONT;
         if (typingTestModel.isReady) {
             this.drawWrittenLines(typingTestModel, startLine, endLine, drawOnlyCurrentLine);
         }
@@ -102,11 +105,15 @@ class TypingArea {
     drawWrittenCharacter(c, x, yShift, i, j, model) {
         if (model.mistakes[i][j]) {
             this.context.fillStyle = MISTAKE_TEXT_COLOR;
+            this.context.font = BOLD_FONT;
         } else if (model.corrections[i][j]) {
             this.context.fillStyle = CORRECTED_TEXT_COLOR;
         } else {
             this.context.fillStyle = WRITTEN_TEXT_COLOR;
         }
         this.context.fillText(c, x, yShift);
+        if (model.mistakes[i][j]) {
+            this.context.font = REGULAR_FONT;
+        }
     }
 }
