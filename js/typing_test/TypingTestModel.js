@@ -1,21 +1,5 @@
     class TypingTestModel {
 
-/*
-        // text to type
-        var textLines of String
-        // text typed in by the user
-        var writtenLines of String
-        var mistakes of Array of Boolean
-        var isPaused;
-        var isReady;
-        var stayedInTheSameLine;
-
-        var mistakesShadow of Array of Boolean
-        var timeStarted;
-        var timeFinished;
-        var timesPaused of Date
-*/
-
         constructor(text,
                 plCharsOn, isReady = true) {
             //this.MAX_LINE_LENGTH = 66;

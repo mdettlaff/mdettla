@@ -1,10 +1,12 @@
-    var PL_TO_EN = {
-        'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o',
-        'ś': 's', 'ż': 'z', 'ź': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'E',
-        'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z'
-    };
-
     class Utils {
+
+        constructor() {
+            this.PL_TO_EN = {
+                'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n', 'ó': 'o',
+                'ś': 's', 'ż': 'z', 'ź': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'E',
+                'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z'
+            };
+        }
 
         breakLines(text, maxLineLength) /* of String */ {
             const multiSpace = / +/g;
@@ -31,15 +33,14 @@
             var withoutPlChars = "";
             for (var i = 0; i < withPlChars.length; i++) {
                 var c = withPlChars.charAt(i);
-                withoutPlChars += c in PL_TO_EN ? PL_TO_EN[c] : c;
+                withoutPlChars += c in this.PL_TO_EN ? this.PL_TO_EN[c] : c;
             }
             return withoutPlChars;
         }
 
-        containsPlChars(s,
-                index = 0, array = null) {
+        containsPlChars(s) {
             for (var i = 0; i < s.length; i++) {
-                if (s.charAt(i) in PL_TO_EN) {
+                if (s.charAt(i) in this.PL_TO_EN) {
                     return true;
                 }
             }

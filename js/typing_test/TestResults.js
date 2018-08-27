@@ -16,7 +16,8 @@ class TestResults {
             }
         }
         this.typingTimeInMilliseconds = typingTestModel.typingTimeInMilliseconds;
-        this.plChars = typingTestModel.textLines.some(new Utils().containsPlChars);
+        var utils = new Utils();
+        this.plChars = typingTestModel.textLines.some(utils.containsPlChars.bind(utils));
     }
 
     get speed() {
@@ -54,11 +55,11 @@ class TestResults {
     }
 
     toHTMLString() {
-        var html = "<font size=\"3\">prędkość: <b>"
+        var html = "<span style=\"font-size: medium;\">prędkość: <b>"
             + this.realSpeed.toFixed(1) + "</b> znaków/min "
             + "(" + this.realSpeedWPM.toFixed(1) + " słów/min)<br>"
             + "poprawność: <b>" + this.correctness.toFixed(1) + "</b>%"
-            + "</font><font size=\"2\"><br><br>"
+            + "</span><span style=\"font-size: small;\"><br><br>"
             + "Ilość błędów: " + (this.mistakesCount + this.correctionsCount);
         if (this.correctionsCount > 0 && this.mistakesCount == 0) {
             html += ", wszystkie poprawione.<br>";
@@ -72,7 +73,7 @@ class TestResults {
         if (parseInt(this.timeMinutes) > 0) {
             html += parseInt(this.timeMinutes) + " min ";
         }
-        html += (parseInt(this.timeSeconds) % 60) + " s." + "</font>";
+        html += (parseInt(this.timeSeconds) % 60) + " s." + "</span>";
         return html;
     }
 
