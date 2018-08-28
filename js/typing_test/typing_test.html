@@ -1,67 +1,68 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-    <title>Typing test</title>
-    <script src="TypingTest.js"></script>
-    <script src="lib/crypto-js/3.1.9-1/crypto-js.min.js"></script>
-  </head>
-  <body>
-    <p>
-      Typing test
-    </p>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+<title>Typing test</title>
+<script src="TypingTest.js"></script>
+<script src="lib/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+</head>
+<body>
+<p>
+Typing test
+</p>
 
-    <div id="dialog" style="display: none; position: absolute; z-index: 1; width: 615px; height: 400px;">
-      <div style="display: table-cell; vertical-align: middle;">
-        <div style="background-color: #D0D0E0; margin-left: auto; margin-right: auto; width: 338px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
-          <span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
-          <div style="background-color: white; padding: 8px; margin-top: 6px;">
-            <div id="highscore_form" style="margin-bottom: 20px;">
-              <span style="font-size: 20px;">Gratulacje!</span>
-              <br><br>
-              Twój wynik jest bardzo dobry.<br>
-              Podaj swoje imię aby trafić na listę najlepszych.<br><br>
-              Imię: <input id="name_input" type="text" size="18" maxlength="32">
-            </div>
-            <div id="dialog_results_text"></div>
-            <div style="text-align: center;">
-              <button id="ok_button" type="button">OK</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div id="typing_test" style="background-image: url('tt_background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
-      <div>
-        <div id="splash_screen" style="position: absolute; background-color: white; margin-left: 1px; margin-top: 1px; width: 573px; height: 273px;">
-          <div style="text-align: center; font-family: Verdana; font-size: 15px;">
-            <br><br><br>Test polega na przepisaniu zadanego tekstu.<br>
-            Czas jest mierzony od momentu kiedy zaczniesz pisać.<br><br>
-          </div><div style="text-align: center; font-family: Verdana; font-size: 18px;">
-            Kliknij aby rozpocząć.<br>
-            Powodzenia!<br><br>
-          </div><div style="text-align: center; font-family: Verdana; font-size: 14px;">
-            autor: Michał Dettlaff
-          </div>
-        </div>
-        <canvas id="typing_area" width="575" height="275" style="border: 1px solid black;" tabindex="1"></canvas>
-      </div>
+<div id="dialog" style="display: none; position: absolute; z-index: 1; width: 615px; height: 400px;">
+	<div style="display: table-cell; vertical-align: middle;">
+		<div style="background-color: #D0D0E0; margin-left: auto; margin-right: auto; width: 338px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
+			<span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
+			<div style="background-color: white; padding: 8px; margin-top: 6px;">
+				<div id="highscore_form" style="margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Podaj swoje imię aby trafić na listę najlepszych.<br><br>
+					Imię: <input id="name_input" type="text" size="18" maxlength="32">
+				</div>
+				<div id="dialog_results_text"></div>
+				<div style="text-align: center;">
+					<button id="ok_button" type="button">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="typing_test" style="background-image: url('tt_background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
+	<div>
+		<div id="splash_screen" style="position: absolute; background-color: white; margin-left: 1px; margin-top: 1px; width: 573px; height: 273px;">
+			<div style="text-align: center; font-family: Verdana; font-size: 15px;">
+				<br><br><br>Test polega na przepisaniu zadanego tekstu.<br>
+				Czas jest mierzony od momentu kiedy zaczniesz pisać.<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 18px;">
+				Kliknij aby rozpocząć.<br>
+				Powodzenia!<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 14px;">
+				autor: Michał Dettlaff
+			</div>
+		</div>
+		<canvas id="typing_area" width="575" height="275" style="border: 1px solid black;" tabindex="1"></canvas>
+	</div>
 
-      <div style="margin-top: 2px; margin-bottom: 6px;">
-        <span id="in_progress_results_speed" style="margin-right: 15px;"></span>
-        <span id="in_progress_results_correctness"></span>
-      </div>
+	<div style="margin-top: 2px; margin-bottom: 6px;">
+		<span id="in_progress_results_speed" style="margin-right: 15px;"></span>
+		<span id="in_progress_results_correctness"></span>
+	</div>
 
-      <button id="newTestButton" type="button">Rozpocznij nowy test</button>
-      <span style="margin-left: 15px;">
-        <input id="plCharsCheckbox" type="checkbox" checked>polskie znaki
-      </span>
-    </div>
+	<button id="newTestButton" type="button">Rozpocznij nowy test</button>
+	<span style="margin-left: 15px;">
+		<input id="plCharsCheckbox" type="checkbox" checked>polskie znaki
+	</span>
+</div>
 
-    <div id="debug_info" style="margin-top: 20px;"></div>
+<div id="debug_info" style="margin-top: 20px;"></div>
 
-    <script>
-      new TypingTest().init();
-    </script>
-  </body>
+<script>
+new TypingTest().init();
+</script>
+
+</body>
 </html>
