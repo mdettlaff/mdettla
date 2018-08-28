@@ -9,13 +9,12 @@ constructor() {
   this.hData = '';
 
   this.textWithPlChars = null;
+  this.canvas = document.getElementById("typing_area");
+  this.context = this.canvas.getContext("2d");
 }
 
 init() {
   this.textWithPlChars = this.nextText();
-
-  this.canvas = document.getElementById("typing_area");
-  this.context = this.canvas.getContext("2d");
 
   this.model = new TypingTestModel(this.textWithPlChars, this.plCharsOn);
   this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
@@ -38,8 +37,6 @@ addEventListeners() {
 }
 
 draw() {
-  this.context.fillStyle = 'white';
-  this.context.fillRect(0, 0, this.canvas.width, this.canvas.height)
   this.typingArea.draw(this.model);
 }
 

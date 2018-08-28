@@ -21,6 +21,9 @@ class TypingArea {
     }
 
     draw(typingTestModel) {
+        this.context.fillStyle = 'white';
+        this.context.fillRect(0, 0, this.width, this.height)
+
         // TODO do we need the drawOnlyCurrentLine variable?
         const drawOnlyCurrentLine = typingTestModel.stayedInTheSameLine && false;
         const startLine = Math.max(
