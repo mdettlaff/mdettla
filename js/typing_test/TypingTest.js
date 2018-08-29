@@ -11,6 +11,7 @@ class TypingTest {
 		this.textWithPlChars = null;
 		this.canvas = document.getElementById("typing_area");
 		this.context = this.canvas.getContext("2d");
+		this.utils = new Utils();
 	}
 
 	init() {
@@ -50,7 +51,16 @@ class TypingTest {
 				this.draw();
 			} else if (e.keyCode >= 32 /* not a control character */
 					&& e.key != null && e.key.length == 1) {
-				this.model.onPrintableChar(e.key);
+				var c = e.key;
+				if (e.ctrlKey && e.altKey) {
+					// polish chars require special treatment on Edge browser
+					if (e.shiftKey) {
+						c = this.utils.toPlCharUppercase(c);
+					} else {
+						c = this.utils.toPlChar(c);
+					}
+				}
+				this.model.onPrintableChar(c);
 				this.draw();
 			}
 			if (this.model.isFinished) {
@@ -563,6 +573,14 @@ class Utils {
 			'ś': 's', 'ż': 'z', 'ź': 'z', 'Ą': 'A', 'Ć': 'C', 'Ę': 'E',
 			'Ł': 'L', 'Ń': 'N', 'Ó': 'O', 'Ś': 'S', 'Ż': 'Z', 'Ź': 'Z'
 		};
+		this.EN_TO_PL_LOWER = {
+			'a': 'ą', 'c': 'ć', 'e': 'ę', 'l': 'ł', 'n': 'ń', 'o': 'ó',
+			's': 'ś', 'z': 'ż', 'x': 'ź'
+		};
+		this.EN_TO_PL_UPPER = {
+			'a': 'Ą', 'c': 'Ć', 'e': 'Ę', 'l': 'Ł', 'n': 'Ń', 'o': 'Ó',
+			's': 'Ś', 'z': 'Ż', 'x': 'Ź'
+		};
 	}
 
 	breakLines(text, maxLineLength) /* of String */ {
@@ -593,6 +611,14 @@ class Utils {
 			withoutPlChars += c in this.PL_TO_EN ? this.PL_TO_EN[c] : c;
 		}
 		return withoutPlChars;
+	}
+
+	toPlChar(c) {
+		return c in this.EN_TO_PL_LOWER ? this.EN_TO_PL_LOWER[c] : c;
+	}
+
+	toPlCharUppercase(c) {
+		return c in this.EN_TO_PL_UPPER ? this.EN_TO_PL_UPPER[c] : c;
 	}
 
 	containsPlChars(s) {
