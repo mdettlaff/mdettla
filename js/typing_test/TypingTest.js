@@ -1,7 +1,7 @@
 class TypingTest {
 
 	constructor() {
-		this.mockTexts = ['W zeszły czwartek dwa rekiny ludojady pożarły osiemnastoletniego australijskiego surfera. Według świadków zdarzenia, rozerwały jego ciało na pół, a następnie spędziły parę minut walcząc o to, któremu z nich przypadnie który kawałek. Jak zwykle w takim przypadku, przeprowadzono wywiady z różnymi ekspertami od przyrody, którzy zgodnie stwierdzili, że rekiny te należy wypuścić na wolność po udzieleniu im pouczenia, częściowo dlatego, że są pod ochroną, a częściowo dlatego, że do takich ataków dochodzi niezwykle rzadko.', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
+		this.mockTexts = ['placeholder', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
 		this.mockTextIndex = -1;
 
 		this.splashScreenVisible = true;
@@ -15,18 +15,40 @@ class TypingTest {
 	}
 
 	init() {
-		this.textWithPlChars = this.nextText();
-
-		this.model = new TypingTestModel(this.textWithPlChars, this.plCharsOn);
+		this.model = new TypingTestModel('Trwa łączenie z serwerem, proszę czekać...', this.plCharsOn);
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
-
 		this.draw();
+
 		this.updateInProgressResults();
 		this.addEventListeners();
-
 		this.preventBackspaceNavigation();
 
 		this.hideSplashScreen(); // hide splash screen for now to make testing easier
+
+		this.sendRequestForNewText(false);
+	}
+
+	sendRequestForNewText(focusOnCanvas) {
+		const inst = this;
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				inst.mockTextIndex = (inst.mockTextIndex + 1) % inst.mockTexts.length;
+				if (inst.mockTextIndex == 0) {
+					inst.textWithPlChars = this.responseXML.getElementsByTagName("text")[0].childNodes[0].nodeValue;
+				} else {
+					inst.textWithPlChars = inst.mockTexts[inst.mockTextIndex];
+				}
+				inst.model = new TypingTestModel(inst.textWithPlChars, inst.plCharsOn);
+				inst.draw();
+				if (focusOnCanvas) {
+					inst.canvas.focus();
+				}
+			}
+		};
+		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8" ?><response><text>Jak wszyscy ludzie, którzy mają jeden ze zmysłów rozwinięty ponad ludzką potrzebę, ojciec był bardzo nerwowy. I oprócz tego był sentymentalny, i jak wszyscy sentymentalni ludzie potrafił okazywać okrucieństwo i obrażać się na cały świat. Nie miał wiele szczęścia, choć nie zasługiwał na takie pomijanie przez los. Zginął w potrzasku, który sam krótko przedtem pomagał zastawiać. A nim zginął wszyscy po kolei w jakiś sposób go w życiu oszukali. Uczuciowi ludzie są tak często oszukiwani. Nicholas nie mógłby jeszcze napisać historii ojca, chociaż miał zamiar uczynić to w przyszłości. Myślał o ojcu z tego okresu, kiedy był jeszcze małym chłopcem, wdzięcznym za dwie rzeczy: łowienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
+		xhr.responseType = 'document';
+		xhr.send();
 	}
 
 	addEventListeners() {
@@ -99,15 +121,7 @@ class TypingTest {
 			this.hideSplashScreen();
 			return;
 		}
-		this.textWithPlChars = this.nextText();
-		this.model = new TypingTestModel(this.textWithPlChars, this.plCharsOn);
-		this.draw();
-		this.canvas.focus();
-	}
-
-	nextText() {
-		this.mockTextIndex = (this.mockTextIndex + 1) % this.mockTexts.length;
-		return this.mockTexts[this.mockTextIndex];
+		this.sendRequestForNewText(true);
 	}
 
 	hideSplashScreen() {
