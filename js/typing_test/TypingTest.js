@@ -1,7 +1,7 @@
 class TypingTest {
 
 	constructor() {
-		this.mockTexts = ['placeholder', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze jeden'];
+		this.mockTexts = ['placeholder', 'Yes this is także pies, może jeszcze z jedną linijką.', 'jeszcze łubin'];
 		this.mockTextIndex = -1;
 
 		this.splashScreenVisible = true;
@@ -46,7 +46,7 @@ class TypingTest {
 				}
 			}
 		};
-		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8" ?><response><text>Jak wszyscy ludzie, którzy mają jeden ze zmysłów rozwinięty ponad ludzką potrzebę, ojciec był bardzo nerwowy. I oprócz tego był sentymentalny, i jak wszyscy sentymentalni ludzie potrafił okazywać okrucieństwo i obrażać się na cały świat. Nie miał wiele szczęścia, choć nie zasługiwał na takie pomijanie przez los. Zginął w potrzasku, który sam krótko przedtem pomagał zastawiać. A nim zginął wszyscy po kolei w jakiś sposób go w życiu oszukali. Uczuciowi ludzie są tak często oszukiwani. Nicholas nie mógłby jeszcze napisać historii ojca, chociaż miał zamiar uczynić to w przyszłości. Myślał o ojcu z tego okresu, kiedy był jeszcze małym chłopcem, wdzięcznym za dwie rzeczy: łowienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
+		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><text>Jak wszyscy ludzie, którzy mają jeden ze zmysłów rozwinięty ponad ludzką potrzebę, ojciec był bardzo nerwowy. I oprócz tego był sentymentalny, i jak wszyscy sentymentalni ludzie potrafił okazywać okrucieństwo i obrażać się na cały świat. Nie miał wiele szczęścia, choć nie zasługiwał na takie pomijanie przez los. Zginął w potrzasku, który sam krótko przedtem pomagał zastawiać. A nim zginął wszyscy po kolei w jakiś sposób go w życiu oszukali. Uczuciowi ludzie są tak często oszukiwani. Nicholas nie mógłby jeszcze napisać historii ojca, chociaż miał zamiar uczynić to w przyszłości. Myślał o ojcu z tego okresu, kiedy był jeszcze małym chłopcem, wdzięcznym za dwie rzeczy: łowienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
 		xhr.responseType = 'document';
 		xhr.send();
 	}
@@ -57,6 +57,7 @@ class TypingTest {
 		document.getElementById('newTestButton').addEventListener('click', this.handleNewTestButtonClick.bind(this));
 		document.getElementById('splash_screen').addEventListener('click', this.hideSplashScreen.bind(this));
 		document.getElementById('ok_button').addEventListener('click', this.hideDialog.bind(this));
+		document.getElementById('cancel_button').addEventListener('click', this.hideDialog.bind(this));
 	}
 
 	draw() {
@@ -86,10 +87,58 @@ class TypingTest {
 				this.draw();
 			}
 			if (this.model.isFinished) {
-				this.showDialog();
-				this.submitTestResults();
+				this.handleTestFinished();
 			}
 		}
+	}
+
+	handleTestFinished() {
+		const testResults = new TestResults(this.model);
+		this.showDialog(testResults);
+		this.submitTestResults(testResults);
+		this.sendRequestForHighscoreRequiredSpeed(testResults);
+	}
+
+	sendRequestForHighscoreRequiredSpeed(testResults) {
+		const inst = this;
+		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				const requiredSpeed = this.responseXML.getElementsByTagName("requiredSpeed")[0].childNodes[0].nodeValue;
+				const usernameTagContent = this.responseXML.getElementsByTagName("username")[0].childNodes[0];
+				const username = usernameTagContent != null ? usernameTagContent.nodeValue : null;
+				inst.onHighscoreRequiredSpeedReceived.bind(inst)(requiredSpeed, username, testResults);
+			}
+		};
+		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><requiredSpeed>273.9</requiredSpeed><username/><hData>rkA1DH7QzbAmI0XoJdfruqhVmB1wnhOw</hData></response>', true);
+//		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><requiredSpeed>273.9</requiredSpeed><username>Janusz</username><hData>rkA1DH7QzbAmI0XoJdfruqhVmB1wnhOw</hData></response>', true);
+		xhr.responseType = 'document';
+		xhr.send();
+	}
+
+	onHighscoreRequiredSpeedReceived(requiredSpeed, username, testResults) {
+		if (testResults.realSpeed > Number(requiredSpeed)
+				&& testResults.mistakesCount == 0
+				&& testResults.plChars
+				&& testResults.correctness > 95) {
+			const usernameInput = document.getElementById('username_input');
+			if (username != null && username != "") {
+				usernameInput.value = username;
+			}
+			if (usernameInput.value == null || usernameInput.value == "") {
+				document.getElementById('highscore_form').style.display = 'block';
+				document.getElementById('ok_button_wrapper').style.display = 'none';
+				usernameInput.focus();
+			} else {
+				document.getElementById('highscore_info').style.display = 'block';
+				this.submitHighscore();
+				// TODO refresh JavaScript highscore table
+			}
+		}
+	}
+
+	submitHighscore() {
+		// TODO implement
 	}
 
 	updateInProgressResults() {
@@ -131,12 +180,14 @@ class TypingTest {
 		//this.canvas.focus();
 	}
 
-	showDialog() {
+	showDialog(testResults) {
+		document.getElementById('highscore_form').style.display = 'none';
+		document.getElementById('highscore_info').style.display = 'none';
+		document.getElementById('ok_button_wrapper').style.display = 'block';
 		var dialog = document.getElementById('dialog');
 		dialog.style.display = 'table';
-		var results = new TestResults(this.model);
 		var dialogText = document.getElementById('dialog_results_text');
-		dialogText.innerHTML = results.toHTMLString();
+		dialogText.innerHTML = testResults.toHTMLString();
 		var typingTest = document.getElementById('typing_test');
 		typingTest.style.filter = 'blur(1px)';
 	}
@@ -148,8 +199,7 @@ class TypingTest {
 		typingTest.style.filter = 'none';
 	}
 
-	submitTestResults() {
-		var testResults = new TestResults(this.model);
+	submitTestResults(testResults) {
 		var params = new Object();
 		params.speed = testResults.realSpeed.toFixed(1);
 		params.mistakes = testResults.mistakesCount;

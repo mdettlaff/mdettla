@@ -16,15 +16,25 @@ Typing test
 		<div style="background-color: #D0D0E0; margin-left: auto; margin-right: auto; width: 338px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
 			<span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
 			<div style="background-color: white; padding: 8px; margin-top: 6px;">
-				<div id="highscore_form" style="margin-bottom: 20px;">
+				<div id="highscore_form" style="display: none; margin-bottom: 20px;">
 					<span style="font-size: 20px;">Gratulacje!</span>
 					<br><br>
 					Twój wynik jest bardzo dobry.<br>
 					Podaj swoje imię aby trafić na listę najlepszych.<br><br>
-					Imię: <input id="name_input" type="text" size="18" maxlength="32">
+					Imię: <input id="username_input" type="text" size="18" maxlength="32">
+					<div style="margin-top: 10px;">
+						<button id="ok_submit_button" type="button">OK</button>
+						<button id="cancel_button" type="button">Anuluj</button>
+					</div>
+				</div>
+				<div id="highscore_info" style="display: none; margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Został on zapisany na liście najlepszych.
 				</div>
 				<div id="dialog_results_text"></div>
-				<div style="text-align: center;">
+				<div id="ok_button_wrapper" style="text-align: center;">
 					<button id="ok_button" type="button">OK</button>
 				</div>
 			</div>
