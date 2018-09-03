@@ -25,7 +25,8 @@ class TypingTest {
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
 		this.draw();
 
-		this.updateInProgressResults();
+		this.updateInProgressResults(new TestResults(this.model));
+		this.updateInProgressResultsTicker();
 		this.addEventListeners();
 		this.preventBackspaceNavigation();
 
@@ -47,6 +48,7 @@ class TypingTest {
 				}
 				inst.hData = this.responseXML.getElementsByTagName("hData")[0].childNodes[0].nodeValue;
 				inst.model = new TypingTestModel(inst.textWithPlChars, inst.plCharsOn);
+				inst.updateInProgressResults(new TestResults(inst.model));
 				inst.draw();
 				if (focusOnCanvas) {
 					inst.canvas.focus();
@@ -101,6 +103,7 @@ class TypingTest {
 
 	handleTestFinished() {
 		const testResults = new TestResults(this.model);
+		this.updateInProgressResults(testResults);
 		this.showDialog(testResults);
 		this.submitTestResults(testResults);
 		this.sendRequestForHighscoreRequiredSpeed(testResults);
@@ -148,18 +151,24 @@ class TypingTest {
 		// TODO implement
 	}
 
-	updateInProgressResults() {
-		var results = new TestResults(this.model);
-		var inProgressResultsSpeed = 'prędkość: ' + results.realSpeed.toFixed(1) + ' znaków/min';
-		var inProgressResultsCorrectness = 'poprawność: ' + results.correctness.toFixed(1) + '%';
+	updateInProgressResultsTicker() {
+		if (this.model.isStarted && !this.model.isFinished) {
+			const testResults = new TestResults(this.model);
+			this.updateInProgressResults(testResults);
+		}
+		setTimeout(this.updateInProgressResultsTicker.bind(this), 1000);
+	}
+
+	updateInProgressResults(testResults) {
+		var inProgressResultsSpeed = 'prędkość: ' + testResults.realSpeed.toFixed(1) + ' znaków/min';
+		var inProgressResultsCorrectness = 'poprawność: ' + testResults.correctness.toFixed(1) + '%';
 		var inProgressResultsSpeedContent = document.getElementById('in_progress_results_speed');
 		inProgressResultsSpeedContent.innerHTML = inProgressResultsSpeed;
 		var inProgressResultsCorrectnessContent = document.getElementById('in_progress_results_correctness');
 		inProgressResultsCorrectnessContent.innerHTML = inProgressResultsCorrectness;
 
 		var debugInfo = document.getElementById('debug_info');
-		debugInfo.innerHTML = results.toHTMLString();
-		setTimeout(this.updateInProgressResults.bind(this), 1000);
+		debugInfo.innerHTML = testResults.toHTMLString();
 	}
 
 	handlePlCharsCheckboxChange() {
