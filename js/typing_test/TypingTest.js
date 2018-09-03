@@ -45,6 +45,7 @@ class TypingTest {
 				} else {
 					inst.textWithPlChars = inst.mockTexts[inst.mockTextIndex];
 				}
+				inst.hData = this.responseXML.getElementsByTagName("hData")[0].childNodes[0].nodeValue;
 				inst.model = new TypingTestModel(inst.textWithPlChars, inst.plCharsOn);
 				inst.draw();
 				if (focusOnCanvas) {
@@ -215,16 +216,16 @@ class TypingTest {
 		params.minutes = parseInt(testResults.timeMinutes);
 		params.seconds = parseInt(testResults.timeSeconds) % 60;
 		params.timeVerifier = testResults.timeSecondsVerifier;
-		params.h = this.h(this.hData + ':'
+		const hInput = this.hData + ':'
 				+ params.speed + ':'
 				+ params.mistakes + ':'
 				+ params.corrections + ':'
 				+ params.plChars + ':'
 				+ params.minutes + ':'
 				+ params.seconds + ':'
-				+ params.timeVerifier,
-				"secret1");
-		console.log('h for ttlog: ' + params.h);
+				+ params.timeVerifier;
+		params.h = this.h(hInput, "secret1");
+		console.log('h for ttlog: ' + params.h + ', h input: ' + hInput);
 	}
 
 	h(hData, hKey) {
