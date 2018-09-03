@@ -1,3 +1,9 @@
+(function (typingTestAPI) {
+
+typingTestAPI.init = function() {
+	new TypingTest().init();
+}
+
 class TypingTest {
 
 	constructor() {
@@ -694,3 +700,5 @@ class Utils {
 		return false;
 	}
 }
+
+} (window.typingTestAPI = window.typingTestAPI || {}));
