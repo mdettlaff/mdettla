@@ -13,6 +13,7 @@ class TypingTest {
 		this.splashScreenVisible = true;
 		this.plCharsOn = true;
 		this.hData = '';
+		this.typingTimeVerifierSeconds = 0;
 
 		this.textWithPlChars = null;
 		this.canvas = document.getElementById("typing_area");
@@ -27,6 +28,7 @@ class TypingTest {
 
 		this.updateInProgressResults(new TestResults(this.model));
 		this.updateInProgressResultsTicker();
+		this.startTypingTimeVerifierTimer();
 		this.addEventListeners();
 		this.preventBackspaceNavigation();
 
@@ -74,6 +76,7 @@ class TypingTest {
 	}
 
 	handleKeyPress(e) {
+		const wasStarted = this.model.isStarted;
 		if (this.model.isReady && !this.model.isFinished && !this.model.isPaused) {
 			if (e.keyCode == 8 /* backspace */) {
 				this.model.onBackspace();
@@ -95,6 +98,9 @@ class TypingTest {
 				this.model.onPrintableChar(c);
 				this.draw();
 			}
+			if (!wasStarted && this.model.isStarted) {
+				this.typingTimeVerifierSeconds = 0;
+			}
 			if (this.model.isFinished) {
 				this.handleTestFinished();
 			}
@@ -102,7 +108,7 @@ class TypingTest {
 	}
 
 	handleTestFinished() {
-		const testResults = new TestResults(this.model);
+		const testResults = new TestResults(this.model, this.typingTimeVerifierSeconds);
 		this.updateInProgressResults(testResults);
 		this.showDialog(testResults);
 		this.submitTestResults(testResults);
@@ -157,6 +163,10 @@ class TypingTest {
 			this.updateInProgressResults(testResults);
 		}
 		setTimeout(this.updateInProgressResultsTicker.bind(this), 1000);
+	}
+
+	startTypingTimeVerifierTimer() {
+		setInterval(function() { this.typingTimeVerifierSeconds++; }.bind(this), 1000);
 	}
 
 	updateInProgressResults(testResults) {
