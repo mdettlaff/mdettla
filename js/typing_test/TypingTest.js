@@ -244,6 +244,19 @@ class TypingTest {
 				+ params.seconds + ':'
 				+ params.timeVerifier;
 		params.h = this.h(hInput, "secret1");
+		var formData = new FormData();
+		formData.append('speed', params.speed);
+		formData.append('mistakes', params.mistakes);
+		formData.append('corrections', params.corrections);
+		formData.append('plChars', params.plChars);
+		formData.append('correctChars', params.correctChars);
+		formData.append('minutes', params.minutes);
+		formData.append('seconds', params.seconds);
+		formData.append('timeVerifier', params.timeVerifier);
+		formData.append('h', params.h);
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', 'data:text/html;,', true);
+		xhr.send(formData);
 		console.log('h for ttlog: ' + params.h + ', h input: ' + hInput);
 	}
 
