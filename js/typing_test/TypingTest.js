@@ -26,7 +26,8 @@ class TypingTest {
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
 		this.draw();
 
-		this.updateInProgressResults(new TestResults(this.model));
+		this.testResults = new TestResults(this.model);
+		this.updateInProgressResults(this.testResults);
 		this.updateInProgressResultsTicker();
 		this.startTypingTimeVerifierTimer();
 		this.addEventListeners();
@@ -69,6 +70,7 @@ class TypingTest {
 		document.getElementById('splash_screen').addEventListener('click', this.hideSplashScreen.bind(this));
 		document.getElementById('ok_button').addEventListener('click', this.hideDialog.bind(this));
 		document.getElementById('cancel_button').addEventListener('click', this.hideDialog.bind(this));
+		document.getElementById('ok_submit_button').addEventListener('click', this.handleSubmitButton.bind(this));
 	}
 
 	draw() {
@@ -108,11 +110,11 @@ class TypingTest {
 	}
 
 	handleTestFinished() {
-		const testResults = new TestResults(this.model, this.typingTimeVerifierSeconds);
-		this.updateInProgressResults(testResults);
-		this.showDialog(testResults);
-		this.submitTestResults(testResults);
-		this.sendRequestForHighscoreRequiredSpeed(testResults);
+		this.testResults = new TestResults(this.model, this.typingTimeVerifierSeconds);
+		this.updateInProgressResults(this.testResults);
+		this.showDialog(this.testResults);
+		this.submitTestResults(this.testResults);
+		this.sendRequestForHighscoreRequiredSpeed(this.testResults);
 	}
 
 	sendRequestForHighscoreRequiredSpeed(testResults) {
@@ -147,14 +149,22 @@ class TypingTest {
 				usernameInput.focus();
 			} else {
 				document.getElementById('highscore_info').style.display = 'block';
-				this.submitHighscore();
+				this.submitHighscore(testResults, usernameInput.value);
 				// TODO refresh JavaScript highscore table
 			}
 		}
 	}
 
-	submitHighscore() {
-		// TODO implement
+	handleSubmitButton() {
+		const usernameInput = document.getElementById('username_input');
+		const username = usernameInput.value;
+		if (username != null && username != "" && username.length >= 2 && username.length <= 32) {
+			this.hideDialog();
+			this.submitHighscore(this.testResults, username);
+		} else {
+			const validationMessage = document.getElementById('usernameValidationMessage');
+			validationMessage.style.display = 'inline';
+		}
 	}
 
 	updateInProgressResultsTicker() {
@@ -258,6 +268,43 @@ class TypingTest {
 		xhr.open('POST', 'data:text/html;,', true);
 		xhr.send(formData);
 		console.log('h for ttlog: ' + params.h + ', h input: ' + hInput);
+	}
+
+	submitHighscore(testResults, username) {
+		var params = new Object();
+		params.username = username;
+		params.speed = testResults.realSpeed.toFixed(1);
+		params.mistakes = testResults.mistakesCount;
+		params.corrections = testResults.correctionsCount;
+		params.plChars = testResults.plChars;
+		params.correctChars = testResults.writtenCharsCount - testResults.mistakesCount;
+		params.minutes = parseInt(testResults.timeMinutes);
+		params.seconds = parseInt(testResults.timeSeconds) % 60;
+		params.timeVerifier = testResults.timeSecondsVerifier;
+		const hInput = this.hData + ':'
+				+ params.speed + ':'
+				+ params.mistakes + ':'
+				+ params.corrections + ':'
+				+ params.plChars + ':'
+				+ params.minutes + ':'
+				+ params.seconds + ':'
+				+ params.timeVerifier;
+		params.h = this.h(hInput, "secret2");
+		var formData = new FormData();
+		formData.append('username', params.username);
+		formData.append('speed', params.speed);
+		formData.append('mistakes', params.mistakes);
+		formData.append('corrections', params.corrections);
+		formData.append('plChars', params.plChars);
+		formData.append('correctChars', params.correctChars);
+		formData.append('minutes', params.minutes);
+		formData.append('seconds', params.seconds);
+		formData.append('timeVerifier', params.timeVerifier);
+		formData.append('h', params.h);
+		const xhr = new XMLHttpRequest();
+		xhr.open('POST', 'data:text/html;,', true);
+		xhr.send(formData);
+		console.log('h for highscore: ' + params.h + ', h input: ' + hInput);
 	}
 
 	h(hData, hKey) {
