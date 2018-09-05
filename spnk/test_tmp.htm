@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
+    <meta name="Keywords" content="test, szybkości, prędkości, szybkość, prędkość, przepisywanie, pisanie, pisania, online, klawiaturze">
+    <meta name="Description" content="Test prędkości pisania na klawiaturze, dobrze nadający się też do ćwiczeń w celu doskonalenia tej umiejętności.">
+    <meta name="Language" content="pl">
+    <meta name="Author" content="Michał Dettlaff">
+    <meta name="Copyright" content="Michał Dettlaff 2018">
+    <link rel="stylesheet" href="layout/style.css" type="text/css">
+
+    <script src="tt/javascript/highscore.js"></script>
+    <script src="tt/javascript/TypingTest.js"></script>
+    <script src="tt/javascript/lib/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+
+    <style>
+      .highscore-table th {
+        font-size: 10pt;
+        padding: 2 7 10 7;
+        text-align: left;
+      }
+      .highscore-table td {
+        padding: 3 10 3 10;
+        text-align: right;
+      }
+    </style>
+    <title>Szybkie Pisanie na Klawiaturze - Test szybkości online</title>
+  </head>
+
+  <body link="#7777EE" alink="#7777EE" vlink="#7777EE" bgcolor="#F5F5F5" text="#000001"
+      leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
+
+    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td width="260" valign="top">
+
+          <table align="left" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td rowspan="2" width="32" height="350" valign="top" background="layout/img/menu1.jpg"
+                  bgcolor="#F5F5F5" style="background-repeat: no-repeat">
+              </td>
+              <td width="228" height="112" valign="top" background="layout/img/menu2a.jpg"
+                  bgcolor="#F5F5F5" style="background-repeat: no-repeat">
+              </td>
+            </tr>
+            <tr>
+              <td width="228" height="238" valign="top" background="layout/img/menu2b.jpg"
+                  bgcolor="#F5F5F5" style="background-repeat: no-repeat">
+                <a href="index.html" class="menu">Strona główna</a><br>&nbsp;<br>
+                <a href="nauka.htm" class="menu">Jak nauczyć się<br>
+                  szybkiego pisania?</a><br>&nbsp;<br>
+                <a href="programy.php" class="menu">Programy</a><br>&nbsp;<br>
+                <a href="test.htm" class="menu">Test prędkości online</a><br>&nbsp;<br>
+                <a href="linki.php" class="menu">Linki</a><br>&nbsp;<br>
+                <a href="ksiega.php" class="menu">Księga gości</a><br>&nbsp;<br>
+                <a href="autor.htm" class="menu">Autor strony</a>
+              </td>
+            </tr>
+          </table>
+
+        </td>
+        <td valign="top">
+
+          <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+              <td valign="top" background="layout/img/menu3.jpg" bgcolor="#F5F5F5"
+                  style="background-repeat: no-repeat">
+
+<p>
+&nbsp;<br>
+Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania; jest też dobrym sposobem na trenowanie szybkości, po tym jak opanujesz już bezwzrokowo całą klawiaturę.
+</p>
+<div style="padding-top: 2px; padding-bottom: 25px">
+
+<div id="dialog" style="display: none; position: absolute; z-index: 1; width: 615px; height: 400px;">
+	<div style="display: table-cell; vertical-align: middle;">
+		<div style="background-color: #D0D0E0; margin-left: auto; margin-right: auto; width: 338px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
+			<span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
+			<div style="background-color: white; padding: 8px; margin-top: 6px;">
+				<div id="highscore_form" style="display: none; margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Podaj swoje imię aby trafić na listę najlepszych.<br><br>
+					Imię: <input id="username_input" type="text" size="18" maxlength="32">
+					<span id="usernameValidationMessage" style="display: none; font-size: 14px; color: red;">wpisz 2-32 znaki</span>
+					<div style="margin-top: 10px;">
+						<button id="ok_submit_button" type="button">OK</button>
+						<button id="cancel_button" type="button">Anuluj</button>
+					</div>
+				</div>
+				<div id="highscore_info" style="display: none; margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Został on zapisany na liście najlepszych.
+				</div>
+				<div id="dialog_results_text"></div>
+				<div id="ok_button_wrapper" style="text-align: center;">
+					<button id="ok_button" type="button">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="typing_test" style="background-image: url('tt/img/background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
+	<div>
+		<div id="splash_screen" style="position: absolute; background-color: white; margin-left: 1px; margin-top: 1px; width: 573px; height: 273px;">
+			<div style="text-align: center; font-family: Verdana; font-size: 15px;">
+				<br><br><br>Test polega na przepisaniu zadanego tekstu.<br>
+				Czas jest mierzony od momentu kiedy zaczniesz pisać.<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 18px;">
+				Kliknij aby rozpocząć.<br>
+				Powodzenia!<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 14px;">
+				autor: Michał Dettlaff
+			</div>
+		</div>
+		<canvas id="typing_area" width="575" height="275" style="border: 1px solid black;" tabindex="1"></canvas>
+	</div>
+
+	<div style="margin-top: 2px; margin-bottom: 6px;">
+		<span id="in_progress_results_speed" style="margin-right: 15px;"></span>
+		<span id="in_progress_results_correctness"></span>
+	</div>
+
+	<button id="newTestButton" type="button">Rozpocznij nowy test</button>
+	<span style="margin-left: 15px;">
+		<input id="plCharsCheckbox" type="checkbox" checked>polskie znaki
+	</span>
+</div>
+
+</div>
+<div id="highscoreTableArea" style="padding-bottom: 10px;"></div>
+<div style="padding-bottom: 24px;">
+Uwaga: wyniki z niepoprawionymi błędami, poprawnością poniżej 95%, prędkością poniżej 120 zn./min lub wyłączonymi polskimi znakami nie są uwzględniane w rankingu.<br>
+Zapamiętywany jest tylko najlepszy wynik dla danej osoby.
+</div>
+
+<script>
+updateHighscoreTable();
+typingTestAPI.init();
+</script>
+
+<p>
+Podobne do powyższego testy prędkości znajdziesz w programach Mistrz Klawiatury, Mistrz Klawiatury II, Q-typing, KSPNK i Klawisz 2000. Niestety, KSPNK i Klawisz 2000 posiadają bardzo mało przykładowych tekstów do przepisywania, a w Mistrzu Klawiatury mogą pojawić się błędy podczas korzystania z tekstów wbudowanych w program. Dlatego też warto posługiwać się własnymi plikami tekstowymi. Stworzenie ich samemu może być dość pracochłonne, dlatego zamieściłem poniżej przykłady różnych tekstów do przepisywania. Po rozpakowaniu otwórz je przy pomocy programu do nauki pisania, którego używasz.
+</p><p style="margin-left: 10px">
+<a href="download/teksty.zip">Pobierz teksty (34 kB)</a><br>
+<a href="download/tekstykspnk.zip">Pobierz teksty (wersja dla KSPNK, 36 kB)</a>
+</p><p>
+A może masz ochotę zmierzyć prędkość, z jaką przepisujesz tekst z papieru (np. z książki) do komputera? W tym celu wystarczy tylko zmierzyć czas pisania i podzielić go przez ilość przepisanych znaków. Na przykład, jeśli przepiszesz 2000 znaków (= około jedna strona książki = ok. 2 kB) w ciągu 10 minut i 30 sekund, obliczasz prędkość pisania w następujący sposób: 2000 znaków / 10,5 min = 190 znaków na minutę. Proste, prawda?
+</p><p>
+A kiedy już zmierzysz swoją prędkość, spójrz na poniższe zestawienie:
+</p>
+
+<table border="0" cellpadding="3" cellspacing="0" width="600">
+  <tr style="font-weight: bold; vertical-align: bottom;">
+    <td width="16%">
+    prędkość<br>
+    (w znakach na minutę)
+    </td><td width="16%">
+    prędkość<br>
+    (w znakach na sekundę)
+    </td><td width="18%">
+    prędkość<br>
+    (w słowach na minutę)
+    </td><td width="25%">
+    czas potrzebny na przepisanie 1 strony maszynopisu (minuty)
+    </td><td width="25%">
+    ocena
+    </td>
+  </tr>
+  <tr><td>0-60</td><td>0-1</td><td>0-12</td><td>ponad 30</td><td>bardzo powoli</td></tr>
+  <tr bgcolor="#F1F1DD"><td>60-120</td><td>1-2</td><td>12-24</td><td>22</td><td>powoli</td></tr>
+  <tr><td>120-180</td><td>2-3</td><td>24-36</td><td>13</td><td>średnio</td></tr>
+  <tr bgcolor="#F1F1DD"><td>180-240</td><td>3-4</td><td>36-48</td><td>9</td><td>szybko</td></tr>
+  <tr><td>240-300</td><td>4-5</td><td>48-60</td><td>7</td><td>bardzo&nbsp;szybko</td></tr>
+  <tr bgcolor="#F1F1DD"><td>300-360</td><td>5-6</td><td>60-72</td><td>6</td><td>super szybko</td></tr>
+  <tr><td>&gt; 360</td><td>&gt; 6</td><td>&gt; 72</td><td>mniej niż 6</td><td>mistrzowsko!</td></tr>
+</table>
+
+<p>
+&nbsp;<br>
+Dla porównania, spójrz jeszcze na te liczby:<br>
+<br>
+Prędkość pisania ręcznego: ok. 140 zn./min<br>
+Przeciętna prędkość czytania: ok. 1200 zn./min<br>
+Przeciętna prędkość mówienia: ok. 750 zn./min<br>
+<br>
+Szybkostrzelność Kałasznikowa: 250 strzałów/min
+</p>
+
+<br>&nbsp;
+
+            </td>
+            <td width="25"></td>
+            </tr>
+          </table>
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
