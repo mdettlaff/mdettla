@@ -7,7 +7,7 @@ typingTestAPI.init = function() {
 class TypingTest {
 
 	constructor() {
-		this.mockTexts = ['placeholder', 'Yes this is takÅ¼e pies, moÅ¼e jeszcze z jednÄ… linijkÄ….', 'jeszcze Å‚ubin'];
+		this.mockTexts = ['placeholder', 'Yes this is tak¿e pies, mo¿e jeszcze z jedn± linijk±.', 'jeszcze ³ubin'];
 		this.mockTextIndex = -1;
 
 		this.splashScreenVisible = true;
@@ -22,7 +22,7 @@ class TypingTest {
 	}
 
 	init() {
-		this.model = new TypingTestModel('Trwa Å‚Ä…czenie z serwerem, proszÄ™ czekaÄ‡...', this.plCharsOn);
+		this.model = new TypingTestModel('Trwa ³±czenie z serwerem, proszê czekaæ...', this.plCharsOn);
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
 		this.draw();
 
@@ -58,7 +58,7 @@ class TypingTest {
 				}
 			}
 		};
-		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><text>Jak wszyscy ludzie, ktÃ³rzy majÄ… jeden ze zmysÅ‚Ã³w rozwiniÄ™ty ponad ludzkÄ… potrzebÄ™, ojciec byÅ‚ bardzo nerwowy. I oprÃ³cz tego byÅ‚ sentymentalny, i jak wszyscy sentymentalni ludzie potrafiÅ‚ okazywaÄ‡ okrucieÅ„stwo i obraÅ¼aÄ‡ siÄ™ na caÅ‚y Å›wiat. Nie miaÅ‚ wiele szczÄ™Å›cia, choÄ‡ nie zasÅ‚ugiwaÅ‚ na takie pomijanie przez los. ZginÄ…Å‚ w potrzasku, ktÃ³ry sam krÃ³tko przedtem pomagaÅ‚ zastawiaÄ‡. A nim zginÄ…Å‚ wszyscy po kolei w jakiÅ› sposÃ³b go w Å¼yciu oszukali. Uczuciowi ludzie sÄ… tak czÄ™sto oszukiwani. Nicholas nie mÃ³gÅ‚by jeszcze napisaÄ‡ historii ojca, chociaÅ¼ miaÅ‚ zamiar uczyniÄ‡ to w przyszÅ‚oÅ›ci. MyÅ›laÅ‚ o ojcu z tego okresu, kiedy byÅ‚ jeszcze maÅ‚ym chÅ‚opcem, wdziÄ™cznym za dwie rzeczy: Å‚owienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
+		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><text>Jak wszyscy ludzie, którzy maj± jeden ze zmys³ów rozwiniêty ponad ludzk± potrzebê, ojciec by³ bardzo nerwowy. I oprócz tego by³ sentymentalny, i jak wszyscy sentymentalni ludzie potrafi³ okazywaæ okrucieñstwo i obra¿aæ siê na ca³y ¶wiat. Nie mia³ wiele szczê¶cia, choæ nie zas³ugiwa³ na takie pomijanie przez los. Zgin±³ w potrzasku, który sam krótko przedtem pomaga³ zastawiaæ. A nim zgin±³ wszyscy po kolei w jaki¶ sposób go w ¿yciu oszukali. Uczuciowi ludzie s± tak czêsto oszukiwani. Nicholas nie móg³by jeszcze napisaæ historii ojca, chocia¿ mia³ zamiar uczyniæ to w przysz³o¶ci. My¶la³ o ojcu z tego okresu, kiedy by³ jeszcze ma³ym ch³opcem, wdziêcznym za dwie rzeczy: ³owienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
 		xhr.responseType = 'document';
 		xhr.send();
 	}
@@ -180,8 +180,8 @@ class TypingTest {
 	}
 
 	updateInProgressResults(testResults) {
-		var inProgressResultsSpeed = 'prÄ™dkoÅ›Ä‡: ' + testResults.realSpeed.toFixed(1) + ' znakÃ³w/min';
-		var inProgressResultsCorrectness = 'poprawnoÅ›Ä‡: ' + testResults.correctness.toFixed(1) + '%';
+		var inProgressResultsSpeed = 'prêdko¶æ: ' + testResults.realSpeed.toFixed(1) + ' znaków/min';
+		var inProgressResultsCorrectness = 'poprawno¶æ: ' + testResults.correctness.toFixed(1) + '%';
 		var inProgressResultsSpeedContent = document.getElementById('in_progress_results_speed');
 		inProgressResultsSpeedContent.innerHTML = inProgressResultsSpeed;
 		var inProgressResultsCorrectnessContent = document.getElementById('in_progress_results_correctness');
@@ -670,12 +670,12 @@ class TestResults {
 	}
 
 	toHTMLString() {
-		var html = "<span style=\"font-size: medium;\">prÄ™dkoÅ›Ä‡: <b>"
-			+ this.realSpeed.toFixed(1) + "</b> znakÃ³w/min "
-			+ "(" + this.realSpeedWPM.toFixed(1) + " sÅ‚Ã³w/min)<br>"
-			+ "poprawnoÅ›Ä‡: <b>" + this.correctness.toFixed(1) + "</b>%"
+		var html = "<span style=\"font-size: medium;\">prêdko¶æ: <b>"
+			+ this.realSpeed.toFixed(1) + "</b> znaków/min "
+			+ "(" + this.realSpeedWPM.toFixed(1) + " s³ów/min)<br>"
+			+ "poprawno¶æ: <b>" + this.correctness.toFixed(1) + "</b>%"
 			+ "</span><span style=\"font-size: small;\"><br><br>"
-			+ "IloÅ›Ä‡ bÅ‚Ä™dÃ³w: " + (this.mistakesCount + this.correctionsCount);
+			+ "Ilo¶æ b³êdów: " + (this.mistakesCount + this.correctionsCount);
 		if (this.correctionsCount > 0 && this.mistakesCount == 0) {
 			html += ", wszystkie poprawione.<br>";
 		} else if (this.mistakesCount > 0) {
@@ -684,7 +684,7 @@ class TestResults {
 			html += ".<br>";
 		}
 		html += "Przepisano "
-			+ (this.writtenCharsCount - this.mistakesCount) + " znakÃ³w w czasie ";
+			+ (this.writtenCharsCount - this.mistakesCount) + " znaków w czasie ";
 		if (parseInt(this.timeMinutes) > 0) {
 			html += parseInt(this.timeMinutes) + " min ";
 		}
@@ -716,17 +716,17 @@ class Utils {
 
 	constructor() {
 		this.PL_TO_EN = {
-			'Ä…': 'a', 'Ä‡': 'c', 'Ä™': 'e', 'Å‚': 'l', 'Å„': 'n', 'Ã³': 'o',
-			'Å›': 's', 'Å¼': 'z', 'Åº': 'z', 'Ä„': 'A', 'Ä†': 'C', 'Ä˜': 'E',
-			'Å': 'L', 'Åƒ': 'N', 'Ã“': 'O', 'Åš': 'S', 'Å»': 'Z', 'Å¹': 'Z'
+			'±': 'a', 'æ': 'c', 'ê': 'e', '³': 'l', 'ñ': 'n', 'ó': 'o',
+			'¶': 's', '¿': 'z', '¼': 'z', '¡': 'A', 'Æ': 'C', 'Ê': 'E',
+			'£': 'L', 'Ñ': 'N', 'Ó': 'O', '¦': 'S', '¯': 'Z', '¬': 'Z'
 		};
 		this.EN_TO_PL_LOWER = {
-			'a': 'Ä…', 'c': 'Ä‡', 'e': 'Ä™', 'l': 'Å‚', 'n': 'Å„', 'o': 'Ã³',
-			's': 'Å›', 'z': 'Å¼', 'x': 'Åº'
+			'a': '±', 'c': 'æ', 'e': 'ê', 'l': '³', 'n': 'ñ', 'o': 'ó',
+			's': '¶', 'z': '¿', 'x': '¼'
 		};
 		this.EN_TO_PL_UPPER = {
-			'a': 'Ä„', 'c': 'Ä†', 'e': 'Ä˜', 'l': 'Å', 'n': 'Åƒ', 'o': 'Ã“',
-			's': 'Åš', 'z': 'Å»', 'x': 'Å¹'
+			'a': '¡', 'c': 'Æ', 'e': 'Ê', 'l': '£', 'n': 'Ñ', 'o': 'Ó',
+			's': '¦', 'z': '¯', 'x': '¬'
 		};
 	}
 
