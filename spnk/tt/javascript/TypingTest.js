@@ -150,7 +150,7 @@ class TypingTest {
 			} else {
 				document.getElementById('highscore_info').style.display = 'block';
 				this.submitHighscore(testResults, usernameInput.value);
-				// TODO refresh JavaScript highscore table
+				updateHighscoreTable();
 			}
 		}
 	}
@@ -328,8 +328,7 @@ class TypingTestModel {
 
 	constructor(text,
 			plCharsOn, isReady = true) {
-		//this.MAX_LINE_LENGTH = 66;
-		this.MAX_LINE_LENGTH = 40;
+		this.MAX_LINE_LENGTH = 66;
 		this.isReady = isReady;
 		this.stayedInTheSameLine = false;
 		const utils = new Utils();
