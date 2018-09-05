@@ -128,8 +128,7 @@ class TypingTest {
 				inst.onHighscoreRequiredSpeedReceived.bind(inst)(requiredSpeed, username, testResults);
 			}
 		};
-		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><requiredSpeed>273.9</requiredSpeed><username/><hData>rkA1DH7QzbAmI0XoJdfruqhVmB1wnhOw</hData></response>', true);
-//		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><requiredSpeed>273.9</requiredSpeed><username>Janusz</username><hData>rkA1DH7QzbAmI0XoJdfruqhVmB1wnhOw</hData></response>', true);
+		xhr.open('GET', 'tt/service/highscore.php?q=get_threshold', true);
 		xhr.responseType = 'document';
 		xhr.send();
 	}
