@@ -31,7 +31,7 @@ class TypingTest {
 		this.updateInProgressResultsTicker();
 		this.startTypingTimeVerifierTimer();
 		this.addEventListeners();
-		this.preventBackspaceNavigation();
+		this.preventBackspaceAndSpaceNavigation();
 
 		this.hideSplashScreen(); // hide splash screen for now to make testing easier
 
@@ -308,14 +308,14 @@ class TypingTest {
 		return CryptoJS.HmacSHA1(hData, hKey);
 	}
 
-	preventBackspaceNavigation() {
-		document.addEventListener('keydown', this.preventDefaultForBackspace.bind(this));
-		document.addEventListener('keypress', this.preventDefaultForBackspace.bind(this));
+	preventBackspaceAndSpaceNavigation() {
+		document.addEventListener('keydown', this.preventDefaultForBackspaceAndSpace.bind(this));
+		document.addEventListener('keypress', this.preventDefaultForBackspaceAndSpace.bind(this));
 	}
 
-	preventDefaultForBackspace(e) {
+	preventDefaultForBackspaceAndSpace(e) {
 		var rx = /INPUT|SELECT|TEXTAREA/i;
-		if (e.which == 8) { // 8 == backspace
+		if (e.which == 8 || e.keyCode == 32) { // 8 == backspace
 			if (!rx.test(e.target.tagName) || e.target.disabled || e.target.readOnly) {
 				e.preventDefault();
 			}
