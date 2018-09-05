@@ -261,7 +261,7 @@ class TypingTest {
 		formData.append('timeVerifier', params.timeVerifier);
 		formData.append('h', params.h);
 		const xhr = new XMLHttpRequest();
-		xhr.open('POST', 'data:text/html;,', true);
+		xhr.open('POST', 'tt/service/ttlog.php', true);
 		xhr.send(formData);
 		console.log('h for ttlog: ' + params.h + ', h input: ' + hInput);
 	}
