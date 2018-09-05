@@ -58,7 +58,7 @@ class TypingTest {
 				}
 			}
 		};
-		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><text>Jak wszyscy ludzie, którzy maj± jeden ze zmys³ów rozwiniêty ponad ludzk± potrzebê, ojciec by³ bardzo nerwowy. I oprócz tego by³ sentymentalny, i jak wszyscy sentymentalni ludzie potrafi³ okazywaæ okrucieñstwo i obra¿aæ siê na ca³y ¶wiat. Nie mia³ wiele szczê¶cia, choæ nie zas³ugiwa³ na takie pomijanie przez los. Zgin±³ w potrzasku, który sam krótko przedtem pomaga³ zastawiaæ. A nim zgin±³ wszyscy po kolei w jaki¶ sposób go w ¿yciu oszukali. Uczuciowi ludzie s± tak czêsto oszukiwani. Nicholas nie móg³by jeszcze napisaæ historii ojca, chocia¿ mia³ zamiar uczyniæ to w przysz³o¶ci. My¶la³ o ojcu z tego okresu, kiedy by³ jeszcze ma³ym ch³opcem, wdziêcznym za dwie rzeczy: ³owienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
+		xhr.open('GET', 'tt/service/texts.php', true);
 		xhr.responseType = 'document';
 		xhr.send();
 	}
