@@ -123,9 +123,10 @@ class TypingTest {
 		xhr.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
 				const requiredSpeed = this.responseXML.getElementsByTagName("requiredSpeed")[0].childNodes[0].nodeValue;
+				const hDataValue = this.responseXML.getElementsByTagName("hData")[0].childNodes[0].nodeValue;
 				const usernameTagContent = this.responseXML.getElementsByTagName("username")[0].childNodes[0];
 				const username = usernameTagContent != null ? usernameTagContent.nodeValue : null;
-				inst.onHighscoreRequiredSpeedReceived.bind(inst)(requiredSpeed, username, testResults);
+				inst.onHighscoreRequiredSpeedReceived.bind(inst)(requiredSpeed, username, testResults, hDataValue);
 			}
 		};
 		xhr.open('GET', 'tt/service/highscore.php?q=get_threshold', true);
@@ -133,7 +134,8 @@ class TypingTest {
 		xhr.send();
 	}
 
-	onHighscoreRequiredSpeedReceived(requiredSpeed, username, testResults) {
+	onHighscoreRequiredSpeedReceived(requiredSpeed, username, testResults, hDataValue) {
+		this.hData = hDataValue;
 		if (testResults.realSpeed > Number(requiredSpeed)
 				&& testResults.mistakesCount == 0
 				&& testResults.plChars
@@ -298,7 +300,7 @@ class TypingTest {
 		formData.append('timeVerifier', params.timeVerifier);
 		formData.append('h', params.h);
 		const xhr = new XMLHttpRequest();
-		xhr.open('POST', 'data:text/html;,', true);
+		xhr.open('POST', 'tt/service/highscore.php', true);
 		xhr.send(formData);
 		console.log('h for highscore: ' + params.h + ', h input: ' + hInput);
 	}
