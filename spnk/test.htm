@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!DOCTYPE HTML>
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=iso-8859-2">
@@ -6,20 +6,21 @@
     <meta name="Description" content="Test prędkości pisania na klawiaturze, dobrze nadający się też do ćwiczeń w celu doskonalenia tej umiejętności.">
     <meta name="Language" content="pl">
     <meta name="Author" content="Michał Dettlaff">
-    <meta name="Copyright" content="Michał Dettlaff 2010">
+    <meta name="Copyright" content="Michał Dettlaff 2018">
     <link rel="stylesheet" href="layout/style.css" type="text/css">
 
     <script src="tt/javascript/highscore.js"></script>
-    <script src="tt/javascript/AC_OETags.js"></script>
+    <script src="tt/javascript/TypingTest.js"></script>
+    <script src="tt/javascript/lib/crypto-js/3.1.9-1/crypto-js.min.js"></script>
 
     <style>
       .highscore-table th {
         font-size: 10pt;
-        padding: 2 7 10 7;
+        padding: 2px 7px 10px 7px;
         text-align: left;
       }
       .highscore-table td {
-        padding: 3 10 3 10;
+        padding: 3px 10px 3px 10px;
         text-align: right;
       }
     </style>
@@ -66,101 +67,67 @@
                   style="background-repeat: no-repeat">
 
 <p>
-&nbsp;<br>
 Poniższy test pozwoli ci na zmierzenie swojej prędkości pisania; jest też dobrym sposobem na trenowanie szybkości, po tym jak opanujesz już bezwzrokowo całą klawiaturę.
 </p>
 <div style="padding-top: 2px; padding-bottom: 25px">
 
-<!--
-Smart developers always View Source.
+<div id="dialog" style="display: none; position: absolute; z-index: 1; width: 615px; height: 400px;">
+	<div style="display: table-cell; vertical-align: middle;">
+		<div style="background-color: #D0D0E0; margin-left: auto; margin-right: auto; width: 338px; padding: 12px; padding-top: 5px; box-shadow: 0 6px 8px 0 rgba(0,0,0,0.2), 0 4px 8px 0 rgba(0,0,0,0.19);">
+			<span style="font-size: 12px; font-weight: bold;">Wyniki testu</span>
+			<div style="background-color: white; padding: 8px; margin-top: 6px;">
+				<div id="highscore_form" style="display: none; margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Podaj swoje imię aby trafić na listę najlepszych.<br><br>
+					Imię: <input id="username_input" type="text" size="18" maxlength="32">
+					<span id="usernameValidationMessage" style="display: none; font-size: 14px; color: red;">wpisz 2-32 znaki</span>
+					<div style="margin-top: 10px;">
+						<button id="ok_submit_button" type="button">OK</button>
+						<button id="cancel_button" type="button">Anuluj</button>
+					</div>
+				</div>
+				<div id="highscore_info" style="display: none; margin-bottom: 20px;">
+					<span style="font-size: 20px;">Gratulacje!</span>
+					<br><br>
+					Twój wynik jest bardzo dobry.<br>
+					Został on zapisany na liście najlepszych.
+				</div>
+				<div id="dialog_results_text"></div>
+				<div id="ok_button_wrapper" style="text-align: center;">
+					<button id="ok_button" type="button">OK</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="typing_test" style="background-image: url('tt/img/background.png'); background-repeat: no-repeat; height: 365px; padding-left: 19px; padding-top: 38px;">
+	<div>
+		<div id="splash_screen" style="position: absolute; background-color: white; margin-left: 1px; margin-top: 1px; width: 573px; height: 273px; line-height: normal;">
+			<div style="text-align: center; font-family: Verdana; font-size: 15px;">
+				<br><br><br>Test polega na przepisaniu zadanego tekstu.<br>
+				Czas jest mierzony od momentu kiedy zaczniesz pisać.<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 18px;">
+				Kliknij aby rozpocząć.<br>
+				Powodzenia!<br><br>
+			</div><div style="text-align: center; font-family: Verdana; font-size: 14px;">
+				autor: Michał Dettlaff
+			</div>
+		</div>
+		<canvas id="typing_area" width="575" height="275" style="border: 1px solid black;" tabindex="1"></canvas>
+	</div>
 
-This application was built using Adobe Flex, an open source framework
-for building rich Internet applications that get delivered via the
-Flash Player or to desktops via Adobe AIR.
+	<div style="margin-top: 2px; margin-bottom: 6px;">
+		<span id="in_progress_results_speed" style="margin-right: 15px;"></span>
+		<span id="in_progress_results_correctness"></span>
+	</div>
 
-Learn more about Flex at http://flex.org
-// -->
-<script>
-<!--
-// -----------------------------------------------------------------------------
-// Globals
-// Major version of Flash required
-var requiredMajorVersion = 9;
-// Minor version of Flash required
-var requiredMinorVersion = 0;
-// Minor version of Flash required
-var requiredRevision = 28;
-// -----------------------------------------------------------------------------
-
-// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
-var hasProductInstall = DetectFlashVer(6, 0, 65);
-
-// Version check based upon the values defined in globals
-var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
-
-if (hasProductInstall && !hasRequestedVersion) {
-    // DO NOT MODIFY THE FOLLOWING FOUR LINES
-    // Location visited after installation is complete if installation is required
-    var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
-    var MMredirectURL = window.location;
-    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
-    var MMdoctitle = document.title;
-
-    AC_FL_RunContent(
-        "src", "tt/flash/playerProductInstall",
-        "FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
-        "width", "620",
-        "height", "400",
-        "align", "middle",
-        "id", "TypingTestApp",
-        "quality", "high",
-        "bgcolor", "#869ca7",
-        "name", "TypingTestApp",
-        "allowScriptAccess","sameDomain",
-        "type", "application/x-shockwave-flash",
-        "pluginspage", "http://www.adobe.com/go/getflashplayer"
-    );
-} else if (hasRequestedVersion) {
-    // if we've detected an acceptable version
-    // embed the Flash Content SWF when all tests are passed
-    AC_FL_RunContent(
-        "src", "tt/flash/TypingTestApp",
-        "width", "620",
-        "height", "400",
-        "align", "middle",
-        "id", "TypingTestApp",
-        "quality", "high",
-        "bgcolor", "#f5f5f5",
-        "name", "TypingTestApp",
-        "allowScriptAccess","sameDomain",
-        "type", "application/x-shockwave-flash",
-        "pluginspage", "http://www.adobe.com/go/getflashplayer"
-    );
-} else { // flash is too old or we can't detect the plugin
-    var alternateContent = '<br />Do wyświetlenia strony wymagany jest Adobe Flash Player. '
-    + '<a href=http://www.adobe.com/go/getflash/>Pobierz Flash</a>';
-    document.write(alternateContent); // insert non-flash content
-}
-// -->
-</script>
-<noscript>
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-        id="TypingTest" width="620" height="400"
-        codebase="http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab">
-        <param name="movie" value="tt/flash/TypingTestApp.swf" />
-        <param name="quality" value="high" />
-        <param name="bgcolor" value="#f5f5f5" />
-        <param name="allowScriptAccess" value="sameDomain" />
-        <embed src="tt/flash/TypingTestApp.swf" quality="high" bgcolor="#f5f5f5"
-            width="620" height="400" name="TypingTest" align="middle"
-            play="true"
-            loop="false"
-            allowScriptAccess="sameDomain"
-            type="application/x-shockwave-flash"
-            pluginspage="http://www.adobe.com/go/getflashplayer">
-        </embed>
-</object>
-</noscript>
+	<button id="newTestButton" type="button">Rozpocznij nowy test</button>
+	<span style="margin-left: 15px;">
+		<input id="plCharsCheckbox" type="checkbox" checked>polskie znaki
+	</span>
+</div>
 
 </div>
 <div id="highscoreTableArea" style="padding-bottom: 10px;"></div>
@@ -171,6 +138,7 @@ Zapamiętywany jest tylko najlepszy wynik dla danej osoby.
 
 <script>
 updateHighscoreTable();
+typingTestAPI.init();
 </script>
 
 <p>
