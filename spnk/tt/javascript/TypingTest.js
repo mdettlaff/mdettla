@@ -7,9 +7,6 @@ typingTestAPI.init = function() {
 class TypingTest {
 
 	constructor() {
-		this.mockTexts = ['placeholder', 'Yes this is tak¿e pies, mo¿e jeszcze z jedn± linijk±.', 'jeszcze ³ubin'];
-		this.mockTextIndex = -1;
-
 		this.splashScreenVisible = true;
 		this.plCharsOn = true;
 		this.hData = '';
@@ -33,8 +30,6 @@ class TypingTest {
 		this.addEventListeners();
 		this.preventBackspaceAndSpaceNavigation();
 
-		this.hideSplashScreen(); // hide splash screen for now to make testing easier
-
 		this.sendRequestForNewText(false);
 	}
 
@@ -43,12 +38,7 @@ class TypingTest {
 		const xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function() {
 			if (this.readyState == 4 && this.status == 200) {
-				inst.mockTextIndex = (inst.mockTextIndex + 1) % inst.mockTexts.length;
-				if (inst.mockTextIndex == 0) {
-					inst.textWithPlChars = this.responseXML.getElementsByTagName("text")[0].childNodes[0].nodeValue;
-				} else {
-					inst.textWithPlChars = inst.mockTexts[inst.mockTextIndex];
-				}
+				inst.textWithPlChars = this.responseXML.getElementsByTagName("text")[0].childNodes[0].nodeValue;
 				inst.hData = this.responseXML.getElementsByTagName("hData")[0].childNodes[0].nodeValue;
 				inst.model = new TypingTestModel(inst.textWithPlChars, inst.plCharsOn);
 				inst.updateInProgressResults(new TestResults(inst.model));
@@ -211,7 +201,7 @@ class TypingTest {
 		this.splashScreenVisible = false;
 		var splashScreen = document.getElementById('splash_screen');
 		splashScreen.parentNode.removeChild(splashScreen);
-		//this.canvas.focus();
+		this.canvas.focus();
 	}
 
 	showDialog(testResults) {
@@ -265,7 +255,6 @@ class TypingTest {
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', 'tt/service/ttlog.php', true);
 		xhr.send(formData);
-		console.log('h for ttlog: ' + params.h + ', h input: ' + hInput);
 	}
 
 	submitHighscore(testResults, username) {
@@ -302,7 +291,6 @@ class TypingTest {
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', 'tt/service/highscore.php', true);
 		xhr.send(formData);
-		console.log('h for highscore: ' + params.h + ', h input: ' + hInput);
 	}
 
 	h(hData, hKey) {
@@ -515,8 +503,8 @@ class TypingArea {
 		this.context.fillStyle = 'white';
 		this.context.fillRect(0, 0, this.width, this.height)
 
-			// TODO do we need the drawOnlyCurrentLine variable?
-			const drawOnlyCurrentLine = typingTestModel.stayedInTheSameLine && false;
+		// TODO do we need the drawOnlyCurrentLine variable?
+		const drawOnlyCurrentLine = typingTestModel.stayedInTheSameLine && false;
 		const startLine = Math.max(
 				typingTestModel.writtenLines.length
 				- this.MAX_VISIBLE_WRITTEN_LINES,
