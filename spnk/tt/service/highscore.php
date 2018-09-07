@@ -18,7 +18,7 @@ include '../include/utils.php';
 
 function validate_username($username) {
     return !empty($username)
-        && strlen($username) <= 32 && strlen($username) >= 3;
+        && strlen($username) <= 32 && strlen($username) >= 2;
 }
 
 function validate($username, $speed, $mistakes, $corrections,
