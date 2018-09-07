@@ -19,7 +19,7 @@ class TypingTest {
 	}
 
 	init() {
-		this.model = new TypingTestModel('Trwa ³±czenie z serwerem, proszê czekaæ...', this.plCharsOn);
+		this.model = new TypingTestModel('Trwa ³±czenie z serwerem, proszê czekaæ...', this.plCharsOn, false);
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
 		this.draw();
 

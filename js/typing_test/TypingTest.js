@@ -22,7 +22,7 @@ class TypingTest {
 	}
 
 	init() {
-		this.model = new TypingTestModel('Trwa łączenie z serwerem, proszę czekać...', this.plCharsOn);
+		this.model = new TypingTestModel('Trwa łączenie z serwerem, proszę czekać...', this.plCharsOn, false);
 		this.typingArea = new TypingArea(this.context, this.canvas.width, this.canvas.height);
 		this.draw();
 
@@ -331,8 +331,7 @@ class TypingTestModel {
 
 	constructor(text,
 			plCharsOn, isReady = true) {
-		//this.MAX_LINE_LENGTH = 66;
-		this.MAX_LINE_LENGTH = 40;
+		this.MAX_LINE_LENGTH = 66;
 		this.isReady = isReady;
 		this.stayedInTheSameLine = false;
 		const utils = new Utils();
