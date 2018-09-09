@@ -142,7 +142,6 @@ class TypingTest {
 			} else {
 				document.getElementById('highscore_info').style.display = 'block';
 				this.submitHighscore(testResults, usernameInput.value);
-				updateHighscoreTable();
 			}
 		}
 	}
@@ -303,6 +302,11 @@ class TypingTest {
 		formData.append('timeVerifier', params.timeVerifier);
 		formData.append('h', params.h);
 		const xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {
+				updateHighscoreTable();
+			}
+		};
 		xhr.open('POST', 'tt/service/highscore.php', true);
 		xhr.send(formData);
 	}
