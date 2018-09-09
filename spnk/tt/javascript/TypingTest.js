@@ -46,6 +46,7 @@ class TypingTest {
 				if (focusOnCanvas) {
 					inst.canvas.focus();
 				}
+				inst.hideLoadingAnimation();
 			}
 		};
 		xhr.open('GET', 'tt/service/texts.php', true);
@@ -194,6 +195,7 @@ class TypingTest {
 			this.hideSplashScreen();
 			return;
 		}
+		this.showLoadingAnimation();
 		this.sendRequestForNewText(true);
 	}
 
@@ -221,6 +223,18 @@ class TypingTest {
 		dialog.style.display = 'none';
 		var typingTest = document.getElementById('typing_test');
 		typingTest.style.filter = 'none';
+	}
+
+	showLoadingAnimation() {
+		document.getElementById('newTestButton').disabled = true;
+		document.getElementById('plCharsCheckbox').disabled = true;
+		document.getElementById('ajax_loader').style.display = 'table';
+	}
+
+	hideLoadingAnimation() {
+		document.getElementById('newTestButton').disabled = false;
+		document.getElementById('plCharsCheckbox').disabled = false;
+		document.getElementById('ajax_loader').style.display = 'none';
 	}
 
 	submitTestResults(testResults) {

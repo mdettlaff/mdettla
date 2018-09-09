@@ -56,6 +56,7 @@ class TypingTest {
 				if (focusOnCanvas) {
 					inst.canvas.focus();
 				}
+				inst.hideLoadingAnimation();
 			}
 		};
 		xhr.open('GET', 'data:text/xml;,<?xml version="1.0" encoding="UTF-8"?><response><text>Jak wszyscy ludzie, którzy mają jeden ze zmysłów rozwinięty ponad ludzką potrzebę, ojciec był bardzo nerwowy. I oprócz tego był sentymentalny, i jak wszyscy sentymentalni ludzie potrafił okazywać okrucieństwo i obrażać się na cały świat. Nie miał wiele szczęścia, choć nie zasługiwał na takie pomijanie przez los. Zginął w potrzasku, który sam krótko przedtem pomagał zastawiać. A nim zginął wszyscy po kolei w jakiś sposób go w życiu oszukali. Uczuciowi ludzie są tak często oszukiwani. Nicholas nie mógłby jeszcze napisać historii ojca, chociaż miał zamiar uczynić to w przyszłości. Myślał o ojcu z tego okresu, kiedy był jeszcze małym chłopcem, wdzięcznym za dwie rzeczy: łowienie ryb i polowanie.</text><hData>R8XVP6wayJBkOrAyhXRuqgcGr6TpRbAI</hData></response>', true);
@@ -206,6 +207,7 @@ class TypingTest {
 			this.hideSplashScreen();
 			return;
 		}
+		this.showLoadingAnimation();
 		this.sendRequestForNewText(true);
 	}
 
@@ -233,6 +235,18 @@ class TypingTest {
 		dialog.style.display = 'none';
 		var typingTest = document.getElementById('typing_test');
 		typingTest.style.filter = 'none';
+	}
+
+	showLoadingAnimation() {
+		document.getElementById('newTestButton').disabled = true;
+		document.getElementById('plCharsCheckbox').disabled = true;
+		document.getElementById('ajax_loader').style.display = 'table';
+	}
+
+	hideLoadingAnimation() {
+		document.getElementById('newTestButton').disabled = false;
+		document.getElementById('plCharsCheckbox').disabled = false;
+		document.getElementById('ajax_loader').style.display = 'none';
 	}
 
 	submitTestResults(testResults) {
