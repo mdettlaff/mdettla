@@ -3,8 +3,14 @@
 
 import random
 import sys
+import re
+
+def convert_lead_time(s):
+    groups = re.match(r'([0-9]+)d([0-9]+)h', s).groups()
+    return float(groups[0]) * 24 + float(groups[1])
 
 SIMULATION_COUNT = 10000
+HOURS_IN_DAY = 24
 
 if (len(sys.argv) != 4):
     print('usage: ' + sys.argv[0] + ' DEADLINE_IN_DAYS DEVELOPERS_COUNT STORY_COUNT < LEAD_TIMES')
@@ -14,12 +20,13 @@ deadline_in_days = int(sys.argv[1])
 developers_count = float(sys.argv[2])
 story_count = int(sys.argv[3])
 
-# lead times for all recent done stories, in hours
+# lead times for all recent done stories, in format XdYh, e.g.: 1d5h 3d22h 2d0h
 lead_times_input = ''.join(sys.stdin.readlines())
 
-lead_times = map(lambda x: float(x), filter(lambda x: x.isdigit(),
-    lead_times_input.strip().replace('\n', ' ').split(' ')))
-#print('lead times: ' + str(lead_times))
+lead_times = map(lambda x: convert_lead_time(x),
+        filter(lambda x: re.match(r'[0-9]+d[0-9]+h', x),
+        lead_times_input.strip().replace('\n', ' ').split(' ')))
+#print('lead times: ' + str(lead_times) + '\n')
 
 # simulated durations in days
 simulations = []
@@ -31,7 +38,7 @@ for i in xrange(SIMULATION_COUNT):
         linear_duration += ub_story_time
     duration = linear_duration / developers_count
     simulations.append(duration)
-    if duration <= deadline_in_days * 8:
+    if duration <= deadline_in_days * HOURS_IN_DAY:
         success_count += 1
 success_probability = success_count / SIMULATION_COUNT
 
