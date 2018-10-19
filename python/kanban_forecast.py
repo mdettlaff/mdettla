@@ -13,10 +13,12 @@ DEVELOPERS_COUNT = float(sys.argv[2])
 STORY_COUNT = int(sys.argv[3])
 
 # lead times for all recent done stories, in days
-LEAD_TIMES = map(lambda x: float(x), """
+LEAD_TIMES_INPUT = """
 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 3 5 5 5 5 5 5 5
 5 5 5 5 5 5 5 5 5 5 5 8 8 8 8 8 8 8 13 13
-""".strip().replace('\n', ' ').split(' '))
+"""
+LEAD_TIMES = map(lambda x: float(x), filter(lambda x: x.isdigit(),
+    LEAD_TIMES_INPUT.strip().replace('\n', ' ').split(' ')))
 SIMULATION_COUNT = 10000
 
 # magic multiplier
