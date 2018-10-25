@@ -1,16 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+u"""Kanban style forecasting for sprints/projects using the Monte Carlo method."""
+
 import random
 import sys
 import re
 
-def convert_lead_time(s):
-    groups = re.match(r'([0-9]+)d([0-9]+)h', s).groups()
-    return float(groups[0]) * 24 + float(groups[1])
-
 SIMULATION_COUNT = 10000
 HOURS_IN_DAY = 24
+
+def convert_lead_time(s):
+    groups = re.match(r'([0-9]+)d([0-9]+)h', s).groups()
+    return float(groups[0]) * HOURS_IN_DAY + float(groups[1])
 
 if (len(sys.argv) != 4):
     print('usage: ' + sys.argv[0] + ' DEADLINE_IN_DAYS DEVELOPERS_COUNT STORY_COUNT < LEAD_TIMES')
