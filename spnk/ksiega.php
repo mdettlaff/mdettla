@@ -48,7 +48,7 @@ setcookie('PHPSESSID', session_id(), 0, '/', '.szybkiepisanienaklawiaturze.pl');
 </table>
 <?php
 
-function validate($name, $email, $content) {
+function validate($name, $email, $content, $ip) {
     if (empty($name) || empty($content)
             || strlen($name) > 32 || strlen($email) > 128
             || strlen($content) > 5000) {
@@ -59,6 +59,14 @@ function validate($name, $email, $content) {
     );
     for ($i = 0; $i < count($RESTRICTED_WORDS); $i++) {
         if (eregi($RESTRICTED_WORDS[$i], $content)) {
+            return false;
+        }
+    }
+    $RESTRICTED_IPS = array(
+        "176.108.5.197"
+    );
+    for ($i = 0; $i < count($RESTRICTED_IPS); $i++) {
+        if ($RESTRICTED_IPS[$i] == $ip) {
             return false;
         }
     }
@@ -74,16 +82,16 @@ if (!empty($_POST['submit'])) {
     $name = mysql_real_escape_string($_POST['name']);
     $email = mysql_real_escape_string($_POST['email']);
     $content = mysql_real_escape_string($_POST['content']);
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+    $ip = mysql_real_escape_string($ip);
     echo "<br>\n";
     /*if ($_SESSION['guestbook_entry_added']) {
         echo "Wielokrotne wpisy nie s± dozwolone.\n";
-    } else */if (validate($name, $email, $content)) {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $ip = $_SERVER['REMOTE_ADDR'];
-        }
-        $ip = mysql_real_escape_string($ip);
+    } else */if (validate($name, $email, $content, $ip)) {
         mysql_query("
             INSERT INTO guestbook
                 (date_added, ip, username, email, content)
