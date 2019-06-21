@@ -63,7 +63,7 @@ function validate($name, $email, $content, $ip) {
         }
     }
     $RESTRICTED_IPS = array(
-        "176.108.5.197"
+        "176.108.5.197", "176.108.5.21"
     );
     for ($i = 0; $i < count($RESTRICTED_IPS); $i++) {
         if ($RESTRICTED_IPS[$i] == $ip) {
