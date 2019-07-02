@@ -62,11 +62,11 @@ function validate($name, $email, $content, $ip) {
             return false;
         }
     }
-    $RESTRICTED_IPS = array(
-        "176.108.5.197", "176.108.5.21"
+    $RESTRICTED_IPS_PREFIXES = array(
+        "176.108.5."
     );
-    for ($i = 0; $i < count($RESTRICTED_IPS); $i++) {
-        if ($RESTRICTED_IPS[$i] == $ip) {
+    for ($i = 0; $i < count($RESTRICTED_IPS_PREFIXES); $i++) {
+        if (substr($ip, 0, strlen($RESTRICTED_IPS_PREFIXES[$i])) == $RESTRICTED_IPS_PREFIXES[$i]) {
             return false;
         }
     }
