@@ -70,6 +70,15 @@ function validate($name, $email, $content, $ip) {
             return false;
         }
     }
+    $RESTRICTED_EMAILS = array(
+        "antonzueev34@gmail.com"
+    );
+    for ($i = 0; $i < count($RESTRICTED_EMAILS); $i++) {
+        $email_no_dots = str_replace(".", "", $email);
+        if ($email_no_dots == str_replace(".", "", $RESTRICTED_EMAILS[$i])) {
+            return false;
+        }
+    }
     return true;
 }
 
